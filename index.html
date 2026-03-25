@@ -466,13 +466,13 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
       <div style="font-size:16px;font-weight:600;color:#F85149" id="ia-count-bear">0</div>
       <div style="font-size:8px;color:#F85149;text-transform:uppercase;letter-spacing:.5px">Bajistas</div>
     </div>
-    <div onclick="setIAFilter('NEUTRAL',null)" style="flex:1;background:#1A1A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #8B949E40;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+    <div onclick="setIAFilter('alta',null)" style="flex:1;background:#1A1A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #8B949E40;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#8B949E" id="ia-count-neu">0</div>
-      <div style="font-size:8px;color:#8B949E;text-transform:uppercase;letter-spacing:.5px">Neutras</div>
+      <div style="font-size:8px;color:#D4A017;text-transform:uppercase;letter-spacing:.5px">Conf. IA</div>
     </div>
     <div onclick="setIAFilter('alta',null)" style="flex:1;background:#2A1A00;border-radius:8px;padding:7px 10px;border:0.5px solid #D4A01740;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#D4A017" id="ia-count-high">0</div>
-      <div style="font-size:8px;color:#D4A017;text-transform:uppercase;letter-spacing:.5px">Alta conf.</div>
+      <div style="font-size:8px;color:#D4A017;text-transform:uppercase;letter-spacing:.5px">Conf. IA</div>
     </div>
   </div>
 </div>
@@ -482,7 +482,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   <div onclick="setIAFilter('todo',this)" class="tf on" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">Todo</div>
   <div onclick="setIAFilter('ALCISTA',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">🟢 Alcista</div>
   <div onclick="setIAFilter('BAJISTA',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">🔴 Bajista</div>
-  <div onclick="setIAFilter('alta',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">⭐ Alta conf.</div>
+  <div onclick="setIAFilter('alta',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">⭐ Conf. IA</div>
   <div onclick="setIAFilter('cripto',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">🔷 Cripto</div>
   <div onclick="setIAFilter('acciones',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">📈 Acciones</div>
   <div onclick="setIAFilter('comm',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">🥇 Comm</div>
@@ -1011,13 +1011,13 @@ function getIAJustif(s, ai, cat) {
     if (conf < 4) return ''; // NEUTRAL baja conf: sin justificación
     return `El modelo detecta consolidación en ${s} con alta confianza (${conf}/5) a pesar de señal neutral. ` +
       `El activo opera en rango definido entre ${stop} y ${ai.target} con volumen consistente. ` +
-      `Alta confianza del modelo indica patrón técnico claro aunque sin dirección definitiva aún. ` +
+      `Confianza IA del modelo indica patrón técnico claro aunque sin dirección definitiva aún. ` +
       `Probabilidad del ${prob}% de mantenerse en este rango en el corto plazo. ` +
       `Vigilar ruptura del rango como señal de entrada — catalizador externo podría definir dirección.`;
   }
 }
 
-function detailHTML(it,c,up){c=c||it.c;up=up!==undefined?up:it.up;const ai=it.ai;const sc=SIGNAL_COL[ai.signal]||SIGNAL_COL.NEUTRAL;const stars='★'.repeat(ai.conf)+'☆'.repeat(5-ai.conf);const probColor=ai.signal==='NEUTRAL'?'#8B949E':ai.signal==='BAJISTA'?'#F85149':ai.prob>=65?'#3FB950':'#FBBF24';const highConf=ai.conf>=4;const tfLabel={'24h':'24 horas','7d':'7 días','1m':'1 mes'}[curTF]||'24 horas';const p=parseFloat(it.p.replace(/[^0-9.]/g,''))||100;const upPct=parseFloat(ai.upside)||10;const _er=[{key:'CORTO',tiempo:'1-4 semanas',mult:.35,prob:Math.min(ai.prob+8,95),signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},{key:'MEDIANO',tiempo:'1-3 meses',mult:1.0,prob:ai.prob,signal:ai.signal},{key:'LARGO',tiempo:'3-12 meses',mult:2.2,prob:Math.max(ai.prob-10,30),signal:ai.prob>=50?'ALCISTA':'BAJISTA'}];const _mp=Math.max(..._er.map(e=>e.prob));const esc=_er.map(e=>({...e,main:e.prob===_mp}));function tgt(mult){const v=p*(1+(upPct/100)*mult);const prefix=it.p.match(/[€£¥R]/)?it.p.match(/[€£¥R]/)[0]:'$';return prefix+(v>=1000?Math.round(v).toLocaleString('en'):v>=1?v.toFixed(2):v.toFixed(4));}function scol(s){return s==='ALCISTA'?'#3FB950':s==='BAJISTA'?'#F85149':'#8B949E';}function sbg(s){return s==='ALCISTA'?'#1A3A2A':s==='BAJISTA'?'#3A1A1A':'#1A1A2A';}const justifText=typeof getIAJustif==='function'?getIAJustif(it.s,ai,''):'';const escRows=esc.map(e=>`<div style="background:${e.main?'#0D1A00':'#0A0E14'};border-radius:9px;padding:${e.main?'11':'9'}px 11px;border:${e.main?'1.5px solid #D4A01780':'0.5px solid #21262D'};display:flex;flex-direction:column;gap:0"><div style="display:flex;align-items:center;gap:10px"><div style="flex-shrink:0;text-align:center;min-width:56px"><div style="font-size:${e.main?'10':'9'}px;font-weight:700;color:${e.main?'#D4A017':'#8B949E'};display:flex;align-items:center;justify-content:center;gap:3px">${e.main?'💎 ':''} ${e.key}</div><div style="font-size:8px;color:#555;margin-top:1px">${e.tiempo}</div></div><div style="flex:1"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span style="font-size:${e.main?'13':'12'}px;font-weight:600;color:#E6EDF3">${tgt(e.mult)}</span><span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;background:${sbg(e.signal)};color:${scol(e.signal)}">${e.signal}</span></div><div style="background:#21262D;border-radius:3px;height:4px;overflow:hidden"><div style="height:100%;border-radius:3px;background:${scol(e.signal)};width:${e.prob}%"></div></div><div style="font-size:9px;color:#555;margin-top:2px">Prob. ${e.prob}%${e.main?' · 💎 Escenario principal':''}</div></div></div>${e.main&&justifText&&(ai.signal!=='NEUTRAL'||ai.conf>=4)?`<div style="margin-top:8px;padding-top:8px;border-top:0.5px solid #D4A01730"><div style="font-size:8px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">⚛ Por qué es el escenario principal</div><div style="font-size:10px;color:#8B949E;line-height:1.7">${justifText}</div></div>`:''}  </div>`).join('');return`<div class="dp-top"><div class="dp-left"><div class="dp-price">${it.p}</div><div class="dp-chg-row"><span class="dp-pill ${up?'u':'d'}">${c}</span><span class="dp-range">${tfLabel} · ${it.v}</span></div></div></div><div class="dp-ai"><div class="dp-ai-top"><div class="dp-ai-icon">⚛</div><span class="dp-ai-title">Análisis IA Aurex</span><span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span></div><div class="dp-ai-grid"><div class="dp-ai-item"><div class="dp-ai-lbl">Precio objetivo IA</div><div class="dp-ai-val" style="color:#D4A017">${ai.target}</div><div class="dp-ai-sub">Upside: <span style="color:#3FB950">${ai.upside}</span></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Probabilidad IA</div><div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div><div class="prob-wrap"><div style="background:#21262D;border-radius:4px;height:6px;overflow:hidden;margin-top:4px"><div style="height:100%;border-radius:4px;width:${ai.prob}%;background:${probColor}"></div></div></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Stop Loss</div><div class="dp-ai-val" style="color:#F85149">${ai.stop}</div><div class="dp-ai-sub">Gestión de riesgo</div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Confianza IA</div><div class="dp-ai-val" style="font-size:12px;color:#D4A017">${stars}</div><div class="dp-ai-sub">${ai.conf}/5 — ${ai.conf>=4?'Alta':ai.conf>=3?'Media':'Baja'}</div></div></div></div><div style="margin:0 14px 10px"><div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚛ Escenarios por temporalidad</div><div style="display:flex;flex-direction:column;gap:6px">${escRows}</div></div><div class="dp-metrics"><div class="dm"><div class="dm-lbl">Vol / Cap</div><div class="dm-val">${it.v}</div></div><div class="dm"><div class="dm-lbl">Cambio ${curTF}</div><div class="dm-val ${up?'up':'dn'}">${c}</div></div><div class="dm"><div class="dm-lbl">Período</div><div class="dm-val">${tfLabel}</div></div></div>
+function detailHTML(it,c,up){c=c||it.c;up=up!==undefined?up:it.up;const ai=it.ai;const sc=SIGNAL_COL[ai.signal]||SIGNAL_COL.NEUTRAL;const stars='★'.repeat(ai.conf)+'☆'.repeat(5-ai.conf);const highConf=ai.conf>=4;const probColor=ai.signal==='NEUTRAL'?'#8B949E':ai.signal==='BAJISTA'?'#F85149':highConf?'#D4A017':'#3FB950';const tfLabel={'24h':'24 horas','7d':'7 días','1m':'1 mes'}[curTF]||'24 horas';const p=parseFloat(it.p.replace(/[^0-9.]/g,''))||100;const upPct=parseFloat(ai.upside)||10;const _er=[{key:'CORTO',tiempo:'1-4 semanas',mult:.35,prob:Math.min(ai.prob+8,95),signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},{key:'MEDIANO',tiempo:'1-3 meses',mult:1.0,prob:ai.prob,signal:ai.signal},{key:'LARGO',tiempo:'3-12 meses',mult:2.2,prob:Math.max(ai.prob-10,30),signal:ai.prob>=50?'ALCISTA':'BAJISTA'}];const _mp=Math.max(..._er.map(e=>e.prob));const esc=_er.map(e=>({...e,main:e.prob===_mp}));function tgt(mult){const v=p*(1+(upPct/100)*mult);const prefix=it.p.match(/[€£¥R]/)?it.p.match(/[€£¥R]/)[0]:'$';return prefix+(v>=1000?Math.round(v).toLocaleString('en'):v>=1?v.toFixed(2):v.toFixed(4));}function scol(s){return s==='ALCISTA'?'#3FB950':s==='BAJISTA'?'#F85149':'#8B949E';}function sbg(s){return s==='ALCISTA'?'#1A3A2A':s==='BAJISTA'?'#3A1A1A':'#1A1A2A';}const justifText=typeof getIAJustif==='function'?getIAJustif(it.s,ai,''):'';const escRows=esc.map(e=>`<div style="background:${e.main?'#0D1A00':'#0A0E14'};border-radius:9px;padding:${e.main?'11':'9'}px 11px;border:${e.main?'1.5px solid #D4A01780':'0.5px solid #21262D'};display:flex;flex-direction:column;gap:0"><div style="display:flex;align-items:center;gap:10px"><div style="flex-shrink:0;text-align:center;min-width:56px"><div style="font-size:${e.main?'10':'9'}px;font-weight:700;color:${e.main?'#D4A017':'#8B949E'};display:flex;align-items:center;justify-content:center;gap:3px">${e.main?'💎 ':''} ${e.key}</div><div style="font-size:8px;color:#555;margin-top:1px">${e.tiempo}</div></div><div style="flex:1"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span style="font-size:${e.main?'13':'12'}px;font-weight:600;color:#E6EDF3">${tgt(e.mult)}</span><span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;background:${sbg(e.signal)};color:${scol(e.signal)}">${e.signal}</span></div><div style="background:#21262D;border-radius:3px;height:4px;overflow:hidden"><div style="height:100%;border-radius:3px;background:${scol(e.signal)};width:${e.prob}%"></div></div><div style="font-size:9px;color:#555;margin-top:2px">Prob. ${e.prob}%${e.main?' · 💎 Escenario principal':''}</div></div></div>${e.main&&justifText&&(ai.signal!=='NEUTRAL'||ai.conf>=4)?`<div style="margin-top:8px;padding-top:8px;border-top:0.5px solid #D4A01730"><div style="font-size:8px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">⚛ Por qué es el escenario principal</div><div style="font-size:10px;color:#8B949E;line-height:1.7">${justifText}</div></div>`:''}  </div>`).join('');return`<div class="dp-top"><div class="dp-left"><div class="dp-price">${it.p}</div><div class="dp-chg-row"><span class="dp-pill ${up?'u':'d'}">${c}</span><span class="dp-range">${tfLabel} · ${it.v}</span></div></div></div><div class="dp-ai"><div class="dp-ai-top"><div class="dp-ai-icon">⚛</div><span class="dp-ai-title">Análisis IA Aurex</span><span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span></div><div class="dp-ai-grid"><div class="dp-ai-item"><div class="dp-ai-lbl">Precio objetivo IA</div><div class="dp-ai-val" style="color:#D4A017">${ai.target}</div><div class="dp-ai-sub">Upside: <span style="color:#3FB950">${ai.upside}</span></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Probabilidad IA</div><div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div><div class="prob-wrap"><div style="background:#21262D;border-radius:4px;height:6px;overflow:hidden;margin-top:4px"><div style="height:100%;border-radius:4px;width:${ai.prob}%;background:${probColor}"></div></div></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Stop Loss</div><div class="dp-ai-val" style="color:#F85149">${ai.stop}</div><div class="dp-ai-sub">Gestión de riesgo</div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Confianza IA</div><div class="dp-ai-val" style="font-size:12px;color:#D4A017">${stars}</div><div class="dp-ai-sub">${ai.conf}/5 — ${ai.conf>=4?'Alta':ai.conf>=3?'Media':'Baja'}</div></div></div></div><div style="margin:0 14px 10px"><div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚛ Escenarios por temporalidad</div><div style="display:flex;flex-direction:column;gap:6px">${escRows}</div></div><div class="dp-metrics"><div class="dm"><div class="dm-lbl">Vol / Cap</div><div class="dm-val">${it.v}</div></div><div class="dm"><div class="dm-lbl">Cambio ${curTF}</div><div class="dm-val ${up?'up':'dn'}">${c}</div></div><div class="dm"><div class="dm-lbl">Período</div><div class="dm-val">${tfLabel}</div></div></div>
   <div style="padding:0 14px 12px;display:flex;gap:6px">
     <div onclick="shareSignalWA('${it.s}','${ai.signal}','${ai.target}',${ai.prob},'${ai.upside}','${it.p}')" style="flex:1;padding:8px 4px;border-radius:9px;background:#25D36620;color:#25D366;font-size:11px;font-weight:600;border:1px solid #25D36650;cursor:pointer;text-align:center;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">💬 WhatsApp</div>
     <div onclick="shareSignalTG('${it.s}','${ai.signal}','${ai.target}',${ai.prob},'${ai.upside}','${it.p}')" style="flex:1;padding:8px 4px;border-radius:9px;background:#2AABEE20;color:#2AABEE;font-size:11px;font-weight:600;border:1px solid #2AABEE50;cursor:pointer;text-align:center;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✈️ Telegram</div>
@@ -1218,7 +1218,7 @@ function portDetailHTML(a,i){
   </div>`;
   if(ai){
     const stars='★'.repeat(ai.conf)+'☆'.repeat(5-ai.conf);
-    const probColor=ai.signal==='NEUTRAL'?'#8B949E':ai.signal==='BAJISTA'?'#F85149':ai.prob>=65?'#3FB950':'#FBBF24';const highConf=ai.conf>=4;
+    const highConf=ai.conf>=4;const probColor=ai.signal==='NEUTRAL'?'#8B949E':ai.signal==='BAJISTA'?'#F85149':highConf?'#D4A017':'#3FB950';
     const p=a.actual;const upPct=parseFloat(ai.upside)||10;
     const esc=[
       {key:'CORTO',tiempo:'1-4 sem',mult:.35,prob:Math.min(ai.prob+8,95),signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},
@@ -1588,7 +1588,9 @@ function getAllSignals() {
     {items: DATA.acciones.arg, tab: 'acciones', pais: 'arg', cat: '📈 Acciones ARG'},
     {items: DATA.acciones.br, tab: 'acciones', pais: 'br', cat: '📈 Brasil'},
     {items: DATA.acciones.eu, tab: 'acciones', pais: 'eu', cat: '📈 Europa'},
-    {items: DATA.stable, tab: 'stable', cat: '💎 Stable & DeFi'},
+    {items: DATA.acciones.es, tab: 'acciones', pais: 'es', cat: '📈 Acciones España'},
+    {items: DATA.acciones.jp, tab: 'acciones', pais: 'jp', cat: '📈 Acciones Japón'},
+    {items: DATA.acciones.cn, tab: 'acciones', pais: 'cn', cat: '📈 Acciones China'},
     {items: DATA.comm, tab: 'comm', cat: '🥇 Commodities'},
     {items: DATA.etf, tab: 'etf', cat: '📊 ETF & Bonos'},
     {items: DATA.divisas, tab: 'divisas', cat: '💱 Divisas'},
@@ -1608,7 +1610,13 @@ function getAllSignals() {
 }
 
 function filterSignals(signals) {
-  return signals.filter(sig => {
+  // Solo ALCISTA, BAJISTA, o alta confianza (conf>=4)
+  const base = signals.filter(sig =>
+    sig.ai.signal === 'ALCISTA' ||
+    sig.ai.signal === 'BAJISTA' ||
+    sig.ai.conf >= 4
+  );
+  return base.filter(sig => {
     if (iaFilter === 'todo') return true;
     if (iaFilter === 'ALCISTA') return sig.ai.signal === 'ALCISTA';
     if (iaFilter === 'BAJISTA') return sig.ai.signal === 'BAJISTA';
@@ -1618,7 +1626,7 @@ function filterSignals(signals) {
     if (iaFilter === 'comm') return sig.tab === 'comm';
     if (iaFilter === 'etf') return sig.tab === 'etf';
     return true;
-  }).sort((a, b) => b.ai.prob - a.ai.prob); // Ordenar por probabilidad
+  }).sort((a, b) => b.ai.prob - a.ai.prob);
 }
 
 function renderIA() {
@@ -1629,10 +1637,11 @@ function renderIA() {
   const filtered = filterSignals(all);
 
   // Actualizar contadores
-  const bull = all.filter(s => s.ai.signal === 'ALCISTA').length;
-  const bear = all.filter(s => s.ai.signal === 'BAJISTA').length;
-  const neu = all.filter(s => s.ai.signal === 'NEUTRAL').length;
-  const high = all.filter(s => s.ai.conf >= 4).length;
+  const visible = all.filter(s => s.ai.signal==='ALCISTA'||s.ai.signal==='BAJISTA'||s.ai.conf>=4);
+  const bull = visible.filter(s => s.ai.signal === 'ALCISTA').length;
+  const bear = visible.filter(s => s.ai.signal === 'BAJISTA').length;
+  const neu = visible.filter(s => s.ai.signal === 'NEUTRAL' && s.ai.conf >= 4).length;
+  const high = visible.filter(s => s.ai.conf >= 4).length;
   const el = (id, v) => { const e = document.getElementById(id); if(e) e.textContent = v; };
   el('ia-count-bull', bull); el('ia-count-bear', bear);
   el('ia-count-neu', neu); el('ia-count-high', high);
@@ -1653,7 +1662,7 @@ function renderIA() {
     filtered.forEach((sig, i) => {
       const sigCol = sc[sig.ai.signal] || sc.NEUTRAL;
       const stars = '★'.repeat(sig.ai.conf) + '☆'.repeat(5 - sig.ai.conf);
-      const probColor = sig.ai.signal==='NEUTRAL'?'#8B949E':sig.ai.signal==='BAJISTA'?'#F85149':sig.ai.prob>=65?'#3FB950':'#FBBF24';
+      const probColor = sig.ai.signal==='NEUTRAL'?'#8B949E':sig.ai.signal==='BAJISTA'?'#F85149':sig.ai.conf>=4?'#D4A017':'#3FB950';
       const isTop = i === 0;
       const justif = getIAJustif(sig.s, sig.ai, sig.cat);
       h += `<div class="ar" id="ia-row-${i}" onclick="toggleIADetail(${i})" style="flex-direction:column;align-items:stretch;padding:${isTop?'12px':'10px'} 13px;gap:0;border-left:${isTop?'3px solid #D4A017':'none'};background:${isTop?'#1A1200':'transparent'}">
