@@ -1178,18 +1178,14 @@ function selectActivoAdd(idx){
       <span style="font-size:10px;color:#555">Inversion total estimada</span>
       <span style="font-size:13px;font-weight:600;color:#D4A017" id="pa-total">— USD</span>
     </div>
-    <script>
-      setTimeout(()=>{
-        const c=document.getElementById('pa-cant');
-        const p=document.getElementById('pa-compra');
-        const t=document.getElementById('pa-total');
-        if(c&&p&&t){
-          const upd=()=>{const v=parseFloat(c.value)*parseFloat(p.value);t.textContent=isNaN(v)?'— USD':'$'+v.toLocaleString('en',{maximumFractionDigits:2})+' USD';};
-          c.oninput=upd;p.oninput=upd;
-        }
-      },100);
-    </script>
-    <button onclick="confirmarAdd('${it.s}','${it.n}','${it.col}','${it.ico}','${it.tab}','${it.pais||''}')" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">+ Agregar al Portfolio</button>`;
+    <button onclick="confirmarAdd('${it.s}','${it.n}','${it.col}','${it.ico}','${it.tab}','${it.pais||''}')" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)" id="pa-btn">+ Agregar al Portfolio</button>`;
+  // Activar preview de inversión después de render
+  setTimeout(()=>{
+    const c=document.getElementById('pa-cant');
+    const p=document.getElementById('pa-compra');
+    const t=document.getElementById('pa-total');
+    if(c&&p&&t){const upd=()=>{const v=parseFloat(c.value||0)*parseFloat(p.value||0);t.textContent=isNaN(v)||v===0?'— USD':'$'+v.toLocaleString('en',{maximumFractionDigits:2})+' USD';};c.oninput=upd;p.oninput=upd;}
+  },100);
 }
 
 function confirmarAdd(s,nombre,col,ico,tab,pais){
