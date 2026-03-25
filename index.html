@@ -2039,7 +2039,7 @@ function renderAlertas() {
           ${disparada ? '<span style="font-size:9px;padding:2px 7px;border-radius:7px;background:#1A3A2A;color:#3FB950;font-weight:700;animation:lp 2s infinite">🔔 DISPARADA</span>' : ''}
         </div>
         <div style="display:flex;align-items:center;gap:6px">
-          <span style="font-size:11px;font-weight:600;color:${condColor}">${condIcon} ${condLabel} ${fmtAlertPrice(a.precio)}</span>
+          <span style="font-size:11px;font-weight:600;color:${condColor}">${condIcon} ${a.pct?(a.cond==='mayor'?'+':'-')+a.pct+'% → ':''} ${fmtAlertPrice(a.precio)}</span>
           <span style="font-size:10px;color:#555">·</span>
           <span style="font-size:10px;color:#8B949E">Actual: ${actual ? fmtAlertPrice(actual) : '—'}</span>
         </div>
@@ -2092,51 +2092,116 @@ function editAlerta(i) {
 
 function renderAlertForm(editIdx) {
   const a = editIdx !== null ? ALERTAS[editIdx] : null;
-  // Construir lista de activos
   const todas = [];
-  DATA.cripto.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'cripto'}));
-  DATA.acciones.usa.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'acciones', pais:'usa'}));
-  DATA.comm.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'comm'}));
-  DATA.etf.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'etf'}));
-  DATA.divisas.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'divisas'}));
-  ['arg','br','eu','es','jp','cn'].forEach(pais => DATA.acciones[pais].forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'acciones', pais})));
+  DATA.cripto.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'cripto'}));
+  DATA.acciones.usa.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'acciones',pais:'usa'}));
+  DATA.comm.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'comm'}));
+  DATA.etf.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'etf'}));
+  DATA.divisas.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'divisas'}));
+  ['arg','br','eu','es','jp','cn'].forEach(pais => DATA.acciones[pais].forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,p:it.p,tab:'acciones',pais})));
   window._alertLista = todas;
+  window._alertCond = a ? a.cond : 'mayor';
+  window._alertActivoIdx = a ? todas.findIndex(x=>x.s===a.s) : -1;
 
-  const opts = todas.map((it, idx) =>
-    `<option value="${idx}" ${a && a.s===it.s ? 'selected' : ''}>${it.s} — ${it.n} (${it.p})</option>`
-  ).join('');
+  const isMayor = !a || a.cond === 'mayor';
+  const pctVal = a && a.pct ? a.pct : 10;
 
-  document.getElementById('alert-modal-body').innerHTML = `
-    <div style="margin-bottom:12px">
-      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Activo</div>
-      <select id="al-activo" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none" onchange="updateAlertPreview()">${opts}</select>
-    </div>
-    <div style="margin-bottom:12px">
-      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Condición</div>
-      <div style="display:flex;gap:8px">
-        <div onclick="selectAlertCond('mayor',this)" id="al-cond-mayor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ${!a||a.cond==='mayor'?'#3FB950':'#21262D'};background:${!a||a.cond==='mayor'?'#1A3A2A':'#0D1117'};text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
-          <div style="font-size:16px">↑</div>
-          <div style="font-size:11px;color:#3FB950;font-weight:600">Sube a</div>
-        </div>
-        <div onclick="selectAlertCond('menor',this)" id="al-cond-menor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ${a&&a.cond==='menor'?'#F85149':'#21262D'};background:${a&&a.cond==='menor'?'#3A1A1A':'#0D1117'};text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
-          <div style="font-size:16px">↓</div>
-          <div style="font-size:11px;color:#F85149;font-weight:600">Baja a</div>
-        </div>
-      </div>
-    </div>
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Precio objetivo (USD)</div>
-      <input id="al-precio" type="number" inputmode="decimal" value="${a ? a.precio : ''}" placeholder="ej: 85000" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:12px 14px;color:#E6EDF3;font-size:20px;font-weight:500;outline:none">
-    </div>
-    <div id="al-preview" style="background:#0D1117;border-radius:10px;padding:10px 12px;border:0.5px solid #21262D;margin-bottom:16px;font-size:11px;color:#8B949E;text-align:center">
-      Seleccioná activo y precio
-    </div>
-    <button onclick="confirmarAlerta(${editIdx !== null ? editIdx : 'null'})" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      ${editIdx !== null ? '✓ Guardar cambios' : '🔔 Crear alerta'}
-    </button>`;
+  const body = document.getElementById('alert-modal-body');
+  body.innerHTML = '';
+
+  // ── BUSCADOR DE ACTIVO ──
+  const buscadorHTML = '<div style="margin-bottom:12px">' +
+    '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Activo</div>' +
+    '<input id="al-buscar" type="text" placeholder="Buscar ticker o nombre..." autocomplete="off" ' +
+      'style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none;box-sizing:border-box" ' +
+      'oninput="filtrarAlertActivos()" onfocus="filtrarAlertActivos()">' +
+    '<div id="al-activos-list" style="background:#161B22;border:1px solid #30363D;border-radius:9px;margin-top:4px;max-height:180px;overflow-y:auto;display:none"></div>' +
+    '<div id="al-activo-sel" style="margin-top:6px;padding:8px 10px;border-radius:8px;background:#1A2A1A;border:1px solid #3FB95040;display:none;align-items:center;gap:8px"></div>' +
+  '</div>';
+
+  // ── DIRECCIÓN ──
+  const bMayor = isMayor?'#3FB950':'#21262D'; const bgMayor = isMayor?'#1A3A2A':'#0D1117';
+  const bMenor = !isMayor?'#F85149':'#21262D'; const bgMenor = !isMayor?'#3A1A1A':'#0D1117';
+  const dirHTML = '<div style="margin-bottom:12px"><div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Dirección</div><div style="display:flex;gap:8px"><div onclick="selectAlertCond(this.dataset.c)" data-c="mayor" id="al-cond-mayor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ' + bMayor + ';background:' + bgMayor + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation"><div style="font-size:18px">↑</div><div style="font-size:11px;color:#3FB950;font-weight:600">Subida</div></div><div onclick="selectAlertCond(this.dataset.c)" data-c="menor" id="al-cond-menor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ' + bMenor + ';background:' + bgMenor + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation"><div style="font-size:18px">↓</div><div style="font-size:11px;color:#F85149;font-weight:600">Bajada</div></div></div></div>'
+
+  // ── % INPUT ──
+  const pctHTML = '<div style="margin-bottom:6px">' +
+    '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Avisame cuando cambie un</div>' +
+    '<div style="display:flex;align-items:center;gap:10px">' +
+      '<input id="al-pct" type="number" inputmode="decimal" min="0.1" max="200" step="0.5" value="' + pctVal + '" ' +
+        'style="flex:1;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:14px;color:#E6EDF3;font-size:28px;font-weight:600;outline:none;text-align:center" oninput="updateAlertPreview()">' +
+      '<div style="font-size:28px;font-weight:600;color:#8B949E">%</div>' +
+    '</div></div>';
+
+  const previewHTML = '<div id="al-precio-calc" style="text-align:center;font-size:11px;color:#555;margin-bottom:10px;padding:4px">Seleccioná activo y porcentaje</div>' +
+    '<div id="al-preview" style="background:#0D1117;border-radius:10px;padding:11px 14px;border:0.5px solid #21262D;margin-bottom:16px;font-size:12px;color:#8B949E;text-align:center">—</div>';
+
+  const btnHTML = '<button onclick="confirmarAlerta(' + (editIdx!==null?editIdx:'null') + ')" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">' +
+    (editIdx!==null?'✓ Guardar cambios':'🔔 Crear alerta') + '</button>';
+
+  body.innerHTML = buscadorHTML + dirHTML + pctHTML + previewHTML + btnHTML;
+
+  // Mostrar activo preseleccionado si es edición
+  if (a && window._alertActivoIdx >= 0) {
+    const it = todas[window._alertActivoIdx];
+    if (it) mostrarAlertActivoSel(it, window._alertActivoIdx);
+  }
+  setTimeout(() => updateAlertPreview(), 80);
 }
 
-function selectAlertCond(cond, el) {
+function filtrarAlertActivos() {
+  const q = (document.getElementById('al-buscar').value||'').toLowerCase().trim();
+  const list = document.getElementById('al-activos-list');
+  if (!list) return;
+  const todas = window._alertLista || [];
+  const res = q.length === 0
+    ? todas.slice(0, 20)
+    : todas.filter(it => it.s.toLowerCase().includes(q) || it.n.toLowerCase().includes(q)).slice(0, 20);
+  if (res.length === 0) { list.style.display='none'; return; }
+  list.style.display = 'block';
+  list.innerHTML = res.map((it, i) => {
+    const idx = todas.indexOf(it);
+    return '<div onclick="seleccionarAlertActivo('+idx+')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
+      logoHTML(it.s,it.col,it.ico) +
+      '<div style="flex:1"><div style="font-size:13px;font-weight:500;color:#E6EDF3">' + it.s + '</div>' +
+      '<div style="font-size:10px;color:#555">' + it.n + '</div></div>' +
+      '<div style="font-size:12px;color:#8B949E">' + it.p + '</div></div>';
+  }).join('');
+}
+
+function seleccionarAlertActivo(idx) {
+  const it = (window._alertLista||[])[idx];
+  if (!it) return;
+  window._alertActivoIdx = idx;
+  mostrarAlertActivoSel(it, idx);
+  const list = document.getElementById('al-activos-list');
+  const buscar = document.getElementById('al-buscar');
+  if (list) list.style.display = 'none';
+  if (buscar) buscar.value = '';
+  updateAlertPreview();
+}
+
+function mostrarAlertActivoSel(it, idx) {
+  const selDiv = document.getElementById('al-activo-sel');
+  if (!selDiv) return;
+  selDiv.style.display = 'flex';
+  selDiv.innerHTML = logoHTML(it.s,it.col,it.ico) +
+    '<div style="flex:1"><div style="font-size:13px;font-weight:500;color:#E6EDF3">' + it.s + '</div>' +
+    '<div style="font-size:10px;color:#8B949E">' + it.n + ' · ' + it.p + '</div></div>' +
+    '<div onclick="limpiarAlertActivo()" style="color:#555;font-size:18px;cursor:pointer;padding:4px">✕</div>';
+}
+
+function limpiarAlertActivo() {
+  window._alertActivoIdx = -1;
+  const selDiv = document.getElementById('al-activo-sel');
+  if (selDiv) selDiv.style.display = 'none';
+  const buscar = document.getElementById('al-buscar');
+  if (buscar) { buscar.value = ''; buscar.focus(); }
+  updateAlertPreview();
+}
+
+
+function selectAlertCond(cond) {
   const mayor = document.getElementById('al-cond-mayor');
   const menor = document.getElementById('al-cond-menor');
   if (mayor) { mayor.style.borderColor = cond==='mayor'?'#3FB950':'#21262D'; mayor.style.background = cond==='mayor'?'#1A3A2A':'#0D1117'; }
@@ -2146,33 +2211,41 @@ function selectAlertCond(cond, el) {
 }
 
 function updateAlertPreview() {
-  const idxEl = document.getElementById('al-activo');
-  const precioEl = document.getElementById('al-precio');
+  const pctEl = document.getElementById('al-pct');
   const preview = document.getElementById('al-preview');
-  if (!idxEl || !precioEl || !preview) return;
-  const it = (window._alertLista||[])[parseInt(idxEl.value)];
-  const precio = parseFloat(precioEl.value);
+  const calcEl = document.getElementById('al-precio-calc');
+  if (!idxEl || !pctEl || !preview) return;
+  const it = (window._alertLista||[])[window._alertActivoIdx >= 0 ? window._alertActivoIdx : 0];
+  const pct = parseFloat(pctEl.value);
   const cond = window._alertCond || 'mayor';
-  if (it && precio) {
-    const condTxt = cond === 'mayor' ? 'suba a' : 'baje a';
-    preview.textContent = `🔔 Alertar cuando ${it.s} ${condTxt} $${precio.toLocaleString('en')}`;
-    preview.style.color = cond === 'mayor' ? '#3FB950' : '#F85149';
-    preview.style.borderColor = cond === 'mayor' ? '#3FB95040' : '#F8514940';
+  if (it && pct) {
+    const precioActual = parseFloat(it.p.replace(/[^0-9.]/g,'')) || 0;
+    const precioObj = cond === 'mayor'
+      ? precioActual * (1 + pct/100)
+      : precioActual * (1 - pct/100);
+    const condTxt = cond === 'mayor' ? `suba +${pct}%` : `baje -${pct}%`;
+    const col = cond === 'mayor' ? '#3FB950' : '#F85149';
+    if (calcEl) calcEl.innerHTML = `Precio actual: <b style="color:#E6EDF3">${it.p}</b> → Objetivo: <b style="color:${col}">${fmtAlertPrice(precioObj)}</b>`;
+    preview.innerHTML = `🔔 Alertar cuando <b style="color:#E6EDF3">${it.s}</b> ${condTxt}`;
+    preview.style.color = col;
+    preview.style.borderColor = cond==='mayor'?'#3FB95040':'#F8514940';
   }
 }
 
 function confirmarAlerta(editIdx) {
-  const idxEl = document.getElementById('al-activo');
-  const precioEl = document.getElementById('al-precio');
-  if (!idxEl || !precioEl) return;
-  const it = (window._alertLista||[])[parseInt(idxEl.value)];
-  const precio = parseFloat(precioEl.value);
+  const pctEl = document.getElementById('al-pct');
+  if (!idxEl || !pctEl) return;
+  const it = (window._alertLista||[])[window._alertActivoIdx >= 0 ? window._alertActivoIdx : 0];
+  const pct = parseFloat(pctEl.value);
   const cond = window._alertCond || 'mayor';
-  if (!it || !precio) { alert('Completá todos los campos'); return; }
+  if (!it || !pct) { alert('Completá todos los campos'); return; }
+  const precioActual = parseFloat(it.p.replace(/[^0-9.]/g,'')) || 0;
+  const precio = cond === 'mayor' ? precioActual*(1+pct/100) : precioActual*(1-pct/100);
+  const obj = {s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio, pct, activa:true};
   if (editIdx !== null && editIdx !== undefined) {
-    ALERTAS[editIdx] = {...ALERTAS[editIdx], s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio};
+    ALERTAS[editIdx] = {...ALERTAS[editIdx], ...obj};
   } else {
-    ALERTAS.push({id:nextAlertId++, s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio, activa:true});
+    ALERTAS.push({id:nextAlertId++, ...obj});
   }
   closeAlertModal();
   renderAlertas();
