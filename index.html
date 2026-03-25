@@ -2292,7 +2292,7 @@ function showSplash() {
 function showScreen(name) {
   ['portfolio','mercados','ia','alertas','perfil'].forEach(function(s) {
     var el = document.getElementById('screen-'+s);
-    if(el) el.style.display = s===name?'flex':'none';
+    if(el){el.style.display = s===name?'flex':'none'; el.style.flexDirection='column'; el.style.flex='1';}
     var btn = document.getElementById('nav-'+s);
     if(!btn) return;
     var on = s===name, col = on?'#D4A017':'#8B949E';
