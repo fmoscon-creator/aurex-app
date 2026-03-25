@@ -33,7 +33,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 .sc{flex:1;background:#161B22;border-radius:8px;padding:6px 8px;border:0.5px solid #21262D;cursor:pointer;transition:all .15s;position:relative}
 .sc:hover{border-color:#D4A01760;background:#1A1F26}
 .sc.active{border-color:#D4A017;background:#D4A01715}
-.sc-edit{flex-shrink:0;display:flex;width:28px;background:#161B22;border-radius:8px;border:0.5px solid #21262D;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s}
+.sc-edit{flex-shrink:0;width:28px;background:#161B22;border-radius:8px;border:0.5px solid #21262D;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:all .15s}
 .sc-edit:hover{border-color:#D4A017;background:#D4A01715}
 .sl{font-size:7px;color:#8B949E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
 .sv{font-size:11px;font-weight:600;color:#E6EDF3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -2292,7 +2292,7 @@ function showSplash() {
 function showScreen(name) {
   ['portfolio','mercados','ia','alertas','perfil'].forEach(function(s) {
     var el = document.getElementById('screen-'+s);
-    if(el){el.style.cssText = s===name ? "display:flex;flex-direction:column;flex:1;width:100%;" : "display:none;";}
+    if(el) el.style.display = s===name?'flex':'none';
     var btn = document.getElementById('nav-'+s);
     if(!btn) return;
     var on = s===name, col = on?'#D4A017':'#8B949E';
