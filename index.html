@@ -391,10 +391,10 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
 .screen{display:none;flex-direction:column;height:100vh;background:#0D1117}
-.screen.active{display:flex;flex-direction:column;flex:1;height:100vh}
+.screen.active{display:flex;flex-direction:column;width:100%;min-height:100vh;overflow:hidden}
 
 /* ── SPLASH ── */
-.splash{align-items:center;justify-content:center;background:#0D1117;flex:1}
+.splash{align-items:center;justify-content:center;background:#0D1117;flex:1;width:100%;min-height:100vh}
 .splash-logo{display:flex;flex-direction:column;align-items:center;gap:16px;animation:fadeIn .8s ease}
 @keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 .splash-name{font-size:36px;font-weight:300;letter-spacing:6px;color:#D4A017}
