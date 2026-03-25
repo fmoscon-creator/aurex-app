@@ -521,7 +521,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
       <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
       <span style="font-size:13px;color:#8B949E">· Mis Alertas</span>
     </div>
-    <div onclick="openNewAlerta()" style="padding:4px 10px;border-radius:9px;background:#3FB95015;border:0.5px solid #3FB95060;color:#3FB950;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">＋ Nueva alerta</div>
+    <div onclick="openNewAlerta()" style="padding:8px 16px;border-radius:10px;background:#3FB950;color:#fff;font-size:13px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">＋ Nueva alerta</div>
   </div>
 </div>
 
@@ -1960,28 +1960,7 @@ function renderAlertas() {
     !ALERTAS.find(a => a.s === sig.s)
   ).slice(0, 3);
 
-  // ── EVENTOS MACRO PRÓXIMOS ──
-  const eventosActivos = (typeof URGENT_EVENTS !== 'undefined') ? URGENT_EVENTS.filter(e => e.active && e.hoursFromNow <= 48) : [];
-
   let h = '';
-
-  // Banner eventos macro
-  if (eventosActivos.length > 0) {
-    eventosActivos.forEach(ev => {
-      const c = (typeof URGENT_COLORS !== 'undefined') ? URGENT_COLORS[ev.type]||URGENT_COLORS.neutral : {bg:'#1A1200',border:'#FBBF24',text:'#FBBF24'};
-      h += `<div style="margin:10px 13px 0;border-radius:10px;background:${c.bg};border:1px solid ${c.border};padding:10px 12px">
-        <div style="display:flex;align-items:center;gap:8px">
-          <div style="width:7px;height:7px;border-radius:50%;background:${c.text};flex-shrink:0;animation:lp 1s infinite"></div>
-          <div style="flex:1">
-            <div style="font-size:10px;font-weight:700;color:${c.text};text-transform:uppercase;letter-spacing:.5px">📅 Evento macro · ${ev.hoursFromNow}h</div>
-            <div style="font-size:11px;color:#E6EDF3;margin-top:1px">${ev.label}</div>
-            <div style="font-size:10px;color:#8B949E;margin-top:1px">${ev.desc}</div>
-          </div>
-        </div>
-      </div>`;
-    });
-    h += '<div style="height:8px"></div>';
-  }
 
   // Alertas sugeridas por IA
   if (sugeridas.length > 0) {
@@ -2125,13 +2104,29 @@ function renderAlertForm(editIdx) {
   const dirHTML = '<div style="margin-bottom:12px"><div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Dirección</div><div style="display:flex;gap:8px"><div onclick="selectAlertCond(this.dataset.c)" data-c="mayor" id="al-cond-mayor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ' + bMayor + ';background:' + bgMayor + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation"><div style="font-size:18px">↑</div><div style="font-size:11px;color:#3FB950;font-weight:600">Subida</div></div><div onclick="selectAlertCond(this.dataset.c)" data-c="menor" id="al-cond-menor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ' + bMenor + ';background:' + bgMenor + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation"><div style="font-size:18px">↓</div><div style="font-size:11px;color:#F85149;font-weight:600">Bajada</div></div></div></div>'
 
   // ── % INPUT ──
-  const pctHTML = '<div style="margin-bottom:6px">' +
-    '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Avisame cuando cambie un</div>' +
-    '<div style="display:flex;align-items:center;gap:10px">' +
+  const tipoAct = window._alertTipo || 'pct';
+  const pctHTML = '<div style="margin-bottom:12px">' +
+    '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Tipo de alerta</div>' +
+    '<div style="display:flex;gap:8px;margin-bottom:12px">' +
+      '<div onclick="setAlertTipo(\'pct\')" id="al-tipo-pct" style="flex:1;padding:8px;border-radius:9px;border:1px solid ' + (tipoAct==='pct'?'#D4A017':'#21262D') + ';background:' + (tipoAct==='pct'?'#2A1A00':'#0D1117') + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
+        '<div style="font-size:14px;font-weight:700;color:#D4A017">%</div>' +
+        '<div style="font-size:10px;color:#D4A017">Por porcentaje</div></div>' +
+      '<div onclick="setAlertTipo(\'precio\')" id="al-tipo-precio" style="flex:1;padding:8px;border-radius:9px;border:1px solid ' + (tipoAct==='precio'?'#58A6FF':'#21262D') + ';background:' + (tipoAct==='precio'?'#0D1A2A':'#0D1117') + ';text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
+        '<div style="font-size:14px;font-weight:700;color:#58A6FF">$</div>' +
+        '<div style="font-size:10px;color:#58A6FF">Precio exacto</div></div>' +
+    '</div>' +
+    '<div id="al-input-pct" style="display:' + (tipoAct==='pct'?'flex':'none') + ';align-items:center;gap:10px">' +
       '<input id="al-pct" type="number" inputmode="decimal" min="0.1" max="200" step="0.5" value="' + pctVal + '" ' +
         'style="flex:1;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:14px;color:#E6EDF3;font-size:28px;font-weight:600;outline:none;text-align:center" oninput="updateAlertPreview()">' +
-      '<div style="font-size:28px;font-weight:600;color:#8B949E">%</div>' +
-    '</div></div>';
+      '<div style="font-size:28px;font-weight:600;color:#D4A017">%</div>' +
+    '</div>' +
+    '<div id="al-input-precio" style="display:' + (tipoAct==='precio'?'flex':'none') + ';align-items:center;gap:10px">' +
+      '<div style="font-size:22px;font-weight:600;color:#58A6FF">$</div>' +
+      '<input id="al-precio-fijo" type="number" inputmode="decimal" min="0" step="any" ' +
+        'style="flex:1;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:14px;color:#E6EDF3;font-size:22px;font-weight:600;outline:none;text-align:center" ' +
+        'placeholder="ej: 96400" oninput="updateAlertPreview()">' +
+    '</div>' +
+  '</div>';
 
   const previewHTML = '<div id="al-precio-calc" style="text-align:center;font-size:11px;color:#555;margin-bottom:10px;padding:4px">Seleccioná activo y porcentaje</div>' +
     '<div id="al-preview" style="background:#0D1117;border-radius:10px;padding:11px 14px;border:0.5px solid #21262D;margin-bottom:16px;font-size:12px;color:#8B949E;text-align:center">—</div>';
