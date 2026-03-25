@@ -1676,7 +1676,7 @@ function sumClick(pi) {
 
 function openPinModal() {
   const modal = document.getElementById('pin-modal');
-  modal.style.display='flex';
+  if(modal)modal.style.display='flex';
   renderPinModal();
 }
 
@@ -1766,7 +1766,7 @@ function togglePin(key,tab,idx,pais) {
 }
 
 function closePinModal() {
-  document.getElementById('pin-modal').style.display='none';
+  var pm=document.getElementById('pin-modal');if(pm)pm.style.display='none';
 }
 
 render();
