@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurex — Símbolos v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0D0800;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:24px;min-height:100vh}
+.wrap{max-width:780px;margin:0 auto}
+h1{font-size:13px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:#8B6910;margin:0 0 24px;padding-bottom:12px;border-bottom:0.5px solid #3D2A00}
+.preview-bar{background:#110C00;border-radius:14px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;gap:20px;border:0.5px solid #3D2A00}
+.preview-wordmark{font-size:26px;font-weight:500;letter-spacing:1px;color:#D4A017}
+.preview-sub{font-size:10px;letter-spacing:2px;color:#8B6910;margin-top:2px}
+.preview-hint{font-size:11px;color:#5A4010;font-style:italic;margin-left:auto}
+.section-label{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:#6B5010;margin:0 0 10px}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:28px}
+.card{border-radius:14px;padding:20px 10px 14px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:all .2s;border:1.5px solid transparent;background:#110C00}
+.card:hover{border-color:#D4A01780;transform:scale(1.04)}
+.card.selected{border-color:#D4A017;background:#D4A01715}
+.card-label{font-size:10px;text-align:center;color:#C49010;line-height:1.4;font-weight:500}
+.concept{font-size:9px;color:#6B5010;text-align:center;line-height:1.3}
+footer{text-align:center;font-size:10px;color:#3D2A00;margin-top:32px;padding-top:16px;border-top:0.5px solid #3D2A00}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>Aurex — Explorador de Símbolos</h1>
+
+<div class="preview-bar">
+  <svg id="preview-svg" width="52" height="52" viewBox="0 0 52 52">
+    <text x="26" y="30" text-anchor="middle" font-size="10" fill="#6B5010" font-family="sans-serif">← seleccioná</text>
+  </svg>
+  <div>
+    <div class="preview-wordmark">AUREX</div>
+    <div class="preview-sub">INVEST · AI</div>
+  </div>
+  <div class="preview-hint" id="sel-label">Tocá un símbolo para previsualizar</div>
+</div>
+
+<div class="section-label" style="margin-bottom:10px">Familia Diamante — variaciones con detalle y facetas</div>
+<div class="grid">
+
+  <div class="card" onclick="pick(this,'Diamante facetado')" data-svg='<polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><polygon points="26,6 44,26 26,22 8,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1"/><polygon points="26,46 44,26 26,22 8,26" fill="#D4A01418" stroke="#D4A017" stroke-width=".5"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <polygon points="26,6 44,26 26,22 8,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1"/>
+      <polygon points="26,46 44,26 26,22 8,26" fill="#D4A01418" stroke="#D4A017" stroke-width=".5"/>
+    </svg>
+    <div class="card-label">Diamante facetado</div>
+    <div class="concept">Joya cortada con luz</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante con luz — 4 facetas')" data-svg='<polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><polygon points="26,6 44,26 26,26" fill="#F5C84230" stroke="#F5C842" stroke-width=".8"/><polygon points="26,26 44,26 26,46" fill="#8B620830" stroke="#8B6208" stroke-width=".8"/><polygon points="26,6 8,26 26,26" fill="#D4A01720" stroke="#D4A017" stroke-width=".5"/><polygon points="8,26 26,46 26,26" fill="#3D240010" stroke="#3D2400" stroke-width=".5"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <polygon points="26,6 44,26 26,26" fill="#F5C84230" stroke="#F5C842" stroke-width=".8"/>
+      <polygon points="26,26 44,26 26,46" fill="#8B620830" stroke="#8B6208" stroke-width=".8"/>
+      <polygon points="26,6 8,26 26,26" fill="#D4A01720" stroke="#D4A017" stroke-width=".5"/>
+      <polygon points="8,26 26,46 26,26" fill="#3D240010" stroke="#3D2400" stroke-width=".5"/>
+    </svg>
+    <div class="card-label">Diamante con luz</div>
+    <div class="concept">4 facetas iluminadas</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante triple concéntrico')" data-svg='<polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><polygon points="26,11 40,26 26,41 12,26" fill="none" stroke="#D4A01790" stroke-width="1.2"/><polygon points="26,16 36,26 26,36 16,26" fill="#D4A01730" stroke="#D4A017" stroke-width=".8"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <polygon points="26,11 40,26 26,41 12,26" fill="none" stroke="#D4A01790" stroke-width="1.2"/>
+      <polygon points="26,16 36,26 26,36 16,26" fill="#D4A01730" stroke="#D4A017" stroke-width=".8"/>
+    </svg>
+    <div class="card-label">Diamante triple</div>
+    <div class="concept">3 capas concéntricas</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante partido con núcleo')" data-svg='<polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><line x1="8" y1="26" x2="44" y2="26" stroke="#D4A017" stroke-width="1"/><polygon points="26,6 44,26 26,26 8,26" fill="#F5C84225" stroke="none"/><circle cx="26" cy="26" r="3.5" fill="#D4A017"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <line x1="8" y1="26" x2="44" y2="26" stroke="#D4A017" stroke-width="1"/>
+      <polygon points="26,6 44,26 26,26 8,26" fill="#F5C84225" stroke="none"/>
+      <circle cx="26" cy="26" r="3.5" fill="#D4A017"/>
+    </svg>
+    <div class="card-label">Diamante partido</div>
+    <div class="concept">Superior iluminado · núcleo</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante tallado — mesa, corona, pabellón')" data-svg='<polygon points="26,8 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><polygon points="26,8 35,17 26,19 17,17" fill="#F5C84240" stroke="#F5C842" stroke-width=".8"/><polygon points="26,19 35,17 44,26 26,26 8,26 17,17" fill="#D4A01720" stroke="#D4A017" stroke-width=".5"/><polygon points="26,26 44,26 26,46 8,26" fill="#8B62081A" stroke="#8B6208" stroke-width=".5"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,8 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <polygon points="26,8 35,17 26,19 17,17" fill="#F5C84240" stroke="#F5C842" stroke-width=".8"/>
+      <polygon points="26,19 35,17 44,26 26,26 8,26 17,17" fill="#D4A01720" stroke="#D4A017" stroke-width=".5"/>
+      <polygon points="26,26 44,26 26,46 8,26" fill="#8B62081A" stroke="#8B6208" stroke-width=".5"/>
+    </svg>
+    <div class="card-label">Diamante tallado</div>
+    <div class="concept">Mesa · corona · pabellón</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante en marco')" data-svg='<rect x="8" y="8" width="36" height="36" rx="8" fill="none" stroke="#D4A017" stroke-width="1.5"/><polygon points="26,12 40,26 26,40 12,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1.5"/><polygon points="26,12 40,26 26,24 12,26" fill="#F5C84228" stroke="#F5C842" stroke-width=".8"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <rect x="8" y="8" width="36" height="36" rx="8" fill="none" stroke="#D4A017" stroke-width="1.5"/>
+      <polygon points="26,12 40,26 26,40 12,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1.5"/>
+      <polygon points="26,12 40,26 26,24 12,26" fill="#F5C84228" stroke="#F5C842" stroke-width=".8"/>
+    </svg>
+    <div class="card-label">Diamante en marco</div>
+    <div class="concept">Joya enmarcada</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante con rayos — núcleo que irradia')" data-svg='<polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/><polygon points="26,16 36,26 26,36 16,26" fill="#D4A017"/><line x1="26" y1="6" x2="26" y2="16" stroke="#F5C842" stroke-width="1"/><line x1="44" y1="26" x2="36" y2="26" stroke="#F5C842" stroke-width="1"/><line x1="26" y1="46" x2="26" y2="36" stroke="#F5C842" stroke-width="1"/><line x1="8" y1="26" x2="16" y2="26" stroke="#F5C842" stroke-width="1"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 44,26 26,46 8,26" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <polygon points="26,16 36,26 26,36 16,26" fill="#D4A017"/>
+      <line x1="26" y1="6" x2="26" y2="16" stroke="#F5C842" stroke-width="1"/>
+      <line x1="44" y1="26" x2="36" y2="26" stroke="#F5C842" stroke-width="1"/>
+      <line x1="26" y1="46" x2="26" y2="36" stroke="#F5C842" stroke-width="1"/>
+      <line x1="8" y1="26" x2="16" y2="26" stroke="#F5C842" stroke-width="1"/>
+    </svg>
+    <div class="card-label">Diamante con rayos</div>
+    <div class="concept">Núcleo que irradia valor</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'Diamante en octágono — corte brillante complejo')" data-svg='<polygon points="26,6 38,10 46,22 46,30 38,42 26,46 14,42 6,30 6,22 14,10" fill="none" stroke="#D4A017" stroke-width="1.5"/><polygon points="26,10 36,13 42,22 42,30 36,39 26,42 16,39 10,30 10,22 16,13" fill="none" stroke="#D4A01760" stroke-width=".8"/><polygon points="26,14 44,26 26,38 8,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 38,10 46,22 46,30 38,42 26,46 14,42 6,30 6,22 14,10" fill="none" stroke="#D4A017" stroke-width="1.5"/>
+      <polygon points="26,10 36,13 42,22 42,30 36,39 26,42 16,39 10,30 10,22 16,13" fill="none" stroke="#D4A01760" stroke-width=".8"/>
+      <polygon points="26,14 44,26 26,38 8,26" fill="#D4A01730" stroke="#D4A017" stroke-width="1"/>
+    </svg>
+    <div class="card-label">Diamante en octágono</div>
+    <div class="concept">Corte brillante complejo</div>
+  </div>
+
+</div>
+
+<div class="section-label" style="margin-bottom:10px">Familia A+X — fusión sofisticada con relieve</div>
+<div class="grid">
+
+  <div class="card" onclick="pick(this,'A + X separados')" data-svg='<path d="M26 7 L40 43 M26 7 L12 43 M16 29 L36 29" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/><line x1="36" y1="37" x2="44" y2="43" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/><line x1="44" y1="37" x2="36" y2="43" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M26 7 L40 43 M26 7 L12 43 M16 29 L36 29" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="36" y1="37" x2="44" y2="43" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+      <line x1="44" y1="37" x2="36" y2="43" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">A + X separados</div>
+    <div class="concept">Identidad clara · dos elementos</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'A con X en el pie')" data-svg='<path d="M26 6 L42 44 M26 6 L10 44" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/><line x1="15" y1="30" x2="37" y2="30" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><path d="M14 44 L24 32 M10 44 L20 32" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M26 6 L42 44 M26 6 L10 44" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>
+      <line x1="15" y1="30" x2="37" y2="30" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <path d="M14 44 L24 32 M10 44 L20 32" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">A con X en el pie</div>
+    <div class="concept">La X emerge de la base</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'AX en doble círculo — sello premium')" data-svg='<circle cx="26" cy="26" r="21" fill="none" stroke="#D4A017" stroke-width="1.8"/><circle cx="26" cy="26" r="17" fill="none" stroke="#D4A01740" stroke-width=".8"/><path d="M26 10 L34 32 M26 10 L18 32 M20 24 L32 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><path d="M20 35 L26 28 M32 35 L26 28" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <circle cx="26" cy="26" r="21" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <circle cx="26" cy="26" r="17" fill="none" stroke="#D4A01740" stroke-width=".8"/>
+      <path d="M26 10 L34 32 M26 10 L18 32 M20 24 L32 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <path d="M20 35 L26 28 M32 35 L26 28" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">AX en doble círculo</div>
+    <div class="concept">Sello tipo marca premium</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'AX en escudo — confianza y protección')" data-svg='<path d="M26 4 L44 12 L44 30 Q44 42 26 48 Q8 42 8 30 L8 12 Z" fill="none" stroke="#D4A017" stroke-width="1.8"/><path d="M26 13 L32 30 M26 13 L20 30 M21 24 L31 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><path d="M20 35 L26 29 M32 35 L26 29" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M26 4 L44 12 L44 30 Q44 42 26 48 Q8 42 8 30 L8 12 Z" fill="none" stroke="#D4A017" stroke-width="1.8"/>
+      <path d="M26 13 L32 30 M26 13 L20 30 M21 24 L31 24" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <path d="M20 35 L26 29 M32 35 L26 29" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">AX en escudo</div>
+    <div class="concept">Confianza y protección</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'A+X superpuestos en un símbolo')" data-svg='<path d="M14 44 L26 8 L38 44" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="18" y1="31" x2="34" y2="31" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="38" x2="32" y2="24" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/><line x1="20" y1="24" x2="32" y2="38" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M14 44 L26 8 L38 44" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="18" y1="31" x2="34" y2="31" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="38" x2="32" y2="24" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+      <line x1="20" y1="24" x2="32" y2="38" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">A+X superpuestos</div>
+    <div class="concept">Dos letras en un símbolo</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'A invertida + X arriba con punto de origen')" data-svg='<path d="M8 14 L26 44 L44 14" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><line x1="14" y1="27" x2="38" y2="27" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><line x1="16" y1="10" x2="26" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/><line x1="36" y1="10" x2="26" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/><circle cx="26" cy="22" r="2.5" fill="#F5C842"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M8 14 L26 44 L44 14" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="14" y1="27" x2="38" y2="27" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <line x1="16" y1="10" x2="26" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+      <line x1="36" y1="10" x2="26" y2="22" stroke="#F5C842" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="26" cy="22" r="2.5" fill="#F5C842"/>
+    </svg>
+    <div class="card-label">A invertida + X arriba</div>
+    <div class="concept">Caret con punto de origen</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'AX dentro del diamante — las dos familias unidas')" data-svg='<polygon points="26,6 46,26 26,46 6,26" fill="none" stroke="#D4A017" stroke-width="1.5"/><path d="M26 13 L32 27 M26 13 L20 27 M21 22 L31 22" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/><path d="M19 33 L26 26 M33 33 L26 26" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <polygon points="26,6 46,26 26,46 6,26" fill="none" stroke="#D4A017" stroke-width="1.5"/>
+      <path d="M26 13 L32 27 M26 13 L20 27 M21 22 L31 22" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <path d="M19 33 L26 26 M33 33 L26 26" fill="none" stroke="#F5C842" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+    <div class="card-label">AX dentro del diamante</div>
+    <div class="concept">Las dos familias unidas</div>
+  </div>
+
+  <div class="card" onclick="pick(this,'I + X entrelazados — monograma clásico')" data-svg='<path d="M18 8 L18 44 M18 26 L26 26" fill="none" stroke="#D4A01760" stroke-width="2" stroke-linecap="round"/><path d="M28 8 L42 26 M28 8 L14 26 M14 26 L28 44 M42 26 L28 44" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'>
+    <svg width="56" height="56" viewBox="0 0 52 52">
+      <path d="M18 8 L18 44 M18 26 L26 26" fill="none" stroke="#D4A01760" stroke-width="2" stroke-linecap="round"/>
+      <path d="M28 8 L42 26 M28 8 L14 26 M14 26 L28 44 M42 26 L28 44" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <div class="card-label">I + X entrelazados</div>
+    <div class="concept">Monograma clásico</div>
+  </div>
+
+</div>
+
+<footer>Aurex — Explorador de Símbolos · Versión 2.0 · Proyecto InvestTracker AI</footer>
+</div>
+
+<script>
+function pick(el, label) {
+  document.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  const inner = el.getAttribute('data-svg');
+  document.getElementById('preview-svg').innerHTML = inner;
+  document.getElementById('sel-label').textContent = label;
+}
+</script>
+</body>
+</html>
