@@ -512,12 +512,33 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 </div>
 </div>
 
-<div class="screen" id="screen-alertas">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
-  <div style="font-size:52px">🔔</div>
-  <div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div>
-  <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos<br><span style="color:#D4A017;font-size:11px">Proximamente</span></div>
+<div class="screen" id="screen-alertas" style="display:flex;flex-direction:column;flex:1;min-height:0">
+
+<!-- HEADER ALERTAS -->
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#001A0A 0%,#0D1117 100%)">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
+      <span style="font-size:13px;color:#8B949E">· Mis Alertas</span>
+    </div>
+    <div onclick="openNewAlerta()" style="padding:4px 10px;border-radius:9px;background:#3FB95015;border:0.5px solid #3FB95060;color:#3FB950;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">＋ Nueva alerta</div>
+  </div>
 </div>
+
+<!-- LISTA ALERTAS -->
+<div class="cnt" id="alert-cnt"></div>
+
+<!-- MODAL NUEVA ALERTA -->
+<div id="alert-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
+  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:85vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span id="alert-modal-title" style="font-size:15px;font-weight:500;color:#E6EDF3">Nueva alerta</span>
+      <span onclick="closeAlertModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span>
+    </div>
+    <div id="alert-modal-body"></div>
+  </div>
+</div>
+
 </div>
 
 <div class="screen" id="screen-perfil">
@@ -1469,6 +1490,7 @@ function showScreen(name){
   if(name==='portfolio'){if(typeof renderPortfolio==='function')renderPortfolio();}
   if(name==='watchlist'){if(typeof renderWatchlist==='function')renderWatchlist();}
   if(name==='ia'){if(typeof renderIA==='function')renderIA();}
+  if(name==='alertas'){if(typeof renderAlertas==='function')renderAlertas();}
 }
 setInterval(function(){var n=new Date();var t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');document.querySelectorAll('.st').forEach(function(el){el.textContent=t;});},1000);
 showScreen('mercados');
@@ -1859,6 +1881,219 @@ function shareSignalMail(s,signal,target,prob,upside,p){
   const subj = 'Señal IA Aurex · '+s+' · '+signal;
   window.location.href = 'mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(shareSignal(s,signal,target,prob,upside,p));
 }
+
+// ── ALERTAS ──
+let ALERTAS = [
+  {id:1, s:'BTC',  nombre:'Bitcoin',      col:'#F7931A', ico:'₿',  cond:'menor', precio:80000, activa:true,  tab:'cripto'},
+  {id:2, s:'ETH',  nombre:'Ethereum',     col:'#627EEA', ico:'Ξ',  cond:'mayor', precio:2200,  activa:true,  tab:'cripto'},
+  {id:3, s:'AAPL', nombre:'Apple Inc.',   col:'#555',    ico:'🍎', cond:'mayor', precio:230,   activa:false, tab:'acciones', pais:'usa'},
+  {id:4, s:'XAU',  nombre:'Oro Spot',     col:'#D4A017', ico:'🥇', cond:'mayor', precio:3200,  activa:true,  tab:'comm'},
+  {id:5, s:'NVDA', nombre:'NVIDIA Corp.', col:'#76B900', ico:'N',  cond:'menor', precio:800,   activa:true,  tab:'acciones', pais:'usa'},
+];
+let nextAlertId = 6;
+
+function getAlertActual(a) {
+  try {
+    if (a.tab === 'acciones') {
+      const arr = DATA.acciones[a.pais||'usa'] || [];
+      const it = arr.find(x => x.s === a.s);
+      return it ? parseFloat(it.p.replace(/[^0-9.]/g,'')) : null;
+    }
+    const arr = DATA[a.tab] || [];
+    const it = arr.find(x => x.s === a.s);
+    return it ? parseFloat(it.p.replace(/[^0-9.]/g,'')) : null;
+  } catch(e) { return null; }
+}
+
+function fmtAlertPrice(v) {
+  if (!v) return '—';
+  if (v >= 1000) return '$' + Math.round(v).toLocaleString('en');
+  if (v >= 1) return '$' + v.toFixed(2);
+  return '$' + v.toFixed(4);
+}
+
+function renderAlertas() {
+  const cnt = document.getElementById('alert-cnt');
+  if (!cnt) return;
+
+  if (ALERTAS.length === 0) {
+    cnt.innerHTML = `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
+      <div style="font-size:52px">🔔</div>
+      <div style="font-size:18px;font-weight:500;color:#E6EDF3">Sin alertas configuradas</div>
+      <div style="font-size:12px;color:#555;line-height:1.8">Tocá + Nueva alerta para crear<br>tu primera alerta de precio</div>
+    </div>`;
+    return;
+  }
+
+  const activas = ALERTAS.filter(a => a.activa).length;
+  let h = `<div style="padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2">
+    <span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">${ALERTAS.length} alertas · ${activas} activas</span>
+    <span style="font-size:9px;color:#3FB950">${activas} monitoreando</span>
+  </div>`;
+
+  ALERTAS.forEach((a, i) => {
+    const actual = getAlertActual(a);
+    const condLabel = a.cond === 'mayor' ? 'Sube a' : 'Baja a';
+    const condIcon = a.cond === 'mayor' ? '↑' : '↓';
+    const condColor = a.cond === 'mayor' ? '#3FB950' : '#F85149';
+    // Calcular distancia %
+    let distancia = '';
+    let distColor = '#555';
+    if (actual) {
+      const diff = ((a.precio - actual) / actual * 100);
+      distancia = (diff >= 0 ? '+' : '') + diff.toFixed(1) + '%';
+      distColor = diff >= 0 ? '#3FB950' : '#F85149';
+    }
+    // Disparada?
+    const disparada = actual && (a.cond === 'mayor' ? actual >= a.precio : actual <= a.precio);
+
+    h += `<div style="display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:0.5px solid #13171D;${disparada ? 'background:#1A2A1A;' : ''}">
+      <div style="width:36px;height:36px;border-radius:9px;background:${a.col}22;color:${a.col};display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${a.ico}</div>
+      <div style="flex:1;min-width:0">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+          <span style="font-size:13px;font-weight:500;color:#E6EDF3">${a.s}</span>
+          ${disparada ? '<span style="font-size:9px;padding:2px 7px;border-radius:7px;background:#1A3A2A;color:#3FB950;font-weight:700">✓ DISPARADA</span>' : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="font-size:11px;font-weight:600;color:${condColor}">${condIcon} ${condLabel} ${fmtAlertPrice(a.precio)}</span>
+          <span style="font-size:10px;color:#555">·</span>
+          <span style="font-size:10px;color:#8B949E">Actual: ${actual ? fmtAlertPrice(actual) : '—'}</span>
+        </div>
+        <div style="font-size:10px;color:${distColor};margin-top:2px">${distancia ? 'Faltan ' + distancia + ' del objetivo' : ''}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
+        <div onclick="toggleAlerta(${i})" style="width:38px;height:22px;border-radius:11px;background:${a.activa ? '#3FB950' : '#21262D'};position:relative;cursor:pointer;transition:background .2s;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+          <div style="position:absolute;top:2px;${a.activa ? 'right:2px' : 'left:2px'};width:18px;height:18px;border-radius:50%;background:#fff;transition:all .2s"></div>
+        </div>
+        <div style="display:flex;gap:4px">
+          <div onclick="editAlerta(${i})" style="width:26px;height:26px;border-radius:7px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✏️</div>
+          <div onclick="deleteAlerta(${i})" style="width:26px;height:26px;border-radius:7px;background:#3A1A1A;display:flex;align-items:center;justify-content:center;font-size:12px;color:#F85149;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">🗑</div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  cnt.innerHTML = h;
+}
+
+function toggleAlerta(i) {
+  ALERTAS[i].activa = !ALERTAS[i].activa;
+  renderAlertas();
+}
+
+function deleteAlerta(i) {
+  if (!confirm('¿Eliminar esta alerta?')) return;
+  ALERTAS.splice(i, 1);
+  renderAlertas();
+}
+
+function openNewAlerta() {
+  document.getElementById('alert-modal-title').textContent = 'Nueva alerta de precio';
+  renderAlertForm(null);
+  const m = document.getElementById('alert-modal');
+  m.style.display = 'flex'; m.style.alignItems = 'flex-end'; m.style.justifyContent = 'center';
+}
+
+function editAlerta(i) {
+  document.getElementById('alert-modal-title').textContent = 'Editar alerta';
+  renderAlertForm(i);
+  const m = document.getElementById('alert-modal');
+  m.style.display = 'flex'; m.style.alignItems = 'flex-end'; m.style.justifyContent = 'center';
+}
+
+function renderAlertForm(editIdx) {
+  const a = editIdx !== null ? ALERTAS[editIdx] : null;
+  // Construir lista de activos
+  const todas = [];
+  DATA.cripto.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'cripto'}));
+  DATA.acciones.usa.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'acciones', pais:'usa'}));
+  DATA.comm.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'comm'}));
+  DATA.etf.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'etf'}));
+  DATA.divisas.forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'divisas'}));
+  ['arg','br','eu','es','jp','cn'].forEach(pais => DATA.acciones[pais].forEach(it => todas.push({s:it.s, n:it.n, col:it.col, ico:it.ico, p:it.p, tab:'acciones', pais})));
+  window._alertLista = todas;
+
+  const opts = todas.map((it, idx) =>
+    `<option value="${idx}" ${a && a.s===it.s ? 'selected' : ''}>${it.s} — ${it.n} (${it.p})</option>`
+  ).join('');
+
+  document.getElementById('alert-modal-body').innerHTML = `
+    <div style="margin-bottom:12px">
+      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Activo</div>
+      <select id="al-activo" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none" onchange="updateAlertPreview()">${opts}</select>
+    </div>
+    <div style="margin-bottom:12px">
+      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Condición</div>
+      <div style="display:flex;gap:8px">
+        <div onclick="selectAlertCond('mayor',this)" id="al-cond-mayor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ${!a||a.cond==='mayor'?'#3FB950':'#21262D'};background:${!a||a.cond==='mayor'?'#1A3A2A':'#0D1117'};text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+          <div style="font-size:16px">↑</div>
+          <div style="font-size:11px;color:#3FB950;font-weight:600">Sube a</div>
+        </div>
+        <div onclick="selectAlertCond('menor',this)" id="al-cond-menor" style="flex:1;padding:10px;border-radius:9px;border:1px solid ${a&&a.cond==='menor'?'#F85149':'#21262D'};background:${a&&a.cond==='menor'?'#3A1A1A':'#0D1117'};text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+          <div style="font-size:16px">↓</div>
+          <div style="font-size:11px;color:#F85149;font-weight:600">Baja a</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Precio objetivo (USD)</div>
+      <input id="al-precio" type="number" inputmode="decimal" value="${a ? a.precio : ''}" placeholder="ej: 85000" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:12px 14px;color:#E6EDF3;font-size:20px;font-weight:500;outline:none">
+    </div>
+    <div id="al-preview" style="background:#0D1117;border-radius:10px;padding:10px 12px;border:0.5px solid #21262D;margin-bottom:16px;font-size:11px;color:#8B949E;text-align:center">
+      Seleccioná activo y precio
+    </div>
+    <button onclick="confirmarAlerta(${editIdx !== null ? editIdx : 'null'})" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      ${editIdx !== null ? '✓ Guardar cambios' : '🔔 Crear alerta'}
+    </button>`;
+}
+
+function selectAlertCond(cond, el) {
+  const mayor = document.getElementById('al-cond-mayor');
+  const menor = document.getElementById('al-cond-menor');
+  if (mayor) { mayor.style.borderColor = cond==='mayor'?'#3FB950':'#21262D'; mayor.style.background = cond==='mayor'?'#1A3A2A':'#0D1117'; }
+  if (menor) { menor.style.borderColor = cond==='menor'?'#F85149':'#21262D'; menor.style.background = cond==='menor'?'#3A1A1A':'#0D1117'; }
+  window._alertCond = cond;
+  updateAlertPreview();
+}
+
+function updateAlertPreview() {
+  const idxEl = document.getElementById('al-activo');
+  const precioEl = document.getElementById('al-precio');
+  const preview = document.getElementById('al-preview');
+  if (!idxEl || !precioEl || !preview) return;
+  const it = (window._alertLista||[])[parseInt(idxEl.value)];
+  const precio = parseFloat(precioEl.value);
+  const cond = window._alertCond || 'mayor';
+  if (it && precio) {
+    const condTxt = cond === 'mayor' ? 'suba a' : 'baje a';
+    preview.textContent = `🔔 Alertar cuando ${it.s} ${condTxt} $${precio.toLocaleString('en')}`;
+    preview.style.color = cond === 'mayor' ? '#3FB950' : '#F85149';
+    preview.style.borderColor = cond === 'mayor' ? '#3FB95040' : '#F8514940';
+  }
+}
+
+function confirmarAlerta(editIdx) {
+  const idxEl = document.getElementById('al-activo');
+  const precioEl = document.getElementById('al-precio');
+  if (!idxEl || !precioEl) return;
+  const it = (window._alertLista||[])[parseInt(idxEl.value)];
+  const precio = parseFloat(precioEl.value);
+  const cond = window._alertCond || 'mayor';
+  if (!it || !precio) { alert('Completá todos los campos'); return; }
+  if (editIdx !== null && editIdx !== undefined) {
+    ALERTAS[editIdx] = {...ALERTAS[editIdx], s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio};
+  } else {
+    ALERTAS.push({id:nextAlertId++, s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio, activa:true});
+  }
+  closeAlertModal();
+  renderAlertas();
+}
+
+function closeAlertModal() {
+  document.getElementById('alert-modal').style.display = 'none';
+  window._alertCond = 'mayor';
+}
+
 </script>
 </body>
 </html>
