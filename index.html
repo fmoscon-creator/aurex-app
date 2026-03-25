@@ -151,7 +151,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 
 /* BOTTOM NAV */
 .bnav{background:#161B22;border-top:0.5px solid #21262D;display:flex;padding:7px 0 5px;flex-shrink:0;position:sticky;bottom:0;width:100%;z-index:10}
-.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .bni.on{opacity:1}
 .bni svg{width:19px;height:19px}
 .bni span{font-size:9px;color:#8B949E}
@@ -304,7 +304,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 
 /* BOTTOM NAV */
 .bnav{background:#161B22;border-top:0.5px solid #21262D;display:flex;padding:7px 0 5px;flex-shrink:0;position:sticky;bottom:0;width:100%;z-index:10}
-.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .bni.on{opacity:1}
 .bni svg{width:19px;height:19px}
 .bni span{font-size:9px;color:#8B949E}
@@ -2364,6 +2364,14 @@ setTimeout(() => showScreen('onboarding'), 2000);
 function enterApp() {
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
   showScreen('mercados');
+// iOS Safari touch fix
+document.querySelectorAll('.bni').forEach(function(btn){
+  btn.addEventListener('touchend',function(e){
+    e.preventDefault();
+    var fn = btn.getAttribute('onclick');
+    if(fn) eval(fn);
+  },{passive:false});
+});
   document.getElementById('screen-mercados').style.display = 'flex';
 }
 
