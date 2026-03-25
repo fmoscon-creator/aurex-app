@@ -388,13 +388,15 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 
+/* LOGIN CSS */
+
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
 .screen{display:none;flex-direction:column;height:100vh;background:#0D1117}
-.screen.active{display:flex;flex-direction:column;width:100%;min-height:100vh;overflow:hidden}
+.screen.active{display:flex}
 
 /* ── SPLASH ── */
-.splash{align-items:center;justify-content:center;background:#0D1117;flex:1;width:100%;min-height:100vh}
+.splash{align-items:center;justify-content:center;background:#0D1117}
 .splash-logo{display:flex;flex-direction:column;align-items:center;gap:16px;animation:fadeIn .8s ease}
 @keyframes fadeIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
 .splash-name{font-size:36px;font-weight:300;letter-spacing:6px;color:#D4A017}
@@ -630,7 +632,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
   </div>
 </div>
 
-<!-- SPLASH -->
+
 <div class="screen active" id="s-splash">
   <div class="splash-logo">
     <svg width="72" height="72" viewBox="0 0 60 60">
@@ -646,7 +648,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 </div>
 
 
-<!-- ONBOARDING -->
+
 <div class="screen" id="s-onboard">
   <div class="ob-slides" id="ob-slides">
 
@@ -683,7 +685,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 </div>
 
 
-<!-- BETA / REGISTRO -->
+
 <div class="screen" id="s-beta">
   <div class="beta-top">
     <div class="beta-badge">✦ Acceso anticipado</div>
@@ -715,7 +717,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 </div>
 
 
-<!-- LOGIN -->
+
 <div class="screen" id="s-login">
   <div class="login-top">
     <div class="login-logo">
@@ -758,7 +760,7 @@ html,body{height:100%;background:#0D1117;font-family:-apple-system,BlinkMacSyste
 </div>
 
 
-<!-- SUCCESS -->
+
 <div class="screen" id="s-success">
   <div class="success-circle">✓</div>
   <div class="success-title">¡Ya estás en la lista!</div>
@@ -2557,7 +2559,53 @@ setTimeout(() => showScreen('onboarding'), 2000);
 
 function enterApp() {
   document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
-  // app ready
+  
+let obIdx = 0;
+const slides = document.querySelectorAll('.ob-slide');
+const dots = document.querySelectorAll('.dot');
+
+function goTo(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function obNext() {
+  if(obIdx < slides.length - 1) {
+    obIdx++;
+    document.getElementById('ob-slides').style.transform = `translateX(-${obIdx * 100}%)`;
+    dots.forEach((d,i) => d.classList.toggle('on', i===obIdx));
+    if(obIdx === slides.length - 1) {
+      document.getElementById('ob-btn').textContent = 'Empezar';
+      document.getElementById('ob-btn').onclick = () => goTo('s-beta');
+    }
+  } else {
+    goTo('s-beta');
+  }
+}
+
+function joinBeta() {
+  const email = document.getElementById('beta-email').value;
+  if(!email || !email.includes('@')) {
+    document.getElementById('beta-email').style.borderColor = '#F85149';
+    document.getElementById('beta-email').focus();
+    return;
+  }
+  goTo('s-success');
+}
+
+function doLogin() {
+  goToApp();
+}
+
+function goToApp() {
+  // Redirigir a la app principal
+  showScreen('mercados');
+}
+
+// Auto-avanzar splash después de 2 segundos
+setTimeout(() => goTo('s-onboard'), 2000);
+
+showScreen('s-splash');
   document.getElementById('screen-mercados').style.display = 'flex';
 }
 
