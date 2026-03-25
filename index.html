@@ -12,6 +12,16 @@
 /* === RESET ÚNICO === */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
+body.light-mode .phone{background:#FFFFFF;border:1px solid #E0E0E0}
+body.light-mode .screen,.light-mode .cnt{background:#F5F5F7}
+body.light-mode .ar{background:#FFFFFF;border-bottom-color:#E5E5EA}
+body.light-mode .an,.light-mode .ap{color:#1C1C1E}
+body.light-mode .as{color:#8E8E93}
+body.light-mode .nav{background:#FFFFFF;border-top-color:#E5E5EA}
+body.light-mode .bni{color:#8E8E93}
+body.light-mode .bni.on{color:#D4A017}
+body.light-mode .tf{background:#E5E5EA;color:#8E8E93}
+body.light-mode .tf.on{background:#D4A01720;color:#D4A017;border-color:#D4A01760}
 
 /* === PHONE — ÚNICA DEFINICIÓN CORRECTA === */
 .phone{width:100%;height:100%;display:flex;flex-direction:column;background:#0D1117;overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0}
@@ -500,6 +510,12 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     </div>
     <div onclick="openAddWatch()" style="padding:4px 10px;border-radius:9px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Seguir activo</div>
   </div>
+  <div style="display:flex;gap:4px;margin-top:8px" id="watch-tf-btns">
+    <div onclick="setWatchTF('24h',this)" class="tf on" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">24h</div>
+    <div onclick="setWatchTF('7d',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">7d</div>
+    <div onclick="setWatchTF('1m',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">1m</div>
+    <div onclick="setWatchTF('1y',this)" class="tf" style="-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">1a</div>
+  </div>
 </div>
 <div class="cnt" id="watch-cnt"></div>
 <div id="watch-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
@@ -678,6 +694,18 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   <div class="row-ico" style="background:#F8514920">🔑</div>
   <div class="row-main"><div class="row-title">Contraseña</div><div class="row-sub">Cambiar contraseña</div></div>
   <div class="row-right"><span class="row-val">••••••••</span><span class="arrow">›</span></div>
+</div>
+
+<!-- APARIENCIA -->
+<div class="sec-lbl">☀️ Apariencia</div>
+<div class="row" onclick="toggleLightMode()" style="cursor:pointer">
+  <div class="ro">
+    <span class="label">Modo de visualización</span>
+    <span class="val" id="theme-label">Oscuro</span>
+  </div>
+  <div id="theme-toggle" style="width:44px;height:26px;border-radius:13px;background:#21262D;position:relative;flex-shrink:0;transition:background .3s">
+    <div id="theme-thumb" style="position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left .3s"></div>
+  </div>
 </div>
 
 <!-- SEGURIDAD -->
@@ -983,7 +1011,7 @@ const DATA={cripto:[{id:'BTCUSDT',s:'BTC',n:'Bitcoin',p:'$84,230',c:'+2.14%',v:'
 const LBLS={cripto:'Criptomonedas · Top capitalización · 24/7',acciones:'Acciones · Seleccioná país arriba',stable:'Stablecoins & DeFi · Tokens de valor estable',futuros:'Futuros · Contratos activos (CME · COMEX)',comm:'Materias Primas · Spot y futuros próximos',divisas:'Divisas · FX y tipos de cambio Argentina',etf:'ETFs & Bonos · Renta fija y variable global'};
 const BCOLORS={cripto:{bg:'#1A1A3A',col:'#A78BFA',t:'24/7'},acciones:{bg:'#1A2A1A',col:'#3FB950',t:'NYSE'},stable:{bg:'#0D2A1A',col:'#3FB950',t:'STABLE'},futuros:{bg:'#2A1E00',col:'#FBBF24',t:'CME'},comm:{bg:'#2A1400',col:'#D4A017',t:'SPOT'},divisas:{bg:'#0D1A2A',col:'#58A6FF',t:'FX'},etf:{bg:'#0D2A1A',col:'#3FB950',t:'FUND'}};
 const SIGNAL_COL={ALCISTA:{bg:'#1A3A2A',col:'#3FB950'},BAJISTA:{bg:'#3A1A1A',col:'#F85149'},NEUTRAL:{bg:'#1A1A2A',col:'#8B949E'}};
-let curTab='cripto',curPais='usa',curTF='24h',editMode=false,openRow=null;
+let curTab='cripto',curPais='usa',curTF='24h',curWatchTF='24h',editMode=false,openRow=null;
 function spark(t,up,w=50,h=22){const mn=Math.min(...t),mx=Math.max(...t),r=mx-mn||1;const pts=t.map((v,i)=>`${(4+(i/(t.length-1))*(w-8)).toFixed(1)},${(2+(1-((v-mn)/r))*(h-4)).toFixed(1)}`).join(' ');const lx=(4+(w-8)).toFixed(1),ly=(2+(1-((t[t.length-1]-mn)/r))*(h-4)).toFixed(1);const col=up?'#3FB950':'#F85149';return`<svg width="${w}" height="${h}" class="spl" style="overflow:visible"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lx}" cy="${ly}" r="2.5" fill="${col}"/></svg>`;}
 const IA_JUSTIF = {
   BTC: 'Bitcoin consolida sobre resistencia clave $84,000 con volumen 38% sobre promedio. FED mantiene tasas sin cambios reduciendo presión vendedora institucional. ETFs spot registran entrada neta $820M en los últimos 5 días. Patrón técnico de acumulación completado en rango $78K-$84K. Dólar DXY debilitándose favorece activos de riesgo en el corto plazo.',
@@ -1524,7 +1552,7 @@ function renderWatchlist(){
         <div onclick="moveWatch(${i},1,event)" style="width:26px;height:24px;background:#21262D;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;${i===WATCH.length-1?'opacity:.3;pointer-events:none':''}">↓</div>
       </div>
       ${logoHTML(it.s,it.col,it.ico)}
-      <div class="ai"><div class="an">${it.s}</div><div class="as">${it.n}</div><div class="ameta"><span class="vol-tag">${it.v}</span></div></div>
+      <div class="ai"><div class="an">${it.s}</div><div class="as">${it.n}</div><div class="ameta"><span class="vol-tag">${it.v}</span><span class="vol-tag" style="color:#D4A017">${{'24h':'24h','7d':'7 días','1m':'1 mes','1y':'1 año'}[curWatchTF]}</span></div></div>
       ${spark(typeof getWatchSparkData==='function'?getWatchSparkData(it):it.t,up)}
       <div class="ar-r"><div class="ap">${it.p}</div><div class="apct ${up?'u':'d'}">${it.c}</div></div>
       <div onclick="removeWatch(${i},event)" style="width:28px;height:28px;border-radius:7px;background:#3A1A1A;display:flex;align-items:center;justify-content:center;font-size:12px;color:#F85149;flex-shrink:0;margin-left:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✕</div>
@@ -1533,6 +1561,31 @@ function renderWatchlist(){
   cnt.innerHTML=h;
 }
 function removeWatch(i,e){e.stopPropagation();WATCH.splice(i,1);renderWatchlist();}
+
+function setWatchTF(tf, el) {
+  curWatchTF = tf;
+  document.querySelectorAll('#watch-tf-btns .tf').forEach(t => t.classList.remove('on'));
+  if (el) el.classList.add('on');
+  renderWatchlist();
+}
+
+function getWatchSparkData(it) {
+  // Datos de sparkline según timeframe seleccionado
+  const base = it.t || [50,50,50,50,50,50,50,50];
+  if (curWatchTF === '24h') return base;
+  if (curWatchTF === '7d') {
+    // Simular 7 días con variación mayor
+    return base.map((v,i) => Math.max(10, Math.min(90, v + (Math.sin(i*0.8)*8))));
+  }
+  if (curWatchTF === '1m') {
+    return base.map((v,i) => Math.max(10, Math.min(90, v + (Math.sin(i*0.5)*15))));
+  }
+  if (curWatchTF === '1y') {
+    // Variación anual más amplia
+    return base.map((v,i) => Math.max(10, Math.min(90, v + (Math.sin(i*0.3)*22) - 5)));
+  }
+  return base;
+}
 function watchGoToMercado(s,tab,pais){
   // Navegar a Mercados y abrir el activo
   const tabIdx=['cripto','acciones','stable','futuros','comm','divisas','etf'].indexOf(tab);
@@ -2311,6 +2364,19 @@ function closeAlertModal() {
   window._alertCond = 'mayor';
 }
 
+
+// ── MODO CLARO/OSCURO ──
+let isLightMode = false;
+function toggleLightMode() {
+  isLightMode = !isLightMode;
+  document.body.classList.toggle('light-mode', isLightMode);
+  const toggle = document.getElementById('theme-toggle');
+  const thumb = document.getElementById('theme-thumb');
+  const label = document.getElementById('theme-label');
+  if (toggle) toggle.style.background = isLightMode ? '#D4A017' : '#21262D';
+  if (thumb) thumb.style.left = isLightMode ? '21px' : '3px';
+  if (label) label.textContent = isLightMode ? 'Claro (activo)' : 'Oscuro (activo)';
+}
 </script>
 </body>
 </html>
