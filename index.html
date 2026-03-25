@@ -12,16 +12,43 @@
 /* === RESET ÚNICO === */
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
-body.light-mode .phone{background:#FFFFFF;border:1px solid #E0E0E0}
-body.light-mode .screen,.light-mode .cnt{background:#F5F5F7}
-body.light-mode .ar{background:#FFFFFF;border-bottom-color:#E5E5EA}
-body.light-mode .an,.light-mode .ap{color:#1C1C1E}
-body.light-mode .as{color:#8E8E93}
-body.light-mode .nav{background:#FFFFFF;border-top-color:#E5E5EA}
-body.light-mode .bni{color:#8E8E93}
-body.light-mode .bni.on{color:#D4A017}
-body.light-mode .tf{background:#E5E5EA;color:#8E8E93}
-body.light-mode .tf.on{background:#D4A01720;color:#D4A017;border-color:#D4A01760}
+body.light-mode{background:#EAEDF2}
+body.light-mode .phone{background:#F2F4F8;border:1px solid #D8DCE6;box-shadow:0 4px 24px rgba(0,0,0,0.10)}
+body.light-mode .screen{background:#F2F4F8}
+body.light-mode .cnt{background:#F2F4F8}
+body.light-mode .ar{background:#FFFFFF;border-bottom:0.5px solid #E2E6EF;border-radius:0}
+body.light-mode .ar:active{background:#F5F6FA}
+body.light-mode .an{color:#1A1A2E;font-weight:500}
+body.light-mode .as{color:#6B7280}
+body.light-mode .ap{color:#1A1A2E;font-weight:600}
+body.light-mode .apct.u{color:#16A34A}
+body.light-mode .apct.d{color:#DC2626}
+body.light-mode .vol-tag{background:#EEF0F5;color:#6B7280;border-color:#DDE0E8}
+body.light-mode .nav{background:#FFFFFF;border-top:1px solid #DDE0E8;box-shadow:0 -2px 12px rgba(0,0,0,0.06)}
+body.light-mode .bni{color:#9CA3AF}
+body.light-mode .bni.on{color:#B8860B}
+body.light-mode .bni.on svg,.light-mode .bni.on span{color:#B8860B}
+body.light-mode .tf{background:#E8EAF0;color:#6B7280;border:0.5px solid #D0D4DF;border-radius:8px}
+body.light-mode .tf.on{background:#FFF8E0;color:#B8860B;border-color:#D4A01780;font-weight:600}
+body.light-mode .logo{background:#F0F2F8;border:0.5px solid #E2E6EF}
+body.light-mode .logo-fb{background:#F0F2F8}
+body.light-mode .spl path,.light-mode .spl polyline{opacity:0.9}
+body.light-mode .detail-panel{background:#F8F9FC;border-top:1px solid #E2E6EF}
+body.light-mode .dp-ai{background:#FFFBF0;border:1px solid #D4A01740}
+body.light-mode .dp-ai-title{color:#1A1A2E}
+body.light-mode .dp-ai-lbl{color:#6B7280}
+body.light-mode .dp-ai-val{color:#1A1A2E}
+body.light-mode .dp-price{color:#1A1A2E}
+body.light-mode .dp-metrics .dm{background:#F0F2F8;border:0.5px solid #E2E6EF}
+body.light-mode .dm-lbl{color:#6B7280}
+body.light-mode .dm-val{color:#1A1A2E}
+body.light-mode .screen-inner{background:#F2F4F8}
+body.light-mode .sec-lbl{color:#B8860B;background:#F2F4F8}
+body.light-mode .row{background:#FFFFFF;border-bottom:0.5px solid #E2E6EF}
+body.light-mode .label{color:#1A1A2E}
+body.light-mode .val{color:#6B7280}
+body.light-mode .alert-cnt,.light-mode #alert-cnt{background:#F2F4F8}
+body.light-mode .cnt > div[style*="padding:6px"]{background:#EAECF2;color:#6B7280}
 
 /* === PHONE — ÚNICA DEFINICIÓN CORRECTA === */
 .phone{width:100%;height:100%;display:flex;flex-direction:column;background:#0D1117;overflow:hidden;position:fixed;top:0;left:0;right:0;bottom:0}
