@@ -1912,23 +1912,107 @@ function fmtAlertPrice(v) {
   return '$' + v.toFixed(4);
 }
 
+function getAlertContextIA(a, actual) {
+  const it_data = (() => {
+    try {
+      if (a.tab==='acciones') return (DATA.acciones[a.pais||'usa']||[]).find(x=>x.s===a.s);
+      return (DATA[a.tab]||[]).find(x=>x.s===a.s);
+    } catch(e) { return null; }
+  })();
+  const ai = it_data ? it_data.ai : null;
+  if (!ai) return `${a.s} alcanzó tu precio objetivo de ${fmtAlertPrice(a.precio)}. Revisá el análisis completo en Mercados.`;
+  const sigTxt = ai.signal==='ALCISTA' ? 'sigue alcista' : ai.signal==='BAJISTA' ? 'muestra señal bajista' : 'está en zona neutral';
+  return `🔔 *AUREX · Alerta disparada*
+
+*${a.s}* llegó a ${fmtAlertPrice(actual)} — tu objetivo era ${fmtAlertPrice(a.precio)}.
+
+⚛ *Análisis IA actual:* La señal ${sigTxt} con ${ai.prob}% de probabilidad.
+Objetivo IA: ${ai.target} · Stop: ${ai.stop} · Upside: ${ai.upside}
+
+_Solo informativo · No es consejo de inversión_
+Aurex · fmoscon-creator.github.io/aurex-app`;
+}
+
+function shareAlertaWA(i) {
+  const a = ALERTAS[i];
+  const actual = getAlertActual(a);
+  window.open('https://wa.me/?text='+encodeURIComponent(getAlertContextIA(a, actual)),'_blank');
+}
+function shareAlertaTG(i) {
+  const a = ALERTAS[i];
+  const actual = getAlertActual(a);
+  window.open('https://t.me/share/url?url=https://fmoscon-creator.github.io/aurex-app&text='+encodeURIComponent(getAlertContextIA(a, actual)),'_blank');
+}
+function shareAlertaMail(i) {
+  const a = ALERTAS[i];
+  const actual = getAlertActual(a);
+  const subj = 'Aurex · Alerta disparada · '+a.s;
+  window.location.href='mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(getAlertContextIA(a, actual));
+}
+
 function renderAlertas() {
   const cnt = document.getElementById('alert-cnt');
   if (!cnt) return;
 
+  // ── ALERTAS SUGERIDAS POR IA ──
+  const sugeridas = getAllSignals().filter(sig =>
+    sig.ai.signal === 'ALCISTA' && sig.ai.conf >= 4 &&
+    !ALERTAS.find(a => a.s === sig.s)
+  ).slice(0, 3);
+
+  // ── EVENTOS MACRO PRÓXIMOS ──
+  const eventosActivos = (typeof URGENT_EVENTS !== 'undefined') ? URGENT_EVENTS.filter(e => e.active && e.hoursFromNow <= 48) : [];
+
+  let h = '';
+
+  // Banner eventos macro
+  if (eventosActivos.length > 0) {
+    eventosActivos.forEach(ev => {
+      const c = (typeof URGENT_COLORS !== 'undefined') ? URGENT_COLORS[ev.type]||URGENT_COLORS.neutral : {bg:'#1A1200',border:'#FBBF24',text:'#FBBF24'};
+      h += `<div style="margin:10px 13px 0;border-radius:10px;background:${c.bg};border:1px solid ${c.border};padding:10px 12px">
+        <div style="display:flex;align-items:center;gap:8px">
+          <div style="width:7px;height:7px;border-radius:50%;background:${c.text};flex-shrink:0;animation:lp 1s infinite"></div>
+          <div style="flex:1">
+            <div style="font-size:10px;font-weight:700;color:${c.text};text-transform:uppercase;letter-spacing:.5px">📅 Evento macro · ${ev.hoursFromNow}h</div>
+            <div style="font-size:11px;color:#E6EDF3;margin-top:1px">${ev.label}</div>
+            <div style="font-size:10px;color:#8B949E;margin-top:1px">${ev.desc}</div>
+          </div>
+        </div>
+      </div>`;
+    });
+    h += '<div style="height:8px"></div>';
+  }
+
+  // Alertas sugeridas por IA
+  if (sugeridas.length > 0) {
+    h += `<div style="padding:8px 13px 4px;font-size:9px;font-weight:600;color:#A78BFA;text-transform:uppercase;letter-spacing:.8px">⚛ Sugeridas por IA</div>`;
+    sugeridas.forEach(sig => {
+      const precioSug = parseFloat(sig.ai.target.replace(/[^0-9.]/g,''));
+      h += `<div style="display:flex;align-items:center;gap:10px;padding:9px 13px;border-bottom:0.5px solid #13171D;background:#0D0D1A">
+        ${logoHTML(sig.s, sig.col, sig.ico)}
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:500;color:#E6EDF3">${sig.s} — Objetivo IA: ${sig.ai.target}</div>
+          <div style="font-size:10px;color:#A78BFA;margin-top:1px">⚛ Señal ALCISTA · ${sig.ai.prob}% prob · ${sig.ai.upside} upside</div>
+        </div>
+        <div onclick="agregarAlertaSugerida('${sig.s}','${sig.tab}','${sig.pais||''}',${precioSug})" style="padding:6px 10px;border-radius:8px;background:#A78BFA20;color:#A78BFA;font-size:10px;font-weight:600;border:1px solid #A78BFA40;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">＋ Agregar</div>
+      </div>`;
+    });
+  }
+
   if (ALERTAS.length === 0) {
-    cnt.innerHTML = `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
+    h += `<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:40px 20px;text-align:center">
       <div style="font-size:52px">🔔</div>
       <div style="font-size:18px;font-weight:500;color:#E6EDF3">Sin alertas configuradas</div>
       <div style="font-size:12px;color:#555;line-height:1.8">Tocá + Nueva alerta para crear<br>tu primera alerta de precio</div>
     </div>`;
+    cnt.innerHTML = h;
     return;
   }
 
   const activas = ALERTAS.filter(a => a.activa).length;
-  let h = `<div style="padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2">
-    <span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">${ALERTAS.length} alertas · ${activas} activas</span>
-    <span style="font-size:9px;color:#3FB950">${activas} monitoreando</span>
+  h += `<div style="padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2">
+    <span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">Mis alertas · ${ALERTAS.length} configuradas</span>
+    <span style="font-size:9px;color:#3FB950">${activas} activas</span>
   </div>`;
 
   ALERTAS.forEach((a, i) => {
@@ -1952,7 +2036,7 @@ function renderAlertas() {
       <div style="flex:1;min-width:0">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
           <span style="font-size:13px;font-weight:500;color:#E6EDF3">${a.s}</span>
-          ${disparada ? '<span style="font-size:9px;padding:2px 7px;border-radius:7px;background:#1A3A2A;color:#3FB950;font-weight:700">✓ DISPARADA</span>' : ''}
+          ${disparada ? '<span style="font-size:9px;padding:2px 7px;border-radius:7px;background:#1A3A2A;color:#3FB950;font-weight:700;animation:lp 2s infinite">🔔 DISPARADA</span>' : ''}
         </div>
         <div style="display:flex;align-items:center;gap:6px">
           <span style="font-size:11px;font-weight:600;color:${condColor}">${condIcon} ${condLabel} ${fmtAlertPrice(a.precio)}</span>
@@ -1960,6 +2044,11 @@ function renderAlertas() {
           <span style="font-size:10px;color:#8B949E">Actual: ${actual ? fmtAlertPrice(actual) : '—'}</span>
         </div>
         <div style="font-size:10px;color:${distColor};margin-top:2px">${distancia ? 'Faltan ' + distancia + ' del objetivo' : ''}</div>
+        ${disparada ? `<div style="display:flex;gap:4px;margin-top:6px">
+          <div onclick="shareAlertaWA(${i})" style="padding:4px 8px;border-radius:7px;background:#25D36620;color:#25D366;font-size:9px;font-weight:600;border:0.5px solid #25D36650;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">💬 WA</div>
+          <div onclick="shareAlertaTG(${i})" style="padding:4px 8px;border-radius:7px;background:#2AABEE20;color:#2AABEE;font-size:9px;font-weight:600;border:0.5px solid #2AABEE50;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✈️ TG</div>
+          <div onclick="shareAlertaMail(${i})" style="padding:4px 8px;border-radius:7px;background:#58A6FF15;color:#58A6FF;font-size:9px;font-weight:600;border:0.5px solid #58A6FF40;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✉️ Mail</div>
+        </div>` : ''}
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex-shrink:0">
         <div onclick="toggleAlerta(${i})" style="width:38px;height:22px;border-radius:11px;background:${a.activa ? '#3FB950' : '#21262D'};position:relative;cursor:pointer;transition:background .2s;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
@@ -2086,6 +2175,19 @@ function confirmarAlerta(editIdx) {
     ALERTAS.push({id:nextAlertId++, s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond, precio, activa:true});
   }
   closeAlertModal();
+  renderAlertas();
+}
+
+function agregarAlertaSugerida(s, tab, pais, precio) {
+  const todas = [];
+  DATA.cripto.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,tab:'cripto',pais:null}));
+  DATA.acciones.usa.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,tab:'acciones',pais:'usa'}));
+  DATA.comm.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,tab:'comm',pais:null}));
+  DATA.etf.forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,tab:'etf',pais:null}));
+  ['arg','br','eu','es','jp','cn'].forEach(p => DATA.acciones[p].forEach(it => todas.push({s:it.s,n:it.n,col:it.col,ico:it.ico,tab:'acciones',pais:p})));
+  const it = todas.find(x => x.s===s && x.tab===tab);
+  if (!it) return;
+  ALERTAS.push({id:nextAlertId++, s:it.s, nombre:it.n, col:it.col, ico:it.ico, tab:it.tab, pais:it.pais||null, cond:'mayor', precio, activa:true});
   renderAlertas();
 }
 
