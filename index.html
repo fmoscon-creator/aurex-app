@@ -268,7 +268,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   <div style="display:flex;align-items:center;gap:8px">
     <div style="width:7px;height:7px;border-radius:50%;background:#FF4500;animation:lp 1s infinite;flex-shrink:0"></div>
     <div style="flex:1">
-      <div style="font-size:10px;font-weight:700;color:#FF4500;text-transform:uppercase;letter-spacing:.6px" id="ub-label">ALERTA URGENTE</div>
+      <div style="font-size:10px;font-weight:700;color:#FF4500;text-transform:uppercase;letter-spacing:.6px" id="ub-label">EVENTO CRÍTICO</div>
       <div style="font-size:11px;color:#E6EDF3;margin-top:1px" id="ub-desc">Evento de alto impacto</div>
     </div>
     <div style="text-align:center;flex-shrink:0;background:#FF450020;border-radius:7px;padding:4px 8px;border:0.5px solid #FF450060">
@@ -449,11 +449,11 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
     <div style="display:flex;align-items:center;gap:8px">
       <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
-      <span style="font-size:13px;color:#8B949E">· IA Señales</span>
+      <span style="font-size:13px;color:#8B949E">· Señales IA</span>
     </div>
     <div style="display:flex;align-items:center;gap:4px;font-size:9px;color:#A78BFA;font-weight:700">
       <div style="width:5px;height:5px;border-radius:50%;background:#A78BFA;animation:lp 1.5s infinite"></div>
-      LIVE IA
+      LIVE · SEÑALES IA
     </div>
   </div>
   <!-- RESUMEN DEL DIA -->
@@ -1583,7 +1583,7 @@ function renderIA() {
 
   const sc = SIGNAL_COL;
   let h = `<div style="padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2;flex-shrink:0">
-    <span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">${filtered.length} señales · ordenadas por probabilidad</span>
+    <span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">${filtered.length} señales IA · ordenadas por probabilidad</span>
     <span style="font-size:9px;color:#A78BFA">Actualizado ahora</span>
   </div>`;
 
@@ -1617,7 +1617,7 @@ function renderIA() {
             <div style="font-size:10px;font-weight:600;color:${sig.up?'#3FB950':'#F85149'}">${sig.c}</div>
           </div>
         </div>
-        ${isTop?`<div style="background:#0D1117;border-radius:8px;padding:9px 11px;border:0.5px solid #D4A01740;margin-bottom:7px"><div style="font-size:9px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">⚛ Análisis IA — Por qué esta señal</div><div style="font-size:10px;color:#8B949E;line-height:1.7">${justif}</div></div>`:''}
+        ${isTop?`<div style="background:#0D1117;border-radius:8px;padding:9px 11px;border:0.5px solid #D4A01740;margin-bottom:7px"><div style="font-size:9px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px">⚛ ⚛ Por qué esta señal IA</div><div style="font-size:10px;color:#8B949E;line-height:1.7">${justif}</div></div>`:''}
         <div style="background:#0D1117;border-radius:8px;padding:8px 10px;border:0.5px solid ${isTop?'#D4A01740':'#21262D'}">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">
             <div style="display:flex;align-items:center;gap:6px">
@@ -1673,20 +1673,40 @@ function setIAFilter(f, el) {
 const URGENT_EVENTS = [
   {
     label: 'FED · Decisión de tasas',
-    desc: 'Reunión FOMC · Decisión de tasas de interés · Alto impacto',
+    desc: 'Reunión FOMC · Decisión de tasas de interés · Alto impacto en todos los mercados',
     hoursFromNow: 6,
-    active: true
+    active: true,
+    type: 'neutral'
   }
 ];
+
+// type: 'positive' = verde, 'negative' = rojo, 'neutral' = naranja
+const URGENT_COLORS = {
+  positive: {bg:'#1A3A2A', border:'#3FB950', dot:'#3FB950', text:'#3FB950', badge:'#3FB95020', badgeBorder:'#3FB95060'},
+  negative: {bg:'#1A0800', border:'#FF4500', dot:'#FF4500', text:'#FF4500', badge:'#FF450020', badgeBorder:'#FF450060'},
+  neutral:  {bg:'#1A1200', border:'#FBBF24', dot:'#FBBF24', text:'#FBBF24', badge:'#FBBF2420', badgeBorder:'#FBBF2460'},
+};
 
 function initUrgentBanner() {
   const active = URGENT_EVENTS.find(e => e.active && e.hoursFromNow <= 24);
   if (!active) return;
   const banner = document.getElementById('urgent-banner');
   if (!banner) return;
+  const c = URGENT_COLORS[active.type] || URGENT_COLORS.neutral;
+  // Aplicar colores dinámicos
+  banner.style.background = c.bg;
+  banner.style.borderBottomColor = c.border;
+  const dot = banner.querySelector('div[style*="border-radius:50%"]');
+  if (dot) dot.style.background = c.dot;
+  const lbl = document.getElementById('ub-label');
+  const desc = document.getElementById('ub-desc');
+  const countdown = document.getElementById('ub-countdown');
+  const badge = countdown ? countdown.parentElement : null;
+  if (lbl) { lbl.style.color = c.text; lbl.textContent = 'EVENTO CRÍTICO · ' + active.label; }
+  if (desc) desc.textContent = active.desc;
+  if (badge) { badge.style.background = c.badge; badge.style.borderColor = c.badgeBorder; }
+  if (countdown) countdown.style.color = c.text;
   banner.style.display = 'block';
-  document.getElementById('ub-label').textContent = 'ALERTA URGENTE · ' + active.label;
-  document.getElementById('ub-desc').textContent = active.desc;
   updateUrgentCountdown(active.hoursFromNow * 3600);
 }
 
