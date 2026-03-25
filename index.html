@@ -231,14 +231,14 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 .notif-item{padding:10px 16px;border-bottom:0.5px solid #13171D}
 .notif-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
 .notif-sub{font-size:10px;color:#555}
-.disclaimer{margin:8px 12px;border-radius:12px;background:#080C10;border:0.5px solid #21262D;padding:16px}
+.disclaimer{margin:8px 12px;border-radius:10px;background:#080C10;border:0.5px solid #21262D;padding:10px}
 .dis-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid #21262D}
 .dis-icon{width:32px;height:32px;border-radius:8px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .dis-title{font-size:12px;font-weight:600;color:#D4A017}
 .dis-sub{font-size:10px;color:#555;margin-top:2px}
-.dis-section{margin-bottom:10px}
+.dis-section{margin-bottom:6px}
 .dis-section-title{font-size:10px;font-weight:600;color:#8B949E;margin-bottom:4px;display:flex;align-items:center;gap:5px}
-.dis-section-body{font-size:10px;color:#444;line-height:1.7}
+.dis-section-body{font-size:9px;color:#444;line-height:1.6}
 .dis-footer{margin-top:10px;padding-top:10px;border-top:0.5px solid #21262D;font-size:9px;color:#333;text-align:center;line-height:1.6}
 .dis-link{color:#D4A01770;text-decoration:underline}
 .data-item{padding:10px 16px;border-bottom:0.5px solid #13171D;display:flex;align-items:center;gap:10px}
@@ -458,19 +458,19 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   </div>
   <!-- RESUMEN DEL DIA -->
   <div style="display:flex;gap:6px">
-    <div style="flex:1;background:#1A3A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #3FB95040;text-align:center">
+    <div onclick="setIAFilter('ALCISTA',null)" style="flex:1;background:#1A3A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #3FB95040;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#3FB950" id="ia-count-bull">0</div>
       <div style="font-size:8px;color:#3FB950;text-transform:uppercase;letter-spacing:.5px">Alcistas</div>
     </div>
-    <div style="flex:1;background:#3A1A1A;border-radius:8px;padding:7px 10px;border:0.5px solid #F8514940;text-align:center">
+    <div onclick="setIAFilter('BAJISTA',null)" style="flex:1;background:#3A1A1A;border-radius:8px;padding:7px 10px;border:0.5px solid #F8514940;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#F85149" id="ia-count-bear">0</div>
       <div style="font-size:8px;color:#F85149;text-transform:uppercase;letter-spacing:.5px">Bajistas</div>
     </div>
-    <div style="flex:1;background:#1A1A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #8B949E40;text-align:center">
+    <div onclick="setIAFilter('NEUTRAL',null)" style="flex:1;background:#1A1A2A;border-radius:8px;padding:7px 10px;border:0.5px solid #8B949E40;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#8B949E" id="ia-count-neu">0</div>
       <div style="font-size:8px;color:#8B949E;text-transform:uppercase;letter-spacing:.5px">Neutras</div>
     </div>
-    <div style="flex:1;background:#2A1A00;border-radius:8px;padding:7px 10px;border:0.5px solid #D4A01740;text-align:center">
+    <div onclick="setIAFilter('alta',null)" style="flex:1;background:#2A1A00;border-radius:8px;padding:7px 10px;border:0.5px solid #D4A01740;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
       <div style="font-size:16px;font-weight:600;color:#D4A017" id="ia-count-high">0</div>
       <div style="font-size:8px;color:#D4A017;text-transform:uppercase;letter-spacing:.5px">Alta conf.</div>
     </div>
@@ -532,7 +532,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     FM
     <div class="avatar-edit">✏️</div>
   </div>
-  <div class="user-name">Federico Moscon</div>
+  <div class="user-name">Fernando Moscon</div>
   <div class="user-email">fmoscon@gmail.com</div>
   <div class="plan-row">
     <div class="plan-badge badge-free">FREE</div>
@@ -643,7 +643,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <div class="sec-lbl">👤 Mi cuenta</div>
 <div class="row" onclick="openModal('nombre')">
   <div class="row-ico" style="background:#58A6FF20">👤</div>
-  <div class="row-main"><div class="row-title">Nombre completo</div><div class="row-sub">Federico Moscon</div></div>
+  <div class="row-main"><div class="row-title">Nombre completo</div><div class="row-sub">Fernando Moscon</div></div>
   <div class="row-right"><span class="arrow">›</span></div>
 </div>
 <div class="row" onclick="openModal('email')">
@@ -967,7 +967,12 @@ const BCOLORS={cripto:{bg:'#1A1A3A',col:'#A78BFA',t:'24/7'},acciones:{bg:'#1A2A1
 const SIGNAL_COL={ALCISTA:{bg:'#1A3A2A',col:'#3FB950'},BAJISTA:{bg:'#3A1A1A',col:'#F85149'},NEUTRAL:{bg:'#1A1A2A',col:'#8B949E'}};
 let curTab='cripto',curPais='usa',curTF='24h',editMode=false,openRow=null;
 function spark(t,up,w=50,h=22){const mn=Math.min(...t),mx=Math.max(...t),r=mx-mn||1;const pts=t.map((v,i)=>`${(4+(i/(t.length-1))*(w-8)).toFixed(1)},${(2+(1-((v-mn)/r))*(h-4)).toFixed(1)}`).join(' ');const lx=(4+(w-8)).toFixed(1),ly=(2+(1-((t[t.length-1]-mn)/r))*(h-4)).toFixed(1);const col=up?'#3FB950':'#F85149';return`<svg width="${w}" height="${h}" class="spl" style="overflow:visible"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lx}" cy="${ly}" r="2.5" fill="${col}"/></svg>`;}
-function detailHTML(it,c,up){c=c||it.c;up=up!==undefined?up:it.up;const ai=it.ai;const sc=SIGNAL_COL[ai.signal]||SIGNAL_COL.NEUTRAL;const stars='★'.repeat(ai.conf)+'☆'.repeat(5-ai.conf);const probColor=ai.prob>=65?'#3FB950':ai.prob>=50?'#FBBF24':'#F85149';const tfLabel={'24h':'24 horas','7d':'7 días','1m':'1 mes'}[curTF];const p=parseFloat(it.p.replace(/[^0-9.]/g,''))||100;const upPct=parseFloat(ai.upside)||10;const esc=[{key:'CORTO',tiempo:'1-4 semanas',mult:.35,prob:Math.min(ai.prob+8,95),signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},{key:'MEDIANO',tiempo:'1-3 meses',mult:1.0,prob:ai.prob,signal:ai.signal,main:true},{key:'LARGO',tiempo:'3-12 meses',mult:2.2,prob:Math.max(ai.prob-10,30),signal:ai.prob>=50?'ALCISTA':'BAJISTA'}];function tgt(mult){const v=p*(1+(upPct/100)*mult);const prefix=it.p.match(/[€£¥R]/)?it.p.match(/[€£¥R]/)[0]:'$';return prefix+(v>=1000?Math.round(v).toLocaleString('en'):v>=1?v.toFixed(2):v.toFixed(4));}function scol(s){return s==='ALCISTA'?'#3FB950':s==='BAJISTA'?'#F85149':'#8B949E';}function sbg(s){return s==='ALCISTA'?'#1A3A2A':s==='BAJISTA'?'#3A1A1A':'#1A1A2A';}const escRows=esc.map(e=>`<div style="background:#0A0E14;border-radius:9px;padding:9px 11px;border:0.5px solid ${e.main?'#D4A01740':'#21262D'};display:flex;align-items:center;gap:10px"><div style="flex-shrink:0;text-align:center;min-width:52px"><div style="font-size:9px;font-weight:600;color:${e.main?'#D4A017':'#8B949E'}">${e.key}</div><div style="font-size:8px;color:#555;margin-top:1px">${e.tiempo}</div></div><div style="flex:1"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:600;color:#E6EDF3">${tgt(e.mult)}</span><span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;background:${sbg(e.signal)};color:${scol(e.signal)}">${e.signal}</span></div><div style="background:#21262D;border-radius:3px;height:4px;overflow:hidden"><div style="height:100%;border-radius:3px;background:${scol(e.signal)};width:${e.prob}%"></div></div><div style="font-size:9px;color:#555;margin-top:2px">Prob. ${e.prob}%${e.main?' · Principal ★':''}</div></div></div>`).join('');return`<div class="dp-top"><div class="dp-left"><div class="dp-price">${it.p}</div><div class="dp-chg-row"><span class="dp-pill ${up?'u':'d'}">${c}</span><span class="dp-range">${tfLabel} · ${it.v}</span></div></div></div><div class="dp-ai"><div class="dp-ai-top"><div class="dp-ai-icon">⚛</div><span class="dp-ai-title">Análisis IA Aurex</span><span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span></div><div class="dp-ai-grid"><div class="dp-ai-item"><div class="dp-ai-lbl">Precio objetivo IA</div><div class="dp-ai-val" style="color:#D4A017">${ai.target}</div><div class="dp-ai-sub">Upside: <span style="color:#3FB950">${ai.upside}</span></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Probabilidad IA</div><div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${ai.prob}%;background:${probColor}"></div></div></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Stop Loss</div><div class="dp-ai-val" style="color:#F85149">${ai.stop}</div><div class="dp-ai-sub">Gestión de riesgo</div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Confianza IA</div><div class="dp-ai-val" style="font-size:12px;color:#D4A017">${stars}</div><div class="dp-ai-sub">${ai.conf}/5 — ${ai.conf>=4?'Alta':ai.conf>=3?'Media':'Baja'}</div></div></div></div><div style="margin:0 14px 10px"><div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚛ Escenarios por temporalidad</div><div style="display:flex;flex-direction:column;gap:6px">${escRows}</div></div><div class="dp-metrics"><div class="dm"><div class="dm-lbl">Vol / Cap</div><div class="dm-val">${it.v}</div></div><div class="dm"><div class="dm-lbl">Cambio ${curTF}</div><div class="dm-val ${up?'up':'dn'}">${c}</div></div><div class="dm"><div class="dm-lbl">Período</div><div class="dm-val">${tfLabel}</div></div></div>`;}
+function detailHTML(it,c,up){c=c||it.c;up=up!==undefined?up:it.up;const ai=it.ai;const sc=SIGNAL_COL[ai.signal]||SIGNAL_COL.NEUTRAL;const stars='★'.repeat(ai.conf)+'☆'.repeat(5-ai.conf);const probColor=ai.prob>=65?'#3FB950':ai.prob>=50?'#FBBF24':'#F85149';const tfLabel={'24h':'24 horas','7d':'7 días','1m':'1 mes'}[curTF];const p=parseFloat(it.p.replace(/[^0-9.]/g,''))||100;const upPct=parseFloat(ai.upside)||10;const _er=[{key:'CORTO',tiempo:'1-4 semanas',mult:.35,prob:Math.min(ai.prob+8,95),signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},{key:'MEDIANO',tiempo:'1-3 meses',mult:1.0,prob:ai.prob,signal:ai.signal},{key:'LARGO',tiempo:'3-12 meses',mult:2.2,prob:Math.max(ai.prob-10,30),signal:ai.prob>=50?'ALCISTA':'BAJISTA'}];const _mp=Math.max(..._er.map(e=>e.prob));const esc=_er.map(e=>({...e,main:e.prob===_mp}));function tgt(mult){const v=p*(1+(upPct/100)*mult);const prefix=it.p.match(/[€£¥R]/)?it.p.match(/[€£¥R]/)[0]:'$';return prefix+(v>=1000?Math.round(v).toLocaleString('en'):v>=1?v.toFixed(2):v.toFixed(4));}function scol(s){return s==='ALCISTA'?'#3FB950':s==='BAJISTA'?'#F85149':'#8B949E';}function sbg(s){return s==='ALCISTA'?'#1A3A2A':s==='BAJISTA'?'#3A1A1A':'#1A1A2A';}const escRows=esc.map(e=>`<div style="background:#0A0E14;border-radius:9px;padding:9px 11px;border:0.5px solid ${e.main?'#D4A01740':'#21262D'};display:flex;align-items:center;gap:10px"><div style="flex-shrink:0;text-align:center;min-width:52px"><div style="font-size:9px;font-weight:600;color:${e.main?'#D4A017':'#8B949E'}">${e.key}</div><div style="font-size:8px;color:#555;margin-top:1px">${e.tiempo}</div></div><div style="flex:1"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px"><span style="font-size:12px;font-weight:600;color:#E6EDF3">${tgt(e.mult)}</span><span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;background:${sbg(e.signal)};color:${scol(e.signal)}">${e.signal}</span></div><div style="background:#21262D;border-radius:3px;height:4px;overflow:hidden"><div style="height:100%;border-radius:3px;background:${scol(e.signal)};width:${e.prob}%"></div></div><div style="font-size:9px;color:#555;margin-top:2px">Prob. ${e.prob}%${e.main?' · Principal ★':''}</div></div></div>`).join('');return`<div class="dp-top"><div class="dp-left"><div class="dp-price">${it.p}</div><div class="dp-chg-row"><span class="dp-pill ${up?'u':'d'}">${c}</span><span class="dp-range">${tfLabel} · ${it.v}</span></div></div></div><div class="dp-ai"><div class="dp-ai-top"><div class="dp-ai-icon">⚛</div><span class="dp-ai-title">Análisis IA Aurex</span><span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span></div><div class="dp-ai-grid"><div class="dp-ai-item"><div class="dp-ai-lbl">Precio objetivo IA</div><div class="dp-ai-val" style="color:#D4A017">${ai.target}</div><div class="dp-ai-sub">Upside: <span style="color:#3FB950">${ai.upside}</span></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Probabilidad IA</div><div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div><div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${ai.prob}%;background:${probColor}"></div></div></div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Stop Loss</div><div class="dp-ai-val" style="color:#F85149">${ai.stop}</div><div class="dp-ai-sub">Gestión de riesgo</div></div><div class="dp-ai-item"><div class="dp-ai-lbl">Confianza IA</div><div class="dp-ai-val" style="font-size:12px;color:#D4A017">${stars}</div><div class="dp-ai-sub">${ai.conf}/5 — ${ai.conf>=4?'Alta':ai.conf>=3?'Media':'Baja'}</div></div></div></div><div style="margin:0 14px 10px"><div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚛ Escenarios por temporalidad</div><div style="display:flex;flex-direction:column;gap:6px">${escRows}</div></div><div class="dp-metrics"><div class="dm"><div class="dm-lbl">Vol / Cap</div><div class="dm-val">${it.v}</div></div><div class="dm"><div class="dm-lbl">Cambio ${curTF}</div><div class="dm-val ${up?'up':'dn'}">${c}</div></div><div class="dm"><div class="dm-lbl">Período</div><div class="dm-val">${tfLabel}</div></div></div>
+  <div style="padding:0 14px 12px;display:flex;gap:6px">
+    <div onclick="shareSignalWA('${it.s}','${ai.signal}','${ai.target}',${ai.prob},'${ai.upside}','${it.p}')" style="flex:1;padding:8px 4px;border-radius:9px;background:#25D36620;color:#25D366;font-size:11px;font-weight:600;border:1px solid #25D36650;cursor:pointer;text-align:center;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">💬 WhatsApp</div>
+    <div onclick="shareSignalTG('${it.s}','${ai.signal}','${ai.target}',${ai.prob},'${ai.upside}','${it.p}')" style="flex:1;padding:8px 4px;border-radius:9px;background:#2AABEE20;color:#2AABEE;font-size:11px;font-weight:600;border:1px solid #2AABEE50;cursor:pointer;text-align:center;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✈️ Telegram</div>
+    <div onclick="shareSignalMail('${it.s}','${ai.signal}','${ai.target}',${ai.prob},'${ai.upside}','${it.p}')" style="flex:1;padding:8px 4px;border-radius:9px;background:#58A6FF15;color:#58A6FF;font-size:11px;font-weight:600;border:1px solid #58A6FF40;cursor:pointer;text-align:center;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✉️ Mail</div>
+  </div>`;}
 DATA.stable=[
   {s:'USDT', n:'Tether',         p:'$1.000', c:'+0.01%',v:'Cap $108B',up:1,col:'#26A17B',ico:'₮',t:[50,50,50,50,50,50,50,50],ai:{target:'$1.00',prob:99,signal:'NEUTRAL',upside:'0%',stop:'$0.98',conf:5}},
   {s:'USDC', n:'USD Coin',       p:'$1.000', c:'+0.00%',v:'Cap $43B', up:1,col:'#2775CA',ico:'$',t:[50,50,50,50,50,50,50,50],ai:{target:'$1.00',prob:99,signal:'NEUTRAL',upside:'0%',stop:'$0.98',conf:5}},
@@ -1666,7 +1671,16 @@ function setIAFilter(f, el) {
   iaFilter = f;
   document.querySelectorAll('#ia-filters .tf').forEach(t => t.classList.remove('on'));
   if (el) el.classList.add('on');
+  else {
+    // Buscar el botón correspondiente en los filtros y activarlo
+    const map = {'ALCISTA':1,'BAJISTA':2,'NEUTRAL':2,'alta':3,'cripto':4,'acciones':5,'comm':6,'etf':7};
+    const btns = document.querySelectorAll('#ia-filters .tf');
+    if(f==='todo' && btns[0]) btns[0].classList.add('on');
+  }
   renderIA();
+  // Scroll al top de la lista
+  const cnt = document.getElementById('ia-cnt');
+  if(cnt) cnt.scrollTop = 0;
 }
 
 // ── EVENTOS URGENTES 0-24hs ──
@@ -1687,27 +1701,54 @@ const URGENT_COLORS = {
   neutral:  {bg:'#1A1200', border:'#FBBF24', dot:'#FBBF24', text:'#FBBF24', badge:'#FBBF2420', badgeBorder:'#FBBF2460'},
 };
 
-function initUrgentBanner() {
-  const active = URGENT_EVENTS.find(e => e.active && e.hoursFromNow <= 24);
-  if (!active) return;
+let _ubIdx = 0;
+let _ubHidden = false;
+let _ubReopenTimer = null;
+
+function showUrgentEvent(ev) {
   const banner = document.getElementById('urgent-banner');
-  if (!banner) return;
-  const c = URGENT_COLORS[active.type] || URGENT_COLORS.neutral;
-  // Aplicar colores dinámicos
+  if (!banner || !ev) return;
+  const c = URGENT_COLORS[ev.type] || URGENT_COLORS.neutral;
   banner.style.background = c.bg;
   banner.style.borderBottomColor = c.border;
-  const dot = banner.querySelector('div[style*="border-radius:50%"]');
+  const dot = banner.querySelector('div[style*="border-radius:50%;background"]');
   if (dot) dot.style.background = c.dot;
   const lbl = document.getElementById('ub-label');
   const desc = document.getElementById('ub-desc');
   const countdown = document.getElementById('ub-countdown');
   const badge = countdown ? countdown.parentElement : null;
-  if (lbl) { lbl.style.color = c.text; lbl.textContent = 'EVENTO CRÍTICO · ' + active.label; }
-  if (desc) desc.textContent = active.desc;
+  if (lbl) { lbl.style.color = c.text; lbl.textContent = 'EVENTO CRÍTICO · ' + ev.label; }
+  if (desc) desc.textContent = ev.desc;
   if (badge) { badge.style.background = c.badge; badge.style.borderColor = c.badgeBorder; }
-  if (countdown) countdown.style.color = c.text;
+  if (countdown) { countdown.style.color = c.text; }
   banner.style.display = 'block';
-  updateUrgentCountdown(active.hoursFromNow * 3600);
+  updateUrgentCountdown(ev.hoursFromNow * 3600);
+}
+
+function initUrgentBanner() {
+  const actives = URGENT_EVENTS.filter(e => e.active && e.hoursFromNow <= 24);
+  if (!actives.length) return;
+  showUrgentEvent(actives[0]);
+  if (actives.length > 1) {
+    setInterval(() => {
+      if (_ubHidden) return;
+      _ubIdx = (_ubIdx + 1) % actives.length;
+      showUrgentEvent(actives[_ubIdx]);
+    }, 8000);
+  }
+}
+
+function closeUrgentBanner() {
+  const b = document.getElementById('urgent-banner');
+  if (b) b.style.display = 'none';
+  _ubHidden = true;
+  // Vuelve a aparecer después de 5 minutos
+  if (_ubReopenTimer) clearTimeout(_ubReopenTimer);
+  _ubReopenTimer = setTimeout(() => {
+    _ubHidden = false;
+    const actives = URGENT_EVENTS.filter(e => e.active && e.hoursFromNow <= 24);
+    if (actives.length) showUrgentEvent(actives[_ubIdx % actives.length]);
+  }, 5 * 60 * 1000);
 }
 
 let urgentSeconds = 0;
@@ -1720,10 +1761,7 @@ function updateUrgentCountdown(secs) {
   el.textContent = h > 0 ? h + 'h ' + m + 'm' : m + 'm';
 }
 
-function closeUrgentBanner() {
-  const b = document.getElementById('urgent-banner');
-  if (b) b.style.display = 'none';
-}
+
 
 setInterval(() => {
   if (urgentSeconds > 0) {
@@ -1757,6 +1795,27 @@ function moveWatch(i, dir, e) {
 }
 
 initUrgentBanner();
+
+function shareSignal(s, signal, target, prob, upside, p) {
+  const msg = `⚛ *AUREX · Señal IA*\n\n` +
+    `*${s}* — ${signal}\n` +
+    `Precio actual: ${p}\n` +
+    `Objetivo IA: ${target} (${upside})\n` +
+    `Probabilidad: ${prob}%\n\n` +
+    `_Señal generada por Aurex IA · Solo informativo · No es consejo de inversión_\n` +
+    `fmoscon-creator.github.io/aurex-app`;
+  return msg;
+}
+function shareSignalWA(s,signal,target,prob,upside,p){
+  window.open('https://wa.me/?text='+encodeURIComponent(shareSignal(s,signal,target,prob,upside,p)),'_blank');
+}
+function shareSignalTG(s,signal,target,prob,upside,p){
+  window.open('https://t.me/share/url?url=https://fmoscon-creator.github.io/aurex-app&text='+encodeURIComponent(shareSignal(s,signal,target,prob,upside,p)),'_blank');
+}
+function shareSignalMail(s,signal,target,prob,upside,p){
+  const subj = 'Señal IA Aurex · '+s+' · '+signal;
+  window.location.href = 'mailto:?subject='+encodeURIComponent(subj)+'&body='+encodeURIComponent(shareSignal(s,signal,target,prob,upside,p));
+}
 </script>
 </body>
 </html>
