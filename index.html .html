@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1A1A2E;display:flex;justify-content:center;padding:20px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.phone{width:390px;background:#0D1117;border-radius:26px;overflow:hidden;border:2px solid #30363D;min-height:844px}
+
+/* STATUS BAR */
+.sbar{padding:12px 20px 5px;display:flex;justify-content:space-between;align-items:center}
+.st{color:#E6EDF3;font-size:15px;font-weight:600}
+.sr{display:flex;gap:5px;align-items:center}
+.sr span{color:#E6EDF3;font-size:11px}
+
+/* HEADER */
+.hdr{padding:10px 16px 8px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #21262D}
+.hl{display:flex;align-items:center;gap:8px}
+.hn{font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017}
+.hp{font-size:13px;color:#8B949E}
+.live{display:flex;align-items:center;gap:4px;font-size:9px;color:#3FB950;font-weight:700}
+.ldot{width:5px;height:5px;border-radius:50%;background:#3FB950;animation:lp 1.5s infinite}
+@keyframes lp{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* SUMMARY */
+.sumrow{display:flex;gap:5px;padding:7px 11px;border-bottom:1px solid #21262D}
+.sc{flex:1;background:#161B22;border-radius:8px;padding:6px 8px;border:0.5px solid #21262D}
+.sl{font-size:7px;color:#8B949E;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+.sv{font-size:11px;font-weight:600;color:#E6EDF3;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sc2{font-size:9px;font-weight:600;margin-top:1px}
+.up{color:#3FB950}.dn{color:#F85149}.neu{color:#8B949E}
+
+/* TABS */
+.tabs{display:flex;overflow-x:auto;border-bottom:1px solid #21262D;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;padding:9px 12px;font-size:10px;font-weight:500;color:#8B949E;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap}
+.tab.on{color:#D4A017;border-bottom-color:#D4A017}
+
+/* FILTRO PAÍSES */
+.pais-row{display:none;gap:5px;padding:6px 11px;overflow-x:auto;border-bottom:1px solid #21262D;scrollbar-width:none}
+.pais-row::-webkit-scrollbar{display:none}
+.pais-row.show{display:flex}
+.pais{flex-shrink:0;padding:3px 9px;border-radius:12px;font-size:10px;font-weight:500;color:#8B949E;border:0.5px solid #21262D;cursor:pointer}
+.pais.on{background:#21262D;color:#E6EDF3;border-color:#8B949E}
+
+/* TIMEFRAME + EDITAR */
+.tfrow{display:flex;gap:5px;padding:6px 11px;border-bottom:1px solid #21262D;align-items:center}
+.tfs{display:flex;gap:5px;flex:1}
+.tf{padding:3px 9px;border-radius:11px;font-size:10px;font-weight:500;color:#8B949E;border:0.5px solid #21262D;cursor:pointer}
+.tf.on{background:#D4A01720;color:#D4A017;border-color:#D4A017}
+.edit-btn{font-size:9px;color:#8B949E;border:0.5px solid #21262D;padding:3px 9px;border-radius:11px;cursor:pointer;flex-shrink:0}
+.edit-btn.on{color:#D4A017;border-color:#D4A017;background:#D4A01715}
+.tf-time{font-size:9px;color:#555;flex-shrink:0}
+
+/* EDIT MODE BANNER */
+.edit-banner{display:none;background:#D4A01715;border-bottom:1px solid #D4A01740;padding:6px 14px;font-size:10px;color:#D4A017;align-items:center;justify-content:space-between}
+.edit-banner.show{display:flex}
+
+/* CONTENT */
+.cnt{overflow-y:auto;max-height:470px}
+.cnt::-webkit-scrollbar{width:2px}
+.cnt::-webkit-scrollbar-thumb{background:#21262D}
+
+/* SECTION HDR */
+.shdr{padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2}
+.shn{font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px}
+.sbg{font-size:9px;padding:2px 6px;border-radius:7px;font-weight:600}
+
+/* FILA ACTIVO — igual a portfolio */
+.ar{display:flex;align-items:center;gap:9px;padding:9px 13px;border-bottom:0.5px solid #13171D;cursor:pointer;transition:all .15s;position:relative}
+.ar:hover{filter:brightness(1.15)}
+.ar.active{background:#161B22;border-left:2px solid #D4A017}
+.ar:last-child{border-bottom:none}
+
+/* DRAG HANDLE (modo edición) */
+.drag-handle{display:none;color:#555;font-size:14px;cursor:grab;flex-shrink:0;width:16px;text-align:center}
+.edit-mode .drag-handle{display:block}
+.drag-over{background:#D4A01710;border:1px dashed #D4A01760}
+
+/* LOGO — igual portfolio */
+.logo{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;position:relative}
+.logo img{width:100%;height:100%;object-fit:cover;border-radius:9px}
+.logo-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;border-radius:9px}
+
+/* CENTRO */
+.ai{flex:1;min-width:0}
+.an{font-size:13px;font-weight:500;color:#E6EDF3}
+.as{font-size:10px;color:#555;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:155px}
+.ameta{display:flex;align-items:center;gap:5px;margin-top:2px}
+.vol-tag{font-size:8px;color:#555}
+.fut-open{font-size:8px;padding:1px 5px;border-radius:5px;font-weight:700;background:#1A3A2A;color:#3FB950}
+
+/* SPARKLINE */
+.spl{width:50px;height:22px;flex-shrink:0}
+
+/* DERECHA */
+.ar-r{text-align:right;flex-shrink:0;min-width:74px}
+.ap{font-size:13px;font-weight:500;color:#E6EDF3}
+.apct{font-size:10px;font-weight:600;margin-top:2px;padding:2px 6px;border-radius:6px;display:inline-block}
+.u{background:#1A3A2A;color:#3FB950}
+.d{background:#3A1A1A;color:#F85149}
+
+/* ── PANEL DETALLE DEL ACTIVO (aparece al click) ── */
+.detail-panel{display:none;background:#161B22;border-bottom:1px solid #21262D;overflow:hidden}
+.detail-panel.open{display:block;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.dp-top{padding:12px 14px 8px;display:flex;align-items:flex-start;justify-content:space-between;border-bottom:1px solid #21262D}
+.dp-left{}
+.dp-price{font-size:22px;font-weight:500;color:#E6EDF3}
+.dp-chg-row{display:flex;align-items:center;gap:6px;margin-top:4px}
+.dp-pill{font-size:11px;font-weight:600;padding:2px 8px;border-radius:7px}
+.dp-range{font-size:10px;color:#8B949E}
+
+/* IA PREDICCIÓN — el elemento clave */
+.dp-ai{background:#0D1117;border:1px solid #D4A01740;border-radius:10px;padding:10px 12px;margin:0 14px 10px}
+.dp-ai-top{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.dp-ai-icon{width:22px;height:22px;border-radius:6px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:11px}
+.dp-ai-title{font-size:10px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px}
+.dp-ai-badge{font-size:8px;padding:1px 7px;border-radius:10px;font-weight:600;margin-left:auto}
+.badge-bull{background:#1A3A2A;color:#3FB950}
+.badge-bear{background:#3A1A1A;color:#F85149}
+.badge-neu{background:#1A1A2A;color:#8B949E}
+
+.dp-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dp-ai-item{background:#0A0E14;border-radius:7px;padding:7px 9px}
+.dp-ai-lbl{font-size:8px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.dp-ai-val{font-size:14px;font-weight:600;color:#E6EDF3}
+.dp-ai-sub{font-size:9px;color:#8B949E;margin-top:2px}
+
+/* PROB BAR */
+.prob-wrap{margin:8px 0 2px}
+.prob-bar-bg{background:#21262D;border-radius:4px;height:6px;overflow:hidden;margin-top:4px}
+.prob-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+
+/* MÉTRICAS RÁPIDAS */
+.dp-metrics{display:flex;gap:6px;padding:0 14px 10px}
+.dm{flex:1;background:#0D1117;border-radius:8px;padding:7px 8px;text-align:center;border:0.5px solid #21262D}
+.dm-lbl{font-size:8px;color:#555;text-transform:uppercase;letter-spacing:.3px}
+.dm-val{font-size:11px;font-weight:600;color:#E6EDF3;margin-top:2px}
+
+/* BOTTOM NAV */
+.bnav{background:#161B22;border-top:0.5px solid #21262D;display:flex;padding:7px 0 5px}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5}
+.bni.on{opacity:1}
+.bni svg{width:19px;height:19px}
+.bni span{font-size:9px;color:#8B949E}
+.bni.on span{color:#D4A017}
+</style>
+</head>
+<body>
+<div class="phone">
+
+<!-- STATUS BAR -->
+<div class="sbar">
+  <span class="st" id="clock">9:41</span>
+  <div class="sr"><span>●●●●</span><span>WiFi</span><span>🔋</span></div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hl">
+    <svg width="22" height="22" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/>
+      <circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/>
+      <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/>
+      <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/>
+    </svg>
+    <span class="hn">AUREX</span>
+    <span class="hp">· Mercados</span>
+  </div>
+  <div class="live"><div class="ldot"></div><span id="liveLabel">LIVE</span></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sumrow">
+  <div class="sc"><div class="sl">BTC</div><div class="sv" id="s-btc">$84,230</div><div class="sc2 up" id="s-btc-c">+2.14%</div></div>
+  <div class="sc"><div class="sl">ETH</div><div class="sv" id="s-eth">$1,924</div><div class="sc2 dn" id="s-eth-c">-0.87%</div></div>
+  <div class="sc"><div class="sl">S&P500</div><div class="sv">5,218</div><div class="sc2 up">+0.42%</div></div>
+  <div class="sc"><div class="sl">Oro</div><div class="sv" id="s-gold">$3,018</div><div class="sc2 up">+0.82%</div></div>
+</div>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on"  onclick="sw('cripto',this)">🔷 Cripto</div>
+  <div class="tab"     onclick="sw('acciones',this)">📈 Acciones</div>
+  <div class="tab"     onclick="sw('futuros',this)">⚡ Futuros</div>
+  <div class="tab"     onclick="sw('comm',this)">🥇 Commodities</div>
+  <div class="tab"     onclick="sw('divisas',this)">💱 Divisas</div>
+  <div class="tab"     onclick="sw('etf',this)">📊 ETF & Bonos</div>
+</div>
+
+<!-- FILTRO PAÍSES -->
+<div class="pais-row" id="pais-row">
+  <div class="pais on" onclick="swPais('usa',this)">🇺🇸 EE.UU.</div>
+  <div class="pais"    onclick="swPais('arg',this)">🇦🇷 Argentina</div>
+  <div class="pais"    onclick="swPais('br',this)">🇧🇷 Brasil</div>
+  <div class="pais"    onclick="swPais('eu',this)">🇪🇺 Europa</div>
+  <div class="pais"    onclick="swPais('es',this)">🇪🇸 España</div>
+  <div class="pais"    onclick="swPais('jp',this)">🇯🇵 Japón</div>
+  <div class="pais"    onclick="swPais('cn',this)">🇨🇳 China</div>
+</div>
+
+<!-- TIMEFRAME + EDITAR -->
+<div class="tfrow">
+  <div class="tfs">
+    <div class="tf on" onclick="stf(this,'24h')">24h</div>
+    <div class="tf" onclick="stf(this,'7d')">7d</div>
+    <div class="tf" onclick="stf(this,'1m')">1m</div>
+  </div>
+  <span class="tf-time" id="tf-time">Act. ahora</span>
+  <div class="edit-btn" id="edit-btn" onclick="toggleEdit()">✏️ Editar orden</div>
+</div>
+
+<!-- BANNER MODO EDICIÓN -->
+<div class="edit-banner" id="edit-banner">
+  <span>Arrastrá para reordenar · Tocá ✕ para ocultar</span>
+  <span onclick="toggleEdit()" style="color:#D4A017;cursor:pointer">Listo ✓</span>
+</div>
+
+<div class="cnt" id="cnt"></div>
+
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Portfolio</span></div>
+  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg><span>IA</span></div>
+  <div class="bni on"><svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg><span style="color:#D4A017">Mercados</span></div>
+  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Alertas</span></div>
+  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"/><path d="M2 13h10M7 8l5 5-5 5"/></svg><span>Noticias</span></div>
+</div>
+
+</div>
+
+<script>
+// ── LOGOS REALES vía CDN ──
+const LOGOS = {
+  BTC:   'https://assets.coincap.io/assets/icons/btc@2x.png',
+  ETH:   'https://assets.coincap.io/assets/icons/eth@2x.png',
+  SOL:   'https://assets.coincap.io/assets/icons/sol@2x.png',
+  BNB:   'https://assets.coincap.io/assets/icons/bnb@2x.png',
+  XRP:   'https://assets.coincap.io/assets/icons/xrp@2x.png',
+  ADA:   'https://assets.coincap.io/assets/icons/ada@2x.png',
+  AVAX:  'https://assets.coincap.io/assets/icons/avax@2x.png',
+  DOT:   'https://assets.coincap.io/assets/icons/dot@2x.png',
+  LINK:  'https://assets.coincap.io/assets/icons/link@2x.png',
+  MATIC: 'https://assets.coincap.io/assets/icons/matic@2x.png',
+  AAPL:  'https://logo.clearbit.com/apple.com',
+  NVDA:  'https://logo.clearbit.com/nvidia.com',
+  MSFT:  'https://logo.clearbit.com/microsoft.com',
+  TSLA:  'https://logo.clearbit.com/tesla.com',
+  META:  'https://logo.clearbit.com/meta.com',
+  GOOGL: 'https://logo.clearbit.com/google.com',
+  AMZN:  'https://logo.clearbit.com/amazon.com',
+  GGAL:  'https://logo.clearbit.com/galiciaseguros.com.ar',
+  YPF:   'https://logo.clearbit.com/ypf.com',
+  BABA:  'https://logo.clearbit.com/alibaba.com',
+  TCEHY: 'https://logo.clearbit.com/tencent.com',
+  VALE3: 'https://logo.clearbit.com/vale.com',
+  PETR4: 'https://logo.clearbit.com/petrobras.com.br',
+  ASML:  'https://logo.clearbit.com/asml.com',
+  LVMH:  'https://logo.clearbit.com/lvmh.com',
+  SAP:   'https://logo.clearbit.com/sap.com',
+  '7203':'https://logo.clearbit.com/toyota.co.jp',
+  '6758':'https://logo.clearbit.com/sony.com',
+  SANT:  'https://logo.clearbit.com/santander.com',
+  BBVA:  'https://logo.clearbit.com/bbva.com',
+  SPY:   'https://logo.clearbit.com/ssga.com',
+  GLD:   'https://logo.clearbit.com/spdrgoldshares.com',
+};
+
+function logoHTML(sym, col, ico) {
+  const url = LOGOS[sym];
+  if (url) {
+    return `<div class="logo" style="background:${col}22">
+      <img src="${url}" alt="${sym}" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+      <div class="logo-fb" style="display:none;background:${col}22;color:${col}">${ico}</div>
+    </div>`;
+  }
+  return `<div class="logo"><div class="logo-fb" style="background:${col}22;color:${col}">${ico}</div></div>`;
+}
+
+// ── DATOS ──
+const DATA = {
+  cripto:[
+    {id:'BTCUSDT',s:'BTC', n:'Bitcoin',     p:'$84,230',c:'+2.14%',v:'Vol $42B', up:1,col:'#F7931A',ico:'₿',t:[44,48,43,52,57,54,60,56],ai:{target:'$96,400',prob:72,signal:'ALCISTA',upside:'+14.5%',stop:'$78,000',conf:4}},
+    {id:'ETHUSDT',s:'ETH', n:'Ethereum',    p:'$1,924', c:'-0.87%',v:'Vol $18B', up:0,col:'#627EEA',ico:'Ξ',t:[62,58,60,56,54,57,52,50],ai:{target:'$2,280',prob:61,signal:'NEUTRAL',upside:'+18.5%',stop:'$1,750',conf:3}},
+    {id:'SOLUSDT',s:'SOL', n:'Solana',      p:'$136.40',c:'+4.21%',v:'Vol $5B',  up:1,col:'#9945FF',ico:'◎',t:[36,40,46,42,52,56,60,62],ai:{target:'$168',  prob:68,signal:'ALCISTA',upside:'+23.2%',stop:'$118',  conf:4}},
+    {id:'BNBUSDT',s:'BNB', n:'BNB Chain',   p:'$605.20',c:'+1.33%',v:'Vol $2B',  up:1,col:'#F3BA2F',ico:'B',t:[44,48,46,50,52,48,54,56],ai:{target:'$680',  prob:58,signal:'ALCISTA',upside:'+12.4%',stop:'$560',  conf:3}},
+    {id:'XRPUSDT',s:'XRP', n:'Ripple',      p:'$2.18',  c:'-1.45%',v:'Vol $4B',  up:0,col:'#00AAE4',ico:'✕',t:[60,56,54,50,48,46,44,42],ai:{target:'$2.60', prob:55,signal:'NEUTRAL',upside:'+19.3%',stop:'$1.88', conf:3}},
+    {id:'ADAUSDT',s:'ADA', n:'Cardano',     p:'$0.718', c:'+0.92%',v:'Vol $1B',  up:1,col:'#3CC8C8',ico:'A',t:[44,46,48,50,48,52,54,56],ai:{target:'$0.92', prob:52,signal:'NEUTRAL',upside:'+28.1%',stop:'$0.62', conf:2}},
+    {id:'AVAXUSDT',s:'AVAX',n:'Avalanche',  p:'$34.20', c:'-2.10%',v:'Vol $880M',up:0,col:'#E84142',ico:'▲',t:[58,54,52,48,46,44,42,40],ai:{target:'$44',   prob:48,signal:'BAJISTA',upside:'+28.7%',stop:'$29',   conf:2}},
+    {id:'DOTUSDT',s:'DOT', n:'Polkadot',    p:'$6.82',  c:'+1.04%',v:'Vol $620M',up:1,col:'#E6007A',ico:'●',t:[42,44,46,48,50,52,54,56],ai:{target:'$8.40', prob:54,signal:'NEUTRAL',upside:'+23.2%',stop:'$5.90', conf:2}},
+  ],
+  acciones:{
+    usa:[
+      {s:'SPX', n:'S&P 500 Index',   p:'5,218',   c:'+0.42%',v:'Índice',    up:1,col:'#3FB950',ico:'S',t:[50,52,56,54,58,60,58,62],ai:{target:'5,650',prob:65,signal:'ALCISTA',upside:'+8.3%',  stop:'4,980',conf:4}},
+      {s:'NDX', n:'NASDAQ 100',      p:'17,842',  c:'+0.61%',v:'Índice',    up:1,col:'#58A6FF',ico:'N',t:[46,50,54,52,56,60,58,62],ai:{target:'19,200',prob:62,signal:'ALCISTA',upside:'+7.6%', stop:'16,800',conf:3}},
+      {s:'DJI', n:'Dow Jones 30',    p:'38,960',  c:'-0.18%',v:'Índice',    up:0,col:'#A78BFA',ico:'D',t:[58,56,60,58,56,54,56,54],ai:{target:'41,000',prob:55,signal:'NEUTRAL',upside:'+5.2%', stop:'37,200',conf:3}},
+      {s:'AAPL',n:'Apple Inc.',      p:'$218.40', c:'+1.12%',v:'Cap $3.4T', up:1,col:'#555',   ico:'🍎',t:[48,52,56,52,58,60,64,66],ai:{target:'$248',prob:70,signal:'ALCISTA',upside:'+13.6%',stop:'$198',conf:4}},
+      {s:'NVDA',n:'NVIDIA Corp.',    p:'$881.20', c:'+3.44%',v:'Cap $2.2T', up:1,col:'#76B900',ico:'N',t:[36,44,50,54,56,58,62,68],ai:{target:'$1,050',prob:67,signal:'ALCISTA',upside:'+19.2%',stop:'$780',conf:4}},
+      {s:'MSFT',n:'Microsoft',       p:'$415.60', c:'+0.78%',v:'Cap $3.1T', up:1,col:'#00A4EF',ico:'M',t:[50,52,54,56,54,58,60,62],ai:{target:'$460',prob:64,signal:'ALCISTA',upside:'+10.7%',stop:'$388',conf:3}},
+      {s:'TSLA',n:'Tesla Inc.',      p:'$268.30', c:'-2.11%',v:'Cap $854B', up:0,col:'#E31937',ico:'T',t:[68,64,60,56,54,52,48,44],ai:{target:'$310',prob:44,signal:'BAJISTA',upside:'+15.5%',stop:'$240',conf:2}},
+      {s:'META',n:'Meta Platforms',  p:'$564.80', c:'+1.88%',v:'Cap $1.4T', up:1,col:'#1877F2',ico:'f',t:[46,50,54,56,58,60,64,66],ai:{target:'$640',prob:68,signal:'ALCISTA',upside:'+13.3%',stop:'$520',conf:4}},
+      {s:'GOOGL',n:'Alphabet Inc.',  p:'$168.40', c:'+0.54%',v:'Cap $2.1T', up:1,col:'#EA4335',ico:'G',t:[48,50,52,54,56,58,60,62],ai:{target:'$192',prob:63,signal:'ALCISTA',upside:'+14.0%',stop:'$155',conf:3}},
+      {s:'AMZN',n:'Amazon',          p:'$196.80', c:'+1.22%',v:'Cap $2.1T', up:1,col:'#FF9900',ico:'a',t:[46,50,52,54,58,60,62,64],ai:{target:'$228',prob:66,signal:'ALCISTA',upside:'+15.8%',stop:'$178',conf:4}},
+    ],
+    arg:[
+      {s:'GGAL', n:'Grupo Galicia',  p:'$38.20',c:'+2.44%',v:'Cap $3.1B', up:1,col:'#75AADB',ico:'G',t:[44,48,52,50,54,56,58,62],ai:{target:'$46',  prob:64,signal:'ALCISTA',upside:'+20.4%',stop:'$34',  conf:3}},
+      {s:'YPF',  n:'YPF S.A.',       p:'$24.60',c:'-0.81%',v:'Cap $9.7B', up:0,col:'#009C3B',ico:'Y',t:[54,52,50,48,46,44,42,40],ai:{target:'$30',  prob:52,signal:'NEUTRAL',upside:'+22.0%',stop:'$20',  conf:2}},
+      {s:'PAMP', n:'Pampa Energía',  p:'$52.40',c:'+3.12%',v:'Cap $5.4B', up:1,col:'#FBBF24',ico:'P',t:[40,44,48,52,56,58,60,64],ai:{target:'$64',  prob:61,signal:'ALCISTA',upside:'+22.1%',stop:'$46',  conf:3}},
+      {s:'LOMA', n:'Loma Negra',     p:'$14.20',c:'+1.05%',v:'Cap $680M', up:1,col:'#8B949E',ico:'L',t:[44,46,48,50,52,54,56,58],ai:{target:'$17',  prob:55,signal:'NEUTRAL',upside:'+19.7%',stop:'$12',  conf:2}},
+      {s:'CEPU', n:'Central Puerto', p:'$8.40', c:'+0.48%',v:'Cap $1.2B', up:1,col:'#60A5FA',ico:'C',t:[46,48,50,52,54,56,58,60],ai:{target:'$10.5',prob:58,signal:'NEUTRAL',upside:'+25.0%',stop:'$7.20',conf:2}},
+    ],
+    br:[
+      {s:'VALE3',n:'Vale S.A.',      p:'R$62.40',c:'-1.20%',v:'Cap $29B',up:0,col:'#009C3B',ico:'V',t:[58,54,52,50,48,46,44,42],ai:{target:'R$72',prob:54,signal:'NEUTRAL',upside:'+15.4%',stop:'R$56',conf:2}},
+      {s:'PETR4',n:'Petrobras',      p:'R$38.20',c:'+0.84%',v:'Cap $49B',up:1,col:'#009C3B',ico:'P',t:[44,46,50,52,54,56,58,60],ai:{target:'R$46',prob:60,signal:'ALCISTA',upside:'+20.4%',stop:'R$33',conf:3}},
+      {s:'ITUB4',n:'Itaú Unibanco',  p:'R$32.80',c:'+0.56%',v:'Cap $34B',up:1,col:'#003366',ico:'I',t:[46,48,50,52,54,56,58,60],ai:{target:'R$38',prob:62,signal:'ALCISTA',upside:'+15.9%',stop:'R$29',conf:3}},
+      {s:'BBDC4',n:'Bradesco',       p:'R$14.20',c:'-0.42%',v:'Cap $14B',up:0,col:'#E32636',ico:'B',t:[54,52,50,48,46,44,42,40],ai:{target:'R$17',prob:48,signal:'BAJISTA',upside:'+19.7%',stop:'R$12',conf:2}},
+    ],
+    eu:[
+      {s:'ASML', n:'ASML Holding',   p:'€724',  c:'+1.84%',v:'Cap $287B',up:1,col:'#003399',ico:'A',t:[44,48,52,56,58,60,62,64],ai:{target:'€860',prob:65,signal:'ALCISTA',upside:'+18.8%',stop:'€650',conf:3}},
+      {s:'LVMH', n:'LVMH',           p:'€580',  c:'-0.44%',v:'Cap $289B',up:0,col:'#C5A028',ico:'L',t:[58,56,54,52,50,48,46,44],ai:{target:'€640',prob:52,signal:'NEUTRAL',upside:'+10.3%',stop:'€530',conf:2}},
+      {s:'SAP',  n:'SAP SE',         p:'€218',  c:'+0.92%',v:'Cap $253B',up:1,col:'#0070D2',ico:'S',t:[46,48,50,52,54,56,58,60],ai:{target:'€250',prob:61,signal:'ALCISTA',upside:'+14.7%',stop:'€198',conf:3}},
+      {s:'SIE',  n:'Siemens AG',     p:'€188',  c:'+1.12%',v:'Cap $151B',up:1,col:'#009999',ico:'S',t:[44,46,50,52,54,56,58,62],ai:{target:'€218',prob:60,signal:'ALCISTA',upside:'+15.9%',stop:'€168',conf:3}},
+    ],
+    es:[
+      {s:'SANT', n:'Banco Santander', p:'€4.82', c:'+1.24%',v:'Cap $82B', up:1,col:'#EC0000',ico:'S',t:[44,46,50,52,54,56,58,60],ai:{target:'€5.60',prob:64,signal:'ALCISTA',upside:'+16.2%',stop:'€4.20',conf:3}},
+      {s:'BBVA', n:'BBVA',            p:'€9.48', c:'+0.88%',v:'Cap $58B', up:1,col:'#004481',ico:'B',t:[42,46,48,52,54,56,58,62],ai:{target:'€11.20',prob:62,signal:'ALCISTA',upside:'+18.1%',stop:'€8.40',conf:3}},
+      {s:'ITX',  n:'Inditex (Zara)',  p:'€48.20',c:'+0.62%',v:'Cap $150B',up:1,col:'#000',   ico:'Z',t:[46,48,50,52,54,56,58,60],ai:{target:'€56',  prob:60,signal:'ALCISTA',upside:'+16.2%',stop:'€43',  conf:3}},
+      {s:'TEF',  n:'Telefónica',      p:'€3.92', c:'-0.25%',v:'Cap $22B', up:0,col:'#0189D7',ico:'T',t:[52,50,48,50,48,46,48,46],ai:{target:'€4.40',prob:50,signal:'NEUTRAL',upside:'+12.2%',stop:'€3.50',conf:2}},
+      {s:'REP',  n:'Repsol',          p:'€13.80',c:'+0.44%',v:'Cap $19B', up:1,col:'#FF6B00',ico:'R',t:[44,46,48,50,52,54,56,58],ai:{target:'€16.40',prob:57,signal:'NEUTRAL',upside:'+18.8%',stop:'€12.40',conf:2}},
+    ],
+    jp:[
+      {s:'7203', n:'Toyota Motor',   p:'¥3,420', c:'+0.88%',v:'Cap $228B',up:1,col:'#E50014',ico:'T',t:[44,46,50,52,54,56,58,62],ai:{target:'¥3,900',prob:62,signal:'ALCISTA',upside:'+14.0%',stop:'¥3,100',conf:3}},
+      {s:'6758', n:'Sony Group',     p:'¥2,840', c:'+1.22%',v:'Cap $175B',up:1,col:'#000',   ico:'S',t:[42,46,50,52,54,56,60,62],ai:{target:'¥3,300',prob:60,signal:'ALCISTA',upside:'+16.2%',stop:'¥2,550',conf:3}},
+      {s:'9984', n:'SoftBank Group', p:'¥9,180', c:'+2.44%',v:'Cap $133B',up:1,col:'#FF6600',ico:'S',t:[40,44,48,52,56,58,62,64],ai:{target:'¥10,800',prob:58,signal:'ALCISTA',upside:'+17.6%',stop:'¥8,200',conf:3}},
+      {s:'7974', n:'Nintendo',       p:'¥8,420', c:'-0.24%',v:'Cap $107B',up:0,col:'#E60012',ico:'N',t:[54,52,50,52,50,48,50,48],ai:{target:'¥9,600',prob:55,signal:'NEUTRAL',upside:'+14.0%',stop:'¥7,600',conf:2}},
+      {s:'8306', n:'Mitsubishi UFJ', p:'¥1,680', c:'+0.96%',v:'Cap $112B',up:1,col:'#E60012',ico:'M',t:[44,46,48,50,52,54,56,58],ai:{target:'¥1,980',prob:63,signal:'ALCISTA',upside:'+17.9%',stop:'¥1,500',conf:3}},
+    ],
+    cn:[
+      {s:'BABA', n:'Alibaba',        p:'$82.40', c:'+2.80%',v:'Cap $191B',up:1,col:'#FF6A00',ico:'A',t:[40,44,48,52,56,58,62,64],ai:{target:'$102',prob:58,signal:'ALCISTA',upside:'+23.8%',stop:'$70',conf:3}},
+      {s:'TCEHY',n:'Tencent',        p:'$54.20', c:'+1.44%',v:'Cap $494B',up:1,col:'#1296DB',ico:'T',t:[44,46,50,52,54,58,60,62],ai:{target:'$65',prob:57,signal:'ALCISTA',upside:'+19.9%',stop:'$46',conf:2}},
+      {s:'PDD',  n:'PDD Holdings',   p:'$114.80',c:'-0.88%',v:'Cap $159B',up:0,col:'#E34234',ico:'P',t:[58,56,54,52,50,48,46,44],ai:{target:'$130',prob:48,signal:'BAJISTA',upside:'+13.2%',stop:'$100',conf:2}},
+    ]
+  },
+  futuros:[
+    {s:'ES1!', n:'S&P 500 Fut Jun25',  p:'5,224',   c:'+0.48%',v:'1.2M cont.', up:1,col:'#3FB950',ico:'⚡',t:[50,52,56,54,58,60,58,62],st:1,ai:{target:'5,480',prob:62,signal:'ALCISTA',upside:'+4.9%', stop:'5,050',conf:3}},
+    {s:'NQ1!', n:'NASDAQ Fut Jun25',   p:'17,920',  c:'+0.72%',v:'480K cont.', up:1,col:'#58A6FF',ico:'⚡',t:[46,50,54,52,56,60,58,62],st:1,ai:{target:'18,800',prob:60,signal:'ALCISTA',upside:'+4.9%', stop:'17,200',conf:3}},
+    {s:'YM1!', n:'Dow Jones Fut Jun25',p:'38,940',  c:'-0.22%',v:'310K cont.', up:0,col:'#A78BFA',ico:'⚡',t:[58,56,60,58,56,54,56,54],st:1,ai:{target:'40,500',prob:54,signal:'NEUTRAL',upside:'+4.0%', stop:'37,500',conf:2}},
+    {s:'GC1!', n:'Oro Fut Abr25',      p:'$3,024',  c:'+0.88%',v:'180K cont.', up:1,col:'#D4A017',ico:'🥇',t:[44,48,52,56,58,60,64,66],st:1,ai:{target:'$3,280',prob:68,signal:'ALCISTA',upside:'+8.5%', stop:'$2,860',conf:4}},
+    {s:'CL1!', n:'Petróleo WTI Abr25', p:'$69.40',  c:'-1.24%',v:'420K cont.', up:0,col:'#654321',ico:'🛢',t:[62,58,54,50,48,44,42,40],st:1,ai:{target:'$74',   prob:48,signal:'BAJISTA',upside:'+6.6%', stop:'$64',   conf:2}},
+    {s:'BTC1!',n:'Bitcoin Fut Jun25',  p:'$84,500', c:'+2.30%',v:'85K cont.',  up:1,col:'#F7931A',ico:'₿',t:[44,48,52,56,58,60,64,68],st:1,ai:{target:'$96,000',prob:70,signal:'ALCISTA',upside:'+13.6%',stop:'$78,000',conf:4}},
+    {s:'SI1!', n:'Plata Fut May25',    p:'$33.60',  c:'+1.22%',v:'92K cont.',  up:1,col:'#C0C0C0',ico:'🥈',t:[42,46,50,48,52,54,58,60],st:1,ai:{target:'$38',   prob:62,signal:'ALCISTA',upside:'+13.1%',stop:'$30.50',conf:3}},
+    {s:'NG1!', n:'Gas Natural Fut',    p:'$4.12',   c:'+2.88%',v:'210K cont.', up:1,col:'#FF6B35',ico:'🔥',t:[36,40,44,48,50,52,54,56],st:1,ai:{target:'$4.80',prob:58,signal:'ALCISTA',upside:'+16.5%',stop:'$3.60',conf:3}},
+  ],
+  comm:[
+    {s:'XAU', n:'Oro Spot',        p:'$3,018',c:'+0.82%',v:'Spot $180B',up:1,col:'#D4A017',ico:'🥇',t:[44,48,52,56,58,62,64,66],ai:{target:'$3,280',prob:70,signal:'ALCISTA',upside:'+8.7%', stop:'$2,840',conf:4}},
+    {s:'XAG', n:'Plata Spot',      p:'$33.42',c:'+1.14%',v:'Spot $12B', up:1,col:'#C0C0C0',ico:'🥈',t:[42,46,50,48,52,54,58,60],ai:{target:'$38',  prob:64,signal:'ALCISTA',upside:'+13.7%',stop:'$30',  conf:3}},
+    {s:'BRENT',n:'Petróleo Brent', p:'$73.20',c:'-0.95%',v:'Global',    up:0,col:'#654321',ico:'🛢',t:[62,58,54,52,50,46,44,42],ai:{target:'$78',  prob:48,signal:'BAJISTA',upside:'+6.6%', stop:'$67',  conf:2}},
+    {s:'WTI', n:'Petróleo WTI',    p:'$69.40',c:'-1.24%',v:'Global',    up:0,col:'#888',   ico:'⛽',t:[64,60,56,52,50,46,44,40],ai:{target:'$74',  prob:47,signal:'BAJISTA',upside:'+6.6%', stop:'$63',  conf:2}},
+    {s:'NG',  n:'Gas Natural',     p:'$4.12', c:'+2.88%',v:'Henry Hub', up:1,col:'#FF6B35',ico:'🔥',t:[36,40,44,48,50,52,54,56],ai:{target:'$4.80',prob:60,signal:'ALCISTA',upside:'+16.5%',stop:'$3.60',conf:3}},
+    {s:'XPT', n:'Platino Spot',    p:'$975',  c:'+0.44%',v:'Spot $4B',  up:1,col:'#E5E5E5',ico:'Pt',t:[44,46,48,50,52,54,56,58],ai:{target:'$1,080',prob:56,signal:'NEUTRAL',upside:'+10.8%',stop:'$900',conf:2}},
+    {s:'XCU', n:'Cobre (LME)',     p:'$4.42', c:'+1.12%',v:'LME',       up:1,col:'#B87333',ico:'Cu',t:[42,46,50,52,54,56,58,60],ai:{target:'$5.10',prob:62,signal:'ALCISTA',upside:'+15.4%',stop:'$4.00',conf:3}},
+    {s:'CORN',n:'Maíz CBOT',       p:'$458',  c:'-0.44%',v:'CBOT',      up:0,col:'#FFD700',ico:'🌽',t:[54,52,50,52,48,50,48,46],ai:{target:'$490',prob:50,signal:'NEUTRAL',upside:'+7.0%', stop:'$430',conf:2}},
+  ],
+  divisas:[
+    {s:'BLUE',   n:'Dólar Blue Bs.As.', p:'1,215',  c:'+0.83%',v:'Informal',   up:1,col:'#3FB950',ico:'💵',t:[42,46,50,54,58,62,66,70],ai:{target:'1,350',prob:66,signal:'ALCISTA',upside:'+11.1%',stop:'1,120',conf:3}},
+    {s:'CCL',    n:'Dólar CCL / Cable', p:'1,198',  c:'+0.71%',v:'Financiero', up:1,col:'#FBBF24',ico:'💱',t:[40,44,48,52,56,60,64,68],ai:{target:'1,320',prob:62,signal:'ALCISTA',upside:'+10.2%',stop:'1,100',conf:3}},
+    {s:'OFI',    n:'Dólar Oficial BCRA',p:'1,070',  c:'+0.28%',v:'BCRA',       up:1,col:'#75AADB',ico:'$', t:[38,40,44,46,50,52,56,60],ai:{target:'1,180',prob:70,signal:'ALCISTA',upside:'+10.3%',stop:'1,010',conf:4}},
+    {s:'EUR/USD',n:'Euro / Dólar',      p:'1.0842', c:'+0.12%',v:'Vol $1.8T',  up:1,col:'#003399',ico:'€', t:[48,50,52,50,52,54,52,54],ai:{target:'1.12',prob:55,signal:'NEUTRAL',upside:'+3.3%', stop:'1.05',conf:2}},
+    {s:'DXY',    n:'Índice Dólar',       p:'104.32', c:'-0.31%',v:'Basket',     up:0,col:'#58A6FF',ico:'$', t:[58,56,54,52,54,52,50,48],ai:{target:'101.5',prob:55,signal:'BAJISTA',upside:'+0%',   stop:'107',conf:2}},
+    {s:'USD/BRL',n:'Dólar / Real',       p:'5.74',   c:'+0.44%',v:'Vol $12B',  up:1,col:'#009C3B',ico:'R', t:[44,46,48,50,52,54,56,58],ai:{target:'6.10',prob:58,signal:'ALCISTA',upside:'+6.3%', stop:'5.40',conf:2}},
+    {s:'GBP/USD',n:'Libra / Dólar',      p:'1.2840', c:'+0.08%',v:'Vol $800B', up:1,col:'#00247D',ico:'£', t:[46,48,50,52,50,52,54,56],ai:{target:'1.32',prob:52,signal:'NEUTRAL',upside:'+2.8%', stop:'1.24',conf:2}},
+    {s:'USD/JPY',n:'Dólar / Yen',         p:'149.82', c:'-0.22%',v:'Vol $700B', up:0,col:'#BC002D',ico:'¥', t:[56,54,52,50,52,50,48,46],ai:{target:'145',prob:50,signal:'NEUTRAL',upside:'+0%',   stop:'154',conf:2}},
+  ],
+  etf:[
+    {s:'SPY',   n:'SPDR S&P 500 ETF',    p:'$521.40',c:'+0.42%',v:'AUM $561B', up:1,col:'#3FB950',ico:'📊',t:[50,52,56,54,58,60,58,62],ai:{target:'$572',prob:63,signal:'ALCISTA',upside:'+9.7%', stop:'$488',conf:3}},
+    {s:'QQQ',   n:'Invesco NASDAQ ETF',  p:'$446.20',c:'+0.61%',v:'AUM $244B', up:1,col:'#58A6FF',ico:'📊',t:[46,50,54,52,56,60,58,62],ai:{target:'$492',prob:61,signal:'ALCISTA',upside:'+10.3%',stop:'$416',conf:3}},
+    {s:'GLD',   n:'SPDR Gold ETF',       p:'$278.40',c:'+0.80%',v:'AUM $72B',  up:1,col:'#D4A017',ico:'🥇',t:[44,48,52,56,60,62,64,66],ai:{target:'$302',prob:66,signal:'ALCISTA',upside:'+8.5%', stop:'$258',conf:3}},
+    {s:'VTI',   n:'Vanguard Total Mkt',  p:'$260.80',c:'+0.38%',v:'AUM $441B', up:1,col:'#A78BFA',ico:'📊',t:[48,50,52,54,56,58,60,62],ai:{target:'$286',prob:62,signal:'ALCISTA',upside:'+9.7%', stop:'$244',conf:3}},
+    {s:'EEM',   n:'iShares EM ETF',      p:'$42.80', c:'+1.12%',v:'AUM $18B',  up:1,col:'#60A5FA',ico:'🌎',t:[42,44,46,48,52,54,56,58],ai:{target:'$50',  prob:54,signal:'NEUTRAL',upside:'+16.8%',stop:'$38',conf:2}},
+    {s:'UST2Y', n:'Bono EE.UU. 2 años',  p:'4.28%',  c:'-0.04%',v:'Tesoro USA', up:0,col:'#58A6FF',ico:'🏛',t:[58,57,56,57,56,55,56,55],ai:{target:'3.80%',prob:55,signal:'NEUTRAL',upside:'-',stop:'4.80%',conf:2}},
+    {s:'UST10Y',n:'Bono EE.UU. 10 años', p:'4.62%',  c:'-0.02%',v:'Tesoro USA', up:0,col:'#A78BFA',ico:'🏛',t:[56,55,54,55,54,53,54,53],ai:{target:'4.20%',prob:52,signal:'NEUTRAL',upside:'-',stop:'5.20%',conf:2}},
+    {s:'GD30',  n:'Bono Argentina GD30',  p:'$67.40', c:'+1.82%',v:'Soberano AR',up:1,col:'#75AADB',ico:'🇦🇷',t:[36,38,42,40,44,46,48,52],ai:{target:'$82',  prob:56,signal:'ALCISTA',upside:'+21.7%',stop:'$58',conf:2}},
+    {s:'EMBIG', n:'JP Morgan EM Bonds',   p:'$88.20', c:'+0.34%',v:'Emergentes', up:1,col:'#3FB950',ico:'🌎',t:[46,48,50,52,54,56,58,60],ai:{target:'$96',  prob:58,signal:'NEUTRAL',upside:'+8.8%', stop:'$82',conf:2}},
+  ]
+};
+
+const LBLS={
+  cripto:'Criptomonedas · Top capitalización · 24/7',
+  acciones:'Acciones · Seleccioná país arriba',
+  futuros:'Futuros · Contratos activos (CME · COMEX)',
+  comm:'Materias Primas · Spot y futuros próximos',
+  divisas:'Divisas · FX y tipos de cambio Argentina',
+  etf:'ETFs & Bonos · Renta fija y variable global'
+};
+const BCOLORS={
+  cripto:{bg:'#1A1A3A',col:'#A78BFA',t:'24/7'},
+  acciones:{bg:'#1A2A1A',col:'#3FB950',t:'NYSE'},
+  futuros:{bg:'#2A1E00',col:'#FBBF24',t:'CME'},
+  comm:{bg:'#2A1400',col:'#D4A017',t:'SPOT'},
+  divisas:{bg:'#0D1A2A',col:'#58A6FF',t:'FX'},
+  etf:{bg:'#0D2A1A',col:'#3FB950',t:'FUND'}
+};
+const SIGNAL_COL = {ALCISTA:{bg:'#1A3A2A',col:'#3FB950'},BAJISTA:{bg:'#3A1A1A',col:'#F85149'},NEUTRAL:{bg:'#1A1A2A',col:'#8B949E'}};
+
+let curTab='cripto', curPais='usa', curTF='24h', editMode=false;
+let openRow=null;
+
+function spark(t,up,w=50,h=22){
+  const mn=Math.min(...t),mx=Math.max(...t),r=mx-mn||1;
+  const pts=t.map((v,i)=>`${(4+(i/(t.length-1))*(w-8)).toFixed(1)},${(2+(1-((v-mn)/r))*(h-4)).toFixed(1)}`).join(' ');
+  const lx=(4+(w-8)).toFixed(1), ly=(2+(1-((t[t.length-1]-mn)/r))*(h-4)).toFixed(1);
+  const col=up?'#3FB950':'#F85149';
+  return `<svg width="${w}" height="${h}" class="spl" style="overflow:visible"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><circle cx="${lx}" cy="${ly}" r="2.5" fill="${col}"/></svg>`;
+}
+
+function detailHTML(it) {
+  const ai = it.ai;
+  const sc = SIGNAL_COL[ai.signal] || SIGNAL_COL.NEUTRAL;
+  const stars = '★'.repeat(ai.conf) + '☆'.repeat(5-ai.conf);
+  const probColor = ai.prob >= 65 ? '#3FB950' : ai.prob >= 50 ? '#FBBF24' : '#F85149';
+  return `
+  <div class="dp-top">
+    <div class="dp-left">
+      <div class="dp-price">${it.p}</div>
+      <div class="dp-chg-row">
+        <span class="dp-pill ${it.up?'u':'d'}">${it.c}</span>
+        <span class="dp-range">Vol: ${it.v}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="dp-ai">
+    <div class="dp-ai-top">
+      <div class="dp-ai-icon">✦</div>
+      <span class="dp-ai-title">Análisis IA Aurex</span>
+      <span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span>
+    </div>
+
+    <div class="dp-ai-grid">
+      <div class="dp-ai-item">
+        <div class="dp-ai-lbl">Precio objetivo IA</div>
+        <div class="dp-ai-val" style="color:#D4A017">${ai.target}</div>
+        <div class="dp-ai-sub">Upside estimado: <span style="color:#3FB950">${ai.upside}</span></div>
+      </div>
+      <div class="dp-ai-item">
+        <div class="dp-ai-lbl">Probabilidad IA</div>
+        <div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div>
+        <div class="prob-wrap">
+          <div class="prob-bar-bg">
+            <div class="prob-bar-fill" style="width:${ai.prob}%;background:${probColor}"></div>
+          </div>
+        </div>
+      </div>
+      <div class="dp-ai-item">
+        <div class="dp-ai-lbl">Stop Loss sugerido</div>
+        <div class="dp-ai-val" style="color:#F85149">${ai.stop}</div>
+        <div class="dp-ai-sub">Gestión del riesgo</div>
+      </div>
+      <div class="dp-ai-item">
+        <div class="dp-ai-lbl">Confianza IA</div>
+        <div class="dp-ai-val" style="font-size:12px;color:#D4A017">${stars}</div>
+        <div class="dp-ai-sub">${ai.conf}/5 — ${ai.conf>=4?'Alta':ai.conf>=3?'Media':'Baja'}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="dp-metrics">
+    <div class="dm"><div class="dm-lbl">Cap / Vol</div><div class="dm-val">${it.v}</div></div>
+    <div class="dm"><div class="dm-lbl">Cambio 24h</div><div class="dm-val ${it.up?'up':'dn'}">${it.c}</div></div>
+    <div class="dm"><div class="dm-lbl">Timeframe</div><div class="dm-val">${curTF}</div></div>
+  </div>`;
+}
+
+function getItems(){
+  if(curTab==='acciones') return DATA.acciones[curPais]||[];
+  return DATA[curTab]||[];
+}
+
+function render(){
+  const items=getItems(), b=BCOLORS[curTab];
+  const cnt=document.getElementById('cnt');
+  cnt.className='cnt'+(editMode?' edit-mode':'');
+
+  let h=`<div class="shdr"><span class="shn">${LBLS[curTab]}</span><span class="sbg" style="background:${b.bg};color:${b.col}">${b.t}</span></div>`;
+  items.forEach((it,i)=>{
+    const logo=logoHTML(it.s,it.col,it.ico);
+    const fut=it.st?'<span class="fut-open">ABIERTO</span>':'';
+    const drag=editMode?`<span class="drag-handle" draggable="true" ondragstart="dragStart(event,${i})" ondragover="dragOver(event)" ondrop="drop(event,${i})">⋮⋮</span>`:'';
+    h+=`<div class="ar" id="row-${i}" onclick="toggleDetail(${i})">
+      ${drag}
+      ${logo}
+      <div class="ai">
+        <div class="an">${it.s}</div>
+        <div class="as">${it.n}</div>
+        <div class="ameta"><span class="vol-tag">${it.v}</span>${fut}</div>
+      </div>
+      ${spark(it.t,it.up)}
+      <div class="ar-r">
+        <div class="ap">${it.p}</div>
+        <div class="apct ${it.up?'u':'d'}">${it.c}</div>
+      </div>
+    </div>
+    <div class="detail-panel" id="detail-${i}">${detailHTML(it)}</div>`;
+  });
+  cnt.innerHTML=h;
+  openRow=null;
+}
+
+function toggleDetail(i){
+  if(editMode) return;
+  const panel=document.getElementById(`detail-${i}`);
+  const row=document.getElementById(`row-${i}`);
+  if(openRow!==null && openRow!==i){
+    document.getElementById(`detail-${openRow}`).classList.remove('open');
+    document.getElementById(`row-${openRow}`).classList.remove('active');
+  }
+  if(panel.classList.contains('open')){
+    panel.classList.remove('open');
+    row.classList.remove('active');
+    openRow=null;
+  } else {
+    panel.classList.add('open');
+    row.classList.add('active');
+    openRow=i;
+  }
+}
+
+function sw(tab,el){
+  curTab=tab; openRow=null;
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  const pr=document.getElementById('pais-row');
+  tab==='acciones'?pr.classList.add('show'):pr.classList.remove('show');
+  render();
+}
+
+function swPais(p,el){
+  curPais=p; openRow=null;
+  document.querySelectorAll('.pais').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on'); render();
+}
+
+function stf(el,tf){
+  curTF=tf;
+  document.querySelectorAll('.tf').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function toggleEdit(){
+  editMode=!editMode;
+  document.getElementById('edit-btn').classList.toggle('on',editMode);
+  document.getElementById('edit-banner').classList.toggle('show',editMode);
+  render();
+}
+
+// Drag & drop para reordenar
+let dragIdx=null;
+function dragStart(e,i){ dragIdx=i; e.stopPropagation(); }
+function dragOver(e){ e.preventDefault(); }
+function drop(e,i){
+  e.stopPropagation();
+  if(dragIdx===null||dragIdx===i) return;
+  const items=getItems();
+  const moved=items.splice(dragIdx,1)[0];
+  items.splice(i,0,moved);
+  dragIdx=null; render();
+}
+
+// ── APIS REALES ──
+async function fetchLive(){
+  try{
+    const syms=['BTCUSDT','ETHUSDT','SOLUSDT','BNBUSDT','XRPUSDT','ADAUSDT','AVAXUSDT','DOTUSDT'];
+    const r=await fetch(`https://api.binance.com/api/v3/ticker/24hr?symbols=${JSON.stringify(syms)}`);
+    const d=await r.json();
+    d.forEach(t=>{
+      const item=DATA.cripto.find(x=>x.id===t.symbol);
+      if(!item) return;
+      const p=parseFloat(t.lastPrice), c=parseFloat(t.priceChangePercent);
+      item.up=c>=0?1:0; item.c=(c>=0?'+':'')+c.toFixed(2)+'%';
+      if(p>=1000) item.p='$'+p.toLocaleString('en',{maximumFractionDigits:0});
+      else if(p>=1) item.p='$'+p.toFixed(2);
+      else item.p='$'+p.toFixed(4);
+      // Actualizar AI target dinámicamente basado en precio real
+      item.ai.target='$'+(p*1.14).toLocaleString('en',{maximumFractionDigits:p>=1000?0:2});
+    });
+    const btc=d.find(x=>x.symbol==='BTCUSDT');
+    const eth=d.find(x=>x.symbol==='ETHUSDT');
+    if(btc){
+      const p=parseFloat(btc.lastPrice),c=parseFloat(btc.priceChangePercent);
+      document.getElementById('s-btc').textContent='$'+Math.round(p).toLocaleString('en');
+      const el=document.getElementById('s-btc-c');
+      el.textContent=(c>=0?'+':'')+c.toFixed(2)+'%';
+      el.className='sc2 '+(c>=0?'up':'dn');
+    }
+    if(eth){
+      const p=parseFloat(eth.lastPrice),c=parseFloat(eth.priceChangePercent);
+      document.getElementById('s-eth').textContent='$'+Math.round(p).toLocaleString('en');
+      const el=document.getElementById('s-eth-c');
+      el.textContent=(c>=0?'+':'')+c.toFixed(2)+'%';
+      el.className='sc2 '+(c>=0?'up':'dn');
+    }
+    if(curTab==='cripto') render();
+  }catch(e){}
+}
+
+function updateClock(){
+  const now=new Date();
+  document.getElementById('clock').textContent=
+    now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
+  document.getElementById('tf-time').textContent=
+    'Act. hace '+now.getSeconds()+'s';
+}
+
+render();
+fetchLive();
+updateClock();
+setInterval(fetchLive,5000);
+setInterval(updateClock,1000);
+</script>
+</body>
+</html>

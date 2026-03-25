@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurex — Sistema de Identidad Visual v1.0</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080400;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:32px 24px;color:#F5F0E8}
+.wrap{max-width:820px;margin:0 auto}
+.page-title{font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:2px;color:#6B5010;margin-bottom:32px;padding-bottom:14px;border-bottom:0.5px solid #2A1800;display:flex;justify-content:space-between;align-items:center}
+.slabel{font-size:10px;font-weight:500;text-transform:uppercase;letter-spacing:1px;color:#6B5010;margin:0 0 14px}
+.divider{height:1px;background:#2A1800;margin:10px 0 28px}
+.badge{background:#D4A01720;border:0.5px solid #D4A017;color:#D4A017;font-size:9px;padding:3px 10px;border-radius:20px;letter-spacing:.5px}
+
+/* HERO */
+.hero{background:#0D0800;border-radius:20px;padding:44px 52px;display:flex;align-items:center;gap:28px;margin-bottom:10px;border:0.5px solid #3D2A00}
+.hero-wordmark{font-size:48px;font-weight:500;letter-spacing:3px;color:#D4A017;line-height:1}
+.hero-sub{font-size:11px;letter-spacing:3.5px;color:#8B6910;margin-top:8px}
+.hero-desc{font-size:10px;color:#5A4010;margin-left:auto;text-align:right;line-height:1.8;max-width:200px}
+.elected{font-size:10px;color:#D4A017;text-align:center;padding:8px 0 24px;letter-spacing:.3px}
+
+/* APP ICONS */
+.app-row{display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:10px}
+.app-size-label{font-size:9px;color:#5A4010;text-align:center;margin-top:8px;line-height:1.5}
+
+/* SCREENS */
+.app-screens{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px}
+.screen-card{background:#0D0800;border-radius:14px;padding:18px;display:flex;flex-direction:column;align-items:flex-start;gap:10px;border:0.5px solid #2A1800}
+.screen-label{font-size:9px;color:#4A3010;text-transform:uppercase;letter-spacing:.8px;margin-top:4px;line-height:1.5}
+
+/* PALETTE */
+.palette{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.swatch{flex:1;min-width:80px;border-radius:10px;padding:16px 12px 12px;text-align:center}
+.sw-name{font-size:10px;font-weight:500;margin-bottom:3px}
+.sw-hex{font-size:9px;opacity:.7}
+
+/* TYPO */
+.typo-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+.typo-card{flex:1;background:#0D0800;border-radius:12px;padding:18px;border:0.5px solid #2A1800}
+
+/* RULES */
+.rules{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.rule-card{background:#0D0800;border-radius:12px;padding:14px 16px;border:0.5px solid #2A1800;font-size:10px;color:#6B5010;line-height:1.7}
+.rule-card strong{color:#D4A017;font-weight:500;display:block;margin-bottom:4px}
+
+footer{text-align:center;font-size:9px;color:#2A1800;margin-top:40px;padding-top:16px;border-top:0.5px solid #2A1800;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="page-title">
+  <span>Aurex · Sistema de Identidad Visual · v1.0 · Marzo 2026</span>
+  <span class="badge">DECISIONES FINALES</span>
+</div>
+
+<!-- LOGO PRINCIPAL -->
+<div class="slabel">Logo principal — versión definitiva</div>
+<div class="hero">
+  <svg width="90" height="90" viewBox="0 0 60 60">
+    <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="1.8"/>
+    <circle cx="30" cy="30" r="23" fill="#1A0A00" stroke="#8B620860" stroke-width=".8"/>
+    <circle cx="30" cy="30" r="19" fill="none" stroke="#D4A01730" stroke-width=".5"/>
+    <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01730" stroke-width="5" stroke-linecap="round"/>
+    <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A01730" stroke-width="4.5" stroke-linecap="round"/>
+    <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+    <circle cx="30" cy="33" r="1.8" fill="#F5C842"/>
+  </svg>
+  <div>
+    <div class="hero-wordmark">AUREX</div>
+    <div class="hero-sub">INVEST · AI</div>
+  </div>
+  <div class="hero-desc">
+    Sello grabado clásico<br>
+    Doble borde circular<br>
+    AX en relieve dorado<br>
+    Punto de origen en oro brillante<br>
+    Fondo negro cálido #1A0D00<br>
+    Letras doradas #D4A017
+  </div>
+</div>
+<div class="elected">✓ Símbolo: Sello Clásico &nbsp;·&nbsp; ✓ App Store: Fondo negro &nbsp;·&nbsp; ✓ Logo: Negro con letras doradas — ELEGIDO</div>
+
+<div class="divider"></div>
+
+<!-- APP STORE -->
+<div class="slabel">Ícono App Store — todos los tamaños iOS</div>
+<div class="app-row">
+
+  <div>
+    <div style="width:128px;height:128px;border-radius:28px;background:#1A0D00;border:2px solid #D4A017;display:flex;align-items:center;justify-content:center">
+      <svg width="100" height="100" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="1.8"/>
+        <circle cx="30" cy="30" r="23" fill="#1A0A00" stroke="#8B620860" stroke-width=".8"/>
+        <circle cx="30" cy="30" r="19" fill="none" stroke="#D4A01730" stroke-width=".5"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01730" stroke-width="5" stroke-linecap="round"/>
+        <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A01730" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+        <circle cx="30" cy="33" r="1.8" fill="#F5C842"/>
+      </svg>
+    </div>
+    <div class="app-size-label">1024×1024<br>App Store</div>
+  </div>
+
+  <div>
+    <div style="width:80px;height:80px;border-radius:18px;background:#1A0D00;border:1.5px solid #D4A01780;display:flex;align-items:center;justify-content:center">
+      <svg width="62" height="62" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/>
+        <circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01740" stroke-width="5.5" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A01740" stroke-width="5" stroke-linecap="round"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="30" cy="33" r="2" fill="#F5C842"/>
+      </svg>
+    </div>
+    <div class="app-size-label">180×180<br>iPhone Home</div>
+  </div>
+
+  <div>
+    <div style="width:54px;height:54px;border-radius:12px;background:#1A0D00;border:1px solid #D4A01760;display:flex;align-items:center;justify-content:center">
+      <svg width="42" height="42" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2.5"/>
+        <circle cx="30" cy="30" r="21" fill="#1A0A00"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01740" stroke-width="6" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A01740" stroke-width="5.5" stroke-linecap="round"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.8" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="app-size-label">80×80<br>Spotlight</div>
+  </div>
+
+  <div>
+    <div style="width:38px;height:38px;border-radius:8px;background:#1A0D00;border:1px solid #D4A01750;display:flex;align-items:center;justify-content:center">
+      <svg width="30" height="30" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="26" fill="#2A1400" stroke="#D4A017" stroke-width="3"/>
+        <circle cx="30" cy="30" r="20" fill="#1A0A00"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="3.2" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A017" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="app-size-label">58×58<br>Notif.</div>
+  </div>
+
+  <div>
+    <div style="width:26px;height:26px;border-radius:6px;background:#1A0D00;border:1px solid #D4A01740;display:flex;align-items:center;justify-content:center">
+      <svg width="20" height="20" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="26" fill="#2A1400" stroke="#D4A017" stroke-width="4"/>
+        <circle cx="30" cy="30" r="18" fill="#1A0A00"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="4" stroke-linecap="round"/>
+        <path d="M23 41 L30 33 M37 41 L30 33" fill="none" stroke="#D4A017" stroke-width="3.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="app-size-label">29×29<br>Config.</div>
+  </div>
+
+  <div style="margin-left:auto;font-size:10px;color:#5A4010;line-height:1.9;align-self:center;text-align:right">
+    ✓ Fondo negro elegido<br>
+    ✓ Legible en todos los tamaños<br>
+    ✓ Se diferencia en el App Store<br>
+    ✓ Compatible iOS y Android
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- USO EN APP -->
+<div class="slabel">Uso dentro de la app</div>
+<div class="app-screens">
+
+  <div class="screen-card">
+    <div style="display:flex;align-items:center;gap:10px">
+      <svg width="30" height="30" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="1.8"/>
+        <circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width=".8"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01740" stroke-width="5" stroke-linecap="round"/>
+        <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A01740" stroke-width="4.5" stroke-linecap="round"/>
+        <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      <span style="font-size:15px;font-weight:500;letter-spacing:1.5px;color:#D4A017">AUREX</span>
+    </div>
+    <div class="screen-label">Navbar / Header<br>de la app</div>
+  </div>
+
+  <div class="screen-card" style="align-items:center">
+    <svg width="52" height="52" viewBox="0 0 60 60">
+      <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="1.8"/>
+      <circle cx="30" cy="30" r="23" fill="#1A0A00" stroke="#8B620860" stroke-width=".8"/>
+      <circle cx="30" cy="30" r="19" fill="none" stroke="#D4A01730" stroke-width=".5"/>
+      <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#D4A01730" stroke-width="5" stroke-linecap="round"/>
+      <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A01730" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="30" cy="33" r="1.8" fill="#F5C842"/>
+    </svg>
+    <div style="font-size:17px;font-weight:500;letter-spacing:2px;color:#D4A017;margin-top:4px">AUREX</div>
+    <div style="font-size:9px;letter-spacing:2.5px;color:#8B6910">INVEST · AI</div>
+    <div class="screen-label">Splash screen<br>Pantalla de bienvenida</div>
+  </div>
+
+  <div class="screen-card" style="align-items:center;justify-content:center">
+    <div style="width:44px;height:44px;border-radius:10px;background:#1A0D00;border:1.5px solid #D4A01780;display:flex;align-items:center;justify-content:center">
+      <svg width="34" height="34" viewBox="0 0 60 60">
+        <circle cx="30" cy="30" r="26" fill="#2A1400" stroke="#D4A017" stroke-width="2"/>
+        <circle cx="30" cy="30" r="20" fill="#1A0A00"/>
+        <path d="M30 14 L37 33 M30 14 L23 33 M24 25 L36 25" fill="none" stroke="#F5C842" stroke-width="2.8" stroke-linecap="round"/>
+        <path d="M24 39 L30 32 M36 39 L30 32" fill="none" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <div class="screen-label">Ícono en iPhone<br>Pantalla de inicio</div>
+  </div>
+
+</div>
+
+<div class="divider"></div>
+
+<!-- PALETTE -->
+<div class="slabel">Paleta de colores — sistema completo</div>
+<div class="palette">
+  <div class="swatch" style="background:#D4A017">
+    <div class="sw-name" style="color:#3D2000">Oro Aurex</div>
+    <div class="sw-hex" style="color:#5A3800">#D4A017</div>
+    <div style="font-size:8px;color:#5A3800;margin-top:4px">Color principal</div>
+  </div>
+  <div class="swatch" style="background:#F5C842">
+    <div class="sw-name" style="color:#3D2000">Oro brillante</div>
+    <div class="sw-hex" style="color:#5A3800">#F5C842</div>
+    <div style="font-size:8px;color:#5A3800;margin-top:4px">Highlights</div>
+  </div>
+  <div class="swatch" style="background:#8B6208">
+    <div class="sw-name" style="color:#F5C842">Oro oscuro</div>
+    <div class="sw-hex" style="color:#D4A017">#8B6208</div>
+    <div style="font-size:8px;color:#D4A017;margin-top:4px">Sombras del sello</div>
+  </div>
+  <div class="swatch" style="background:#1A0D00;border:0.5px solid #3D2A00">
+    <div class="sw-name" style="color:#D4A017">Negro cálido</div>
+    <div class="sw-hex" style="color:#8B6910">#1A0D00</div>
+    <div style="font-size:8px;color:#8B6910;margin-top:4px">Fondo principal</div>
+  </div>
+  <div class="swatch" style="background:#2A1800;border:0.5px solid #3D2A00">
+    <div class="sw-name" style="color:#D4A017">Marrón oscuro</div>
+    <div class="sw-hex" style="color:#8B6910">#2A1800</div>
+    <div style="font-size:8px;color:#8B6910;margin-top:4px">Cards / bordes</div>
+  </div>
+  <div class="swatch" style="background:#F5F0E8;border:0.5px solid #D4A01730">
+    <div class="sw-name" style="color:#3D2000">Crema</div>
+    <div class="sw-hex" style="color:#8B6910">#F5F0E8</div>
+    <div style="font-size:8px;color:#8B6910;margin-top:4px">Textos sobre fondo</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TIPOGRAFIA -->
+<div class="slabel">Tipografía del nombre y tagline</div>
+<div class="typo-row">
+  <div class="typo-card">
+    <div style="font-size:10px;color:#5A4010;margin-bottom:10px">Nombre principal</div>
+    <div style="font-size:36px;font-weight:500;letter-spacing:3px;color:#D4A017">AUREX</div>
+    <div style="font-size:9px;color:#5A4010;margin-top:8px;line-height:1.7">
+      Todo mayúscula · Peso 500 · Espaciado 3px<br>
+      Color: Oro Aurex #D4A017 · ✓ Elegido
+    </div>
+  </div>
+  <div class="typo-card">
+    <div style="font-size:10px;color:#5A4010;margin-bottom:10px">Tagline</div>
+    <div style="font-size:13px;letter-spacing:3.5px;color:#8B6910">INVEST · AI</div>
+    <div style="font-size:9px;color:#5A4010;margin-top:8px;line-height:1.7">
+      Todo mayúscula · Peso 400 · Espaciado 3.5px<br>
+      Color: Oro apagado #8B6910
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- REGLAS DE USO -->
+<div class="slabel">Reglas de uso de la marca</div>
+<div class="rules">
+  <div class="rule-card">
+    <strong>✓ Usar siempre</strong>
+    Logo negro con letras doradas como versión principal · Símbolo mínimo 24px · Espaciado del nombre respetado · Colores del sistema aprobado
+  </div>
+  <div class="rule-card">
+    <strong>✗ Nunca usar</strong>
+    Fondo blanco puro con el logo · Colores fuera de la paleta · Comprimir o estirar el símbolo · Cambiar la tipografía del nombre
+  </div>
+  <div class="rule-card">
+    <strong>App Store</strong>
+    Ícono: fondo negro #1A0D00 · Sello grabado clásico · Radio de esquinas 22% · Sin texto en el ícono · Solo el símbolo
+  </div>
+  <div class="rule-card">
+    <strong>Redes sociales</strong>
+    Avatar: solo el símbolo sobre fondo negro · Sin el nombre · Tamaño mínimo 200×200px · Mismo sello clásico
+  </div>
+</div>
+
+<footer>AUREX · Sistema de Identidad Visual · Versión 1.0 · Marzo 2026 · Decisiones finales aprobadas</footer>
+
+</div>
+</body>
+</html>
