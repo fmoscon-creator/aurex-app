@@ -2,20 +2,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Aurex">
 <meta name="theme-color" content="#1A0D00">
-<title>Aurex — Mercados</title>
+<title>Aurex</title>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%231A0D00'/%3E%3Ccircle cx='90' cy='90' r='75' fill='%232A1400' stroke='%23D4A017' stroke-width='5'/%3E%3Ccircle cx='90' cy='90' r='62' fill='%231A0A00' stroke='%238B620860' stroke-width='2'/%3E%3Cpath d='M90 38 L112 98 M90 38 L68 98 M72 72 L108 72' fill='none' stroke='%23F5C842' stroke-width='7' stroke-linecap='round'/%3E%3Cpath d='M72 110 L90 90 M108 110 L90 90' fill='none' stroke='%23D4A017' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='29' fill='%231A0D00'/%3E%3Ccircle cx='30' cy='30' r='25' fill='%232A1400' stroke='%23D4A017' stroke-width='2'/%3E%3Ccircle cx='30' cy='30' r='20' fill='%231A0A00' stroke='%238B6208' stroke-width='1'/%3E%3Cpath d='M30 13 L38 35 M30 13 L22 35 M23 26 L37 26' fill='none' stroke='%23F5C842' stroke-width='2.5' stroke-linecap='round'/%3E%3Cpath d='M23 40 L30 33 M37 40 L30 33' fill='none' stroke='%23D4A017' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#1A1A2E;display:flex;justify-content:center;padding:20px;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
-.phone{width:390px;background:#0D1117;border-radius:26px;overflow:hidden;border:2px solid #30363D;min-height:844px}
-
-/* STATUS BAR */
+html,body{height:100%;background:#0D1117;overflow:hidden}
+body{font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.phone{width:100%;height:100%;height:100dvh;background:#0D1117;display:flex;flex-direction:column;overflow:hidden}
 .sbar{padding:12px 20px 5px;display:flex;justify-content:space-between;align-items:center}
 .st{color:#E6EDF3;font-size:15px;font-weight:600}
 .sr{display:flex;gap:5px;align-items:center}
@@ -158,11 +156,177 @@ body{background:#1A1A2E;display:flex;justify-content:center;padding:20px;font-fa
 .bni svg{width:19px;height:19px}
 .bni span{font-size:9px;color:#8B949E}
 .bni.on span{color:#D4A017}
+
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#1A1A2E;display:flex;justify-content:center;padding:0;font-family:-apple-system,BlinkMacSystemFont,sans-serif}
+.phone{width:390px;background:#0D1117;border-radius:0;overflow:hidden;border:none;min-height:844px;position:relative}
+.sbar{padding:12px 20px 5px;display:flex;justify-content:space-between;align-items:center}
+.st{color:#E6EDF3;font-size:15px;font-weight:600}
+.sr{display:flex;gap:5px;align-items:center}
+.sr span{color:#E6EDF3;font-size:11px}
+.hdr{padding:10px 16px 8px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #21262D}
+.hn{font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017}
+.hp{font-size:13px;color:#8B949E}
+
+/* CONTENT */
+.cnt{overflow-y:auto;max-height:736px;padding-bottom:20px}
+.cnt::-webkit-scrollbar{width:2px}
+.cnt::-webkit-scrollbar-thumb{background:#21262D}
+
+/* AVATAR */
+.avatar-sec{padding:24px 16px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:1px solid #21262D;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)}
+.avatar{width:76px;height:76px;border-radius:50%;background:#D4A01720;border:2.5px solid #D4A017;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:#D4A017;position:relative;cursor:pointer}
+.avatar-edit{position:absolute;bottom:2px;right:2px;width:22px;height:22px;border-radius:50%;background:#D4A017;display:flex;align-items:center;justify-content:center;font-size:10px;color:#1A0D00}
+.user-name{font-size:19px;font-weight:500;color:#E6EDF3}
+.user-email{font-size:12px;color:#8B949E}
+.plan-row{display:flex;gap:8px;align-items:center;margin-top:2px}
+.plan-badge{font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px}
+.badge-free{background:#21262D;color:#8B949E;border:1px solid #30363D}
+.badge-pro{background:#A78BFA20;color:#A78BFA;border:1px solid #A78BFA50}
+.badge-elite{background:#D4A01720;color:#D4A017;border:1px solid #D4A01750}
+
+/* SEC LABEL */
+.sec-lbl{padding:12px 16px 6px;font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;background:#0D1117;position:sticky;top:0;z-index:1}
+
+/* ROW */
+.row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #13171D;cursor:pointer;transition:filter .15s}
+.row:hover{filter:brightness(1.2)}
+.row-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.row-main{flex:1;min-width:0}
+.row-title{font-size:13px;font-weight:500;color:#E6EDF3}
+.row-sub{font-size:10px;color:#555;margin-top:2px}
+.row-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.row-val{font-size:12px;color:#8B949E}
+.arrow{font-size:14px;color:#555}
+
+/* TOGGLE */
+.tog{width:42px;height:24px;border-radius:12px;background:#21262D;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.tog.on{background:#3FB950}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px #00000060}
+.tog.on::after{transform:translateX(18px)}
+
+/* PLAN CARDS */
+.plans-wrap{padding:8px 12px}
+.plan-card{border-radius:12px;padding:14px;border:1px solid #21262D;background:#161B22;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.plan-card:hover{filter:brightness(1.1)}
+.plan-card.current{border-color:#D4A01760;background:#D4A01708}
+.plan-card.pro-c{border-color:#A78BFA60;background:#A78BFA08}
+.plan-card.elite-c{border-color:#D4A01760;background:#D4A01708}
+.plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.plan-name{font-size:15px;font-weight:600}
+.plan-pricing{text-align:right}
+.plan-price{font-size:14px;font-weight:600}
+.plan-period{font-size:10px;color:#555}
+.plan-annual{font-size:9px;padding:2px 7px;border-radius:10px;font-weight:600;margin-top:2px;display:inline-block}
+.feats{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.feat{font-size:11px;display:flex;align-items:center;gap:7px}
+.feat.ok::before{content:'✓';font-size:10px;font-weight:700;flex-shrink:0}
+.feat.no::before{content:'✕';font-size:10px;flex-shrink:0;color:#555}
+.feat.no{color:#555}
+.plan-btn{width:100%;padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s}
+.plan-btn:hover{opacity:.85}
+.btn-curr{background:#21262D;color:#555}
+.btn-pro{background:#A78BFA;color:#fff}
+.btn-elite{background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00}
+
+/* IDIOMA SELECTOR */
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 12px}
+.lang-item{background:#161B22;border-radius:9px;padding:10px 12px;border:0.5px solid #21262D;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s}
+.lang-item:hover{border-color:#D4A01780}
+.lang-item.on{border-color:#D4A017;background:#D4A01715}
+.lang-flag{font-size:18px}
+.lang-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.lang-native{font-size:9px;color:#555;margin-top:1px}
+
+/* MONEDA */
+.curr-grid{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px}
+.curr-item{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:500;border:0.5px solid #21262D;cursor:pointer;color:#8B949E;transition:all .15s}
+.curr-item:hover{border-color:#D4A01780}
+.curr-item.on{background:#D4A01720;color:#D4A017;border-color:#D4A017}
+
+/* SEGURIDAD */
+.sec2fa{margin:0 12px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #21262D;margin-bottom:1px}
+.sec2fa-title{font-size:12px;font-weight:600;color:#E6EDF3;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.sec2fa-sub{font-size:10px;color:#555;margin-bottom:10px}
+.method-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #21262D}
+.method-row:last-child{border-bottom:none;padding-bottom:0}
+.method-ico{font-size:18px;width:32px}
+.method-info{flex:1}
+.method-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.method-status{font-size:10px;margin-top:1px}
+.status-on{color:#3FB950}
+.status-off{color:#555}
+
+/* SESIONES */
+.session-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:0.5px solid #13171D}
+.sess-ico{font-size:20px;width:32px;text-align:center}
+.sess-info{flex:1}
+.sess-device{font-size:12px;font-weight:500;color:#E6EDF3}
+.sess-detail{font-size:10px;color:#555;margin-top:1px}
+.sess-current{font-size:9px;padding:2px 7px;border-radius:10px;background:#1A3A2A;color:#3FB950;font-weight:600}
+.sess-revoke{font-size:10px;color:#F85149;cursor:pointer}
+
+/* NOTIF */
+.notif-item{padding:10px 16px;border-bottom:0.5px solid #13171D}
+.notif-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.notif-name{font-size:13px;font-weight:500;color:#E6EDF3}
+.notif-sub{font-size:10px;color:#555}
+
+/* DISCLAIMER */
+.disclaimer{margin:8px 12px;border-radius:12px;background:#080C10;border:0.5px solid #21262D;padding:16px}
+.dis-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid #21262D}
+.dis-icon{width:32px;height:32px;border-radius:8px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.dis-title{font-size:12px;font-weight:600;color:#D4A017}
+.dis-sub{font-size:10px;color:#555;margin-top:2px}
+.dis-text{font-size:10px;color:#555;line-height:1.8}
+.dis-section{margin-bottom:10px}
+.dis-section-title{font-size:10px;font-weight:600;color:#8B949E;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.dis-section-body{font-size:10px;color:#444;line-height:1.7}
+.dis-footer{margin-top:10px;padding-top:10px;border-top:0.5px solid #21262D;font-size:9px;color:#333;text-align:center;line-height:1.6}
+.dis-link{color:#D4A01770;text-decoration:underline}
+
+/* DATOS */
+.data-item{padding:10px 16px;border-bottom:0.5px solid #13171D;display:flex;align-items:center;gap:10px}
+.data-ico{font-size:18px;width:28px}
+.data-info{flex:1}
+.data-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.data-sub{font-size:10px;color:#555;margin-top:1px}
+.data-btn{font-size:10px;padding:4px 10px;border-radius:8px;border:0.5px solid #F85149;color:#F85149;cursor:pointer;background:transparent}
+
+/* LOGOUT */
+.logout-btn{margin:12px 12px 4px;padding:13px;border-radius:10px;background:#1A0808;border:0.5px solid #F8514940;text-align:center;color:#F85149;font-size:13px;font-weight:500;cursor:pointer;transition:filter .15s}
+.logout-btn:hover{filter:brightness(1.2)}
+.delete-btn{margin:0 12px 8px;padding:10px;border-radius:10px;background:transparent;border:0.5px solid #21262D;text-align:center;color:#555;font-size:11px;cursor:pointer}
+
+/* VER */
+.ver{text-align:center;padding:10px 16px 16px;font-size:10px;color:#333;line-height:1.8}
+
+/* BOTTOM NAV */
+.bnav{background:#161B22;border-top:0.5px solid #21262D;display:flex;padding:7px 0 5px}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5}
+.bni.on{opacity:1}
+.bni svg{width:19px;height:19px}
+.bni span{font-size:9px;color:#8B949E}
+.bni.on span{color:#D4A017}
+
+/* MODAL */
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#161B22;border-radius:20px 20px 0 0;width:100%;max-width:390px;padding:0 16px 32px;border-top:1px solid #30363D;max-height:80vh;overflow-y:auto}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:#30363D;margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:4px}
+.modal-sub{font-size:11px;color:#555;margin-bottom:16px}
+.modal-close{position:absolute;right:16px;top:20px;color:#8B949E;font-size:20px;cursor:pointer}
+
 </style>
 </head>
 <body>
 <div class="phone">
 
+<div class="screen" id="screen-portfolio"><div class="sbar"><span class="st">9:41</span><div class="sr"><span>●●●●</span><span>WiFi</span><span>🔋</span></div></div><div class="hdr"><div class="hl"><svg width="22" height="22" viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/><circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/><path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/><path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/></svg><span class="hn">AUREX</span><span class="hp">· Portfolio</span></div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center"><div style="font-size:52px">🏠</div><div style="font-size:20px;font-weight:500;color:#E6EDF3">Portfolio</div><div style="font-size:12px;color:#555;line-height:1.8">Tu portfolio con todos tus activos,<br>ganancias y análisis en tiempo real</div><div style="margin-top:8px;font-size:11px;padding:6px 18px;border-radius:20px;background:#D4A01720;color:#D4A017;border:1px solid #D4A01740">Semana 2 del cronograma</div></div></div>
+
+<div class="screen" id="screen-mercados" style="display:flex">
 <!-- STATUS BAR -->
 <div class="sbar">
   <span class="st" id="clock">9:41</span>
@@ -191,7 +355,7 @@ body{background:#1A1A2E;display:flex;justify-content:center;padding:20px;font-fa
 
 <!-- MODAL PARA EDITAR LOS 4 ACTIVOS DESTACADOS -->
 <div id="pin-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
-  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;max-width:390px;padding:20px 16px 32px;border-top:1px solid #30363D">
+  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;max-width:390px;padding:0 16px 32px;border-top:1px solid #30363D">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
       <span style="font-size:15px;font-weight:500;color:#E6EDF3">Editar activos destacados</span>
       <span onclick="closePinModal()" style="font-size:13px;color:#D4A017;cursor:pointer">Listo ✓</span>
@@ -241,18 +405,497 @@ body{background:#1A1A2E;display:flex;justify-content:center;padding:20px;font-fa
 
 <div class="cnt" id="cnt"></div>
 
-<!-- BOTTOM NAV -->
+
+</div>
+
+<div class="screen" id="screen-ia"><div class="sbar"><span class="st">9:41</span><div class="sr"><span>●●●●</span><span>WiFi</span><span>🔋</span></div></div><div class="hdr"><div class="hl"><svg width="22" height="22" viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/><circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/><path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/><path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/></svg><span class="hn">AUREX</span><span class="hp">· Inteligencia Artificial</span></div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center"><div style="font-size:52px">⚛️</div><div style="font-size:20px;font-weight:500;color:#E6EDF3">Inteligencia Artificial</div><div style="font-size:12px;color:#555;line-height:1.8">Señales, oportunidades y análisis<br>de mercado generados por IA</div><div style="margin-top:8px;font-size:11px;padding:6px 18px;border-radius:20px;background:#D4A01720;color:#D4A017;border:1px solid #D4A01740">Semana 2 del cronograma</div></div></div>
+
+<div class="screen" id="screen-alertas"><div class="sbar"><span class="st">9:41</span><div class="sr"><span>●●●●</span><span>WiFi</span><span>🔋</span></div></div><div class="hdr"><div class="hl"><svg width="22" height="22" viewBox="0 0 60 60"><circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/><circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/><path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/><path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/></svg><span class="hn">AUREX</span><span class="hp">· Mis Alertas</span></div></div><div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center"><div style="font-size:52px">🔔</div><div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div><div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para todos tus activos favoritos</div><div style="margin-top:8px;font-size:11px;padding:6px 18px;border-radius:20px;background:#D4A01720;color:#D4A017;border:1px solid #D4A01740">Semana 2 del cronograma</div></div></div>
+
+<div class="screen" id="screen-perfil">
+<div class="screen-inner">
+<!-- AVATAR -->
+<div class="avatar-sec">
+  <div class="avatar" onclick="alert('Cambiar foto de perfil — disponible en v1.1')">
+    FM
+    <div class="avatar-edit">✏️</div>
+  </div>
+  <div class="user-name">Federico Moscon</div>
+  <div class="user-email">fmoscon@gmail.com</div>
+  <div class="plan-row">
+    <div class="plan-badge badge-free">FREE</div>
+    <div style="font-size:10px;color:#555">Miembro desde Mar 2026</div>
+  </div>
+</div>
+
+<!-- SUSCRIPCIÓN -->
+<div class="sec-lbl">✦ Mi suscripción</div>
+<div class="plans-wrap">
+
+  <div class="plan-card current">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name" style="color:#8B949E">Free</div>
+        <div style="font-size:10px;color:#555;margin-top:2px">Plan actual</div>
+      </div>
+      <div class="plan-pricing">
+        <div class="plan-price" style="color:#8B949E">$0</div>
+        <div class="plan-period">para siempre</div>
+      </div>
+    </div>
+    <div class="feats">
+      <div class="feat ok" style="color:#8B949E">5 activos en portfolio</div>
+      <div class="feat ok" style="color:#8B949E">Mercados completo</div>
+      <div class="feat ok" style="color:#8B949E">3 sugerencias IA / día</div>
+      <div class="feat no">Sin alertas push</div>
+      <div class="feat no">Con publicidad</div>
+    </div>
+    <button class="plan-btn btn-curr">Plan actual ✓</button>
+  </div>
+
+  <!-- PRO -->
+  <div class="plan-card pro-c" style="position:relative" onclick="openModal('pro')">
+    <!-- Badge más popular -->
+    <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:9px;font-weight:700;padding:3px 14px;border-radius:0 0 10px 10px;letter-spacing:.5px;white-space:nowrap">⚡ MÁS POPULAR</div>
+    <div style="margin-top:12px">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name" style="color:#A78BFA;font-size:17px">PRO</div>
+        <div style="font-size:10px;color:#A78BFA80;margin-top:2px">Para el inversor activo</div>
+      </div>
+      <div class="plan-pricing">
+        <div style="display:flex;align-items:baseline;gap:2px;justify-content:flex-end">
+          <div class="plan-price" style="color:#A78BFA;font-size:22px">$9.99</div>
+          <div class="plan-period">/mes</div>
+        </div>
+        <!-- Descuento anual -->
+        <div style="background:#A78BFA;color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;margin-top:4px;text-align:center">
+          💰 ANUAL: $7.79/mes · Ahorrás $26/año
+        </div>
+      </div>
+    </div>
+
+    <!-- Propuesta de valor -->
+    <div style="background:#A78BFA15;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #A78BFA30">
+      <div style="font-size:10px;color:#A78BFA;font-weight:600;margin-bottom:3px">¿Por qué vale la pena?</div>
+      <div style="font-size:10px;color:#8B949E;line-height:1.6">Una sola operación bien ejecutada con las alertas de IA cubre años de suscripción. Dejá de perderte movimientos por no tener las herramientas correctas.</div>
+    </div>
+
+    <div class="feats">
+      <div class="feat ok" style="color:#A78BFA"><strong>50 activos</strong> en portfolio simultáneos</div>
+      <div class="feat ok" style="color:#A78BFA"><strong>10 señales IA</strong> personalizadas por día</div>
+      <div class="feat ok" style="color:#A78BFA"><strong>Alertas push</strong> en tiempo real al iPhone</div>
+      <div class="feat ok" style="color:#A78BFA"><strong>Sin publicidad</strong> — experiencia limpia</div>
+      <div class="feat ok" style="color:#A78BFA"><strong>Historial</strong> completo de señales IA</div>
+      <div class="feat no">API de datos ilimitada</div>
+      <div class="feat no">Soporte VIP directo</div>
+    </div>
+    <button class="plan-btn btn-pro" style="font-size:13px;padding:12px">⚡ Activar PRO — $9.99/mes</button>
+    <div style="text-align:center;font-size:9px;color:#555;margin-top:6px">Sin compromiso · Cancelás cuando querés</div>
+    </div>
+  </div>
+
+  <!-- ELITE -->
+  <div class="plan-card elite-c" style="position:relative;border-width:1.5px" onclick="openModal('elite')">
+    <!-- Badge top -->
+    <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:9px;font-weight:700;padding:3px 14px;border-radius:0 0 10px 10px;letter-spacing:.5px;white-space:nowrap">✦ TODO INCLUIDO</div>
+    <div style="margin-top:12px">
+    <div class="plan-top">
+      <div>
+        <div class="plan-name" style="color:#D4A017;font-size:17px">ELITE</div>
+        <div style="font-size:10px;color:#D4A01780;margin-top:2px">Para el inversor serio</div>
+      </div>
+      <div class="plan-pricing">
+        <div style="display:flex;align-items:baseline;gap:2px;justify-content:flex-end">
+          <div class="plan-price" style="color:#D4A017;font-size:22px">$19.99</div>
+          <div class="plan-period">/mes</div>
+        </div>
+        <!-- Descuento anual -->
+        <div style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;margin-top:4px;text-align:center">
+          💰 ANUAL: $15.59/mes · Ahorrás $53/año
+        </div>
+      </div>
+    </div>
+
+    <!-- Propuesta de valor -->
+    <div style="background:#D4A01715;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #D4A01730">
+      <div style="font-size:10px;color:#D4A017;font-weight:600;margin-bottom:3px">✦ El plan del inversor profesional</div>
+      <div style="font-size:10px;color:#8B949E;line-height:1.6">IA sin límites, datos en tiempo real, alertas instantáneas y soporte VIP. Todo lo que necesitás para tomar decisiones de inversión como un profesional, desde tu iPhone.</div>
+    </div>
+
+    <div class="feats">
+      <div class="feat ok" style="color:#D4A017"><strong>Activos ilimitados</strong> en portfolio</div>
+      <div class="feat ok" style="color:#D4A017"><strong>IA ilimitada 24/7</strong> — señales sin tope</div>
+      <div class="feat ok" style="color:#D4A017"><strong>Alertas push + email</strong> instantáneas</div>
+      <div class="feat ok" style="color:#D4A017"><strong>API completa</strong> — datos sin restricción</div>
+      <div class="feat ok" style="color:#D4A017"><strong>8 idiomas</strong> — ES · EN · PT · FR · DE · IT · CN · JP</div>
+      <div class="feat ok" style="color:#D4A017"><strong>Soporte VIP</strong> — respuesta en menos de 2hs</div>
+      <div class="feat ok" style="color:#D4A017"><strong>Acceso anticipado</strong> a nuevas funciones</div>
+    </div>
+    <button class="plan-btn btn-elite" style="font-size:13px;padding:12px">✦ Activar ELITE — $19.99/mes</button>
+    <div style="text-align:center;font-size:9px;color:#555;margin-top:6px">Sin compromiso · Cancelás cuando querés</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- CUENTA -->
+<div class="sec-lbl">👤 Mi cuenta</div>
+
+<div class="row" onclick="openModal('nombre')">
+  <div class="row-ico" style="background:#58A6FF20">👤</div>
+  <div class="row-main"><div class="row-title">Nombre completo</div><div class="row-sub">Federico Moscon</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('email')">
+  <div class="row-ico" style="background:#3FB95020">✉️</div>
+  <div class="row-main"><div class="row-title">Email</div><div class="row-sub">fmoscon@gmail.com</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('telefono')">
+  <div class="row-ico" style="background:#A78BFA20">📱</div>
+  <div class="row-main"><div class="row-title">Teléfono</div><div class="row-sub">Para verificación 2FA</div></div>
+  <div class="row-right"><span class="row-val">+54 9...</span><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('password')">
+  <div class="row-ico" style="background:#F8514920">🔑</div>
+  <div class="row-main"><div class="row-title">Contraseña</div><div class="row-sub">Cambiar contraseña</div></div>
+  <div class="row-right"><span class="row-val">••••••••</span><span class="arrow">›</span></div>
+</div>
+
+<!-- SEGURIDAD -->
+<div class="sec-lbl">🔐 Seguridad</div>
+
+<div class="row" onclick="">
+  <div class="row-ico" style="background:#D4A01720">🔐</div>
+  <div class="row-main"><div class="row-title">Face ID / Touch ID</div><div class="row-sub">Acceso biométrico al abrir la app</div></div>
+  <div class="row-right"><div class="tog on" onclick="this.classList.toggle('on');event.stopPropagation()"></div></div>
+</div>
+
+<div class="row" onclick="openModal('2fa')">
+  <div class="row-ico" style="background:#3FB95020">🛡️</div>
+  <div class="row-main">
+    <div class="row-title">Autenticación de dos factores (2FA)</div>
+    <div class="row-sub">SMS o app autenticadora</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#1A3A2A;color:#3FB950">Activo</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<div class="row" onclick="openModal('pin')">
+  <div class="row-ico" style="background:#58A6FF20">🔢</div>
+  <div class="row-main"><div class="row-title">PIN de seguridad</div><div class="row-sub">Código de 6 dígitos alternativo</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('sesiones')">
+  <div class="row-ico" style="background:#A78BFA20">📲</div>
+  <div class="row-main"><div class="row-title">Sesiones activas</div><div class="row-sub">Dispositivos con tu cuenta abierta</div></div>
+  <div class="row-right"><span class="row-val" style="color:#D4A017">2</span><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('actividad')">
+  <div class="row-ico" style="background:#F8514920">🕵️</div>
+  <div class="row-main"><div class="row-title">Historial de actividad</div><div class="row-sub">Accesos y cambios recientes</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<!-- PREFERENCIAS -->
+<div class="sec-lbl">💱 Herramientas</div>
+
+<div class="row" onclick="openModal('conversor')">
+  <div class="row-ico" style="background:#58A6FF20">💱</div>
+  <div class="row-main">
+    <div class="row-title">Conversor de monedas</div>
+    <div class="row-sub">Cripto · Fiat · Stablecoins · Tiempo real</div>
+  </div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="sec-lbl">⚙️ Preferencias</div>
+
+<div class="row" onclick="openModal('idioma')">
+  <div class="row-ico" style="background:#58A6FF20">🌐</div>
+  <div class="row-main"><div class="row-title">Idioma de la app</div><div class="row-sub">8 idiomas disponibles</div></div>
+  <div class="row-right"><span class="row-val">🇺🇸 EN</span><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('moneda')">
+  <div class="row-ico" style="background:#D4A01720">💰</div>
+  <div class="row-main"><div class="row-title">Moneda base</div><div class="row-sub">Para calcular tu portfolio total</div></div>
+  <div class="row-right"><span class="row-val">USD $</span><span class="arrow">›</span></div>
+</div>
+
+<div class="row">
+  <div class="row-ico" style="background:#1A1A2E">🌙</div>
+  <div class="row-main"><div class="row-title">Modo oscuro</div><div class="row-sub">Siempre activo — protege tu vista</div></div>
+  <div class="row-right"><div class="tog on"></div></div>
+</div>
+
+<div class="row">
+  <div class="row-ico" style="background:#F59E0B20">📊</div>
+  <div class="row-main"><div class="row-title">Gráficos por defecto</div><div class="row-sub">Timeframe al abrir un activo</div></div>
+  <div class="row-right"><span class="row-val">24h</span><span class="arrow">›</span></div>
+</div>
+
+<div class="row">
+  <div class="row-ico" style="background:#3FB95020">💹</div>
+  <div class="row-main"><div class="row-title">Mostrar PnL en</div><div class="row-sub">Formato de ganancias y pérdidas</div></div>
+  <div class="row-right"><span class="row-val">% y $</span><span class="arrow">›</span></div>
+</div>
+
+<!-- NOTIFICACIONES -->
+<div class="sec-lbl">🔔 Notificaciones</div>
+
+<div class="notif-item">
+  <div class="notif-top"><span class="row-title">Alertas de precio</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+  <div class="notif-sub">Cuando un activo llega a tu precio objetivo</div>
+</div>
+
+<div class="notif-item">
+  <div class="notif-top"><span class="row-title">Señales de IA</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+  <div class="notif-sub">Nuevas oportunidades detectadas por la IA</div>
+</div>
+
+<div class="notif-item">
+  <div class="notif-top"><span class="row-title">Noticias de alta prioridad</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+  <div class="notif-sub">FED, CPI, eventos macro que afectan tu portfolio</div>
+</div>
+
+<div class="notif-item">
+  <div class="notif-top"><span class="row-title">Resumen diario</span><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+  <div class="notif-sub">Performance del día a las 20:00 hs</div>
+</div>
+
+<div class="notif-item">
+  <div class="notif-top"><span class="row-title">Emails de cuenta</span><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
+  <div class="notif-sub">Seguridad, pagos y actualizaciones</div>
+</div>
+
+<!-- EXPORTAR PORTFOLIO -->
+<div class="sec-lbl">📤 Exportar portfolio</div>
+
+<div class="row" onclick="openModal('exportar')">
+  <div class="row-ico" style="background:#3FB95020">📊</div>
+  <div class="row-main">
+    <div class="row-title">Exportar en Excel / CSV</div>
+    <div class="row-sub">Todos tus activos, precios y PnL</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:10px;padding:2px 7px;border-radius:8px;background:#1A3A2A;color:#3FB950">XLS</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<div class="row" onclick="openModal('exportarpdf')">
+  <div class="row-ico" style="background:#F8514920">📄</div>
+  <div class="row-main">
+    <div class="row-title">Exportar en PDF</div>
+    <div class="row-sub">Reporte visual de tu portfolio</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:10px;padding:2px 7px;border-radius:8px;background:#3A1A1A;color:#F85149">PDF</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<div class="row" onclick="shareWhatsApp()">
+  <div class="row-ico" style="background:#25D36620">💬</div>
+  <div class="row-main">
+    <div class="row-title">Enviar por WhatsApp</div>
+    <div class="row-sub">Resumen de tu portfolio al instante</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:16px">📲</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<div class="row" onclick="shareEmail()">
+  <div class="row-ico" style="background:#58A6FF20">✉️</div>
+  <div class="row-main">
+    <div class="row-title">Enviar por email</div>
+    <div class="row-sub">Reporte completo a tu correo</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:16px">📧</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<!-- DATOS Y PRIVACIDAD -->
+<div class="sec-lbl">🔏 Datos y privacidad</div>
+
+<div class="data-item">
+  <div class="data-ico">🔄</div>
+  <div class="data-info"><div class="data-name">Sincronización</div><div class="data-sub">Última sincronización: hace 2 min</div></div>
+  <button class="data-btn" style="border-color:#3FB950;color:#3FB950" onclick="alert('Sincronizando...')">Sincronizar</button>
+</div>
+
+<div class="data-item">
+  <div class="data-ico">🍪</div>
+  <div class="data-info"><div class="data-name">Cookies y analítica</div><div class="data-sub">Mejora de la experiencia</div></div>
+  <div class="tog on" onclick="this.classList.toggle('on')"></div>
+</div>
+
+<!-- SOPORTE -->
+<div class="sec-lbl">🎁 Referidos</div>
+
+<div class="row" onclick="openModal('invitar')">
+  <div class="row-ico" style="background:#25D36620">🎁</div>
+  <div class="row-main">
+    <div class="row-title">Invitar a un amigo</div>
+    <div class="row-sub">Compartí Aurex · Ganá 1 mes PRO gratis</div>
+  </div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="openModal('prueba')">
+  <div class="row-ico" style="background:#A78BFA20">🧪</div>
+  <div class="row-main">
+    <div class="row-title">Únase a la prueba Beta</div>
+    <div class="row-sub">Acceso anticipado a nuevas funciones</div>
+  </div>
+  <div class="row-right">
+    <span style="font-size:10px;padding:2px 7px;border-radius:10px;background:#A78BFA20;color:#A78BFA;font-weight:600">BETA</span>
+    <span class="arrow">›</span>
+  </div>
+</div>
+
+<div class="sec-lbl">💬 Soporte</div>
+
+<div class="row" onclick="alert('Centro de ayuda — abriendo...')">
+  <div class="row-ico" style="background:#58A6FF20">❓</div>
+  <div class="row-main"><div class="row-title">Centro de ayuda</div><div class="row-sub">Preguntas frecuentes y tutoriales</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="alert('Contacto: hola@aurex.app')">
+  <div class="row-ico" style="background:#3FB95020">📧</div>
+  <div class="row-main"><div class="row-title">Contactar soporte</div><div class="row-sub">hola@aurex.app · Resp. en 24hs</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="alert('Calificá Aurex en el App Store!')">
+  <div class="row-ico" style="background:#F59E0B20">⭐</div>
+  <div class="row-main"><div class="row-title">Calificar Aurex</div><div class="row-sub">¿Te gusta la app? Dejá tu reseña</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="alert('Compartir Aurex con un amigo')">
+  <div class="row-ico" style="background:#A78BFA20">🔗</div>
+  <div class="row-main"><div class="row-title">Compartir Aurex</div><div class="row-sub">Invitá a un amigo · Ganen juntos</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<!-- LEGAL -->
+<div class="sec-lbl">⚖️ Legal</div>
+
+<div class="row" onclick="openModal('disclaimer')">
+  <div class="row-ico" style="background:#D4A01720">⚖️</div>
+  <div class="row-main"><div class="row-title">Aviso Legal · Disclaimer</div><div class="row-sub">No somos asesores de inversión</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="">
+  <div class="row-ico" style="background:#A78BFA20">🔒</div>
+  <div class="row-main"><div class="row-title">Política de Privacidad</div><div class="row-sub">Cómo usamos tus datos</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<div class="row" onclick="">
+  <div class="row-ico" style="background:#21262D">📄</div>
+  <div class="row-main"><div class="row-title">Términos y Condiciones</div><div class="row-sub">Condiciones de uso de Aurex</div></div>
+  <div class="row-right"><span class="arrow">›</span></div>
+</div>
+
+<!-- DISCLAIMER VISIBLE -->
+<div class="disclaimer">
+  <div class="dis-header">
+    <div class="dis-icon">⚖️</div>
+    <div>
+      <div class="dis-title">Aviso Legal — Disclaimer de Inversiones</div>
+      <div class="dis-sub">Leé antes de operar. Tu capital está en riesgo.</div>
+    </div>
+  </div>
+
+  <div class="dis-section">
+    <div class="dis-section-title">🚫 Aurex NO es un asesor de inversiones</div>
+    <div class="dis-section-body">La información, análisis, sugerencias de IA, precios objetivo y cualquier contenido de esta app tiene carácter exclusivamente <strong style="color:#8B949E">informativo y educativo</strong>. No constituye consejo, recomendación, asesoramiento ni señal de inversión bajo ninguna circunstancia ni legislación.</div>
+  </div>
+
+  <div class="dis-section">
+    <div class="dis-section-title">🤖 Las proyecciones de IA no son predicciones</div>
+    <div class="dis-section-body">Los precios objetivo, probabilidades, señales ALCISTA/BAJISTA/NEUTRAL y análisis generados por inteligencia artificial son estimaciones algorítmicas basadas en datos históricos y modelos matemáticos. <strong style="color:#8B949E">No garantizan resultados futuros.</strong> Los mercados financieros son volátiles e impredecibles.</div>
+  </div>
+
+  <div class="dis-section">
+    <div class="dis-section-title">⚠️ Riesgo de pérdida total</div>
+    <div class="dis-section-body">Toda inversión en acciones, criptomonedas, commodities, bonos, divisas o futuros implica riesgo significativo, incluyendo la <strong style="color:#8B949E">pérdida total del capital invertido</strong>. Rendimientos pasados no garantizan rendimientos futuros.</div>
+  </div>
+
+  <div class="dis-section">
+    <div class="dis-section-title">👨‍💼 Consultá un profesional</div>
+    <div class="dis-section-body">Antes de invertir, consultá con un asesor financiero certificado, contador o profesional habilitado que conozca tu situación patrimonial, objetivos financieros y perfil de riesgo personal.</div>
+  </div>
+
+  <div class="dis-section">
+    <div class="dis-section-title">📋 Exención de responsabilidad</div>
+    <div class="dis-section-body">Aurex, sus desarrolladores y socios no asumen ninguna responsabilidad por pérdidas económicas, daños directos, indirectos o consecuentes derivados del uso de la información de esta aplicación.</div>
+  </div>
+
+  <div class="dis-footer">
+    Al usar Aurex aceptás estos términos · <span class="dis-link">legal@aurex.app</span><br>
+    Aurex no está regulada por la CNV, SEC ni ningún organismo financiero.<br>
+    © 2026 Aurex App · Todos los derechos reservados
+  </div>
+</div>
+
+<!-- LOGOUT -->
+<div class="logout-btn" onclick="if(confirm('¿Cerrar sesión?')) alert('Sesión cerrada. ¡Hasta pronto!')">
+  Cerrar sesión
+</div>
+<div class="delete-btn" onclick="if(confirm('¿Eliminar cuenta? Esta acción es irreversible.')) alert('Solicitud enviada a legal@aurex.app')">
+  Eliminar mi cuenta
+</div>
+
+<div class="ver">
+  Aurex v1.0.0 · Build 2026.03 · iOS 18+<br>
+  © 2026 Aurex App · Todos los derechos reservados<br>
+  <span style="color:#D4A01760">✦ Hecho con IA · Potenciado por Appstack</span>
+</div>
+
+</div>
+
+
+<!-- MODAL DINÁMICO -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal" id="modal-content" style="position:relative">
+    <div class="modal-handle"></div>
+    <span class="modal-close" onclick="closeModal()" style="position:absolute;right:16px;top:16px;color:#8B949E;font-size:20px;cursor:pointer;z-index:10">✕</span>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+
+</div>
+</div>
+
 <div class="bnav">
-  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Portfolio</span></div>
-  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M13 2L3 14h9l-1 8 10-12h-9z"/></svg><span>IA</span></div>
-  <div class="bni on"><svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg><span style="color:#D4A017">Mercados</span></div>
-  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Alertas</span></div>
-  <div class="bni"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v2"/><path d="M2 13h10M7 8l5 5-5 5"/></svg><span>Noticias</span></div>
+  <div class="bni" id="nav-portfolio" onclick="showScreen('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Portfolio</span></div>
+  <div class="bni on" id="nav-mercados" onclick="showScreen('mercados')"><svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg><span style="color:#D4A017">Mercados</span></div>
+  <div class="bni" id="nav-ia" onclick="showScreen('ia')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.3"><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="#8B949E" stroke="none"/></svg><span>IA</span></div>
+  <div class="bni" id="nav-alertas" onclick="showScreen('alertas')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Alertas</span></div>
+  <div class="bni" id="nav-perfil" onclick="showScreen('perfil')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Perfil</span></div>
 </div>
-
 </div>
-
 <script>
+
 // ── LOGOS REALES vía CDN ──
 const LOGOS = {
   BTC:   'https://assets.coincap.io/assets/icons/btc@2x.png',
@@ -444,6 +1087,41 @@ function detailHTML(it, c, up) {
   const stars = '★'.repeat(ai.conf) + '☆'.repeat(5-ai.conf);
   const probColor = ai.prob >= 65 ? '#3FB950' : ai.prob >= 50 ? '#FBBF24' : '#F85149';
   const tfLabel = {'24h':'24 horas','7d':'7 días','1m':'1 mes'}[curTF];
+
+  // 3 escenarios de temporalidad
+  const p = parseFloat(it.p.replace(/[^0-9.]/g,'')) || 100;
+  const upPct = parseFloat(ai.upside) || 10;
+  const esc = [
+    {key:'CORTO', tiempo:'1-4 semanas', mult:0.35, prob:Math.min(ai.prob+8,95), signal:ai.prob>=55?'ALCISTA':'NEUTRAL'},
+    {key:'MEDIANO', tiempo:'1-3 meses', mult:1.0, prob:ai.prob, signal:ai.signal, main:true},
+    {key:'LARGO', tiempo:'3-12 meses', mult:2.2, prob:Math.max(ai.prob-10,30), signal:ai.prob>=50?'ALCISTA':'BAJISTA'},
+  ];
+  function tgt(mult) {
+    const v = p*(1+(upPct/100)*mult);
+    const prefix = it.p.match(/[€£¥R]/)?it.p.match(/[€£¥R]/)[0]:'$';
+    return prefix+(v>=1000?Math.round(v).toLocaleString('en'):v>=1?v.toFixed(2):v.toFixed(4));
+  }
+  function scol(s){return s==='ALCISTA'?'#3FB950':s==='BAJISTA'?'#F85149':'#8B949E';}
+  function sbg(s){return s==='ALCISTA'?'#1A3A2A':s==='BAJISTA'?'#3A1A1A':'#1A1A2A';}
+
+  const escRows = esc.map(e=>`
+    <div style="background:#0A0E14;border-radius:9px;padding:9px 11px;border:0.5px solid ${e.main?'#D4A01740':'#21262D'};display:flex;align-items:center;gap:10px">
+      <div style="flex-shrink:0;text-align:center;min-width:52px">
+        <div style="font-size:9px;font-weight:600;color:${e.main?'#D4A017':'#8B949E'}">${e.key}</div>
+        <div style="font-size:8px;color:#555;margin-top:1px">${e.tiempo}</div>
+      </div>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">
+          <span style="font-size:12px;font-weight:600;color:#E6EDF3">${tgt(e.mult)}</span>
+          <span style="font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;background:${sbg(e.signal)};color:${scol(e.signal)}">${e.signal}</span>
+        </div>
+        <div style="background:#21262D;border-radius:3px;height:4px;overflow:hidden">
+          <div style="height:100%;border-radius:3px;background:${scol(e.signal)};width:${e.prob}%"></div>
+        </div>
+        <div style="font-size:9px;color:#555;margin-top:2px">Prob. ${e.prob}%${e.main?' · Principal ★':''}</div>
+      </div>
+    </div>`).join('');
+
   return `
   <div class="dp-top">
     <div class="dp-left">
@@ -457,30 +1135,25 @@ function detailHTML(it, c, up) {
 
   <div class="dp-ai">
     <div class="dp-ai-top">
-      <div class="dp-ai-icon">✦</div>
+      <div class="dp-ai-icon">⚛</div>
       <span class="dp-ai-title">Análisis IA Aurex</span>
       <span class="dp-ai-badge" style="background:${sc.bg};color:${sc.col}">${ai.signal}</span>
     </div>
-
     <div class="dp-ai-grid">
       <div class="dp-ai-item">
         <div class="dp-ai-lbl">Precio objetivo IA</div>
         <div class="dp-ai-val" style="color:#D4A017">${ai.target}</div>
-        <div class="dp-ai-sub">Upside estimado: <span style="color:#3FB950">${ai.upside}</span></div>
+        <div class="dp-ai-sub">Upside: <span style="color:#3FB950">${ai.upside}</span></div>
       </div>
       <div class="dp-ai-item">
         <div class="dp-ai-lbl">Probabilidad IA</div>
         <div class="dp-ai-val" style="color:${probColor}">${ai.prob}%</div>
-        <div class="prob-wrap">
-          <div class="prob-bar-bg">
-            <div class="prob-bar-fill" style="width:${ai.prob}%;background:${probColor}"></div>
-          </div>
-        </div>
+        <div class="prob-wrap"><div class="prob-bar-bg"><div class="prob-bar-fill" style="width:${ai.prob}%;background:${probColor}"></div></div></div>
       </div>
       <div class="dp-ai-item">
-        <div class="dp-ai-lbl">Stop Loss sugerido</div>
+        <div class="dp-ai-lbl">Stop Loss</div>
         <div class="dp-ai-val" style="color:#F85149">${ai.stop}</div>
-        <div class="dp-ai-sub">Gestión del riesgo</div>
+        <div class="dp-ai-sub">Gestión de riesgo</div>
       </div>
       <div class="dp-ai-item">
         <div class="dp-ai-lbl">Confianza IA</div>
@@ -490,8 +1163,13 @@ function detailHTML(it, c, up) {
     </div>
   </div>
 
+  <div style="margin:0 14px 10px">
+    <div style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px">⚛ Escenarios por temporalidad</div>
+    <div style="display:flex;flex-direction:column;gap:6px">${escRows}</div>
+  </div>
+
   <div class="dp-metrics">
-    <div class="dm"><div class="dm-lbl">Cap / Vol</div><div class="dm-val">${it.v}</div></div>
+    <div class="dm"><div class="dm-lbl">Vol / Cap</div><div class="dm-val">${it.v}</div></div>
     <div class="dm"><div class="dm-lbl">Cambio ${curTF}</div><div class="dm-val ${up?'up':'dn'}">${c}</div></div>
     <div class="dm"><div class="dm-lbl">Período</div><div class="dm-val">${tfLabel}</div></div>
   </div>`;
@@ -865,6 +1543,534 @@ fetchLive();
 updateClock();
 setInterval(fetchLive,5000);
 setInterval(updateClock,1000);
+
+
+// ── DATOS DEL PORTFOLIO (en la app real vienen del portfolio del usuario) ──
+const PORTFOLIO = [
+  {ticker:'BTC',  nombre:'Bitcoin',   cant:0.14, compra:48200, actual:84230, col:'#F7931A'},
+  {ticker:'ETH',  nombre:'Ethereum',  cant:2.14, compra:2850,  actual:1924,  col:'#627EEA'},
+  {ticker:'AAPL', nombre:'Apple Inc.',cant:28,   compra:195,   actual:218.40,col:'#555'},
+  {ticker:'NVDA', nombre:'NVIDIA',    cant:3,    compra:620,   actual:881.20,col:'#76B900'},
+  {ticker:'XAU',  nombre:'Oro Spot',  cant:0.5,  compra:1950,  actual:3018,  col:'#D4A017'},
+];
+
+function calcPortfolio() {
+  return PORTFOLIO.map(a => {
+    const valorActual = a.cant * a.actual;
+    const valorCompra = a.cant * a.compra;
+    const pnlUSD = valorActual - valorCompra;
+    const pnlPct = ((pnlUSD / valorCompra) * 100).toFixed(2);
+    return {...a, valorActual, valorCompra, pnlUSD, pnlPct};
+  });
+}
+
+function exportCSV() {
+  const data = calcPortfolio();
+  const total = data.reduce((s,a) => s + a.valorActual, 0);
+  const totalPnl = data.reduce((s,a) => s + a.pnlUSD, 0);
+
+  let csv = 'Ticker,Nombre,Cantidad,Precio Compra (USD),Precio Actual (USD),Valor Total (USD),PnL USD,PnL %\n';
+  data.forEach(a => {
+    csv += `${a.ticker},${a.nombre},${a.cant},${a.compra.toFixed(2)},${a.actual.toFixed(2)},${a.valorActual.toFixed(2)},${a.pnlUSD.toFixed(2)},${a.pnlPct}%\n`;
+  });
+  csv += `\nTOTAL PORTFOLIO,,,,,${total.toFixed(2)},${totalPnl.toFixed(2)},${((totalPnl/data.reduce((s,a)=>s+a.valorCompra,0))*100).toFixed(2)}%\n`;
+  csv += `\nGenerado por Aurex · ${new Date().toLocaleDateString('es-AR')} · fmoscon-creator.github.io/aurex-app`;
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `aurex_portfolio_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function exportPDF() {
+  const data = calcPortfolio();
+  const total = data.reduce((s,a) => s + a.valorActual, 0);
+  const totalPnl = data.reduce((s,a) => s + a.pnlUSD, 0);
+  const fecha = new Date().toLocaleDateString('es-AR');
+
+  const rows = data.map(a => `
+    <tr>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;font-weight:600">${a.ticker}</td>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;color:#555">${a.nombre}</td>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right">${a.cant}</td>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right">$${a.actual.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right;font-weight:600">$${a.valorActual.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td>
+      <td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right;color:${a.pnlUSD>=0?'#16a34a':'#dc2626'};font-weight:600">${a.pnlUSD>=0?'+':''}$${a.pnlUSD.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})} (${a.pnlPct}%)</td>
+    </tr>`).join('');
+
+  const html = `<!DOCTYPE html><html><head><meta charset="UTF-8">
+  <title>Aurex Portfolio — ${fecha}</title>
+  <style>
+    body{font-family:-apple-system,sans-serif;padding:40px;color:#1a1a1a;max-width:800px;margin:0 auto}
+    .header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:16px;border-bottom:3px solid #D4A017}
+    .logo{font-size:24px;font-weight:700;color:#D4A017;letter-spacing:2px}
+    .date{font-size:13px;color:#555}
+    .summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:32px}
+    .sum-box{background:#f9f9f9;border-radius:10px;padding:16px;text-align:center;border:1px solid #eee}
+    .sum-lbl{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px}
+    .sum-val{font-size:20px;font-weight:700;margin-top:4px}
+    table{width:100%;border-collapse:collapse}
+    th{padding:10px 6px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#555;border-bottom:2px solid #D4A017}
+    th:nth-child(3),th:nth-child(4),th:nth-child(5),th:nth-child(6){text-align:right}
+    .footer{margin-top:32px;padding-top:16px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center}
+    .disclaimer{margin-top:16px;padding:12px;background:#fff8e1;border-radius:8px;font-size:10px;color:#555;line-height:1.6;border:1px solid #D4A01740}
+  </style>
+  </head><body>
+  <div class="header">
+    <div class="logo">✦ AUREX</div>
+    <div class="date">Reporte de Portfolio · ${fecha}</div>
+  </div>
+  <div class="summary">
+    <div class="sum-box">
+      <div class="sum-lbl">Valor Total</div>
+      <div class="sum-val">$${total.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+    </div>
+    <div class="sum-box">
+      <div class="sum-lbl">PnL Total</div>
+      <div class="sum-val" style="color:${totalPnl>=0?'#16a34a':'#dc2626'}">${totalPnl>=0?'+':''}$${totalPnl.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+    </div>
+    <div class="sum-box">
+      <div class="sum-lbl">Activos</div>
+      <div class="sum-val">${data.length}</div>
+    </div>
+  </div>
+  <table>
+    <tr><th>Ticker</th><th>Nombre</th><th>Cant.</th><th>Precio actual</th><th>Valor total</th><th>PnL</th></tr>
+    ${rows}
+  </table>
+  <div class="disclaimer">⚖️ <strong>Disclaimer:</strong> Este reporte es generado por Aurex con fines exclusivamente informativos. No constituye consejo ni recomendación de inversión. Los valores son de mercado y pueden variar. Aurex no es un asesor financiero registrado.</div>
+  <div class="footer">Generado por Aurex App · ${fecha} · fmoscon-creator.github.io/aurex-app</div>
+  </body></html>`;
+
+  const blob = new Blob([html], {type:'text/html'});
+  const url = URL.createObjectURL(blob);
+  const win = window.open(url,'_blank');
+  setTimeout(()=>{ if(win) win.print(); }, 800);
+}
+
+function shareWhatsApp() {
+  const data = calcPortfolio();
+  const total = data.reduce((s,a) => s + a.valorActual, 0);
+  const totalPnl = data.reduce((s,a) => s + a.pnlUSD, 0);
+  const fecha = new Date().toLocaleDateString('es-AR');
+
+  let msg = `✦ *AUREX — Mi Portfolio* · ${fecha}\n\n`;
+  msg += `💰 *Valor total: $${total.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}*\n`;
+  msg += `📊 *PnL: ${totalPnl>=0?'+':''}$${totalPnl.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}*\n\n`;
+  msg += `─────────────────\n`;
+  data.forEach(a => {
+    msg += `${a.pnlUSD>=0?'🟢':'🔴'} *${a.ticker}* — $${a.valorActual.toLocaleString('en',{minimumFractionDigits:0,maximumFractionDigits:0})} (${a.pnlPct>=0?'+':''}${a.pnlPct}%)\n`;
+  });
+  msg += `─────────────────\n`;
+  msg += `_Generado por Aurex · fmoscon-creator.github.io/aurex-app_\n`;
+  msg += `_⚖️ Solo informativo · No es consejo de inversión_`;
+
+  window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, '_blank');
+}
+
+function shareEmail() {
+  const data = calcPortfolio();
+  const total = data.reduce((s,a) => s + a.valorActual, 0);
+  const totalPnl = data.reduce((s,a) => s + a.pnlUSD, 0);
+  const fecha = new Date().toLocaleDateString('es-AR');
+
+  const subject = `✦ Aurex — Mi Portfolio · ${fecha}`;
+  let body = `Reporte de Portfolio Aurex · ${fecha}\n\n`;
+  body += `VALOR TOTAL: $${total.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}\n`;
+  body += `PnL TOTAL: ${totalPnl>=0?'+':''}$${totalPnl.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}\n\n`;
+  body += `ACTIVOS:\n`;
+  data.forEach(a => {
+    body += `• ${a.ticker} (${a.nombre}) — $${a.valorActual.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})} · PnL: ${a.pnlPct>=0?'+':''}${a.pnlPct}%\n`;
+  });
+  body += `\nGenerado por Aurex · ${fecha}\n`;
+  body += `⚖️ Este reporte es solo informativo y no constituye consejo de inversión.`;
+
+  window.location.href = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+// Clock
+setInterval(()=>{
+  const n=new Date();
+  document.getElementById('clock').textContent=
+    n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+},1000);
+
+const MODALS = {
+  idioma: `
+    <div class="modal-title">🌐 Idioma de la app</div>
+    <div class="modal-sub">Seleccioná tu idioma preferido</div>
+    <div class="lang-grid">
+      ${[
+        ['🇦🇷','Español','Spanish',''],
+        ['🇺🇸','English','Inglés','on'],
+        ['🇧🇷','Português','Portugués',''],
+        ['🇫🇷','Français','Francés',''],
+        ['🇩🇪','Deutsch','Alemán',''],
+        ['🇮🇹','Italiano','Italiano',''],
+        ['🇨🇳','中文','Chino',''],
+        ['🇯🇵','日本語','Japonés',''],
+      ].map(([f,n,s,on])=>`
+        <div class="lang-item ${on}" onclick="selectLang(this,'${n}')">
+          <span class="lang-flag">${f}</span>
+          <div><div class="lang-name">${n}</div><div class="lang-native">${s}</div></div>
+        </div>`).join('')}
+    </div>`,
+
+  moneda: `
+    <div class="modal-title">💰 Moneda base</div>
+    <div class="modal-sub">Para mostrar tu portfolio total</div>
+    <div class="curr-grid">
+      ${['USD $','ARS $','EUR €','BRL R$','GBP £','JPY ¥','BTC ₿','USDT ₮'].map((c,i)=>`
+        <div class="curr-item ${i===0?'on':''}" onclick="selectCurr(this)">${c}</div>`).join('')}
+    </div>`,
+
+  '2fa': `
+    <div class="modal-title">🛡️ Autenticación 2FA</div>
+    <div class="modal-sub">Doble factor de seguridad activo</div>
+    <div class="sec2fa" style="margin:0;margin-bottom:12px">
+      <div class="method-row">
+        <div class="method-ico">📱</div>
+        <div class="method-info">
+          <div class="method-name">SMS al teléfono</div>
+          <div class="method-status status-on">✓ Activo · +54 9 11 ****-1234</div>
+        </div>
+        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="method-row">
+        <div class="method-ico">🔐</div>
+        <div class="method-info">
+          <div class="method-name">App autenticadora</div>
+          <div class="method-status status-off">No configurado · Google Auth / Authy</div>
+        </div>
+        <button style="font-size:10px;padding:4px 10px;border-radius:8px;border:0.5px solid #D4A017;color:#D4A017;background:transparent;cursor:pointer">Activar</button>
+      </div>
+      <div class="method-row">
+        <div class="method-ico">📧</div>
+        <div class="method-info">
+          <div class="method-name">Email de verificación</div>
+          <div class="method-status status-on">✓ Activo · fmoscon@gmail.com</div>
+        </div>
+        <div class="tog on" onclick="this.classList.toggle('on')"></div>
+      </div>
+      <div class="method-row">
+        <div class="method-ico">🔑</div>
+        <div class="method-info">
+          <div class="method-name">Códigos de recuperación</div>
+          <div class="method-status status-off">8 códigos generados · úsalos si perdés acceso</div>
+        </div>
+        <button style="font-size:10px;padding:4px 10px;border-radius:8px;border:0.5px solid #8B949E;color:#8B949E;background:transparent;cursor:pointer">Ver</button>
+      </div>
+    </div>`,
+
+  sesiones: `
+    <div class="modal-title">📲 Sesiones activas</div>
+    <div class="modal-sub">Dispositivos con tu cuenta abierta</div>
+    <div style="margin-top:8px">
+      <div class="session-item">
+        <div class="sess-ico">📱</div>
+        <div class="sess-info">
+          <div class="sess-device">iPhone 17 Pro Max</div>
+          <div class="sess-detail">Buenos Aires · hace 2 min</div>
+        </div>
+        <div class="sess-current">Este dispositivo</div>
+      </div>
+      <div class="session-item">
+        <div class="sess-ico">💻</div>
+        <div class="sess-info">
+          <div class="sess-device">MacBook Pro</div>
+          <div class="sess-detail">Buenos Aires · hace 1 hora</div>
+        </div>
+        <span class="sess-revoke" onclick="alert('Sesión cerrada en MacBook Pro')">Cerrar</span>
+      </div>
+    </div>`,
+
+  disclaimer: `
+    <div class="modal-title">⚖️ Aviso Legal Completo</div>
+    <div class="modal-sub">Última actualización: Marzo 2026</div>
+    <div style="margin-top:12px;font-size:10px;color:#555;line-height:1.8">
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">1. Naturaleza del servicio.</strong> Aurex es una aplicación de seguimiento y análisis de inversiones con inteligencia artificial. No es una entidad financiera, broker, asesor de inversiones ni gestor de patrimonio. No está regulada por la CNV (Argentina), SEC (EEUU), FCA (UK) ni ningún organismo financiero internacional.</p>
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">2. Carácter informativo.</strong> Todo el contenido — precios, gráficos, análisis de IA, señales, alertas, precios objetivo, probabilidades y noticias — tiene exclusivo carácter informativo y educativo. Bajo ninguna circunstancia debe interpretarse como recomendación, consejo, señal ni incitación a comprar, vender o mantener instrumentos financieros.</p>
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">3. Riesgo de pérdida.</strong> Los instrumentos financieros — acciones, criptomonedas, futuros, opciones, ETFs, bonos y divisas — conllevan riesgo de pérdida parcial o total del capital. Los mercados son volátiles. Las decisiones de inversión son responsabilidad exclusiva del usuario.</p>
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">4. Limitaciones de la IA.</strong> Los modelos de inteligencia artificial utilizados por Aurex se basan en datos históricos y patrones estadísticos. No tienen capacidad predictiva garantizada. Una señal ALCISTA no implica que el activo subirá. Una probabilidad del 70% implica que existe un 30% de probabilidad de resultado contrario.</p>
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">5. Exactitud de datos.</strong> Aurex obtiene datos de fuentes de terceros (Binance, Alpha Vantage, MetalpriceAPI y otros). No garantizamos la exactitud, completitud ni actualización en tiempo real de los datos mostrados.</p>
+      <p style="margin-bottom:10px"><strong style="color:#E6EDF3">6. Exención de responsabilidad.</strong> Aurex, sus desarrolladores, directores, empleados y proveedores de datos no asumen responsabilidad por pérdidas, daños directos, indirectos, incidentales o consecuentes derivados del uso o la imposibilidad de uso de la aplicación o la información que contiene.</p>
+      <p style="color:#333">Al crear una cuenta y usar Aurex aceptás este disclaimer en su totalidad. Si no estás de acuerdo, debés desinstalar la aplicación. Consultas: <span style="color:#D4A01770">legal@aurex.app</span></p>
+    </div>`,
+
+  exportar: `
+    <div class="modal-title" style="color:#3FB950">📊 Exportar en Excel</div>
+    <div class="modal-sub">Descargá tu portfolio completo en formato CSV/Excel</div>
+    <div style="background:#161B22;border-radius:10px;padding:12px;margin:12px 0;border:0.5px solid #21262D">
+      <div style="font-size:11px;color:#8B949E;line-height:2">
+        📌 <strong style="color:#E6EDF3">Incluye:</strong> Ticker · Nombre · Cantidad · Precio compra · Precio actual · PnL $ · PnL % · Valor total<br>
+        📅 <strong style="color:#E6EDF3">Fecha:</strong> ${new Date().toLocaleDateString('es-AR')}<br>
+        📁 <strong style="color:#E6EDF3">Formato:</strong> .CSV compatible con Excel, Google Sheets y Numbers
+      </div>
+    </div>
+    <button onclick="exportCSV()" style="width:100%;padding:13px;border-radius:10px;background:#3FB950;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;margin-bottom:8px">📊 Descargar Excel / CSV</button>
+    <button onclick="shareWhatsApp();closeModal()" style="width:100%;padding:11px;border-radius:10px;background:#25D36620;color:#25D366;font-size:13px;font-weight:600;border:1px solid #25D36650;cursor:pointer;margin-bottom:8px">💬 Enviar por WhatsApp</button>
+    <button onclick="shareEmail();closeModal()" style="width:100%;padding:11px;border-radius:10px;background:#58A6FF15;color:#58A6FF;font-size:13px;font-weight:600;border:1px solid #58A6FF40;cursor:pointer">✉️ Enviar por Email</button>`,
+
+  exportarpdf: `
+    <div class="modal-title" style="color:#F85149">📄 Exportar en PDF</div>
+    <div class="modal-sub">Reporte visual completo de tu portfolio</div>
+    <div style="background:#161B22;border-radius:10px;padding:12px;margin:12px 0;border:0.5px solid #21262D">
+      <div style="font-size:11px;color:#8B949E;line-height:2">
+        📌 <strong style="color:#E6EDF3">Incluye:</strong> Resumen total · Tabla de activos · PnL por activo · Distribución %<br>
+        📅 <strong style="color:#E6EDF3">Fecha:</strong> ${new Date().toLocaleDateString('es-AR')}<br>
+        📁 <strong style="color:#E6EDF3">Formato:</strong> PDF listo para guardar o imprimir
+      </div>
+    </div>
+    <button onclick="exportPDF()" style="width:100%;padding:13px;border-radius:10px;background:#F85149;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;margin-bottom:8px">📄 Descargar PDF</button>
+    <button onclick="shareWhatsApp();closeModal()" style="width:100%;padding:11px;border-radius:10px;background:#25D36620;color:#25D366;font-size:13px;font-weight:600;border:1px solid #25D36650;cursor:pointer;margin-bottom:8px">💬 Enviar por WhatsApp</button>
+    <button onclick="shareEmail();closeModal()" style="width:100%;padding:11px;border-radius:10px;background:#58A6FF15;color:#58A6FF;font-size:13px;font-weight:600;border:1px solid #58A6FF40;cursor:pointer">✉️ Enviar por Email</button>`,
+
+  pro: `
+    <div style="text-align:center;padding-bottom:16px;border-bottom:0.5px solid #21262D;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:600;color:#A78BFA">⚡ PRO</div>
+      <div style="font-size:12px;color:#555;margin-top:4px">Para el inversor activo</div>
+      <div style="margin-top:12px;display:flex;justify-content:center;gap:12px">
+        <div style="background:#161B22;border-radius:12px;padding:12px 16px;border:1px solid #A78BFA50;text-align:center">
+          <div style="font-size:11px;color:#555">Mensual</div>
+          <div style="font-size:22px;font-weight:600;color:#A78BFA;margin-top:2px">$9.99</div>
+          <div style="font-size:9px;color:#555">/mes</div>
+        </div>
+        <div style="background:#A78BFA15;border-radius:12px;padding:12px 16px;border:2px solid #A78BFA;text-align:center;position:relative">
+          <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:8px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap">AHORRÁS $26/AÑO</div>
+          <div style="font-size:11px;color:#A78BFA">Anual</div>
+          <div style="font-size:22px;font-weight:600;color:#A78BFA;margin-top:2px">$7.79</div>
+          <div style="font-size:9px;color:#A78BFA">/mes · $93.48/año</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#8B949E;line-height:2;margin-bottom:16px">
+      ✅ <strong style="color:#E6EDF3">50 activos</strong> en portfolio simultáneos<br>
+      ✅ <strong style="color:#E6EDF3">10 señales IA</strong> personalizadas por día<br>
+      ✅ <strong style="color:#E6EDF3">Alertas push</strong> en tiempo real al iPhone<br>
+      ✅ <strong style="color:#E6EDF3">Sin publicidad</strong> — experiencia limpia<br>
+      ✅ <strong style="color:#E6EDF3">Historial completo</strong> de señales IA<br>
+      ✅ <strong style="color:#E6EDF3">Exportar datos</strong> en CSV<br>
+      ❌ API de datos ilimitada<br>
+      ❌ Soporte VIP directo
+    </div>
+    <button onclick="alert('Disponible en la Semana 5 con RevenueCat')" style="width:100%;padding:13px;border-radius:10px;background:#A78BFA;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;margin-bottom:8px">⚡ Empezar con PRO — $9.99/mes</button>
+    <button onclick="alert('Disponible en la Semana 5 con RevenueCat')" style="width:100%;padding:11px;border-radius:10px;background:#A78BFA15;color:#A78BFA;font-size:13px;font-weight:600;border:1px solid #A78BFA50;cursor:pointer">💰 Anual $7.79/mes — Ahorrás $26</button>
+    <div style="text-align:center;font-size:9px;color:#555;margin-top:8px">7 días de prueba gratis · Sin tarjeta de crédito · Cancelás cuando querés</div>`,
+
+  elite: `
+    <div style="text-align:center;padding-bottom:16px;border-bottom:0.5px solid #21262D;margin-bottom:16px">
+      <div style="font-size:20px;font-weight:600;color:#D4A017">✦ ELITE</div>
+      <div style="font-size:12px;color:#555;margin-top:4px">Para el inversor serio — todo sin límites</div>
+      <div style="margin-top:12px;display:flex;justify-content:center;gap:12px">
+        <div style="background:#161B22;border-radius:12px;padding:12px 16px;border:1px solid #D4A01750;text-align:center">
+          <div style="font-size:11px;color:#555">Mensual</div>
+          <div style="font-size:22px;font-weight:600;color:#D4A017;margin-top:2px">$19.99</div>
+          <div style="font-size:9px;color:#555">/mes</div>
+        </div>
+        <div style="background:#D4A01715;border-radius:12px;padding:12px 16px;border:2px solid #D4A017;text-align:center;position:relative">
+          <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:8px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap">AHORRÁS $53/AÑO</div>
+          <div style="font-size:11px;color:#D4A017">Anual</div>
+          <div style="font-size:22px;font-weight:600;color:#D4A017;margin-top:2px">$15.59</div>
+          <div style="font-size:9px;color:#D4A017">/mes · $187.08/año</div>
+        </div>
+      </div>
+    </div>
+    <div style="font-size:12px;color:#8B949E;line-height:2;margin-bottom:16px">
+      ✅ <strong style="color:#E6EDF3">Activos ilimitados</strong> en portfolio<br>
+      ✅ <strong style="color:#E6EDF3">IA ilimitada 24/7</strong> — señales sin tope<br>
+      ✅ <strong style="color:#E6EDF3">Alertas push + email</strong> instantáneas<br>
+      ✅ <strong style="color:#E6EDF3">API completa</strong> — datos sin restricción<br>
+      ✅ <strong style="color:#E6EDF3">8 idiomas</strong> — ES · EN · PT · FR · DE · IT · CN · JP<br>
+      ✅ <strong style="color:#E6EDF3">Soporte VIP</strong> — respuesta en menos de 2hs<br>
+      ✅ <strong style="color:#E6EDF3">Acceso anticipado</strong> a nuevas funciones<br>
+      ✅ <strong style="color:#E6EDF3">Todo lo de PRO</strong> incluido
+    </div>
+    <button onclick="alert('Disponible en la Semana 5 con RevenueCat')" style="width:100%;padding:13px;border-radius:10px;background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:14px;font-weight:600;border:none;cursor:pointer;margin-bottom:8px">✦ Empezar con ELITE — $19.99/mes</button>
+    <button onclick="alert('Disponible en la Semana 5 con RevenueCat')" style="width:100%;padding:11px;border-radius:10px;background:#D4A01715;color:#D4A017;font-size:13px;font-weight:600;border:1px solid #D4A01750;cursor:pointer">💰 Anual $15.59/mes — Ahorrás $53</button>
+    <div style="text-align:center;font-size:9px;color:#555;margin-top:8px">7 días de prueba gratis · Sin tarjeta de crédito · Cancelás cuando querés</div>`,
+  invitar: `
+    <div style="text-align:center;padding-bottom:16px;border-bottom:0.5px solid #21262D;margin-bottom:16px">
+      <div style="font-size:40px;margin-bottom:8px">🎁</div>
+      <div style="font-size:18px;font-weight:600;color:#E6EDF3">Invitá a un amigo</div>
+      <div style="font-size:12px;color:#555;margin-top:4px">Compartís Aurex · los dos ganan</div>
+    </div>
+    <div style="background:#1A3A2A;border-radius:10px;padding:12px;margin-bottom:14px;border:0.5px solid #3FB95040;text-align:center">
+      <div style="font-size:10px;color:#3FB950;font-weight:600;margin-bottom:6px">TU BENEFICIO</div>
+      <div style="font-size:14px;color:#E6EDF3;font-weight:500">1 mes de PRO gratis</div>
+      <div style="font-size:10px;color:#8B949E;margin-top:2px">por cada amigo que se registre</div>
+    </div>
+    <div style="font-size:12px;color:#8B949E;line-height:1.8;margin-bottom:14px;text-align:center">
+      Tu amigo también obtiene<br><strong style="color:#E6EDF3">7 días de PRO gratis</strong> al registrarse con tu link
+    </div>
+    <div style="background:#161B22;border-radius:10px;padding:10px 14px;margin-bottom:12px;border:0.5px solid #21262D;font-family:monospace;font-size:13px;color:#D4A017;text-align:center">
+      aurex.app/ref/FMOSCON
+    </div>
+    <button onclick="navigator.share?navigator.share({title:'Aurex',text:'Probá Aurex — el mejor tracker de inversiones con IA',url:'https://fmoscon-creator.github.io/aurex-app'}):alert('Link copiado!')" style="width:100%;padding:12px;border-radius:10px;background:#25D366;color:#fff;font-size:13px;font-weight:600;border:none;cursor:pointer;margin-bottom:8px">💬 Compartir por WhatsApp</button>
+    <button onclick="alert('Link copiado al portapapeles!')" style="width:100%;padding:10px;border-radius:10px;background:#161B22;color:#8B949E;font-size:12px;font-weight:500;border:0.5px solid #21262D;cursor:pointer">📋 Copiar link de referido</button>`,
+
+  prueba: `
+    <div style="text-align:center;padding-bottom:16px;border-bottom:0.5px solid #21262D;margin-bottom:16px">
+      <div style="font-size:40px;margin-bottom:8px">🧪</div>
+      <div style="font-size:18px;font-weight:600;color:#A78BFA">Beta Testers Aurex</div>
+      <div style="font-size:12px;color:#555;margin-top:4px">Acceso anticipado · Forma el producto</div>
+    </div>
+    <div style="font-size:12px;color:#8B949E;line-height:1.8;margin-bottom:14px">
+      Como beta tester tenés acceso a:<br>
+      ✅ <strong style="color:#E6EDF3">Funciones antes del lanzamiento</strong><br>
+      ✅ <strong style="color:#E6EDF3">Plan PRO gratis mientras dure la beta</strong><br>
+      ✅ <strong style="color:#E6EDF3">Canal directo con el equipo</strong><br>
+      ✅ <strong style="color:#E6EDF3">Tu nombre en los créditos</strong>
+    </div>
+    <div style="background:#A78BFA15;border-radius:10px;padding:10px;margin-bottom:14px;border:0.5px solid #A78BFA40;font-size:11px;color:#A78BFA;text-align:center">
+      Cupos limitados · 50 beta testers seleccionados
+    </div>
+    <button onclick="alert('¡Solicitud enviada! Te contactamos en 24hs.')" style="width:100%;padding:12px;border-radius:10px;background:#A78BFA;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer">🧪 Quiero ser Beta Tester</button>`,
+
+  conversor: `
+    <div style="margin-bottom:14px">
+      <div style="font-size:14px;font-weight:500;color:#E6EDF3;margin-bottom:12px">💱 Conversor de Monedas</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Monto</div>
+          <input id="conv-amount" type="number" value="1000" style="width:100%;background:#161B22;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:16px;outline:none" oninput="updateConv()">
+        </div>
+        <div>
+          <div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">De</div>
+          <select id="conv-from" style="width:100%;background:#161B22;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:13px;outline:none" onchange="updateConv()">
+            <option value="USD">🇺🇸 USD — Dólar</option>
+            <option value="ARS">🇦🇷 ARS — Peso Arg.</option>
+            <option value="EUR">🇪🇺 EUR — Euro</option>
+            <option value="BRL">🇧🇷 BRL — Real</option>
+            <option value="BTC">₿ BTC — Bitcoin</option>
+            <option value="ETH">Ξ ETH — Ethereum</option>
+            <option value="USDT">💲 USDT — Tether</option>
+            <option value="USDC">💲 USDC — USD Coin</option>
+            <option value="SOL">◎ SOL — Solana</option>
+            <option value="BNB">B BNB — BNB Chain</option>
+          </select>
+        </div>
+        <div style="text-align:center;font-size:20px;cursor:pointer" onclick="swapConv()">⇅</div>
+        <div>
+          <div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">A</div>
+          <select id="conv-to" style="width:100%;background:#161B22;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:13px;outline:none" onchange="updateConv()">
+            <option value="ARS">🇦🇷 ARS — Peso Arg.</option>
+            <option value="USD">🇺🇸 USD — Dólar</option>
+            <option value="EUR">🇪🇺 EUR — Euro</option>
+            <option value="BRL">🇧🇷 BRL — Real</option>
+            <option value="BTC">₿ BTC — Bitcoin</option>
+            <option value="ETH">Ξ ETH — Ethereum</option>
+            <option value="USDT">💲 USDT — Tether</option>
+            <option value="USDC">💲 USDC — USD Coin</option>
+            <option value="SOL">◎ SOL — Solana</option>
+            <option value="BNB">B BNB — BNB Chain</option>
+          </select>
+        </div>
+        <div style="background:#0D1117;border-radius:10px;padding:14px;border:1px solid #D4A01740;text-align:center">
+          <div style="font-size:11px;color:#555;margin-bottom:4px">Resultado</div>
+          <div id="conv-result" style="font-size:22px;font-weight:500;color:#D4A017">—</div>
+          <div id="conv-rate" style="font-size:10px;color:#555;margin-top:4px">Cargando tasa...</div>
+        </div>
+      </div>
+    </div>`,
+
+};
+
+function openModal(id) {
+  const body = MODALS[id];
+  if(!body) return;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal(e) {
+  if(!e || e.target.id==='modal' || e.target.classList.contains('modal-close')) {
+    document.getElementById('modal').classList.remove('show');
+  }
+}
+
+function selectLang(el, name) {
+  document.querySelectorAll('.lang-item').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+
+function selectCurr(el) {
+  document.querySelectorAll('.curr-item').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+}
+
+// Conversor de monedas
+const CONV_RATES = {
+  USD:1, ARS:1215, EUR:0.92, BRL:5.74,
+  BTC:0.0000118, ETH:0.00052, USDT:1, USDC:1,
+  SOL:0.0108, BNB:0.00155
+};
+
+async function fetchConvRates() {
+  try {
+    const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbols=["BTCUSDT","ETHUSDT","SOLUSDT","BNBUSDT"]');
+    const d = await r.json();
+    d.forEach(t => {
+      const p = parseFloat(t.price);
+      if(t.symbol==='BTCUSDT') CONV_RATES.BTC = 1/p;
+      if(t.symbol==='ETHUSDT') CONV_RATES.ETH = 1/p;
+      if(t.symbol==='SOLUSDT') CONV_RATES.SOL = 1/p;
+      if(t.symbol==='BNBUSDT') CONV_RATES.BNB = 1/p;
+    });
+  } catch(e) {}
+}
+
+function updateConv() {
+  const amt = parseFloat(document.getElementById('conv-amount')?.value) || 0;
+  const from = document.getElementById('conv-from')?.value;
+  const to = document.getElementById('conv-to')?.value;
+  if(!amt || !from || !to) return;
+  const inUSD = amt / CONV_RATES[from];
+  const result = inUSD * CONV_RATES[to];
+  const fmt = result >= 1000 ? result.toLocaleString('en',{maximumFractionDigits:2}) :
+              result >= 1 ? result.toFixed(4) : result.toFixed(8);
+  const rateVal = (CONV_RATES[to] / CONV_RATES[from]).toFixed(6);
+  const el = document.getElementById('conv-result');
+  const rel = document.getElementById('conv-rate');
+  if(el) el.textContent = fmt + ' ' + to;
+  if(rel) rel.textContent = `1 ${from} = ${rateVal} ${to} · Tiempo real`;
+}
+
+function swapConv() {
+  const f = document.getElementById('conv-from');
+  const t = document.getElementById('conv-to');
+  if(!f||!t) return;
+  const tmp = f.value; f.value = t.value; t.value = tmp;
+  updateConv();
+}
+
+fetchConvRates();
+setInterval(fetchConvRates, 30000);
+
+
+function showScreen(name) {
+  ['portfolio','mercados','ia','alertas','perfil'].forEach(function(s) {
+    var el = document.getElementById('screen-'+s);
+    if(el) el.style.display = s===name?'flex':'none';
+    var btn = document.getElementById('nav-'+s);
+    if(!btn) return;
+    var on = s===name, col = on?'#D4A017':'#8B949E';
+    btn.classList.toggle('on',on);
+    var svg=btn.querySelector('svg'); if(svg) svg.setAttribute('stroke',col);
+    btn.querySelectorAll('ellipse').forEach(function(e){e.setAttribute('stroke',col);});
+    btn.querySelectorAll('circle[r="2"]').forEach(function(e){e.setAttribute('fill',col);});
+    var span=btn.querySelector('span'); if(span) span.style.color=on?'#D4A017':'';
+  });
+  if(name==='mercados'){render();renderSumrow();}
+}
+setInterval(function(){
+  var n=new Date(),t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');
+  document.querySelectorAll('.st').forEach(function(el){el.textContent=t;});
+},1000);
+
+showScreen('mercados');
 </script>
 </body>
 </html>
