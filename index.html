@@ -434,11 +434,33 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 </div>
 </div>
 
+<div class="screen" id="screen-watchlist" style="display:flex;flex-direction:column;flex:1;min-height:0">
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#001A2A 0%,#0D1117 100%)">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
+      <span style="font-size:13px;color:#8B949E">· Watchlist</span>
+    </div>
+    <div onclick="openAddWatch()" style="padding:4px 10px;border-radius:9px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Seguir activo</div>
+  </div>
+</div>
+<div class="cnt" id="watch-cnt"></div>
+<div id="watch-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
+  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:85vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar a Watchlist</span>
+      <span onclick="closeWatchModal()" style="font-size:20px;color:#8B949E;cursor:pointer">X</span>
+    </div>
+    <div id="watch-modal-body"></div>
+  </div>
+</div>
+</div>
+
 <div class="screen" id="screen-alertas">
 <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
   <div style="font-size:52px">🔔</div>
   <div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div>
-  <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos</div>
+  <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos<br><span style="color:#D4A017;font-size:11px">Proximamente</span></div>
 </div>
 </div>
 
@@ -823,11 +845,12 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 </div>
 
 <div class="bnav">
-  <div class="bni" id="nav-portfolio" onclick="showScreen('portfolio')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>Portfolio</span></div>
-  <div class="bni on" id="nav-mercados" onclick="showScreen('mercados')"><svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg><span style="color:#D4A017">Mercados</span></div>
-  <div class="bni" id="nav-ia" onclick="showScreen('ia')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.3"><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="#8B949E" stroke="none"/></svg><span>IA</span></div>
-  <div class="bni" id="nav-alertas" onclick="showScreen('alertas')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Alertas</span></div>
-  <div class="bni" id="nav-perfil" onclick="showScreen('perfil')"><svg viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Perfil</span></div>
+  <div class="bni on" id="nav-portfolio" onclick="showScreen('portfolio')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span style="color:#D4A017">Portfolio</span></div>
+  <div class="bni" id="nav-mercados" onclick="showScreen('mercados')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M3 3v18h18"/><path d="M18 9l-5 5-4-4-3 3"/></svg><span>Mercados</span></div>
+  <div class="bni" id="nav-watchlist" onclick="showScreen('watchlist')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg><span>Watchlist</span></div>
+  <div class="bni" id="nav-ia" onclick="showScreen('ia')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.3"><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.5" fill="none" stroke="#8B949E" stroke-width="1.3" transform="rotate(120 12 12)"/><circle cx="12" cy="12" r="2" fill="#8B949E" stroke="none"/></svg><span>IA</span></div>
+  <div class="bni" id="nav-alertas" onclick="showScreen('alertas')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span>Alertas</span></div>
+  <div class="bni" id="nav-perfil" onclick="showScreen('perfil')"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8B949E" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg><span>Perfil</span></div>
 </div>
 </div>
 <script>
@@ -1087,31 +1110,39 @@ function togglePortEdit(){
 function openAddActivo(){
   const modal=document.getElementById('port-modal');
   document.getElementById('port-modal-title').textContent='Agregar activo';
-  // Construir lista de todos los activos disponibles en DATA
   const todas=[];
-  DATA.cripto.forEach(it=>todas.push({s:it.s,n:it.nombre||it.n,tab:'cripto',col:it.col,ico:it.ico,p:it.p}));
-  DATA.acciones.usa.forEach(it=>todas.push({s:it.s,n:it.n,tab:'acciones',pais:'usa',col:it.col,ico:it.ico,p:it.p}));
-  DATA.stable.forEach(it=>todas.push({s:it.s,n:it.n,tab:'stable',col:it.col,ico:it.ico,p:it.p}));
-  DATA.comm.forEach(it=>todas.push({s:it.s,n:it.n,tab:'comm',col:it.col,ico:it.ico,p:it.p}));
-  DATA.etf.forEach(it=>todas.push({s:it.s,n:it.n,tab:'etf',col:it.col,ico:it.ico,p:it.p}));
-  DATA.divisas.forEach(it=>todas.push({s:it.s,n:it.n,tab:'divisas',col:it.col,ico:it.ico,p:it.p}));
-  ['arg','br','eu','es','jp','cn'].forEach(pais=>DATA.acciones[pais].forEach(it=>todas.push({s:it.s,n:it.n,tab:'acciones',pais,col:it.col,ico:it.ico,p:it.p})));
+  const cats=[
+    {label:'🔷 Cripto',items:DATA.cripto,tab:'cripto'},
+    {label:'📈 Acciones EE.UU.',items:DATA.acciones.usa,tab:'acciones',pais:'usa'},
+    {label:'📈 Acciones ARG',items:DATA.acciones.arg,tab:'acciones',pais:'arg'},
+    {label:'📈 Acciones Brasil',items:DATA.acciones.br,tab:'acciones',pais:'br'},
+    {label:'📈 Acciones Europa',items:DATA.acciones.eu,tab:'acciones',pais:'eu'},
+    {label:'📈 Acciones España',items:DATA.acciones.es,tab:'acciones',pais:'es'},
+    {label:'📈 Acciones Japón',items:DATA.acciones.jp,tab:'acciones',pais:'jp'},
+    {label:'📈 Acciones China',items:DATA.acciones.cn,tab:'acciones',pais:'cn'},
+    {label:'💎 Stable & DeFi',items:DATA.stable,tab:'stable'},
+    {label:'🥇 Commodities',items:DATA.comm,tab:'comm'},
+    {label:'📊 ETF & Bonos',items:DATA.etf,tab:'etf'},
+    {label:'💱 Divisas',items:DATA.divisas,tab:'divisas'},
+    {label:'⚡ Futuros',items:DATA.futuros,tab:'futuros'},
+  ];
+  cats.forEach(cat=>cat.items.forEach(it=>todas.push({s:it.s,n:it.n,tab:cat.tab,pais:cat.pais||null,col:it.col,ico:it.ico,p:it.p,cat:cat.label})));
 
-  let rows='';
+  let rows='';let lastCat='';
   todas.forEach((it,idx)=>{
-    const yaEsta=PORT.findIndex(p=>p.s===it.s&&p.tab===it.tab)>=0;
-    rows+=`<div onclick="selectActivoAdd(${idx})" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:0.5px solid ${yaEsta?'#D4A017':'#21262D'};background:${yaEsta?'#D4A01710':'#0D1117'};cursor:pointer;margin-bottom:5px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
-      <div style="width:30px;height:30px;border-radius:8px;background:${it.col}22;color:${it.col};display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">${it.ico}</div>
-      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:#E6EDF3">${it.s} ${yaEsta?'<span style="font-size:9px;color:#D4A017;background:#D4A01720;padding:1px 5px;border-radius:5px">En portfolio</span>':''}</div><div style="font-size:10px;color:#555">${it.n}</div></div>
-      <div style="font-size:12px;color:#8B949E">${it.p}</div>
+    const yaEsta=PORT.findIndex(p=>p.s===it.s&&p.tab===it.tab&&(p.pais||'')===(it.pais||''))>=0;
+    if(it.cat!==lastCat){rows+=`<div style="padding:8px 4px 4px;font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px;border-top:${lastCat?'0.5px solid #21262D':'none'};margin-top:${lastCat?'6px':'0'}">${it.cat}</div>`;lastCat=it.cat;}
+    rows+=`<div onclick="selectActivoAdd(${idx})" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:0.5px solid ${yaEsta?'#D4A017':'#21262D'};background:${yaEsta?'#D4A01710':'#0D1117'};cursor:pointer;margin-bottom:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+      <div style="width:32px;height:32px;border-radius:8px;background:${it.col}22;color:${it.col};display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0">${it.ico}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:#E6EDF3">${it.s}${yaEsta?' <span style="font-size:9px;color:#D4A017;background:#D4A01720;padding:1px 5px;border-radius:5px">En portfolio</span>':''}</div><div style="font-size:10px;color:#555;margin-top:1px">${it.n}</div></div>
+      <div style="font-size:12px;color:#E6EDF3;flex-shrink:0">${it.p}</div>
     </div>`;
   });
-
-  // Guardar lista para acceso posterior
   window._portAddLista=todas;
   document.getElementById('port-modal-body').innerHTML=`
-    <input placeholder="Buscar activo..." id="port-search" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:10px" oninput="filterPortSearch(this.value)">
-    <div id="port-add-list" style="max-height:50vh;overflow-y:auto;display:flex;flex-direction:column">${rows}</div>`;
+    <input placeholder="Buscar ticker o nombre..." id="port-search" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:10px;padding:11px 14px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:8px" oninput="filterPortSearch(this.value)">
+    <div style="font-size:10px;color:#555;margin-bottom:8px">${todas.length} activos disponibles en todas las categorias</div>
+    <div id="port-add-list" style="max-height:55vh;overflow-y:auto">${rows}</div>`;
   modal.style.display='flex';modal.style.alignItems='flex-end';modal.style.justifyContent='center';
 }
 
@@ -1131,15 +1162,34 @@ function selectActivoAdd(idx){
       <div><div style="font-size:14px;font-weight:500;color:#E6EDF3">${it.s}</div><div style="font-size:11px;color:#555">${it.n}</div></div>
       <div style="margin-left:auto;font-size:13px;color:#D4A017">${it.p}</div>
     </div>
-    <div style="margin-bottom:12px">
-      <div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Cantidad que tenés</div>
-      <input id="pa-cant" type="number" placeholder="ej: 0.5" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:16px;outline:none">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px">
+      <div style="background:#0D1117;border-radius:10px;padding:12px;border:1px solid #30363D">
+        <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Cantidad</div>
+        <input id="pa-cant" type="number" inputmode="decimal" placeholder="0.00" style="width:100%;background:transparent;border:none;color:#E6EDF3;font-size:20px;font-weight:500;outline:none;padding:0">
+        <div style="font-size:9px;color:#555;margin-top:4px">Ej: 0.5 BTC · 15 acciones</div>
+      </div>
+      <div style="background:#0D1117;border-radius:10px;padding:12px;border:1px solid #30363D">
+        <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Precio compra (USD)</div>
+        <input id="pa-compra" type="number" inputmode="decimal" placeholder="0.00" style="width:100%;background:transparent;border:none;color:#E6EDF3;font-size:20px;font-weight:500;outline:none;padding:0">
+        <div style="font-size:9px;color:#555;margin-top:4px">Precio que pagaste</div>
+      </div>
     </div>
-    <div style="margin-bottom:16px">
-      <div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Precio de compra (USD)</div>
-      <input id="pa-compra" type="number" placeholder="ej: 48000" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:16px;outline:none">
+    <div id="pa-preview" style="background:#0D1117;border-radius:10px;padding:10px 12px;border:0.5px solid #21262D;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:10px;color:#555">Inversion total estimada</span>
+      <span style="font-size:13px;font-weight:600;color:#D4A017" id="pa-total">— USD</span>
     </div>
-    <button onclick="confirmarAdd('${it.s}','${it.n}','${it.col}','${it.ico}','${it.tab}','${it.pais||''}')" style="width:100%;padding:13px;border-radius:10px;background:#3FB950;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer">✓ Agregar al Portfolio</button>`;
+    <script>
+      setTimeout(()=>{
+        const c=document.getElementById('pa-cant');
+        const p=document.getElementById('pa-compra');
+        const t=document.getElementById('pa-total');
+        if(c&&p&&t){
+          const upd=()=>{const v=parseFloat(c.value)*parseFloat(p.value);t.textContent=isNaN(v)?'— USD':'$'+v.toLocaleString('en',{maximumFractionDigits:2})+' USD';};
+          c.oninput=upd;p.oninput=upd;
+        }
+      },100);
+    </script>
+    <button onclick="confirmarAdd('${it.s}','${it.n}','${it.col}','${it.ico}','${it.tab}','${it.pais||''}')" style="width:100%;padding:14px;border-radius:10px;background:#3FB950;color:#fff;font-size:15px;font-weight:600;border:none;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">+ Agregar al Portfolio</button>`;
 }
 
 function confirmarAdd(s,nombre,col,ico,tab,pais){
@@ -1243,7 +1293,7 @@ fetchConvRates();
 setInterval(fetchConvRates,30000);
 
 function showScreen(name){
-  var list=['portfolio','mercados','ia','alertas','perfil'];
+  var list=['portfolio','mercados','watchlist','ia','alertas','perfil'];
   for(var i=0;i<list.length;i++){
     var s=list[i];
     var el=document.getElementById('screen-'+s);
@@ -1264,9 +1314,105 @@ function showScreen(name){
   }
   if(name==='mercados'){if(typeof render==='function')render();if(typeof renderSumrow==='function')renderSumrow();}
   if(name==='portfolio'){if(typeof renderPortfolio==='function')renderPortfolio();}
+  if(name==='watchlist'){if(typeof renderWatchlist==='function')renderWatchlist();}
 }
 setInterval(function(){var n=new Date();var t=n.getHours().toString().padStart(2,'0')+':'+n.getMinutes().toString().padStart(2,'0');document.querySelectorAll('.st').forEach(function(el){el.textContent=t;});},1000);
-showScreen('mercados');
+showScreen('portfolio');
+if(typeof renderPortfolio==='function')renderPortfolio();
+
+// ── WATCHLIST ──
+let WATCH = [
+  {s:'NVDA',tab:'acciones',pais:'usa'},{s:'SOL',tab:'cripto'},
+  {s:'XAG',tab:'comm'},{s:'GGAL',tab:'acciones',pais:'arg'},
+  {s:'LINK',tab:'stable'}
+];
+function getWatchItem(w){
+  try{
+    if(w.tab==='acciones')return(DATA.acciones[w.pais||'usa']||[]).find(x=>x.s===w.s);
+    return(DATA[w.tab]||[]).find(x=>x.s===w.s);
+  }catch(e){return null;}
+}
+function renderWatchlist(){
+  const cnt=document.getElementById('watch-cnt');if(!cnt)return;
+  if(WATCH.length===0){
+    cnt.innerHTML=`<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center"><div style="font-size:52px">👁</div><div style="font-size:18px;font-weight:500;color:#E6EDF3">Sin activos seguidos</div><div style="font-size:12px;color:#555">Tocá + Seguir activo para agregar</div></div>`;
+    return;
+  }
+  let h=`<div style="padding:6px 13px;background:#080C10;border-bottom:0.5px solid #21262D;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2"><span style="font-size:9px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:.8px">Siguiendo · ${WATCH.length} activos</span></div>`;
+  WATCH.forEach((w,i)=>{
+    const it=getWatchItem(w);if(!it)return;
+    const up=it.up;
+    h+=`<div class="ar" onclick="watchGoToMercado('${w.s}','${w.tab}','${w.pais||''}')">
+      ${logoHTML(it.s,it.col,it.ico)}
+      <div class="ai"><div class="an">${it.s}</div><div class="as">${it.n}</div><div class="ameta"><span class="vol-tag">${it.v}</span></div></div>
+      ${spark(it._t||it.t,up)}
+      <div class="ar-r"><div class="ap">${it.p}</div><div class="apct ${up?'u':'d'}">${it.c}</div></div>
+      <div onclick="removeWatch(${i},event)" style="width:28px;height:28px;border-radius:7px;background:#3A1A1A;display:flex;align-items:center;justify-content:center;font-size:12px;color:#F85149;flex-shrink:0;margin-left:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">✕</div>
+    </div>`;
+  });
+  cnt.innerHTML=h;
+}
+function removeWatch(i,e){e.stopPropagation();WATCH.splice(i,1);renderWatchlist();}
+function watchGoToMercado(s,tab,pais){
+  // Navegar a Mercados y abrir el activo
+  const tabIdx=['cripto','acciones','stable','futuros','comm','divisas','etf'].indexOf(tab);
+  const tabEl=document.querySelectorAll('.tab')[tabIdx];
+  showScreen('mercados');
+  if(tabEl)sw(tab,tabEl);
+  if(tab==='acciones'&&pais){
+    const paisIdx=['usa','arg','br','eu','es','jp','cn'].indexOf(pais);
+    const paisEls=document.querySelectorAll('.pais');
+    if(paisEls[paisIdx])swPais(pais,paisEls[paisIdx]);
+  }
+  setTimeout(()=>{
+    const items=getItems();
+    const idx=items.findIndex(x=>x.s===s);
+    if(idx>=0)toggleDetail(idx);
+    document.getElementById('cnt').scrollTop=0;
+  },80);
+}
+function openAddWatch(){
+  const modal=document.getElementById('watch-modal');
+  const todas=[];
+  DATA.cripto.forEach(it=>todas.push({s:it.s,n:it.n,tab:'cripto',col:it.col,ico:it.ico,p:it.p}));
+  DATA.acciones.usa.forEach(it=>todas.push({s:it.s,n:it.n,tab:'acciones',pais:'usa',col:it.col,ico:it.ico,p:it.p}));
+  DATA.stable.forEach(it=>todas.push({s:it.s,n:it.n,tab:'stable',col:it.col,ico:it.ico,p:it.p}));
+  DATA.comm.forEach(it=>todas.push({s:it.s,n:it.n,tab:'comm',col:it.col,ico:it.ico,p:it.p}));
+  DATA.etf.forEach(it=>todas.push({s:it.s,n:it.n,tab:'etf',col:it.col,ico:it.ico,p:it.p}));
+  DATA.divisas.forEach(it=>todas.push({s:it.s,n:it.n,tab:'divisas',col:it.col,ico:it.ico,p:it.p}));
+  ['arg','br','eu','es','jp','cn'].forEach(pais=>DATA.acciones[pais].forEach(it=>todas.push({s:it.s,n:it.n,tab:'acciones',pais,col:it.col,ico:it.ico,p:it.p})));
+  window._watchLista=todas;
+  let rows='';
+  todas.forEach((it,idx)=>{
+    const yaEsta=WATCH.findIndex(w=>w.s===it.s&&w.tab===it.tab)>=0;
+    rows+=`<div onclick="toggleWatch(${idx})" style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;border:0.5px solid ${yaEsta?'#58A6FF':'#21262D'};background:${yaEsta?'#58A6FF12':'#0D1117'};cursor:pointer;margin-bottom:5px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">
+      <div style="width:30px;height:30px;border-radius:8px;background:${it.col}22;color:${it.col};display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">${it.ico}</div>
+      <div style="flex:1"><div style="font-size:13px;font-weight:500;color:#E6EDF3">${it.s}</div><div style="font-size:10px;color:#555">${it.n}</div></div>
+      <div style="font-size:12px;color:#8B949E;margin-right:6px">${it.p}</div>
+      <div style="font-size:18px;color:${yaEsta?'#58A6FF':'#555'}">${yaEsta?'★':'☆'}</div>
+    </div>`;
+  });
+  document.getElementById('watch-modal-body').innerHTML=`
+    <input placeholder="Buscar activo..." id="watch-search" style="width:100%;background:#0D1117;border:1px solid #30363D;border-radius:10px;padding:11px 14px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:10px" oninput="filterWatchSearch(this.value)">
+    <div id="watch-add-list" style="max-height:55vh;overflow-y:auto">${rows}</div>`;
+  modal.style.display='flex';modal.style.alignItems='flex-end';modal.style.justifyContent='center';
+}
+function filterWatchSearch(q){
+  const lista=window._watchLista||[];const ql=q.toLowerCase();
+  document.querySelectorAll('#watch-add-list > div').forEach((d,i)=>{
+    const it=lista[i];if(!it)return;
+    d.style.display=(it.s.toLowerCase().includes(ql)||it.n.toLowerCase().includes(ql))?'flex':'none';
+  });
+}
+function toggleWatch(idx){
+  const it=(window._watchLista||[])[idx];if(!it)return;
+  const existing=WATCH.findIndex(w=>w.s===it.s&&w.tab===it.tab);
+  if(existing>=0)WATCH.splice(existing,1);
+  else WATCH.push({s:it.s,tab:it.tab,pais:it.pais||null});
+  openAddWatch();
+  renderWatchlist();
+}
+function closeWatchModal(){document.getElementById('watch-modal').style.display='none';}
 </script>
 </body>
 </html>
