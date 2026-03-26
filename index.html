@@ -2474,6 +2474,9 @@ async function initBackend() {
 initBackend();
 
 
+
+</script>
+<script>
 const BACKEND_URL='https://aurex-app-production.up.railway.app';
 let USER_WA=localStorage.getItem('aurex_wa_numero')||'';
 function saveWANumero(n){USER_WA=n;localStorage.setItem('aurex_wa_numero',n);}
@@ -2498,4 +2501,5 @@ function obNext(s){document.querySelectorAll('.ob-step').forEach(el=>el.style.di
 function obFinish(){const n=(document.getElementById('ob-nombre')||{}).value||'',w=(document.getElementById('ob-wa')||{}).value||'';if(n)localStorage.setItem('aurex_nombre',n);if(w){localStorage.setItem('aurex_wa_numero',w);saveWANumero(w);}localStorage.setItem('aurex_plan',obPlan);localStorage.setItem('aurex_onboarding_done','1');const ob=document.getElementById('onboarding');ob.style.transition='opacity 0.4s';ob.style.opacity='0';setTimeout(()=>{ob.style.display='none';},400);setTimeout(()=>{const b=document.createElement('div');b.style.cssText='position:fixed;top:60px;left:0;right:0;z-index:9999;margin:0 12px;background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:12px;padding:14px 16px;color:white;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.5);text-align:center';b.textContent='Bienvenido'+(n?', '+n:'')+'! Aurex esta listo.';document.body.appendChild(b);setTimeout(()=>b.remove(),4000);},500);}
 function initOnboarding(){if(localStorage.getItem('aurex_onboarding_done'))return;const ob=document.getElementById('onboarding');if(!ob)return;ob.style.display='block';const w=document.getElementById('ob-wa');if(w&&localStorage.getItem('aurex_wa_numero'))w.value=localStorage.getItem('aurex_wa_numero');const n=document.getElementById('ob-nombre');if(n&&localStorage.getItem('aurex_nombre'))n.value=localStorage.getItem('aurex_nombre');}
 setTimeout(initOnboarding,600);
+
 </script>
