@@ -2474,4 +2474,86 @@ async function initBackend() {
 }
 initBackend();
 
+
+// ── ONBOARDING ─────────────────────────────────────────────
+let obPlan='FREE';
+function obSelectPlan(p){obPlan=p;['free','pro','elite'].forEach(x=>{const el=document.getElementById('ob-plan-'+x);if(!el)return;el.style.border=x===p.toLowerCase()?'2px solid '+(x==='pro'?'#A78BFA':'#D4A017'):'1px solid #2E2E45';});}
+function obNext(s){document.querySelectorAll('.ob-step').forEach(el=>el.style.display='none');const el=document.getElementById('ob-step-'+s);if(el)el.style.display='flex';}
+function obFinish(){
+  const n=(document.getElementById('ob-nombre')||{}).value||'';
+  const w=(document.getElementById('ob-wa')||{}).value||'';
+  if(n)localStorage.setItem('aurex_nombre',n);
+  if(w){localStorage.setItem('aurex_wa_numero',w);if(typeof saveWANumero==='function')saveWANumero(w);}
+  localStorage.setItem('aurex_plan',obPlan);
+  localStorage.setItem('aurex_onboarding_done','1');
+  const ob=document.getElementById('onboarding');
+  if(ob){ob.style.transition='opacity 0.4s';ob.style.opacity='0';setTimeout(()=>{ob.style.display='none';},400);}
+  setTimeout(()=>{const b=document.createElement('div');b.style.cssText='position:fixed;top:60px;left:0;right:0;z-index:9999;margin:0 12px;background:linear-gradient(135deg,#16A34A,#22C55E);border-radius:12px;padding:14px 16px;color:white;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.5);text-align:center';b.textContent='Bienvenido'+(n?', '+n:'')+'! Aurex esta listo.';document.body.appendChild(b);setTimeout(()=>b.remove(),4000);},500);
+}
+function initOnboarding(){
+  if(localStorage.getItem('aurex_onboarding_done'))return;
+  const ob=document.getElementById('onboarding');if(!ob)return;
+  ob.style.display='block';
+  const w=document.getElementById('ob-wa');if(w&&localStorage.getItem('aurex_wa_numero'))w.value=localStorage.getItem('aurex_wa_numero');
+  const nEl=document.getElementById('ob-nombre');if(nEl&&localStorage.getItem('aurex_nombre'))nEl.value=localStorage.getItem('aurex_nombre');
+}
+setTimeout(initOnboarding,600);
+
+// ── YAHOO FINANCE RT ───────────────────────────────────────
+const YF_MAP={'AAPL':{tab:'acciones',pais:'usa',s:'AAPL'},'NVDA':{tab:'acciones',pais:'usa',s:'NVDA'},'MSFT':{tab:'acciones',pais:'usa',s:'MSFT'},'TSLA':{tab:'acciones',pais:'usa',s:'TSLA'},'META':{tab:'acciones',pais:'usa',s:'META'},'GOOGL':{tab:'acciones',pais:'usa',s:'GOOGL'},'AMZN':{tab:'acciones',pais:'usa',s:'AMZN'},'GGAL':{tab:'acciones',pais:'arg',s:'GGAL'},'YPF':{tab:'acciones',pais:'arg',s:'YPF'},'VALE':{tab:'acciones',pais:'br',s:'VALE3'},'PBR':{tab:'acciones',pais:'br',s:'PETR4'},'SPY':{tab:'etf',s:'SPY'},'QQQ':{tab:'etf',s:'QQQ'},'GLD':{tab:'etf',s:'GLD'},'GC=F':{tab:'comm',s:'XAU'},'SI=F':{tab:'comm',s:'XAG'},'CL=F':{tab:'comm',s:'WTI'},'ES=F':{tab:'futuros',s:'ES1!'},'NQ=F':{tab:'futuros',s:'NQ1!'},'EURUSD=X':{tab:'divisas',s:'EUR/USD'},'^GSPC':{tab:'acciones',pais:'usa',s:'SPX'},'^IXIC':{tab:'acciones',pais:'usa',s:'NDX'}};
+function updateItemRT(tab,pais,sk,price,pct){const arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];const it=arr.find(x=>x.s===sk);if(!it||!price)return;it.p=price>=1000?'$'+Math.round(price).toLocaleString('en'):price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4);it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;it._rt=true;}
+async function yahooFinanceRT(){
+  const syms=Object.keys(YF_MAP).join(',');
+  try{
+    const r=await fetch('https://query1.finance.yahoo.com/v7/finance/quote?symbols='+encodeURIComponent(syms)+'&fields=regularMarketPrice,regularMarketChangePercent');
+    const d=await r.json();const q=d?.quoteResponse?.result||[];
+    q.forEach(x=>{const m=YF_MAP[x.symbol];if(m)updateItemRT(m.tab,m.pais,m.s,x.regularMarketPrice,x.regularMarketChangePercent);});
+    if(q.length){if(typeof render==='function')render();if(typeof renderSumrow==='function')renderSumrow();console.log('RT Yahoo: '+q.length+' activos OK');}
+  }catch(e){
+    try{
+      const r=await fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v7/finance/quote?symbols='+syms+'&fields=regularMarketPrice,regularMarketChangePercent'));
+      const d=await r.json();const q=d?.quoteResponse?.result||[];
+      q.forEach(x=>{const m=YF_MAP[x.symbol];if(m)updateItemRT(m.tab,m.pais,m.s,x.regularMarketPrice,x.regularMarketChangePercent);});
+      if(q.length){if(typeof render==='function')render();if(typeof renderSumrow==='function')renderSumrow();console.log('RT Yahoo proxy: '+q.length);}
+    }catch(e2){console.log('Yahoo offline');}
+  }
+}
+yahooFinanceRT();
+setInterval(yahooFinanceRT,20000);
+
+// ── PUSH NOTIFICATIONS ─────────────────────────────────────
+let swReg=null;
+async function initPushNotifications(){if(!('serviceWorker' in navigator))return;try{swReg=await navigator.serviceWorker.register('/aurex-app/service-worker.js');console.log('SW registrado OK');if(Notification.permission==='granted')updateNotifButton(true);}catch(e){console.log('SW error:',e);}}
+async function requestPushPermission(){
+  if(!('Notification' in window)){alert('Agrega Aurex a tu pantalla de inicio desde Safari para activar notificaciones push.');return;}
+  if(Notification.permission==='granted'){showTestNotification();return;}
+  try{const p=await Notification.requestPermission();if(p==='granted'){updateNotifButton(true);showTestNotification();}}
+  catch(e){alert('Para push en iPhone:\n1. Safari > Compartir > Agregar a pantalla de inicio\n2. Abri desde el icono\n3. Activa notificaciones');}
+}
+function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'Recibirás alertas cuando tus objetivos se cumplan.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
+function showAlertNotification(s,precio,obj){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+precio.toLocaleString('en')+'  objetivo: $'+obj.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
+function updateNotifButton(on){const b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'#D4A017';b.textContent=on?'Activas':'Activar';}
+initPushNotifications();
+
+// ── ALERTAS LOCAL CHECK ─────────────────────────────────────
+function checkAlertasLocal(){
+  if(typeof ALERTAS==='undefined')return;
+  ALERTAS.forEach(async(a)=>{
+    if(!a.activa)return;
+    const actual=typeof getAlertActual==='function'?getAlertActual(a):null;
+    if(!actual)return;
+    const ok=(a.cond==='mayor'&&actual>=a.precio)||(a.cond==='menor'&&actual<=a.precio);
+    if(ok&&!a._disparada){
+      a._disparada=true;
+      const b=document.createElement('div');
+      b.style.cssText='position:fixed;top:60px;left:0;right:0;z-index:9999;margin:0 12px;background:#16A34A;border-radius:12px;padding:12px 16px;color:white;font-size:13px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
+      b.textContent='ALERTA - '+a.s+' llego a $'+actual.toLocaleString('en');
+      document.body.appendChild(b);setTimeout(()=>b.remove(),5000);
+      if(typeof showAlertNotification==='function')showAlertNotification(a.s,actual,a.precio);
+      if(a.canales&&a.canales.includes('whatsapp')&&typeof notificarAlertaWA==='function')notificarAlertaWA(a,actual);
+    }
+  });
+}
+setInterval(checkAlertasLocal,30000);
+
 </script>
