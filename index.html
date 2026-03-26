@@ -2475,9 +2475,9 @@ initBackend();
 
 
 // ═══ BACKEND + ONBOARDING + YAHOO RT + PUSH ═══════════════
-const BACKEND_URL='https://aurex-app-production.up.railway.app';
-let USER_WA=localStorage.getItem('aurex_wa_numero')||'';
-function saveWANumero(n){USER_WA=n;localStorage.setItem('aurex_wa_numero',n);}
+window.BACKEND_URL=window.BACKEND_URL||'https://aurex-app-production.up.railway.app';
+window.USER_WA=window.USER_WA||localStorage.getItem('aurex_wa_numero')||'';
+window.saveWANumero=function(n){window.USER_WA=n;localStorage.setItem('aurex_wa_numero',n);};
 
 async function notificarAlertaWA(a,precio){
   if(!USER_WA)return;
