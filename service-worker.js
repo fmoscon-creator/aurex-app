@@ -1,5 +1,5 @@
-// Aurex Service Worker v1.0 — Push Notifications + Offline Cache
-const CACHE_NAME = 'aurex-v1';
+// Aurex Service Worker v1.1 — Push Notifications + Offline Cache
+const CACHE_NAME = 'aurex-v2';
 const ASSETS = ['/aurex-app/', '/aurex-app/index.html'];
 
 // Instalar y cachear assets
