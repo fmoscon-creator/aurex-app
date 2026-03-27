@@ -1,11 +1,14 @@
-// Aurex Service Worker v1.1 — Push Notifications + Offline Cache
-const CACHE_NAME = 'aurex-v2';
-const ASSETS = ['/aurex-app/', '/aurex-app/index.html'];
+// Aurex Service Worker v2.0 — Network-first HTML + Cache static assets
+const CACHE_NAME = 'aurex-v3';
+const STATIC_ASSETS = ['/aurex-app/icon-192.png', '/aurex-app/manifest.json'];
 
-// Instalar y cachear assets
+// Instalar y cachear solo assets estaticos (NO index.html)
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => {
+      // Solo cacheamos assets estaticos, no el HTML
+      return cache.addAll(STATIC_ASSETS).catch(() => {});
+    })
   );
   self.skipWaiting();
 });
@@ -20,25 +23,35 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
-// Fetch — cache first para assets, network first para API
+// Fetch — Network first para HTML, cache first para assets estaticos
 self.addEventListener('fetch', e => {
-  if (e.request.url.includes('railway.app') || e.request.url.includes('binance') || e.request.url.includes('yahoo')) {
-    return; // No cachear APIs en tiempo real
+  const url = e.request.url;
+
+  // No interceptar APIs en tiempo real
+  if (url.includes('railway.app') || url.includes('binance') || url.includes('yahoo') || url.includes('api.')) {
+    return;
   }
+
+  // Para HTML (index.html o root): siempre red primero para tener version actualizada
+  if (e.request.mode === 'navigate' || url.endsWith('.html') || url.endsWith('/aurex-app/') || url === 'https://fmoscon-creator.github.io/aurex-app') {
+    e.respondWith(
+      fetch(e.request).catch(() => caches.match(e.request))
+    );
+    return;
+  }
+
+  // Para otros assets: cache first
   e.respondWith(
     caches.match(e.request).then(cached => cached || fetch(e.request))
   );
 });
 
-// ── PUSH NOTIFICATION ──────────────────────────────────────
+// Push notifications
 self.addEventListener('push', e => {
-  let data = { title: '🔔 Aurex Alerta', body: 'Una alerta se ha disparado', icon: '/aurex-app/icon-192.png', badge: '/aurex-app/icon-192.png' };
-  
+  let data = { title: '\uD83D\uDD14 Aurex Alerta', body: 'Una alerta se ha disparado', icon: '/aurex-app/icon-192.png', badge: '/aurex-app/icon-192.png' };
   if (e.data) {
-    try { data = { ...data, ...e.data.json() }; } 
-    catch(err) { data.body = e.data.text(); }
+    try { data = { ...data, ...e.data.json() }; } catch(err) { data.body = e.data.text(); }
   }
-
   e.waitUntil(
     self.registration.showNotification(data.title, {
       body: data.body,
@@ -51,16 +64,14 @@ self.addEventListener('push', e => {
   );
 });
 
-// Click en notificación — abrir la app
+// Click en notificacion
 self.addEventListener('notificationclick', e => {
   e.notification.close();
   e.waitUntil(
     clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
       const url = e.notification.data?.url || 'https://fmoscon-creator.github.io/aurex-app/';
       for (const client of clientList) {
-        if (client.url.includes('aurex-app') && 'focus' in client) {
-          return client.focus();
-        }
+        if (client.url.includes('aurex-app') && 'focus' in client) return client.focus();
       }
       return clients.openWindow(url);
     })
