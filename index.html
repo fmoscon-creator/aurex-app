@@ -270,23 +270,25 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});
     var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());
   }
-  // Definir showObs2 (ir de OBS1 a OBS2) 
+  // showObs2: ocultar contenido de obs1 y mostrar obs2 dentro
   window.showObs2=function(){
     var o1=document.getElementById('obs1');
     var o2=document.getElementById('obs2');
-    if(o1) o1.style.display='none';
-    if(o2){
-      o2.style.display='flex';
-      // Iniciar canvas de estrellas de OBS2
-      if(window.initConstellacion) setTimeout(window.initConstellacion,100);
-    }
+    if(!o1||!o2) return;
+    // Ocultar elementos visuales de obs1 pero dejar obs1 visible (obs2 es hijo de obs1)
+    ['obs1-logo','obs1-title','obs1-sub','obs1-cards','obs1-btn','obs1-tag'].forEach(function(cls){
+      var el=o1.querySelector('.'+cls);
+      if(el) el.style.display='none';
+    });
+    o2.style.display='flex';
+    // Iniciar canvas de estrellas
+    if(window.initConstellacion) setTimeout(window.initConstellacion,100);
   };
   // Interceptar initOnboarding para ocultar .phone
-  var _origInitSet=false;
-  var _checkInit=setInterval(function(){
-    if(window.initOnboarding && !_origInitSet){
-      _origInitSet=true;
-      clearInterval(_checkInit);
+  var _checked=false;
+  var _iv=setInterval(function(){
+    if(window.initOnboarding && !_checked){
+      _checked=true; clearInterval(_iv);
       var _orig=window.initOnboarding;
       window.initOnboarding=function(){
         _orig();
