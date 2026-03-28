@@ -1,7 +1,7 @@
-// Aurex Service Worker v3.4 — Network First critico + Cache busting automatico
-// BUILD: 1774710500000
-const CACHE_VERSION = 'aurex-1774710500000';
-const CACHE_STATIC  = 'aurex-static-1774710500000';
+// Aurex Service Worker v3.5 — Network First critico + Cache busting automatico
+// BUILD: 1774711200000
+const CACHE_VERSION = 'aurex-1774711200000';
+const CACHE_STATIC  = 'aurex-static-1774711200000';
 
 // Archivos que SIEMPRE van a la red primero (nunca quedan stale)
 const NETWORK_FIRST = [
