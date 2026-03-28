@@ -264,13 +264,37 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <meta name="apple-mobile-web-app-title" content="Aurex">
 <script>
 (function(){
+  // Helper: mover phone al body y preparar los screens
+  function _movePhoneToBody(){
+    var ph=document.querySelector('.phone');
+    var onb=document.getElementById('onboarding');
+    if(!ph||!onb) return;
+    if(ph.parentElement===document.body) return; // ya movido
+    document.body.insertBefore(ph,onb.nextSibling);
+    ph.style.cssText='display:flex!important;position:fixed!important;inset:0!important;z-index:1000!important;flex-direction:column!important;overflow:hidden!important;background:#0D1117!important;width:100%!important;height:100%!important;';
+    var screens=ph.querySelectorAll('.screen');
+    screens.forEach(function(s){
+      s.style.position='absolute';s.style.inset='0';s.style.height='100%';s.style.width='100%';s.style.flex='none';s.style.background='#0D1117';s.style.zIndex='10';
+    });
+    if(onb) onb.style.display='none';
+  }
   // 1. Reset onboarding via URL param
   var p=new URLSearchParams(window.location.search);
   if(p.get('resetOnboarding')==='1'){
     ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});
     var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());
   }
-  // 2. showObs2: ocultar contenido de obs1, mostrar obs2 dentro
+  // 2. Si ya completó el onboarding, mover phone al body directamente
+  var _alreadyDone=['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].some(function(k){return !!localStorage.getItem(k);});
+  if(_alreadyDone){
+    // Esperar a que el DOM esté listo
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',_movePhoneToBody);
+    } else {
+      setTimeout(_movePhoneToBody,100);
+    }
+  }
+  // 3. showObs2: ocultar contenido de obs1, mostrar obs2 dentro
   window.showObs2=function(){
     var o1=document.getElementById('obs1');
     var o2=document.getElementById('obs2');
@@ -281,35 +305,13 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     o2.style.display='flex';
     if(window.initConstellacion) setTimeout(window.initConstellacion,100);
   };
-  // 3. startApp: mover phone al body, fijar screens como capas absolutas, ocultar onboarding
+  // 4. startApp: mover phone al body y finalizar onboarding
   window.startApp=function(){
-    var ph=document.querySelector('.phone');
-    var onb=document.getElementById('onboarding');
-    if(ph && onb){
-      // Mover phone al body
-      document.body.insertBefore(ph,onb.nextSibling);
-      // Estilos del phone como contenedor
-      ph.style.cssText='display:flex!important;position:fixed!important;inset:0!important;z-index:1000!important;flex-direction:column!important;overflow:hidden!important;background:#0D1117!important;width:100%!important;height:100%!important;';
-      // Hacer que cada screen sea absoluta y ocupe todo el phone
-      var screens=ph.querySelectorAll('.screen');
-      screens.forEach(function(s){
-        s.style.position='absolute';
-        s.style.inset='0';
-        s.style.height='100%';
-        s.style.width='100%';
-        s.style.flex='none';
-        s.style.background='#0D1117';
-        s.style.zIndex='10';
-      });
-    }
-    // Llamar obFinish original para guardar localStorage y ocultar onboarding
+    _movePhoneToBody();
     if(window.obFinish) window.obFinish();
-    else {
-      if(onb) onb.style.display='none';
-      localStorage.setItem('aurex_onboarding_done','1');
-    }
+    else { localStorage.setItem('aurex_onboarding_done','1'); }
   };
-  // 4. Interceptar initOnboarding para ocultar .phone mientras el onboarding está activo
+  // 5. Interceptar initOnboarding para ocultar .phone durante onboarding
   var _iv=setInterval(function(){
     if(window.initOnboarding){
       clearInterval(_iv);
