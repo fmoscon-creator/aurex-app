@@ -1220,11 +1220,10 @@ window.navTo = function(screen) {
   var activeBtn = document.getElementById('btn-' + screen);
   if(activeBtn) activeBtn.classList.add('active');
   if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
+  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc)pc.scrollTop=0;}
 };
 
-// ── Selector de paí
-  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc)pc.scrollTop=0;}
-s para teléfono ──
+// ── Selector de país para teléfono ──
 window.updatePhonePrefix = function(){
   var sel = document.getElementById('reg-pais');
   var hidden = document.getElementById('reg-celular');
