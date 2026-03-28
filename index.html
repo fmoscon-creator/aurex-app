@@ -270,8 +270,8 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 // ===== SUPABASE CONFIG =====
 // Para activar: reemplaza estos valores con los de tu proyecto Supabase
 // Settings > API > Project URL y anon/public key
-var SUPABASE_URL = 'https://TU_PROYECTO.supabase.co';
-var SUPABASE_ANON_KEY = 'TU_ANON_KEY';
+var SUPABASE_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
 var GOOGLE_CLIENT_ID = 'TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
 // ===========================
 
@@ -279,7 +279,7 @@ var _supabase = null;
 var _currentUser = null;
 
 // Solo inicializa si las keys estan configuradas
-if (SUPABASE_URL.indexOf('TU_PROYECTO') === -1 && SUPABASE_ANON_KEY.indexOf('TU_ANON_KEY') === -1) {
+if (SUPABASE_URL.indexOf('dklljnfhlzmfsfmxrpie') === -1 && SUPABASE_ANON_KEY.indexOf('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k') === -1) {
   try {
     _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     
@@ -913,10 +913,4 @@ document.addEventListener('DOMContentLoaded', function() {
           <div class="plan-period">/mes</div>
         </div>
         <div style="background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;margin-top:4px;text-align:center">
-          💰 ANUAL: $15.59/mes · Ahorrás $53/año
-        </div>
-      </div>
-    </div>
-    <div style="background:#D4A01715;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #D4A01730">
-      <div style="font-size:10px;color:#D4A017;font-weight:600;margin-bottom:3px">✦ El plan del inversor profesional</div>
-      <div style="font-size:10px;color:#8B949E;line-height:1.6">IA sin límites, datos 
+          💰 
