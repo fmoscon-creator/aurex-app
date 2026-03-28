@@ -262,6 +262,48 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Aurex">
+<script>
+(function(){
+  // Reset onboarding si URL lo pide
+  var p=new URLSearchParams(window.location.search);
+  if(p.get('resetOnboarding')==='1'){
+    ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});
+    var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());
+  }
+  // Interceptar initOnboarding cuando features.js la defina
+  var _initFn=null;
+  Object.defineProperty(window,'initOnboarding',{
+    get:function(){return _initFn;},
+    set:function(fn){
+      // Wrappear la función cuando features.js la asigna
+      _initFn=function(){
+        var ob=document.getElementById('onboarding');
+        var ph=document.querySelector('.phone');
+        // Borrar el flag de onboarding done si fue reseteado
+        fn(); // llamar original
+        // Si el onboarding está visible, ocultar .phone
+        if(ob && ph && ob.style.display!=='none'){
+          ph.style.display='none';
+        }
+      };
+    },
+    configurable:true
+  });
+  // Interceptar obFinish también
+  var _finishFn=null;
+  Object.defineProperty(window,'obFinish',{
+    get:function(){return _finishFn;},
+    set:function(fn){
+      _finishFn=function(){
+        var ph=document.querySelector('.phone');
+        if(ph) ph.style.display='flex';
+        fn();
+      };
+    },
+    configurable:true
+  });
+})();
+</script>
 <script src="aurex-features.js"></script>
 
 <!-- SUPABASE AUTH -->
