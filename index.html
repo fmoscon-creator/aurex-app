@@ -346,8 +346,46 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
       var onb=document.getElementById('onboarding');
       if(onb) onb.style.display='flex';
       var o2=document.getElementById('obs2');
+    initObs1Canvas();
       if(o2) o2.style.display='none';
     });
+  }
+  function initObs1Canvas(){
+    var canvas=document.getElementById('obs1Stars');
+    if(!canvas||canvas._init) return;
+    canvas._init=true;
+    var W=canvas.width=window.innerWidth||390;
+    var H=canvas.height=window.innerHeight||844;
+    var ctx=canvas.getContext('2d');
+    var stars=[];
+    for(var k=0;k<70;k++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,alpha:Math.random(),da:(Math.random()*0.006+0.002)*(Math.random()<0.5?1:-1),vx:(Math.random()-0.5)*0.06,vy:(Math.random()-0.5)*0.06});
+    }
+    function drawObs1(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<stars.length;i++){
+        for(var j=i+1;j<stars.length;j++){
+          var dx=stars[i].x-stars[j].x,dy=stars[i].y-stars[j].y;
+          var dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<100){
+            ctx.strokeStyle='rgba(212,160,23,'+(0.12*(1-dist/100))+')';
+            ctx.lineWidth=0.5;
+            ctx.beginPath();ctx.moveTo(stars[i].x,stars[i].y);ctx.lineTo(stars[j].x,stars[j].y);ctx.stroke();
+          }
+        }
+      }
+      stars.forEach(function(s){
+        ctx.fillStyle='rgba(255,255,255,'+s.alpha+')';
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+        s.alpha+=s.da; if(s.alpha>1||s.alpha<0.05) s.da*=-1;
+        s.x+=s.vx; s.y+=s.vy;
+        if(s.x<0)s.x=W; if(s.x>W)s.x=0;
+        if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      });
+      var o1=document.getElementById('obs1');
+      if(o1&&o1.style.display!=='none') requestAnimationFrame(drawObs1);
+    }
+    drawObs1();
   }
 })();
 </script>
@@ -474,65 +512,46 @@ document.addEventListener('DOMContentLoaded', function() {
 </head>
 <body ontouchstart="">
 <div id="onboarding" style="display:none;position:fixed;inset:0;z-index:99999;background:#0D0D1A;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
-<div id="obs1" style="display:flex;flex-direction:column;height:100%;background:#1A0D00;position:relative;overflow:hidden">
-<style>
-#obs1 .obs1-logo{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
-#obs1 .obs1-logo svg{width:60px;height:60px}
-#obs1 .obs1-title{font-size:26px;font-weight:900;color:#FFFFFF;letter-spacing:2px;text-align:center;margin-bottom:4px}
-#obs1 .obs1-sub{font-size:10px;font-weight:700;color:#D4A017;letter-spacing:4px;text-align:center;margin-bottom:24px}
-#obs1 .obs1-cards{width:100%;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-#obs1 .ocard{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.05);border-left:3px solid}
-#obs1 .ocard.g{border-color:#00D4AA}
-#obs1 .ocard.b{border-color:#4A9EFF}
-#obs1 .ocard.y{border-color:#D4A017}
-#obs1 .ocard.p{border-color:#9B59B6}
-#obs1 .ocard-ic{font-size:20px;min-width:28px;text-align:center;padding-top:1px}
-#obs1 .ocard-t{font-size:13px;font-weight:700;color:#fff;margin-bottom:2px}
-#obs1 .ocard-s{font-size:10px;color:#8B949E;line-height:1.4}
-#obs1 .obs1-btn{width:100%;padding:15px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px;margin-bottom:8px;-webkit-tap-highlight-color:transparent}
-#obs1 .obs1-tag{font-size:11px;color:#8B949E;text-align:center}
-</style>
-<div class="obs1-logo">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="120" height="120" style="display:block;margin:0 auto;">
-  <defs>
-    <linearGradient id="gAo1" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
-    </linearGradient>
-    <linearGradient id="gCo1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
-    </linearGradient>
-  </defs>
-  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo1)" stroke-width="3.5"/>
-  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo1)" stroke-width="1.5"/>
-  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo1)" stroke-width="1" opacity="0.8"/>
-  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
-  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
-  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
-  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-  <circle cx="150" cy="164" r="5" fill="#F7D060"/>
-</svg>
+<div id="obs1" style="position:fixed;inset:0;z-index:99999;background:#0D1117;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;overflow:hidden;">
+  <!-- Canvas estrellas OBS1 -->
+  <canvas id="obs1Stars" style="position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;"></canvas>
+  <!-- Contenido centrado -->
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:40px 32px 0;">
+    <!-- Logo grande -->
+    <div style="margin-bottom:28px;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="140" height="140">
+        <defs>
+          <linearGradient id="gAo1" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient>
+          <linearGradient id="gCo1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient>
+        </defs>
+        <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo1)" stroke-width="3.5"/>
+        <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo1)" stroke-width="1.5"/>
+        <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo1)" stroke-width="1"/>
+        <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+        <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo1)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="150" cy="164" r="5" fill="#F7D060"/>
+      </svg>
+    </div>
+    <!-- AUREX -->
+    <div style="font-size:36px;font-weight:900;color:#D4A017;letter-spacing:10px;text-align:center;font-family:inherit;margin-bottom:8px;">AUREX</div>
+    <!-- INVEST · AI -->
+    <div style="font-size:12px;font-weight:600;color:#D4A017;letter-spacing:6px;text-align:center;margin-bottom:24px;opacity:0.85;">INVEST &middot; AI</div>
+    <!-- Subtítulo -->
+    <div style="font-size:11px;color:#8B949E;letter-spacing:2px;text-align:center;line-height:1.6;text-transform:uppercase;max-width:260px;">La primera plataforma global<br>de multiactivos con señales IA</div>
+  </div>
+  <!-- Dots indicadores de página -->
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:24px;">
+    <div style="width:22px;height:3px;background:#D4A017;border-radius:2px;"></div>
+    <div style="width:8px;height:3px;background:#444;border-radius:2px;"></div>
+    <div style="width:8px;height:3px;background:#444;border-radius:2px;"></div>
+  </div>
+  <!-- Botón Comenzar -->
+  <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;">
+    <button onclick="showObs2()" style="width:100%;padding:17px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Comenzar →</button>
+  </div>
 </div>
-<div class="obs1-title">AUREX &middot; IA</div>
-<div class="obs1-sub">AN&Aacute;LISIS DE MERCADOS 24 HS</div>
-<div class="obs1-cards">
-<div class="ocard g">
-<div class="ocard-ic">&#128200;</div>
-<div><div class="ocard-t">Explor&aacute; Mercados</div><div class="ocard-s">Acciones &middot; 7 Mercados &middot; Criptos &middot; ETFs &middot; Bonos &middot; Metales &middot; Materias Primas &middot; DeFi</div></div>
-</div>
-<div class="ocard b">
-<div class="ocard-ic">&#129302;</div>
-<div><div class="ocard-t">Se&ntilde;ales IA en tiempo real</div><div class="ocard-s">An&aacute;lisis basado en 5 variables: Tendencia &middot; Volumen &middot; Momentum &middot; Correlaci&oacute;n Macro &middot; Valuaci&oacute;n</div></div>
-</div>
-<div class="ocard y">
-<div class="ocard-ic">&#128276;</div>
-<div><div class="ocard-t">Alertas autom&aacute;ticas las 24 hs</div><div class="ocard-s">WhatsApp + Push &middot; Siempre activo</div></div>
-</div>
-<div class="ocard p">
-<div class="ocard-ic">&#127758;</div>
-<div><div class="ocard-t">Mercados Globales</div><div class="ocard-s">NYSE &middot; NASDAQ &middot; Merval &middot; San Pablo &middot; Londres &middot; Tokio &middot; Hong Kong &middot; Shanghai</div></div>
-</div>
-</div>
-<button class="obs1-btn" onclick="showObs2()">Comenzar &#8594;</button>
 <div class="obs1-tag">Gratis &middot; Sin tarjeta de cr&eacute;dito</div>
 <div id="obs2" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;background:#0D1117;padding:0 20px;box-sizing:border-box;position:relative;overflow:hidden;">
   <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.5;pointer-events:none;"></canvas>
