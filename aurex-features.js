@@ -10,10 +10,128 @@ function initOnboarding(){if(localStorage.getItem('aurex_onboarding_done'))retur
 setTimeout(initOnboarding,800);
 function initConstellacion(){var container=document.getElementById('ob-stars');var svg=document.getElementById('ob-clines');if(!container||!svg)return;var W=container.offsetWidth||window.innerWidth;var H=container.offsetHeight||window.innerHeight;svg.setAttribute('viewBox','0 0 '+W+' '+H);var stars=[];for(var i=0;i<28;i++){var x=Math.random()*W;var y=Math.random()*H;var size=Math.random()*2+1;var delay=Math.random()*3;var dur=Math.random()*2+1.5;stars.push({x:x,y:y});var s=document.createElement('div');s.style.cssText='position:absolute;border-radius:50%;background:#F5C842;width:'+size+'px;height:'+size+'px;left:'+x+'px;top:'+y+'px;animation:starPulse '+dur+'s '+delay+'s ease-in-out infinite;opacity:0.6;';container.appendChild(s);}for(var a=0;a<stars.length;a++){for(var b=a+1;b<stars.length;b++){var dx=stars[a].x-stars[b].x;var dy=stars[a].y-stars[b].y;var dist=Math.sqrt(dx*dx+dy*dy);if(dist<90){var op=(1-dist/90)*0.25;var l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',stars[a].x);l.setAttribute('y1',stars[a].y);l.setAttribute('x2',stars[b].x);l.setAttribute('y2',stars[b].y);l.setAttribute('stroke','#D4A017');l.setAttribute('stroke-width','0.5');l.setAttribute('opacity',op);svg.appendChild(l);}}}};
 setTimeout(initConstellacion,900);
-var YF_MAP={'AAPL':{tab:'acciones',pais:'usa',s:'AAPL'},'NVDA':{tab:'acciones',pais:'usa',s:'NVDA'},'MSFT':{tab:'acciones',pais:'usa',s:'MSFT'},'TSLA':{tab:'acciones',pais:'usa',s:'TSLA'},'META':{tab:'acciones',pais:'usa',s:'META'},'GOOGL':{tab:'acciones',pais:'usa',s:'GOOGL'},'AMZN':{tab:'acciones',pais:'usa',s:'AMZN'},'GGAL':{tab:'acciones',pais:'arg',s:'GGAL'},'YPF':{tab:'acciones',pais:'arg',s:'YPF'},'VALE':{tab:'acciones',pais:'br',s:'VALE3'},'PBR':{tab:'acciones',pais:'br',s:'PETR4'},'SPY':{tab:'etf',s:'SPY'},'QQQ':{tab:'etf',s:'QQQ'},'GLD':{tab:'etf',s:'GLD'},'GC=F':{tab:'comm',s:'XAU'},'SI=F':{tab:'comm',s:'XAG'},'CL=F':{tab:'comm',s:'WTI'},'ES=F':{tab:'futuros',s:'ES1!'},'NQ=F':{tab:'futuros',s:'NQ1!'},'EURUSD=X':{tab:'divisas',s:'EUR/USD'}};
+var YF_MAP={'AAPL':{tab:'acciones',pais:'usa',s:'AAPL'},'NVDA':{tab:'acciones',pais:'usa',s:'NVDA'},'MSFT':{tab:'acciones',pais:'usa',s:'MSFT'},'TSLA':{tab:'acciones',pais:'usa',s:'TSLA'},'META':{tab:'acciones',pais:'usa',s:'META'},'GOOGL':{tab:'acciones',pais:'usa',s:'GOOGL'},'AMZN':{tab:'acciones',pais:'usa',s:'AMZN'},'GGAL':{tab:'acciones',pais:'arg',s:'GGAL'},'YPF':{tab:'acciones',pais:'arg',s:'YPF'},'VALE':{tab:'acciones',pais:'br',s:'VALE3'},'PBR':{tab:'acciones',pais:'br',s:'PETR4'},'SPY':{tab:'etf',s:'SPY'},'QQQ':{tab:'etf',s:'QQQ'},'GLD':{tab:'etf',s:'GLD'},'GC=F':{tab:'comm',s:'XAU'},'SI=F':{tab:'comm',s:'XAG'},'CL=F':{tab:'comm',s:'WTI'},'ES=F':{tab:'futuros',s:'ES1!'},'NQ=F':{tab:'futuros',s:'NQ1!'},'EURUSD=X':{tab:'divisas',s:'EUR/USD'}}
+// === DATA: items de cada tab de Mercados ===
+var DATA={
+  cripto: [
+    {s:'BTC',n:'Bitcoin',      tab:'cripto'},
+    {s:'ETH',n:'Ethereum',     tab:'cripto'},
+    {s:'SOL',n:'Solana',       tab:'cripto'},
+    {s:'BNB',n:'BNB',          tab:'cripto'},
+    {s:'XRP',n:'XRP',          tab:'cripto'},
+    {s:'ADA',n:'Cardano',      tab:'cripto'},
+    {s:'AVAX',n:'Avalanche',   tab:'cripto'},
+    {s:'DOT',n:'Polkadot',     tab:'cripto'},
+    {s:'LINK',n:'Chainlink',   tab:'cripto'},
+    {s:'MATIC',n:'Polygon',    tab:'cripto'}
+  ],
+  stable: [
+    {s:'USDT',n:'Tether',      tab:'stable'},
+    {s:'USDC',n:'USD Coin',    tab:'stable'},
+    {s:'BUSD',n:'BUSD',        tab:'stable'}
+  ],
+  acciones: {
+    usa: [
+      {s:'AAPL',n:'Apple'},
+      {s:'NVDA',n:'NVIDIA'},
+      {s:'MSFT',n:'Microsoft'},
+      {s:'TSLA',n:'Tesla'},
+      {s:'META',n:'Meta'},
+      {s:'GOOGL',n:'Alphabet'},
+      {s:'AMZN',n:'Amazon'}
+    ],
+    arg: [
+      {s:'GGAL',n:'Galicia'},
+      {s:'YPF',n:'YPF'},
+      {s:'BMA',n:'Macro'}
+    ]
+  },
+  etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'}],
+  comm:     [{s:'GC=F',n:'Gold'},{s:'CL=F',n:'Oil WTI'},{s:'XAG',n:'Silver'}],
+  futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
+  divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
+};
+var _activeTab='cripto', _activePais='usa';
+
+// === RENDER: dibuja los items en #cnt ===
+function renderTab(tab, pais){
+  _activeTab=tab; _activePais=pais||'usa';
+  var cnt=document.getElementById('cnt');
+  if(!cnt) return;
+  var arr = tab==='acciones' ? (DATA.acciones[pais]||DATA.acciones.usa) : (DATA[tab]||[]);
+  cnt.innerHTML='';
+  arr.forEach(function(item){
+    var row=document.createElement('div');
+    row.className='item-row'; row.id='row-'+item.s;
+    row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #21262D;cursor:pointer;';
+    row.innerHTML='<div style="display:flex;flex-direction:column;"><span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span><span style="color:#8B949E;font-size:11px;">'+item.n+'</span></div>'
+      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">—</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">—</span></div>';
+    cnt.appendChild(row);
+  });
+  // Lanzar fetch de datos para este tab
+  if(tab==='cripto'||tab==='stable') fetchBinance(tab);
+  else fetchYahoo(tab, pais);
+}
+
+// === BINANCE: cripto y stable ===
+function fetchBinance(tab){
+  var arr=DATA[tab]||[];
+  var syms=arr.map(function(x){return '"'+x.s+'USDT"';}).join(',');
+  fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=['+syms+']')
+    .then(function(r){return r.json();})
+    .then(function(list){
+      list.forEach(function(t){
+        var sym=t.symbol.replace('USDT','');
+        var price=parseFloat(t.lastPrice);
+        var pct=parseFloat(t.priceChangePercent);
+        var pel=document.getElementById('p-'+sym);
+        var cel=document.getElementById('c-'+sym);
+        if(pel) pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+        if(cel){ cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%'; cel.style.color=pct>=0?'#3FB950':'#F85149'; }
+      });
+    }).catch(function(){});
+}
+
+// === YAHOO: acciones, etf, comm, futuros, divisas ===
+function fetchYahoo(tab,pais){
+  var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
+  Promise.all(arr.map(function(item){
+    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval=1d&range=1d'))
+      .then(function(r){return r.json();})
+      .then(function(d){
+        var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
+        if(!meta)return;
+        var price=meta.regularMarketPrice,pct=meta.regularMarketChangePercent||0;
+        var pel=document.getElementById('p-'+item.s);
+        var cel=document.getElementById('c-'+item.s);
+        if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+        if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+      }).catch(function(){});
+  }));
+}
+
+// === sw: cambio de tab en Mercados ===
+window.sw=function(tab,el){
+  document.querySelectorAll('#screen-mercados .tab').forEach(function(t){t.classList.remove('on');});
+  if(el) el.classList.add('on');
+  var pr=document.getElementById('pais-row');
+  if(pr) pr.style.display=tab==='acciones'?'flex':'none';
+  renderTab(tab, _activePais);
+};
+
+// === swPais: cambio de país en acciones ===
+window.swPais=function(pais,el){
+  document.querySelectorAll('#pais-row .tab').forEach(function(t){t.classList.remove('on');});
+  if(el) el.classList.add('on');
+  renderTab('acciones', pais);
+};
+
+;
 function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+Math.round(price).toLocaleString('en'):price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4);it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;}
-function yahooFinanceRT(){var syms=Object.keys(YF_MAP).join(',');fetch('https://query1.finance.yahoo.com/v7/finance/quote?symbols='+encodeURIComponent(syms)+'&fields=regularMarketPrice,regularMarketChangePercent').then(function(r){return r.json();}).then(function(d){var q=d&&d.quoteResponse&&d.quoteResponse.result||[];q.forEach(function(x){var m=YF_MAP[x.symbol];if(m)updateItemRT(m.tab,m.pais,m.s,x.regularMarketPrice,x.regularMarketChangePercent);});if(q.length){if(typeof render==='function')render();if(typeof renderSumrow==='function')renderSumrow();console.log('Yahoo RT: '+q.length);}}).catch(function(){});}
-yahooFinanceRT();setInterval(yahooFinanceRT,20000);
+
+function yahooFinanceRT(){}
+
+renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'||_activeTab==='stable') fetchBinance(_activeTab); else fetchYahoo(_activeTab,_activePais); },30000);
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
