@@ -407,13 +407,10 @@ document.addEventListener('DOMContentLoaded', function() {
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="120" height="120" style="display:block;margin:0 auto;">
   <defs>
     <linearGradient id="gAo1" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#F7D060"/>
-      <stop offset="50%" stop-color="#D4A017"/>
-      <stop offset="100%" stop-color="#8B6208"/>
+      <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
     </linearGradient>
     <linearGradient id="gCo1" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F0C030"/>
-      <stop offset="100%" stop-color="#9A7010"/>
+      <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
     </linearGradient>
   </defs>
   <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo1)" stroke-width="3.5"/>
@@ -448,20 +445,16 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 <button class="obs1-btn" onclick="showObs2()">Comenzar &#8594;</button>
 <div class="obs1-tag">Gratis &middot; Sin tarjeta de cr&eacute;dito</div>
-<div id="obs2" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;min-height:100vh;background:#0D1117;position:relative;overflow:hidden;">
-<canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.4;pointer-events:none;"></canvas>
-<div style="position:relative;z-index:1;width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;">
-<div style="width:72px;height:72px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;border:2px solid #D4A017;">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="70" height="70" style="display:block;margin:0 auto;">
+<div id="obs2" style="display:none;flex-direction:column;align-items:center;justify-content:center;width:100%;height:100%;background:#0D1117;padding:0 20px;box-sizing:border-box;position:relative;overflow:hidden;">
+  <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.5;pointer-events:none;"></canvas>
+  <div style="position:relative;z-index:1;width:100%;max-width:400px;display:flex;flex-direction:column;align-items:center;">
+    <div style="margin-bottom:14px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="70" height="70" style="display:block;margin:0 auto;">
   <defs>
     <linearGradient id="gAo2" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#F7D060"/>
-      <stop offset="50%" stop-color="#D4A017"/>
-      <stop offset="100%" stop-color="#8B6208"/>
+      <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
     </linearGradient>
     <linearGradient id="gCo2" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F0C030"/>
-      <stop offset="100%" stop-color="#9A7010"/>
+      <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
     </linearGradient>
   </defs>
   <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo2)" stroke-width="3.5"/>
@@ -472,27 +465,30 @@ document.addEventListener('DOMContentLoaded', function() {
   <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/>
   <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
   <circle cx="150" cy="164" r="5" fill="#F7D060"/>
-</svg>
-</div>
-<div style="font-size:22px;font-weight:900;color:#fff;text-align:center;margin-bottom:8px;letter-spacing:1px;">Se&ntilde;ales IA en tiempo real</div>
-<div style="font-size:14px;color:#8B949E;text-align:center;margin-bottom:32px;line-height:1.6;">AUREX analiza miles de activos globales y te entrega las mejores oportunidades antes que el mercado las descuente.</div>
-<div style="width:100%;display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
-<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #00D4AA;">
-<div style="font-size:22px;min-width:30px;">&#128225;</div>
-<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Cobertura global</div><div style="font-size:11px;color:#8B949E;">Acciones, cripto, forex, commodities y ETFs en un solo lugar.</div></div>
-</div>
-<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #D4A017;">
-<div style="font-size:22px;min-width:30px;">&#9889;</div>
-<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Alertas instant&aacute;neas</div><div style="font-size:11px;color:#8B949E;">Notificaciones push y WhatsApp cuando se activa una se&ntilde;al.</div></div>
-</div>
-<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #4A9EFF;">
-<div style="font-size:22px;min-width:30px;">&#127919;</div>
-<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Precisi&oacute;n comprobada</div><div style="font-size:11px;color:#8B949E;">Modelos entrenados con datos hist&oacute;ricos de alta frecuencia.</div></div>
-</div>
-</div>
-<button onclick="startApp()" style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px;margin-bottom:10px;-webkit-tap-highlight-color:transparent;">Continuar &#8594;</button>
-<div onclick="showObs1()" style="font-size:12px;color:#8B949E;text-align:center;cursor:pointer;padding:8px;">&larr; Volver</div>
-</div>
+</svg></div>
+    <div style="font-size:22px;font-weight:900;color:#fff;letter-spacing:3px;text-align:center;margin-bottom:4px;">AUREX &middot; IA</div>
+    <div style="font-size:9px;font-weight:700;color:#D4A017;letter-spacing:4px;text-align:center;margin-bottom:22px;">AN&#xC1;LISIS DE MERCADOS 24 HS</div>
+    <div style="width:100%;display:flex;flex-direction:column;gap:10px;margin-bottom:26px;">
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #00D4AA;">
+        <div style="font-size:20px;min-width:32px;text-align:center;">&#x1F4C8;</div>
+        <div><div style="font-size:13px;font-weight:700;color:#00D4AA;margin-bottom:3px;">Explo&#xE1; Mercados</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">Acciones &middot; 7 Mercados &middot; Criptos &middot; ETFs &middot; Bonos &middot; Metales &middot; Materias Primas &middot; DeFi</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #4A9EFF;">
+        <div style="font-size:20px;min-width:32px;text-align:center;">&#x1F916;</div>
+        <div><div style="font-size:13px;font-weight:700;color:#4A9EFF;margin-bottom:3px;">Se&#xF1;ales IA en tiempo real</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">An&#xE1;lisis objetivo basado en 5 variables: Tendencia &middot; Volumen &middot; Momentum &middot; Correlaci&#xF3;n Macro &middot; Valuaci&#xF3;n</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #D4A017;">
+        <div style="font-size:20px;min-width:32px;text-align:center;">&#x1F514;</div>
+        <div><div style="font-size:13px;font-weight:700;color:#D4A017;margin-bottom:3px;">Alertas autom&#xE1;ticas las 24 hs</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">WhatsApp + Push cuando se activa una se&#xF1;al &middot; Siempre activo</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #9B59B6;">
+        <div style="font-size:20px;min-width:32px;text-align:center;">&#x1F30E;</div>
+        <div><div style="font-size:13px;font-weight:700;color:#9B59B6;margin-bottom:3px;">Mercados Globales</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">NYSE &middot; NASDAQ &middot; Merval &middot; San Pablo &middot; Londres &middot; Tokio &middot; Hong Kong &middot; Shanghai</div></div>
+      </div>
+    </div>
+    <div style="width:100%;"><button onclick="startApp()" style="width:100%;padding:15px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:12px;font-size:1rem;font-weight:700;color:#0d0a00;cursor:pointer;letter-spacing:0.03em;">Entrar a Aurex &#x2192;</button></div>
+    <div style="margin-top:8px;font-size:11px;color:#8B949E;">Gratis &middot; Sin tarjeta de cr&#xE9;dito</div>
+  </div>
 </div>
 <div id="obs3" style="display:none;flex-direction:column;height:100%;padding:55px 22px 36px;box-sizing:border-box">
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%">
@@ -649,13 +645,10 @@ document.addEventListener('DOMContentLoaded', function() {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32">
   <defs>
     <linearGradient id="gAhd" x1="20%" y1="0%" x2="80%" y2="100%">
-      <stop offset="0%" stop-color="#F7D060"/>
-      <stop offset="50%" stop-color="#D4A017"/>
-      <stop offset="100%" stop-color="#8B6208"/>
+      <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
     </linearGradient>
     <linearGradient id="gChd" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F0C030"/>
-      <stop offset="100%" stop-color="#9A7010"/>
+      <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
     </linearGradient>
   </defs>
   <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gChd)" stroke-width="3.5"/>
@@ -926,11 +919,4 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div style="background:#D4A01715;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #D4A01730">
       <div style="font-size:10px;color:#D4A017;font-weight:600;margin-bottom:3px">✦ El plan del inversor profesional</div>
-      <div style="font-size:10px;color:#8B949E;line-height:1.6">IA sin límites, datos en tiempo real, alertas instantáneas y soporte VIP. Todo lo que necesitás para tomar decisiones de inversión como un profesional, desde tu iPhone.</div>
-    </div>
-    <div class="feats">
-      <div class="feat ok" style="color:#D4A017"><strong>Activos ilimitados</strong> en portfolio</div>
-      <div class="feat ok" style="color:#D4A017"><strong>IA ilimitada 24/7</strong> — señales sin tope</div>
-      <div class="feat ok" style="color:#D4A017"><strong>Alertas push + email</strong> instantáneas</div>
-      <div class="feat ok" style="color:#D4A017"><strong>API completa</strong> — datos sin restricción</div>
-      <div class
+      <div style="font-size:10px;color:#8B949E;line-height:1.6">IA sin límites, datos 
