@@ -1,7 +1,7 @@
-// Aurex Service Worker v3.7 — Network First critico + Cache busting automatico
-// BUILD: 1774712800000
-const CACHE_VERSION = 'aurex-1774712800000';
-const CACHE_STATIC  = 'aurex-static-1774712800000';
+// Aurex Service Worker v3.7 â Network First critico + Cache busting automatico
+// BUILD: 1774713600000
+const CACHE_VERSION = 'aurex-1774713600000';
+const CACHE_STATIC  = 'aurex-static-1774713600000';
 
 // Archivos que SIEMPRE van a la red primero (nunca quedan stale)
 const NETWORK_FIRST = [
@@ -17,7 +17,7 @@ const STATIC_ASSETS = [
   '/assets/logo/aurex_logo_transparent.svg'
 ];
 
-// ── INSTALL: pre-cachear solo assets estaticos ──
+// ââ INSTALL: pre-cachear solo assets estaticos ââ
 self.addEventListener('install', function(e){
   e.waitUntil(
     caches.open(CACHE_STATIC).then(function(cache){
@@ -28,7 +28,7 @@ self.addEventListener('install', function(e){
   );
 });
 
-// ── ACTIVATE: borrar caches viejas ──
+// ââ ACTIVATE: borrar caches viejas ââ
 self.addEventListener('activate', function(e){
   e.waitUntil(
     caches.keys().then(function(keys){
@@ -46,7 +46,7 @@ self.addEventListener('activate', function(e){
   );
 });
 
-// ── FETCH: Network First para criticos, Cache First para estaticos ──
+// ââ FETCH: Network First para criticos, Cache First para estaticos ââ
 self.addEventListener('fetch', function(e){
   var url = new URL(e.request.url);
 
