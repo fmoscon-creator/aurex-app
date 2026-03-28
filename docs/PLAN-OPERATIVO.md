@@ -1,10 +1,33 @@
 # AUREX — PLAN OPERATIVO COMPLETO 12 SEMANAS
-Version: 1.0 | Fecha: 27/03/2026 | Fundador: Fernando G. Moscon
+Version: 2.0 | Actualizado: 28/03/2026 | Fundador: Fernando G. Moscon
 Stack: HTML+CSS+JS Vanilla - GitHub Pages - Supabase - Railway - Stripe
 
 ---
 
-## ESTADO ACTUAL — QUE ESTA HECHO HOY 27/03/2026
+## DECISION ESTRATEGICA APP STORE (actualizada 28/03/2026)
+
+**Camino elegido: React Native** (NO Capacitor wrapper, NO Swift puro)
+- React Native genera app nativa real — Apple lo aprueba como app nativa
+- Se escribe en JavaScript (reutiliza logica actual)
+- Xcode se usa SOLO al final para empaquetar y subir — no para programar
+
+**Primer envio al App Store contiene 4 tabs:**
+1. Mercados — cotizaciones en tiempo real Binance + Yahoo
+2. Portfolio — activos del usuario guardados en Supabase
+3. Senales IA — diferenciador clave frente a apps genericas
+4. Perfil — login/logout con Supabase
+
+**Por que estas 4 y no menos:**
+Apple puede rechazar apps por funcionalidad insuficiente. Las cotizaciones solas no alcanzan.
+Login real + Portfolio personal + Senales IA = funcionalidad unica que justifica la existencia de AUREX.
+Watchlist y Alertas se agregan en version 2 post-aprobacion.
+
+**Cuenta Apple Developer:** USD 99/anio — comprar al inicio Semana 5
+**Privacy Policy:** generarla en 30 min con generador automatico — subir a GitHub Pages
+
+---
+
+## ESTADO ACTUAL — QUE ESTA HECHO HOY 28/03/2026
 
 ### FRONTEND — funcionando en produccion
 
@@ -16,319 +39,205 @@ Stack: HTML+CSS+JS Vanilla - GitHub Pages - Supabase - Railway - Stripe
 | Precios crypto tiempo real | REAL | Binance REST API cada 5seg - Tab Mercados | Base completada |
 | Conversor crypto | REAL | Binance cada 30seg - boton superior | Base completada |
 | Modo oscuro + diseno completo | REAL | CSS en index.html - paleta #D4A017 + #0D1117 | Base completada |
-| OBS1 nuevo diseno aprobado | REAL | index.html - 4 tarjetas + boton Entrar a Aurex | Semana 1 - HOY 27/03 |
-| Encoding UTF-8 corregido | REAL | index.html - todos los caracteres sin errores | Semana 1 - HOY 27/03 |
-| Planes Free/PRO/ELITE en UI | SOLO VISUAL | Tab Perfil - sin logica real aun | Semana 3 |
-| 45+ acciones USA | ESTATICO | Tab Mercados - precios hardcodeados | Semana 4 |
-| Service Worker v2.0 | REAL | service-worker.js - network-first, no cachea HTML | Base completada |
+| OBS1 nuevo diseno aprobado | REAL | index.html - 4 tarjetas + boton Entrar a Aurex | Base completada |
+| OBS2 Senales IA pantalla | REAL | index.html - 3 features + boton Continuar | Base completada |
+| Conversor fiat real | REAL | ExchangeRate API - ARS/USD/EUR/BRL reales | Base completada |
+| Supabase auth funcionando | REAL | email/password, sin confirmacion, celular guardado | Semana 1 completada |
+| Perfil logueado rediseniado | REAL | avatar + celular editable + guardar + cerrar sesion | Semana 1 completada |
+| Service Worker auto-update | REAL | skipWaiting automatico — sin actualizacion manual | Base completada |
 
-### BACKEND — estructura existe, sin logica
-
-| Feature | Estado | Donde | Semana del plan |
-|---|---|---|---|
-| Estructura backend | EXISTE | backend/server.js + Procfile + railway.json | Base |
-| server.js | VACIO | Solo 8 lineas de require() sin logica real | Semana 2 - Vie 03/04 |
-| Deploy Railway | EXISTE | aurex-app-production.up.railway.app | Base - sin rutas |
-
-### REPOSITORIO GITHUB
-
-| Archivo | Que es | Estado |
-|---|---|---|
-| index.html | App completa frontend ~2800 lineas | Actualizado hoy |
-| service-worker.js | PWA + cache + push | OK |
-| manifest.json | Config PWA | OK |
-| aurex-features.js | Features JS adicionales | OK |
-| CONTEXTO.md | Estado proyecto para Claude | Actualizado |
-| PLAN.md | Plan original resumido | En repo |
-| docs/PLAN-OPERATIVO.md | Este archivo - plan detallado | NUEVO HOY |
-| designs/ | OBS1 y OBS2 disenos aprobados en PNG | Subidos |
-| backend/ | Servidor Node.js esqueleto | Sin logica |
-
-### LO QUE ES MOCK — A resolver segun cronograma
-
-| Feature | Estado real | Semana que se resuelve |
-|---|---|---|
-| Autenticacion | NO EXISTE | Semana 1 - Dom 29/03 |
-| Portfolio storage | In-memory, se borra al cerrar | Semana 1 - Lun 30/03 |
-| Watchlist storage | In-memory, se borra al cerrar | Semana 1 - Mar 31/03 |
-| Alertas WhatsApp | Simuladas, no llegan | Semana 2 - Sab 04/04 |
-| Senales IA | 93 hardcodeadas en el codigo | Semana 2 - Mar 07/04 |
-| Pagos Stripe | Botones sin funcion | Semana 3 - Vie 10/04 |
-| Restricciones por plan | Sin validacion real | Semana 3 - Dom 12/04 |
-| Acciones USA precios | Estaticos hardcodeados | Semana 4 - Vie 17/04 |
-| Push notifications | Boton existe, no funciona | Semana 2 - Lun 06/04 |
-| Conversor tasas fiat ARS/EUR/BRL | Estaticos | Semana 1 - Sab 28/03 |
-| OBS2 onboarding | No implementada | Semana 1 - Sab 28/03 |
-| Perfil de usuario | Hardcodeado | Semana 1 - Dom 29/03 |
-| 2FA SMS | Boton existe, sin funcion | Semana 3 - Mie 15/04 |
-| Exportar PDF y Excel | Sin funcion | Semana 3 - Lun 13/04 |
-| Email de reporte | Sin funcion | Semana 3 - Mar 14/04 |
-| Sistema de referidos | No existe | Semana 4 - Lun 20/04 |
-| Analytics de usuarios | No existe | Semana 2 - Mie 08/04 |
-| Telegram Bot | No existe | Semana 7 |
-| App Store iOS | No existe | Semana 9 |
-| Google Play Android | No existe | Semana 10 |
+### BUILD ACTUAL: v890000
 
 ---
 
-## COMO INICIAR CADA SESION CON CLAUDE SIN PERDER TIEMPO
+## FASES DEL PROYECTO
 
-Copia y pega esto exactamente al abrir un chat nuevo:
+### FASE 1 — PWA IMPECABLE (Semanas 1-4: 27 Mar - 24 Abr)
+Objetivo: App sin bugs, todas las funcionalidades reales, base solida para React Native
 
----
-Hola, continuamos con Aurex.
-Repo: https://github.com/fmoscon-creator/aurex-app
-App: https://fmoscon-creator.github.io/aurex-app
-Lee CONTEXTO.md y docs/PLAN-OPERATIVO.md del repo.
-Token GitHub: [PEGA EL TOKEN ACA]
-Tarea de hoy segun cronograma: [FECHA] - [NOMBRE EXACTO DE LA TAREA DEL DIA]
-Credenciales necesarias hoy: [solo las del dia segun lista abajo]
----
+### FASE 2 — REACT NATIVE PRIMERAS 4 TABS (Semanas 5-8: 25 Abr - 21 May)
+Objetivo: App nativa iOS con Mercados + Portfolio + Senales IA + Perfil. Subir al App Store.
 
-Credenciales por semana (tenerlas listas ANTES de la sesion):
-- Semana 1: GitHub Token + URL Supabase + anon key Supabase + Google OAuth client ID
-- Semana 2: Twilio Account SID + Auth Token + Anthropic API key
-- Semana 3: Stripe publishable key + secret key + webhook secret + Resend API key
-- Semana 4: Polygon.io API key
-- Semana 6: Plausible script ID + Hotjar site ID
-- Semana 7: Token de Telegram BotFather
-- Semana 9: Apple Developer Team ID + Firebase config JSON
+### FASE 3 — APRENDIZAJE APPLE (Semanas 8-10: 18 May - 4 Jun)
+Objetivo: Review Apple, ajustes si rechazan, re-submit. Entender el proceso completo.
+Mientras se espera review: seguir agregando features a PWA y preparar tabs 5-6 para version 2.
 
-IMPORTANTE: Nunca guardar tokens o passwords en el repo. Solo pasarlos en el chat al inicio de la sesion.
+### FASE 4 — APP COMPLETA (Semanas 10-12+: 29 May - 19 Jun)
+Objetivo: Si aprobaron, agregar Watchlist + Alertas. Version 1.1 completa con 6 tabs.
 
 ---
 
-## CRONOGRAMA DIA X DIA — 12 SEMANAS (28 Mar al 19 Jun 2026)
+## SEMANA 1 (27 Mar - 2 Abr) — BUGS CRITICOS Y BASE TECNICA
+
+### VIE 27/03 — COMPLETADO
+- fix encoding UTF-8 definitivo
+- OBS1 nuevo diseno (4 tarjetas + boton Entrar a Aurex)
+- OBS2 implementada (3 features + boton Continuar)
+- Conversor fiat con ExchangeRate API real
+
+### SAB 28/03 — EN CURSO
+- Fix Conversor de monedas — de Cargando... a funcional con Binance
+- Verificar en emulador iPhone antes de confirmar
+
+### DOM 29/03 — 5 hs
+- Portfolio persistente: tabla portfolios en Supabase
+- Activos del usuario guardados en la nube
+
+### LUN 30/03 — 5 hs
+- Portfolio completo: agregar/eliminar activos, ver valor total, P&L
+
+### MAR 31/03 — 5 hs
+- Senales IA funcionales: RSI simulado + tendencia + volumen
+- 5 senales diarias: activo, LONG/SHORT, confianza %
+- Tabla signals en Supabase
+
+### MIE 01/04 — 5 hs
+- Watchlist persistente en Supabase
+- Boton + en Mercados agrega a watchlist
+
+### JUE 02/04 — 5 hs
+- Buffer: corregir bugs, verificar todas las tabs en iPhone
 
 ---
 
-### SEMANA 1 (28 Mar - 2 Abr) — APP IMPECABLE + BASE DE DATOS
-Objetivo: Sin bugs visuales. Auth real. Portfolio y Watchlist persistentes en DB.
+## SEMANA 2 (3 - 9 Abr) — ALERTAS + BACKEND
 
-SAB 28/03 — 5 hs
-Tarea: Fix conversor fiat + implementar OBS2
-Herramienta: Claude escribe codigo, commitea via GitHub API
-Proceso: Claude integra open.er-api.com (gratuita, sin key) para tasas ARS/USD/EUR/BRL reales en el conversor. Implementa pantalla OBS2 segun designs/OBS2-senales-IA.png. Flujo: OBS1 -> OBS2 -> App.
-Resultado esperado: Conversor con tasas reales. OBS2 existe y funciona.
-
-DOM 29/03 — 5 hs
-Tarea: Supabase + Google OAuth
-Herramienta: Claude + Supabase Dashboard (vos) + GitHub API
-Proceso: Vos creas proyecto en supabase.com gratis. Me pasas URL publica y anon key. Claude integra SDK Supabase via CDN, configura Google OAuth, crea tabla users (id, email, nombre, foto_url, plan, created_at).
-Credenciales necesarias: URL Supabase + anon key + Google OAuth client ID
-Resultado esperado: Login real con Google. Usuario guardado en Supabase. Perfil muestra datos reales.
-
-LUN 30/03 — 5 hs
-Tarea: Portfolio persistente en Supabase
-Herramienta: Claude + GitHub API
-Proceso: Tabla portfolios (id, user_id, symbol, nombre, cantidad, precio_compra, fecha). CRUD completo contra Supabase. Solo funciona autenticado.
-Resultado esperado: El portfolio no se borra al cerrar la app. Cada usuario ve solo el suyo.
-
-MAR 31/03 — 5 hs
-Tarea: Watchlist + Alertas persistentes en Supabase
-Herramienta: Claude + GitHub API
-Proceso: Tablas watchlists (id, user_id, symbol, precio_referencia) y alerts (id, user_id, symbol, precio_objetivo, condicion, canal, activa). Reemplaza arrays en memoria.
-Resultado esperado: Watchlist y alertas persisten entre sesiones.
-
-MIE 01/04 — 5 hs
-Tarea: Testing completo iOS Safari + desktop
-Proceso: Vos abris la app en tu iPhone, recorres cada tab y reportas bugs en el chat. Claude los corrige y commitea. Repetimos hasta que todo este limpio.
-Resultado esperado: App perfecta en iPhone.
-
-JUE 02/04 — 5 hs
-Tarea: Actualizar CONTEXTO.md + buffer de bugs
-Proceso: Claude documenta estado real post-Semana 1. Resuelve bugs menores pendientes.
-Resultado esperado: Documentacion al dia. Proximo chat empieza sin re-diagnosticar nada.
+- Backend Node.js: Express + Supabase + Twilio en Railway
+- Tabla alerts: user_id, activo, precio_objetivo, direccion, activa
+- Cron job verifica precios cada minuto
+- Notificacion WhatsApp via Twilio
+- UI alertas: crear, listar, eliminar
 
 ---
 
-### SEMANA 2 (3 - 9 Abr) — BACKEND REAL + ALERTAS + SENALES IA
-Objetivo: Backend en Railway con logica real. Alertas WhatsApp reales. Senales IA via Claude API.
+## SEMANA 3 (10 - 16 Abr) — STRIPE + PLANES
 
-VIE 03/04 — 5 hs
-Tarea: server.js completo + deploy Railway
-Herramienta: Claude escribe Node.js + vos conectas repo en railway.app
-Proceso: Claude escribe servidor Express completo: GET /health, POST /api/alerts/check, GET /api/signals/:symbol, POST /api/users/sync. Railway auto-deploya al commitear.
-Resultado esperado: Backend vivo en Railway respondiendo rutas correctamente.
-
-SAB 04/04 — 5 hs
-Tarea: Twilio WhatsApp alertas reales
-Herramienta: Claude + Twilio sandbox gratuito + Railway
-Proceso: Vos creas cuenta twilio.com. Me pasas Account SID y Auth Token. Claude agrega /api/send-alert que llama a Twilio. Cron job node-cron cada minuto: lee alertas de Supabase, compara precio Binance, si se cumple manda WhatsApp real.
-Credenciales: Twilio Account SID + Auth Token + numero sandbox
-Resultado esperado: Creas alerta BTC mayor 90000 y recibes WhatsApp real cuando se cumple.
-
-DOM 05/04 — 5 hs
-Tarea: Frontend conectado a backend via JWT
-Proceso: Llamadas a Supabase pasan por backend con token JWT. Frontend y backend autenticados.
-Resultado esperado: Comunicacion segura frontend-backend.
-
-LUN 06/04 — 5 hs
-Tarea: Push notifications reales Firebase
-Herramienta: Claude + Firebase Console (vos) + GitHub API
-Proceso: Vos creas proyecto Firebase gratis. Me pasas config JSON. Claude integra FCM en service-worker.js e index.html. Boton Activar pide permiso real, guarda FCM token en Supabase.
-Credenciales: Firebase config JSON
-Resultado esperado: Recibes notificacion push real en tu iPhone.
-
-MAR 07/04 — 5 hs
-Tarea: Senales IA conectadas a Claude API real
-Herramienta: Claude + Anthropic API + Railway
-Proceso: Vos generas API key en console.anthropic.com. Claude agrega /api/signals/:symbol: llama a Claude API con prompt de precio, volumen, variacion. Respuesta cacheada 1 hora en Supabase.
-Credenciales: Anthropic API key
-Resultado esperado: Senales IA son analisis reales de Claude, no datos hardcodeados.
-
-MIE 08/04 — 5 hs
-Tarea: Plausible Analytics
-Herramienta: Claude + plausible.io $9/mes + GitHub API
-Proceso: Claude integra script y eventos: page_view, alert_created, plan_viewed, signal_viewed, upgrade_clicked.
-Resultado esperado: Dashboard de usuarios en tiempo real.
-
-JUE 09/04 — 5 hs
-Tarea: Testing end-to-end + docs
-Proceso: Flujo completo: login Google -> portfolio -> alerta -> WhatsApp recibido -> senal IA -> salir y volver con portfolio intacto. Claude corrige lo que falle.
-Resultado esperado: Flujo completo funcional en iPhone.
+- Stripe: PRO USD 9.99/mes, ELITE USD 19.99/mes
+- UI upgrade: botones Activar PRO y Activar ELITE
+- Restricciones por plan:
+  - FREE: max 5 activos, 3 senales/dia, sin alertas
+  - PRO: 50 activos, 10 senales, alertas WhatsApp
+  - ELITE: ilimitado + Telegram Bot
 
 ---
 
-### SEMANA 3 (10 - 16 Abr) — STRIPE + RESTRICCIONES + EXPORTACIONES
-Objetivo: Pagos reales. Features diferenciadas por plan. Primer usuario PRO posible.
+## SEMANA 4 (17 - 24 Abr) — PULIDO FINAL PWA
 
-VIE 10/04 — 5 hs
-Tarea: Stripe setup + productos + webhooks
-Herramienta: Claude + Stripe Dashboard (vos) + Railway
-Proceso: POST /api/create-checkout-session genera link pago Stripe. POST /api/webhook recibe confirmacion y actualiza plan en Supabase. Productos: PRO $9.99/mes, ELITE $19.99/mes.
-Credenciales: Stripe publishable key + secret key + webhook signing secret
-Resultado: Backend crea sesiones de pago y recibe confirmaciones.
-
-SAB 11/04 — 5 hs
-Tarea: UI de upgrade funcional
-Proceso: Botones Activar PRO y Activar ELITE llaman backend -> link Stripe Checkout. Usuario paga y vuelve con plan actualizado.
-Resultado: Flujo de upgrade completo en modo test Stripe.
-
-DOM 12/04 — 5 hs
-Tarea: Restricciones reales por plan
-Proceso: FREE: max 5 activos, 3 senales/dia, sin alertas. PRO: 50 activos, 10 senales, alertas. ELITE: ilimitado. Validacion en frontend Y backend.
-Resultado: Restricciones no bypasseables.
-
-LUN 13/04 — 5 hs
-Tarea: Exportar PDF y Excel reales
-Herramienta: jsPDF + SheetJS via CDN, sin backend
-Proceso: PDF del portfolio generado en el browser. Excel .xlsx descargable.
-Resultado: Botones de exportacion funcionan con archivos reales.
-
-MAR 14/04 — 5 hs
-Tarea: Email de reporte del portfolio
-Herramienta: Claude + Resend gratis 3000 emails/mes + Railway
-Proceso: /api/send-report genera HTML del portfolio y lo manda via Resend al email del usuario.
-Credenciales: Resend API key
-Resultado: Boton Enviar por email funciona.
-
-MIE 15/04 — 5 hs
-Tarea: 2FA real via SMS Twilio
-Proceso: Activa 2FA -> ingresa telefono -> SMS codigo 6 digitos -> lo ingresa -> confirmado. En proximos logins: Google OAuth + codigo SMS.
-Resultado: 2FA del Perfil funciona con SMS real.
-
-JUE 16/04 — 5 hs
-Tarea: Test end-to-end de pago + fixes
-Proceso: Tarjeta test Stripe 4242424242424242. De FREE a PRO. Limites cambian. Claude corrige lo que falle.
-Resultado: Primer pago real posible desde manana.
+- Exportar PDF y Excel (jsPDF + SheetJS)
+- Mejoras UX: animaciones, skeletons, empty states
+- Revision completa en iPhone — todas las tabs impecables
+- Commit: "PWA v1.0 completa — base React Native"
 
 ---
 
-### SEMANA 4 (17 - 23 Abr) — ACCIONES REALES + PRIMEROS 50 USUARIOS
-Objetivo: Acciones USA en tiempo real. Lanzamiento a primeros usuarios.
+## SEMANA 5 (25 Abr - 1 May) — SETUP REACT NATIVE
 
-VIE 17/04: Polygon.io acciones USA ($29/mes). Reemplaza 45+ acciones estaticas por precios reales cacheados cada 15seg en el backend.
-SAB 18/04: Acciones LatAm datos reales de cierre dia anterior (BYMA, B3, BMV via APIs publicas).
-DOM 19/04: Optimizacion performance iOS Safari. Lazy loading. Reducir tiempo de carga inicial.
-LUN 20/04: Sistema de referidos. Tabla referrals Supabase. Codigo unico por usuario. Link de invitacion.
-MAR 21/04: Compartir en redes. Twitter/X, WhatsApp, imagen de senal IA via Canvas API para Instagram Stories.
-MIE 22/04: Preparar materiales de lanzamiento: mensaje WhatsApp, post LinkedIn, texto grupos LATAM.
-JUE 23/04: LANZAMIENTO primeros 50 usuarios. Monitoreo Plausible en tiempo real.
-
----
-
-### SEMANA 5 (24 - 30 Abr) — FEEDBACK REAL + MEJORAS UX
-VIE 24/04: Widget feedback in-app Tally.so gratis. Pregunta: Que te falta para pagar $9.99/mes?
-SAB 25/04: Hotjar grabaciones de sesion (1000/mes gratis). Ver donde se traban los usuarios.
-DOM 26/04: Analisis Plausible + Hotjar. Definir top 5 mejoras por comportamiento real.
-LUN 27/04 al JUE 30/04: Implementar mejoras UX 1 a 5, una por dia con Claude.
+- Comprar Apple Developer Account: USD 99 (fmoscon@gmail.com)
+- Instalar: Node.js + React Native CLI + Xcode en Mac
+- Crear proyecto: npx react-native init AurexApp
+- Configurar React Navigation (bottom tabs)
+- Conectar Supabase SDK
+- Splash screen con logo AUREX
+- App corre en simulador iOS y en iPhone real
 
 ---
 
-### SEMANA 6 (1 - 7 May) — CONTENIDO + REDES SOCIALES
-Cada dia: 2.5 hs codigo con Claude + 2.5 hs grabando videos en iPhone.
-Videos 30-60 seg: senales IA en accion, portfolio tiempo real, alertas llegando por WhatsApp.
-Plataformas: Instagram Stories + Reels + TikTok.
-Objetivo semanal: 3 videos publicados. 100+ seguidores nuevos.
+## SEMANA 6 (2 - 8 May) — TAB MERCADOS EN REACT NATIVE
+
+- MercadosScreen: FlatList activos crypto + acciones USA
+- WebSocket Binance — misma logica portada a React Native
+- Conversor de monedas
+- Diseno identico a PWA: modo oscuro, #D4A017 + #0D1117
 
 ---
 
-### SEMANA 7 (8 - 14 May) — TELEGRAM BOT
-LUN 08/05: Crear @AurexBot via @BotFather Telegram (gratis). Webhook en Railway. Comandos /start /precio BTC /ayuda.
-MAR-SAB: /senales (top 5 del dia). /alerta BTC 90000 (notifica por Telegram). /portfolio (muestra portfolio vinculado). Suscripcion alertas via Telegram ademas de WhatsApp.
-Credenciales: Token Telegram BotFather
+## SEMANA 7 (9 - 15 May) — TABS PORTFOLIO + PERFIL EN REACT NATIVE
+
+- AuthScreen: login/registro Supabase
+- PerfilScreen: datos usuario, celular, plan, cerrar sesion
+- PortfolioScreen: activos, valor total, P&L
+- Misma DB Supabase que PWA — datos compartidos
 
 ---
 
-### SEMANA 8 (15 - 21 May) — STRIPE PRODUCCION + OBJETIVO 10 USUARIOS PRO
-LUN 15/05: Stripe modo live. Railway variables de entorno actualizadas. Facturacion automatica.
-MAR-MIE 16-17/05: Dashboard metricas en Supabase: usuarios, MRR, conversion free a PRO.
-JUE-SAB 18-21/05: Campana WhatsApp personal a inversores. Primer mes PRO con descuento.
-Objetivo: 10 usuarios PRO = $99.90 MRR real.
+## SEMANA 8 (16 - 21 May) — TAB SENALES IA + SUBMIT APP STORE
+
+### LUN-MAR 16-17/05
+- SeñalesScreen: 5 senales diarias LONG/SHORT con confianza %
+
+### MIE 18/05
+- Privacy Policy: fmoscon-creator.github.io/aurex-app/privacy-policy
+- App Icons (1024x1024 + todos los tamanos) y Screenshots App Store
+- Descripcion en espanol e ingles
+
+### JUE-VIE 19-20/05
+- Archive en Xcode: Product -> Archive
+- Subir via Xcode Organizer a App Store Connect
+- Submit a App Store Review
+
+### SAB 21/05
+- TestFlight: invitar 5-10 beta testers
+- Monitorear estado del review
 
 ---
 
-### SEMANA 9 (22 - 28 May) — APP STORE PREPARATION
-LUN 22/05: Registrar Apple Developer Account $99/ano. REGISTRAR HOY porque tarda 1-3 dias. Setup Capacitor.js.
-MAR-MIE 23-24/05: Capacitor envuelve la PWA en contenedor nativo iOS. Genera proyecto Xcode. Vos compilas desde Mac con Xcode.
-JUE-SAB 25-28/05: Screenshots iPhone 6.5 y 5.5 pulgadas. Descripcion App Store espanol e ingles. TestFlight 10 usuarios.
+## SEMANA 9 (22 - 28 May) — FASE 3: APRENDIZAJE APPLE
+
+Apple tarda entre 1 y 7 dias habiles en revisar.
+
+**Si aprueba:** publicar en redes, preparar version 2 con Watchlist + Alertas.
+**Si rechaza:** leer motivo exacto, corregir en 48hs, re-submit.
+
+Causas comunes de rechazo y como evitarlas:
+- Funcionalidad insuficiente: cubierto con 4 tabs + login + senales IA
+- Privacy Policy faltante: cubierto en Semana 8
+- Demo/placeholder content: todas las senales y datos deben ser reales al momento del submit
+- Crash en review device: testear exhaustivamente antes de subir
+
+Mientras se espera: agregar Watchlist a React Native para version 2.
 
 ---
 
-### SEMANA 10 (29 May - 4 Jun) — APP STORE SUBMISSION + GOOGLE PLAY
-LUN 29/05: Submit a App Store Review (tarda 1-7 dias habiles).
-MAR-JUE 30/05-02/06: Google Play via TWA con Bubblewrap Google gratuito. Google Play Developer $25 unico pago.
-VIE-SAB 03-04/06: Press kit. Post ProductHunt. Post LinkedIn. Tweet de lanzamiento.
+## SEMANA 10 (29 May - 4 Jun) — LANZAMIENTO + GOOGLE PLAY
+
+- Anuncio en LinkedIn, Twitter/X, grupos crypto LATAM
+- Post ProductHunt
+- Google Play via TWA con Bubblewrap (USD 25 unico pago)
 
 ---
 
-### SEMANA 11 (5 - 11 Jun) — LANZAMIENTO OFICIAL + B2B
-LUN 05/06: LAUNCH DAY. LinkedIn, Twitter/X, grupos LATAM, WhatsApp personal. Monitor Plausible.
-MAR-MIE 06-07/06: ProductHunt launch. Tagline, descripcion, respuestas a comentarios.
-JUE-SAB 08-11/06: Reuniones B2B con asesores financieros. Plan B2B $199/mes. Claude prepara deck de ventas.
-Objetivo: 50+ usuarios registrados. 20+ usuarios PRO.
+## SEMANA 11 (5 - 11 Jun) — LANZAMIENTO OFICIAL + B2B
+
+- LAUNCH DAY en todas las redes
+- ProductHunt launch
+- Reuniones B2B con asesores financieros
+- Plan B2B USD 199/mes
+- Objetivo: 50+ usuarios registrados, 20+ usuarios PRO
 
 ---
 
-### SEMANA 12 (12 - 19 Jun) — CIERRE + METRICAS + HANDOFF
-LUN-MAR 12-13/06: Revision completa 6 tabs. Todo lo que era mock ahora es real.
-MIE-JUE 14-15/06: TECHNICAL-DOCS.md: arquitectura, APIs usadas, variables de entorno, como hacer deploy.
-VIE-SAB 16-17/06: Metricas finales: usuarios, MRR, conversion, CAC. Brief para Lucas AppStack Fase 4.
-DOM 19/06: Retrospectiva. Proyecto completado en 12 semanas exactas.
+## SEMANA 12 (12 - 19 Jun) — CIERRE + METRICAS
+
+- Revision completa: app nativa 4 tabs + PWA 6 tabs
+- TECHNICAL-DOCS.md: arquitectura, APIs, decisiones
+- Metricas finales: usuarios, MRR, conversion rate
 
 ---
 
-## COSTOS OPERATIVOS MENSUALES
+## PROTOCOLO DE TRABAJO SESION A SESION
 
-| Servicio | Costo mes | Desde semana |
-|---|---|---|
-| Claude Max x20 | $200 | Ya activo |
-| Railway backend | $5 | Semana 2 |
-| Supabase Free | $0 | Semana 1 |
-| Plausible Analytics | $9 | Semana 2 |
-| Polygon.io Starter | $29 | Semana 4 |
-| Twilio WhatsApp | $10 variable | Semana 2 |
-| Apple Developer | $8.25 mes | Semana 9 |
-| Google Play | $25 unico | Semana 10 |
-| Resend email | $0 gratis | Semana 3 |
-| Firebase FCM | $0 gratis | Semana 2 |
-| TOTAL mensual | ~$261 mes | Semana 4+ |
-
-Break-even: 27 usuarios PRO a $9.99/mes cubren TODOS los costos incluido Claude Max x20.
+1. Claude lee CONTEXTO.md y PLAN-OPERATIVO.md al inicio de cada sesion
+2. Ejecuta la tarea del dia segun cronograma
+3. SIEMPRE verificar en emulador iPhone antes de confirmar terminado
+4. SIEMPRE borrar fmoscon@gmail.com de Supabase antes de pedir que Fernando pruebe
+5. NUNCA marcar como terminado sin screenshot en iPhone verificado
+6. NUNCA proponer temas nuevos si los actuales no funcionan
 
 ---
 
-Generado: Claude Sonnet 4.6 - 27/03/2026
-Fundador: Fernando G. Moscon - fmoscon@gmail.com
-Repo: https://github.com/fmoscon-creator/aurex-app
+## CREDENCIALES (no commitear en codigo)
+
+- GitHub Token: ver CONTEXTO.md
+- Supabase URL: https://dklljnfhlzmfsfmxrpie.supabase.co
+- App en vivo: https://fmoscon-creator.github.io/aurex-app
+- Repo: https://github.com/fmoscon-creator/aurex-app
