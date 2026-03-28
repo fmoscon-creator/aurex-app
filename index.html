@@ -263,6 +263,125 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Aurex">
 <script src="aurex-features.js"></script>
+
+<!-- SUPABASE AUTH -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===== SUPABASE CONFIG =====
+// Para activar: reemplaza estos valores con los de tu proyecto Supabase
+// Settings > API > Project URL y anon/public key
+var SUPABASE_URL = 'https://TU_PROYECTO.supabase.co';
+var SUPABASE_ANON_KEY = 'TU_ANON_KEY';
+var GOOGLE_CLIENT_ID = 'TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+// ===========================
+
+var _supabase = null;
+var _currentUser = null;
+
+// Solo inicializa si las keys estan configuradas
+if (SUPABASE_URL.indexOf('TU_PROYECTO') === -1 && SUPABASE_ANON_KEY.indexOf('TU_ANON_KEY') === -1) {
+  try {
+    _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Escuchar cambios de auth
+    _supabase.auth.onAuthStateChange(function(event, session) {
+      _currentUser = session ? session.user : null;
+      updateUserUI(_currentUser);
+      if (event === 'SIGNED_IN') {
+        console.log('[Aurex Auth] Usuario logueado:', _currentUser.email);
+        upsertUserDB(_currentUser);
+      }
+      if (event === 'SIGNED_OUT') {
+        console.log('[Aurex Auth] Usuario deslogueado');
+      }
+    });
+    
+    console.log('[Aurex] Supabase inicializado correctamente');
+  } catch(e) {
+    console.log('[Aurex] Error Supabase:', e.message);
+  }
+} else {
+  console.log('[Aurex] Supabase: pendiente de configuracion de keys');
+}
+
+// Login con Google
+function loginGoogle() {
+  if (!_supabase) { alert('Supabase no configurado. Contacta al administrador.'); return; }
+  _supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + window.location.pathname
+    }
+  });
+}
+
+// Logout
+function logoutUser() {
+  if (!_supabase) return;
+  _supabase.auth.signOut().then(function() {
+    _currentUser = null;
+    updateUserUI(null);
+  });
+}
+
+// Guardar/actualizar usuario en DB
+function upsertUserDB(user) {
+  if (!_supabase || !user) return;
+  _supabase.from('users').upsert({
+    id: user.id,
+    email: user.email,
+    nombre: user.user_metadata.full_name || user.email.split('@')[0],
+    foto_url: user.user_metadata.avatar_url || '',
+    plan: 'FREE',
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'id' }).then(function(result) {
+    if (result.error) console.log('[Aurex DB] Error upsert user:', result.error.message);
+    else console.log('[Aurex DB] Usuario guardado en DB');
+  });
+}
+
+// Actualizar la UI del perfil con datos del usuario
+function updateUserUI(user) {
+  var nameEl = document.getElementById('user-name-display');
+  var emailEl = document.getElementById('user-email-display');
+  var avatarEl = document.getElementById('user-avatar-img');
+  var loginBtn = document.getElementById('btn-login-google');
+  var logoutBtn = document.getElementById('btn-logout');
+  var userPanel = document.getElementById('user-logged-panel');
+  var guestPanel = document.getElementById('user-guest-panel');
+  
+  if (user) {
+    var name = user.user_metadata.full_name || user.email.split('@')[0];
+    var email = user.email;
+    var foto = user.user_metadata.avatar_url || '';
+    
+    if (nameEl) nameEl.textContent = name;
+    if (emailEl) emailEl.textContent = email;
+    if (avatarEl && foto) { avatarEl.src = foto; avatarEl.style.display = 'block'; }
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'block';
+    if (userPanel) userPanel.style.display = 'block';
+    if (guestPanel) guestPanel.style.display = 'none';
+  } else {
+    if (nameEl) nameEl.textContent = 'Invitado';
+    if (emailEl) emailEl.textContent = 'Sin cuenta';
+    if (loginBtn) loginBtn.style.display = 'block';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    if (userPanel) userPanel.style.display = 'none';
+    if (guestPanel) guestPanel.style.display = 'block';
+  }
+}
+
+// Verificar sesion al cargar
+document.addEventListener('DOMContentLoaded', function() {
+  if (_supabase) {
+    _supabase.auth.getSession().then(function(result) {
+      _currentUser = result.data.session ? result.data.session.user : null;
+      updateUserUI(_currentUser);
+    });
+  }
+});
+</script>
 </head>
 <body ontouchstart="">
 <div id="onboarding" style="display:none;position:fixed;inset:0;z-index:99999;background:#0D0D1A;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
@@ -647,16 +766,32 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <div class="screen-inner">
 <!-- AVATAR -->
 <div class="avatar-sec">
-  <div class="avatar" onclick="alert('Cambiar foto de perfil — disponible en v1.1')">
-    FM
-    <div class="avatar-edit">✏️</div>
+<div id="user-guest-panel" style="display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;padding:8px 0;">
+  <div style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a1a2e,#D4A017);display:flex;align-items:center;justify-content:center;font-size:28px;">&#128100;</div>
+  <div style="text-align:center;">
+    <div style="font-size:16px;font-weight:700;color:#fff;">Bienvenido a Aurex</div>
+    <div style="font-size:12px;color:#8B949E;margin-top:4px;">Inicia sesi&oacute;n para guardar tu portfolio</div>
   </div>
-  <div class="user-name">Federico Moscon</div>
-  <div class="user-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1b7d7674687874755b7c767a727735787476">[email&#160;protected]</a></div>
-  <div class="plan-row">
-    <div class="plan-badge badge-free">FREE</div>
-    <div style="font-size:10px;color:#555">Miembro desde Mar 2026</div>
+  <button id="btn-login-google" onclick="loginGoogle()" style="display:flex;align-items:center;gap:10px;background:#fff;color:#333;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:600;cursor:pointer;width:100%;justify-content:center;-webkit-tap-highlight-color:transparent;">
+    <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/><path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/><path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/><path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/></svg>
+    Entrar con Google
+  </button>
+</div>
+<div id="user-logged-panel" style="display:none;flex-direction:column;align-items:center;gap:10px;width:100%;">
+  <div style="position:relative;">
+    <img id="user-avatar-img" src="" alt="" style="display:none;width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid #D4A017;">
+    <div id="user-avatar-initials" style="width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#F0C040);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:900;color:#0D1117;">A</div>
   </div>
+  <div style="text-align:center;">
+    <div id="user-name-display" style="font-size:17px;font-weight:700;color:#fff;">Cargando...</div>
+    <div id="user-email-display" style="font-size:12px;color:#8B949E;margin-top:2px;">...</div>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span id="user-plan-badge" style="background:#D4A017;color:#0D1117;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;">FREE</span>
+    <span style="font-size:11px;color:#8B949E;">Miembro desde 2026</span>
+  </div>
+  <button id="btn-logout" onclick="logoutUser()" style="display:none;background:rgba(255,255,255,0.08);color:#8B949E;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:8px 16px;font-size:12px;cursor:pointer;margin-top:4px;">Cerrar sesi&oacute;n</button>
+</div>
 </div>
 
 <!-- SUSCRIPCIÓN -->
