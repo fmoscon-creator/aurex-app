@@ -1,66 +1,72 @@
-// Aurex Service Worker v4.0 â Network First SIEMPRE para index.html
-// BUILD: 1774716000000
-const CACHE_VERSION = 'aurex-1774716000000';
-const CACHE_STATIC  = 'aurex-static-1774716000000';
+// Aurex Service Worker v5.0 — Auto-update garantizado
+// BUILD: 1774716600000
+const CACHE_VERSION = 'aurex-1774716600000';
 
-// Al instalar â tomar control inmediato
-self.addEventListener('install', event => {
-  self.skipWaiting();
+// Responder al mensaje SKIP_WAITING para activarse inmediatamente
+self.addEventListener('message', event => {
+  if(event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });
 
-// Al activar â borrar TODOS los caches viejos y tomar control
+self.addEventListener('install', event => {
+  // NO hacer skipWaiting aqui - esperamos el mensaje del cliente
+  // Precachear solo recursos estaticos esenciales
+  event.waitUntil(
+    caches.open(CACHE_VERSION).then(cache => {
+      return cache.addAll(['/aurex-app/manifest.json']);
+    }).catch(() => {})
+  );
+});
+
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => 
+    caches.keys().then(keys =>
       Promise.all(
-        keys.filter(k => k !== CACHE_VERSION && k !== CACHE_STATIC)
-            .map(k => { console.log('[SW] Borrando cache viejo:', k); return caches.delete(k); })
+        keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
       )
     ).then(() => self.clients.claim())
   );
 });
 
-// Fetch â Network First SIEMPRE para index.html y archivos principales
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  
-  // Para index.html y service-worker.js â SIEMPRE de la red, nunca del cache
-  if (url.pathname.endsWith('/') || 
-      url.pathname.endsWith('index.html') || 
-      url.pathname.endsWith('service-worker.js')) {
+
+  // index.html y raiz: SIEMPRE de la red
+  if(url.pathname === '/aurex-app/' || 
+     url.pathname === '/aurex-app/index.html' ||
+     url.pathname.endsWith('service-worker.js')) {
     event.respondWith(
-      fetch(event.request, { cache: 'no-store' })
-        .catch(() => caches.match(event.request))
+      fetch(event.request, {cache: 'no-store'})
+        .catch(() => caches.match('/aurex-app/'))
     );
     return;
   }
-  
-  // Para aurex-features.js â Network First con fallback a cache
-  if (url.pathname.includes('aurex-features.js')) {
+
+  // aurex-features.js: Network First
+  if(url.pathname.includes('aurex-features.js')) {
     event.respondWith(
-      fetch(event.request, { cache: 'no-cache' })
-        .then(response => {
-          if (response.ok) {
-            const clone = response.clone();
-            caches.open(CACHE_STATIC).then(c => c.put(event.request, clone));
+      fetch(event.request, {cache: 'no-cache'})
+        .then(res => {
+          if(res.ok) {
+            caches.open(CACHE_VERSION).then(c => c.put(event.request, res.clone()));
           }
-          return response;
+          return res;
         })
         .catch(() => caches.match(event.request))
     );
     return;
   }
-  
-  // Para el resto â Cache First (imÃ¡genes, fonts, etc.)
+
+  // Resto: Cache First
   event.respondWith(
     caches.match(event.request).then(cached => {
-      if (cached) return cached;
-      return fetch(event.request).then(response => {
-        if (response.ok && event.request.method === 'GET') {
-          const clone = response.clone();
-          caches.open(CACHE_STATIC).then(c => c.put(event.request, clone));
+      if(cached) return cached;
+      return fetch(event.request).then(res => {
+        if(res.ok && event.request.method === 'GET') {
+          caches.open(CACHE_VERSION).then(c => c.put(event.request, res.clone()));
         }
-        return response;
+        return res;
       });
     })
   );
