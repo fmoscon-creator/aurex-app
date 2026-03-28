@@ -1,79 +1,90 @@
-// Aurex Service Worker v2.0 — Network-first HTML + Cache static assets
-const CACHE_NAME = 'aurex-v3';
-const STATIC_ASSETS = ['/aurex-app/icon-192.png', '/aurex-app/manifest.json'];
+// Aurex Service Worker v3.0 — Network First critico + Cache busting automatico
+// BUILD: 1774678443804
+const CACHE_VERSION = 'aurex-1774678443804';
+const CACHE_STATIC  = 'aurex-static-1774678443804';
 
-// Instalar y cachear solo assets estaticos (NO index.html)
-self.addEventListener('install', e => {
+// Archivos que SIEMPRE van a la red primero (nunca quedan stale)
+const NETWORK_FIRST = [
+  '/',
+  '/index.html',
+  '/aurex-features.js'
+];
+
+// Archivos estaticos que se pueden cachear (cambian poco)
+const STATIC_ASSETS = [
+  '/manifest.json',
+  '/assets/logo/aurex_logo_dark.svg',
+  '/assets/logo/aurex_logo_transparent.svg'
+];
+
+// ── INSTALL: pre-cachear solo assets estaticos ──
+self.addEventListener('install', function(e){
   e.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      // Solo cacheamos assets estaticos, no el HTML
-      return cache.addAll(STATIC_ASSETS).catch(() => {});
+    caches.open(CACHE_STATIC).then(function(cache){
+      return cache.addAll(STATIC_ASSETS).catch(function(){});
+    }).then(function(){
+      return self.skipWaiting(); // activar inmediatamente sin esperar
     })
   );
-  self.skipWaiting();
 });
 
-// Activar — limpiar caches viejos
-self.addEventListener('activate', e => {
+// ── ACTIVATE: borrar caches viejas ──
+self.addEventListener('activate', function(e){
   e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE_NAME).map(k => caches.delete(k)))
-    )
+    caches.keys().then(function(keys){
+      return Promise.all(
+        keys.map(function(key){
+          // Borrar cualquier cache que no sea la version actual
+          if(key !== CACHE_VERSION && key !== CACHE_STATIC){
+            return caches.delete(key);
+          }
+        })
+      );
+    }).then(function(){
+      return self.clients.claim(); // tomar control de todas las tabs inmediatamente
+    })
   );
-  self.clients.claim();
 });
 
-// Fetch — Network first para HTML, cache first para assets estaticos
-self.addEventListener('fetch', e => {
-  const url = e.request.url;
+// ── FETCH: Network First para criticos, Cache First para estaticos ──
+self.addEventListener('fetch', function(e){
+  var url = new URL(e.request.url);
 
-  // No interceptar APIs en tiempo real
-  if (url.includes('railway.app') || url.includes('binance') || url.includes('yahoo') || url.includes('api.')) {
-    return;
-  }
+  // Solo manejar requests del mismo origen
+  if(url.origin !== location.origin) return;
 
-  // Para HTML (index.html o root): siempre red primero para tener version actualizada
-  if (e.request.mode === 'navigate' || url.endsWith('.html') || url.endsWith('/aurex-app/') || url === 'https://fmoscon-creator.github.io/aurex-app') {
+  var path = url.pathname;
+  var isNetworkFirst = NETWORK_FIRST.some(function(p){ return path === p || path.endsWith('index.html') || path.endsWith('aurex-features.js'); });
+
+  if(isNetworkFirst){
+    // NETWORK FIRST: siempre intenta la red, usa cache solo si falla
     e.respondWith(
-      fetch(e.request).catch(() => caches.match(e.request))
+      fetch(e.request, { cache: 'no-store' })
+        .then(function(response){
+          // Guardar copia fresca en cache
+          if(response && response.status === 200){
+            var clone = response.clone();
+            caches.open(CACHE_VERSION).then(function(cache){ cache.put(e.request, clone); });
+          }
+          return response;
+        })
+        .catch(function(){
+          // Sin red: usar cache si existe
+          return caches.match(e.request);
+        })
     );
-    return;
+  } else {
+    // CACHE FIRST para assets estaticos
+    e.respondWith(
+      caches.match(e.request).then(function(cached){
+        return cached || fetch(e.request).then(function(response){
+          if(response && response.status === 200){
+            var clone = response.clone();
+            caches.open(CACHE_STATIC).then(function(cache){ cache.put(e.request, clone); });
+          }
+          return response;
+        });
+      })
+    );
   }
-
-  // Para otros assets: cache first
-  e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request))
-  );
-});
-
-// Push notifications
-self.addEventListener('push', e => {
-  let data = { title: '\uD83D\uDD14 Aurex Alerta', body: 'Una alerta se ha disparado', icon: '/aurex-app/icon-192.png', badge: '/aurex-app/icon-192.png' };
-  if (e.data) {
-    try { data = { ...data, ...e.data.json() }; } catch(err) { data.body = e.data.text(); }
-  }
-  e.waitUntil(
-    self.registration.showNotification(data.title, {
-      body: data.body,
-      icon: data.icon || '/aurex-app/icon-192.png',
-      badge: data.badge || '/aurex-app/icon-192.png',
-      tag: 'aurex-alerta',
-      renotify: true,
-      data: { url: data.url || 'https://fmoscon-creator.github.io/aurex-app/' }
-    })
-  );
-});
-
-// Click en notificacion
-self.addEventListener('notificationclick', e => {
-  e.notification.close();
-  e.waitUntil(
-    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(clientList => {
-      const url = e.notification.data?.url || 'https://fmoscon-creator.github.io/aurex-app/';
-      for (const client of clientList) {
-        if (client.url.includes('aurex-app') && 'focus' in client) return client.focus();
-      }
-      return clients.openWindow(url);
-    })
-  );
 });
