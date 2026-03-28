@@ -380,7 +380,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=1774705553495"></script>
+<script src="aurex-features.js?v=1774708316866"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1222,5 +1222,8 @@ window.syncPhoneField = function(){
 };
 
 </script>
+<!-- DEV VERSION BADGE — QUITAR AL LANZAR -->
+<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.82);border:1.5px solid #2ea043;border-radius:20px;padding:3px 10px 3px 7px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:11px;color:#fff;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,0.5);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v316866</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");var ok=(typeof window.aurexBuild!=="undefined"?window.aurexBuild==="1774708316866":true);var color=ok?"#2ea043":"#f85149";if(badge)badge.style.borderColor=color;if(dot){dot.style.background=color;dot.style.boxShadow="0 0 6px "+color;}if(txt)txt.textContent="BUILD v316866 "+(ok?"\u2714":"\u2717 CACHE VIEJA");},2000);})();</script>
+<!-- /DEV VERSION BADGE -->
 </body>
 </html>
