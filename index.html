@@ -1221,6 +1221,7 @@ window.navTo = function(screen) {
   btns.forEach(function(b){ b.classList.remove('active'); });
   var activeBtn = document.getElementById('btn-' + screen);
   if(activeBtn) activeBtn.classList.add('active');
+  if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
 };
 </script>
 </body>
