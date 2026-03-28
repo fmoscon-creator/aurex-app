@@ -264,43 +264,47 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <meta name="apple-mobile-web-app-title" content="Aurex">
 <script>
 (function(){
-  // Reset onboarding si URL lo pide
+  // 1. Reset onboarding si URL lo pide
   var p=new URLSearchParams(window.location.search);
   if(p.get('resetOnboarding')==='1'){
     ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});
     var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());
   }
-  // showObs2: ocultar contenido de obs1 y mostrar obs2 dentro
+  // 2. showObs2: ocultar contenido de obs1, mostrar obs2 (que es hijo de obs1)
   window.showObs2=function(){
     var o1=document.getElementById('obs1');
     var o2=document.getElementById('obs2');
     if(!o1||!o2) return;
-    // Ocultar elementos visuales de obs1 pero dejar obs1 visible (obs2 es hijo de obs1)
     ['obs1-logo','obs1-title','obs1-sub','obs1-cards','obs1-btn','obs1-tag'].forEach(function(cls){
-      var el=o1.querySelector('.'+cls);
-      if(el) el.style.display='none';
+      var el=o1.querySelector('.'+cls); if(el) el.style.display='none';
     });
     o2.style.display='flex';
-    // Iniciar canvas de estrellas
     if(window.initConstellacion) setTimeout(window.initConstellacion,100);
   };
-  // Interceptar initOnboarding para ocultar .phone
-  var _checked=false;
+  // 3. startApp: mover .phone al body y ocultar onboarding
+  window.startApp=function(){
+    var ph=document.querySelector('.phone');
+    var onb=document.getElementById('onboarding');
+    if(ph && onb){
+      document.body.insertBefore(ph,onb.nextSibling);
+      ph.style.cssText='display:flex!important;position:fixed!important;inset:0!important;z-index:1000!important;flex-direction:column!important;overflow:hidden!important;background:#0D1117!important;';
+    }
+    if(window.obFinish) window.obFinish();
+    else {
+      if(onb) onb.style.display='none';
+      localStorage.setItem('aurex_onboarding_done','1');
+    }
+  };
+  // 4. Interceptar initOnboarding para ocultar .phone mientras el onboarding está activo
   var _iv=setInterval(function(){
-    if(window.initOnboarding && !_checked){
-      _checked=true; clearInterval(_iv);
+    if(window.initOnboarding){
+      clearInterval(_iv);
       var _orig=window.initOnboarding;
       window.initOnboarding=function(){
         _orig();
         var ob=document.getElementById('onboarding');
         var ph=document.querySelector('.phone');
         if(ob && ph && ob.style.display!=='none') ph.style.display='none';
-      };
-      var _origFin=window.obFinish;
-      window.obFinish=function(){
-        var ph=document.querySelector('.phone');
-        if(ph) ph.style.display='flex';
-        if(_origFin) _origFin();
       };
     }
   },50);
