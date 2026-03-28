@@ -28,7 +28,7 @@ var DATA={
   stable: [
     {s:'USDT',n:'Tether',      tab:'stable'},
     {s:'USDC',n:'USD Coin',    tab:'stable'},
-    {s:'BUSD',n:'BUSD',        tab:'stable'}
+    {s:'DAI',n:'Dai',           tab:'stable'}
   ],
   acciones: {
     usa: [
@@ -46,8 +46,8 @@ var DATA={
       {s:'BMA',n:'Macro'}
     ]
   },
-  etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'}],
-  comm:     [{s:'GC=F',n:'Gold'},{s:'CL=F',n:'Oil WTI'},{s:'XAG',n:'Silver'}],
+  etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],
+  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'Petróleo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
   futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
   divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
 };
@@ -76,6 +76,17 @@ function renderTab(tab, pais){
 // === BINANCE: cripto y stable ===
 function fetchBinance(tab){
   var arr=DATA[tab]||[];
+  var stableFixed={USDT:1};
+  if(stableFixed[arr[0]&&arr[0].s]){
+    // Stables especiales
+    arr.forEach(function(item){
+      var pel=document.getElementById('p-'+item.s);
+      var cel=document.getElementById('c-'+item.s);
+      if(item.s==='USDT'||stableFixed[item.s]){if(pel)pel.textContent='$1.0000';if(cel){cel.textContent='+0.00%';cel.style.color='#8B949E';}return;}
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice);var pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent='$'+pr.toFixed(4);if(cel){cel.textContent=(pc>=0?'+':'')+pc.toFixed(3)+'%';cel.style.color=pc>=0?'#3FB950':'#F85149';}}).catch(function(){});
+    });
+    return;
+  }
   var syms=arr.map(function(x){return '"'+x.s+'USDT"';}).join(',');
   fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=['+syms+']')
     .then(function(r){return r.json();})
@@ -96,12 +107,14 @@ function fetchBinance(tab){
 function fetchYahoo(tab,pais){
   var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
-    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval=1d&range=1d'))
+    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval=1d&range=2d'))
       .then(function(r){return r.json();})
       .then(function(d){
         var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
         if(!meta)return;
-        var price=meta.regularMarketPrice,pct=meta.regularMarketChangePercent||0;
+        var price=meta.regularMarketPrice;if(!price)return;
+        var prevClose=meta.chartPreviousClose||meta.previousClose||price;
+        var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
         var pel=document.getElementById('p-'+item.s);
         var cel=document.getElementById('c-'+item.s);
         if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
@@ -413,7 +426,7 @@ var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
   {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
   {g:'Acciones ARG',items:[{s:'GGAL',n:'Galicia'},{s:'YPF',n:'YPF'},{s:'BMA',n:'Macro'}],tipo:'accion'},
-  {g:'ETFs',items:[{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq 100'},{s:'GLD',n:'Gold ETF'}],tipo:'etf'},
+  {g:'ETFs',items:[{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq 100'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],tipo:'etf'},
   {g:'Stablecoins',items:[{s:'USDT',n:'Tether'},{s:'USDC',n:'USD Coin'}],tipo:'stable'}
 ];
 
