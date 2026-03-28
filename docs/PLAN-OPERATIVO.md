@@ -217,15 +217,62 @@ Tarea: Buffer
 
 ---
 
-## SEMANA 7 (9 - 15 May) — TABS PORTFOLIO + PERFIL EN REACT NATIVE
+## SEMANA 7 (9 - 15 May) — PORTFOLIO + PERFIL + CONVERSOR DE ACTIVOS EN REACT NATIVE
 
-- AuthScreen: login/registro con Supabase email/password
-- PerfilScreen: nombre, email, celular, plan actual, boton cerrar sesion
-- PortfolioScreen: agregar activos, ver lista con precio en vivo, P&L, eliminar
-- Misma DB Supabase que PWA — los datos del usuario ya existen
-- Verificar flujo completo: registro nuevo -> agregar activo -> ver P&L
+**Objetivo:** Login real, Portfolio simulado y Conversor de Activos funcional.
 
----
+### AuthScreen + PerfilScreen
+- Login/registro Supabase (email/password)
+- PerfilScreen: nombre, email, celular, plan, cerrar sesion
+
+### PortfolioScreen — DEFINICION IMPORTANTE
+**Portfolio AUREX = Seguimiento SIMULADO, no ejecucion real.**
+- AUREX NO recibe dinero, NO ejecuta ordenes, NO conecta con exchanges
+- Usuario carga manualmente: "tengo 0.5 BTC, 10 AAPL, 2 ETH"
+- AUREX muestra valor en tiempo real (como Delta, CoinStats, Kubera)
+- Usuario tiene su dinero donde quiera — AUREX solo lo visualiza
+- No requiere licencias financieras — Apple aprueba sin restricciones
+
+Funcionalidades:
+- Agregar activo: ticker + cantidad + precio de compra
+- Lista con precio actual en vivo y P&L por activo
+- Valor total y P&L total en tiempo real
+- Eliminar activo
+- Misma DB Supabase que PWA
+
+### CONVERSOR DE ACTIVOS — Feature diferenciadora para App Store
+**— Definicion acordada con Fernando el 28/03/2026 —**
+
+Permite simular conversiones entre activos dentro del portfolio simulado.
+El portfolio se actualiza reflejando el resultado de la conversion.
+
+Ejemplo:
+- Usuario tiene: 1 BTC en portfolio
+- Convierte: 0.5 BTC a XRP
+- AUREX calcula al precio actual: 0.5 BTC = USD 33.000 = 47.826 XRP
+- Portfolio queda: 0.5 BTC + 47.826 XRP (nuevo activo creado automaticamente)
+- Valor total del portfolio no cambia — es conversion a precio de mercado
+
+Flujo de desarrollo (UX):
+1. Usuario toca activo en Portfolio (ej: BTC)
+2. Boton "Convertir" en detalle del activo
+3. Ingresa cantidad a convertir (ej: 0.5)
+4. Buscador elige activo destino con logo real (ej: XRP)
+5. AUREX muestra calculo previo: X BTC = Y USD = Z XRP
+6. Usuario confirma
+7. Supabase actualiza: BTC reducido + XRP creado o incrementado
+8. Portfolio se refresca con nueva composicion
+
+Aclaraciones tecnicas y legales:
+- 100% simulado — no ejecuta trades reales en ningun exchange
+- No requiere conexion con Binance/Coinbase para operar
+- No requiere licencias financieras ni regulacion (paper trading)
+- Apple lo aprueba: es gestion de portfolio simulado
+
+Por que es clave para aprobacion App Store:
+- Funcionalidad unica y diferenciadora
+- Usuario tiene razon concreta para usar AUREX todos los dias
+- Demuestra valor real mas alla de cotizaciones
 
 ## SEMANA 8 (16 - 21 May) — TAB SENALES IA + SUBMIT APP STORE
 
