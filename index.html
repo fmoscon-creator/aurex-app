@@ -312,9 +312,35 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 <div><div class="ocard-t">Mercados Globales</div><div class="ocard-s">NYSE &middot; NASDAQ &middot; Merval &middot; San Pablo &middot; Londres &middot; Tokio &middot; Hong Kong &middot; Shanghai</div></div>
 </div>
 </div>
-<button class="obs1-btn" onclick="startApp()">Entrar a Aurex &#8594;</button>
+<button class="obs1-btn" onclick="showObs2()">Entrar a Aurex &#8594;</button>
 <div class="obs1-tag">Gratis &middot; Sin tarjeta de cr&eacute;dito</div></div>
 id="obs2" style="display:none;flex-direction:column;height:100%;background:#1A0D00;position:relative;overflow:hidden"><div style="position:absolute;inset:0;pointer-events:none;z-index:0"><svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"><circle cx="14%" cy="9%" r="1.2" fill="#F5C842" opacity=".55"/><circle cx="78%" cy="14%" r="1" fill="#F5C842" opacity=".4"/><circle cx="48%" cy="6%" r="1.5" fill="#D4A017" opacity=".65"/><circle cx="28%" cy="22%" r="1" fill="#F5C842" opacity=".35"/><circle cx="88%" cy="32%" r="1.2" fill="#F5C842" opacity=".5"/><circle cx="7%" cy="48%" r="1" fill="#D4A017" opacity=".4"/><circle cx="92%" cy="58%" r="1.2" fill="#F5C842" opacity=".35"/><circle cx="18%" cy="72%" r="1" fill="#F5C842" opacity=".5"/><circle cx="82%" cy="80%" r="1.5" fill="#D4A017" opacity=".4"/><circle cx="55%" cy="88%" r="1" fill="#F5C842" opacity=".3"/><circle cx="38%" cy="78%" r="1.2" fill="#F5C842" opacity=".45"/><line x1="14%" y1="9%" x2="48%" y2="6%" stroke="#D4A017" stroke-width="0.4" opacity=".2"/><line x1="48%" y1="6%" x2="78%" y2="14%" stroke="#D4A017" stroke-width="0.4" opacity=".2"/><line x1="28%" y1="22%" x2="7%" y2="48%" stroke="#D4A017" stroke-width="0.4" opacity=".15"/><line x1="88%" y1="32%" x2="92%" y2="58%" stroke="#D4A017" stroke-width="0.4" opacity=".15"/><line x1="18%" y1="72%" x2="38%" y2="78%" stroke="#D4A017" stroke-width="0.4" opacity=".15"/><line x1="55%" y1="88%" x2="82%" y2="80%" stroke="#D4A017" stroke-width="0.4" opacity=".15"/></svg></div><div style="position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(212,160,23,0.10) 0%,transparent 70%);top:18%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0"></div><div style="position:relative;z-index:2;flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:32px 24px 20px;"><div style="display:flex;justify-content:center;margin-bottom:14px"><div style="background:#D4A01720;border:0.5px solid #D4A01760;border-radius:20px;padding:4px 14px;font-size:9px;font-weight:700;color:#D4A017;letter-spacing:2px">AUREX IA</div></div><div style="font-size:19px;font-weight:700;color:#fff;text-align:center;line-height:1.25;margin-bottom:4px">Se�ales IA<br><span style="color:#D4A017">en tiempo real</span></div><div style="font-size:9px;color:#8B6208;text-align:center;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px">An�lisis continuo � 24/7</div><div style="display:flex;flex-direction:column;gap:14px"><div style="border-left:2.5px solid #3FB950;padding:14px 16px;background:#071209;border-radius:0 10px 10px 0"><div style="font-size:12px;font-weight:700;color:#E6EDF3;margin-bottom:3px">Se�ales Alcistas</div><div style="font-size:10px;color:#8B949E;line-height:1.4">Objetivo, stop loss y probabilidad exacta</div></div><div style="border-left:2.5px solid #F85149;padding:14px 16px;background:#120707;border-radius:0 10px 10px 0"><div style="font-size:12px;font-weight:700;color:#E6EDF3;margin-bottom:3px">Se�ales Bajistas</div><div style="font-size:10px;color:#8B949E;line-height:1.4">Protecci�n de capital en tiempo real</div></div><div style="border-left:2.5px solid #D4A017;padding:14px 16px;background:#120E00;border-radius:0 10px 10px 0"><div style="font-size:12px;font-weight:700;color:#E6EDF3;margin-bottom:3px">Se�al principal del d�a</div><div style="font-size:10px;color:#8B949E;line-height:1.4">Mayor prob. con 5 justificaciones detalladas</div></div><div style="border-left:2.5px solid #25D366;padding:14px 16px;background:#07120A;border-radius:0 10px 10px 0"><div style="font-size:12px;font-weight:700;color:#E6EDF3;margin-bottom:3px">Alertas WhatsApp</div><div style="font-size:10px;color:#8B949E;line-height:1.4">Te avisamos al instante, directo a tu celular</div></div></div></div><div style="position:relative;z-index:2;padding:0 18px 28px;"><div style="display:flex;gap:5px;justify-content:center;margin-bottom:12px"><div style="width:7px;height:3px;border-radius:2px;background:#3A3A58"></div><div style="width:20px;height:3px;border-radius:2px;background:#D4A017"></div><div style="width:7px;height:3px;border-radius:2px;background:#3A3A58"></div><div style="width:7px;height:3px;border-radius:2px;background:#3A3A58"></div></div><div style="display:flex;gap:8px"><button onclick="obNext(1)" style="flex:1;padding:15px;border-radius:13px;background:#1C1C2E;color:#8B949E;font-size:14px;font-weight:600;border:0.5px solid #2E2E45;cursor:pointer">&larr;</button><button onclick="obNext(3)" style="flex:2;padding:15px;border-radius:13px;background:#D4A017;color:#000;font-size:15px;font-weight:700;border:none;cursor:pointer">Siguiente &rarr;</button></div></div>
+<div id="obs2" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;min-height:100vh;background:#0D1117;position:relative;overflow:hidden;">
+<canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.4;pointer-events:none;"></canvas>
+<div style="position:relative;z-index:1;width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;">
+<div style="width:72px;height:72px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;border:2px solid #D4A017;">
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><polygon points="18,3 33,30 3,30" fill="none" stroke="#D4A017" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="30" stroke="#D4A017" stroke-width="1" opacity="0.5"/></svg>
+</div>
+<div style="font-size:22px;font-weight:900;color:#fff;text-align:center;margin-bottom:8px;letter-spacing:1px;">Se&ntilde;ales IA en tiempo real</div>
+<div style="font-size:14px;color:#8B949E;text-align:center;margin-bottom:32px;line-height:1.6;">AUREX analiza miles de activos globales y te entrega las mejores oportunidades antes que el mercado las descuente.</div>
+<div style="width:100%;display:flex;flex-direction:column;gap:16px;margin-bottom:36px;">
+<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #00D4AA;">
+<div style="font-size:22px;min-width:30px;">&#128225;</div>
+<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Cobertura global</div><div style="font-size:11px;color:#8B949E;">Acciones, cripto, forex, commodities y ETFs en un solo lugar.</div></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #D4A017;">
+<div style="font-size:22px;min-width:30px;">&#9889;</div>
+<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Alertas instant&aacute;neas</div><div style="font-size:11px;color:#8B949E;">Notificaciones push y WhatsApp cuando se activa una se&ntilde;al.</div></div>
+</div>
+<div style="display:flex;align-items:flex-start;gap:14px;padding:14px;background:rgba(255,255,255,0.04);border-radius:10px;border-left:3px solid #4A9EFF;">
+<div style="font-size:22px;min-width:30px;">&#127919;</div>
+<div><div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:3px;">Precisi&oacute;n comprobada</div><div style="font-size:11px;color:#8B949E;">Modelos entrenados con datos hist&oacute;ricos de alta frecuencia.</div></div>
+</div>
+</div>
+<button onclick="startApp()" style="width:100%;padding:16px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:12px;cursor:pointer;letter-spacing:1px;margin-bottom:10px;-webkit-tap-highlight-color:transparent;">Continuar &#8594;</button>
+<div onclick="showObs1()" style="font-size:12px;color:#8B949E;text-align:center;cursor:pointer;padding:8px;">&larr; Volver</div>
+</div>
+</div>
 <div id="obs3" style="display:none;flex-direction:column;height:100%;padding:55px 22px 36px;box-sizing:border-box">
   <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%">
     <div style="font-size:38px;text-align:center;margin-bottom:10px">&#127758;</div>
@@ -1442,6 +1468,22 @@ function closePortModal(){document.getElementById('port-modal').style.display='n
 
 // Conversor Portfolio
 const PC_RATES={USD:1,ARS:1215,ARS_OF:1070,EUR:.92,BRL:5.74,BTC:.0000118,ETH:.00052,SOL:.0108,USDT:1};
+(function fetchFiatRates(){
+  fetch('https://open.er-api.com/v6/latest/USD')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      if(data&&data.rates){
+        var r=data.rates;
+        if(r.ARS){PC_RATES.ARS=r.ARS;PC_RATES.ARS_OF=Math.round(r.ARS*0.88);}
+        if(r.EUR){PC_RATES.EUR=parseFloat((1/r.EUR).toFixed(6));}
+        if(r.BRL){PC_RATES.BRL=r.BRL;}
+        console.log('[Aurex] Tasas reales: ARS='+PC_RATES.ARS.toFixed(0)+' EUR='+PC_RATES.EUR.toFixed(4)+' BRL='+PC_RATES.BRL.toFixed(2));
+        if(typeof updateConvDisplay==='function')updateConvDisplay();
+      }
+    })
+    .catch(function(){console.log('[Aurex] Tasas fiat: usando valores de respaldo');});
+  setTimeout(fetchFiatRates,1800000);
+})();
 function openPortConversor(){
   const m=document.getElementById('port-conv-modal');
   m.style.display='flex';m.style.alignItems='flex-end';m.style.justifyContent='center';
@@ -1475,22 +1517,25 @@ function calcPortfolio(){return PORTFOLIO.map(a=>{const valorActual=a.cant*a.act
 function exportCSV(){const data=calcPortfolio();const total=data.reduce((s,a)=>s+a.valorActual,0);const totalPnl=data.reduce((s,a)=>s+a.pnlUSD,0);let csv='Ticker,Nombre,Cantidad,Precio Compra (USD),Precio Actual (USD),Valor Total (USD),PnL USD,PnL %\n';data.forEach(a=>{csv+=`${a.ticker},${a.nombre},${a.cant},${a.compra.toFixed(2)},${a.actual.toFixed(2)},${a.valorActual.toFixed(2)},${a.pnlUSD.toFixed(2)},${a.pnlPct}%\n`;});csv+=`\nTOTAL PORTFOLIO,,,,,${total.toFixed(2)},${totalPnl.toFixed(2)},${((totalPnl/data.reduce((s,a)=>s+a.valorCompra,0))*100).toFixed(2)}%\n`;csv+=`\nGenerado por Aurex · ${new Date().toLocaleDateString('es-AR')} · fmoscon-creator.github.io/aurex-app`;const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`aurex_portfolio_${new Date().toISOString().slice(0,10)}.csv`;a.click();URL.revokeObjectURL(url);}
 function exportPDF(){const data=calcPortfolio();const total=data.reduce((s,a)=>s+a.valorActual,0);const totalPnl=data.reduce((s,a)=>s+a.pnlUSD,0);const fecha=new Date().toLocaleDateString('es-AR');const rows=data.map(a=>`<tr><td style="padding:8px 6px;border-bottom:1px solid #eee;font-weight:600">${a.ticker}</td><td style="padding:8px 6px;border-bottom:1px solid #eee;color:#555">${a.nombre}</td><td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right">${a.cant}</td><td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right">$${a.actual.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right;font-weight:600">$${a.valorActual.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</td><td style="padding:8px 6px;border-bottom:1px solid #eee;text-align:right;color:${a.pnlUSD>=0?'#16a34a':'#dc2626'};font-weight:600">${a.pnlUSD>=0?'+':''}$${a.pnlUSD.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})} (${a.pnlPct}%)</td></tr>`).join('');const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Aurex Portfolio — ${fecha}</title><style>body{font-family:-apple-system,sans-serif;padding:40px;color:#1a1a1a;max-width:800px;margin:0 auto}.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:16px;border-bottom:3px solid #D4A017}.logo{font-size:24px;font-weight:700;color:#D4A017;letter-spacing:2px}.date{font-size:13px;color:#555}.summary{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:32px}.sum-box{background:#f9f9f9;border-radius:10px;padding:16px;text-align:center;border:1px solid #eee}.sum-lbl{font-size:11px;color:#555;text-transform:uppercase;letter-spacing:.5px}.sum-val{font-size:20px;font-weight:700;margin-top:4px}table{width:100%;border-collapse:collapse}th{padding:10px 6px;text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#555;border-bottom:2px solid #D4A017}th:nth-child(3),th:nth-child(4),th:nth-child(5),th:nth-child(6){text-align:right}.footer{margin-top:32px;padding-top:16px;border-top:1px solid #eee;font-size:11px;color:#aaa;text-align:center}.disclaimer{margin-top:16px;padding:12px;background:#fff8e1;border-radius:8px;font-size:10px;color:#555;line-height:1.6;border:1px solid #D4A01740}</style></head><body><div class="header"><div class="logo">✦ AUREX</div><div class="date">Reporte de Portfolio · ${fecha}</div></div><div class="summary"><div class="sum-box"><div class="sum-lbl">Valor Total</div><div class="sum-val">$${total.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div><div class="sum-box"><div class="sum-lbl">PnL Total</div><div class="sum-val" style="color:${totalPnl>=0?'#16a34a':'#dc2626'}">${totalPnl>=0?'+':''}$${totalPnl.toLocaleString('en',{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div><div class="sum-box"><div class="sum-lbl">Activos</div><div class="sum-val">${data.length}</div></div></div><table><tr><th>Ticker</th><th>Nombre</th><th>Cant.</th><th>Precio actual</th><th>Valor total</th><th>PnL</th></tr>${rows}</table><div class="disclaimer">⚖️ <strong>Disclaimer:</strong> Este reporte es generado por Aurex con fines exclusivamente informativos. No constituye consejo ni recomendación de inversión.</div><div class="footer">Generado por Aurex App · ${fecha} · fmoscon-creator.github.io/aurex-app</div>
 <script>
-function startApp() {
-  var onb = document.getElementById('onboarding');
-  if (onb) onb.style.display = 'none';
-  localStorage.setItem('aurex_onboarding_done', '1');
-  // Show main app elements
-  var mainEls = document.querySelectorAll('.main-content, #app-wrapper, .app-container, nav, .header');
-  mainEls.forEach(function(el) { el.style.display = ''; });
-  // Trigger tab switch to Mercados if available
-  if (typeof showTab === 'function') showTab('mercados');
-  else if (typeof switchTab === 'function') switchTab('mercados');
+function showObs(id){
+  ['obs1','obs2','obs3','obs4'].forEach(function(o){
+    var el=document.getElementById(o);
+    if(el)el.style.display=(o===id?'flex':'none');
+  });
 }
-// Auto-skip onboarding if already done
-if (localStorage.getItem('aurex_onboarding_done') === '1') {
-  document.addEventListener('DOMContentLoaded', function() {
-    var onb = document.getElementById('onboarding');
-    if (onb) onb.style.display = 'none';
+function showObs1(){showObs('obs1');}
+function showObs2(){showObs('obs2');}
+function startApp(){
+  var onb=document.getElementById('onboarding');
+  if(onb)onb.style.display='none';
+  localStorage.setItem('aurex_onboarding_done','1');
+  if(typeof showTab==='function')showTab('mercados');
+  else if(typeof switchTab==='function')switchTab('mercados');
+}
+if(localStorage.getItem('aurex_onboarding_done')==='1'){
+  document.addEventListener('DOMContentLoaded',function(){
+    var onb=document.getElementById('onboarding');
+    if(onb)onb.style.display='none';
   });
 }
 </script>
