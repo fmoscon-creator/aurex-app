@@ -993,7 +993,7 @@ function runConversion(){
 </div>
 </div>
 
-<<div id="screen-perfil" class="screen" style="display:none">
+<div id="screen-perfil" class="screen" style="display:none">
 <style>
 #screen-perfil{padding:0;background:#0D1117;position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;}
 #perfil-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -1072,7 +1072,7 @@ function runConversion(){
 <div id="auth-msg" class="auth-msg"></div>
 </div>
 <!-- ESTADO LOGUEADO -->
-<div <div id="auth-logged" class="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
+<div id="auth-logged" class="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
   <div id="auth-avatar-initial" style="width:64px;height:64px;border-radius:50%;background:#c9a84c;color:#000;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"></div>
   <div id="auth-username-txt" style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;"></div>
   <div id="auth-email-txt" style="font-size:13px;color:#aaa;margin-bottom:10px;"></div>
@@ -1105,17 +1105,15 @@ window.authSwitchTab=function(tab){
   document.getElementById('form-register').style.display=tab==='register'?'flex':'none';
   document.getElementById('auth-msg').textContent='';
 };
-window.authDoLogin=async function(){
+window.authDoLogin=function(){
   var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
   var email=document.getElementById('auth-email').value.trim();
   var pass=document.getElementById('auth-pass').value;
   if(!email||!pass){showAuthMsg('CompletÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ todos los campos');return;}
   showAuthMsg('Ingresando...');
-  var r=await c.auth.signInWithPassword({email,password:pass});
-  if(r.error){showAuthMsg(r.error.message);}
-  else{showAuthMsg('');}
+  c.auth.signInWithPassword({email:email,password:pass}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('');}});
 };
-window.authDoRegister=async function(){
+window.authDoRegister=function(){
   var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
   var email=document.getElementById('reg-email').value.trim();
   var pass=document.getElementById('reg-pass').value;
@@ -1123,11 +1121,9 @@ window.authDoRegister=async function(){
   if(!email||!pass){showAuthMsg('CompletÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ email y contraseÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±a');return;}
   if(pass.length<6){showAuthMsg('La contraseÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ±a debe tener al menos 6 caracteres');return;}
   showAuthMsg('Creando cuenta...');
-  var r=await c.auth.signUp({email,password:pass,options:{data:{celular:cel||''}}});
-  if(r.error){showAuthMsg(r.error.message);}
-  else{showAuthMsg('ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}
+  c.auth.signUp({email:email,password:pass,options:{data:{celular:cel||''}}}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('\u00a1Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}});
 };
-window.authSaveCelular=async function(){
+window.authSaveCelular=function(){
   var c=getSB();
   var msgEl=document.getElementById('auth-msg');
   if(!c){
@@ -1141,19 +1137,20 @@ window.authSaveCelular=async function(){
     return;
   }
   if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
-  var r=await c.auth.updateUser({data:{celular:cel}});
+  c.auth.updateUser({data:{celular:cel}}).then(function(r){
   if(r.error){
     if(msgEl){msgEl.textContent='Error: '+r.error.message;msgEl.style.color='#e74c3c';}
     return;
   }
   var user=r.data&&r.data.user?r.data.user:null;
   if(user){
-    await c.from('users').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
+    c.from('users').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
   }
   var el=document.getElementById('auth-celular-txt');
   if(el)el.textContent=cel;
-  if(msgEl){msgEl.textContent='Celular guardado ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';msgEl.style.color='#2ecc71';setTimeout(function(){if(msgEl)msgEl.textContent='';},3000);}
-}
+  if(msgEl){msgEl.textContent='Celular guardado';msgEl.style.color='#2ecc71';setTimeout(function(){if(msgEl)msgEl.textContent='';},3000);}
+});
+
 window.syncCelularDisplay=function(){
   var cel=document.getElementById('celular-input');
   var txt=document.getElementById('auth-celular-txt');
@@ -1186,9 +1183,9 @@ window.updateUserUI=function(user){
     document.getElementById('auth-logged').style.display='none';
   }
 };
-window.logoutUser=async function(){
+window.logoutUser=function(){
   var c=getSB(); if(!c) return;
-  await c.auth.signOut();
+  c.auth.signOut();
   updateUserUI(null);
 };
 window.upsertUserDB=function(user){};
