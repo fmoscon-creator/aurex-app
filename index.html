@@ -1068,45 +1068,76 @@ setTimeout(function(){
 <!-- SUSCRIPCIÓN -->
 <div class="sec-lbl">✦ Mi suscripción</div>
 <div class="plans-wrap">
-  <div class="plan-card current">
-    <div class="plan-top">
-      <div>
-        <div class="plan-name" style="color:#8B949E">Free</div>
-        <div style="font-size:10px;color:#555;margin-top:2px">Plan actual</div>
+
+  <!-- FREE: pequeño y discreto -->
+  <div class="plan-card current" style="padding:10px 14px;opacity:0.7;margin-bottom:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="plan-name" style="font-size:13px;color:#8B949E">Free</div>
+        <div style="font-size:10px;color:#8B949E;background:#21262D;padding:2px 8px;border-radius:10px">Plan actual</div>
       </div>
-      <div class="plan-pricing">
-        <div class="plan-price" style="color:#8B949E">$0</div>
-        <div class="plan-period">para siempre</div>
-      </div>
+      <div style="font-size:12px;color:#555">$0</div>
     </div>
-    <div class="feats">
-      <div class="feat ok" style="color:#8B949E">5 activos en portfolio</div>
-      <div class="feat ok" style="color:#8B949E">Mercados completo</div>
-      <div class="feat ok" style="color:#8B949E">3 sugerencias IA / día</div>
-      <div class="feat no">Sin alertas push</div>
-      <div class="feat no">Con publicidad</div>
-    </div>
-    <button class="plan-btn btn-curr">Plan actual ✓</button>
+    <div style="font-size:10px;color:#555;margin-top:6px">5 activos · 3 señales IA/día · Con publicidad</div>
+    <button class="plan-btn btn-curr" style="margin-top:8px;font-size:11px;padding:7px" onclick="obSelectPlan('free')">Plan actual ✓</button>
   </div>
 
-  <!-- PRO -->
-  <div class="plan-card pro-c" style="position:relative" onclick="openModal('pro')">
-    <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:9px;font-weight:700;padding:3px 14px;border-radius:0 0 10px 10px;letter-spacing:.5px;white-space:nowrap">⚡ MÁS POPULAR</div>
-    <div style="margin-top:12px">
-    <div class="plan-top">
+  <!-- PRO: grande y destacado -->
+  <div class="plan-card pro-c" style="border:1.5px solid #A78BFA80;background:linear-gradient(135deg,#A78BFA10,#7C3AED08);position:relative;margin-bottom:10px">
+    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap">⚡ MÁS POPULAR</div>
+    <div class="plan-top" style="margin-top:8px">
       <div>
-        <div class="plan-name" style="color:#A78BFA;font-size:17px">PRO</div>
-        <div style="font-size:10px;color:#A78BFA80;margin-top:2px">Para el inversor activo</div>
+        <div class="plan-name" style="font-size:18px;color:#A78BFA">PRO</div>
+        <div style="font-size:11px;color:#8B949E">Para el inversor activo</div>
       </div>
       <div class="plan-pricing">
-        <div style="display:flex;align-items:baseline;gap:2px;justify-content:flex-end">
-          <div class="plan-price" style="color:#A78BFA;font-size:22px">$9.99</div>
-          <div class="plan-period">/mes</div>
-        </div>
-        <div style="background:#A78BFA;color:#fff;font-size:9px;font-weight:700;padding:3px 8px;border-radius:8px;margin-top:4px;text-align:center">
-          💰 ANUAL: $7.79/mes · Ahorrás $26/año
-        </div>
+        <div class="plan-price" style="font-size:22px;color:#fff">$9.99</div>
+        <div class="plan-period">/mes</div>
       </div>
     </div>
     <div style="background:#A78BFA15;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #A78BFA30">
-      <div style="font-size:10px;color:#A78BFA;font-weight:600;m
+      <div style="font-size:10px;color:#A78BFA;font-weight:600;margin-bottom:4px">💰 ANUAL: $7.79/mes · Ahorrás $26/año</div>
+    </div>
+    <div class="feats">
+      <div class="feat ok">Portfolio ilimitado</div>
+      <div class="feat ok">Mercados completo</div>
+      <div class="feat ok">Señales IA ilimitadas</div>
+      <div class="feat ok">Alertas push en tiempo real</div>
+      <div class="feat ok">Sin publicidad</div>
+      <div class="feat ok">Soporte prioritario</div>
+    </div>
+    <button class="plan-btn btn-pro" style="margin-top:12px;font-size:14px;padding:13px;font-weight:800;letter-spacing:0.5px" onclick="obSelectPlan('pro')">QUIERO PRO →</button>
+  </div>
+
+  <!-- ELITE: premium -->
+  <div class="plan-card elite-c" style="border:1.5px solid #D4A01780;background:linear-gradient(135deg,#D4A01710,#8B620808);position:relative;margin-bottom:8px">
+    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap">💎 MÁXIMO RENDIMIENTO</div>
+    <div class="plan-top" style="margin-top:8px">
+      <div>
+        <div class="plan-name" style="font-size:18px;background:linear-gradient(135deg,#F7D060,#D4A017);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ELITE</div>
+        <div style="font-size:11px;color:#8B949E">Para traders profesionales</div>
+      </div>
+      <div class="plan-pricing">
+        <div class="plan-price" style="font-size:22px;color:#D4A017">$19.99</div>
+        <div class="plan-period">/mes</div>
+      </div>
+    </div>
+    <div style="background:#D4A01715;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #D4A01730">
+      <div style="font-size:10px;color:#D4A017;font-weight:600;margin-bottom:4px">💰 ANUAL: $15.99/mes · Ahorrás $48/año</div>
+    </div>
+    <div class="feats">
+      <div class="feat ok">Todo lo de PRO</div>
+      <div class="feat ok">Señales IA prioritarias</div>
+      <div class="feat ok">API de trading automático</div>
+      <div class="feat ok">Alertas WhatsApp + Email</div>
+      <div class="feat ok">Reporte semanal personalizado</div>
+      <div class="feat ok">Acceso anticipado a funciones</div>
+    </div>
+    <button class="plan-btn btn-elite" style="margin-top:12px;font-size:14px;padding:13px;font-weight:800;letter-spacing:0.5px" onclick="obSelectPlan('elite')">QUIERO ELITE →</button>
+  </div>
+
+</div>
+</div>
+</div>
+</body>
+</html>

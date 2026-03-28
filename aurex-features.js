@@ -1,3 +1,16 @@
+// Reset onboarding si se pide via URL
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  if(params.get('resetOnboarding') === '1') {
+    ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){
+      localStorage.removeItem(k);
+    });
+    // Limpiar el param de la URL sin recargar
+    var url = new URL(window.location.href);
+    url.searchParams.delete('resetOnboarding');
+    history.replaceState(null, '', url.toString());
+  }
+})();
 var BACKEND_URL='https://aurex-app-production.up.railway.app';
 var USER_WA=localStorage.getItem('aurex_wa_numero')||'';
 function saveWANumero(n){USER_WA=n;localStorage.setItem('aurex_wa_numero',n);}
