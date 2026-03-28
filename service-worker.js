@@ -1,14 +1,14 @@
-// Aurex Service Worker v4.0 — Network First SIEMPRE para index.html
-// BUILD: 1774715400000
-const CACHE_VERSION = 'aurex-1774715400000';
-const CACHE_STATIC  = 'aurex-static-1774715400000';
+// Aurex Service Worker v4.0 â Network First SIEMPRE para index.html
+// BUILD: 1774716000000
+const CACHE_VERSION = 'aurex-1774716000000';
+const CACHE_STATIC  = 'aurex-static-1774716000000';
 
-// Al instalar — tomar control inmediato
+// Al instalar â tomar control inmediato
 self.addEventListener('install', event => {
   self.skipWaiting();
 });
 
-// Al activar — borrar TODOS los caches viejos y tomar control
+// Al activar â borrar TODOS los caches viejos y tomar control
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => 
@@ -20,11 +20,11 @@ self.addEventListener('activate', event => {
   );
 });
 
-// Fetch — Network First SIEMPRE para index.html y archivos principales
+// Fetch â Network First SIEMPRE para index.html y archivos principales
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
   
-  // Para index.html y service-worker.js — SIEMPRE de la red, nunca del cache
+  // Para index.html y service-worker.js â SIEMPRE de la red, nunca del cache
   if (url.pathname.endsWith('/') || 
       url.pathname.endsWith('index.html') || 
       url.pathname.endsWith('service-worker.js')) {
@@ -35,7 +35,7 @@ self.addEventListener('fetch', event => {
     return;
   }
   
-  // Para aurex-features.js — Network First con fallback a cache
+  // Para aurex-features.js â Network First con fallback a cache
   if (url.pathname.includes('aurex-features.js')) {
     event.respondWith(
       fetch(event.request, { cache: 'no-cache' })
@@ -51,7 +51,7 @@ self.addEventListener('fetch', event => {
     return;
   }
   
-  // Para el resto — Cache First (imágenes, fonts, etc.)
+  // Para el resto â Cache First (imÃ¡genes, fonts, etc.)
   event.respondWith(
     caches.match(event.request).then(cached => {
       if (cached) return cached;
