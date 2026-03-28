@@ -270,38 +270,38 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     ['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});
     var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());
   }
-  // Interceptar initOnboarding cuando features.js la defina
-  var _initFn=null;
-  Object.defineProperty(window,'initOnboarding',{
-    get:function(){return _initFn;},
-    set:function(fn){
-      // Wrappear la función cuando features.js la asigna
-      _initFn=function(){
+  // Definir showObs2 (ir de OBS1 a OBS2) 
+  window.showObs2=function(){
+    var o1=document.getElementById('obs1');
+    var o2=document.getElementById('obs2');
+    if(o1) o1.style.display='none';
+    if(o2){
+      o2.style.display='flex';
+      // Iniciar canvas de estrellas de OBS2
+      if(window.initConstellacion) setTimeout(window.initConstellacion,100);
+    }
+  };
+  // Interceptar initOnboarding para ocultar .phone
+  var _origInitSet=false;
+  var _checkInit=setInterval(function(){
+    if(window.initOnboarding && !_origInitSet){
+      _origInitSet=true;
+      clearInterval(_checkInit);
+      var _orig=window.initOnboarding;
+      window.initOnboarding=function(){
+        _orig();
         var ob=document.getElementById('onboarding');
         var ph=document.querySelector('.phone');
-        // Borrar el flag de onboarding done si fue reseteado
-        fn(); // llamar original
-        // Si el onboarding está visible, ocultar .phone
-        if(ob && ph && ob.style.display!=='none'){
-          ph.style.display='none';
-        }
+        if(ob && ph && ob.style.display!=='none') ph.style.display='none';
       };
-    },
-    configurable:true
-  });
-  // Interceptar obFinish también
-  var _finishFn=null;
-  Object.defineProperty(window,'obFinish',{
-    get:function(){return _finishFn;},
-    set:function(fn){
-      _finishFn=function(){
+      var _origFin=window.obFinish;
+      window.obFinish=function(){
         var ph=document.querySelector('.phone');
         if(ph) ph.style.display='flex';
-        fn();
+        if(_origFin) _origFin();
       };
-    },
-    configurable:true
-  });
+    }
+  },50);
 })();
 </script>
 <script src="aurex-features.js"></script>
