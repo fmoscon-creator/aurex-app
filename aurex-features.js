@@ -329,8 +329,25 @@ function _fetchPortfolio(token, userId){
 
 function _renderPortfolioEmpty(){
   var cnt = document.getElementById('port-cnt');
-  if(cnt) cnt.innerHTML = '<div style="color:#8B949E;text-align:center;padding:40px 20px;font-size:13px;line-height:1.6;">Sin activos aún.<br>Tocá <b style=\"color:#3FB950\">+ Agregar</b> para comenzar.</div>';
-  _updateTotals([]);
+  if(!cnt) return;
+  // Si no hay sesión, mostrar demo con activos de ejemplo
+  var demoItems = [
+    {id:'demo1', simbolo:'AAPL',  nombre:'Apple',       cantidad:10,   precio_compra:185.00, tipo:'accion'},
+    {id:'demo2', simbolo:'NVDA',  nombre:'NVIDIA',      cantidad:5,    precio_compra:125.00, tipo:'accion'},
+    {id:'demo3', simbolo:'BTC',   nombre:'Bitcoin',     cantidad:0.05, precio_compra:62000,  tipo:'cripto'},
+    {id:'demo4', simbolo:'ETH',   nombre:'Ethereum',    cantidad:1.5,  precio_compra:3200,   tipo:'cripto'},
+    {id:'demo5', simbolo:'GC=F',  nombre:'Oro (Gold)',  cantidad:2,    precio_compra:2050,   tipo:'commodity'},
+    {id:'demo6', simbolo:'CL=F',  nombre:'Petróleo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
+    {id:'demo7', simbolo:'TLT',   nombre:'Bono 20Y US', cantidad:20,   precio_compra:92.00,  tipo:'bono'}
+  ];
+  cnt.innerHTML = '<div style="background:#1A0D0060;border:1px dashed #D4A01740;border-radius:10px;margin:10px 14px 6px;padding:8px 14px;display:flex;align-items:center;gap:8px;">' +
+    '<span style="font-size:18px;">👤</span>' +
+    '<div>' +
+      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo — Iniciá sesión para tu portfolio real</div>' +
+      '<div onclick="navTo('perfil');authSwitchTab('register')" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis →</div>' +
+    '</div>' +
+  '</div>';
+  _renderPortfolioItems(demoItems);
 }
 
 function _renderPortfolioItems(items){
@@ -401,6 +418,29 @@ var _ACTIVOS_MODAL = [
 ];
 
 window.openAddActivo = function(){
+  // Si no hay sesión, mostrar aviso de login
+  if(!window._supabaseClient){ navTo('perfil'); return; }
+  window._supabaseClient.auth.getSession().then(function(res){
+    if(!res.data || !res.data.session){
+      // Mostrar mini-aviso en el portfolio y redirigir a Perfil/Login
+      var cnt = document.getElementById('port-cnt');
+      if(cnt){
+        var old = cnt.innerHTML;
+        cnt.innerHTML = '<div style="background:#1A0D00;border:1px solid #D4A01780;border-radius:12px;margin:20px 14px;padding:20px;text-align:center;">' +
+          '<div style="font-size:28px;margin-bottom:8px;">🔐</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">Necesitás una cuenta</div>' +
+          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creá tu cuenta gratis.</div>' +
+          '<div onclick="navTo('perfil');authSwitchTab('register')" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
+          '<div onclick="navTo('perfil')" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
+        '</div>' + old;
+        setTimeout(function(){ cnt.innerHTML = old; }, 5000);
+      }
+      return;
+    }
+    _openAddActivoModal();
+  });
+};
+function _openAddActivoModal(){
   var modal = document.getElementById('port-modal');
   var body = document.getElementById('port-modal-body');
   var title = document.getElementById('port-modal-title');
@@ -432,7 +472,7 @@ window.openAddActivo = function(){
       '<div onclick="savePortActivo()" style="background:linear-gradient(135deg,#D4A017,#B8860B);border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;color:#000;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Guardar activo</div>' +
     '</div>';
   modal.style.display = 'flex';
-};
+}
 
 window.closePortModal = function(){
   var modal = document.getElementById('port-modal');
