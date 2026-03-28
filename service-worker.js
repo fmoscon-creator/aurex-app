@@ -1,6 +1,6 @@
-// Aurex Service Worker v5.0 — Auto-update garantizado
-// BUILD: 1774716600000
-const CACHE_VERSION = 'aurex-1774716600000';
+// Aurex Service Worker v5.0 â Auto-update garantizado
+// BUILD: 1774717200000
+const CACHE_VERSION = 'aurex-1774717200000';
 
 // Responder al mensaje SKIP_WAITING para activarse inmediatamente
 self.addEventListener('message', event => {
