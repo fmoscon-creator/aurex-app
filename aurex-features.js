@@ -142,3 +142,132 @@ initPushNotifications();
 function checkAlertasLocal(){if(typeof ALERTAS==='undefined')return;ALERTAS.forEach(function(a){if(!a.activa)return;var actual=typeof getAlertActual==='function'?getAlertActual(a):null;if(!actual)return;if((a.cond==='mayor'&&actual>=a.precio)||(a.cond==='menor'&&actual<=a.precio)){if(!a._disparada){a._disparada=true;var b=document.createElement('div');b.style.cssText='position:fixed;top:60px;left:0;right:0;z-index:9999;margin:0 12px;background:#16A34A;border-radius:12px;padding:12px 16px;color:white;font-size:13px;font-weight:600';b.textContent='ALERTA - '+a.s;document.body.appendChild(b);setTimeout(function(){b.remove();},5000);if(typeof showAlertNotification==='function')showAlertNotification(a.s,actual,a.precio);}}});}
 setInterval(checkAlertasLocal,30000);
 fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d.status==='ok')console.log('Backend v'+d.version+' OK');}).catch(function(){});
+
+// ============================================================
+// === CONVERSOR DE MONEDAS — Binance + fallback fiat =========
+// ============================================================
+
+window._pcPrices = {};
+
+// Abrir modal
+window.openPortConversor = function(){
+  var modal = document.getElementById('port-conv-modal');
+  if(!modal) return;
+  modal.style.display = 'flex';
+  pcLoadPrices();
+};
+
+// Cerrar modal (nombre que usa el HTML)
+window.closePortConvModal = function(){
+  var modal = document.getElementById('port-conv-modal');
+  if(modal) modal.style.display = 'none';
+};
+
+// Cargar precios reales desde Binance
+function pcLoadPrices(){
+  var rateEl = document.getElementById('pc-rate');
+  if(rateEl) rateEl.textContent = 'Obteniendo precios...';
+
+  // Binance: BTC, ETH, SOL, USDT en USDT (= USD)
+  fetch('https://api.binance.com/api/v3/ticker/price?symbols=%5B%22BTCUSDT%22%2C%22ETHUSDT%22%2C%22SOLUSDT%22%5D')
+    .then(function(r){ return r.json(); })
+    .then(function(list){
+      list.forEach(function(t){
+        var sym = t.symbol.replace('USDT','');
+        window._pcPrices[sym] = parseFloat(t.price);
+      });
+      window._pcPrices['USDT'] = 1;
+      window._pcPrices['USD']  = 1;
+      // Tipos de cambio fiat (actualizables)
+      window._pcPrices['ARS']    = 1195;  // Blue aprox
+      window._pcPrices['ARS_OF'] = 1060;  // Oficial aprox
+      window._pcPrices['EUR']    = 0.92;
+      window._pcPrices['BRL']    = 5.70;
+      if(rateEl) rateEl.textContent = 'Precios en vivo via Binance';
+      updatePortConv();
+    })
+    .catch(function(){
+      // Fallback offline
+      window._pcPrices = { BTC:66000, ETH:2000, SOL:83, USDT:1, USD:1, ARS:1195, ARS_OF:1060, EUR:0.92, BRL:5.70 };
+      if(rateEl) rateEl.textContent = 'Precios sin conexion (aprox)';
+      updatePortConv();
+    });
+}
+
+// Calcular y mostrar resultado
+window.updatePortConv = function(){
+  var amtEl  = document.getElementById('pc-amount');
+  var fromEl = document.getElementById('pc-from');
+  var toEl   = document.getElementById('pc-to');
+  var resEl  = document.getElementById('pc-result');
+  var rateEl = document.getElementById('pc-rate');
+  if(!amtEl || !fromEl || !toEl || !resEl) return;
+
+  var amt  = parseFloat(amtEl.value);
+  if(isNaN(amt) || amt < 0) { resEl.textContent = '—'; return; }
+  var from = fromEl.value;
+  var to   = toEl.value;
+  var p    = window._pcPrices;
+  if(!p[from] || !p[to]) { resEl.textContent = 'Cargando...'; return; }
+
+  var FIAT  = ['USD','ARS','ARS_OF','EUR','BRL','USDT'];
+  var isCrypto = function(s){ return FIAT.indexOf(s) === -1; };
+
+  // Todo pasa por USD como pivote
+  var amtUSD;
+  if(from === 'USD' || from === 'USDT'){
+    amtUSD = amt;
+  } else if(isCrypto(from)){
+    amtUSD = amt * p[from];          // Ej: 2 ETH * 2000 = 4000 USD
+  } else {
+    amtUSD = amt / p[from];          // Ej: 1000 ARS / 1195 = 0.837 USD
+  }
+
+  var result;
+  if(to === 'USD' || to === 'USDT'){
+    result = amtUSD;
+  } else if(isCrypto(to)){
+    result = amtUSD / p[to];         // Ej: 4000 / 66000 = 0.0606 BTC
+  } else {
+    result = amtUSD * p[to];         // Ej: 0.837 * 5.70 = 4.77 BRL
+  }
+
+  // Formatear
+  var fmt;
+  if(isCrypto(to)){
+    fmt = result.toFixed(8).replace(/\.?0+$/, '') + ' ' + to;
+  } else {
+    fmt = result.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' ' + to;
+  }
+  resEl.textContent = fmt;
+
+  // Tasa de referencia: 1 FROM = ? TO
+  var oneUSD;
+  if(from === 'USD' || from === 'USDT'){ oneUSD = 1; }
+  else if(isCrypto(from)){ oneUSD = p[from]; }
+  else { oneUSD = 1 / p[from]; }
+
+  var oneTo;
+  if(to === 'USD' || to === 'USDT'){ oneTo = oneUSD; }
+  else if(isCrypto(to)){ oneTo = oneUSD / p[to]; }
+  else { oneTo = oneUSD * p[to]; }
+
+  var fmtRate;
+  if(isCrypto(to)){
+    fmtRate = oneTo.toFixed(8).replace(/\.?0+$/,'');
+  } else {
+    fmtRate = oneTo.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  if(rateEl) rateEl.textContent = '1 ' + from + ' = ' + fmtRate + ' ' + to;
+};
+
+// Intercambiar monedas
+window.swapPortConv = function(){
+  var fromEl = document.getElementById('pc-from');
+  var toEl   = document.getElementById('pc-to');
+  if(!fromEl || !toEl) return;
+  var tmp = fromEl.value;
+  fromEl.value = toEl.value;
+  toEl.value = tmp;
+  updatePortConv();
+};
