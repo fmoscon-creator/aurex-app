@@ -301,10 +301,17 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     var o1=document.getElementById('obs1');
     var o2=document.getElementById('obs2');
     if(!o1||!o2) return;
-    Array.from(o1.children).forEach(function(el){
-      if(el.id!=='obs2') el.style.display='none';
-    });
+    // Posicionar obs2 como fixed cubriendo toda la pantalla
+    o2.style.position='fixed';
+    o2.style.inset='0';
+    o2.style.zIndex='100001';
     o2.style.display='flex';
+    o2.style.flexDirection='column';
+    o2.style.alignItems='center';
+    o2.style.justifyContent='center';
+    o2.style.background='#0D1117';
+    o2.style.padding='32px 20px';
+    o2.style.overflowY='auto';
   };
 
   // 4. startApp
