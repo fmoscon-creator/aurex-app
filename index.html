@@ -910,13 +910,8 @@ document.addEventListener('DOMContentLoaded', function() {
 (function(){
 var SURL='https://dklljnfhlzmfsfmxrpie.supabase.co';
 var SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
-var sb=null;
 function getSB(){
-  if(sb) return sb;
-  if(window.supabase && window.supabase.createClient){
-    sb=window.supabase.createClient(SURL,SKEY);
-  }
-  return sb;
+  return window._supabase || null;
 }
 window.authSwitchTab=function(tab){
   document.getElementById('tab-login').classList.toggle('on',tab==='login');
@@ -948,13 +943,33 @@ window.authDoRegister=async function(){
   else{showAuthMsg('¡Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}
 };
 window.authSaveCelular=async function(){
-  var c=getSB(); if(!c) return;
-  var cel=document.getElementById('celular-input').value.trim();
-  var r=await c.auth.updateUser({data:{celular:cel}});
-  if(!r.error){
-    var el=document.getElementById('auth-celular-txt');
-    if(el) el.textContent=cel?cel:'Sin celular cargado';
+  var c=getSB();
+  var msgEl=document.getElementById('auth-msg');
+  if(!c){
+    if(msgEl){msgEl.textContent='Error: sesión no iniciada';msgEl.style.color='#e74c3c';}
+    return;
   }
+  var celInput=document.getElementById('celular-input');
+  var cel=celInput?celInput.value.trim():'';
+  if(!cel){
+    if(msgEl){msgEl.textContent='Ingresá un número de celular';msgEl.style.color='#e74c3c';}
+    return;
+  }
+  if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
+  var r=await c.auth.updateUser({data:{celular:cel}});
+  if(r.error){
+    if(msgEl){msgEl.textContent='Error al guardar: '+r.error.message;msgEl.style.color='#e74c3c';}
+    return;
+  }
+  var user=r.data&&r.data.user?r.data.user:null;
+  if(user){
+    await c.from('users').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
+  }
+  var el=document.getElementById('auth-celular-txt');
+  if(el)el.textContent=cel;
+  var editEl=document.getElementById('auth-celular-edit');
+  if(editEl)editEl.style.display='none';
+  if(msgEl){msgEl.textContent='Celular guardado ✓';msgEl.style.color='#2ecc71';setTimeout(function(){if(msgEl)msgEl.textContent='';},3000);}
 };
 function showAuthMsg(msg){
   var el=document.getElementById('auth-msg');
@@ -1214,7 +1229,7 @@ window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-
 
 </script>
 <!-- DEV VERSION BADGE — QUITAR AL LANZAR -->
-<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v860000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v860000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v860000 \u2714";},2000);},1500);})();</script>
+<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v870000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v870000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v870000 \u2714";},2000);},1500);})();</script>
 <!-- /DEV VERSION BADGE -->
 
 <script>
