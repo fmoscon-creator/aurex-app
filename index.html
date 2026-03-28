@@ -404,11 +404,26 @@ document.addEventListener('DOMContentLoaded', function() {
 #obs1 .obs1-tag{font-size:11px;color:#8B949E;text-align:center}
 </style>
 <div class="obs1-logo">
-<svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-<polygon points="32,4 60,56 4,56" fill="none" stroke="#D4A017" stroke-width="2.5"/>
-<polygon points="32,16 52,52 12,52" fill="none" stroke="#D4A017" stroke-width="1.5" opacity="0.5"/>
-<line x1="32" y1="4" x2="32" y2="56" stroke="#D4A017" stroke-width="1" opacity="0.3"/>
-<line x1="4" y1="56" x2="60" y2="56" stroke="#D4A017" stroke-width="1" opacity="0.3"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="120" height="120" style="display:block;margin:0 auto;">
+  <defs>
+    <linearGradient id="gAo1" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#F7D060"/>
+      <stop offset="50%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#8B6208"/>
+    </linearGradient>
+    <linearGradient id="gCo1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0C030"/>
+      <stop offset="100%" stop-color="#9A7010"/>
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo1)" stroke-width="3.5"/>
+  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo1)" stroke-width="1.5"/>
+  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo1)" stroke-width="1" opacity="0.8"/>
+  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/>
+  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="164" r="5" fill="#F7D060"/>
 </svg>
 </div>
 <div class="obs1-title">AUREX &middot; IA</div>
@@ -431,13 +446,33 @@ document.addEventListener('DOMContentLoaded', function() {
 <div><div class="ocard-t">Mercados Globales</div><div class="ocard-s">NYSE &middot; NASDAQ &middot; Merval &middot; San Pablo &middot; Londres &middot; Tokio &middot; Hong Kong &middot; Shanghai</div></div>
 </div>
 </div>
-<button class="obs1-btn" onclick="showObs2()">Entrar a Aurex &#8594;</button>
+<button class="obs1-btn" onclick="showObs2()">Comenzar &#8594;</button>
 <div class="obs1-tag">Gratis &middot; Sin tarjeta de cr&eacute;dito</div>
 <div id="obs2" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:32px 20px;min-height:100vh;background:#0D1117;position:relative;overflow:hidden;">
 <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;opacity:0.4;pointer-events:none;"></canvas>
 <div style="position:relative;z-index:1;width:100%;max-width:380px;display:flex;flex-direction:column;align-items:center;">
 <div style="width:72px;height:72px;background:linear-gradient(135deg,#1a1a2e,#16213e);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:24px;border:2px solid #D4A017;">
-<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><polygon points="18,3 33,30 3,30" fill="none" stroke="#D4A017" stroke-width="2"/><line x1="18" y1="3" x2="18" y2="30" stroke="#D4A017" stroke-width="1" opacity="0.5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="70" height="70" style="display:block;margin:0 auto;">
+  <defs>
+    <linearGradient id="gAo2" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#F7D060"/>
+      <stop offset="50%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#8B6208"/>
+    </linearGradient>
+    <linearGradient id="gCo2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0C030"/>
+      <stop offset="100%" stop-color="#9A7010"/>
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo2)" stroke-width="3.5"/>
+  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo2)" stroke-width="1.5"/>
+  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo2)" stroke-width="1" opacity="0.8"/>
+  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/>
+  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="164" r="5" fill="#F7D060"/>
+</svg>
 </div>
 <div style="font-size:22px;font-weight:900;color:#fff;text-align:center;margin-bottom:8px;letter-spacing:1px;">Se&ntilde;ales IA en tiempo real</div>
 <div style="font-size:14px;color:#8B949E;text-align:center;margin-bottom:32px;line-height:1.6;">AUREX analiza miles de activos globales y te entrega las mejores oportunidades antes que el mercado las descuente.</div>
@@ -611,12 +646,27 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- HEADER -->
 <div class="hdr">
   <div class="hl">
-    <svg width="22" height="22" viewBox="0 0 60 60">
-      <circle cx="30" cy="30" r="27" fill="#2A1400" stroke="#D4A017" stroke-width="2"/>
-      <circle cx="30" cy="30" r="22" fill="#1A0A00" stroke="#8B620860" stroke-width="1"/>
-      <path d="M30 13 L38 35 M30 13 L22 35 M23 26 L37 26" fill="none" stroke="#F5C842" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M23 40 L30 33 M37 40 L30 33" fill="none" stroke="#D4A017" stroke-width="2.2" stroke-linecap="round"/>
-    </svg>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32">
+  <defs>
+    <linearGradient id="gAhd" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#F7D060"/>
+      <stop offset="50%" stop-color="#D4A017"/>
+      <stop offset="100%" stop-color="#8B6208"/>
+    </linearGradient>
+    <linearGradient id="gChd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0C030"/>
+      <stop offset="100%" stop-color="#9A7010"/>
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gChd)" stroke-width="3.5"/>
+  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gChd)" stroke-width="1.5"/>
+  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gChd)" stroke-width="1" opacity="0.8"/>
+  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="164" r="5" fill="#F7D060"/>
+</svg>
     <span class="hn">AUREX</span>
     <span class="hp">· Mercados</span>
   </div>
