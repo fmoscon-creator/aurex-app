@@ -303,14 +303,11 @@ function getSupaToken(){
 
 // ── CARGAR portfolio del usuario desde Supabase ──
 window.loadPortfolioSupa = function(){
-  var session = null;
   try {
-    // Intentar obtener sesión del cliente Supabase global
     if(window._supabaseClient){
       window._supabaseClient.auth.getSession().then(function(res){
         if(res.data && res.data.session){
-          session = res.data.session;
-          _fetchPortfolio(session.access_token, session.user.id);
+          _fetchPortfolio(res.data.session.access_token, res.data.session.user.id);
         } else {
           _renderPortfolioEmpty();
         }
@@ -331,46 +328,141 @@ function _fetchPortfolio(token, userId){
 }
 
 function _renderPortfolioEmpty(){
-  var list = document.getElementById('port-list');
-  if(list) list.innerHTML = '<div style="color:#8B949E;text-align:center;padding:40px 20px;font-size:13px;">Sin activos. Tocá + Agregar para comenzar.</div>';
+  var cnt = document.getElementById('port-cnt');
+  if(cnt) cnt.innerHTML = '<div style="color:#8B949E;text-align:center;padding:40px 20px;font-size:13px;line-height:1.6;">Sin activos aún.<br>Tocá <b style=\"color:#3FB950\">+ Agregar</b> para comenzar.</div>';
   _updateTotals([]);
 }
 
 function _renderPortfolioItems(items){
-  var list = document.getElementById('port-list');
-  if(!list) return;
+  var cnt = document.getElementById('port-cnt');
+  if(!cnt) return;
   if(!items || items.length === 0){ _renderPortfolioEmpty(); return; }
-  
-  list.innerHTML = items.map(function(item){
-    var precio = window._pcPrices && window._pcPrices[item.simbolo] ? window._pcPrices[item.simbolo] : 0;
+  var prcs = window._pcPrices || {};
+  cnt.innerHTML = items.map(function(item){
+    var precio = prcs[item.simbolo] || 0;
     var valor = precio > 0 ? (item.cantidad * precio) : (item.cantidad * item.precio_compra);
     var pnl = precio > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
-    var pnlColor = pnl >= 0 ? '#00D4AA' : '#FF4444';
+    var pnlColor = pnl >= 0 ? '#3FB950' : '#FF4444';
     var pnlSign = pnl >= 0 ? '+' : '';
-    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #1C2128;">' +
-      '<div><div style="font-weight:700;color:#fff;font-size:14px;">' + item.simbolo + '</div>' +
-      '<div style="font-size:11px;color:#8B949E;">' + item.cantidad + ' u. @ $' + item.precio_compra.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div></div>' +
-      '<div style="text-align:right;">' +
-      '<div style="font-size:14px;font-weight:700;color:#fff;">$' + valor.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>' +
-      '<div style="font-size:11px;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div></div>' +
-      '<button onclick="deletePortfolioItem('' + item.id + '')" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;padding:4px 8px;">×</button>' +
-      '</div>';
+    var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="display:flex;align-items:center;gap:6px;">' +
+          '<span style="font-weight:700;color:#E6EDF3;font-size:14px;">' + item.simbolo + '</span>' +
+          '<span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E;">' + (item.tipo||'cripto') + '</span>' +
+        '</div>' +
+        '<div style="font-size:11px;color:#8B949E;margin-top:2px;">' + item.cantidad + ' u. @ $' + fmtNum(item.precio_compra) + '</div>' +
+      '</div>' +
+      '<div style="text-align:right;margin-right:8px;">' +
+        '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$' + fmtNum(valor) + '</div>' +
+        '<div style="font-size:11px;font-weight:600;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div>' +
+      '</div>' +
+      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">×</div>' +
+    '</div>';
   }).join('');
   _updateTotals(items);
 }
 
 function _updateTotals(items){
-  var total = items.reduce(function(acc, item){
-    var precio = window._pcPrices && window._pcPrices[item.simbolo] ? window._pcPrices[item.simbolo] : item.precio_compra;
-    return acc + (item.cantidad * precio);
-  }, 0);
-  var totalEl = document.querySelector('.port-total-val, [class*="total"]');
-  var actEl = document.getElementById('port-activos-count');
-  if(totalEl) totalEl.textContent = '$' + total.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
-  if(actEl) actEl.textContent = items.length;
+  var prcs = window._pcPrices || {};
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
+  items.forEach(function(item){
+    var precio = prcs[item.simbolo] || item.precio_compra;
+    total += item.cantidad * precio;
+    totalCosto += item.cantidad * item.precio_compra;
+    var pnl = item.precio_compra > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
+    if(pnl > bestPct){ bestPct = pnl; bestSym = item.simbolo; }
+  });
+  var pnlUsd = total - totalCosto;
+  var pnlPct = totalCosto > 0 ? (pnlUsd / totalCosto * 100) : 0;
+  var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+  var el = function(id){ return document.getElementById(id); };
+  if(el('port-total')) el('port-total').textContent = '$' + fmtNum(total);
+  if(el('port-count')) el('port-count').textContent = items.length;
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
+  if(el('port-pnl-usd')){
+    el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
+    el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
+  }
+  if(el('port-pnl-pct')){
+    el('port-pnl-pct').textContent = (pnlPct>=0?'+':'') + pnlPct.toFixed(2) + '%';
+    el('port-pnl-pct').style.background = pnlPct >= 0 ? '#1A3A2A' : '#3A1A1A';
+    el('port-pnl-pct').style.color = pnlPct >= 0 ? '#3FB950' : '#FF4444';
+  }
 }
 
-// ── AGREGAR activo al portfolio ──
+// ── ABRIR / CERRAR modal Agregar activo ──
+var _ACTIVOS_MODAL = [
+  {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
+  {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
+  {g:'Acciones ARG',items:[{s:'GGAL',n:'Galicia'},{s:'YPF',n:'YPF'},{s:'BMA',n:'Macro'}],tipo:'accion'},
+  {g:'ETFs',items:[{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq 100'},{s:'GLD',n:'Gold ETF'}],tipo:'etf'},
+  {g:'Stablecoins',items:[{s:'USDT',n:'Tether'},{s:'USDC',n:'USD Coin'}],tipo:'stable'}
+];
+
+window.openAddActivo = function(){
+  var modal = document.getElementById('port-modal');
+  var body = document.getElementById('port-modal-body');
+  var title = document.getElementById('port-modal-title');
+  if(!modal || !body) return;
+  if(title) title.textContent = 'Agregar activo';
+  // Construir selector de activos agrupado + inputs
+  var opts = _ACTIVOS_MODAL.map(function(g){
+    return '<optgroup label="── ' + g.g + ' ──">' +
+      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' · ' + a.n + '</option>'; }).join('') +
+    '</optgroup>';
+  }).join('');
+  body.innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:12px;">' +
+      '<div>' +
+        '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Activo</div>' +
+        '<select id="pa-sym" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none;">' + opts + '</select>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;">' +
+        '<div style="flex:1;">' +
+          '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Cantidad</div>' +
+          '<input id="pa-qty" type="number" min="0" step="any" placeholder="0.001" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:16px;outline:none;box-sizing:border-box;">' +
+        '</div>' +
+        '<div style="flex:1;">' +
+          '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Precio compra (USD)</div>' +
+          '<input id="pa-price" type="number" min="0" step="any" placeholder="0.00" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:16px;outline:none;box-sizing:border-box;">' +
+        '</div>' +
+      '</div>' +
+      '<div id="pa-err" style="font-size:11px;color:#FF4444;display:none;text-align:center;"></div>' +
+      '<div onclick="savePortActivo()" style="background:linear-gradient(135deg,#D4A017,#B8860B);border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;color:#000;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Guardar activo</div>' +
+    '</div>';
+  modal.style.display = 'flex';
+};
+
+window.closePortModal = function(){
+  var modal = document.getElementById('port-modal');
+  if(modal) modal.style.display = 'none';
+};
+
+window.savePortActivo = function(){
+  var symEl = document.getElementById('pa-sym');
+  var qtyEl = document.getElementById('pa-qty');
+  var priceEl = document.getElementById('pa-price');
+  var errEl = document.getElementById('pa-err');
+  if(!symEl || !qtyEl || !priceEl) return;
+  var parts = symEl.value.split('|');
+  var simbolo = parts[0], nombre = parts[1], tipo = parts[2];
+  var cantidad = parseFloat(qtyEl.value);
+  var precio = parseFloat(priceEl.value);
+  if(!simbolo){ showPortErr('Seleccioná un activo.'); return; }
+  if(!cantidad || cantidad <= 0){ showPortErr('Ingresá una cantidad válida.'); return; }
+  if(!precio || precio <= 0){ showPortErr('Ingresá un precio de compra válido.'); return; }
+  if(errEl) errEl.style.display = 'none';
+  addPortfolioItem(simbolo, nombre, cantidad, precio, tipo);
+  closePortModal();
+};
+
+function showPortErr(msg){
+  var errEl = document.getElementById('pa-err');
+  if(errEl){ errEl.textContent = msg; errEl.style.display = 'block'; }
+}
+
+// ── AGREGAR activo al portfolio en Supabase ──
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
   if(!window._supabaseClient){ alert('Necesitás iniciar sesión para guardar activos.'); return; }
   window._supabaseClient.auth.getSession().then(function(res){
@@ -379,18 +471,20 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
     var userId = res.data.session.user.id;
     fetch(SUPA_URL + '/rest/v1/portfolio', {
       method: 'POST',
-      headers: supaHeaders(token),
+      headers: Object.assign({}, supaHeaders(token), {'Prefer': 'return=minimal'}),
       body: JSON.stringify({
         user_id: userId,
         simbolo: simbolo.toUpperCase(),
-        nombre: nombre,
+        nombre: nombre || simbolo,
         cantidad: parseFloat(cantidad),
         precio_compra: parseFloat(precioCompra),
         tipo: tipo || 'cripto'
       })
     })
-    .then(function(r){ return r.json(); })
-    .then(function(){ loadPortfolioSupa(); })
+    .then(function(r){
+      if(r.ok){ loadPortfolioSupa(); }
+      else { return r.text().then(function(t){ console.error('Error POST portfolio:', t); }); }
+    })
     .catch(function(e){ console.error('Error agregando activo:', e); });
   });
 };
@@ -398,7 +492,7 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
 // ── ELIMINAR activo del portfolio ──
 window.deletePortfolioItem = function(id){
   if(!window._supabaseClient) return;
-  if(!confirm('¿Eliminar este activo?')) return;
+  if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
   window._supabaseClient.auth.getSession().then(function(res){
     if(!res.data || !res.data.session) return;
     var token = res.data.session.access_token;
@@ -406,19 +500,22 @@ window.deletePortfolioItem = function(id){
       method: 'DELETE',
       headers: supaHeaders(token)
     })
-    .then(function(){ loadPortfolioSupa(); })
+    .then(function(r){ if(r.ok) loadPortfolioSupa(); })
     .catch(function(e){ console.error('Error eliminando:', e); });
   });
 };
 
-// Cargar portfolio cuando el usuario se loguea
+// Inicializar portfolio cuando hay sesión
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     if(window._supabaseClient){
       window._supabaseClient.auth.onAuthStateChange(function(event, session){
-        if(session) { window._supabaseClient = window._supabaseClient; loadPortfolioSupa(); }
+        if(event === 'SIGNED_IN') loadPortfolioSupa();
+        if(event === 'SIGNED_OUT') _renderPortfolioEmpty();
       });
       loadPortfolioSupa();
+    } else {
+      _renderPortfolioEmpty();
     }
-  }, 1000);
+  }, 1200);
 });
