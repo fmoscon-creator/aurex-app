@@ -1,5 +1,5 @@
 # AUREX — PLAN OPERATIVO COMPLETO 12 SEMANAS
-Version: 2.0 | Actualizado: 28/03/2026 | Fundador: Fernando G. Moscon
+Version: 2.1 | Actualizado: 28/03/2026 | Fundador: Fernando G. Moscon
 Stack: HTML+CSS+JS Vanilla - GitHub Pages - Supabase - Railway - Stripe
 
 ---
@@ -27,24 +27,34 @@ Watchlist y Alertas se agregan en version 2 post-aprobacion.
 
 ---
 
-## ESTADO ACTUAL — QUE ESTA HECHO HOY 28/03/2026
+## ESTADO REAL AL 28/03/2026 — QUE ESTA HECHO
 
-### FRONTEND — funcionando en produccion
+| Feature | Estado | Notas |
+|---|---|---|
+| App en produccion GitHub Pages | DONE | fmoscon-creator.github.io/aurex-app |
+| PWA instalable iPhone | DONE | manifest.json + service-worker.js |
+| 6 tabs navegables | DONE | Portfolio, Mercados, Watchlist, Senales IA, Alertas, Perfil |
+| Precios crypto tiempo real | DONE | Binance REST API cada 5seg |
+| Conversor crypto Binance | DONE | BTC/ETH/BNB/SOL en tiempo real |
+| Conversor fiat real | DONE | ExchangeRate API — ARS/USD/EUR/BRL cada 30min |
+| Modo oscuro + diseno completo | DONE | CSS paleta #D4A017 + #0D1117 |
+| OBS1 nuevo diseno aprobado | DONE | 4 tarjetas + boton Entrar a Aurex |
+| OBS2 Senales IA pantalla | DONE | 3 features + boton Continuar |
+| Supabase auth email/password | DONE | Sin confirmacion de email, login inmediato |
+| Perfil logueado rediseniado | DONE | Avatar + celular editable + Guardar + Cerrar sesion |
+| Boton Guardar celular funciona | DONE | getSB() corregido, upsert a tabla users |
+| Service Worker auto-update | DONE | skipWaiting automatico, sin intervencion manual |
+| Portfolio Supabase (basico) | DONE | feat v800000 — activos guardados en nube |
+| Build badge dev | DONE | Muestra BUILD + pantalla activa |
 
-| Feature | Estado | Donde | Semana del plan |
-|---|---|---|---|
-| App en produccion | REAL | fmoscon-creator.github.io/aurex-app | Base completada |
-| PWA instalable iPhone | REAL | manifest.json + service-worker.js | Base completada |
-| 6 tabs navegables | REAL | index.html: Portfolio, Mercados, Watchlist, IA, Alertas, Perfil | Base completada |
-| Precios crypto tiempo real | REAL | Binance REST API cada 5seg - Tab Mercados | Base completada |
-| Conversor crypto | REAL | Binance cada 30seg - boton superior | Base completada |
-| Modo oscuro + diseno completo | REAL | CSS en index.html - paleta #D4A017 + #0D1117 | Base completada |
-| OBS1 nuevo diseno aprobado | REAL | index.html - 4 tarjetas + boton Entrar a Aurex | Base completada |
-| OBS2 Senales IA pantalla | REAL | index.html - 3 features + boton Continuar | Base completada |
-| Conversor fiat real | REAL | ExchangeRate API - ARS/USD/EUR/BRL reales | Base completada |
-| Supabase auth funcionando | REAL | email/password, sin confirmacion, celular guardado | Semana 1 completada |
-| Perfil logueado rediseniado | REAL | avatar + celular editable + guardar + cerrar sesion | Semana 1 completada |
-| Service Worker auto-update | REAL | skipWaiting automatico — sin actualizacion manual | Base completada |
+| Feature | Estado | Notas |
+|---|---|---|
+| Conversor modal (fix "Cargando...") | PENDIENTE HOY | El modal del conversor puede tener bug |
+| Portfolio completo (agregar/editar/eliminar) | PENDIENTE | Semana 1 |
+| Senales IA funcionales | PENDIENTE | Semana 1 |
+| Watchlist persistente Supabase | PENDIENTE | Semana 1 |
+| Backend alertas Railway | PENDIENTE | Semana 2 |
+| Stripe pagos | PENDIENTE | Semana 3 |
 
 ### BUILD ACTUAL: v890000
 
@@ -59,11 +69,10 @@ Objetivo: App sin bugs, todas las funcionalidades reales, base solida para React
 Objetivo: App nativa iOS con Mercados + Portfolio + Senales IA + Perfil. Subir al App Store.
 
 ### FASE 3 — APRENDIZAJE APPLE (Semanas 8-10: 18 May - 4 Jun)
-Objetivo: Review Apple, ajustes si rechazan, re-submit. Entender el proceso completo.
-Mientras se espera review: seguir agregando features a PWA y preparar tabs 5-6 para version 2.
+Objetivo: Review Apple, ajustes si rechazan, re-submit.
 
 ### FASE 4 — APP COMPLETA (Semanas 10-12+: 29 May - 19 Jun)
-Objetivo: Si aprobaron, agregar Watchlist + Alertas. Version 1.1 completa con 6 tabs.
+Objetivo: Watchlist + Alertas en app nativa. Version 1.1 completa con 6 tabs.
 
 ---
 
@@ -75,109 +84,173 @@ Objetivo: Si aprobaron, agregar Watchlist + Alertas. Version 1.1 completa con 6 
 - OBS2 implementada (3 features + boton Continuar)
 - Conversor fiat con ExchangeRate API real
 
-### SAB 28/03 — EN CURSO
-- Fix Conversor de monedas — de Cargando... a funcional con Binance
-- Verificar en emulador iPhone antes de confirmar
+### SAB 28/03 — COMPLETADO (sesion maniana)
+- Supabase auth funcionando: registro, login, celular, cerrar sesion
+- Perfil logueado rediseniado
+- Boton Guardar celular corregido (getSB fix)
+- Service Worker auto-update sin intervencion manual
+- Portfolio basico guardado en Supabase (v800000)
+- Build badge funcionando
+
+### SAB 28/03 — TAREA ACTUAL (sesion tarde/noche)
+Verificar conversor modal: abrir conversor desde header, comprobar que muestra precios reales Binance y no "Cargando..." congelado. Si hay bug, corregir.
 
 ### DOM 29/03 — 5 hs
-- Portfolio persistente: tabla portfolios en Supabase
-- Activos del usuario guardados en la nube
+Tarea: Portfolio completo en Supabase
+- Tabla portfolios: id, user_id, activo, cantidad, precio_compra, fecha
+- UI: agregar activo (nombre + cantidad + precio compra)
+- UI: listar activos con precio actual en vivo (Binance/Yahoo)
+- UI: eliminar activo
+- UI: ver valor total del portfolio y P&L total
+- Verificar en iPhone emulador
 
 ### LUN 30/03 — 5 hs
-- Portfolio completo: agregar/eliminar activos, ver valor total, P&L
+Tarea: Senales IA funcionales
+- Algoritmo: RSI simulado + tendencia de precio (comparar precio actual vs 24h antes) + volumen
+- Genera 5 senales diarias: activo, LONG/SHORT, confianza %
+- Tabla signals en Supabase: id, user_id, activo, direccion, confianza, fecha
+- UI tab Senales IA: lista de senales del dia con color verde/rojo
+- Verificar en iPhone
 
 ### MAR 31/03 — 5 hs
-- Senales IA funcionales: RSI simulado + tendencia + volumen
-- 5 senales diarias: activo, LONG/SHORT, confianza %
-- Tabla signals en Supabase
+Tarea: Watchlist persistente
+- Tabla watchlist en Supabase: user_id, activo, agregado_el
+- Boton corazon/estrella en tab Mercados agrega activo a watchlist
+- Tab Watchlist lee de Supabase y muestra activos con precio en vivo
+- Verificar en iPhone
 
 ### MIE 01/04 — 5 hs
-- Watchlist persistente en Supabase
-- Boton + en Mercados agrega a watchlist
+Tarea: Pulido y revision Semana 1
+- Revisar los 3 features anteriores en conjunto
+- Corregir bugs encontrados
+- Verificar flujo completo: registro -> portfolio -> senales -> watchlist
+- Commit: "Semana 1 completa — portfolio + senales + watchlist"
 
 ### JUE 02/04 — 5 hs
-- Buffer: corregir bugs, verificar todas las tabs en iPhone
+Tarea: Buffer
+- Cualquier fix pendiente de la semana
+- Verificar en iPhone real (no solo emulador)
 
 ---
 
 ## SEMANA 2 (3 - 9 Abr) — ALERTAS + BACKEND
 
-- Backend Node.js: Express + Supabase + Twilio en Railway
-- Tabla alerts: user_id, activo, precio_objetivo, direccion, activa
-- Cron job verifica precios cada minuto
-- Notificacion WhatsApp via Twilio
-- UI alertas: crear, listar, eliminar
+### LUN 03/04
+- Crear proyecto Railway (railway.app gratuito)
+- server.js: Express + Supabase + node-cron
+- Deploy a Railway
+
+### MAR 04/04
+- Tabla alerts en Supabase: user_id, activo, precio_objetivo, direccion (above/below), activa
+- Cron job en Railway: verifica precios cada minuto via Binance REST
+
+### MIE 05/04
+- Notificacion: cuando precio cruza objetivo, marcar alerta como disparada en Supabase
+- (Twilio WhatsApp opcional si Fernando tiene cuenta Twilio)
+
+### JUE-VIE 06-07/04
+- UI tab Alertas: crear alerta (activo + precio + direccion)
+- Listar alertas activas e historial de disparadas
+- Verificar flujo completo en iPhone
 
 ---
 
 ## SEMANA 3 (10 - 16 Abr) — STRIPE + PLANES
 
-- Stripe: PRO USD 9.99/mes, ELITE USD 19.99/mes
-- UI upgrade: botones Activar PRO y Activar ELITE
-- Restricciones por plan:
-  - FREE: max 5 activos, 3 senales/dia, sin alertas
-  - PRO: 50 activos, 10 senales, alertas WhatsApp
-  - ELITE: ilimitado + Telegram Bot
+### LUN 07/04
+- Stripe setup: crear productos PRO USD 9.99/mes y ELITE USD 19.99/mes
+- Credenciales necesarias: Stripe publishable key + secret key + webhook signing secret
+- Backend: POST /api/checkout-session + POST /api/webhook
+
+### MAR-MIE 08-09/04
+- UI upgrade: modal planes con botones Activar PRO y Activar ELITE
+- Link Stripe Checkout abre en browser externo
+
+### JUE-SAB 10-12/04
+- Restricciones reales por plan en frontend:
+  - FREE: max 5 activos portfolio, 3 senales/dia, sin alertas
+  - PRO: 50 activos, 10 senales, alertas activas
+  - ELITE: ilimitado + prioridad en senales
 
 ---
 
 ## SEMANA 4 (17 - 24 Abr) — PULIDO FINAL PWA
 
-- Exportar PDF y Excel (jsPDF + SheetJS)
-- Mejoras UX: animaciones, skeletons, empty states
-- Revision completa en iPhone — todas las tabs impecables
-- Commit: "PWA v1.0 completa — base React Native"
+### LUN-MAR 17-18/04
+- Exportar PDF portfolio con jsPDF (via CDN, sin backend)
+- Exportar Excel .xlsx con SheetJS (via CDN)
+
+### MIE-JUE 19-20/04
+- Mejoras UX: skeletons de carga, empty states, animaciones suaves
+- Performance: reducir renders innecesarios
+
+### VIE-SAB 21-22/04
+- Revision completa todas las tabs en iPhone real
+- Corregir cualquier bug visual o funcional
+
+### DOM 24/04 — Cierre Fase 1
+- Commit: "PWA v1.0 completa — base lista para React Native"
+- Actualizar CONTEXTO.md con estado final Fase 1
 
 ---
 
 ## SEMANA 5 (25 Abr - 1 May) — SETUP REACT NATIVE
 
 - Comprar Apple Developer Account: USD 99 (fmoscon@gmail.com)
-- Instalar: Node.js + React Native CLI + Xcode en Mac
-- Crear proyecto: npx react-native init AurexApp
-- Configurar React Navigation (bottom tabs)
-- Conectar Supabase SDK
+- Instalar en Mac: Node.js LTS + React Native CLI + Xcode (desde App Store, gratis)
+- Crear proyecto: npx react-native init AurexApp --template react-native-template-typescript
+- Instalar dependencias: React Navigation, @supabase/supabase-js, react-native-async-storage
+- Configurar bottom tab navigator con 4 tabs: Mercados, Portfolio, Senales, Perfil
 - Splash screen con logo AUREX
-- App corre en simulador iOS y en iPhone real
+- Meta: app corre en simulador iOS (sin datos aun)
 
 ---
 
 ## SEMANA 6 (2 - 8 May) — TAB MERCADOS EN REACT NATIVE
 
-- MercadosScreen: FlatList activos crypto + acciones USA
-- WebSocket Binance — misma logica portada a React Native
-- Conversor de monedas
-- Diseno identico a PWA: modo oscuro, #D4A017 + #0D1117
+- MercadosScreen: FlatList con BTC, ETH, BNB, SOL, y acciones USA
+- WebSocket Binance para precios en tiempo real
+- Yahoo Finance para acciones (AAPL, TSLA, NVDA, etc.)
+- Conversor de monedas (Binance + ExchangeRate)
+- Diseno: modo oscuro, fuente SF Pro, colores identicos a PWA (#D4A017 + #0D1117)
+- Verificar en iPhone real via Xcode (cable USB)
 
 ---
 
 ## SEMANA 7 (9 - 15 May) — TABS PORTFOLIO + PERFIL EN REACT NATIVE
 
-- AuthScreen: login/registro Supabase
-- PerfilScreen: datos usuario, celular, plan, cerrar sesion
-- PortfolioScreen: activos, valor total, P&L
-- Misma DB Supabase que PWA — datos compartidos
+- AuthScreen: login/registro con Supabase email/password
+- PerfilScreen: nombre, email, celular, plan actual, boton cerrar sesion
+- PortfolioScreen: agregar activos, ver lista con precio en vivo, P&L, eliminar
+- Misma DB Supabase que PWA — los datos del usuario ya existen
+- Verificar flujo completo: registro nuevo -> agregar activo -> ver P&L
 
 ---
 
 ## SEMANA 8 (16 - 21 May) — TAB SENALES IA + SUBMIT APP STORE
 
 ### LUN-MAR 16-17/05
-- SeñalesScreen: 5 senales diarias LONG/SHORT con confianza %
+- SeñalesScreen: lista de 5 senales diarias LONG/SHORT con confianza %
+- Misma logica de algoritmo que PWA, portada a React Native
+- Diseno: tarjetas con color verde (LONG) / rojo (SHORT)
 
-### MIE 18/05
-- Privacy Policy: fmoscon-creator.github.io/aurex-app/privacy-policy
-- App Icons (1024x1024 + todos los tamanos) y Screenshots App Store
-- Descripcion en espanol e ingles
+### MIE 18/05 — Preparacion App Store
+- Privacy Policy: generarla en privacypolicygenerator.info
+- Subir a: fmoscon-creator.github.io/aurex-app/privacy-policy.html
+- App Icons: generar todos los tamanos desde 1024x1024 con appicon.co
+- Screenshots: capturar en simulador iPhone 6.7" y 6.1"
+- Descripcion App Store espanol: titulo, subtitulo, descripcion, keywords
+- Keywords sugeridos: crypto, bitcoin, portfolio, inversion, senales, trading
 
-### JUE-VIE 19-20/05
-- Archive en Xcode: Product -> Archive
-- Subir via Xcode Organizer a App Store Connect
+### JUE-VIE 19-20/05 — Submit
+- Xcode: Product -> Archive -> Distribute App -> App Store Connect
+- App Store Connect: completar metadata, subir screenshots, Privacy Policy URL
+- Categoria: Finance | Precio: Gratis | Clasificacion: 4+
 - Submit a App Store Review
 
 ### SAB 21/05
-- TestFlight: invitar 5-10 beta testers
-- Monitorear estado del review
+- TestFlight: invitar a Fernando + 5-10 beta testers
+- Monitorear estado en App Store Connect
 
 ---
 
@@ -185,42 +258,46 @@ Objetivo: Si aprobaron, agregar Watchlist + Alertas. Version 1.1 completa con 6 
 
 Apple tarda entre 1 y 7 dias habiles en revisar.
 
-**Si aprueba:** publicar en redes, preparar version 2 con Watchlist + Alertas.
-**Si rechaza:** leer motivo exacto, corregir en 48hs, re-submit.
+**Si aprueba:** publicar en LinkedIn/Twitter/X, preparar update con Watchlist + Alertas.
+**Si rechaza:** leer el motivo exacto que manda Apple por email, corregir en 48hs, re-submit.
 
-Causas comunes de rechazo y como evitarlas:
-- Funcionalidad insuficiente: cubierto con 4 tabs + login + senales IA
-- Privacy Policy faltante: cubierto en Semana 8
-- Demo/placeholder content: todas las senales y datos deben ser reales al momento del submit
-- Crash en review device: testear exhaustivamente antes de subir
+Causas comunes de rechazo:
+- 4.0 Design: funcionalidad insuficiente — evitado con 4 tabs + login + senales
+- 5.1.1 Privacy: datos sin Privacy Policy — evitado en Semana 8
+- 2.1 Performance: crash en review device — testear exhaustivamente antes de subir
+- 4.2 Minimum Functionality: app demasiado simple — evitado con diferenciadores
 
-Mientras se espera: agregar Watchlist a React Native para version 2.
+Mientras se espera review (hasta 7 dias):
+- Agregar tab Watchlist a React Native para version 2.0
+- Continuar mejoras en PWA
 
 ---
 
 ## SEMANA 10 (29 May - 4 Jun) — LANZAMIENTO + GOOGLE PLAY
 
-- Anuncio en LinkedIn, Twitter/X, grupos crypto LATAM
-- Post ProductHunt
-- Google Play via TWA con Bubblewrap (USD 25 unico pago)
+**Si App Store aprueba (lo sabremos esta semana):**
+- Anuncio en LinkedIn, Twitter/X, grupos crypto LATAM, WhatsApp personal
+- Post ProductHunt: tagline + descripcion + screenshots
+- Google Play via TWA con Bubblewrap (gratis) — Google Play Developer USD 25 unico pago
 
 ---
 
 ## SEMANA 11 (5 - 11 Jun) — LANZAMIENTO OFICIAL + B2B
 
-- LAUNCH DAY en todas las redes
-- ProductHunt launch
-- Reuniones B2B con asesores financieros
-- Plan B2B USD 199/mes
-- Objetivo: 50+ usuarios registrados, 20+ usuarios PRO
+- LAUNCH DAY oficial en todas las redes
+- ProductHunt submit
+- Primeras reuniones B2B con asesores financieros independientes
+- Deck de ventas para Plan B2B USD 199/mes
+- Objetivo de la semana: 50+ usuarios registrados, 20+ usuarios PRO
 
 ---
 
 ## SEMANA 12 (12 - 19 Jun) — CIERRE + METRICAS
 
-- Revision completa: app nativa 4 tabs + PWA 6 tabs
-- TECHNICAL-DOCS.md: arquitectura, APIs, decisiones
-- Metricas finales: usuarios, MRR, conversion rate
+- Revision completa: app nativa 4 tabs + PWA 6 tabs todo funcionando
+- TECHNICAL-DOCS.md: arquitectura final, APIs usadas, decisiones tecnicas
+- Metricas finales del MVP: usuarios totales, MRR, conversion rate FREE->PRO
+- Plan Semana 13+: version 2.0 app nativa con Watchlist + Alertas + Stripe nativo
 
 ---
 
