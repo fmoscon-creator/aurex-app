@@ -766,37 +766,55 @@ function refreshPickerDisplay(){
   setD('pc-from',_convFrom);setD('pc-to',_convTo);
 }
 function swapPortConv(){var t=_convFrom;_convFrom=_convTo;_convTo=t;refreshPickerDisplay();runConversion();}
-async function getAssetPriceUSD(asset){
+function getAssetPriceUSD(asset){
   if(asset.type==='fiat'){
-    if(asset.ticker==='USD')return 1;
-    try{var r=await fetch('https://open.er-api.com/v6/latest/USD');var d=await r.json();return d.rates&&d.rates[asset.ticker]?1/d.rates[asset.ticker]:null;}catch(e){return null;}
+    if(asset.ticker==='USD')return Promise.resolve(1);
+    return fetch('https://open.er-api.com/v6/latest/USD')
+      .then(function(r){return r.json();})
+      .then(function(d){return d.rates&&d.rates[asset.ticker]?1/d.rates[asset.ticker]:null;})
+      .catch(function(){return null;});
   }
   if(asset.type==='crypto'||asset.type==='stable'){
-    if(_convPriceCache[asset.ticker])return _convPriceCache[asset.ticker];
-    try{var r=await fetch('https://api.binance.com/api/v3/ticker/price?symbol='+asset.ticker+'USDT');var d=await r.json();if(d.price){_convPriceCache[asset.ticker]=parseFloat(d.price);return parseFloat(d.price);}}catch(e){}
-    try{var r2=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd');var d2=await r2.json();var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}}catch(e){}
-    return null;
+    if(_convPriceCache[asset.ticker])return Promise.resolve(_convPriceCache[asset.ticker]);
+    return fetch('https://api.binance.com/api/v3/ticker/price?symbol='+asset.ticker+'USDT')
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.price){_convPriceCache[asset.ticker]=parseFloat(d.price);return parseFloat(d.price);}
+        return fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd')
+          .then(function(r2){return r2.json();})
+          .then(function(d2){var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}return null;})
+          .catch(function(){return null;});
+      })
+      .catch(function(){
+        return fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd')
+          .then(function(r2){return r2.json();})
+          .then(function(d2){var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}return null;})
+          .catch(function(){return null;});
+      });
   }
   if(asset.type==='stock'||asset.type==='commodity'){
-    try{var r3=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+asset.ticker+'?interval=1d&range=1d');var d3=await r3.json();var p=d3.chart&&d3.chart.result&&d3.chart.result[0]&&d3.chart.result[0].meta&&d3.chart.result[0].meta.regularMarketPrice;if(p)return p;}catch(e){}
-    return null;
+    return fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+asset.ticker+'?interval=1d&range=1d')
+      .then(function(r3){return r3.json();})
+      .then(function(d3){var p=d3.chart&&d3.chart.result&&d3.chart.result[0]&&d3.chart.result[0].meta&&d3.chart.result[0].meta.regularMarketPrice;return p||null;})
+      .catch(function(){return null;});
   }
-  return null;
+  return Promise.resolve(null);
 }
-async function runConversion(){
+function runConversion(){
   var amountEl=document.getElementById('pc-amount');
   var resultEl=document.getElementById('pc-result');
   var rateEl=document.getElementById('pc-rate');
   if(!amountEl||!resultEl||!rateEl)return;
   var amount=parseFloat(amountEl.value)||1;
   resultEl.textContent='...';rateEl.textContent='Obteniendo tasas...';
-  var prices=await Promise.all([getAssetPriceUSD(_convFrom),getAssetPriceUSD(_convTo)]);
-  var fromUSD=prices[0];var toUSD=prices[1];
-  if(!fromUSD||!toUSD){resultEl.textContent='N/D';rateEl.textContent='No se pudo obtener la tasa';return;}
-  var rate=fromUSD/toUSD;var result=amount*rate;
-  var fmt=function(n){return n>=1000?n.toLocaleString('es-AR',{maximumFractionDigits:2}):n>=0.01?n.toLocaleString('es-AR',{maximumFractionDigits:6}):n.toExponential(4);};
-  resultEl.textContent=fmt(result)+' '+_convTo.ticker;
-  rateEl.textContent='1 '+_convFrom.ticker+' = '+fmt(rate)+' '+_convTo.ticker;
+  Promise.all([getAssetPriceUSD(_convFrom),getAssetPriceUSD(_convTo)]).then(function(prices){
+    var fromUSD=prices[0];var toUSD=prices[1];
+    if(!fromUSD||!toUSD){resultEl.textContent='N/D';rateEl.textContent='No se pudo obtener la tasa';return;}
+    var rate=fromUSD/toUSD;var result=amount*rate;
+    var fmt=function(n){return n>=1000?n.toLocaleString('es-AR',{maximumFractionDigits:2}):n>=0.01?n.toLocaleString('es-AR',{maximumFractionDigits:6}):n.toExponential(4);};
+    resultEl.textContent=fmt(result)+' '+_convTo.ticker;
+    rateEl.textContent='1 '+_convFrom.ticker+' = '+fmt(rate)+' '+_convTo.ticker;
+  });
 }
 </script>
 </div>
