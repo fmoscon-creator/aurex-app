@@ -890,7 +890,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="auth-msg" class="auth-msg"></div>
 </div>
 <!-- ESTADO LOGUEADO -->
-<div <div id="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
+<div <div id="auth-logged" class="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
   <div id="auth-avatar-initial" style="width:64px;height:64px;border-radius:50%;background:#c9a84c;color:#000;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"></div>
   <div id="auth-username-txt" style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;"></div>
   <div id="auth-email-txt" style="font-size:13px;color:#aaa;margin-bottom:10px;"></div>
@@ -1220,7 +1220,7 @@ window.navTo = function(screen) {
   var activeBtn = document.getElementById('btn-' + screen);
   if(activeBtn) activeBtn.classList.add('active');
   if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
-  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc)pc.scrollTop=0;}
+  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
 };
 
 // ── Selector de país para teléfono ──
