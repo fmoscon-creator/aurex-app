@@ -344,7 +344,7 @@ function _renderPortfolioEmpty(){
     '<span style="font-size:18px;">👤</span>' +
     '<div>' +
       '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo — Iniciá sesión para tu portfolio real</div>' +
-      '<div onclick="navTo('perfil');authSwitchTab('register')" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis →</div>' +
+      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis →</div>' +
     '</div>' +
   '</div>';
   _renderPortfolioItems(demoItems);
@@ -430,8 +430,8 @@ window.openAddActivo = function(){
           '<div style="font-size:28px;margin-bottom:8px;">🔐</div>' +
           '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">Necesitás una cuenta</div>' +
           '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creá tu cuenta gratis.</div>' +
-          '<div onclick="navTo('perfil');authSwitchTab('register')" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
-          '<div onclick="navTo('perfil')" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
+          '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
       }
