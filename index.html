@@ -380,7 +380,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=1774716000000"></script>
+<script src="aurex-features.js?v=1774716600000"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -1210,7 +1210,35 @@ window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-
 
 </script>
 <!-- DEV VERSION BADGE — QUITAR AL LANZAR -->
-<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v840000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v840000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v840000 \u2714";},2000);},1500);})();</script>
+<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v850000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v850000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v850000 \u2714";},2000);},1500);})();</script>
 <!-- /DEV VERSION BADGE -->
-</body>
+
+<script>
+// === AUTO-UPDATE SERVICE WORKER ===
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(reg){
+    // Chequear updates cada vez que se carga la página
+    reg.update();
+    // Cuando se detecta una nueva versión instalándose
+    reg.addEventListener('updatefound', function(){
+      var newSW = reg.installing;
+      newSW.addEventListener('statechange', function(){
+        // Cuando el nuevo SW está listo y hay un SW viejo activo
+        if(newSW.state === 'installed' && navigator.serviceWorker.controller){
+          // Mandar mensaje al nuevo SW para que tome control inmediato
+          newSW.postMessage({type: 'SKIP_WAITING'});
+        }
+      });
+    });
+  });
+  // Cuando el SW toma control, recargar la página automáticamente
+  var refreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', function(){
+    if(!refreshing){
+      refreshing = true;
+      window.location.reload();
+    }
+  });
+}
+</script></body>
 </html>
