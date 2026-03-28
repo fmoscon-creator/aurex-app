@@ -336,8 +336,47 @@ function _fetchPortfolio(token, userId){
     headers: supaHeaders(token)
   })
   .then(function(r){ return r.json(); })
-  .then(function(items){ _renderPortfolioItems(items); })
+  .then(function(items){
+    if(!items || items.length===0){ _renderPortfolioEmpty(); return; }
+    // Primero renderizar con precios de cache
+    _renderPortfolioItems(items);
+    // Luego buscar precios frescos para los símbolos del portfolio
+    _refreshPortPrices(items);
+  })
   .catch(function(){ _renderPortfolioEmpty(); });
+}
+
+function _refreshPortPrices(items){
+  if(!items || items.length===0) return;
+  var syms = items.map(function(i){ return i.simbolo; });
+  // Separar cripto (Binance) de Yahoo
+  var CRIPTO = ["BTC","ETH","SOL","BNB","XRP","ADA","AVAX","DOT","LINK","MATIC","USDT","USDC"];
+  var cryptoSyms = syms.filter(function(s){ return CRIPTO.indexOf(s)>=0; });
+  var yahooSyms = syms.filter(function(s){ return CRIPTO.indexOf(s)<0; });
+  var pending = cryptoSyms.length + yahooSyms.length;
+  if(pending===0){ _renderPortfolioItems(items); return; }
+  function done(){ pending--; if(pending<=0) _renderPortfolioItems(items); }
+  // Binance
+  cryptoSyms.forEach(function(sym){
+    var pair = sym==="USDT"||sym==="USDC" ? sym+"BUSD" : sym+"USDT";
+    fetch("https://api.binance.com/api/v3/ticker/price?symbol="+pair)
+      .then(function(r){ return r.json(); })
+      .then(function(d){ if(d.price){ if(!window._pcPrices)window._pcPrices={}; window._pcPrices[sym]=parseFloat(d.price); } done(); })
+      .catch(done);
+  });
+  // Yahoo Finance
+  yahooSyms.forEach(function(sym){
+    fetch("https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/"+sym+"?interval=1d&range=1d")
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        try{
+          var p = d.chart.result[0].meta.regularMarketPrice;
+          if(p){ if(!window._pcPrices)window._pcPrices={}; window._pcPrices[sym]=parseFloat(p); }
+        }catch(e){}
+        done();
+      })
+      .catch(done);
+  });
 }
 
 function _renderPortfolioEmpty(){
