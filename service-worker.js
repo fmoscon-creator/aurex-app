@@ -1,90 +1,67 @@
-// Aurex Service Worker v3.7 ÃÂ¢ÃÂÃÂ Network First critico + Cache busting automatico
-// BUILD: 1774714800000
-const CACHE_VERSION = 'aurex-1774714800000';
-const CACHE_STATIC  = 'aurex-static-1774714800000';
+// Aurex Service Worker v4.0 — Network First SIEMPRE para index.html
+// BUILD: 1774715400000
+const CACHE_VERSION = 'aurex-1774715400000';
+const CACHE_STATIC  = 'aurex-static-1774715400000';
 
-// Archivos que SIEMPRE van a la red primero (nunca quedan stale)
-const NETWORK_FIRST = [
-  '/',
-  '/index.html',
-  '/aurex-features.js'
-];
+// Al instalar — tomar control inmediato
+self.addEventListener('install', event => {
+  self.skipWaiting();
+});
 
-// Archivos estaticos que se pueden cachear (cambian poco)
-const STATIC_ASSETS = [
-  '/manifest.json',
-  '/assets/logo/aurex_logo_dark.svg',
-  '/assets/logo/aurex_logo_transparent.svg'
-];
-
-// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ INSTALL: pre-cachear solo assets estaticos ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
-self.addEventListener('install', function(e){
-  e.waitUntil(
-    caches.open(CACHE_STATIC).then(function(cache){
-      return cache.addAll(STATIC_ASSETS).catch(function(){});
-    }).then(function(){
-      return self.skipWaiting(); // activar inmediatamente sin esperar
-    })
+// Al activar — borrar TODOS los caches viejos y tomar control
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => 
+      Promise.all(
+        keys.filter(k => k !== CACHE_VERSION && k !== CACHE_STATIC)
+            .map(k => { console.log('[SW] Borrando cache viejo:', k); return caches.delete(k); })
+      )
+    ).then(() => self.clients.claim())
   );
 });
 
-// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ ACTIVATE: borrar caches viejas ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
-self.addEventListener('activate', function(e){
-  e.waitUntil(
-    caches.keys().then(function(keys){
-      return Promise.all(
-        keys.map(function(key){
-          // Borrar cualquier cache que no sea la version actual
-          if(key !== CACHE_VERSION && key !== CACHE_STATIC){
-            return caches.delete(key);
-          }
-        })
-      );
-    }).then(function(){
-      return self.clients.claim(); // tomar control de todas las tabs inmediatamente
-    })
-  );
-});
-
-// ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ FETCH: Network First para criticos, Cache First para estaticos ÃÂ¢ÃÂÃÂÃÂ¢ÃÂÃÂ
-self.addEventListener('fetch', function(e){
-  var url = new URL(e.request.url);
-
-  // Solo manejar requests del mismo origen
-  if(url.origin !== location.origin) return;
-
-  var path = url.pathname;
-  var isNetworkFirst = NETWORK_FIRST.some(function(p){ return path === p || path.endsWith('index.html') || path.endsWith('aurex-features.js'); });
-
-  if(isNetworkFirst){
-    // NETWORK FIRST: siempre intenta la red, usa cache solo si falla
-    e.respondWith(
-      fetch(e.request, { cache: 'no-store' })
-        .then(function(response){
-          // Guardar copia fresca en cache
-          if(response && response.status === 200){
-            var clone = response.clone();
-            caches.open(CACHE_VERSION).then(function(cache){ cache.put(e.request, clone); });
-          }
-          return response;
-        })
-        .catch(function(){
-          // Sin red: usar cache si existe
-          return caches.match(e.request);
-        })
+// Fetch — Network First SIEMPRE para index.html y archivos principales
+self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+  
+  // Para index.html y service-worker.js — SIEMPRE de la red, nunca del cache
+  if (url.pathname.endsWith('/') || 
+      url.pathname.endsWith('index.html') || 
+      url.pathname.endsWith('service-worker.js')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-store' })
+        .catch(() => caches.match(event.request))
     );
-  } else {
-    // CACHE FIRST para assets estaticos
-    e.respondWith(
-      caches.match(e.request).then(function(cached){
-        return cached || fetch(e.request).then(function(response){
-          if(response && response.status === 200){
-            var clone = response.clone();
-            caches.open(CACHE_STATIC).then(function(cache){ cache.put(e.request, clone); });
-          }
-          return response;
-        });
-      })
-    );
+    return;
   }
+  
+  // Para aurex-features.js — Network First con fallback a cache
+  if (url.pathname.includes('aurex-features.js')) {
+    event.respondWith(
+      fetch(event.request, { cache: 'no-cache' })
+        .then(response => {
+          if (response.ok) {
+            const clone = response.clone();
+            caches.open(CACHE_STATIC).then(c => c.put(event.request, clone));
+          }
+          return response;
+        })
+        .catch(() => caches.match(event.request))
+    );
+    return;
+  }
+  
+  // Para el resto — Cache First (imágenes, fonts, etc.)
+  event.respondWith(
+    caches.match(event.request).then(cached => {
+      if (cached) return cached;
+      return fetch(event.request).then(response => {
+        if (response.ok && event.request.method === 'GET') {
+          const clone = response.clone();
+          caches.open(CACHE_STATIC).then(c => c.put(event.request, clone));
+        }
+        return response;
+      });
+    })
+  );
 });
