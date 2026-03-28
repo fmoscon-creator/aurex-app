@@ -890,21 +890,24 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="auth-msg" class="auth-msg"></div>
 </div>
 <!-- ESTADO LOGUEADO -->
-<div id="auth-logged" class="auth-wrap">
-<div class="auth-logged">
-<div id="auth-avatar-initial" class="auth-avatar">A</div>
-<div id="auth-username-txt" class="auth-username">Usuario</div>
-<div id="auth-email-txt" class="auth-email-txt">...</div>
-<div id="auth-celular-txt" class="auth-badge" style="background:rgba(22,27,34,0.8);border-color:#30363D;color:#8B949E;font-size:10px">Sin celular cargado</div>
-<div class="auth-badge">Plan Gratis</div>
-<div id="auth-celular-edit" class="auth-celular-row" style="margin-top:8px">
-<div class="auth-celular-label">&#128241; Celular para alertas IA</div>
-<input id="celular-input" class="auth-input" type="tel" placeholder="+54 9 11 1234-5678" autocomplete="tel" style="background:transparent;border:none;padding:4px 0;border-bottom:1px solid #30363D;border-radius:0;margin-top:4px"/>
-<div class="auth-celular-hint">* Necesario para recibir alertas autom&aacute;ticas</div>
-<button onclick="authSaveCelular()" style="margin-top:8px;padding:8px 16px;background:linear-gradient(135deg,#D4A017,#8B6208);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;cursor:pointer;align-self:flex-end">Guardar</button>
-</div>
-<button class="auth-logout" onclick="logoutUser()">Cerrar sesi&oacute;n</button>
-</div>
+<div <div id="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
+  <div id="auth-avatar-initial" style="width:64px;height:64px;border-radius:50%;background:#c9a84c;color:#000;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"></div>
+  <div id="auth-username-txt" style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;"></div>
+  <div id="auth-email-txt" style="font-size:13px;color:#aaa;margin-bottom:10px;"></div>
+  <div id="auth-celular-txt" style="font-size:13px;color:#c9a84c;background:rgba(201,168,76,0.12);border-radius:20px;padding:4px 16px;display:inline-block;margin-bottom:12px;"></div>
+  <div style="margin-bottom:20px;">
+    <button onclick="showPlanModal()" style="background:transparent;border:1px solid #c9a84c;color:#c9a84c;border-radius:20px;padding:6px 20px;font-size:13px;cursor:pointer;">Plan Gratis</button>
+  </div>
+  <div style="background:#1a1a2e;border-radius:12px;padding:16px;margin-bottom:12px;text-align:left;">
+    <div style="font-size:12px;color:#888;margin-bottom:8px;">📱 Celular para alertas IA</div>
+    <div id="auth-celular-edit" style="display:flex;align-items:center;gap:8px;">
+      <input id="celular-input" type="tel" placeholder="+54 9 11 1234-5678" style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none;" oninput="syncCelularDisplay()" />
+      <button onclick="authSaveCelular()" style="background:#c9a84c;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:10px 16px;cursor:pointer;">Guardar</button>
+    </div>
+    <div style="font-size:11px;color:#666;margin-top:6px;">* Necesario para recibir alertas automáticas</div>
+  </div>
+  <div id="auth-msg" class="auth-msg"></div>
+  <button onclick="logoutUser()" style="width:100%;border:1.5px solid #e74c3c;background:transparent;color:#e74c3c;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;">Cerrar sesión</button>
 </div>
 <script>
 (function(){
@@ -958,7 +961,7 @@ window.authSaveCelular=async function(){
   if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
   var r=await c.auth.updateUser({data:{celular:cel}});
   if(r.error){
-    if(msgEl){msgEl.textContent='Error al guardar: '+r.error.message;msgEl.style.color='#e74c3c';}
+    if(msgEl){msgEl.textContent='Error: '+r.error.message;msgEl.style.color='#e74c3c';}
     return;
   }
   var user=r.data&&r.data.user?r.data.user:null;
@@ -967,10 +970,13 @@ window.authSaveCelular=async function(){
   }
   var el=document.getElementById('auth-celular-txt');
   if(el)el.textContent=cel;
-  var editEl=document.getElementById('auth-celular-edit');
-  if(editEl)editEl.style.display='none';
   if(msgEl){msgEl.textContent='Celular guardado ✓';msgEl.style.color='#2ecc71';setTimeout(function(){if(msgEl)msgEl.textContent='';},3000);}
-};
+}
+window.syncCelularDisplay=function(){
+  var cel=document.getElementById('celular-input');
+  var txt=document.getElementById('auth-celular-txt');
+  if(cel&&txt)txt.textContent=cel.value.trim()||'';
+};;
 function showAuthMsg(msg){
   var el=document.getElementById('auth-msg');
   if(el) el.textContent=msg;
@@ -1229,7 +1235,7 @@ window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-
 
 </script>
 <!-- DEV VERSION BADGE — QUITAR AL LANZAR -->
-<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v870000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v870000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v870000 \u2714";},2000);},1500);})();</script>
+<div id="dev-badge" style="position:fixed;top:8px;right:8px;z-index:999999;background:rgba(0,0,0,0.9);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:12px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v880000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v880000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v880000 \u2714";},2000);},1500);})();</script>
 <!-- /DEV VERSION BADGE -->
 
 <script>
