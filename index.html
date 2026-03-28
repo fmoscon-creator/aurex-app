@@ -805,10 +805,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 </div>
 
-<div id="screen-perfil" class="screen" style="display:none">
+<<div id="screen-perfil" class="screen" style="display:none">
 <style>
-#screen-perfil{padding:0;background:#0D1117}
-.auth-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 20px;min-height:100%}
+#screen-perfil{padding:0;background:#0D1117;position:relative;overflow:hidden}
+#perfil-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.auth-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 20px;min-height:100%;position:relative;z-index:1}
 .auth-logo{margin-bottom:16px}
 .auth-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:4px;text-align:center}
 .auth-sub{font-size:11px;color:#D4A017;letter-spacing:3px;text-align:center;margin-bottom:28px}
@@ -816,79 +817,253 @@ document.addEventListener('DOMContentLoaded', function() {
 .auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:#8B949E;border-radius:8px;cursor:pointer;transition:all .2s}
 .auth-tab.on{background:#D4A017;color:#000}
 .auth-form{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
-.auth-input{width:100%;padding:13px 14px;background:#161B22;border:1px solid #30363D;border-radius:10px;color:#fff;font-size:14px;box-sizing:border-box;outline:none}
+.auth-input{width:100%;padding:13px 14px;background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;color:#fff;font-size:14px;box-sizing:border-box;outline:none}
 .auth-input:focus{border-color:#D4A017}
-.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,#c9a227,#e8c547);border:none;border-radius:10px;font-size:15px;font-weight:700;color:#0D1117;cursor:pointer;letter-spacing:0.03em}
-.auth-msg{font-size:12px;text-align:center;min-height:18px;margin-top:4px}
-.auth-msg.ok{color:#00D4AA}
-.auth-msg.err{color:#F85149}
-.auth-logged{width:100%;display:flex;flex-direction:column;align-items:center;gap:16px}
-.auth-avatar{width:72px;height:72px;border-radius:50%;background:#D4A01720;border:2px solid #D4A017;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;color:#D4A017}
-.auth-username{font-size:18px;font-weight:700;color:#fff}
-.auth-email-txt{font-size:13px;color:#8B949E;margin-top:-8px}
-.auth-badge{background:#D4A01720;border:1px solid #D4A017;border-radius:20px;padding:5px 14px;font-size:11px;color:#D4A017;font-weight:600}
+.auth-input-hint{font-size:10px;color:#D4A017;margin-top:-8px;margin-left:4px;margin-bottom:2px}
+.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,#D4A017,#8B6208);border:none;border-radius:10px;color:#000;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px}
+.auth-msg{font-size:13px;color:#D4A017;min-height:20px;text-align:center}
+.auth-logged{display:flex;flex-direction:column;align-items:center;width:100%;gap:10px}
+.auth-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#8B6208);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#000;margin-bottom:4px}
+.auth-username{font-size:18px;font-weight:800;color:#fff;letter-spacing:1px}
+.auth-email-txt{font-size:12px;color:#8B949E}
+.auth-badge{background:#161B22;border:1px solid #D4A017;border-radius:20px;padding:4px 14px;font-size:11px;color:#D4A017;font-weight:700;margin:4px 0 8px}
+.auth-celular-row{width:100%;background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;padding:13px 14px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.auth-celular-label{font-size:11px;color:#8B949E}
+.auth-celular-value{font-size:14px;color:#fff}
+.auth-celular-hint{font-size:10px;color:#D4A017}
 .auth-logout{width:100%;padding:12px;background:transparent;border:1px solid #F85149;border-radius:10px;color:#F85149;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
 </style>
-
+<canvas id="perfil-canvas"></canvas>
 <!-- ESTADO NO LOGUEADO -->
-<div id="auth-guest" class="auth-wrap">
-  <div class="auth-logo">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="60" height="60">
-      <defs>
-        <linearGradient id="gApr" x1="20%" y1="0%" x2="80%" y2="100%">
-          <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
-        </linearGradient>
-        <linearGradient id="gCpr" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
-        </linearGradient>
-      </defs>
-      <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCpr)" stroke-width="3.5"/>
-      <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCpr)" stroke-width="1.5"/>
-      <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCpr)" stroke-width="1" opacity="0.8"/>
-      <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gApr)" stroke-width="11" stroke-linecap="round"/>
-      <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gApr)" stroke-width="11" stroke-linecap="round"/>
-      <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gApr)" stroke-width="11" stroke-linecap="round"/>
-      <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gApr)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
-      <circle cx="150" cy="164" r="5" fill="#F7D060"/>
-    </svg>
-  </div>
-  <div class="auth-title">AUREX</div>
-  <div class="auth-sub">TU CUENTA</div>
-
-  <!-- Tabs login / registro -->
-  <div class="auth-tabs">
-    <div class="auth-tab on" id="tab-login" onclick="authTab('login')">Ingresar</div>
-    <div class="auth-tab" id="tab-register" onclick="authTab('register')">Registrarse</div>
-  </div>
-
-  <!-- Formulario login -->
-  <div id="form-login" class="auth-form">
-    <input class="auth-input" id="auth-email" type="email" placeholder="Email" autocomplete="email"/>
-    <input class="auth-input" id="auth-pass" type="password" placeholder="Contrase&#xF1;a" autocomplete="current-password"/>
-    <button class="auth-btn" onclick="authLogin()">Ingresar</button>
-  </div>
-
-  <!-- Formulario registro (oculto por defecto) -->
-  <div id="form-register" class="auth-form" style="display:none">
-    <input class="auth-input" id="reg-email" type="email" placeholder="Email" autocomplete="email"/>
-    <input class="auth-input" id="reg-pass" type="password" placeholder="Contrase&#xF1;a (m&#xED;n 6 caracteres)" autocomplete="new-password"/>
-    <button class="auth-btn" onclick="authRegister()">Crear cuenta</button>
-  </div>
-
-  <div class="auth-msg" id="auth-msg"></div>
+<div id="auth-guest" class="auth-wrap" style="display:none">
+<div class="auth-logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="60" height="60">
+<defs>
+<linearGradient id="gApr" x1="20%" y1="0%" x2="80%" y2="100%">
+<stop offset="0%" stop-color="#F7D060"/>
+<stop offset="50%" stop-color="#D4A017"/>
+<stop offset="100%" stop-color="#8B6208"/>
+</linearGradient>
+<linearGradient id="gCpr" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#F0C030"/>
+<stop offset="100%" stop-color="#9A7010"/>
+</linearGradient>
+</defs>
+<circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCpr)" stroke-width="3.5"/>
+<circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCpr)" stroke-width="1.5"/>
+<circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCpr)" stroke-width="1" opacity="0.8"/>
+<line x1="150" y1="78" x2="108" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
+<line x1="150" y1="78" x2="192" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
+<line x1="120" y1="148" x2="180" y2="148" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round"/>
+<polyline points="132,178 150,195 168,178" fill="none" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="150" cy="195" r="3" fill="url(#gApr)"/>
+</svg>
 </div>
-
+<div class="auth-title">AUREX</div>
+<div class="auth-sub">TU VENTAJA EN EL MERCADO</div>
+<div class="auth-tabs">
+<div id="tab-login" class="auth-tab on" onclick="authSwitchTab('login')">Ingresar</div>
+<div id="tab-register" class="auth-tab" onclick="authSwitchTab('register')">Registrarse</div>
+</div>
+<div id="form-login" class="auth-form">
+<input id="auth-email" class="auth-input" type="email" placeholder="Email" autocomplete="email"/>
+<input id="auth-pass" class="auth-input" type="password" placeholder="Contrase&ntilde;a" autocomplete="current-password"/>
+<button class="auth-btn" onclick="authDoLogin()">INGRESAR</button>
+</div>
+<div id="form-register" class="auth-form" style="display:none">
+<input id="reg-email" class="auth-input" type="email" placeholder="Email" autocomplete="email"/>
+<input id="reg-pass" class="auth-input" type="password" placeholder="Contrase&ntilde;a (m&iacute;n 6 car.)" autocomplete="new-password"/>
+<input id="reg-celular" class="auth-input" type="tel" placeholder="+54 9 11 1234-5678" autocomplete="tel"/>
+<div class="auth-input-hint">* Para recibir alertas autom&aacute;ticas de se&ntilde;ales IA</div>
+<button class="auth-btn" onclick="authDoRegister()">CREAR CUENTA</button>
+</div>
+<div id="auth-msg" class="auth-msg"></div>
+</div>
 <!-- ESTADO LOGUEADO -->
-<div id="auth-logged" class="auth-wrap" style="display:none">
-  <div class="auth-logged">
-    <div class="auth-avatar" id="auth-avatar-initial">A</div>
-    <div class="auth-username" id="auth-username-txt">Usuario</div>
-    <div class="auth-email-txt" id="auth-email-txt">email@ejemplo.com</div>
-    <div class="auth-badge">&#x2605; Plan Gratis</div>
-    <button class="auth-logout" onclick="authLogout()">Cerrar sesi&#xF3;n</button>
-  </div>
+<div id="auth-logged" class="auth-wrap">
+<div class="auth-logged">
+<div id="auth-avatar-initial" class="auth-avatar">A</div>
+<div id="auth-username-txt" class="auth-username">Usuario</div>
+<div id="auth-email-txt" class="auth-email-txt">...</div>
+<div id="auth-celular-txt" class="auth-badge" style="background:rgba(22,27,34,0.8);border-color:#30363D;color:#8B949E;font-size:10px">Sin celular cargado</div>
+<div class="auth-badge">Plan Gratis</div>
+<div id="auth-celular-edit" class="auth-celular-row" style="margin-top:8px">
+<div class="auth-celular-label">&#128241; Celular para alertas IA</div>
+<input id="celular-input" class="auth-input" type="tel" placeholder="+54 9 11 1234-5678" autocomplete="tel" style="background:transparent;border:none;padding:4px 0;border-bottom:1px solid #30363D;border-radius:0;margin-top:4px"/>
+<div class="auth-celular-hint">* Necesario para recibir alertas autom&aacute;ticas</div>
+<button onclick="authSaveCelular()" style="margin-top:8px;padding:8px 16px;background:linear-gradient(135deg,#D4A017,#8B6208);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:700;cursor:pointer;align-self:flex-end">Guardar</button>
 </div>
-
+<button class="auth-logout" onclick="logoutUser()">Cerrar sesi&oacute;n</button>
+</div>
+</div>
+<script>
+(function(){
+var SURL='https://dklljnfhlzmfsfmxrpie.supabase.co';
+var SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
+var sb=null;
+function getSB(){
+  if(sb) return sb;
+  if(window.supabase && window.supabase.createClient){
+    sb=window.supabase.createClient(SURL,SKEY);
+  }
+  return sb;
+}
+window.authSwitchTab=function(tab){
+  document.getElementById('tab-login').classList.toggle('on',tab==='login');
+  document.getElementById('tab-register').classList.toggle('on',tab==='register');
+  document.getElementById('form-login').style.display=tab==='login'?'flex':'none';
+  document.getElementById('form-register').style.display=tab==='register'?'flex':'none';
+  document.getElementById('auth-msg').textContent='';
+};
+window.authDoLogin=async function(){
+  var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
+  var email=document.getElementById('auth-email').value.trim();
+  var pass=document.getElementById('auth-pass').value;
+  if(!email||!pass){showAuthMsg('Completá todos los campos');return;}
+  showAuthMsg('Ingresando...');
+  var r=await c.auth.signInWithPassword({email,password:pass});
+  if(r.error){showAuthMsg(r.error.message);}
+  else{showAuthMsg('');}
+};
+window.authDoRegister=async function(){
+  var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
+  var email=document.getElementById('reg-email').value.trim();
+  var pass=document.getElementById('reg-pass').value;
+  var cel=document.getElementById('reg-celular').value.trim();
+  if(!email||!pass){showAuthMsg('Completá email y contraseña');return;}
+  if(pass.length<6){showAuthMsg('La contraseña debe tener al menos 6 caracteres');return;}
+  showAuthMsg('Creando cuenta...');
+  var r=await c.auth.signUp({email,password:pass,options:{data:{celular:cel||''}}});
+  if(r.error){showAuthMsg(r.error.message);}
+  else{showAuthMsg('Revisa tu email para confirmar la cuenta');}
+};
+window.authSaveCelular=async function(){
+  var c=getSB(); if(!c) return;
+  var cel=document.getElementById('celular-input').value.trim();
+  var r=await c.auth.updateUser({data:{celular:cel}});
+  if(!r.error){
+    var el=document.getElementById('auth-celular-txt');
+    if(el) el.textContent=cel?cel:'Sin celular cargado';
+  }
+};
+function showAuthMsg(msg){
+  var el=document.getElementById('auth-msg');
+  if(el) el.textContent=msg;
+}
+window.updateUserUI=function(user){
+  var nameEl=document.getElementById('auth-username-txt');
+  var emailEl=document.getElementById('auth-email-txt');
+  var avatarEl=document.getElementById('auth-avatar-initial');
+  var celEl=document.getElementById('auth-celular-txt');
+  if(user){
+    document.getElementById('auth-guest').style.display='none';
+    document.getElementById('auth-logged').style.display='flex';
+    var em=user.email||'';
+    var meta=user.user_metadata||{};
+    var cel=meta.celular||'';
+    var name=meta.nombre||em.split('@')[0]||'Usuario';
+    if(nameEl) nameEl.textContent=name;
+    if(emailEl) emailEl.textContent=em;
+    if(avatarEl) avatarEl.textContent=(name[0]||'A').toUpperCase();
+    if(celEl) celEl.textContent=cel?cel:'Sin celular cargado';
+    var cinput=document.getElementById('celular-input');
+    if(cinput) cinput.value=cel;
+  } else {
+    document.getElementById('auth-guest').style.display='flex';
+    document.getElementById('auth-logged').style.display='none';
+  }
+};
+window.logoutUser=async function(){
+  var c=getSB(); if(!c) return;
+  await c.auth.signOut();
+  updateUserUI(null);
+};
+window.upsertUserDB=function(user){};
+// Init auth listener
+setTimeout(function(){
+  var c=getSB();
+  if(!c) return;
+  c.auth.getSession().then(function(r){
+    if(r.data&&r.data.session) updateUserUI(r.data.session.user);
+    else updateUserUI(null);
+  });
+  c.auth.onAuthStateChange(function(event,session){
+    if(session) updateUserUI(session.user);
+    else updateUserUI(null);
+  });
+},500);
+// Canvas estrellas perfil
+function initPerfilCanvas(){
+  var canvas=document.getElementById('perfil-canvas');
+  if(!canvas) return;
+  var screen=document.getElementById('screen-perfil');
+  canvas.width=screen.offsetWidth||390;
+  canvas.height=screen.offsetHeight||700;
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width, H=canvas.height;
+  var stars=[];
+  for(var i=0;i<70;i++){
+    stars.push({
+      x:Math.random()*W,
+      y:Math.random()*H,
+      r:Math.random()*1.4+0.3,
+      alpha:Math.random(),
+      da:(Math.random()*0.008+0.003)*(Math.random()<0.5?1:-1),
+      vx:(Math.random()-0.5)*0.08,
+      vy:(Math.random()-0.5)*0.08
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // Lineas entre estrellas cercanas
+    for(var i=0;i<stars.length;i++){
+      for(var j=i+1;j<stars.length;j++){
+        var dx=stars[i].x-stars[j].x;
+        var dy=stars[i].y-stars[j].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<90){
+          var lineAlpha=(1-dist/90)*0.18;
+          ctx.beginPath();
+          ctx.moveTo(stars[i].x,stars[i].y);
+          ctx.lineTo(stars[j].x,stars[j].y);
+          ctx.strokeStyle='rgba(212,160,23,'+lineAlpha+')';
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    // Estrellas
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(212,160,23,'+Math.max(0,Math.min(1,s.alpha))+')';
+      ctx.fill();
+      // Actualizar
+      s.alpha+=s.da;
+      if(s.alpha>1||s.alpha<0) s.da*=-1;
+      s.x+=s.vx; s.y+=s.vy;
+      if(s.x<0) s.x=W; if(s.x>W) s.x=0;
+      if(s.y<0) s.y=H; if(s.y>H) s.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+// Inicializar canvas cuando se muestra la pantalla de perfil
+var origShow=window.showScreen;
+window.showScreen=function(id){
+  if(origShow) origShow(id);
+  if(id==='screen-perfil') setTimeout(initPerfilCanvas,50);
+};
+// También init si ya está visible
+setTimeout(function(){
+  if(document.getElementById('screen-perfil').style.display!=='none'){
+    initPerfilCanvas();
+  }
+},800);
+})();
+</script>
 </div>
 <!-- SUSCRIPCIÓN -->
 <div class="sec-lbl">✦ Mi suscripción</div>
