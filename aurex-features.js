@@ -271,3 +271,154 @@ window.swapPortConv = function(){
   toEl.value = tmp;
   updatePortConv();
 };
+
+
+// ============================================================
+// === PORTFOLIO PERSISTENTE — Supabase ========================
+// ============================================================
+
+var SUPA_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
+var SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
+
+// Headers comunes para Supabase
+function supaHeaders(token){
+  var h = {
+    'apikey': SUPA_KEY,
+    'Content-Type': 'application/json',
+    'Prefer': 'return=representation'
+  };
+  if(token) h['Authorization'] = 'Bearer ' + token;
+  else h['Authorization'] = 'Bearer ' + SUPA_KEY;
+  return h;
+}
+
+// Obtener el token de sesión actual del usuario
+function getSupaToken(){
+  try {
+    var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
+    if(window._supabaseClient) return window._supabaseClient.auth.getSession();
+    return Promise.resolve({ data: { session: null } });
+  } catch(e) { return Promise.resolve({ data: { session: null } }); }
+}
+
+// ── CARGAR portfolio del usuario desde Supabase ──
+window.loadPortfolioSupa = function(){
+  var session = null;
+  try {
+    // Intentar obtener sesión del cliente Supabase global
+    if(window._supabaseClient){
+      window._supabaseClient.auth.getSession().then(function(res){
+        if(res.data && res.data.session){
+          session = res.data.session;
+          _fetchPortfolio(session.access_token, session.user.id);
+        } else {
+          _renderPortfolioEmpty();
+        }
+      });
+    } else {
+      _renderPortfolioEmpty();
+    }
+  } catch(e) { _renderPortfolioEmpty(); }
+};
+
+function _fetchPortfolio(token, userId){
+  fetch(SUPA_URL + '/rest/v1/portfolio?user_id=eq.' + userId + '&order=created_at.desc', {
+    headers: supaHeaders(token)
+  })
+  .then(function(r){ return r.json(); })
+  .then(function(items){ _renderPortfolioItems(items); })
+  .catch(function(){ _renderPortfolioEmpty(); });
+}
+
+function _renderPortfolioEmpty(){
+  var list = document.getElementById('port-list');
+  if(list) list.innerHTML = '<div style="color:#8B949E;text-align:center;padding:40px 20px;font-size:13px;">Sin activos. Tocá + Agregar para comenzar.</div>';
+  _updateTotals([]);
+}
+
+function _renderPortfolioItems(items){
+  var list = document.getElementById('port-list');
+  if(!list) return;
+  if(!items || items.length === 0){ _renderPortfolioEmpty(); return; }
+  
+  list.innerHTML = items.map(function(item){
+    var precio = window._pcPrices && window._pcPrices[item.simbolo] ? window._pcPrices[item.simbolo] : 0;
+    var valor = precio > 0 ? (item.cantidad * precio) : (item.cantidad * item.precio_compra);
+    var pnl = precio > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
+    var pnlColor = pnl >= 0 ? '#00D4AA' : '#FF4444';
+    var pnlSign = pnl >= 0 ? '+' : '';
+    return '<div style="display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #1C2128;">' +
+      '<div><div style="font-weight:700;color:#fff;font-size:14px;">' + item.simbolo + '</div>' +
+      '<div style="font-size:11px;color:#8B949E;">' + item.cantidad + ' u. @ $' + item.precio_compra.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div></div>' +
+      '<div style="text-align:right;">' +
+      '<div style="font-size:14px;font-weight:700;color:#fff;">$' + valor.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>' +
+      '<div style="font-size:11px;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div></div>' +
+      '<button onclick="deletePortfolioItem('' + item.id + '')" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;padding:4px 8px;">×</button>' +
+      '</div>';
+  }).join('');
+  _updateTotals(items);
+}
+
+function _updateTotals(items){
+  var total = items.reduce(function(acc, item){
+    var precio = window._pcPrices && window._pcPrices[item.simbolo] ? window._pcPrices[item.simbolo] : item.precio_compra;
+    return acc + (item.cantidad * precio);
+  }, 0);
+  var totalEl = document.querySelector('.port-total-val, [class*="total"]');
+  var actEl = document.getElementById('port-activos-count');
+  if(totalEl) totalEl.textContent = '$' + total.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(actEl) actEl.textContent = items.length;
+}
+
+// ── AGREGAR activo al portfolio ──
+window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
+  if(!window._supabaseClient){ alert('Necesitás iniciar sesión para guardar activos.'); return; }
+  window._supabaseClient.auth.getSession().then(function(res){
+    if(!res.data || !res.data.session){ alert('Iniciá sesión primero.'); return; }
+    var token = res.data.session.access_token;
+    var userId = res.data.session.user.id;
+    fetch(SUPA_URL + '/rest/v1/portfolio', {
+      method: 'POST',
+      headers: supaHeaders(token),
+      body: JSON.stringify({
+        user_id: userId,
+        simbolo: simbolo.toUpperCase(),
+        nombre: nombre,
+        cantidad: parseFloat(cantidad),
+        precio_compra: parseFloat(precioCompra),
+        tipo: tipo || 'cripto'
+      })
+    })
+    .then(function(r){ return r.json(); })
+    .then(function(){ loadPortfolioSupa(); })
+    .catch(function(e){ console.error('Error agregando activo:', e); });
+  });
+};
+
+// ── ELIMINAR activo del portfolio ──
+window.deletePortfolioItem = function(id){
+  if(!window._supabaseClient) return;
+  if(!confirm('¿Eliminar este activo?')) return;
+  window._supabaseClient.auth.getSession().then(function(res){
+    if(!res.data || !res.data.session) return;
+    var token = res.data.session.access_token;
+    fetch(SUPA_URL + '/rest/v1/portfolio?id=eq.' + id, {
+      method: 'DELETE',
+      headers: supaHeaders(token)
+    })
+    .then(function(){ loadPortfolioSupa(); })
+    .catch(function(e){ console.error('Error eliminando:', e); });
+  });
+};
+
+// Cargar portfolio cuando el usuario se loguea
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    if(window._supabaseClient){
+      window._supabaseClient.auth.onAuthStateChange(function(event, session){
+        if(session) { window._supabaseClient = window._supabaseClient; loadPortfolioSupa(); }
+      });
+      loadPortfolioSupa();
+    }
+  }, 1000);
+});
