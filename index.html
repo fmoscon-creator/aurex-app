@@ -607,38 +607,201 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- MODAL CONVERSOR PORTFOLIO -->
-<div id="port-conv-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
-  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <span style="font-size:15px;font-weight:500;color:#E6EDF3">💱 Conversor</span>
-      <span onclick="closePortConvModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span>
+<div id="port-conv-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);" onclick="if(event.target===this)closePortConvModal()">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#0d1117;border-radius:20px 20px 0 0;padding:20px 16px 40px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;">💱</span><span style="color:#fff;font-size:18px;font-weight:700;">Conversor</span></div>
+      <div onclick="closePortConvModal()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">✕</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      <div><div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Monto</div>
-      <input id="pc-amount" type="number" value="1000" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 14px;color:#E6EDF3;font-size:18px;outline:none" oninput="updatePortConv()"></div>
-      <div style="display:flex;gap:8px;align-items:center">
-        <div style="flex:1"><div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">De</div>
-        <select id="pc-from" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none" onchange="updatePortConv()">
-          <option value="USD">🇺🇸 USD</option><option value="ARS">🇦🇷 ARS · Blue</option><option value="ARS_OF">🇦🇷 ARS · Oficial</option><option value="EUR">🇪🇺 EUR</option><option value="BRL">🇧🇷 BRL</option><option value="BTC">₿ BTC</option><option value="ETH">Ξ ETH</option><option value="SOL">◎ SOL</option><option value="USDT">💲 USDT</option>
-        </select></div>
-        <div onclick="swapPortConv()" style="font-size:22px;cursor:pointer;padding:8px;color:#D4A017;margin-top:14px">⇄</div>
-        <div style="flex:1"><div style="font-size:10px;color:#555;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">A</div>
-        <select id="pc-to" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none" onchange="updatePortConv()">
-          <option value="ARS">🇦🇷 ARS · Blue</option><option value="USD">🇺🇸 USD</option><option value="ARS_OF">🇦🇷 ARS · Oficial</option><option value="EUR">🇪🇺 EUR</option><option value="BRL">🇧🇷 BRL</option><option value="BTC">₿ BTC</option><option value="ETH">Ξ ETH</option><option value="SOL">◎ SOL</option><option value="USDT">💲 USDT</option>
-        </select></div>
+    <div style="margin-bottom:16px;">
+      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
+      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:14px 16px;color:#fff;font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;align-items:end;margin-bottom:20px;">
+      <div>
+        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
+        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;"/>
+          <div style="overflow:hidden;flex:1;">
+            <div id="pc-from-ticker" style="color:#fff;font-size:14px;font-weight:700;">BTC</div>
+            <div id="pc-from-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
+          </div>
+          <span style="color:#888;font-size:11px;flex-shrink:0;">▼</span>
+        </div>
       </div>
-      <div style="background:#0D1117;border-radius:12px;padding:16px;border:1px solid #D4A01740;text-align:center;margin-top:4px">
-        <div style="font-size:10px;color:#555;margin-bottom:6px">Resultado</div>
-        <div id="pc-result" style="font-size:26px;font-weight:500;color:#D4A017">—</div>
-        <div id="pc-rate" style="font-size:10px;color:#555;margin-top:4px">Cargando...</div>
+      <div onclick="swapPortConv()" style="height:56px;background:#D4A017;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#000;font-weight:bold;">⇄</div>
+      <div>
+        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
+        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-to-logo" src="https://flagcdn.com/w40/us.png" style="width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;"/>
+          <div style="overflow:hidden;flex:1;">
+            <div id="pc-to-ticker" style="color:#fff;font-size:14px;font-weight:700;">USD</div>
+            <div id="pc-to-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dólar USA</div>
+          </div>
+          <span style="color:#888;font-size:11px;flex-shrink:0;">▼</span>
+        </div>
       </div>
+    </div>
+    <div style="background:#1a1a2e;border-radius:16px;padding:24px;text-align:center;border:1px solid #2a2a3e;">
+      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
+      <div id="pc-result" style="color:#D4A017;font-size:30px;font-weight:800;margin-bottom:8px;line-height:1.2;">—</div>
+      <div id="pc-rate" style="color:#666;font-size:12px;">Ingresá un monto para convertir</div>
     </div>
   </div>
 </div>
-
+<div id="asset-picker-modal" style="display:none;position:fixed;inset:0;z-index:1001;background:rgba(0,0,0,0.85);" onclick="if(event.target===this)closeAssetPicker()">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#0d1117;border-radius:20px 20px 0 0;padding:20px 16px 40px;height:80vh;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <span style="color:#fff;font-size:16px;font-weight:700;" id="picker-title">Seleccionar activo</span>
+      <div onclick="closeAssetPicker()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">✕</div>
+    </div>
+    <div style="position:relative;margin-bottom:12px;">
+      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;">🔍</span>
+      <input id="asset-search" type="text" placeholder="Buscar por nombre o ticker..." oninput="filterAssets(this.value)" autocomplete="off" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 14px 12px 42px;color:#fff;font-size:15px;box-sizing:border-box;outline:none;"/>
+    </div>
+    <div id="asset-list" style="flex:1;overflow-y:auto;padding-right:2px;"></div>
+  </div>
 </div>
-
-<div class="screen" id="screen-mercados" style="display:flex;flex-direction:column;flex:1;min-height:0">
+<script>
+var _convAssets=[
+{ticker:'BTC',name:'Bitcoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png',cgId:'bitcoin'},
+{ticker:'ETH',name:'Ethereum',type:'crypto',logo:'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png',cgId:'ethereum'},
+{ticker:'BNB',name:'BNB',type:'crypto',logo:'https://assets.coingecko.com/coins/images/825/thumb/bnb-icon2_2x.png',cgId:'binancecoin'},
+{ticker:'SOL',name:'Solana',type:'crypto',logo:'https://assets.coingecko.com/coins/images/4128/thumb/solana.png',cgId:'solana'},
+{ticker:'XRP',name:'XRP',type:'crypto',logo:'https://assets.coingecko.com/coins/images/44/thumb/xrp-symbol-white-128.png',cgId:'ripple'},
+{ticker:'ADA',name:'Cardano',type:'crypto',logo:'https://assets.coingecko.com/coins/images/975/thumb/cardano.png',cgId:'cardano'},
+{ticker:'AVAX',name:'Avalanche',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12559/thumb/Avalanche_Circle_RedWhite_Trans.png',cgId:'avalanche-2'},
+{ticker:'DOT',name:'Polkadot',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png',cgId:'polkadot'},
+{ticker:'MATIC',name:'Polygon',type:'crypto',logo:'https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png',cgId:'matic-network'},
+{ticker:'LINK',name:'Chainlink',type:'crypto',logo:'https://assets.coingecko.com/coins/images/877/thumb/chainlink-new-logo.png',cgId:'chainlink'},
+{ticker:'LTC',name:'Litecoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/2/thumb/litecoin.png',cgId:'litecoin'},
+{ticker:'DOGE',name:'Dogecoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/5/thumb/dogecoin.png',cgId:'dogecoin'},
+{ticker:'UNI',name:'Uniswap',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12504/thumb/uniswap-uni.png',cgId:'uniswap'},
+{ticker:'ATOM',name:'Cosmos',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1481/thumb/cosmos_hub.png',cgId:'cosmos'},
+{ticker:'TRX',name:'TRON',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1094/thumb/tron-logo.png',cgId:'tron'},
+{ticker:'USDT',name:'Tether',type:'stable',logo:'https://assets.coingecko.com/coins/images/325/thumb/Tether.png',cgId:'tether'},
+{ticker:'USDC',name:'USD Coin',type:'stable',logo:'https://assets.coingecko.com/coins/images/6319/thumb/usdc.png',cgId:'usd-coin'},
+{ticker:'DAI',name:'Dai',type:'stable',logo:'https://assets.coingecko.com/coins/images/9956/thumb/Badge_Dai.png',cgId:'dai'},
+{ticker:'USD',name:'Dolar USA',type:'fiat',logo:'https://flagcdn.com/w40/us.png'},
+{ticker:'EUR',name:'Euro',type:'fiat',logo:'https://flagcdn.com/w40/eu.png'},
+{ticker:'ARS',name:'Peso Argentino',type:'fiat',logo:'https://flagcdn.com/w40/ar.png'},
+{ticker:'BRL',name:'Real Brasileiro',type:'fiat',logo:'https://flagcdn.com/w40/br.png'},
+{ticker:'MXN',name:'Peso Mexicano',type:'fiat',logo:'https://flagcdn.com/w40/mx.png'},
+{ticker:'CLP',name:'Peso Chileno',type:'fiat',logo:'https://flagcdn.com/w40/cl.png'},
+{ticker:'COP',name:'Peso Colombiano',type:'fiat',logo:'https://flagcdn.com/w40/co.png'},
+{ticker:'PEN',name:'Sol Peruano',type:'fiat',logo:'https://flagcdn.com/w40/pe.png'},
+{ticker:'GBP',name:'Libra Esterlina',type:'fiat',logo:'https://flagcdn.com/w40/gb.png'},
+{ticker:'JPY',name:'Yen Japones',type:'fiat',logo:'https://flagcdn.com/w40/jp.png'},
+{ticker:'CHF',name:'Franco Suizo',type:'fiat',logo:'https://flagcdn.com/w40/ch.png'},
+{ticker:'CAD',name:'Dolar Canadiense',type:'fiat',logo:'https://flagcdn.com/w40/ca.png'},
+{ticker:'AAPL',name:'Apple',type:'stock',logo:'https://logo.clearbit.com/apple.com'},
+{ticker:'TSLA',name:'Tesla',type:'stock',logo:'https://logo.clearbit.com/tesla.com'},
+{ticker:'NVDA',name:'NVIDIA',type:'stock',logo:'https://logo.clearbit.com/nvidia.com'},
+{ticker:'MSFT',name:'Microsoft',type:'stock',logo:'https://logo.clearbit.com/microsoft.com'},
+{ticker:'GOOGL',name:'Alphabet',type:'stock',logo:'https://logo.clearbit.com/google.com'},
+{ticker:'AMZN',name:'Amazon',type:'stock',logo:'https://logo.clearbit.com/amazon.com'},
+{ticker:'META',name:'Meta',type:'stock',logo:'https://logo.clearbit.com/meta.com'},
+{ticker:'NFLX',name:'Netflix',type:'stock',logo:'https://logo.clearbit.com/netflix.com'},
+{ticker:'XAU',name:'Oro Gold',type:'commodity',logo:'https://assets.coingecko.com/coins/images/14800/thumb/pax_gold.png'},
+{ticker:'XAG',name:'Plata Silver',type:'commodity',logo:'https://assets.coingecko.com/coins/images/14916/thumb/silver.png'}
+];
+var _convFrom=_convAssets[0];
+var _convTo=_convAssets.find(function(a){return a.ticker==='USD';});
+var _pickerTarget='from';
+var _convPriceCache={};
+function openPortConversor(){
+  var el=document.getElementById('port-conv-modal');
+  el.style.display='flex';el.style.alignItems='flex-end';
+  refreshPickerDisplay();runConversion();
+}
+function closePortConvModal(){document.getElementById('port-conv-modal').style.display='none';}
+function openAssetPicker(t){
+  _pickerTarget=t;
+  document.getElementById('picker-title').textContent=t==='from'?'Convertir de...':'Convertir a...';
+  document.getElementById('asset-search').value='';
+  renderAssetList(_convAssets);
+  var el=document.getElementById('asset-picker-modal');
+  el.style.display='flex';el.style.alignItems='flex-end';
+  setTimeout(function(){document.getElementById('asset-search').focus();},300);
+}
+function closeAssetPicker(){document.getElementById('asset-picker-modal').style.display='none';}
+function filterAssets(q){
+  if(!q){renderAssetList(_convAssets);return;}
+  var ql=q.toLowerCase();
+  renderAssetList(_convAssets.filter(function(a){return a.ticker.toLowerCase().indexOf(ql)>-1||a.name.toLowerCase().indexOf(ql)>-1;}));
+}
+function renderAssetList(assets){
+  var typeOrder={crypto:0,stable:1,fiat:2,stock:3,commodity:4};
+  var typeName={crypto:'Crypto',stable:'Stablecoins',fiat:'Monedas Fiat',stock:'Acciones USA',commodity:'Commodities'};
+  var sorted=assets.slice().sort(function(a,b){return (typeOrder[a.type]||9)-(typeOrder[b.type]||9);});
+  var html='';var lastType='';
+  sorted.forEach(function(a){
+    if(a.type!==lastType){
+      html+='<div style="color:#D4A017;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:10px 4px 4px;">'+typeName[a.type]+'</div>';
+      lastType=a.type;
+    }
+    var isFlag=a.logo&&a.logo.indexOf('flagcdn')>-1;
+    var ls=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    var fb='data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2728%27 height=%2728%27%3E%3Ccircle cx=%2714%27 cy=%2714%27 r=%2714%27 fill=%27%231a1a2e%27/%3E%3Ctext x=%2750%25%27 y=%2755%25%27 text-anchor=%27middle%27 dominant-baseline=%27middle%27 fill=%27%23D4A017%27 font-size=%2710%27%3E'+a.ticker.substring(0,3)+'%3C/text%3E%3C/svg%3E';
+    html+='<div onclick="selectAsset(''+a.ticker+'')" style="display:flex;align-items:center;gap:12px;padding:12px 8px;border-radius:10px;cursor:pointer;active:background:#1a1a2e;">'
+      +'<img src="'+a.logo+'" style="'+ls+'" onerror="this.src=''+fb+''"/>'
+      +'<div style="flex:1;"><div style="color:#fff;font-size:14px;font-weight:700;">'+a.ticker+'</div><div style="color:#888;font-size:11px;">'+a.name+'</div></div>'
+      +'</div>';
+  });
+  document.getElementById('asset-list').innerHTML=html||'<div style="color:#888;text-align:center;padding:30px;">Sin resultados</div>';
+}
+function selectAsset(ticker){
+  var asset=_convAssets.find(function(a){return a.ticker===ticker;});
+  if(!asset)return;
+  if(_pickerTarget==='from')_convFrom=asset;else _convTo=asset;
+  closeAssetPicker();refreshPickerDisplay();runConversion();
+}
+function refreshPickerDisplay(){
+  var setD=function(prefix,asset){
+    var isFlag=asset.logo&&asset.logo.indexOf('flagcdn')>-1;
+    var logoEl=document.getElementById(prefix+'-logo');
+    if(!logoEl)return;
+    logoEl.src=asset.logo;
+    logoEl.style.cssText=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    document.getElementById(prefix+'-ticker').textContent=asset.ticker;
+    document.getElementById(prefix+'-name').textContent=asset.name;
+  };
+  setD('pc-from',_convFrom);setD('pc-to',_convTo);
+}
+function swapPortConv(){var t=_convFrom;_convFrom=_convTo;_convTo=t;refreshPickerDisplay();runConversion();}
+async function getAssetPriceUSD(asset){
+  if(asset.type==='fiat'){
+    if(asset.ticker==='USD')return 1;
+    try{var r=await fetch('https://open.er-api.com/v6/latest/USD');var d=await r.json();return d.rates&&d.rates[asset.ticker]?1/d.rates[asset.ticker]:null;}catch(e){return null;}
+  }
+  if(asset.type==='crypto'||asset.type==='stable'){
+    if(_convPriceCache[asset.ticker])return _convPriceCache[asset.ticker];
+    try{var r=await fetch('https://api.binance.com/api/v3/ticker/price?symbol='+asset.ticker+'USDT');var d=await r.json();if(d.price){_convPriceCache[asset.ticker]=parseFloat(d.price);return parseFloat(d.price);}}catch(e){}
+    try{var r2=await fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd');var d2=await r2.json();var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}}catch(e){}
+    return null;
+  }
+  if(asset.type==='stock'||asset.type==='commodity'){
+    try{var r3=await fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+asset.ticker+'?interval=1d&range=1d');var d3=await r3.json();var p=d3.chart&&d3.chart.result&&d3.chart.result[0]&&d3.chart.result[0].meta&&d3.chart.result[0].meta.regularMarketPrice;if(p)return p;}catch(e){}
+    return null;
+  }
+  return null;
+}
+async function runConversion(){
+  var amountEl=document.getElementById('pc-amount');
+  var resultEl=document.getElementById('pc-result');
+  var rateEl=document.getElementById('pc-rate');
+  if(!amountEl||!resultEl||!rateEl)return;
+  var amount=parseFloat(amountEl.value)||1;
+  resultEl.textContent='...';rateEl.textContent='Obteniendo tasas...';
+  var prices=await Promise.all([getAssetPriceUSD(_convFrom),getAssetPriceUSD(_convTo)]);
+  var fromUSD=prices[0];var toUSD=prices[1];
+  if(!fromUSD||!toUSD){resultEl.textContent='N/D';rateEl.textContent='No se pudo obtener la tasa';return;}
+  var rate=fromUSD/toUSD;var result=amount*rate;
+  var fmt=function(n){return n>=1000?n.toLocaleString('es-AR',{maximumFractionDigits:2}):n>=0.01?n.toLocaleString('es-AR',{maximumFractionDigits:6}):n.toExponential(4);};
+  resultEl.textContent=fmt(result)+' '+_convTo.ticker;
+  rateEl.textContent='1 '+_convFrom.ticker+' = '+fmt(rate)+' '+_convTo.ticker;
+}
+</script>
 <!-- STATUS BAR -->
 <div class="sbar">
   <span class="st" id="clock">9:41</span>
@@ -1235,9 +1398,7 @@ window.updatePhonePrefix = function(){
 window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-code');var hidden=document.getElementById('reg-celular');var numInput=document.getElementById('reg-celular-num');if(!hidden||!numInput)return;var prefix=codeEl?codeEl.textContent.trim():'+54';hidden.value=prefix+' '+numInput.value.trim();};
 
 </script>
-<!-- DEV VERSION BADGE — QUITAR AL LANZAR -->
-<div id="dev-badge" style="position:fixed;bottom:70px;left:50%;transform:translateX(-50%);z-index:999999;background:rgba(0,0,0,0.85);border:2px solid #2ea043;border-radius:20px;padding:4px 12px 4px 8px;display:flex;align-items:center;gap:5px;font-family:monospace;font-size:11px;font-weight:bold;color:#fff;pointer-events:none;box-shadow:0 2px 12px rgba(0,0,0,0.7);white-space:nowrap;"><span id="dev-dot" style="width:8px;height:8px;border-radius:50%;background:#2ea043;display:inline-block;box-shadow:0 0 6px #2ea043;"></span><span id="dev-badge-txt">BUILD v900000</span></div><script>(function(){setTimeout(function(){var badge=document.getElementById("dev-badge");var dot=document.getElementById("dev-dot");var txt=document.getElementById("dev-badge-txt");function getActiveScreen(){  var screens=["portfolio","mercados","ia","watchlist","alertas","perfil"];  for(var i=0;i<screens.length;i++){    var el=document.getElementById("screen-"+screens[i]);    if(el&&el.style.display!=="none"&&el.style.display!=="")return screens[i];  }return "?";}function getActiveTab(){  var fr=document.getElementById("form-register");  var fl=document.getElementById("form-login");  if(fr&&(fr.style.display==="flex"||fr.style.display==="block"))return "REG";  if(fl&&(fl.style.display==="flex"||fl.style.display==="block"))return "LOG";  return "";}var screen=getActiveScreen();var tab=getActiveTab();var info="["+screen+(tab?"/"+tab:"")+"] BUILD v900000";if(txt)txt.textContent=info+" \u2714";setInterval(function(){  var s=getActiveScreen();var t=getActiveTab();  if(txt)txt.textContent="["+s+(t?"/"+t:"")+"] BUILD v900000 \u2714";},2000);},1500);})();</script>
-<!-- /DEV VERSION BADGE -->
+
 
 <script>
 // === AUTO-UPDATE SERVICE WORKER ===
