@@ -1165,10 +1165,11 @@ function _renderIALista(signals, keepLoadingBar) {
     var cambio24h = s.precio24h>0?((s.precio-s.precio24h)/s.precio24h*100):0;
     var pctColor = cambio24h>=0?'#3FB950':'#FF4444';
     var pctStr = (cambio24h>=0?'+':'')+cambio24h.toFixed(2)+'%';
+    var abbr = s.abbr || s.simbolo.substring(0,3);
     var logoHtml = s.logo ?
-      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
-      '<span style="display:none;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>' :
-      '<span style="font-size:9px;font-weight:800;color:'+s.color+'">'+(s.abbr||s.simbolo.substring(0,3))+'</span>';
+      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
+      '<span style="display:none;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;display:none;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
+      '<span style="display:flex;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:1px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="padding:10px 14px 8px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
