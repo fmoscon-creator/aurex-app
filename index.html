@@ -440,7 +440,7 @@ function logoutUser() {
 // Guardar/actualizar usuario en DB
 function upsertUserDB(user) {
   if (!_supabase || !user) return;
-  _supabase.from('users').upsert({
+  _supabase.from('usuarios').upsert({
     id: user.id,
     email: user.email,
     nombre: user.user_metadata.full_name || user.email.split('@')[0],
@@ -1146,7 +1146,7 @@ window.authSaveCelular=function(){
   }
   var user=r.data&&r.data.user?r.data.user:null;
   if(user){
-    c.from('users').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
+    c.from('usuarios').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
   }
   var el=document.getElementById('auth-celular-txt');
   if(el)el.textContent=cel;
