@@ -379,6 +379,10 @@ function _refreshPortPrices(items){
           if(meta.regularMarketPrice){ window._pcPrices[sym] = parseFloat(meta.regularMarketPrice); }
           if(meta.previousClose && meta.regularMarketPrice){
             window._pcChange24[sym] = ((meta.regularMarketPrice - meta.previousClose) / meta.previousClose * 100);
+            if(!window._pcMarketState) window._pcMarketState={};
+            window._pcMarketState[sym]=meta.marketState||'CLOSED';
+            if(!window._pcPrevClose) window._pcPrevClose={};
+            window._pcPrevClose[sym]=meta.previousClose;
           }
         }catch(e){}
         done();
@@ -419,6 +423,30 @@ function _renderPortfolioItems(items){
     var ch24 = window._pcChange24 && window._pcChange24[item.simbolo] !== undefined ? window._pcChange24[item.simbolo] : (precio > 0 && item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0);
     var cc = ch24 >= 0 ? '#3FB950' : '#FF4444';
     var cs = ch24 >= 0 ? '+' : '';
+    var isCrypto = item.tipo === 'Cripto';
+    var mktState = !isCrypto && window._pcMarketState && window._pcMarketState[item.simbolo];
+    var mktClosed = mktState && mktState !== 'REGULAR' && mktState !== 'PRE';
+    var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
+    var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
+    if(mktClosed && prevClosePct !== null){ cc = '#888'; cs = prevClosePct >= 0 ? '+' : ''; }
+    var nowUtc = new Date();
+    var nowMin = nowUtc.getUTCHours()*60+nowUtc.getUTCMinutes();
+    var nyseOpenMin = 13*60+30;
+    var nyseCloseMin = 20*60;
+    var isWeekend = nowUtc.getUTCDay()===0||nowUtc.getUTCDay()===6;
+    var minsToOpen = 0;
+    if(mktClosed){
+      if(isWeekend){
+        var daysToMon = (8-nowUtc.getUTCDay())%7||7;
+        minsToOpen = daysToMon*24*60 - nowMin + nyseOpenMin;
+      } else if(nowMin < nyseOpenMin){
+        minsToOpen = nyseOpenMin - nowMin;
+      } else {
+        minsToOpen = (24*60 - nowMin) + nyseOpenMin;
+      }
+    }
+    var closedLabel = mktClosed ? ' <span style="font-size:9px;color:#666;font-weight:400;">\u25CF cierre</span>' : '';
+    var openLabel = mktClosed ? '<div style="font-size:9px;color:#666;margin-top:1px;">Abre en '+Math.floor(minsToOpen/60)+'h '+( minsToOpen%60)+'m</div>' : '';
     var upColor = idx === 0 ? '#333' : '#8B949E';
     var dnColor = idx === items.length-1 ? '#333' : '#8B949E';
     var upCursor = idx === 0 ? 'default' : 'pointer';
@@ -438,7 +466,7 @@ function _renderPortfolioItems(items){
       '<div style="text-align:right;margin-right:8px;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$'+fmtNum(valor)+'</div>' +
         '<div style="display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:3px;">' +
-          '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+cs+ch24.toFixed(2)+'%</span>' +
+          '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%'+closedLabel : cs+ch24.toFixed(2)+'%')+'</span>'+openLabel +
           '<span style="display:flex;gap:1px;">' +
             ['24h','7d','1m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
           '</span>' +
@@ -607,6 +635,7 @@ function _openAddActivoModal(){
     '</div>';
   modal.style.display = 'flex';
 }
+window.openPortModal = _openAddActivoModal;
 
 window.closePortModal = function(){
   var modal = document.getElementById('port-modal');
