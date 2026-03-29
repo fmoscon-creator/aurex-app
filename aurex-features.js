@@ -738,7 +738,7 @@ function _calcIAScore(activo, precioActual, precioOro, precioPetroleo) {
   var stop = precioActual > 0 ? (precioActual * (1 - absScore * 1.2)).toFixed(precioActual > 100 ? 0 : 4) : '0';
   var upside = (absScore * 200).toFixed(1);
   return {
-    simbolo: sym, nombre: activo.n, tipo: activo.t, icon: activo.icon || sym[0], color: activo.color || '#D4A017',
+    simbolo: sym, nombre: activo.n, tipo: activo.tipo, logo: activo.logo || '', icon: activo.icon || sym[0], color: activo.color || '#D4A017',
     direccion: direccion, confianza: probPrincipal, score: total,
     prob_alcista: probAlcista, prob_bajista: probBajista, prob_alta_conf: probAltaConf,
     escenario_principal: escenarioPrincipal, prob_principal: probPrincipal,
