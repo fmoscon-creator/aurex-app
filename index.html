@@ -1438,10 +1438,10 @@ window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-
 
 
 <script>
-// AUREX SW registro v1020000
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/aurex-app/service-worker.js',{updateViaCache:'none'})
-    .catch(function(e){ console.log('SW:',e); });
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(r){ r.unregister(); });
+  });
 }
 </script>
 </body>
