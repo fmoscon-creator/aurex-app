@@ -309,7 +309,7 @@ function supaHeaders(token){
 function getSupaToken(){
   try {
     var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
-    if(window._supabaseClient) return window._supabaseClient.auth.getSession();
+    if(window._supabase) return window._supabase.auth.getSession();
     return Promise.resolve({ data: { session: null } });
   } catch(e) { return Promise.resolve({ data: { session: null } }); }
 }
@@ -317,8 +317,8 @@ function getSupaToken(){
 // ── CARGAR portfolio del usuario desde Supabase ──
 window.loadPortfolioSupa = function(){
   try {
-    if(window._supabaseClient){
-      window._supabaseClient.auth.getSession().then(function(res){
+    if(window._supabase){
+      window._supabase.auth.getSession().then(function(res){
         if(res.data && res.data.session){
           _fetchPortfolio(res.data.session.access_token, res.data.session.user.id);
         } else {
@@ -471,8 +471,8 @@ var _ACTIVOS_MODAL = [
 
 window.openAddActivo = function(){
   // Si no hay sesión, mostrar aviso de login
-  if(!window._supabaseClient){ navTo('perfil'); return; }
-  window._supabaseClient.auth.getSession().then(function(res){
+  if(!window._supabase){ navTo('perfil'); return; }
+  window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){
       // Mostrar mini-aviso en el portfolio y redirigir a Perfil/Login
       var cnt = document.getElementById('port-cnt');
@@ -556,8 +556,8 @@ function showPortErr(msg){
 
 // ── AGREGAR activo al portfolio en Supabase ──
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
-  if(!window._supabaseClient){ alert('Necesitás iniciar sesión para guardar activos.'); return; }
-  window._supabaseClient.auth.getSession().then(function(res){
+  if(!window._supabase){ alert('Necesitás iniciar sesión para guardar activos.'); return; }
+  window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){ alert('Iniciá sesión primero.'); return; }
     var token = res.data.session.access_token;
     var userId = res.data.session.user.id;
@@ -583,9 +583,9 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
 
 // ── ELIMINAR activo del portfolio ──
 window.deletePortfolioItem = function(id){
-  if(!window._supabaseClient) return;
+  if(!window._supabase) return;
   if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
-  window._supabaseClient.auth.getSession().then(function(res){
+  window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session) return;
     var token = res.data.session.access_token;
     fetch(SUPA_URL + '/rest/v1/portfolio?id=eq.' + id, {
@@ -600,8 +600,8 @@ window.deletePortfolioItem = function(id){
 // Inicializar portfolio cuando hay sesión
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
-    if(window._supabaseClient){
-      window._supabaseClient.auth.onAuthStateChange(function(event, session){
+    if(window._supabase){
+      window._supabase.auth.onAuthStateChange(function(event, session){
         if(event === 'SIGNED_IN') loadPortfolioSupa();
         if(event === 'SIGNED_OUT') _renderPortfolioEmpty();
       });
