@@ -415,14 +415,19 @@ function _renderPortfolioItems(items){
     var pnlColor = pnl >= 0 ? '#3FB950' : '#FF4444';
     var pnlSign = pnl >= 0 ? '+' : '';
     var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
-    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">×</div>' +
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border-bottom:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="display:flex;align-items:center;gap:6px;">' +
+          '<span style="font-weight:700;color:#E6EDF3;font-size:14px;">' + item.simbolo + '</span>' +
+          '<span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E;">' + (item.tipo||'cripto') + '</span>' +
+        '</div>' +
         '<div style="font-size:11px;color:#8B949E;margin-top:2px;">' + item.cantidad + ' u. @ $' + fmtNum(item.precio_compra) + '</div>' +
       '</div>' +
       '<div style="text-align:right;margin-right:8px;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$' + fmtNum(valor) + '</div>' +
         '<div style="font-size:11px;font-weight:600;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div>' +
       '</div>' +
-      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
+      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">×</div>' +
     '</div>';
   }).join('');
   _updateTotals(items);
