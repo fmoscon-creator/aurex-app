@@ -1,3 +1,4 @@
+/* v=1774768876408 */
 (function(){var p=new URLSearchParams(window.location.search);if(p.get('resetOnboarding')==='1'){['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());}})();
 var BACKEND_URL='https://aurex-app-production.up.railway.app';
 var USER_WA=localStorage.getItem('aurex_wa_numero')||'';
@@ -47,7 +48,7 @@ var DATA={
     ]
   },
   etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],
-  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'PetrÃ³leo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
+  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'PetrÃÂ³leo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
   futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
   divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
 };
@@ -65,7 +66,7 @@ function renderTab(tab, pais){
     row.className='item-row'; row.id='row-'+item.s;
     row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #21262D;cursor:pointer;';
     row.innerHTML='<div style="display:flex;flex-direction:column;"><span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span><span style="color:#8B949E;font-size:11px;">'+item.n+'</span></div>'
-      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">â</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">â</span></div>';
+      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">Ã¢ÂÂ</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">Ã¢ÂÂ</span></div>';
     cnt.appendChild(row);
   });
   // Lanzar fetch de datos para este tab
@@ -132,7 +133,7 @@ window.sw=function(tab,el){
   renderTab(tab, _activePais);
 };
 
-// === swPais: cambio de paÃ­s en acciones ===
+// === swPais: cambio de paÃÂ­s en acciones ===
 window.swPais=function(pais,el){
   document.querySelectorAll('#pais-row .tab').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
@@ -148,7 +149,7 @@ renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
-function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
+function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃÂ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
 function showAlertNotification(s,p,o){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+p.toLocaleString('en')+' obj:$'+o.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
 function updateNotifButton(on){var b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'#D4A017';b.textContent=on?'Activas':'Activar';}
 initPushNotifications();
@@ -157,7 +158,7 @@ setInterval(checkAlertasLocal,30000);
 fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d.status==='ok')console.log('Backend v'+d.version+' OK');}).catch(function(){});
 
 // ============================================================
-// === CONVERSOR DE MONEDAS â Binance + fallback fiat =========
+// === CONVERSOR DE MONEDAS Ã¢ÂÂ Binance + fallback fiat =========
 // ============================================================
 
 window._pcPrices = {};
@@ -217,7 +218,7 @@ window.updatePortConv = function(){
   if(!amtEl || !fromEl || !toEl || !resEl) return;
 
   var amt  = parseFloat(amtEl.value);
-  if(isNaN(amt) || amt < 0) { resEl.textContent = 'â'; return; }
+  if(isNaN(amt) || amt < 0) { resEl.textContent = 'Ã¢ÂÂ'; return; }
   var from = fromEl.value;
   var to   = toEl.value;
   var p    = window._pcPrices;
@@ -287,7 +288,7 @@ window.swapPortConv = function(){
 
 
 // ============================================================
-// === PORTFOLIO PERSISTENTE â Supabase ========================
+// === PORTFOLIO PERSISTENTE Ã¢ÂÂ Supabase ========================
 // ============================================================
 
 var SUPA_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
@@ -305,7 +306,7 @@ function supaHeaders(token){
   return h;
 }
 
-// Obtener el token de sesiÃ³n actual del usuario
+// Obtener el token de sesiÃÂ³n actual del usuario
 function getSupaToken(){
   try {
     var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
@@ -314,7 +315,7 @@ function getSupaToken(){
   } catch(e) { return Promise.resolve({ data: { session: null } }); }
 }
 
-// ââ CARGAR portfolio del usuario desde Supabase ââ
+// Ã¢ÂÂÃ¢ÂÂ CARGAR portfolio del usuario desde Supabase Ã¢ÂÂÃ¢ÂÂ
 window.loadPortfolioSupa = function(){
   try {
     if(window._supabase){
@@ -340,7 +341,7 @@ function _fetchPortfolio(token, userId){
     if(!items || items.length===0){ _renderPortfolioEmpty(); return; }
     // Primero renderizar con precios de cache
     _renderPortfolioItems(items);
-    // Luego buscar precios frescos para los sÃ­mbolos del portfolio
+    // Luego buscar precios frescos para los sÃÂ­mbolos del portfolio
     _refreshPortPrices(items);
   })
   .catch(function(){ _renderPortfolioEmpty(); });
@@ -382,21 +383,21 @@ function _refreshPortPrices(items){
 function _renderPortfolioEmpty(){
   var cnt = document.getElementById('port-cnt');
   if(!cnt) return;
-  // Si no hay sesiÃ³n, mostrar demo con activos de ejemplo
+  // Si no hay sesiÃÂ³n, mostrar demo con activos de ejemplo
   var demoItems = [
     {id:'demo1', simbolo:'AAPL',  nombre:'Apple',       cantidad:10,   precio_compra:185.00, tipo:'accion'},
     {id:'demo2', simbolo:'NVDA',  nombre:'NVIDIA',      cantidad:5,    precio_compra:125.00, tipo:'accion'},
     {id:'demo3', simbolo:'BTC',   nombre:'Bitcoin',     cantidad:0.05, precio_compra:62000,  tipo:'cripto'},
     {id:'demo4', simbolo:'ETH',   nombre:'Ethereum',    cantidad:1.5,  precio_compra:3200,   tipo:'cripto'},
     {id:'demo5', simbolo:'GC=F',  nombre:'Oro (Gold)',  cantidad:2,    precio_compra:2050,   tipo:'commodity'},
-    {id:'demo6', simbolo:'CL=F',  nombre:'PetrÃ³leo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
+    {id:'demo6', simbolo:'CL=F',  nombre:'PetrÃÂ³leo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
     {id:'demo7', simbolo:'TLT',   nombre:'Bono 20Y US', cantidad:20,   precio_compra:92.00,  tipo:'bono'}
   ];
   cnt.innerHTML = '<div style="background:#1A0D0060;border:1px dashed #D4A01740;border-radius:10px;margin:10px 14px 6px;padding:8px 14px;display:flex;align-items:center;gap:8px;">' +
-    '<span style="font-size:18px;">ð¤</span>' +
+    '<span style="font-size:18px;">Ã°ÂÂÂ¤</span>' +
     '<div>' +
-      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo â IniciÃ¡ sesiÃ³n para tu portfolio real</div>' +
-      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis â</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo Ã¢ÂÂ IniciÃÂ¡ sesiÃÂ³n para tu portfolio real</div>' +
+      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis Ã¢ÂÂ</div>' +
     '</div>' +
   '</div>';
   _renderPortfolioItems(demoItems);
@@ -426,7 +427,7 @@ function _renderPortfolioItems(items){
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$' + fmtNum(valor) + '</div>' +
         '<div style="font-size:11px;font-weight:600;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div>' +
       '</div>' +
-      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">Ã</div>' +
+      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">ÃÂ</div>' +
     '</div>';
   }).join('');
   _updateTotals(items);
@@ -434,7 +435,7 @@ function _renderPortfolioItems(items){
 
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
-  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'â';
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'Ã¢ÂÂ';
   items.forEach(function(item){
     var precio = prcs[item.simbolo] || item.precio_compra;
     total += item.cantidad * precio;
@@ -448,7 +449,7 @@ function _updateTotals(items){
   var el = function(id){ return document.getElementById(id); };
   if(el('port-total')) el('port-total').textContent = '$' + fmtNum(total);
   if(el('port-count')) el('port-count').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'â';
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'Ã¢ÂÂ';
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
@@ -460,7 +461,7 @@ function _updateTotals(items){
   }
 }
 
-// ââ ABRIR / CERRAR modal Agregar activo ââ
+// Ã¢ÂÂÃ¢ÂÂ ABRIR / CERRAR modal Agregar activo Ã¢ÂÂÃ¢ÂÂ
 var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
   {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
@@ -470,7 +471,7 @@ var _ACTIVOS_MODAL = [
 ];
 
 window.openAddActivo = function(){
-  // Si no hay sesiÃ³n, mostrar aviso de login
+  // Si no hay sesiÃÂ³n, mostrar aviso de login
   if(!window._supabase){ navTo('perfil'); return; }
   window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){
@@ -479,10 +480,10 @@ window.openAddActivo = function(){
       if(cnt){
         var old = cnt.innerHTML;
         cnt.innerHTML = '<div style="background:#1A0D00;border:1px solid #D4A01780;border-radius:12px;margin:20px 14px;padding:20px;text-align:center;">' +
-          '<div style="font-size:28px;margin-bottom:8px;">ð</div>' +
-          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃ¡s una cuenta</div>' +
-          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃ¡ tu cuenta gratis.</div>' +
-          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis â</div>' +
+          '<div style="font-size:28px;margin-bottom:8px;">Ã°ÂÂÂ</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃÂ¡s una cuenta</div>' +
+          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃÂ¡ tu cuenta gratis.</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis Ã¢ÂÂ</div>' +
           '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
@@ -500,8 +501,8 @@ function _openAddActivoModal(){
   if(title) title.textContent = 'Agregar activo';
   // Construir selector de activos agrupado + inputs
   var opts = _ACTIVOS_MODAL.map(function(g){
-    return '<optgroup label="ââ ' + g.g + ' ââ">' +
-      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' Â· ' + a.n + '</option>'; }).join('') +
+    return '<optgroup label="Ã¢ÂÂÃ¢ÂÂ ' + g.g + ' Ã¢ÂÂÃ¢ÂÂ">' +
+      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' ÃÂ· ' + a.n + '</option>'; }).join('') +
     '</optgroup>';
   }).join('');
   body.innerHTML =
@@ -541,9 +542,9 @@ window.savePortActivo = function(){
   var simbolo = parts[0], nombre = parts[1], tipo = parts[2];
   var cantidad = parseFloat(qtyEl.value);
   var precio = parseFloat(priceEl.value);
-  if(!simbolo){ showPortErr('SeleccionÃ¡ un activo.'); return; }
-  if(!cantidad || cantidad <= 0){ showPortErr('IngresÃ¡ una cantidad vÃ¡lida.'); return; }
-  if(!precio || precio <= 0){ showPortErr('IngresÃ¡ un precio de compra vÃ¡lido.'); return; }
+  if(!simbolo){ showPortErr('SeleccionÃÂ¡ un activo.'); return; }
+  if(!cantidad || cantidad <= 0){ showPortErr('IngresÃÂ¡ una cantidad vÃÂ¡lida.'); return; }
+  if(!precio || precio <= 0){ showPortErr('IngresÃÂ¡ un precio de compra vÃÂ¡lido.'); return; }
   if(errEl) errEl.style.display = 'none';
   addPortfolioItem(simbolo, nombre, cantidad, precio, tipo);
   closePortModal();
@@ -554,11 +555,11 @@ function showPortErr(msg){
   if(errEl){ errEl.textContent = msg; errEl.style.display = 'block'; }
 }
 
-// ââ AGREGAR activo al portfolio en Supabase ââ
+// Ã¢ÂÂÃ¢ÂÂ AGREGAR activo al portfolio en Supabase Ã¢ÂÂÃ¢ÂÂ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
-  if(!window._supabase){ alert('NecesitÃ¡s iniciar sesiÃ³n para guardar activos.'); return; }
+  if(!window._supabase){ alert('NecesitÃÂ¡s iniciar sesiÃÂ³n para guardar activos.'); return; }
   window._supabase.auth.getSession().then(function(res){
-    if(!res.data || !res.data.session){ alert('IniciÃ¡ sesiÃ³n primero.'); return; }
+    if(!res.data || !res.data.session){ alert('IniciÃÂ¡ sesiÃÂ³n primero.'); return; }
     var token = res.data.session.access_token;
     var userId = res.data.session.user.id;
     fetch(SUPA_URL + '/rest/v1/portfolio', {
@@ -581,7 +582,7 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
   });
 };
 
-// ââ ELIMINAR activo del portfolio ââ
+// Ã¢ÂÂÃ¢ÂÂ ELIMINAR activo del portfolio Ã¢ÂÂÃ¢ÂÂ
 window.deletePortfolioItem = function(id){
   if(!window._supabase) return;
   if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
@@ -597,7 +598,7 @@ window.deletePortfolioItem = function(id){
   });
 };
 
-// Inicializar portfolio cuando hay sesiÃ³n
+// Inicializar portfolio cuando hay sesiÃÂ³n
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     if(window._supabase){
@@ -741,7 +742,7 @@ function _calcIAScore(activo, precioActual, precioOro, precioPetroleo) {
   probAlcista = Math.round(probAlcista/sumProb*100);
   probBajista = Math.round(probBajista/sumProb*100);
   probAltaConf = 100 - probAlcista - probBajista;
-  var direccion = total > 0.15 ? 'alcista' : total < -0.15 ? 'bajista' : 'alta_conf';
+  var direccion = total > 0.05 ? 'alcista' : total < -0.05 ? 'bajista' : 'alta_conf';
   var escenarioPrincipal = direccion === 'alcista' ? 'ALCISTA' : direccion === 'bajista' ? 'BAJISTA' : 'ALTA CONF';
   var confianza = direccion === 'alcista' ? probAlcista : direccion === 'bajista' ? probBajista : probAltaConf + 20;
   motivos = motivos.filter(function(m){ return m && m.length > 0; }).slice(0, 5);
