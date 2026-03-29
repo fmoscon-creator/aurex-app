@@ -712,32 +712,32 @@ window._IA_ACTIVOS = [
   {s:'XLK',  n:'Tech ETF',     tipo:'etf',          logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'XLK',   color:'#4285F4'},
   {s:'GDX',  n:'Gold Miners',  tipo:'etf',          logo:'https://logo.clearbit.com/vaneck.com',        ySymbol:'GDX',   color:'#FFD700'},
   // METALES (8)
-  {s:'GLD',  n:'Oro',          tipo:'metal',        logo:''', abbr:'Au''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23FFD700'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EAu%3C/text%3E%3C/svg%3E',   ySymbol:'GC=F', color:'#FFD700'},
-  {s:'SLV',  n:'Plata',        tipo:'metal',        logo:''', abbr:'Ag''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23C0C0C0'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EAg%3C/text%3E%3C/svg%3E', ySymbol:'SI=F', color:'#C0C0C0'},
-  {s:'CPER', n:'Cobre',        tipo:'metal',        logo:''', abbr:'Cu''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23B87333'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3ECu%3C/text%3E%3C/svg%3E', ySymbol:'HG=F', color:'#B87333'},
-  {s:'PPLT', n:'Platino',      tipo:'metal',        logo:''', abbr:'Pt''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23E5E4E2'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EPt%3C/text%3E%3C/svg%3E',ySymbol:'PL=F',color:'#E5E4E2'},
-  {s:'PALL', n:'Paladio',      tipo:'metal',        logo:''', abbr:'Pd''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23CED0D0'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EPd%3C/text%3E%3C/svg%3E',ySymbol:'PA=F',color:'#CED0D0'},
-  {s:'ZINC', n:'Zinc',         tipo:'metal',        logo:''', abbr:'Zn''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%234682B4'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EZn%3C/text%3E%3C/svg%3E',   ySymbol:'ZNC=F',color:'#4682B4'},
-  {s:'ALUM', n:'Aluminio',     tipo:'metal',        logo:''', abbr:'Al''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23848789'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EAl%3C/text%3E%3C/svg%3E',   ySymbol:'ALI=F',color:'#848789'},
-  {s:'IRON', n:'Hierro',       tipo:'metal',        logo:''', abbr:'Fe''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23A04000'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EFe%3C/text%3E%3C/svg%3E',   ySymbol:'TIO=F',color:'#A04000'},
+  {s:'GLD',  n:'Oro',          tipo:'metal',        logo:'', abbr:'Au',   ySymbol:'GC=F', color:'#FFD700'},
+  {s:'SLV',  n:'Plata',        tipo:'metal',        logo:'', abbr:'Ag', ySymbol:'SI=F', color:'#C0C0C0'},
+  {s:'CPER', n:'Cobre',        tipo:'metal',        logo:'', abbr:'Cu', ySymbol:'HG=F', color:'#B87333'},
+  {s:'PPLT', n:'Platino',      tipo:'metal',        logo:'', abbr:'Pt',ySymbol:'PL=F',color:'#E5E4E2'},
+  {s:'PALL', n:'Paladio',      tipo:'metal',        logo:'', abbr:'Pd',ySymbol:'PA=F',color:'#CED0D0'},
+  {s:'ZINC', n:'Zinc',         tipo:'metal',        logo:'', abbr:'Zn',   ySymbol:'ZNC=F',color:'#4682B4'},
+  {s:'ALUM', n:'Aluminio',     tipo:'metal',        logo:'', abbr:'Al',   ySymbol:'ALI=F',color:'#848789'},
+  {s:'IRON', n:'Hierro',       tipo:'metal',        logo:'', abbr:'Fe',   ySymbol:'TIO=F',color:'#A04000'},
   // MATERIAS PRIMAS (8)
-  {s:'USO',  n:'Petroleo WTI', tipo:'materia_prima',logo:''', abbr:'WTI''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23654321'/%3E%3Ctext x='16' y='21' font-size='12' font-weight='bold' text-anchor='middle' fill='%23fff'%3EWTI%3C/text%3E%3C/svg%3E',    ySymbol:'CL=F', color:'#8B4513'},
-  {s:'BNO',  n:'Petroleo Brent',tipo:'materia_prima',logo:''', abbr:'BNT''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%238B4513'/%3E%3Ctext x='16' y='21' font-size='10' font-weight='bold' text-anchor='middle' fill='%23fff'%3EBRENT%3C/text%3E%3C/svg%3E', ySymbol:'BZ=F', color:'#654321'},
-  {s:'UNG',  n:'Gas Natural',  tipo:'materia_prima',logo:''', abbr:'GAS''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%234169E1'/%3E%3Ctext x='16' y='21' font-size='13' font-weight='bold' text-anchor='middle' fill='%23fff'%3EGas%3C/text%3E%3C/svg%3E',    ySymbol:'NG=F', color:'#4169E1'},
-  {s:'WEAT', n:'Trigo',        tipo:'materia_prima',logo:''', abbr:'WHT''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23DAA520'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EWHT%3C/text%3E%3C/svg%3E',  ySymbol:'ZW=F', color:'#DAA520'},
-  {s:'CORN', n:'Maiz',         tipo:'materia_prima',logo:''', abbr:'CRN''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23F5DEB3'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ECRN%3C/text%3E%3C/svg%3E',   ySymbol:'ZC=F', color:'#F5DEB3'},
-  {s:'SOYB', n:'Soja',         tipo:'materia_prima',logo:''', abbr:'SOY''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2390EE90'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ESOY%3C/text%3E%3C/svg%3E',    ySymbol:'ZS=F', color:'#90EE90'},
-  {s:'JO',   n:'Cafe',         tipo:'materia_prima',logo:''', abbr:'CFE''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%236F4E37'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23fff'%3ECFE%3C/text%3E%3C/svg%3E', ySymbol:'KC=F', color:'#6F4E37'},
-  {s:'SGG',  n:'Azucar',       tipo:'materia_prima',logo:''', abbr:'SGR''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23FFF9C4'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ESGR%3C/text%3E%3C/svg%3E',  ySymbol:'SB=F', color:'#FFF9C4'},
+  {s:'USO',  n:'Petroleo WTI', tipo:'materia_prima',logo:'', abbr:'WTI',    ySymbol:'CL=F', color:'#8B4513'},
+  {s:'BNO',  n:'Petroleo Brent',tipo:'materia_prima',logo:'', abbr:'BNT', ySymbol:'BZ=F', color:'#654321'},
+  {s:'UNG',  n:'Gas Natural',  tipo:'materia_prima',logo:'', abbr:'GAS',    ySymbol:'NG=F', color:'#4169E1'},
+  {s:'WEAT', n:'Trigo',        tipo:'materia_prima',logo:'', abbr:'WHT',  ySymbol:'ZW=F', color:'#DAA520'},
+  {s:'CORN', n:'Maiz',         tipo:'materia_prima',logo:'', abbr:'CRN',   ySymbol:'ZC=F', color:'#F5DEB3'},
+  {s:'SOYB', n:'Soja',         tipo:'materia_prima',logo:'', abbr:'SOY',    ySymbol:'ZS=F', color:'#90EE90'},
+  {s:'JO',   n:'Cafe',         tipo:'materia_prima',logo:'', abbr:'CFE', ySymbol:'KC=F', color:'#6F4E37'},
+  {s:'SGG',  n:'Azucar',       tipo:'materia_prima',logo:'', abbr:'SGR',  ySymbol:'SB=F', color:'#FFF9C4'},
   // BONOS (8)
-  {s:'TLT',  n:'Bono EEUU 20Y',tipo:'bono',         logo:''', abbr:'TLT''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'TLT',  color:'#6CB4EE'},
-  {s:'AGG',  n:'Bonos Agregados',tipo:'bono',        logo:''', abbr:'AGG''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'AGG',  color:'#4A90D9'},
-  {s:'IEF',  n:'Bono EEUU 7-10Y',tipo:'bono',       logo:''', abbr:'IEF''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'IEF',  color:'#7CB9E8'},
-  {s:'SHY',  n:'Bono EEUU 1-3Y',tipo:'bono',        logo:''', abbr:'SHY''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'SHY',  color:'#A8D8EA'},
-  {s:'HYG',  n:'High Yield Corp',tipo:'bono',       logo:''', abbr:'HYG''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'HYG',  color:'#FF9580'},
-  {s:'LQD',  n:'Bonos Corp USA',tipo:'bono',         logo:''', abbr:'LQD''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'LQD',  color:'#C8A96E'},
-  {s:'EMB',  n:'Bonos Emergentes',tipo:'bono',       logo:''', abbr:'EMB''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'EMB',  color:'#F0883E'},
-  {s:'BND',  n:'Bonos Totales', tipo:'bono',         logo:''', abbr:'BND''http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'BND',  color:'#6CB4EE'}
+  {s:'TLT',  n:'Bono EEUU 20Y',tipo:'bono',         logo:'', abbr:'TLT',   ySymbol:'TLT',  color:'#6CB4EE'},
+  {s:'AGG',  n:'Bonos Agregados',tipo:'bono',        logo:'', abbr:'AGG',   ySymbol:'AGG',  color:'#4A90D9'},
+  {s:'IEF',  n:'Bono EEUU 7-10Y',tipo:'bono',       logo:'', abbr:'IEF',   ySymbol:'IEF',  color:'#7CB9E8'},
+  {s:'SHY',  n:'Bono EEUU 1-3Y',tipo:'bono',        logo:'', abbr:'SHY',   ySymbol:'SHY',  color:'#A8D8EA'},
+  {s:'HYG',  n:'High Yield Corp',tipo:'bono',       logo:'', abbr:'HYG',   ySymbol:'HYG',  color:'#FF9580'},
+  {s:'LQD',  n:'Bonos Corp USA',tipo:'bono',         logo:'', abbr:'LQD',   ySymbol:'LQD',  color:'#C8A96E'},
+  {s:'EMB',  n:'Bonos Emergentes',tipo:'bono',       logo:'', abbr:'EMB',   ySymbol:'EMB',  color:'#F0883E'},
+  {s:'BND',  n:'Bonos Totales', tipo:'bono',         logo:'', abbr:'BND',   ySymbol:'BND',  color:'#6CB4EE'}
 
 ];
 
@@ -1165,11 +1165,10 @@ function _renderIALista(signals, keepLoadingBar) {
     var cambio24h = s.precio24h>0?((s.precio-s.precio24h)/s.precio24h*100):0;
     var pctColor = cambio24h>=0?'#3FB950':'#FF4444';
     var pctStr = (cambio24h>=0?'+':'')+cambio24h.toFixed(2)+'%';
-    var displayText = (s.abbr || s.simbolo.substring(0,3));
     var logoHtml = s.logo ?
-      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
-      '<span style="display:none;font-size:9px;font-weight:800;color:'+s.color+'">'+displayText+'</span>' :
-      '<span style="font-size:9px;font-weight:800;color:'+s.color+'">'+displayText+'</span>';
+      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
+      '<span style="display:none;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>' :
+      '<span style="font-size:9px;font-weight:800;color:'+s.color+'">'+(s.abbr||s.simbolo.substring(0,3))+'</span>';
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:1px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="padding:10px 14px 8px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
