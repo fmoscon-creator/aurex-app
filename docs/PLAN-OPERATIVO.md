@@ -122,19 +122,21 @@ DOCUMENTACION:
 - [x] BUGFIX_HISTORIAL.md creado con historico completo
 - [x] PLAN-OPERATIVO.md actualizado con metodologia Grupo A/B
 
-### LUN 30/03 -- PENDIENTE (manana)
-Tarea: Senales IA - Guardar en Supabase + Watchlist
-- [ ] Guardar senales del dia en Supabase tabla signals
-- [ ] Verificar tabla signals existe (SQL: CREATE TABLE IF NOT EXISTS signals...)
-- [ ] Implementar Watchlist: boton estrella en Mercados agrega a watchlist
-- [ ] Tab Watchlist lee activos favoritos de Supabase con precio en vivo
-- [ ] Verificar flujo completo en iPhone 390x844
+### LUN 30/03 -- EN PROGRESO
+COMPLETADO esta sesion (30/03):
+- [x] Rediseno completo tab IA segun imagen original definida
+- [x] Motor senales v4 con datos REALES: Binance 24hr ticker + Yahoo Finance
+- [x] 16 activos: Criptos + Acciones + ETF + Metales + Mat.Primas + Bonos
+- [x] Banner ticker 2 lineas con animacion scroll + click abre panel eventos
+- [x] Fix CONF.IA: probabilidad real basada en analisis, no en residuo
+- [x] Estrellas (1-5) basadas en calidad del analisis real
+- [x] Pills filtro: Todo/Alcista/Bajista/Conf.IA/Cripto/Acciones/ETF/Metales/Mat.Primas/Bonos
+- [x] Logos reales CoinGecko (criptos) + Clearbit (acciones)
+- [x] 5 motivos objetivos en TODAS las senales (alcista/bajista/conf.ia)
 
-GRUPO B (Semana 2 via Railway):
-- [ ] Noticias periodisticas + NLP
-- [ ] Sentiment redes sociales
-- [ ] Variables geopoliticas
-- [ ] Materias primas extendidas
+PENDIENTE:
+- [ ] Watchlist persistente: boton estrella en Mercados + tab Watchlist desde Supabase
+- [ ] Verificacion flujo completo en iPhone real
 
 ### MAR 31/03 â 5 hs
 Tarea: Watchlist persistente
@@ -159,11 +161,33 @@ Tarea: Buffer
 
 ## SEMANA 2 (3 - 9 Abr) â ALERTAS + BACKEND
 
-### LUN 03/04
-- Implementar Grupo B del Motor de Señales: NewsAPI + NLP + Geopolitica + Redes Sociales
-- Crear proyecto Railway (railway.app gratuito)
+### LUN 03/04 -- ACTUALIZADO
+SEMANA 2 PRIORIDADES ACTUALIZADAS (30/03/2026):
+
+#### TAREA 1: API Investing.com -- Calendario Economico
+- Integrar API Investing.com para datos macro en tiempo real
+- Fuente: https://api.investing.com/economic_calendar (requiere key)
+- Reemplaza los eventos macro hardcodeados de la Semana 1
+- Variables a traer: evento, fecha/hora, impacto (alto/medio/bajo), previo, estimado, actual
+- Activar en Railway como cron job diario (actualizar eventos a las 00:00 UTC)
+
+#### TAREA 2: Calendario Economico en la App
+- Nueva tab o seccion dentro de Alertas: "Calendario"
+- Diseno identico al de Investing.com:
+  * Tabla con columnas: Hora | Pais | Evento | Impacto | Previo | Estimado | Actual
+  * Filtro por impacto: Alto / Medio / Bajo
+  * Filtro por dia: Hoy / Esta semana
+  * Badge de color por impacto: rojo=alto, naranja=medio, gris=bajo
+  * Countdown al proximo evento de alto impacto
+- Fuente: Investing.com API via Railway
+
+#### TAREA 3: Grupo B Motor de Senales
+- NewsAPI + NLP para sentiment de noticias
+- Variables geopoliticas (guerras, elecciones, catastrofes)
+- Sentiment redes sociales (Twitter/Reddit)
+- Balances y resultados corporativos reales (earnings calendar real)
+- Crear proyecto Railway (railway.app)
 - server.js: Express + Supabase + node-cron
-- Deploy a Railway
 
 ### MAR 04/04
 - Tabla alerts en Supabase: user_id, activo, precio_objetivo, direccion (above/below), activa
