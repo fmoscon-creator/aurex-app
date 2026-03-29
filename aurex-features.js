@@ -383,6 +383,10 @@ function _refreshPortPrices(items){
             window._pcMarketState[sym]=meta.marketState||'CLOSED';
             if(!window._pcPrevClose) window._pcPrevClose={};
             window._pcPrevClose[sym]=meta.previousClose;
+            if(!window._pc52Low) window._pc52Low={};
+            if(!window._pc52High) window._pc52High={};
+            if(meta.fiftyTwoWeekLow) window._pc52Low[sym]=meta.fiftyTwoWeekLow;
+            if(meta.fiftyTwoWeekHigh) window._pc52High[sym]=meta.fiftyTwoWeekHigh;
           }
         }catch(e){}
         done();
@@ -456,7 +460,7 @@ function _renderPortfolioItems(items){
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', 1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+dnColor+';cursor:'+dnCursor+';">&#9660;</div>' +
       '</div>' +
-      '<div style="flex:1;min-width:0;">' +
+      '<div style="flex:1;min-width:0;cursor:pointer;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
         '<div style="display:flex;align-items:center;gap:6px;">' +
           '<span style="font-weight:700;color:#E6EDF3;font-size:14px;">'+item.simbolo+'</span>' +
           '<span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E;">'+(item.tipo||'cripto')+'</span>' +
@@ -608,36 +612,64 @@ function _openAddActivoModal(){
   var title = document.getElementById('port-modal-title');
   if(!modal || !body) return;
   if(title) title.textContent = 'Agregar activo';
-  // Construir selector de activos agrupado + inputs
-  var opts = _ACTIVOS_MODAL.map(function(g){
-    return '<optgroup label="ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ' + g.g + ' ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ">' +
-      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· ' + a.n + '</option>'; }).join('') +
-    '</optgroup>';
-  }).join('');
+  var allActs = window._IA_ACTIVOS || [];
   body.innerHTML =
-    '<div style="display:flex;flex-direction:column;gap:12px;">' +
-      '<div>' +
-        '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Activo</div>' +
-        '<select id="pa-sym" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:13px;outline:none;">' + opts + '</select>' +
-      '</div>' +
-      '<div style="display:flex;gap:10px;">' +
-        '<div style="flex:1;">' +
-          '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Cantidad</div>' +
-          '<input id="pa-qty" type="number" min="0" step="any" placeholder="0.001" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:16px;outline:none;box-sizing:border-box;">' +
-        '</div>' +
-        '<div style="flex:1;">' +
-          '<div style="font-size:10px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Precio compra (USD)</div>' +
-          '<input id="pa-price" type="number" min="0" step="any" placeholder="0.00" style="width:100%;background:#0D1117;border:0.5px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:16px;outline:none;box-sizing:border-box;">' +
-        '</div>' +
-      '</div>' +
-      '<div id="pa-err" style="font-size:11px;color:#FF4444;display:none;text-align:center;"></div>' +
-      '<div onclick="savePortActivo()" style="background:linear-gradient(135deg,#D4A017,#B8860B);border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;color:#000;cursor:pointer;margin-top:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Guardar activo</div>' +
+    '<div style="display:flex;flex-direction:column;gap:10px;">' +
+    '<div style="position:relative;">' +
+    '<input id="pa-search" type="text" placeholder="Buscar por nombre o ticker..." autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;" oninput="filterPortSearch()" />' +
+    '</div>' +
+    '<div id="pa-results" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>' +
+    '<div id="pa-selected" style="display:none;background:#161B22;border-radius:9px;padding:10px;border:1px solid #D4A017;">' +
+    '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#E6EDF3;margin-bottom:8px;"></div>' +
+    '<div style="display:flex;gap:8px;">' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div>' +
+    '<input id="pa-qty" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div>' +
+    '<input id="pa-price" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '</div>' +
+    '<div id="pa-err" style="color:#FF4444;font-size:11px;margin-top:4px;display:none;"></div>' +
+    '<div onclick="savePortActivo()" style="margin-top:10px;background:#3FB950;color:#0D1117;border-radius:9px;padding:11px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Confirmar</div>' +
+    '</div>' +
+    '<input id="pa-sym" type="hidden" value="" />' +
     '</div>';
   modal.style.display = 'flex';
+  window._portSearchActs = allActs;
+  setTimeout(function(){ var el = document.getElementById('pa-search'); if(el) el.focus(); }, 100);
+  window.filterPortSearch();
 }
+window.filterPortSearch = function(){
+  var q = (document.getElementById('pa-search') ? document.getElementById('pa-search').value : '').toLowerCase().trim();
+  var acts = window._portSearchActs || [];
+  var res = document.getElementById('pa-results');
+  if(!res) return;
+  var filtered = q.length < 1 ? acts.slice(0,20) : acts.filter(function(a){ return a.s.toLowerCase().indexOf(q) >= 0 || a.n.toLowerCase().indexOf(q) >= 0; }).slice(0,20);
+  res.innerHTML = filtered.map(function(a){
+    var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />' : '<div style="width:22px;height:22px;border-radius:50%;background:'+(a.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">'+(a.s[0]||'?')+'</div>';
+    var tipoLabel = a.tipo === 'cripto' ? 'cripto' : (a.tipo === 'accion' ? 'accion' : (a.tipo||''));
+    var sEsc = a.s.replace(/'/g, '');
+    var nEsc = a.n.replace(/'/g, '');
+    return '<div onclick="window.selectPortActivo(\x27'+sEsc+'\x27,\x27'+nEsc+'\x27)" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer;background:#161B22;border:0.5px solid #21262D;">' +
+      logoHtml +
+      '<div><div style="font-size:12px;font-weight:600;color:#E6EDF3;">'+a.s+'</div><div style="font-size:10px;color:#8B949E;">'+a.n+' &bull; '+tipoLabel+'</div></div>' +
+      '</div>';
+  }).join('');
+};
+window.selectPortActivo = function(sym, nombre){
+  var sel = document.getElementById('pa-selected');
+  var selName = document.getElementById('pa-sel-name');
+  var symInput = document.getElementById('pa-sym');
+  var acts = window._portSearchActs || [];
+  var act = null;
+  for(var i=0;i<acts.length;i++){ if(acts[i].s===sym){ act=acts[i]; break; } }
+  if(sel) sel.style.display = 'block';
+  if(selName) selName.innerHTML = (act && act.logo ? '<img src="'+act.logo+'" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\x27none\x27" />' : '') + sym + ' <span style="color:#8B949E;font-weight:400;font-size:11px;">'+nombre+'</span>';
+  if(symInput) symInput.value = sym + '|' + nombre + '|' + (act ? act.tipo : 'accion');
+  var res = document.getElementById('pa-results');
+  if(res) res.style.display = 'none';
+};
 window.openPortModal = _openAddActivoModal;
-
-window.closePortModal = function(){
+window.openAddActivo = _openAddActivoModal;
+Modal = function(){
   var modal = document.getElementById('port-modal');
   if(modal) modal.style.display = 'none';
 };
@@ -664,6 +696,131 @@ function showPortErr(msg){
   var errEl = document.getElementById('pa-err');
   if(errEl){ errEl.textContent = msg; errEl.style.display = 'block'; }
 }
+
+
+window.openPortItemDetail = function(itemId){
+  var items = window._portItems || [];
+  var item = null;
+  for(var i=0;i<items.length;i++){ if(items[i].id===itemId){ item=items[i]; break; } }
+  if(!item) return;
+  var modal = document.getElementById('port-detail-modal');
+  var body = document.getElementById('port-detail-body');
+  if(!modal || !body) return;
+  var prcs = window._pcPrices || {};
+  var precio = prcs[item.simbolo] || item.precio_compra || 0;
+  var pnlPct = item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0;
+  var pnlUsd = item.cantidad > 0 ? (item.cantidad * (precio - item.precio_compra)) : 0;
+  var pnlColor = pnlPct >= 0 ? '#3FB950' : '#FF4444';
+  var pnlSign = pnlPct >= 0 ? '+' : '';
+  var acts = window._IA_ACTIVOS || [];
+  var act = null;
+  for(var i=0;i<acts.length;i++){ if(acts[i].s===item.simbolo){ act=acts[i]; break; } }
+  var logoHtml = (act && act.logo) ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin-right:10px;" onerror="this.style.display=\'none\'"/>' : '<div style="width:32px;height:32px;border-radius:50%;background:'+(act&&act.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;margin-right:10px;">'+(item.simbolo[0]||'?')+'</div>';
+  var fechaStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '--';
+  var fmtP = function(n,d){ return n ? n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--'; };
+  // 52-week range
+  var low52 = window._pc52Low && window._pc52Low[item.simbolo];
+  var high52 = window._pc52High && window._pc52High[item.simbolo];
+  var rangeBar = '';
+  if(low52 && high52 && high52 > low52 && precio > 0){
+    var pct52 = Math.max(0, Math.min(100, ((precio - low52)/(high52 - low52)*100)));
+    rangeBar = '<div style="margin:10px 0 4px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;"><span>Min 52s: $'+fmtP(low52)+'</span><span>Max 52s: $'+fmtP(high52)+'</span></div><div style="background:#21262D;border-radius:4px;height:5px;position:relative;"><div style="background:linear-gradient(90deg,#FF4444,#D4A017,#3FB950);border-radius:4px;height:5px;width:'+pct52.toFixed(0)+'%;"></div><div style="position:absolute;top:-3px;left:calc('+pct52.toFixed(0)+'% - 5px);width:10px;height:10px;border-radius:50%;background:#E6EDF3;border:2px solid #0D1117;"></div></div><div style="text-align:center;font-size:9px;color:#8B949E;margin-top:3px;">Posicion en rango anual: '+pct52.toFixed(0)+'%</div></div>';
+  }
+  // Find signal for this asset
+  var sigs = window._iaSignals || [];
+  var sig = null;
+  for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===item.simbolo){ sig=sigs[i]; break; } }
+  var sigHtml = '';
+  if(sig){
+    var dirColor = sig.direccion === 'ALCISTA' ? '#3FB950' : (sig.direccion === 'BAJISTA' ? '#FF4444' : '#D4A017');
+    var probPrincipal = sig.prob_principal || sig.confianza || 0;
+    var motivosHtml = (sig.motivos||[]).slice(0,5).map(function(m,i){ return '<div style="display:flex;gap:6px;margin-bottom:4px;"><span style="color:'+dirColor+';font-weight:700;flex-shrink:0;">'+(i+1)+'.</span><span style="color:#8B949E;font-size:11px;">'+m+'</span></div>'; }).join('');
+    sigHtml = '<div style="background:#161B22;border-radius:9px;padding:12px;border-left:3px solid '+dirColor+';margin-top:10px;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+      '<div style="font-size:10px;font-weight:700;color:'+dirColor+';letter-spacing:.5px;">'+sig.direccion+'</div>' +
+      '<div style="font-size:20px;font-weight:700;color:'+dirColor+';">'+probPrincipal.toFixed(0)+'<span style="font-size:11px;">%</span></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin-bottom:8px;">' +
+      '<div style="flex:1;background:#0D1117;border-radius:7px;padding:7px;text-align:center;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Objetivo</div><div style="font-size:12px;color:#3FB950;font-weight:600;">$'+fmtP(sig.objetivo)+'</div></div>' +
+      '<div style="flex:1;background:#0D1117;border-radius:7px;padding:7px;text-align:center;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Stop Loss</div><div style="font-size:12px;color:#FF4444;font-weight:600;">$'+fmtP(sig.stop)+'</div></div>' +
+      '<div style="flex:1;background:#0D1117;border-radius:7px;padding:7px;text-align:center;"><div style="font-size:9px;color:#555;margin-bottom:2px;">'+(sig.direccion==='ALCISTA'?'Upside':'Downside')+'</div><div style="font-size:12px;color:'+dirColor+';font-weight:600;">'+(sig.direccion==='ALCISTA'?'+':'-')+Math.abs(sig.upside||0).toFixed(1)+'%</div></div>' +
+      '</div>' +
+      motivosHtml +
+      '</div>';
+  } else {
+    sigHtml = '<div style="background:#161B22;border-radius:9px;padding:12px;margin-top:10px;text-align:center;color:#555;font-size:12px;">Sin senal activa hoy</div>';
+  }
+  body.innerHTML =
+    '<div style="display:flex;align-items:center;margin-bottom:12px;">' + logoHtml +
+    '<div><div style="font-size:16px;font-weight:700;color:#E6EDF3;">'+item.simbolo+'</div>' +
+    '<div style="font-size:11px;color:#8B949E;">'+item.nombre+'</div></div>' +
+    '<div style="margin-left:auto;text-align:right;">' +
+    '<div style="font-size:18px;font-weight:700;color:#E6EDF3;">$'+fmtP(precio)+'</div>' +
+    '<div style="font-size:11px;color:'+pnlColor+';">'+pnlSign+pnlPct.toFixed(2)+'% P&L</div>' +
+    '</div></div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px;">' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Precio compra</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">$'+fmtP(item.precio_compra)+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Cantidad</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">'+item.cantidad+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L USD</div><div style="font-size:13px;color:'+pnlColor+';font-weight:600;">'+pnlSign+'$'+fmtP(Math.abs(pnlUsd))+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Entrada</div><div style="font-size:11px;color:#8B949E;">'+fechaStr+'</div></div>' +
+    '</div>' +
+    rangeBar +
+    '<div id="port-det-pct" style="margin:6px 0;"><span id="pd-24h-val" style="font-size:13px;font-weight:600;color:#8B949E;">--</span><span style="display:flex;gap:4px;margin-top:4px;">' +
+    ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portDetPeriod(\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pd-tab-'+p+'" style="font-size:9px;padding:2px 6px;border-radius:4px;cursor:pointer;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';">'+p+'</span>'; }).join('') +
+    '</span></div>' +
+    sigHtml;
+  modal.style.display = 'flex';
+  portDetPeriod(item.simbolo, item.tipo, '24h');
+};
+window.closePortItemDetail = function(){
+  var m = document.getElementById('port-detail-modal');
+  if(m) m.style.display = 'none';
+};
+window.portDetPeriod = function(simbolo, tipo, period){
+  ['24h','7d','1m','3m','1y'].forEach(function(p){
+    var t = document.getElementById('pd-tab-'+p);
+    if(!t) return;
+    t.style.background = p === period ? '#D4A017' : '#21262D';
+    t.style.color = p === period ? '#0D1117' : '#8B949E';
+  });
+  var valEl = document.getElementById('pd-24h-val');
+  if(!valEl) return;
+  if(period === '24h'){
+    var cv = window._pcChange24 && window._pcChange24[simbolo];
+    if(cv !== undefined && cv !== null){
+      valEl.style.color = cv >= 0 ? '#3FB950' : '#FF4444';
+      valEl.textContent = (cv>=0?'+':'')+cv.toFixed(2)+'% (24h)';
+    } else { valEl.textContent = '--'; valEl.style.color = '#8B949E'; }
+    return;
+  }
+  var days = period==='7d'?7:period==='1m'?30:period==='3m'?90:365;
+  var CRIPTO = ['BTC','ETH','SOL','BNB','XRP','ADA','AVAX','DOT','LINK','MATIC','DOGE','SHIB','LTC','ATOM','UNI','FIL','NEAR','APT','ARB','OP'];
+  if(CRIPTO.indexOf(simbolo) >= 0){
+    var intv = days<=7?'4h':'1d'; var lim = days<=7?42:days;
+    fetch('https://api.binance.com/api/v3/klines?symbol='+simbolo+'USDT&interval='+intv+'&limit='+lim)
+    .then(function(r){ return r.json(); }).then(function(d){
+      if(!d||!d.length) return;
+      var oldest = parseFloat(d[0][1]);
+      var newest = parseFloat(d[d.length-1][4]);
+      var pct = oldest > 0 ? ((newest-oldest)/oldest*100) : 0;
+      if(valEl){ valEl.style.color = pct>=0?'#3FB950':'#FF4444'; valEl.textContent = (pct>=0?'+':'')+pct.toFixed(2)+'% ('+period+')'; }
+    }).catch(function(){ if(valEl) valEl.textContent = '--'; });
+  } else {
+    var now = Math.floor(Date.now()/1000);
+    var from = now - days*86400;
+    var yurl = 'https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/'+simbolo+'?interval=1d&period1='+from+'&period2='+now;
+    fetch(yurl).then(function(r){ return r.json(); }).then(function(d){
+      try{
+        var closes = d.chart.result[0].indicators.quote[0].close;
+        var oldest2 = closes.find(function(x){ return x !== null && x !== undefined; });
+        var newest2 = closes[closes.length-1];
+        var pct2 = oldest2 > 0 ? ((newest2-oldest2)/oldest2*100) : 0;
+        if(valEl){ valEl.style.color = pct2>=0?'#3FB950':'#FF4444'; valEl.textContent = (pct2>=0?'+':'')+pct2.toFixed(2)+'% ('+period+')'; }
+      }catch(e){ if(valEl) valEl.textContent='--'; }
+    }).catch(function(){ if(valEl) valEl.textContent='--'; });
+  }
+};
+
 
 // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AGREGAR activo al portfolio en Supabase ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
