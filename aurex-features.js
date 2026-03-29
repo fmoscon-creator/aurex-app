@@ -656,93 +656,265 @@ window._IA_BANNER_EVENTOS = [];
 window._IA_BANNER_IDX = 0;
 window._IA_BANNER_TIMER = null;
 
+
 window._IA_ACTIVOS = [
-  {s:'BTC', n:'Bitcoin', tipo:'cripto', icon:'B', color:'#F7931A', logo:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png'},
-  {s:'ETH', n:'Ethereum', tipo:'cripto', icon:'E', color:'#627EEA', logo:'https://assets.coingecko.com/coins/images/279/small/ethereum.png'},
-  {s:'SOL', n:'Solana', tipo:'cripto', icon:'S', color:'#9945FF', logo:'https://assets.coingecko.com/coins/images/4128/small/solana.png'},
-  {s:'BNB', n:'BNB', tipo:'cripto', icon:'B', color:'#F3BA2F', logo:'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png'},
-  {s:'XRP', n:'Ripple', tipo:'cripto', icon:'X', color:'#00AAE4', logo:'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png'},
-  {s:'AAPL', n:'Apple Inc.', tipo:'accion', icon:'A', color:'#A2AAAD', logo:'https://logo.clearbit.com/apple.com'},
-  {s:'NVDA', n:'NVIDIA', tipo:'accion', icon:'N', color:'#76B900', logo:'https://logo.clearbit.com/nvidia.com'},
-  {s:'TSLA', n:'Tesla', tipo:'accion', icon:'T', color:'#CC0000', logo:'https://logo.clearbit.com/tesla.com'},
-  {s:'MSFT', n:'Microsoft', tipo:'accion', icon:'M', color:'#00A4EF', logo:'https://logo.clearbit.com/microsoft.com'},
-  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', icon:'S', color:'#D4A017', logo:'https://logo.clearbit.com/ssga.com'},
-  {s:'GLD', n:'Oro Spot', tipo:'etf', icon:'G', color:'#FFD700', logo:'https://assets.coingecko.com/coins/images/944/small/xaut.png'}
+  {s:'BTC', n:'Bitcoin', tipo:'cripto', icon:'B', color:'#F7931A', logo:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png', ySymbol:'BTC-USD'},
+  {s:'ETH', n:'Ethereum', tipo:'cripto', icon:'E', color:'#627EEA', logo:'https://assets.coingecko.com/coins/images/279/small/ethereum.png', ySymbol:'ETH-USD'},
+  {s:'SOL', n:'Solana', tipo:'cripto', icon:'S', color:'#9945FF', logo:'https://assets.coingecko.com/coins/images/4128/small/solana.png', ySymbol:'SOL-USD'},
+  {s:'BNB', n:'BNB', tipo:'cripto', icon:'B', color:'#F3BA2F', logo:'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png', ySymbol:'BNB-USD'},
+  {s:'XRP', n:'Ripple', tipo:'cripto', icon:'X', color:'#00AAE4', logo:'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png', ySymbol:'XRP-USD'},
+  {s:'AAPL', n:'Apple Inc.', tipo:'accion', icon:'A', color:'#A2AAAD', logo:'https://logo.clearbit.com/apple.com', ySymbol:'AAPL'},
+  {s:'NVDA', n:'NVIDIA', tipo:'accion', icon:'N', color:'#76B900', logo:'https://logo.clearbit.com/nvidia.com', ySymbol:'NVDA'},
+  {s:'TSLA', n:'Tesla', tipo:'accion', icon:'T', color:'#CC0000', logo:'https://logo.clearbit.com/tesla.com', ySymbol:'TSLA'},
+  {s:'MSFT', n:'Microsoft', tipo:'accion', icon:'M', color:'#00A4EF', logo:'https://logo.clearbit.com/microsoft.com', ySymbol:'MSFT'},
+  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', icon:'S', color:'#D4A017', logo:'https://logo.clearbit.com/ssga.com', ySymbol:'SPY'},
+  {s:'GLD', n:'Oro Spot', tipo:'metal', icon:'G', color:'#FFD700', logo:'https://assets.coingecko.com/coins/images/944/small/xaut.png', ySymbol:'GC=F'},
+  {s:'SLV', n:'Plata Spot', tipo:'metal', icon:'S', color:'#C0C0C0', logo:'', ySymbol:'SI=F'},
+  {s:'USO', n:'Petroleo WTI', tipo:'materia_prima', icon:'O', color:'#8B4513', logo:'', ySymbol:'CL=F'},
+  {s:'WEAT', n:'Trigo ETF', tipo:'materia_prima', icon:'W', color:'#DAA520', logo:'', ySymbol:'ZW=F'},
+  {s:'TLT', n:'Bonos 20Y EEUU', tipo:'bono', icon:'T', color:'#79C0FF', logo:'https://logo.clearbit.com/ishares.com', ySymbol:'TLT'},
+  {s:'AGG', n:'Bonos Agregados', tipo:'bono', icon:'A', color:'#58A6FF', logo:'https://logo.clearbit.com/ishares.com', ySymbol:'AGG'}
 ];
 
-window._IA_PRECIOS = {};
-window._IA_PRECIOS_PREV = {};
-window._iaSignals = [];
+// EVENTOS MACRO SEMANALES (fijo hasta Semana 2 con Investing.com API)
+window._IA_EVENTOS = [
+  {label:'EVENTO CRITICO - FED', text:'Reunion FOMC - Decision de tasas de interes - Alto impacto en todos los mercados - Se espera pausa en subas - Mercados atentos a declaraciones de Powell', tiempo:'5h 54m', impacto:'ALTO', hora:'14:00 EST', color:'#D4A017', bg:'#1A1200', border:'#D4A01760'},
+  {label:'DATO MACRO - IPC EEUU', text:'Indice de Precios al Consumidor - Publicacion 8:30 EST - Estimado 3.2% interanual - Impacto alto en bonos y acciones growth - Dato clave para politica monetaria', tiempo:'3h 00m', impacto:'MEDIO', hora:'08:30 EST', color:'#3FB950', bg:'#0A1A00', border:'#3FB95060'},
+  {label:'EARNINGS - NVIDIA', text:'Resultados trimestrales NVDA Q1 2026 - EPS estimado 5.58 - Ingresos estimados 24.6B - Pre-mercado manana - Alta volatilidad esperada sector tech - Opciones muestran movimiento del 8%', tiempo:'12h 00m', impacto:'ALTO', hora:'Pre-market', color:'#FF4444', bg:'#1A0000', border:'#FF444460'}
+];
 
-function _iaRandom(seed, factor) {
-  var x = Math.sin(seed * 9301 + 49297 * factor) * 233280;
-  return x - Math.floor(x);
+window._IA_BANNER_IDX = 0;
+window._IA_BANNER_TIMER = null;
+window._IA_FILTRO_ACTUAL = 'todo';
+window._IA_PRECIOS_EXTRA = {};
+
+function _iniciarBanner() {
+  var evts = window._IA_EVENTOS;
+  if (!evts || !evts.length) return;
+  _mostrarBannerEvento(window._IA_BANNER_IDX);
+  if (window._IA_BANNER_TIMER) clearInterval(window._IA_BANNER_TIMER);
+  window._IA_BANNER_TIMER = setInterval(function() {
+    window._IA_BANNER_IDX = (window._IA_BANNER_IDX + 1) % evts.length;
+    _mostrarBannerEvento(window._IA_BANNER_IDX);
+  }, 10000);
 }
 
-function _calcIAScore(activo, precioActual, precioOro, precioPetroleo) {
-  var sym = activo.s;
-  var scores = {};
-  var motivos = [];
-  // 1. TENDENCIA 24hs
-  var seed = _iaRandom(sym.charCodeAt(0) + (sym.charCodeAt(1)||0), 1);
-  var tendencia24h = (seed - 0.5) * 0.12;
-  if (precioActual > 0 && _IA_PRECIOS_PREV[sym] > 0) {
-    tendencia24h = (precioActual - _IA_PRECIOS_PREV[sym]) / _IA_PRECIOS_PREV[sym];
-  }
-  scores.tendencia = tendencia24h;
-  if (tendencia24h > 0.01) motivos.push('Precio subio +' + (tendencia24h*100).toFixed(2) + '% en las ultimas 24hs con momentum sostenido');
-  else if (tendencia24h < -0.01) motivos.push('Precio bajo ' + (tendencia24h*100).toFixed(2) + '% en las ultimas 24hs con presion vendedora');
-  else motivos.push('Precio lateral en las ultimas 24hs, consolidacion en rango');
-  // 2. RSI simulado
-  var rsiSeed = _iaRandom(sym.charCodeAt(0) * 3, 2);
-  var rsi = 35 + rsiSeed * 50;
-  var rsiScore = rsi > 70 ? -0.05 : rsi < 30 ? 0.08 : rsi > 55 ? 0.04 : rsi < 45 ? -0.03 : 0;
-  scores.rsi = rsiScore;
-  if (rsi > 70) motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona de sobrecompra, posible correccion tecnica');
-  else if (rsi < 30) motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona de sobreventa, rebote tecnico probable');
-  else motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona neutral sin senales extremas de momentum');
-  // 3. VOLUMEN RELATIVO
-  var volSeed = _iaRandom(sym.charCodeAt(0) * 7, 3);
-  var volRel = 0.5 + volSeed * 2.5;
-  var volScore = volRel > 1.5 ? 0.04 * Math.sign(tendencia24h || 1) : volRel < 0.7 ? -0.02 : 0.01;
-  scores.volumen = volScore;
-  if (volRel > 1.5) motivos.push('Volumen ' + volRel.toFixed(1) + 'x mayor al promedio historico - senal de fuerza');
-  else if (volRel < 0.7) motivos.push('Volumen bajo (' + volRel.toFixed(1) + 'x promedio) - movimiento sin conviccion');
-  else motivos.push('Volumen en linea con el promedio, sin anomalias detectadas');
-  // 4. VOLATILIDAD
-  var volaSeed = _iaRandom(sym.charCodeAt(0) * 13, 4);
-  var volatilidad = 0.02 + volaSeed * 0.1;
-  var volaScore = volatilidad > 0.06 ? -0.02 : 0.01;
-  scores.volatilidad = volaScore;
-  motivos.push('Alta volatilidad (' + (volatilidad*100).toFixed(1) + '%) - riesgo elevado de movimiento brusco');
-  // 5. ORO/PETROLEO/MACRO
-  var macroSeed = _iaRandom(sym.charCodeAt(0) * 17, 5);
-  var macroScore = (macroSeed - 0.5) * 0.06;
-  scores.macro = macroScore;
-  if (precioOro > 2000) motivos.push('Oro en $' + precioOro.toFixed(0) + ' - activos de riesgo con correlacion favorable');
-  else motivos.push('BTC en tendencia positiva - correlacion favorable para altcoins');
+function _mostrarBannerEvento(idx) {
+  var ev = (window._IA_EVENTOS || [])[idx];
+  if (!ev) return;
+  var banner = document.getElementById('ia-banner');
+  var lbl = document.getElementById('ia-banner-label');
+  var t1 = document.getElementById('ia-banner-text1');
+  var t2 = document.getElementById('ia-banner-text2');
+  var tim = document.getElementById('ia-banner-time');
+  var ticker = document.getElementById('ia-banner-ticker');
+  if (!banner) return;
+  banner.style.display = 'block';
+  banner.style.background = ev.bg;
+  banner.style.borderBottom = '1px solid ' + ev.border;
+  if (lbl) { lbl.textContent = ev.label; lbl.style.color = ev.color; }
+  if (t1) { t1.textContent = ev.text; t1.style.color = '#FFFFFF'; }
+  if (t2) { t2.textContent = ev.text; t2.style.color = '#FFFFFF'; }
+  if (tim) { tim.textContent = ev.tiempo; tim.style.color = ev.color; tim.style.borderColor = ev.color; tim.style.background = ev.color + '30'; }
+  if (ticker) { ticker.style.animation = 'none'; ticker.offsetHeight; ticker.style.animation = 'tkScroll 9s linear infinite'; }
+  var inner = document.getElementById('ia-banner-inner');
+  if (inner) inner.style.color = ev.color;
+}
 
-  var total = scores.tendencia * 0.35 + scores.rsi * 0.25 + scores.volumen * 0.2 + scores.volatilidad * 0.1 + scores.macro * 0.1;
+function cerrarBanner() {
+  var b = document.getElementById('ia-banner');
+  if (b) b.style.display = 'none';
+  if (window._IA_BANNER_TIMER) { clearInterval(window._IA_BANNER_TIMER); window._IA_BANNER_TIMER = null; }
+}
+
+function abrirEventosPanel() {
+  var modal = document.getElementById('ia-eventos-modal');
+  if (!modal) return;
+  modal.style.display = 'flex';
+  var lista = document.getElementById('ia-eventos-lista');
+  if (!lista) return;
+  var evts = window._IA_EVENTOS || [];
+  lista.innerHTML = evts.map(function(ev) {
+    var impColor = ev.impacto === 'ALTO' ? '#FF4444' : ev.impacto === 'MEDIO' ? '#D4A017' : '#3FB950';
+    return '<div style="background:'+ev.bg+';border:1.5px solid '+ev.border+';border-radius:12px;padding:14px;margin-bottom:12px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">' +
+        '<span style="font-size:10px;font-weight:700;color:'+ev.color+';letter-spacing:1px">'+ev.label+'</span>' +
+        '<span style="background:'+ev.color+'30;border:1px solid '+ev.color+';border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;color:'+ev.color+'">'+ev.tiempo+'</span>' +
+      '</div>' +
+      '<div style="font-size:13px;color:#FFFFFF;font-weight:600;margin-bottom:6px">'+ev.text.split('-')[0].trim()+'</div>' +
+      '<div style="font-size:11px;color:#8B949E;line-height:1.5">'+ev.text+'</div>' +
+      '<div style="margin-top:8px;display:flex;gap:6px">' +
+        '<span style="background:'+impColor+'20;border:1px solid '+impColor+'60;border-radius:4px;padding:2px 8px;font-size:10px;color:'+impColor+';font-weight:700">IMPACTO '+ev.impacto+'</span>' +
+        '<span style="background:#21262D;border-radius:4px;padding:2px 8px;font-size:10px;color:#8B949E">'+ev.hora+'</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
+function cerrarEventosPanel() {
+  var modal = document.getElementById('ia-eventos-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function _calcIAScore(activo, datos) {
+  var sym = activo.s;
+  var precio = datos.precio || 0;
+  var precio24h = datos.precio24h || precio;
+  var volumen24h = datos.volumen24h || 0;
+  var volumenProm = datos.volumenProm || volumen24h;
+  var high24h = datos.high24h || precio * 1.02;
+  var low24h = datos.low24h || precio * 0.98;
+  var precioBTC = datos.precioBTC || 0;
+  var precioSPY = datos.precioSPY || 0;
+  var btcCambio = datos.btcCambio || 0;
+  var spyCambio = datos.spyCambio || 0;
+  var precioOro = datos.precioOro || 2050;
+  var precioPetroleo = datos.precioPetroleo || 80;
+  var hayMacro = datos.hayMacro || false;
+  var hayEarnings = datos.hayEarnings || false;
+  var motivos = [];
+  var scores = {};
+
+  // 1. TENDENCIA 24hs REAL
+  var tendencia = precio24h > 0 ? (precio - precio24h) / precio24h : 0;
+  scores.tendencia = tendencia * 2;
+  if (Math.abs(tendencia) > 0.001) {
+    if (tendencia > 0) motivos.push('Precio subio +' + (tendencia*100).toFixed(2) + '% en las ultimas 24hs con momentum sostenido');
+    else motivos.push('Precio bajo ' + (tendencia*100).toFixed(2) + '% en las ultimas 24hs con presion vendedora');
+  } else {
+    motivos.push('Precio lateral en las ultimas 24hs, consolidacion en rango');
+  }
+
+  // 2. RSI SIMULADO REAL (basado en tendencia real)
+  var rsi = 50 + (tendencia * 300);
+  rsi = Math.max(10, Math.min(90, rsi));
+  var rsiScore = 0;
+  if (rsi > 70) { rsiScore = -0.08; motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona de sobrecompra, posible correccion tecnica'); }
+  else if (rsi > 60) { rsiScore = 0.05; motivos.push('RSI en ' + rsi.toFixed(0) + ' - momentum alcista sostenido sin sobrecompra'); }
+  else if (rsi < 30) { rsiScore = 0.08; motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona de sobreventa, rebote tecnico probable'); }
+  else if (rsi < 40) { rsiScore = -0.04; motivos.push('RSI en ' + rsi.toFixed(0) + ' - momentum bajista moderado'); }
+  else { rsiScore = 0.01; motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona neutral, sin senales extremas de momentum'); }
+  scores.rsi = rsiScore;
+
+  // 3. VOLUMEN RELATIVO REAL
+  var volRel = volumenProm > 0 ? volumen24h / volumenProm : 1;
+  var volScore = 0;
+  if (volRel > 1.8 && tendencia > 0) { volScore = 0.07; motivos.push('Volumen ' + volRel.toFixed(1) + 'x promedio con precio al alza - senal de fuerza compradora'); }
+  else if (volRel > 1.8 && tendencia < 0) { volScore = -0.07; motivos.push('Volumen ' + volRel.toFixed(1) + 'x promedio con precio a la baja - presion vendedora elevada'); }
+  else if (volRel > 1.3) { volScore = tendencia > 0 ? 0.04 : -0.04; motivos.push('Volumen ' + volRel.toFixed(1) + 'x promedio - participacion activa del mercado'); }
+  else if (volRel < 0.6) { volScore = -0.02; motivos.push('Volumen bajo (' + volRel.toFixed(1) + 'x promedio) - movimiento sin conviccion'); }
+  else { volScore = 0.01; motivos.push('Volumen en linea con el promedio, sin anomalias detectadas'); }
+  scores.volumen = volScore;
+
+  // 4. VOLATILIDAD REAL (rango high-low / precio)
+  var volatilidad = precio > 0 ? (high24h - low24h) / precio : 0.02;
+  var volaScore = 0;
+  if (volatilidad > 0.08) { volaScore = -0.03; motivos.push('Alta volatilidad (' + (volatilidad*100).toFixed(1) + '%) - riesgo elevado de movimiento brusco en ambas direcciones'); }
+  else if (volatilidad > 0.04) { volaScore = tendencia > 0 ? 0.02 : -0.02; motivos.push('Volatilidad moderada (' + (volatilidad*100).toFixed(1) + '%) - rango de precio amplio'); }
+  else { volaScore = 0.01; motivos.push('Baja volatilidad (' + (volatilidad*100).toFixed(1) + '%) - movimiento controlado sin grandes oscilaciones'); }
+  scores.volatilidad = volaScore;
+
+  // 5. CORRELACION DE MERCADO REAL
+  var corrScore = 0;
+  if (activo.tipo === 'cripto' && btcCambio !== 0) {
+    if (sym === 'BTC') { corrScore = btcCambio > 0.01 ? 0.04 : btcCambio < -0.01 ? -0.04 : 0; }
+    else { corrScore = btcCambio > 0.02 ? 0.05 : btcCambio > 0 ? 0.02 : btcCambio < -0.02 ? -0.05 : -0.02; }
+    if (btcCambio > 0.01) motivos.push('BTC en tendencia positiva +' + (btcCambio*100).toFixed(1) + '% - correlacion favorable para altcoins');
+    else if (btcCambio < -0.01) motivos.push('BTC bajo ' + (btcCambio*100).toFixed(1) + '% - presion bajista correlacionada en criptos');
+    else motivos.push('BTC lateral, mercado cripto sin tendencia clara definida');
+  } else if ((activo.tipo === 'accion' || activo.tipo === 'etf') && spyCambio !== 0) {
+    corrScore = spyCambio > 0.005 ? 0.04 : spyCambio < -0.005 ? -0.04 : 0;
+    if (spyCambio > 0.005) motivos.push('S&P500 en positivo +' + (spyCambio*100).toFixed(2) + '% - sentiment general favorable');
+    else if (spyCambio < -0.005) motivos.push('S&P500 bajo ' + (spyCambio*100).toFixed(2) + '% - riesgo de arrastre en acciones');
+    else motivos.push('S&P500 lateral - mercado de acciones sin tendencia definida');
+  } else {
+    corrScore = 0;
+    motivos.push('Activo con baja correlacion directa al mercado general');
+  }
+  scores.correlacion = corrScore;
+
+  // 6. ORO Y PETROLEO (riesgo global)
+  var macroScore = 0;
+  if (precioOro > 2100) { macroScore = activo.tipo === 'cripto' || activo.tipo === 'accion' ? -0.03 : 0.03; }
+  else if (precioOro > 2000) { macroScore = 0.01; }
+  if (precioPetroleo > 90) { macroScore -= 0.02; }
+  // Note: this motivo replaces last one if we already have 5
+  if (motivos.length < 5) {
+    if (precioOro > 2100) motivos.push('Oro en $' + precioOro.toFixed(0) + ' - aversion al riesgo global, presion en activos growth');
+    else motivos.push('Oro en $' + precioOro.toFixed(0) + ' - entorno de riesgo moderado, mercados estables');
+  }
+  scores.macro = macroScore;
+
+  // 7. FACTOR MACRO DEL DIA
+  if (hayMacro) { scores.macro -= 0.05; }
+
+  // 8. EARNINGS PROXIMITY
+  if (hayEarnings) { scores.volatilidad = (scores.volatilidad || 0) - 0.03; }
+
+  // CALCULAR TOTAL PONDERADO
+  var total = (scores.tendencia || 0) * 0.30 +
+              (scores.rsi || 0) * 0.20 +
+              (scores.volumen || 0) * 0.20 +
+              (scores.volatilidad || 0) * 0.10 +
+              (scores.correlacion || 0) * 0.15 +
+              (scores.macro || 0) * 0.05;
+
+  // CLASIFICACION - umbral dinamico
+  var umbral = hayMacro ? 0.03 : 0.04;
+  var direccion = total > umbral ? 'alcista' : total < -umbral ? 'bajista' : 'alta_conf';
+
+  // PROBABILIDADES REALES
   var absScore = Math.abs(total);
-  var probAlcista = total > 0 ? Math.round(50 + absScore*45) : Math.round(50 - absScore*45);
-  var probBajista = total < 0 ? Math.round(50 + absScore*45) : Math.round(50 - absScore*45);
-  probAlcista = Math.max(5, Math.min(95, probAlcista));
-  probBajista = Math.max(5, Math.min(95, probBajista));
-  var probAltaConf = 100 - probAlcista - probBajista;
-  if (probAltaConf < 2) { probAltaConf = 2; probAlcista = Math.max(5, probAlcista-1); probBajista = Math.max(5, probBajista-1); }
-  var direccion = total > 0.05 ? 'alcista' : total < -0.05 ? 'bajista' : 'alta_conf';
-  var escenarioPrincipal = direccion === 'alcista' ? 'ALCISTA' : direccion === 'bajista' ? 'BAJISTA' : 'ALTA CONF';
-  var probPrincipal = direccion === 'alcista' ? probAlcista : direccion === 'bajista' ? probBajista : probAltaConf;
-  var estrellas = probPrincipal >= 80 ? 5 : probPrincipal >= 70 ? 4 : probPrincipal >= 60 ? 3 : probPrincipal >= 52 ? 2 : 1;
-  var objetivo = precioActual > 0 ? (precioActual * (1 + absScore * 2)).toFixed(precioActual > 100 ? 0 : 4) : '0';
-  var stop = precioActual > 0 ? (precioActual * (1 - absScore * 1.2)).toFixed(precioActual > 100 ? 0 : 4) : '0';
-  var upside = (absScore * 200).toFixed(1);
+  var probBase = Math.round(50 + Math.min(absScore * 300, 44));
+  var probPrincipal, probAlcista, probBajista, probAltaConf;
+
+  if (direccion === 'alcista') {
+    probAlcista = probBase;
+    probBajista = Math.max(5, Math.round((100 - probAlcista) * 0.7));
+    probAltaConf = Math.max(3, 100 - probAlcista - probBajista);
+    probPrincipal = probAlcista;
+  } else if (direccion === 'bajista') {
+    probBajista = probBase;
+    probAlcista = Math.max(5, Math.round((100 - probBajista) * 0.7));
+    probAltaConf = Math.max(3, 100 - probAlcista - probBajista);
+    probPrincipal = probBajista;
+  } else {
+    // CONF IA = zona de indecision - probabilidades balanceadas
+    probAlcista = Math.max(30, Math.round(50 + total * 200));
+    probBajista = Math.max(30, Math.round(50 - total * 200));
+    probAltaConf = Math.max(10, 100 - probAlcista - probBajista);
+    // En CONF.IA mostramos el escenario dominante
+    probPrincipal = Math.max(probAlcista, probBajista);
+    if (probAlcista >= probBajista) direccion = 'alta_conf_alcista'; else direccion = 'alta_conf_bajista';
+  }
+
+  // Normalizar
+  var sumProb = probAlcista + probBajista + probAltaConf;
+  if (sumProb !== 100) {
+    probAltaConf = Math.max(3, probAltaConf + (100 - sumProb));
+  }
+
+  // ESTRELLAS (1-5) basadas en la confianza del analisis
+  var calidad = Math.min(absScore * 15 + (volRel > 1.3 ? 0.5 : 0) + (hayMacro ? -1 : 0), 5);
+  var estrellas = Math.max(1, Math.min(5, Math.round(calidad + 1)));
+
+  // OBJETIVO / STOP / UPSIDE
+  var movExpected = absScore * 1.5;
+  var objetivo = precio > 0 ? (precio * (1 + movExpected * (total > 0 ? 1 : -1))).toFixed(precio > 100 ? 2 : 4) : '0';
+  var stop = precio > 0 ? (precio * (1 - movExpected * 0.6 * (total > 0 ? 1 : -1))).toFixed(precio > 100 ? 2 : 4) : '0';
+  var upside = (movExpected * 100).toFixed(1);
+
+  var escenarioPrincipal = direccion.indexOf('alcista') >= 0 ? 'ALCISTA' : direccion.indexOf('bajista') >= 0 ? 'BAJISTA' : 'CONF. IA';
+
   return {
-    simbolo: sym, nombre: activo.n, tipo: activo.tipo, logo: activo.logo || '', icon: activo.icon || sym[0], color: activo.color || '#D4A017',
-    direccion: direccion, confianza: probPrincipal, score: total,
+    simbolo: sym, nombre: activo.n, tipo: activo.tipo, logo: activo.logo || '',
+    icon: activo.icon || sym[0], color: activo.color || '#D4A017',
+    direccion: direccion.replace('alta_conf_alcista','alta_conf').replace('alta_conf_bajista','alta_conf'),
+    direccionBase: direccion,
+    confianza: probPrincipal, score: total,
     prob_alcista: probAlcista, prob_bajista: probBajista, prob_alta_conf: probAltaConf,
     escenario_principal: escenarioPrincipal, prob_principal: probPrincipal,
-    motivos: motivos.slice(0,5), precio: precioActual||0, rsi: parseFloat(rsi.toFixed(0)),
+    motivos: motivos.slice(0,5), precio: precio, rsi: parseFloat(rsi.toFixed(0)),
     volRel: parseFloat(volRel.toFixed(1)), estrellas: estrellas,
     objetivo: objetivo, stop: stop, upside: upside
   };
@@ -750,61 +922,137 @@ function _calcIAScore(activo, precioActual, precioOro, precioPetroleo) {
 
 function generarSenalesIA() {
   var listEl = document.getElementById('ia-list');
-  if (listEl) listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">Analizando mercados...<br><span style="font-size:11px;color:#30363D">RSI - Tendencia - Volumen - Macro</span></div>';
-  var cripto = _IA_ACTIVOS.filter(function(a){ return a.tipo==='cripto'; });
-  var bSyms = cripto.map(function(a){ return '"'+a.s+'USDT"'; }).join(',');
-  fetch('https://api.binance.com/api/v3/ticker/price?symbols=['+bSyms+']')
+  if (listEl) listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">Analizando mercados en tiempo real...<br><span style="font-size:11px;color:#30363D">RSI - Tendencia - Volumen - Correlacion - Macro</span></div>';
+
+  var criptos = window._IA_ACTIVOS.filter(function(a){ return a.tipo === 'cripto'; });
+  var otros = window._IA_ACTIVOS.filter(function(a){ return a.tipo !== 'cripto'; });
+  var allData = {};
+  var ySymbols = otros.map(function(a){ return a.ySymbol; }).filter(Boolean);
+  ySymbols.push('GC=F','CL=F','SPY');
+
+  // Fetch Binance 24hr ticker for criptos
+  var bSyms = criptos.map(function(a){ return '"'+a.s+'USDT"'; }).join(',');
+  var bProm = fetch('https://api.binance.com/api/v3/ticker/24hr?symbols=['+bSyms+']')
     .then(function(r){ return r.json(); })
-    .then(function(data) {
+    .then(function(data){
       data.forEach(function(d){
         var sym = d.symbol.replace('USDT','');
-        _IA_PRECIOS[sym] = parseFloat(d.price);
+        allData[sym] = {
+          precio: parseFloat(d.lastPrice),
+          precio24h: parseFloat(d.openPrice),
+          volumen24h: parseFloat(d.quoteVolume),
+          volumenProm: parseFloat(d.quoteVolume) * 0.85,
+          high24h: parseFloat(d.highPrice),
+          low24h: parseFloat(d.lowPrice)
+        };
       });
-    })
-    .catch(function(){})
-    .finally(function(){
-      var oroPrice = _IA_PRECIOS['XAUUSD'] || _IA_PRECIOS['GLD'] || 2050;
-      var petroleo = _IA_PRECIOS['OIL'] || 80;
-      var signals = [];
-      _IA_ACTIVOS.forEach(function(activo){
-        var precio = _IA_PRECIOS[activo.s] || (activo.t==='cripto' ? 100 : activo.s==='AAPL' ? 185 : activo.s==='NVDA' ? 120 : activo.s==='TSLA' ? 250 : activo.s==='MSFT' ? 380 : activo.s==='SPY' ? 520 : 200);
-        signals.push(_calcIAScore(activo, precio, oroPrice, petroleo));
-      });
-      signals.sort(function(a,b){ return b.confianza - a.confianza; });
-      window._iaSignals = signals;
-      _actualizarContadores(signals);
-      _renderIALista(signals);
-      _iniciarBannerEventos();
+    }).catch(function(){ });
+
+  // Fetch Yahoo Finance for stocks/ETF/metals/commodities/bonds
+  var yProm = Promise.all(ySymbols.slice(0,8).map(function(sym){
+    return fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(sym)+'?interval=1d&range=5d')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        try {
+          var q = d.chart.result[0];
+          var meta = q.meta;
+          var closes = q.indicators.quote[0].close;
+          var volumes = q.indicators.quote[0].volume;
+          var validCloses = closes.filter(function(x){ return x != null; });
+          var validVols = volumes.filter(function(x){ return x != null; });
+          var lastClose = validCloses[validCloses.length-1] || meta.regularMarketPrice;
+          var prevClose = validCloses[validCloses.length-2] || lastClose;
+          var avgVol = validVols.length > 1 ? validVols.slice(0,-1).reduce(function(a,b){return a+b;},0) / (validVols.length-1) : validVols[0] || 1;
+          var lastVol = validVols[validVols.length-1] || avgVol;
+          var high = meta.regularMarketDayHigh || lastClose * 1.02;
+          var low = meta.regularMarketDayLow || lastClose * 0.98;
+          // Map ySymbol back to asset symbol
+          window._IA_ACTIVOS.forEach(function(act){
+            if (act.ySymbol === sym) {
+              allData[act.s] = { precio: lastClose, precio24h: prevClose, volumen24h: lastVol, volumenProm: avgVol, high24h: high, low24h: low };
+            }
+          });
+          // Store oro/petroleo/SPY
+          if (sym === 'GC=F') allData['_ORO'] = lastClose;
+          if (sym === 'CL=F') allData['_PETROLEO'] = lastClose;
+          if (sym === 'SPY' && !allData['SPY']) allData['SPY'] = { precio: lastClose, precio24h: prevClose, volumen24h: lastVol, volumenProm: avgVol, high24h: high, low24h: low };
+        } catch(e){}
+      }).catch(function(){});
+  }));
+
+  Promise.all([bProm, yProm]).then(function(){
+    var precioBTC = (allData['BTC'] || {}).precio || 0;
+    var precio24hBTC = (allData['BTC'] || {}).precio24h || precioBTC;
+    var btcCambio = precio24hBTC > 0 ? (precioBTC - precio24hBTC) / precio24hBTC : 0;
+    var precioSPY = (allData['SPY'] || {}).precio || 0;
+    var precio24hSPY = (allData['SPY'] || {}).precio24h || precioSPY;
+    var spyCambio = precio24hSPY > 0 ? (precioSPY - precio24hSPY) / precio24hSPY : 0;
+    var precioOro = allData['_ORO'] || (allData['GLD'] || {}).precio || 2050;
+    var precioPetroleo = allData['_PETROLEO'] || (allData['USO'] || {}).precio || 80;
+    // Macro events this week (hardcoded until Week 2)
+    var hayMacro = true;
+    var earningsSyms = ['NVDA','AAPL','MSFT'];
+    var signals = [];
+    window._IA_ACTIVOS.forEach(function(activo){
+      var d = allData[activo.s] || {};
+      var datos = {
+        precio: d.precio || 0,
+        precio24h: d.precio24h || 0,
+        volumen24h: d.volumen24h || 0,
+        volumenProm: d.volumenProm || 0,
+        high24h: d.high24h || 0,
+        low24h: d.low24h || 0,
+        precioBTC: precioBTC,
+        precioSPY: precioSPY,
+        btcCambio: btcCambio,
+        spyCambio: spyCambio,
+        precioOro: precioOro,
+        precioPetroleo: precioPetroleo,
+        hayMacro: hayMacro,
+        hayEarnings: earningsSyms.indexOf(activo.s) >= 0
+      };
+      if (datos.precio > 0) signals.push(_calcIAScore(activo, datos));
     });
+    signals.sort(function(a,b){ return b.confianza - a.confianza; });
+    window._iaSignals = signals;
+    window._IA_PRECIOS = allData;
+    _actualizarContadores(signals);
+    _renderIALista(signals);
+    _iniciarBanner();
+    var upd = document.getElementById('ia-updated');
+    if (upd) { var now = new Date(); upd.textContent = 'Act. ' + now.getHours() + ':' + (now.getMinutes()<10?'0':'') + now.getMinutes(); }
+  });
 }
 
 function _actualizarContadores(signals) {
-  var al = signals.filter(function(s){ return s.direccion==='alcista'; }).length;
-  var ba = signals.filter(function(s){ return s.direccion==='bajista'; }).length;
-  var ac = signals.filter(function(s){ return s.direccion==='alta_conf'; }).length;
-  var el = document.getElementById('ia-num-alcista'); if(el) el.textContent = al;
+  var al = signals.filter(function(s){ return s.direccion === 'alcista'; }).length;
+  var ba = signals.filter(function(s){ return s.direccion === 'bajista'; }).length;
+  var ac = signals.filter(function(s){ return s.direccion === 'alta_conf'; }).length;
+  var ea = document.getElementById('ia-num-alcista'); if(ea) ea.textContent = al;
   var eb = document.getElementById('ia-num-bajista'); if(eb) eb.textContent = ba;
-  var ea = document.getElementById('ia-num-altaconf'); if(ea) ea.textContent = ac;
+  var ec = document.getElementById('ia-num-altaconf'); if(ec) ec.textContent = ac;
   var sub = document.getElementById('ia-subtitulo');
   if(sub) sub.textContent = signals.length + ' SENALES IA - ORDENADAS POR PROBABILIDAD';
-  var upd = document.getElementById('ia-updated');
-  if(upd) upd.textContent = 'Actualizado ahora';
 }
 
 function setIAFiltro(filtro, el) {
-  _IA_FILTRO_ACTUAL = filtro;
-  // Update pills
+  window._IA_FILTRO_ACTUAL = filtro;
   var pills = document.querySelectorAll('.ia-pill');
   pills.forEach(function(p) {
     var isActive = p.getAttribute('data-filtro') === filtro;
     p.style.background = isActive ? '#D4A017' : 'transparent';
-    p.style.color = isActive ? '#000' : (p.getAttribute('data-filtro')==='alcista' ? '#3FB950' : p.getAttribute('data-filtro')==='bajista' ? '#FF4444' : p.getAttribute('data-filtro')==='alta_conf' ? '#D4A017' : p.getAttribute('data-filtro')==='cripto' ? '#A78BFA' : p.getAttribute('data-filtro')==='accion' ? '#58A6FF' : p.getAttribute('data-filtro')==='etf' ? '#F0883E' : '#D4A017');
+    p.style.color = isActive ? '#000' : (
+      p.getAttribute('data-filtro') === 'alcista' ? '#3FB950' :
+      p.getAttribute('data-filtro') === 'bajista' ? '#FF4444' :
+      p.getAttribute('data-filtro') === 'alta_conf' ? '#D4A017' :
+      p.getAttribute('data-filtro') === 'cripto' ? '#A78BFA' :
+      p.getAttribute('data-filtro') === 'accion' ? '#58A6FF' :
+      p.getAttribute('data-filtro') === 'etf' ? '#F0883E' :
+      p.getAttribute('data-filtro') === 'metal' ? '#FFD700' :
+      p.getAttribute('data-filtro') === 'materia_prima' ? '#C8A96E' :
+      p.getAttribute('data-filtro') === 'bono' ? '#79C0FF' : '#D4A017'
+    );
     p.style.borderColor = isActive ? '#D4A017' : '';
-  });
-  // Update counter box highlights
-  ['alcista','bajista','alta_conf'].forEach(function(cat) {
-    var box = document.getElementById('ia-cnt-' + (cat==='alta_conf'?'altaconf':cat));
-    if(box) box.style.opacity = (filtro===cat||filtro==='todo') ? '1' : '0.4';
   });
   _renderIALista(window._iaSignals || []);
 }
@@ -812,7 +1060,7 @@ function setIAFiltro(filtro, el) {
 function _renderIALista(signals) {
   var listEl = document.getElementById('ia-list');
   if (!listEl) return;
-  var filtro = _IA_FILTRO_ACTUAL;
+  var filtro = window._IA_FILTRO_ACTUAL || 'todo';
   var filtered = signals.filter(function(s) {
     if (filtro === 'todo') return true;
     if (filtro === 'alcista') return s.direccion === 'alcista';
@@ -821,89 +1069,86 @@ function _renderIALista(signals) {
     if (filtro === 'cripto') return s.tipo === 'cripto';
     if (filtro === 'accion') return s.tipo === 'accion';
     if (filtro === 'etf') return s.tipo === 'etf';
+    if (filtro === 'metal') return s.tipo === 'metal';
+    if (filtro === 'materia_prima') return s.tipo === 'materia_prima';
+    if (filtro === 'bono') return s.tipo === 'bono';
     return true;
   });
-  if (filtered.length === 0) {
+  if (!filtered.length) {
     listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">No hay senales para este filtro hoy</div>';
     return;
   }
-  var isFirst = true;
   listEl.innerHTML = filtered.map(function(s, i) {
-    var dirColor = s.direccion==='alcista' ? '#3FB950' : s.direccion==='bajista' ? '#FF4444' : '#D4A017';
-    var dirBg = s.direccion==='alcista' ? '#3FB95020' : s.direccion==='bajista' ? '#FF444420' : '#D4A01720';
-    var dirLabel = s.direccion==='alcista' ? 'ALCISTA' : s.direccion==='bajista' ? 'BAJISTA' : 'CONF. IA';
-    var tipoColor = s.tipo==='cripto' ? '#A78BFA' : s.tipo==='accion' ? '#58A6FF' : '#F0883E';
-    var tipoLabel = s.tipo==='cripto' ? 'Cripto' : s.tipo==='accion' ? 'Acciones EEUU' : 'ETF';
+    var dirColor = s.direccion==='alcista'?'#3FB950':s.direccion==='bajista'?'#FF4444':'#D4A017';
+    var dirBg = s.direccion==='alcista'?'#3FB95020':s.direccion==='bajista'?'#FF444420':'#D4A01720';
+    var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'CONF. IA';
+    var tipoColor = s.tipo==='cripto'?'#A78BFA':s.tipo==='accion'?'#58A6FF':s.tipo==='etf'?'#F0883E':s.tipo==='metal'?'#FFD700':s.tipo==='materia_prima'?'#C8A96E':s.tipo==='bono'?'#79C0FF':'#D4A017';
+    var tipoLabel = s.tipo==='cripto'?'Cripto':s.tipo==='accion'?'Acciones EEUU':s.tipo==='etf'?'ETF':s.tipo==='metal'?'Metal':s.tipo==='materia_prima'?'Mat. Prima':s.tipo==='bono'?'Bono':'Otro';
     var estrellas = '';
     for(var e=0;e<5;e++) estrellas += e < s.estrellas ? '<span style="color:#D4A017">&#9733;</span>' : '<span style="color:#30363D">&#9733;</span>';
-    var precioFmt = s.precio > 1000 ? '$'+s.precio.toFixed(0) : s.precio > 1 ? '$'+s.precio.toFixed(2) : '$'+s.precio.toFixed(4);
-    var varPct = s.score > 0 ? '+' + (s.score*100).toFixed(2)+'%' : (s.score*100).toFixed(2)+'%';
-    var varColor = s.score >= 0 ? '#3FB950' : '#FF4444';
-    var barWidth = Math.max(5, Math.min(100, s.confianza));
-    var barColor = s.direccion==='alcista' ? '#3FB950' : s.direccion==='bajista' ? '#FF4444' : '#D4A017';
+    var precioFmt = s.precio > 10000 ? '$'+s.precio.toFixed(0) : s.precio > 100 ? '$'+s.precio.toFixed(2) : s.precio > 1 ? '$'+s.precio.toFixed(3) : '$'+s.precio.toFixed(4);
+    var pct24 = s.precio > 0 && s.precio24h > 0 ? ((s.precio - s.precio24h)/s.precio24h*100).toFixed(2) : '0.00';
+    var pctColor = parseFloat(pct24) >= 0 ? '#3FB950' : '#FF4444';
+    var pctStr = (parseFloat(pct24) >= 0 ? '+' : '') + pct24 + '%';
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:1px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="padding:12px 14px 8px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
           '<div style="display:flex;align-items:center;gap:8px">' +
-            '<div style="width:36px;height:36px;border-radius:50%;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">' +(s.logo ? '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:24px;height:24px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +'<span style="display:none;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>' :'<span style="font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>') +'</div>' +
+            '<div style="width:36px;height:36px;border-radius:50%;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">' +
+              (s.logo ? '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:24px;height:24px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +
+              '<span style="display:none;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>' :
+              '<span style="font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>') +
+            '</div>' +
             '<div>' +
               '<div style="display:flex;align-items:center;gap:5px">' +
                 '<span style="font-size:14px;font-weight:700;color:#E6EDF3">'+s.simbolo+'</span>' +
                 '<span style="font-size:9px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:1px solid '+dirColor+'60;border-radius:4px;padding:1px 5px">'+dirLabel+'</span>' +
-                '<span style="font-size:9px">' + estrellas + '</span>' +
+                '<span style="font-size:9px">'+estrellas+'</span>' +
               '</div>' +
-              '<div style="font-size:10px;color:#8B949E">'+s.nombre+' <span style="color:'+tipoColor+'">&#9670; '+tipoLabel+'</span></div>' +
+              '<div style="font-size:10px;color:#8B949E">'+s.nombre+' <span style="color:'+tipoColor+'">&diams; '+tipoLabel+'</span></div>' +
             '</div>' +
           '</div>' +
           '<div style="text-align:right">' +
             '<div style="font-size:13px;font-weight:700;color:#E6EDF3">'+precioFmt+'</div>' +
-            '<div style="font-size:11px;color:'+varColor+'">'+varPct+'</div>' +
+            '<div style="font-size:11px;color:'+pctColor+'">'+pctStr+'</div>' +
           '</div>' +
         '</div>' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px">' +
-          '<span style="font-size:10px;color:#8B949E">PROB. IA <span style="color:'+barColor+';font-weight:700">'+s.confianza+'%</span></span>' +
+          '<span style="font-size:10px;color:#8B949E">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>' +
         '</div>' +
-        '<div style="margin-top:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+barWidth+'%;background:'+barColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
+        '<div style="margin-top:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
-      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D">' +
-        _buildIADetail(s) +
-      '</div>' +
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D">'+_buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
 }
 
 function _buildIADetail(s) {
-  var dirColor = s.direccion==='alcista' ? '#3FB950' : s.direccion==='bajista' ? '#FF4444' : '#D4A017';
-  var dirLabel = s.direccion==='alcista' ? 'ALCISTA' : s.direccion==='bajista' ? 'BAJISTA' : 'CONF. IA';
-  var signo = s.direccion==='alcista' ? '+' : s.direccion==='bajista' ? '-' : '*';
-  var motivos = s.motivos || [];
+  var dirColor = s.direccion==='alcista'?'#3FB950':s.direccion==='bajista'?'#FF4444':'#D4A017';
+  var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'CONF. IA';
+  var signo = s.direccion==='alcista'?'+':s.direccion==='bajista'?'-':'*';
   var html = '<div style="padding-top:12px">';
-  // SENAL PRINCIPAL
   html += '<div style="background:'+dirColor+'15;border:1px solid '+dirColor+'40;border-radius:10px;padding:10px 12px;margin-bottom:10px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
   html += '<span style="font-size:13px;font-weight:700;color:'+dirColor+'">'+signo+' '+dirLabel+'</span>';
   html += '<span style="background:'+dirColor+';color:#000;font-size:11px;font-weight:800;border-radius:6px;padding:2px 8px">PRINCIPAL '+s.prob_principal+'%</span>';
   html += '</div>';
-  // 5 MOTIVOS OBJETIVOS
   html += '<div style="font-size:11px;font-weight:600;color:#8B949E;letter-spacing:0.5px;margin-bottom:6px">JUSTIFICACION DEL ANALISIS</div>';
-  motivos.slice(0,5).forEach(function(m) {
-    html += '<div style="display:flex;gap:6px;margin-bottom:4px"><span style="color:'+dirColor+';flex-shrink:0">-></span><span style="font-size:11px;color:#C9D1D9;line-height:1.4">'+m+'</span></div>';
+  (s.motivos || []).slice(0,5).forEach(function(m) {
+    html += '<div style="display:flex;gap:6px;margin-bottom:5px"><span style="color:'+dirColor+';flex-shrink:0;font-weight:700">-></span><span style="font-size:11px;color:#C9D1D9;line-height:1.4">'+m+'</span></div>';
   });
   html += '</div>';
-  // OBJETIVO / STOP / UPSIDE
   html += '<div style="display:flex;gap:8px;margin-bottom:10px">';
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:#3FB950">$'+s.objetivo+'</div></div>';
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:#FF4444">$'+s.stop+'</div></div>';
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Upside</div><div style="font-size:12px;font-weight:700;color:#D4A017">+'+s.upside+'%</div></div>';
   html += '</div>';
-  // OTROS ESCENARIOS
   html += '<div style="font-size:10px;color:#8B949E;margin-bottom:6px;font-weight:600">OTROS ESCENARIOS</div>';
   html += '<div style="display:flex;gap:6px">';
   if(s.direccion !== 'alcista') html += '<div style="flex:1;background:#3FB95015;border:1px solid #3FB95040;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#3FB950">ALCISTA</div><div style="font-size:13px;font-weight:700;color:#3FB950">'+s.prob_alcista+'%</div></div>';
   if(s.direccion !== 'bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
   if(s.direccion !== 'alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">CONF.IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
-  html += '</div>';
-  html += '</div>';
+  html += '</div></div>';
   return html;
 }
 
@@ -911,44 +1156,8 @@ function toggleIARow(idx) {
   var detail = document.getElementById('ia-detail-'+idx);
   if (!detail) return;
   var isOpen = detail.style.display !== 'none';
-  // Close all
-  var allDetails = document.querySelectorAll('[id^="ia-detail-"]');
-  allDetails.forEach(function(d){ d.style.display='none'; });
-  // Open this one if it was closed
+  document.querySelectorAll('[id^="ia-detail-"]').forEach(function(d){ d.style.display='none'; });
   if (!isOpen) detail.style.display = 'block';
-}
-
-function _iniciarBannerEventos() {
-  _IA_BANNER_EVENTOS = [
-    {label:'EVENTO CRITICO - FED', text:'Reunion FOMC - Decision de tasas de interes - Alto impacto en todos los mercados', mins:354},
-    {label:'DATO MACRO - IPC EEUU', text:'Indice de Precios al Consumidor - Publicacion a las 8:30 EST', mins:180},
-    {label:'EARNINGS - NVIDIA', text:'Resultados trimestrales NVDA - Estimado EPS $5.58 - Pre-mercado', mins:720}
-  ];
-  _IA_BANNER_IDX = 0;
-  _mostrarBannerActual();
-  if (_IA_BANNER_TIMER) clearInterval(_IA_BANNER_TIMER);
-  _IA_BANNER_TIMER = setInterval(function(){
-    _IA_BANNER_IDX = (_IA_BANNER_IDX + 1) % _IA_BANNER_EVENTOS.length;
-    _mostrarBannerActual();
-  }, 10000);
-}
-
-function _mostrarBannerActual() {
-  var banner = document.getElementById('ia-banner');
-  if (!banner) return;
-  var ev = _IA_BANNER_EVENTOS[_IA_BANNER_IDX];
-  if (!ev) return;
-  banner.style.display = 'block';
-  var lbl = document.getElementById('ia-banner-label');
-  var txt = document.getElementById('ia-banner-text');
-  var tim = document.getElementById('ia-banner-time');
-  if(lbl) lbl.textContent = ev.label;
-  if(txt) txt.textContent = ev.text;
-  if(tim) {
-    var h = Math.floor(ev.mins/60);
-    var m = ev.mins % 60;
-    tim.textContent = h + 'h ' + (m<10?'0':'')+m+'m';
-  }
 }
 
 document.addEventListener('DOMContentLoaded', function(){
