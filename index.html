@@ -1438,31 +1438,35 @@ window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-
 
 
 <script>
-// === AUTO-UPDATE SERVICE WORKER ===
+// === AUREX SW v6.0 - iOS Safari Compatible ===
+// BUILD: v1000000
 if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(reg){
-    // Chequear updates cada vez que se carga la pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡gina
-    reg.update();
-    // Cuando se detecta una nueva versiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n instalÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ndose
-    reg.addEventListener('updatefound', function(){
-      var newSW = reg.installing;
-      newSW.addEventListener('statechange', function(){
-        // Cuando el nuevo SW estÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ listo y hay un SW viejo activo
-        if(newSW.state === 'installed' && navigator.serviceWorker.controller){
-          // Mandar mensaje al nuevo SW para que tome control inmediato
-          newSW.postMessage({type: 'SKIP_WAITING'});
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    var kills=[];
+    regs.forEach(function(r){kills.push(r.unregister());});
+    return Promise.all(kills);
+  }).then(function(){
+    if(window.caches){
+      return caches.keys().then(function(keys){
+        return Promise.all(keys.map(function(k){return caches.delete(k);}));
+      });
+    }
+  }).then(function(){
+    return navigator.serviceWorker.register('/aurex-app/service-worker.js',{updateViaCache:'none'});
+  }).then(function(reg){
+    setInterval(function(){reg.update();},30000);
+    reg.addEventListener('updatefound',function(){
+      var nw=reg.installing;
+      if(!nw)return;
+      nw.addEventListener('statechange',function(){
+        if(nw.state==='installed'){
+          nw.postMessage({type:'SKIP_WAITING'});
+          setTimeout(function(){window.location.reload();},500);
         }
       });
     });
-  });
-  // Cuando el SW toma control, recargar la pÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡gina automÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ticamente
-  var refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', function(){
-    if(!refreshing){
-      refreshing = true;
-      window.location.reload();
-    }
-  });
+  }).catch(function(e){console.log('SW error:',e);});
 }
-</script></body>
+</script>
+</body>
 </html>
