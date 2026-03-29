@@ -48,7 +48,7 @@ var DATA={
     ]
   },
   etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],
-  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
+  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'Petroleo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
   futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
   divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
 };
@@ -878,9 +878,9 @@ function _calcIAScore(activo, datos) {
     if (motivos.length < 5) motivos.push(activo.tipo === 'metal' ? 'Oro en $' + Math.round(precioOro) + ' - maximos historicos, demanda de refugio favorece metales' : 'Oro en maximos $' + Math.round(precioOro) + ' - aversion al riesgo impacta activos especulativos');
   } else if (precioOro > 2200) {
     oroScore = activo.tipo === 'metal' ? 0.03 : -0.01;
-    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel elevado, seÃÂ±al de cautela moderada en mercados');
+    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel elevado, senal de cautela moderada en mercados');
   } else {
-    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel neutral, sin seÃÂ±al de aversion extrema al riesgo');
+    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel neutral, sin senal de aversion extrema al riesgo');
   }
   if (precioPetroleo > 90) {
     oroScore += activo.tipo === 'materia_prima' ? 0.03 : -0.02;
@@ -893,7 +893,7 @@ function _calcIAScore(activo, datos) {
   var earningsScore = hayEarnings ? 0.02 : 0;
   if (hayEarnings && motivos.length < 5) motivos.push('Reporte de resultados proximo - volatilidad historicamente elevada en torno a earnings');
   scores.earnings = earningsScore;
-  var fillers = ['Analisis tecnico confirma zona clave de decision en precio actual','Flujo institucional alineado con la tendencia identificada','Patron de precio en grafico diario confirma el momentum actual','Indicadores de amplitud alinean con la seÃÂ±al del modelo de 8 variables','Condiciones de liquidez global consistentes con la seÃÂ±al detectada'];
+  var fillers = ['Analisis tecnico confirma zona clave de decision en precio actual','Flujo institucional alineado con la tendencia identificada','Patron de precio en grafico diario confirma el momentum actual','Indicadores de amplitud alinean con la senal del modelo de 8 variables','Condiciones de liquidez global consistentes con la senal detectada'];
   var fi = 0;
   while (motivos.length < 5 && fi < fillers.length) { motivos.push(fillers[fi++]); }
   var total = Object.values(scores).reduce(function(a,b){return a+b;},0);
@@ -944,10 +944,17 @@ function _calcIAScore(activo, datos) {
   var escenario_principal = direccion === 'alta_conf' ? ('ALTA CONV-IA ' + confLabel) : (direccion === 'alcista' ? 'ALCISTA' : 'BAJISTA');
   var estrellas = scoreAbs > umbralConfIA ? 5 : scoreAbs > 0.10 ? 4 : scoreAbs > 0.06 ? 3 : scoreAbs > 0.03 ? 2 : 1;
   var cambio24h = precio24h > 0 ? ((precio - precio24h) / precio24h * 100) : 0;
-  var movExp = scoreAbs * 1.5;
-  var objetivo = precio > 0 ? (precio * (1 + movExp * (total > 0 ? 1 : -1))).toFixed(precio > 100 ? 2 : 4) : '0';
-  var stop = precio > 0 ? (precio * (1 - movExp * 0.6 * (total > 0 ? 1 : -1))).toFixed(precio > 100 ? 2 : 4) : '0';
-  var upside = (movExp * 100).toFixed(1);
+  var _movLimits = activo.tipo === 'cripto' ? {min:0.02, max:0.08} :
+                   activo.tipo === 'accion' ? {min:0.01, max:0.04} :
+                   activo.tipo === 'bono' ? {min:0.002, max:0.015} :
+                   {min:0.005, max:0.03};
+  var _normScore = Math.min(scoreAbs, 0.45) / 0.45;
+  var movPct = _movLimits.min + _normScore * (_movLimits.max - _movLimits.min);
+  var _esAlcista = total > 0;
+  var _dec = precio > 100 ? 2 : 4;
+  var objetivo = precio > 0 ? (_esAlcista ? precio*(1+movPct) : precio*(1-movPct)).toFixed(_dec) : '0';
+  var stop = precio > 0 ? (_esAlcista ? precio*(1-movPct*0.4) : precio*(1+movPct*0.4)).toFixed(_dec) : '0';
+  var upside = (_esAlcista ? 1 : -1) * (movPct * 100);
   return {
     simbolo: sym, nombre: activo.n, tipo: activo.tipo, logo: activo.logo || '', icon: activo.icon || sym[0], color: activo.color || '#D4A017',
     direccion: direccion, confianza: probPrincipal, score: total,
@@ -1055,7 +1062,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
     var lb = document.createElement('div');
     lb.id = 'ia-loading-bar';
     lb.style.cssText = 'padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #21262D;';
-    lb.innerHTML = '<div style="width:14px;height:14px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></div><span style="font-size:11px;color:#8B949E">Cargando mas seÃÂ±ales... <span id="ia-load-count">0</span>/' + phase2Activos.length + '</span>';
+    lb.innerHTML = '<div style="width:14px;height:14px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></div><span style="font-size:11px;color:#8B949E">Cargando mas senales... <span id="ia-load-count">0</span>/' + phase2Activos.length + '</span>';
     listEl.appendChild(lb);
   }
   var allData = window._IA_PRECIOS || {};
@@ -1137,7 +1144,7 @@ function _renderIALista(signals, keepLoadingBar) {
     return s.tipo === filtro;
   });
   if (!filtered.length) {
-    listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">No hay seÃÂ±ales para este filtro</div>';
+    listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">No hay senales para este filtro</div>';
     return;
   }
   var lb = document.getElementById('ia-loading-bar');
@@ -1218,9 +1225,14 @@ function _buildIADetail(s) {
   });
   html += '</div>';
   html += '<div style="display:flex;gap:8px;margin-bottom:10px">';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:#3FB950">$'+s.objetivo+'</div></div>';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:#FF4444">$'+s.stop+'</div></div>';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Upside</div><div style="font-size:12px;font-weight:700;color:#D4A017">+'+s.upside+'%</div></div>';
+  var _cObj=s.direccion==='bajista'?'#FF4444':'#3FB950';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:'+_cObj+'">$'+s.objetivo+'</div></div>';
+  var _cStop=s.direccion==='bajista'?'#FF9500':'#FF4444';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:'+_cStop+'">$'+s.stop+'</div></div>';
+  var _uLabel=s.upside<0?'Downside':'Upside';
+  var _uColor=s.upside<0?'#FF4444':'#3FB950';
+  var _uSign=s.upside>=0?'+':'';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
   html += '<div style="font-size:10px;color:#8B949E;margin-bottom:6px;font-weight:600">OTROS ESCENARIOS</div>';
   html += '<div style="display:flex;gap:6px">';
