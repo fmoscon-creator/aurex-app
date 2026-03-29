@@ -637,19 +637,7 @@ var _IA_PRECIOS = {};
 var _IA_PRECIOS_PREV = {};
 var _MACRO_EVENTOS = [];
 
-var _IA_ACTIVOS = [
-  {s:'BTC', n:'Bitcoin', tipo:'cripto'},
-  {s:'ETH', n:'Ethereum', tipo:'cripto'},
-  {s:'SOL', n:'Solana', tipo:'cripto'},
-  {s:'BNB', n:'BNB', tipo:'cripto'},
-  {s:'XRP', n:'XRP', tipo:'cripto'},
-  {s:'AAPL', n:'Apple', tipo:'accion'},
-  {s:'NVDA', n:'NVIDIA', tipo:'accion'},
-  {s:'TSLA', n:'Tesla', tipo:'accion'},
-  {s:'MSFT', n:'Microsoft', tipo:'accion'},
-  {s:'SPY', n:'S&P 500 ETF', tipo:'etf'},
-  {s:'GLD', n:'Gold ETF', tipo:'etf'}
-];
+
 
 function _iaSeed(sym) {
   var d = new Date(); var day = d.getFullYear()*10000 + (d.getMonth()+1)*100 + d.getDate();
@@ -663,23 +651,23 @@ function _iaSeed(sym) {
 // SENALES IA - MOTOR COMPLETO v3 (rediseno imagen original)
 // ============================================================
 
-var _IA_FILTRO_ACTUAL = 'todo';
-var _IA_BANNER_EVENTOS = [];
-var _IA_BANNER_IDX = 0;
-var _IA_BANNER_TIMER = null;
+window._IA_FILTRO_ACTUAL = 'todo';
+window._IA_BANNER_EVENTOS = [];
+window._IA_BANNER_IDX = 0;
+window._IA_BANNER_TIMER = null;
 
-var _IA_ACTIVOS = [
-  {s:'BTC', n:'Bitcoin', t:'cripto', icon:'B', color:'#F7931A'},
-  {s:'ETH', n:'Ethereum', t:'cripto', icon:'E', color:'#627EEA'},
-  {s:'SOL', n:'Solana', t:'cripto', icon:'S', color:'#9945FF'},
-  {s:'BNB', n:'BNB', t:'cripto', icon:'B', color:'#F3BA2F'},
-  {s:'XRP', n:'Ripple', t:'cripto', icon:'X', color:'#00AAE4'},
-  {s:'AAPL', n:'Apple Inc.', t:'accion', icon:'A', color:'#A2AAAD'},
-  {s:'NVDA', n:'NVIDIA', t:'accion', icon:'N', color:'#76B900'},
-  {s:'TSLA', n:'Tesla', t:'accion', icon:'T', color:'#CC0000'},
-  {s:'MSFT', n:'Microsoft', t:'accion', icon:'M', color:'#00A4EF'},
-  {s:'SPY', n:'S&P 500 ETF', t:'etf', icon:'S', color:'#D4A017'},
-  {s:'GLD', n:'Oro Spot', t:'etf', icon:'G', color:'#FFD700'}
+window._IA_ACTIVOS = [
+  {s:'BTC', n:'Bitcoin', tipo:'cripto', icon:'B', color:'#F7931A'},
+  {s:'ETH', n:'Ethereum', tipo:'cripto', icon:'E', color:'#627EEA'},
+  {s:'SOL', n:'Solana', tipo:'cripto', icon:'S', color:'#9945FF'},
+  {s:'BNB', n:'BNB', tipo:'cripto', icon:'B', color:'#F3BA2F'},
+  {s:'XRP', n:'Ripple', tipo:'cripto', icon:'X', color:'#00AAE4'},
+  {s:'AAPL', n:'Apple Inc.', tipo:'accion', icon:'A', color:'#A2AAAD'},
+  {s:'NVDA', n:'NVIDIA', tipo:'accion', icon:'N', color:'#76B900'},
+  {s:'TSLA', n:'Tesla', tipo:'accion', icon:'T', color:'#CC0000'},
+  {s:'MSFT', n:'Microsoft', tipo:'accion', icon:'M', color:'#00A4EF'},
+  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', icon:'S', color:'#D4A017'},
+  {s:'GLD', n:'Oro Spot', tipo:'etf', icon:'G', color:'#FFD700'}
 ];
 
 window._IA_PRECIOS = {};
