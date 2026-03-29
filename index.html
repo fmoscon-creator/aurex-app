@@ -382,7 +382,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=1774800992857"></script>
+<script src="aurex-features.js?v=1774801078041"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -920,7 +920,84 @@ function runConversion(){
 <div class="cnt" id="cnt"></div>
 </div>
 
-undefined
+<div class="screen" id="screen-ia" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
+
+<!-- BANNER EVENTOS -->
+<div id="ia-banner" style="display:none;flex-shrink:0">
+  <div id="ia-banner-inner" onclick="abrirEventosPanel()" style="cursor:pointer;padding:7px 14px 0;display:flex;justify-content:space-between;align-items:center">
+    <span id="ia-banner-label" style="font-size:9px;font-weight:700;color:#D4A017;letter-spacing:1px">EVENTO</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div id="ia-banner-time" style="background:#D4A01730;border:1px solid #D4A017;border-radius:5px;padding:2px 7px;font-size:10px;font-weight:700;color:#D4A017"></div>
+      <span onclick="event.stopPropagation();cerrarBanner()" style="color:#8B949E;font-size:13px;padding:2px 4px">X</span>
+    </div>
+  </div>
+  <div style="overflow:hidden;padding:2px 14px 7px;border-bottom:1px solid #21262D">
+    <div id="ia-banner-ticker" style="display:flex">
+      <span id="ia-banner-text1" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
+      <span id="ia-banner-text2" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TODOS LOS EVENTOS -->
+<div id="ia-eventos-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;flex-direction:column;overflow-y:auto;padding:20px 16px 40px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <span style="color:#D4A017;font-size:14px;font-weight:700;letter-spacing:1px">EVENTOS DEL DIA</span>
+    <span onclick="cerrarEventosPanel()" style="color:#8B949E;font-size:22px;cursor:pointer;padding:4px 8px">X</span>
+  </div>
+  <div id="ia-eventos-lista"></div>
+</div>
+
+<!-- HEADER 3 CONTADORES -->
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:#0D1117">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <span style="font-size:15px;font-weight:600;color:#E6EDF3">AUREX <span style="color:#8B949E;font-weight:400;font-size:13px">- Senales IA</span></span>
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#A78BFA;font-weight:700">
+      <div style="width:5px;height:5px;border-radius:50%;background:#A78BFA;animation:lp 1.5s infinite"></div>
+      <span>LIVE</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <div id="ia-cnt-alcista" onclick="setIAFiltro('alcista')" style="flex:1;background:#3FB95020;border:1.5px solid #3FB95060;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-alcista" style="font-size:26px;font-weight:800;color:#3FB950;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#3FB950;margin-top:3px">ALCISTAS</div>
+    </div>
+    <div id="ia-cnt-bajista" onclick="setIAFiltro('bajista')" style="flex:1;background:#FF444420;border:1.5px solid #FF444460;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-bajista" style="font-size:26px;font-weight:800;color:#FF4444;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#FF4444;margin-top:3px">BAJISTAS</div>
+    </div>
+    <div id="ia-cnt-altaconf" onclick="setIAFiltro('alta_conf')" style="flex:1;background:#D4A01720;border:1.5px solid #D4A01760;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-altaconf" style="font-size:26px;font-weight:800;color:#D4A017;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#D4A017;margin-top:3px">CONF. IA</div>
+    </div>
+  </div>
+</div>
+
+<!-- PILLS FILTRO -->
+<div style="padding:8px 14px;border-bottom:1px solid #21262D;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+  <div id="ia-filtros" style="display:flex;gap:6px;white-space:nowrap">
+    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#000;border:1px solid #D4A017;-webkit-tap-highlight-color:rgba(0,0,0,0)">Todo</div>
+    <div class="ia-pill" onclick="setIAFiltro('alcista',this)" data-filtro="alcista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#3FB950;border:1px solid #3FB95060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Alcista</div>
+    <div class="ia-pill" onclick="setIAFiltro('bajista',this)" data-filtro="bajista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FF4444;border:1px solid #FF444460;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bajista</div>
+    <div class="ia-pill" onclick="setIAFiltro('alta_conf',this)" data-filtro="alta_conf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#D4A017;border:1px solid #D4A01760;-webkit-tap-highlight-color:rgba(0,0,0,0)">Conf. IA</div>
+    <div class="ia-pill" onclick="setIAFiltro('cripto',this)" data-filtro="cripto" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#A78BFA;border:1px solid #A78BFA60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Cripto</div>
+    <div class="ia-pill" onclick="setIAFiltro('accion',this)" data-filtro="accion" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#58A6FF;border:1px solid #58A6FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Acciones</div>
+    <div class="ia-pill" onclick="setIAFiltro('etf',this)" data-filtro="etf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#F0883E;border:1px solid #F0883E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">ETF</div>
+    <div class="ia-pill" onclick="setIAFiltro('metal',this)" data-filtro="metal" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FFD700;border:1px solid #FFD70060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Metales</div>
+    <div class="ia-pill" onclick="setIAFiltro('materia_prima',this)" data-filtro="materia_prima" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#C8A96E;border:1px solid #C8A96E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Mat. Primas</div>
+    <div class="ia-pill" onclick="setIAFiltro('bono',this)" data-filtro="bono" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#79C0FF;border:1px solid #79C0FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bonos</div>
+  </div>
+</div>
+
+<!-- SUBTITULO -->
+<div style="padding:6px 14px 4px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+  <span id="ia-subtitulo" style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:0.5px">SENALES IA</span>
+  <span id="ia-updated" style="font-size:10px;color:#8B949E">-</span>
+</div>
+
+<div class="cnt" id="ia-list" style="overflow-y:auto;flex:1"></div>
+
+</div>
 
 <div class="screen" id="screen-watchlist" style="flex-direction:column;flex:1;min-height:0">
 <div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#001A2A 0%,#0D1117 100%)">
