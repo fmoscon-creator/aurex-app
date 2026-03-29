@@ -657,17 +657,17 @@ window._IA_BANNER_IDX = 0;
 window._IA_BANNER_TIMER = null;
 
 window._IA_ACTIVOS = [
-  {s:'BTC', n:'Bitcoin', tipo:'cripto', icon:'B', color:'#F7931A'},
-  {s:'ETH', n:'Ethereum', tipo:'cripto', icon:'E', color:'#627EEA'},
-  {s:'SOL', n:'Solana', tipo:'cripto', icon:'S', color:'#9945FF'},
-  {s:'BNB', n:'BNB', tipo:'cripto', icon:'B', color:'#F3BA2F'},
-  {s:'XRP', n:'Ripple', tipo:'cripto', icon:'X', color:'#00AAE4'},
-  {s:'AAPL', n:'Apple Inc.', tipo:'accion', icon:'A', color:'#A2AAAD'},
-  {s:'NVDA', n:'NVIDIA', tipo:'accion', icon:'N', color:'#76B900'},
-  {s:'TSLA', n:'Tesla', tipo:'accion', icon:'T', color:'#CC0000'},
-  {s:'MSFT', n:'Microsoft', tipo:'accion', icon:'M', color:'#00A4EF'},
-  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', icon:'S', color:'#D4A017'},
-  {s:'GLD', n:'Oro Spot', tipo:'etf', icon:'G', color:'#FFD700'}
+  {s:'BTC', n:'Bitcoin', tipo:'cripto', icon:'B', color:'#F7931A', logo:'https://assets.coingecko.com/coins/images/1/small/bitcoin.png'},
+  {s:'ETH', n:'Ethereum', tipo:'cripto', icon:'E', color:'#627EEA', logo:'https://assets.coingecko.com/coins/images/279/small/ethereum.png'},
+  {s:'SOL', n:'Solana', tipo:'cripto', icon:'S', color:'#9945FF', logo:'https://assets.coingecko.com/coins/images/4128/small/solana.png'},
+  {s:'BNB', n:'BNB', tipo:'cripto', icon:'B', color:'#F3BA2F', logo:'https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png'},
+  {s:'XRP', n:'Ripple', tipo:'cripto', icon:'X', color:'#00AAE4', logo:'https://assets.coingecko.com/coins/images/44/small/xrp-symbol-white-128.png'},
+  {s:'AAPL', n:'Apple Inc.', tipo:'accion', icon:'A', color:'#A2AAAD', logo:'https://logo.clearbit.com/apple.com'},
+  {s:'NVDA', n:'NVIDIA', tipo:'accion', icon:'N', color:'#76B900', logo:'https://logo.clearbit.com/nvidia.com'},
+  {s:'TSLA', n:'Tesla', tipo:'accion', icon:'T', color:'#CC0000', logo:'https://logo.clearbit.com/tesla.com'},
+  {s:'MSFT', n:'Microsoft', tipo:'accion', icon:'M', color:'#00A4EF', logo:'https://logo.clearbit.com/microsoft.com'},
+  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', icon:'S', color:'#D4A017', logo:'https://logo.clearbit.com/ssga.com'},
+  {s:'GLD', n:'Oro Spot', tipo:'etf', icon:'G', color:'#FFD700', logo:'https://assets.coingecko.com/coins/images/944/small/xaut.png'}
 ];
 
 window._IA_PRECIOS = {};
@@ -845,7 +845,7 @@ function _renderIALista(signals) {
       '<div style="padding:12px 14px 8px">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
           '<div style="display:flex;align-items:center;gap:8px">' +
-            '<div style="width:32px;height:32px;border-radius:50%;background:'+s.color+'20;border:1.5px solid '+s.color+';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</div>' +
+            '<div style="width:36px;height:36px;border-radius:50%;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">' +(s.logo ? '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:24px;height:24px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">' +'<span style="display:none;font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>' :'<span style="font-size:12px;font-weight:800;color:'+s.color+'">'+s.simbolo.substring(0,1)+'</span>') +'</div>' +
             '<div>' +
               '<div style="display:flex;align-items:center;gap:5px">' +
                 '<span style="font-size:14px;font-weight:700;color:#E6EDF3">'+s.simbolo+'</span>' +
