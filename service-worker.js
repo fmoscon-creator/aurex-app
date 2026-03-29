@@ -1,70 +1,65 @@
-// Aurex Service Worker v5.0 Ã¢ÂÂ Auto-update garantizado
-// BUILD: 1774740873781
-const CACHE_VERSION = 'aurex-1774740873781';
+// Aurex Service Worker v6.0 - iOS Safari Compatible
+// BUILD: 1774840000000
+var CACHE_VERSION = 'aurex-v6-1774840000000';
 
-// Responder al mensaje SKIP_WAITING para activarse inmediatamente
-self.addEventListener('message', event => {
-  if(event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-});
-
-self.addEventListener('install', event => {
-  // NO hacer skipWaiting aqui - esperamos el mensaje del cliente
-  // Precachear solo recursos estaticos esenciales
+self.addEventListener('install', function(event) {
+  self.skipWaiting();
   event.waitUntil(
-    caches.open(CACHE_VERSION).then(cache => {
+    caches.open(CACHE_VERSION).then(function(cache) {
       return cache.addAll(['/aurex-app/manifest.json']);
-    }).catch(() => {})
+    }).catch(function() {})
   );
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', function(event) {
   event.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(
-        keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
-      )
-    ).then(() => self.clients.claim())
+    caches.keys().then(function(keys) {
+      return Promise.all(
+        keys.filter(function(k) { return k !== CACHE_VERSION; })
+            .map(function(k) { return caches.delete(k); })
+      );
+    }).then(function() {
+      return self.clients.claim();
+    })
   );
 });
 
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
+self.addEventListener('fetch', function(event) {
+  var url = new URL(event.request.url);
 
-  // index.html y raiz: SIEMPRE de la red
-  if(url.pathname === '/aurex-app/' || 
+  if(url.pathname === '/aurex-app/' ||
      url.pathname === '/aurex-app/index.html' ||
-     url.pathname.endsWith('service-worker.js')) {
+     url.pathname.indexOf('.html') !== -1 ||
+     url.pathname.indexOf('service-worker') !== -1) {
     event.respondWith(
       fetch(event.request, {cache: 'no-store'})
-        .catch(() => caches.match('/aurex-app/'))
+        .catch(function() {
+          return caches.match('/aurex-app/');
+        })
     );
     return;
   }
 
-  // aurex-features.js: Network First
-  if(url.pathname.includes('aurex-features.js')) {
+  if(url.pathname.indexOf('aurex-features.js') !== -1) {
     event.respondWith(
       fetch(event.request, {cache: 'no-cache'})
-        .then(res => {
+        .then(function(res) {
           if(res.ok) {
-            caches.open(CACHE_VERSION).then(c => c.put(event.request, res.clone()));
+            caches.open(CACHE_VERSION).then(function(c) { c.put(event.request, res.clone()); });
           }
           return res;
         })
-        .catch(() => caches.match(event.request))
+        .catch(function() { return caches.match(event.request); })
     );
     return;
   }
 
-  // Resto: Cache First
   event.respondWith(
-    caches.match(event.request).then(cached => {
+    caches.match(event.request).then(function(cached) {
       if(cached) return cached;
-      return fetch(event.request).then(res => {
+      return fetch(event.request).then(function(res) {
         if(res.ok && event.request.method === 'GET') {
-          caches.open(CACHE_VERSION).then(c => c.put(event.request, res.clone()));
+          caches.open(CACHE_VERSION).then(function(c) { c.put(event.request, res.clone()); });
         }
         return res;
       });
