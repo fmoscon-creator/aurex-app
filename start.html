@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Aurex - Iniciando...</title>
+<style>
+body{background:#0D1117;color:#E6EDF3;font-family:-apple-system,sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;text-align:center;}
+</style>
+</head>
+<body>
+<div>
+<div style="font-size:32px;font-weight:800;color:#D4A017;margin-bottom:16px;">AUREX</div>
+<div style="font-size:14px;color:#8B949E;" id="msg">Limpiando cache...</div>
+</div>
+<script>
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    var kills=[];
+    regs.forEach(function(r){kills.push(r.unregister());});
+    return Promise.all(kills);
+  }).then(function(){
+    document.getElementById("msg").textContent="Listo! Abriendo Aurex...";
+    setTimeout(function(){
+      window.location.href="/aurex-app/";
+    },1500);
+  }).catch(function(){
+    window.location.href="/aurex-app/";
+  });
+} else {
+  window.location.href="/aurex-app/";
+}
+</script>
+</body>
+</html>
