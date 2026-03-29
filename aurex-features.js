@@ -383,24 +383,12 @@ function _refreshPortPrices(items){
 function _renderPortfolioEmpty(){
   var cnt = document.getElementById('port-cnt');
   if(!cnt) return;
-  // Si no hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, mostrar demo con activos de ejemplo
-  var demoItems = [
-    {id:'demo1', simbolo:'AAPL',  nombre:'Apple',       cantidad:10,   precio_compra:185.00, tipo:'accion'},
-    {id:'demo2', simbolo:'NVDA',  nombre:'NVIDIA',      cantidad:5,    precio_compra:125.00, tipo:'accion'},
-    {id:'demo3', simbolo:'BTC',   nombre:'Bitcoin',     cantidad:0.05, precio_compra:62000,  tipo:'cripto'},
-    {id:'demo4', simbolo:'ETH',   nombre:'Ethereum',    cantidad:1.5,  precio_compra:3200,   tipo:'cripto'},
-    {id:'demo5', simbolo:'GC=F',  nombre:'Oro (Gold)',  cantidad:2,    precio_compra:2050,   tipo:'commodity'},
-    {id:'demo6', simbolo:'CL=F',  nombre:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
-    {id:'demo7', simbolo:'TLT',   nombre:'Bono 20Y US', cantidad:20,   precio_compra:92.00,  tipo:'bono'}
-  ];
-  cnt.innerHTML = '<div style="background:#1A0D0060;border:1px dashed #D4A01740;border-radius:10px;margin:10px 14px 6px;padding:8px 14px;display:flex;align-items:center;gap:8px;">' +
-    '<span style="font-size:18px;">ÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤</span>' +
-    '<div>' +
-      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para tu portfolio real</div>' +
-      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
-    '</div>' +
+  cnt.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
+    '<div style="font-size:40px;margin-bottom:12px;">AUREX</div>' +
+    '<div style="font-size:14px;font-weight:700;color:#C9D1D9;margin-bottom:6px;">Tu portfolio esta vacio</div>' +
+    '<div style="font-size:12px;color:#8B949E;margin-bottom:20px;">Agrega tu primer activo para empezar a seguir tu cartera en tiempo real</div>' +
+    '<button onclick="openPortModal()" style="background:#D4A017;color:#0D1117;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;">+ Agregar primer activo</button>' +
   '</div>';
-  _renderPortfolioItems(demoItems);
 }
 
 function _renderPortfolioItems(items){
@@ -557,9 +545,9 @@ function showPortErr(msg){
 
 // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AGREGAR activo al portfolio en Supabase ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
-  if(!window._supabase){ alert('NecesitÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s iniciar sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para guardar activos.'); return; }
+  if(!window._supabase){ console.warn('Supabase no disponible'); return; }
   window._supabase.auth.getSession().then(function(res){
-    if(!res.data || !res.data.session){ alert('IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n primero.'); return; }
+    if(!res.data || !res.data.session){ console.warn('Sin sesion activa'); return; }
     var token = res.data.session.access_token;
     var userId = res.data.session.user.id;
     fetch(SUPA_URL + '/rest/v1/portfolio', {
@@ -606,7 +594,16 @@ document.addEventListener('DOMContentLoaded', function(){
         if(event === 'SIGNED_IN') loadPortfolioSupa();
         if(event === 'SIGNED_OUT') _renderPortfolioEmpty();
       });
-      loadPortfolioSupa();
+      window._supabase.auth.getSession().then(function(res){
+        if(res.data && res.data.session){
+          loadPortfolioSupa();
+        } else {
+          window._supabase.auth.signInAnonymously().then(function(r){
+            if(!r.error){ loadPortfolioSupa(); }
+            else { _renderPortfolioEmpty(); }
+          }).catch(function(){ _renderPortfolioEmpty(); });
+        }
+      });
     } else {
       _renderPortfolioEmpty();
     }
