@@ -95,22 +95,46 @@ Objetivo: Watchlist + Alertas en app nativa. Version 1.1 completa con 6 tabs.
 ### SAB 28/03 â TAREA ACTUAL (sesion tarde/noche)
 Verificar conversor modal: abrir conversor desde header, comprobar que muestra precios reales Binance y no "Cargando..." congelado. Si hay bug, corregir.
 
-### DOM 29/03 â 5 hs
-Tarea: Portfolio completo en Supabase
-- Tabla portfolios: id, user_id, activo, cantidad, precio_compra, fecha
-- UI: agregar activo (nombre + cantidad + precio compra)
-- UI: listar activos con precio actual en vivo (Binance/Yahoo)
-- UI: eliminar activo
-- UI: ver valor total del portfolio y P&L total
-- Verificar en iPhone emulador
+### DOM 29/03 -- COMPLETADO
+BUGS CRITICOS:
+- [x] Bug pantalla negra iPhone nuevo (obs1 display:none) -- corregido commit df69aa21
+- [x] window._supabaseClient -> window._supabase -- corregido commit 608704af
+- [x] from("users") -> from("usuarios") -- corregido commit 3101a021
+- [x] FK constraint portfolio + RLS policies -- corregido via SQL Supabase
 
-### LUN 30/03 â 5 hs
-Tarea: Senales IA funcionales
-- Algoritmo: RSI simulado + tendencia de precio (comparar precio actual vs 24h antes) + volumen
-- Genera 5 senales diarias: activo, LONG/SHORT, confianza %
-- Tabla signals en Supabase: id, user_id, activo, direccion, confianza, fecha
-- UI tab Senales IA: lista de senales del dia con color verde/rojo
-- Verificar en iPhone
+PORTFOLIO:
+- [x] Modal agregar activo (nombre + cantidad + precio compra)
+- [x] Lista activos con precio vivo Binance/Yahoo
+- [x] P&L total en tiempo real
+- [x] Eliminar activo
+- [x] Guardado en Supabase tabla portfolio
+
+SENALES IA (Tab completo):
+- [x] UI: 3 botones ALCISTAS / BAJISTAS / ALTA CONF
+- [x] Motor: 8 variables Grupo A (RSI, Tendencia, Volumen, Volatilidad, Correlacion, Oro/Petroleo, Macro, Earnings)
+- [x] Threshold fix: 0.15 -> 0.05 para distribucion correcta de categorias
+- [x] Modal detalle: 3 escenarios probabilidad + Principal resaltado + 5 justificaciones
+- [x] Distribucion hoy: 8 ALCISTAS, 0 BAJISTAS, 3 ALTA CONF (11 activos)
+- [x] Encoding fix: botones + Senales IA header + X cerrar modal
+- [x] Fix HTML: div screen-watchlist faltante
+
+DOCUMENTACION:
+- [x] BUGFIX_HISTORIAL.md creado con historico completo
+- [x] PLAN-OPERATIVO.md actualizado con metodologia Grupo A/B
+
+### LUN 30/03 -- PENDIENTE (manana)
+Tarea: Senales IA - Guardar en Supabase + Watchlist
+- [ ] Guardar senales del dia en Supabase tabla signals
+- [ ] Verificar tabla signals existe (SQL: CREATE TABLE IF NOT EXISTS signals...)
+- [ ] Implementar Watchlist: boton estrella en Mercados agrega a watchlist
+- [ ] Tab Watchlist lee activos favoritos de Supabase con precio en vivo
+- [ ] Verificar flujo completo en iPhone 390x844
+
+GRUPO B (Semana 2 via Railway):
+- [ ] Noticias periodisticas + NLP
+- [ ] Sentiment redes sociales
+- [ ] Variables geopoliticas
+- [ ] Materias primas extendidas
 
 ### MAR 31/03 â 5 hs
 Tarea: Watchlist persistente
