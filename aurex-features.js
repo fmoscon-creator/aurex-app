@@ -48,7 +48,7 @@ var DATA={
     ]
   },
   etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],
-  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
+  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
   futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
   divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
 };
@@ -66,7 +66,7 @@ function renderTab(tab, pais){
     row.className='item-row'; row.id='row-'+item.s;
     row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #21262D;cursor:pointer;';
     row.innerHTML='<div style="display:flex;flex-direction:column;"><span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span><span style="color:#8B949E;font-size:11px;">'+item.n+'</span></div>'
-      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span></div>';
+      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span></div>';
     cnt.appendChild(row);
   });
   // Lanzar fetch de datos para este tab
@@ -133,7 +133,7 @@ window.sw=function(tab,el){
   renderTab(tab, _activePais);
 };
 
-// === swPais: cambio de paÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­s en acciones ===
+// === swPais: cambio de paÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­s en acciones ===
 window.swPais=function(pais,el){
   document.querySelectorAll('#pais-row .tab').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
@@ -149,7 +149,7 @@ renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
-function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
+function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
 function showAlertNotification(s,p,o){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+p.toLocaleString('en')+' obj:$'+o.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
 function updateNotifButton(on){var b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'#D4A017';b.textContent=on?'Activas':'Activar';}
 initPushNotifications();
@@ -158,7 +158,7 @@ setInterval(checkAlertasLocal,30000);
 fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d.status==='ok')console.log('Backend v'+d.version+' OK');}).catch(function(){});
 
 // ============================================================
-// === CONVERSOR DE MONEDAS ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Binance + fallback fiat =========
+// === CONVERSOR DE MONEDAS ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Binance + fallback fiat =========
 // ============================================================
 
 window._pcPrices = {};
@@ -218,7 +218,7 @@ window.updatePortConv = function(){
   if(!amtEl || !fromEl || !toEl || !resEl) return;
 
   var amt  = parseFloat(amtEl.value);
-  if(isNaN(amt) || amt < 0) { resEl.textContent = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ'; return; }
+  if(isNaN(amt) || amt < 0) { resEl.textContent = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ'; return; }
   var from = fromEl.value;
   var to   = toEl.value;
   var p    = window._pcPrices;
@@ -288,7 +288,7 @@ window.swapPortConv = function(){
 
 
 // ============================================================
-// === PORTFOLIO PERSISTENTE ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Supabase ========================
+// === PORTFOLIO PERSISTENTE ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ Supabase ========================
 // ============================================================
 
 var SUPA_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
@@ -306,7 +306,7 @@ function supaHeaders(token){
   return h;
 }
 
-// Obtener el token de sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n actual del usuario
+// Obtener el token de sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n actual del usuario
 function getSupaToken(){
   try {
     var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
@@ -315,7 +315,7 @@ function getSupaToken(){
   } catch(e) { return Promise.resolve({ data: { session: null } }); }
 }
 
-// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ CARGAR portfolio del usuario desde Supabase ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ CARGAR portfolio del usuario desde Supabase ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 window.loadPortfolioSupa = function(){
   try {
     if(window._supabase){
@@ -341,7 +341,7 @@ function _fetchPortfolio(token, userId){
     if(!items || items.length===0){ _renderPortfolioEmpty(); return; }
     // Primero renderizar con precios de cache
     _renderPortfolioItems(items);
-    // Luego buscar precios frescos para los sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­mbolos del portfolio
+    // Luego buscar precios frescos para los sÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­mbolos del portfolio
     _refreshPortPrices(items);
   })
   .catch(function(){ _renderPortfolioEmpty(); });
@@ -383,21 +383,21 @@ function _refreshPortPrices(items){
 function _renderPortfolioEmpty(){
   var cnt = document.getElementById('port-cnt');
   if(!cnt) return;
-  // Si no hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, mostrar demo con activos de ejemplo
+  // Si no hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, mostrar demo con activos de ejemplo
   var demoItems = [
     {id:'demo1', simbolo:'AAPL',  nombre:'Apple',       cantidad:10,   precio_compra:185.00, tipo:'accion'},
     {id:'demo2', simbolo:'NVDA',  nombre:'NVIDIA',      cantidad:5,    precio_compra:125.00, tipo:'accion'},
     {id:'demo3', simbolo:'BTC',   nombre:'Bitcoin',     cantidad:0.05, precio_compra:62000,  tipo:'cripto'},
     {id:'demo4', simbolo:'ETH',   nombre:'Ethereum',    cantidad:1.5,  precio_compra:3200,   tipo:'cripto'},
     {id:'demo5', simbolo:'GC=F',  nombre:'Oro (Gold)',  cantidad:2,    precio_compra:2050,   tipo:'commodity'},
-    {id:'demo6', simbolo:'CL=F',  nombre:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
+    {id:'demo6', simbolo:'CL=F',  nombre:'PetrÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³leo WTI',cantidad:10,   precio_compra:78.50,  tipo:'commodity'},
     {id:'demo7', simbolo:'TLT',   nombre:'Bono 20Y US', cantidad:20,   precio_compra:92.00,  tipo:'bono'}
   ];
   cnt.innerHTML = '<div style="background:#1A0D0060;border:1px dashed #D4A01740;border-radius:10px;margin:10px 14px 6px;padding:8px 14px;display:flex;align-items:center;gap:8px;">' +
-    '<span style="font-size:18px;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤</span>' +
+    '<span style="font-size:18px;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¤</span>' +
     '<div>' +
-      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para tu portfolio real</div>' +
-      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#D4A017;">Modo demo ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para tu portfolio real</div>' +
+      '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="font-size:10px;color:#58A6FF;cursor:pointer;margin-top:2px;">Crear cuenta gratis ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
     '</div>' +
   '</div>';
   _renderPortfolioItems(demoItems);
@@ -427,7 +427,7 @@ function _renderPortfolioItems(items){
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$' + fmtNum(valor) + '</div>' +
         '<div style="font-size:11px;font-weight:600;color:' + pnlColor + ';">' + pnlSign + pnl.toFixed(2) + '%</div>' +
       '</div>' +
-      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
+      '<div onclick="deletePortfolioItem(\'' + item.id + '\')" style="font-size:18px;color:#555;cursor:pointer;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
     '</div>';
   }).join('');
   _updateTotals(items);
@@ -435,7 +435,7 @@ function _renderPortfolioItems(items){
 
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
-  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
   items.forEach(function(item){
     var precio = prcs[item.simbolo] || item.precio_compra;
     total += item.cantidad * precio;
@@ -449,7 +449,7 @@ function _updateTotals(items){
   var el = function(id){ return document.getElementById(id); };
   if(el('port-total')) el('port-total').textContent = '$' + fmtNum(total);
   if(el('port-count')) el('port-count').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
@@ -461,7 +461,7 @@ function _updateTotals(items){
   }
 }
 
-// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ABRIR / CERRAR modal Agregar activo ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ABRIR / CERRAR modal Agregar activo ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
   {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
@@ -471,7 +471,7 @@ var _ACTIVOS_MODAL = [
 ];
 
 window.openAddActivo = function(){
-  // Si no hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, mostrar aviso de login
+  // Si no hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n, mostrar aviso de login
   if(!window._supabase){ navTo('perfil'); return; }
   window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){
@@ -480,10 +480,10 @@ window.openAddActivo = function(){
       if(cnt){
         var old = cnt.innerHTML;
         cnt.innerHTML = '<div style="background:#1A0D00;border:1px solid #D4A01780;border-radius:12px;margin:20px 14px;padding:20px;text-align:center;">' +
-          '<div style="font-size:28px;margin-bottom:8px;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
-          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s una cuenta</div>' +
-          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ tu cuenta gratis.</div>' +
-          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
+          '<div style="font-size:28px;margin-bottom:8px;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ°ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s una cuenta</div>' +
+          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ tu cuenta gratis.</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>' +
           '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
@@ -501,8 +501,8 @@ function _openAddActivoModal(){
   if(title) title.textContent = 'Agregar activo';
   // Construir selector de activos agrupado + inputs
   var opts = _ACTIVOS_MODAL.map(function(g){
-    return '<optgroup label="ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ' + g.g + ' ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ">' +
-      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· ' + a.n + '</option>'; }).join('') +
+    return '<optgroup label="ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ' + g.g + ' ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ">' +
+      g.items.map(function(a){ return '<option value="' + a.s + '|' + a.n + '|' + g.tipo + '">' + a.s + ' ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ· ' + a.n + '</option>'; }).join('') +
     '</optgroup>';
   }).join('');
   body.innerHTML =
@@ -542,9 +542,9 @@ window.savePortActivo = function(){
   var simbolo = parts[0], nombre = parts[1], tipo = parts[2];
   var cantidad = parseFloat(qtyEl.value);
   var precio = parseFloat(priceEl.value);
-  if(!simbolo){ showPortErr('SeleccionÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un activo.'); return; }
-  if(!cantidad || cantidad <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ una cantidad vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lida.'); return; }
-  if(!precio || precio <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un precio de compra vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lido.'); return; }
+  if(!simbolo){ showPortErr('SeleccionÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un activo.'); return; }
+  if(!cantidad || cantidad <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ una cantidad vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lida.'); return; }
+  if(!precio || precio <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un precio de compra vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lido.'); return; }
   if(errEl) errEl.style.display = 'none';
   addPortfolioItem(simbolo, nombre, cantidad, precio, tipo);
   closePortModal();
@@ -555,11 +555,11 @@ function showPortErr(msg){
   if(errEl){ errEl.textContent = msg; errEl.style.display = 'block'; }
 }
 
-// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AGREGAR activo al portfolio en Supabase ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AGREGAR activo al portfolio en Supabase ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
-  if(!window._supabase){ alert('NecesitÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s iniciar sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para guardar activos.'); return; }
+  if(!window._supabase){ alert('NecesitÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡s iniciar sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n para guardar activos.'); return; }
   window._supabase.auth.getSession().then(function(res){
-    if(!res.data || !res.data.session){ alert('IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n primero.'); return; }
+    if(!res.data || !res.data.session){ alert('IniciÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n primero.'); return; }
     var token = res.data.session.access_token;
     var userId = res.data.session.user.id;
     fetch(SUPA_URL + '/rest/v1/portfolio', {
@@ -582,7 +582,7 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
   });
 };
 
-// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ELIMINAR activo del portfolio ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
+// ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ELIMINAR activo del portfolio ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 window.deletePortfolioItem = function(id){
   if(!window._supabase) return;
   if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
@@ -598,7 +598,7 @@ window.deletePortfolioItem = function(id){
   });
 };
 
-// Inicializar portfolio cuando hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n
+// Inicializar portfolio cuando hay sesiÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ³n
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     if(window._supabase){
@@ -680,64 +680,65 @@ window._IA_ACTIVOS = [
   {s:'ARB',  n:'Arbitrum',     tipo:'cripto',       logo:'https://assets.coingecko.com/coins/images/16547/small/photo_2023-03-29_18.21.png', ySymbol:'ARB-USD', color:'#28A0F0'},
   {s:'OP',   n:'Optimism',     tipo:'cripto',       logo:'https://assets.coingecko.com/coins/images/25244/small/Optimism.png',  ySymbol:'OP-USD',   color:'#FF0420'},
   // ACCIONES USA (20)
-  {s:'AAPL', n:'Apple',        tipo:'accion',       logo:'https://assets.coingecko.com/coins/images/12504/small/uniswap-uni.png', ySymbol:'AAPL',  color:'#A2AAAD'},
-  {s:'NVDA', n:'NVIDIA',       tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Nvidia_logo.svg/100px-Nvidia_logo.svg.png', ySymbol:'NVDA', color:'#76B900'},
-  {s:'TSLA', n:'Tesla',        tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Tesla_T_symbol.svg/60px-Tesla_T_symbol.svg.png', ySymbol:'TSLA', color:'#CC0000'},
-  {s:'MSFT', n:'Microsoft',    tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/44/Microsoft_logo.svg/100px-Microsoft_logo.svg.png', ySymbol:'MSFT', color:'#00A4EF'},
-  {s:'META', n:'Meta',         tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Meta_Platforms_Inc._logo.svg/100px-Meta_Platforms_Inc._logo.svg.png', ySymbol:'META', color:'#0081FB'},
-  {s:'GOOGL',n:'Alphabet',     tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/100px-Google_2015_logo.svg.png', ySymbol:'GOOGL', color:'#4285F4'},
-  {s:'AMZN', n:'Amazon',       tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/100px-Amazon_logo.svg.png', ySymbol:'AMZN', color:'#FF9900'},
-  {s:'NFLX', n:'Netflix',      tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Netflix_2015_logo.svg/100px-Netflix_2015_logo.svg.png', ySymbol:'NFLX', color:'#E50914'},
-  {s:'AMD',  n:'AMD',          tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/AMD_Logo.svg/100px-AMD_Logo.svg.png', ySymbol:'AMD', color:'#ED1C24'},
-  {s:'INTC', n:'Intel',        tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Intel_logo_%282006-2020%29.svg/100px-Intel_logo_%282006-2020%29.svg.png', ySymbol:'INTC', color:'#0071C5'},
-  {s:'JPM',  n:'JPMorgan',     tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/J_P_Morgan_Logo_2008_1.svg/100px-J_P_Morgan_Logo_2008_1.svg.png', ySymbol:'JPM', color:'#003087'},
-  {s:'BAC',  n:'Bank of America',tipo:'accion',     logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/76/Bank_of_America_logo.svg/100px-Bank_of_America_logo.svg.png', ySymbol:'BAC', color:'#E31837'},
-  {s:'V',    n:'Visa',         tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/100px-Visa_Inc._logo.svg.png', ySymbol:'V', color:'#1A1F71'},
-  {s:'MA',   n:'Mastercard',   tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/100px-Mastercard-logo.svg.png', ySymbol:'MA', color:'#FF5F00'},
-  {s:'DIS',  n:'Disney',       tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Disney%2B_logo.svg/100px-Disney%2B_logo.svg.png', ySymbol:'DIS', color:'#006E99'},
-  {s:'PYPL', n:'PayPal',       tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/100px-PayPal.svg.png', ySymbol:'PYPL', color:'#003087'},
-  {s:'UBER', n:'Uber',         tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/58/Uber_logo_2018.svg/100px-Uber_logo_2018.svg.png', ySymbol:'UBER', color:'#000000'},
-  {s:'COIN', n:'Coinbase',     tipo:'accion',       logo:'https://assets.coingecko.com/markets/images/23/small/coinbase.jpg', ySymbol:'COIN', color:'#0052FF'},
-  {s:'SPOT', n:'Spotify',      tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Spotify_logo_without_text.svg/60px-Spotify_logo_without_text.svg.png', ySymbol:'SPOT', color:'#1DB954'},
-  {s:'BABA', n:'Alibaba',      tipo:'accion',       logo:'https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Alibaba_logo.svg/100px-Alibaba_logo.svg.png', ySymbol:'BABA', color:'#FF6A00'},
+  {s:'AAPL', n:'Apple',        tipo:'accion',       logo:'https://logo.clearbit.com/apple.com',         ySymbol:'AAPL',  color:'#A2AAAD'},
+  {s:'NVDA', n:'NVIDIA',       tipo:'accion',       logo:'https://logo.clearbit.com/nvidia.com',        ySymbol:'NVDA',  color:'#76B900'},
+  {s:'TSLA', n:'Tesla',        tipo:'accion',       logo:'https://logo.clearbit.com/tesla.com',         ySymbol:'TSLA',  color:'#CC0000'},
+  {s:'MSFT', n:'Microsoft',    tipo:'accion',       logo:'https://logo.clearbit.com/microsoft.com',     ySymbol:'MSFT',  color:'#00A4EF'},
+  {s:'META', n:'Meta',         tipo:'accion',       logo:'https://logo.clearbit.com/meta.com',          ySymbol:'META',  color:'#0081FB'},
+  {s:'GOOGL',n:'Alphabet',     tipo:'accion',       logo:'https://logo.clearbit.com/google.com',        ySymbol:'GOOGL', color:'#4285F4'},
+  {s:'AMZN', n:'Amazon',       tipo:'accion',       logo:'https://logo.clearbit.com/amazon.com',        ySymbol:'AMZN',  color:'#FF9900'},
+  {s:'NFLX', n:'Netflix',      tipo:'accion',       logo:'https://logo.clearbit.com/netflix.com',       ySymbol:'NFLX',  color:'#E50914'},
+  {s:'AMD',  n:'AMD',          tipo:'accion',       logo:'https://logo.clearbit.com/amd.com',           ySymbol:'AMD',   color:'#ED1C24'},
+  {s:'INTC', n:'Intel',        tipo:'accion',       logo:'https://logo.clearbit.com/intel.com',         ySymbol:'INTC',  color:'#0071C5'},
+  {s:'JPM',  n:'JPMorgan',     tipo:'accion',       logo:'https://logo.clearbit.com/jpmorganchase.com', ySymbol:'JPM',   color:'#003087'},
+  {s:'BAC',  n:'Bank of America',tipo:'accion',     logo:'https://logo.clearbit.com/bankofamerica.com', ySymbol:'BAC',   color:'#E31837'},
+  {s:'V',    n:'Visa',         tipo:'accion',       logo:'https://logo.clearbit.com/visa.com',          ySymbol:'V',     color:'#1A1F71'},
+  {s:'MA',   n:'Mastercard',   tipo:'accion',       logo:'https://logo.clearbit.com/mastercard.com',    ySymbol:'MA',    color:'#EB001B'},
+  {s:'DIS',  n:'Disney',       tipo:'accion',       logo:'https://logo.clearbit.com/disney.com',        ySymbol:'DIS',   color:'#006E99'},
+  {s:'PYPL', n:'PayPal',       tipo:'accion',       logo:'https://logo.clearbit.com/paypal.com',        ySymbol:'PYPL',  color:'#00457C'},
+  {s:'UBER', n:'Uber',         tipo:'accion',       logo:'https://logo.clearbit.com/uber.com',          ySymbol:'UBER',  color:'#000000'},
+  {s:'COIN', n:'Coinbase',     tipo:'accion',       logo:'https://logo.clearbit.com/coinbase.com',      ySymbol:'COIN',  color:'#0052FF'},
+  {s:'SPOT', n:'Spotify',      tipo:'accion',       logo:'https://logo.clearbit.com/spotify.com',       ySymbol:'SPOT',  color:'#1DB954'},
+  {s:'BABA', n:'Alibaba',      tipo:'accion',       logo:'https://logo.clearbit.com/alibaba.com',       ySymbol:'BABA',  color:'#FF6A00'},
   // ETF (10)
-  {s:'SPY',  n:'S&P 500 ETF',  tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'SPY',  color:'#D4A017'},
-  {s:'QQQ',  n:'Nasdaq 100',   tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'QQQ',  color:'#00C49A'},
-  {s:'DIA',  n:'Dow Jones ETF',tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'DIA',  color:'#4A90D9'},
-  {s:'IWM',  n:'Russell 2000', tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'IWM',  color:'#F0883E'},
-  {s:'VTI',  n:'Total Market', tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'VTI',  color:'#7CB9E8'},
-  {s:'ARKK', n:'ARK Innovation',tipo:'etf',         logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'ARKK', color:'#00B4D8'},
-  {s:'XLF',  n:'Financials ETF',tipo:'etf',         logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'XLF',  color:'#003087'},
-  {s:'XLE',  n:'Energy ETF',   tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'XLE',  color:'#8B4513'},
-  {s:'XLK',  n:'Tech ETF',     tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'XLK',  color:'#4285F4'},
-  {s:'GDX',  n:'Gold Miners',  tipo:'etf',          logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'GDX',  color:'#FFD700'},
+  {s:'SPY',  n:'S&P 500 ETF',  tipo:'etf',          logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'SPY',   color:'#D4A017'},
+  {s:'QQQ',  n:'Nasdaq 100',   tipo:'etf',          logo:'https://logo.clearbit.com/invesco.com',       ySymbol:'QQQ',   color:'#00C49A'},
+  {s:'DIA',  n:'Dow Jones ETF',tipo:'etf',          logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'DIA',   color:'#4A90D9'},
+  {s:'IWM',  n:'Russell 2000', tipo:'etf',          logo:'https://logo.clearbit.com/ishares.com',       ySymbol:'IWM',   color:'#F0883E'},
+  {s:'VTI',  n:'Total Market', tipo:'etf',          logo:'https://logo.clearbit.com/vanguard.com',      ySymbol:'VTI',   color:'#7CB9E8'},
+  {s:'ARKK', n:'ARK Innovation',tipo:'etf',         logo:'https://logo.clearbit.com/ark-invest.com',    ySymbol:'ARKK',  color:'#00B4D8'},
+  {s:'XLF',  n:'Financials ETF',tipo:'etf',         logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'XLF',   color:'#003087'},
+  {s:'XLE',  n:'Energy ETF',   tipo:'etf',          logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'XLE',   color:'#8B4513'},
+  {s:'XLK',  n:'Tech ETF',     tipo:'etf',          logo:'https://logo.clearbit.com/ssga.com',          ySymbol:'XLK',   color:'#4285F4'},
+  {s:'GDX',  n:'Gold Miners',  tipo:'etf',          logo:'https://logo.clearbit.com/vaneck.com',        ySymbol:'GDX',   color:'#FFD700'},
   // METALES (8)
-  {s:'GLD',  n:'Oro',          tipo:'metal',        logo:'https://assets.coingecko.com/coins/images/944/small/xaut.png',   ySymbol:'GC=F', color:'#FFD700'},
-  {s:'SLV',  n:'Plata',        tipo:'metal',        logo:'https://assets.coingecko.com/coins/images/14021/small/42981.png',ySymbol:'SI=F', color:'#C0C0C0'},
-  {s:'CPER', n:'Cobre',        tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'HG=F', color:'#B87333'},
-  {s:'PPLT', n:'Platino',      tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'PL=F', color:'#E5E4E2'},
-  {s:'PALL', n:'Paladio',      tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'PA=F', color:'#CED0DD'},
-  {s:'ZINC', n:'Zinc',         tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'HG=F', color:'#7D7D7D'},
-  {s:'ALUM', n:'Aluminio',     tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'HG=F', color:'#848484'},
-  {s:'IRON', n:'Hierro',       tipo:'metal',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'HG=F', color:'#8B4513'},
+  {s:'GLD',  n:'Oro',          tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23FFD700'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EAu%3C/text%3E%3C/svg%3E',   ySymbol:'GC=F', color:'#FFD700'},
+  {s:'SLV',  n:'Plata',        tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23C0C0C0'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EAg%3C/text%3E%3C/svg%3E', ySymbol:'SI=F', color:'#C0C0C0'},
+  {s:'CPER', n:'Cobre',        tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23B87333'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3ECu%3C/text%3E%3C/svg%3E', ySymbol:'HG=F', color:'#B87333'},
+  {s:'PPLT', n:'Platino',      tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23E5E4E2'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EPt%3C/text%3E%3C/svg%3E',ySymbol:'PL=F',color:'#E5E4E2'},
+  {s:'PALL', n:'Paladio',      tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23CED0D0'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23000'%3EPd%3C/text%3E%3C/svg%3E',ySymbol:'PA=F',color:'#CED0D0'},
+  {s:'ZINC', n:'Zinc',         tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%234682B4'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EZn%3C/text%3E%3C/svg%3E',   ySymbol:'ZNC=F',color:'#4682B4'},
+  {s:'ALUM', n:'Aluminio',     tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23848789'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EAl%3C/text%3E%3C/svg%3E',   ySymbol:'ALI=F',color:'#848789'},
+  {s:'IRON', n:'Hierro',       tipo:'metal',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23A04000'/%3E%3Ctext x='16' y='21' font-size='14' font-weight='bold' text-anchor='middle' fill='%23fff'%3EFe%3C/text%3E%3C/svg%3E',   ySymbol:'TIO=F',color:'#A04000'},
   // MATERIAS PRIMAS (8)
-  {s:'USO',  n:'Petroleo WTI', tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'CL=F', color:'#8B4513'},
-  {s:'BNO',  n:'Petroleo Brent',tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png',ySymbol:'BZ=F', color:'#654321'},
-  {s:'UNG',  n:'Gas Natural',  tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'NG=F', color:'#4169E1'},
-  {s:'WEAT', n:'Trigo',        tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'ZW=F', color:'#DAA520'},
-  {s:'CORN', n:'Maiz',         tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'ZC=F', color:'#F5DEB3'},
-  {s:'SOYB', n:'Soja',         tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'ZS=F', color:'#8B7355'},
-  {s:'JO',   n:'Cafe',         tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'KC=F', color:'#6F4E37'},
-  {s:'SGG',  n:'Azucar',       tipo:'materia_prima',logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'SB=F', color:'#FFFFFF'},
+  {s:'USO',  n:'Petroleo WTI', tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23654321'/%3E%3Ctext x='16' y='21' font-size='12' font-weight='bold' text-anchor='middle' fill='%23fff'%3EWTI%3C/text%3E%3C/svg%3E',    ySymbol:'CL=F', color:'#8B4513'},
+  {s:'BNO',  n:'Petroleo Brent',tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%238B4513'/%3E%3Ctext x='16' y='21' font-size='10' font-weight='bold' text-anchor='middle' fill='%23fff'%3EBRENT%3C/text%3E%3C/svg%3E', ySymbol:'BZ=F', color:'#654321'},
+  {s:'UNG',  n:'Gas Natural',  tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%234169E1'/%3E%3Ctext x='16' y='21' font-size='13' font-weight='bold' text-anchor='middle' fill='%23fff'%3EGas%3C/text%3E%3C/svg%3E',    ySymbol:'NG=F', color:'#4169E1'},
+  {s:'WEAT', n:'Trigo',        tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23DAA520'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EWHT%3C/text%3E%3C/svg%3E',  ySymbol:'ZW=F', color:'#DAA520'},
+  {s:'CORN', n:'Maiz',         tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23F5DEB3'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ECRN%3C/text%3E%3C/svg%3E',   ySymbol:'ZC=F', color:'#F5DEB3'},
+  {s:'SOYB', n:'Soja',         tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2390EE90'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ESOY%3C/text%3E%3C/svg%3E',    ySymbol:'ZS=F', color:'#90EE90'},
+  {s:'JO',   n:'Cafe',         tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%236F4E37'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23fff'%3ECFE%3C/text%3E%3C/svg%3E', ySymbol:'KC=F', color:'#6F4E37'},
+  {s:'SGG',  n:'Azucar',       tipo:'materia_prima',logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%23FFF9C4'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3ESGR%3C/text%3E%3C/svg%3E',  ySymbol:'SB=F', color:'#FFF9C4'},
   // BONOS (8)
-  {s:'TLT',  n:'Bono EEUU 20Y',tipo:'bono',         logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'TLT',  color:'#79C0FF'},
-  {s:'AGG',  n:'Bonos Agregados',tipo:'bono',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'AGG',  color:'#58A6FF'},
-  {s:'IEF',  n:'Bono EEUU 7-10Y',tipo:'bono',       logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'IEF',  color:'#3FB0FF'},
-  {s:'SHY',  n:'Bono EEUU 1-3Y',tipo:'bono',        logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'SHY',  color:'#A8D8FF'},
-  {s:'HYG',  n:'Bonos High Yield',tipo:'bono',      logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'HYG',  color:'#FF9580'},
-  {s:'LQD',  n:'Bonos Corp USA',tipo:'bono',         logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'LQD',  color:'#C8A96E'},
-  {s:'EMB',  n:'Bonos Emergentes',tipo:'bono',       logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'EMB',  color:'#F0883E'},
-  {s:'BND',  n:'Bonos Totales', tipo:'bono',         logo:'https://assets.coingecko.com/markets/images/542/small/spy.png', ySymbol:'BND',  color:'#6CB4EE'}
+  {s:'TLT',  n:'Bono EEUU 20Y',tipo:'bono',         logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'TLT',  color:'#6CB4EE'},
+  {s:'AGG',  n:'Bonos Agregados',tipo:'bono',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'AGG',  color:'#4A90D9'},
+  {s:'IEF',  n:'Bono EEUU 7-10Y',tipo:'bono',       logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'IEF',  color:'#7CB9E8'},
+  {s:'SHY',  n:'Bono EEUU 1-3Y',tipo:'bono',        logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'SHY',  color:'#A8D8EA'},
+  {s:'HYG',  n:'High Yield Corp',tipo:'bono',       logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'HYG',  color:'#FF9580'},
+  {s:'LQD',  n:'Bonos Corp USA',tipo:'bono',         logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'LQD',  color:'#C8A96E'},
+  {s:'EMB',  n:'Bonos Emergentes',tipo:'bono',       logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'EMB',  color:'#F0883E'},
+  {s:'BND',  n:'Bonos Totales', tipo:'bono',         logo:'data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='15' fill='%2379C0FF'/%3E%3Ctext x='16' y='21' font-size='11' font-weight='bold' text-anchor='middle' fill='%23000'%3EBND%3C/text%3E%3C/svg%3E',   ySymbol:'BND',  color:'#6CB4EE'}
+
 ];
 
 // EVENTOS MACRO SEMANALES
@@ -877,9 +878,9 @@ function _calcIAScore(activo, datos) {
     if (motivos.length < 5) motivos.push(activo.tipo === 'metal' ? 'Oro en $' + Math.round(precioOro) + ' - maximos historicos, demanda de refugio favorece metales' : 'Oro en maximos $' + Math.round(precioOro) + ' - aversion al riesgo impacta activos especulativos');
   } else if (precioOro > 2200) {
     oroScore = activo.tipo === 'metal' ? 0.03 : -0.01;
-    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel elevado, seÃ±al de cautela moderada en mercados');
+    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel elevado, seÃÂ±al de cautela moderada en mercados');
   } else {
-    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel neutral, sin seÃ±al de aversion extrema al riesgo');
+    if (motivos.length < 5) motivos.push('Oro en $' + Math.round(precioOro) + ' - nivel neutral, sin seÃÂ±al de aversion extrema al riesgo');
   }
   if (precioPetroleo > 90) {
     oroScore += activo.tipo === 'materia_prima' ? 0.03 : -0.02;
@@ -892,11 +893,15 @@ function _calcIAScore(activo, datos) {
   var earningsScore = hayEarnings ? 0.02 : 0;
   if (hayEarnings && motivos.length < 5) motivos.push('Reporte de resultados proximo - volatilidad historicamente elevada en torno a earnings');
   scores.earnings = earningsScore;
-  var fillers = ['Analisis tecnico confirma zona clave de decision en precio actual','Flujo institucional alineado con la tendencia identificada','Patron de precio en grafico diario confirma el momentum actual','Indicadores de amplitud alinean con la seÃ±al del modelo de 8 variables','Condiciones de liquidez global consistentes con la seÃ±al detectada'];
+  var fillers = ['Analisis tecnico confirma zona clave de decision en precio actual','Flujo institucional alineado con la tendencia identificada','Patron de precio en grafico diario confirma el momentum actual','Indicadores de amplitud alinean con la seÃÂ±al del modelo de 8 variables','Condiciones de liquidez global consistentes con la seÃÂ±al detectada'];
   var fi = 0;
   while (motivos.length < 5 && fi < fillers.length) { motivos.push(fillers[fi++]); }
   var total = Object.values(scores).reduce(function(a,b){return a+b;},0);
-  var umbralConfIA = 0.30;
+  // ALTA CONV-IA: requiere score >= 0.55 Y al menos un catalizador activo
+  // Catalizadores: RSI extremo (>70 o <30) + earnings proximos + dato macro + volumen alto
+  var tieneCatalizador = (rsi > 70 || rsi < 30) || hayMacro || hayEarnings || scores.volumen > 0.12;
+  var umbralConfIA = tieneCatalizador ? 0.45 : 0.65;
+  var umbralNormal_unused = 0; // deprecated, kept for reference
   var umbralNormal = hayMacro ? 0.015 : 0.02;
   var scoreAbs = Math.abs(total);
   var direccion, probPrincipal;
@@ -1049,7 +1054,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
     var lb = document.createElement('div');
     lb.id = 'ia-loading-bar';
     lb.style.cssText = 'padding:10px 14px;display:flex;align-items:center;gap:8px;border-bottom:1px solid #21262D;';
-    lb.innerHTML = '<div style="width:14px;height:14px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></div><span style="font-size:11px;color:#8B949E">Cargando mas seÃ±ales... <span id="ia-load-count">0</span>/' + phase2Activos.length + '</span>';
+    lb.innerHTML = '<div style="width:14px;height:14px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;flex-shrink:0"></div><span style="font-size:11px;color:#8B949E">Cargando mas seÃÂ±ales... <span id="ia-load-count">0</span>/' + phase2Activos.length + '</span>';
     listEl.appendChild(lb);
   }
   var allData = window._IA_PRECIOS || {};
@@ -1131,7 +1136,7 @@ function _renderIALista(signals, keepLoadingBar) {
     return s.tipo === filtro;
   });
   if (!filtered.length) {
-    listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">No hay seÃ±ales para este filtro</div>';
+    listEl.innerHTML = '<div style="text-align:center;padding:40px 20px;color:#8B949E;font-size:13px">No hay seÃÂ±ales para este filtro</div>';
     return;
   }
   var lb = document.getElementById('ia-loading-bar');
@@ -1139,6 +1144,19 @@ function _renderIALista(signals, keepLoadingBar) {
     var dirColor = s.direccion==='alcista'?'#3FB950':s.direccion==='bajista'?'#FF4444':'#D4A017';
     var dirBg = s.direccion==='alcista'?'#3FB95020':s.direccion==='bajista'?'#FF444420':'#D4A01720';
     var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
+    // Para ALTA CONV-IA, obtener la sub-dirección del escenario_principal
+    var altaConfDirLabel = '';
+    var altaConfDirColor = '';
+    if (s.direccion === 'alta_conf') {
+      var escDir = (s.escenario_principal || '').toLowerCase();
+      if (escDir.indexOf('alcista') >= 0) {
+        altaConfDirLabel = '\u2191 ALCISTA';
+        altaConfDirColor = '#3FB950';
+      } else if (escDir.indexOf('bajista') >= 0) {
+        altaConfDirLabel = '\u2193 BAJISTA';
+        altaConfDirColor = '#FF4444';
+      }
+    }
     var tipoColor = s.tipo==='cripto'?'#A78BFA':s.tipo==='accion'?'#58A6FF':s.tipo==='etf'?'#F0883E':s.tipo==='metal'?'#FFD700':s.tipo==='materia_prima'?'#C8A96E':s.tipo==='bono'?'#79C0FF':'#D4A017';
     var tipoLabel = s.tipo==='cripto'?'Cripto':s.tipo==='accion'?'Acciones':s.tipo==='etf'?'ETF':s.tipo==='metal'?'Metal':s.tipo==='materia_prima'?'Mat. Prima':s.tipo==='bono'?'Bono':'Otro';
     var estrellas = '';
@@ -1160,6 +1178,7 @@ function _renderIALista(signals, keepLoadingBar) {
               '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">' +
                 '<span style="font-size:13px;font-weight:700;color:#E6EDF3">'+s.simbolo+'</span>' +
                 '<span style="font-size:9px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:1px solid '+dirColor+'60;border-radius:4px;padding:1px 5px;white-space:nowrap">'+dirLabel+'</span>' +
+                (altaConfDirLabel ? '<span style="font-size:9px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:1px solid '+altaConfDirColor+'60;border-radius:4px;padding:1px 5px;margin-left:3px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
                 '<span style="font-size:9px">'+estrellas+'</span>' +
               '</div>' +
               '<div style="font-size:10px;color:#8B949E">'+s.nombre+' <span style="color:'+tipoColor+'">&diams; '+tipoLabel+'</span></div>' +
