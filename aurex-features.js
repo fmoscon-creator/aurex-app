@@ -669,6 +669,7 @@ window.selectPortActivo = function(sym, nombre){
 };
 window.openPortModal = _openAddActivoModal;
 window.openAddActivo = _openAddActivoModal;
+window.closePortModal = function(){ var m = document.getElementById('port-modal'); if(m) m.style.display = 'none'; var errEl = document.getElementById('pa-err'); if(errEl){ errEl.style.display='none'; errEl.textContent=''; } var res = document.getElementById('pa-results'); if(res) res.style.display='flex'; };
 Modal = function(){
   var modal = document.getElementById('port-modal');
   if(modal) modal.style.display = 'none';
