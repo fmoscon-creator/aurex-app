@@ -55,38 +55,78 @@ var DATA={
 var _activeTab='cripto', _activePais='usa';
 
 // === RENDER: dibuja los items en #cnt ===
+function _buildSparklineSVG(closes, isUp) {
+  if(!closes||closes.length<2) return '<div style="width:64px;height:28px;"></div>';
+  var W=64,H=28,pad=2;
+  var min=Math.min.apply(null,closes),max=Math.max.apply(null,closes),range=max-min||1;
+  var pts=closes.map(function(v,i){var x=pad+(i/(closes.length-1))*(W-pad*2);var y=H-pad-((v-min)/range)*(H-pad*2);return x.toFixed(1)+','+y.toFixed(1);});
+  var color=isUp?'#3FB950':'#F85149';
+  var gid='sg'+(isUp?'g':'r')+Math.floor(Math.random()*9999);
+  var areaPath='M'+pts[0]+' L'+pts.join(' L')+' L'+(W-pad).toFixed(1)+','+(H-pad)+' L'+pad.toFixed(1)+','+(H-pad)+' Z';
+  return '<svg width="'+W+'" height="'+H+'" viewBox="0 0 '+W+' '+H+'" style="overflow:visible;display:block"><defs><linearGradient id="'+gid+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="'+color+'" stop-opacity="0.3"/><stop offset="100%" stop-color="'+color+'" stop-opacity="0"/></linearGradient></defs><path d="'+areaPath+'" fill="url(#'+gid+')" /><polyline points="'+pts.join(' ')+'" fill="none" stroke="'+color+'" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+}
+
+function _buildDotsHTML(scores) {
+  if(!scores) return '';
+  var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];
+  var dots='';
+  keys.forEach(function(k){var v=scores[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#3FB950;margin:0 1px;flex-shrink:0"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#F85149;margin:0 1px;flex-shrink:0"></span>';});
+  return dots?'<div style="display:flex;align-items:center;flex-wrap:wrap;gap:1px;margin-top:3px;justify-content:flex-end;">'+dots+'</div>':'';
+}
+
+function _getActivoScores(sym) {
+  var signals = window._iaSignals || [];
+  for(var i=0;i<signals.length;i++){ if(signals[i].simbolo===sym) return signals[i].scores||null; }
+  return null;
+}
+
 function renderTab(tab, pais){
   _activeTab=tab; _activePais=pais||'usa';
   var cnt=document.getElementById('cnt');
   if(!cnt) return;
-  if(typeof _renderMarketBanner === 'function') _renderMarketBanner('mkt-market-banner');
-  if(typeof _renderFuturesBanner === 'function') _renderFuturesBanner('mkt-futures-banner');
-  if(typeof _renderMktNewsBanner === 'function') _renderMktNewsBanner('mkt-news-banner');
-  // Set pulse category based on active tab
-  var pulseMap = {cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
-  if(typeof _renderFearGreed === 'function') {
-    window._pulseActiveFilter = pulseMap[tab] || 'GLOBAL';
-    _renderFearGreed('mkt-fear-greed');
-  }
-  var arr = tab==='acciones' ? (DATA.acciones[pais]||DATA.acciones.usa) : (DATA[tab]||[]);
+  if(typeof _renderMarketBanner==='function') _renderMarketBanner('mkt-market-banner');
+  if(typeof _renderFuturesBanner==='function') _renderFuturesBanner('mkt-futures-banner');
+  if(typeof _renderMktNewsBanner==='function') _renderMktNewsBanner('mkt-news-banner');
+  var pulseMap={cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
+  if(typeof _renderFearGreed==='function'){window._pulseActiveFilter=pulseMap[tab]||'GLOBAL';_renderFearGreed('mkt-fear-greed');}
+  var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
   cnt.innerHTML='';
-  arr.forEach(function(item){
-    var row=document.createElement('div');
-    row.className='item-row'; row.id='row-'+item.s;
-    row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #21262D;cursor:pointer;';
-    row.innerHTML='<div style="display:flex;flex-direction:column;"><span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span><span style="color:#8B949E;font-size:11px;">'+item.n+'</span></div>'
-      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">···</span><span id="lbl-'+item.s+'" style="font-size:9px;color:#D4A017;font-weight:700;display:none;"></span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">···</span></div>';
-    cnt.appendChild(row);
-  });
-  // Lanzar fetch de datos para este tab
+  window._mktRenderedSyms={};
+  arr.forEach(function(item){ _appendMktRow(cnt, item, tab); });
   window._editMode=false;
-  var ebtn=document.getElementById('edit-btn');
-  var ebanner=document.getElementById('edit-banner');
+  var ebtn=document.getElementById('edit-btn'),ebanner=document.getElementById('edit-banner');
   if(ebtn){ebtn.textContent=' Editar orden';ebtn.classList.remove('on');}
   if(ebanner) ebanner.style.display='none';
   window._activeTf=window._activeTf||'24h';
   if(tab==='cripto'||tab==='stable') fetchBinance(tab);
   else fetchYahoo(tab, pais, window._activeTf);
+  // Background load
+  setTimeout(function(){ _loadMktBackground(tab, pais); }, 1200);
+}
+
+function _appendMktRow(cnt, item, tab) {
+  if(window._mktRenderedSyms[item.s]) return;
+  window._mktRenderedSyms[item.s]=true;
+  var scores = _getActivoScores(item.s);
+  var dotsHtml = _buildDotsHTML(scores);
+  var row=document.createElement('div');
+  row.className='item-row'; row.id='row-'+item.s;
+  row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #21262D;cursor:pointer;gap:8px;';
+  row.innerHTML=
+    '<div style="display:flex;flex-direction:column;min-width:70px;flex-shrink:0;">'+
+      '<span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span>'+
+      '<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
+    '</div>'+
+    '<div id="spark-'+item.s+'" style="flex:1;display:flex;align-items:center;justify-content:center;min-width:64px;max-width:80px;">'+
+      '<div style="width:64px;height:28px;background:#21262D22;border-radius:4px;"></div>'+
+    '</div>'+
+    '<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;">'+
+      '<span id="p-'+item.s+'" style="color:#E6EDF3;font-size:13px;font-weight:600;">···</span>'+
+      '<span id="lbl-'+item.s+'" style="font-size:9px;color:#D4A017;font-weight:700;display:none;"></span>'+
+      '<span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">···</span>'+
+      dotsHtml+
+    '</div>';
+  cnt.appendChild(row);
 }
 
 // === BINANCE: cripto y stable ===
@@ -94,12 +134,10 @@ function fetchBinance(tab){
   var arr=DATA[tab]||[];
   var stableFixed={USDT:1};
   if(stableFixed[arr[0]&&arr[0].s]){
-    // Stables especiales
     arr.forEach(function(item){
-      var pel=document.getElementById('p-'+item.s);
-      var cel=document.getElementById('c-'+item.s);
+      var pel=document.getElementById('p-'+item.s),cel=document.getElementById('c-'+item.s);
       if(item.s==='USDT'||stableFixed[item.s]){if(pel)pel.textContent='$1.0000';if(cel){cel.textContent='+0.00%';cel.style.color='#8B949E';}return;}
-      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice);var pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent='$'+pr.toFixed(4);if(cel){cel.textContent=(pc>=0?'+':'')+pc.toFixed(3)+'%';cel.style.color=pc>=0?'#3FB950':'#F85149';}}).catch(function(){});
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice),pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent='$'+pr.toFixed(4);if(cel){cel.textContent=(pc>=0?'+':'')+pc.toFixed(3)+'%';cel.style.color=pc>=0?'#3FB950':'#F85149';}}).catch(function(){});
     });
     return;
   }
@@ -108,21 +146,29 @@ function fetchBinance(tab){
     .then(function(r){return r.json();})
     .then(function(list){
       list.forEach(function(t){
-        var sym=t.symbol.replace('USDT','');
-        var price=parseFloat(t.lastPrice);
-        var pct=parseFloat(t.priceChangePercent);
-        var pel=document.getElementById('p-'+sym);
-        var cel=document.getElementById('c-'+sym);
+        var sym=t.symbol.replace('USDT',''),price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
+        var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
         if(pel) pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
-        if(cel){ cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%'; cel.style.color=pct>=0?'#3FB950':'#F85149'; }
+        if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
       });
     }).catch(function(){});
+  // Fetch sparklines for cripto (batch klines)
+  arr.forEach(function(item){
+    fetch('https://api.binance.com/api/v3/klines?symbol='+item.s+'USDT&interval=1d&limit=7')
+      .then(function(r){return r.json();})
+      .then(function(kl){
+        var closes=kl.map(function(k){return parseFloat(k[4]);});
+        var isUp=closes.length>1&&closes[closes.length-1]>=closes[0];
+        var sparkEl=document.getElementById('spark-'+item.s);
+        if(sparkEl) sparkEl.innerHTML=_buildSparklineSVG(closes,isUp);
+      }).catch(function(){});
+  });
 }
 
 // === YAHOO: acciones, etf, comm, futuros, divisas ===
 function fetchYahoo(tab,pais,tf){
-  var range = tf==='7d'?'7d':tf==='1m'?'1mo':tf==='3m'?'3mo':tf==='1a'?'1y':'2d';
-  var interval = (tf==='3m'||tf==='1a')?'1wk':'1d';
+  var range=tf==='7d'?'7d':tf==='1m'?'1mo':tf==='3m'?'3mo':tf==='1a'?'1y':'2d';
+  var interval=(tf==='3m'||tf==='1a')?'1wk':'1d';
   var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
     return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval='+interval+'&range='+range))
@@ -132,42 +178,95 @@ function fetchYahoo(tab,pais,tf){
         if(!meta)return;
         var price=meta.regularMarketPrice;if(!price)return;
         var mktState=meta.marketState||'';
-        // Market closed detection: use marketState OR regularMarketTime age
-        // Yahoo often returns empty marketState when closed - use time-based fallback
-        var lastTradeTs=(meta.regularMarketTime||0)*1000;
-        var nowMs=Date.now();
-        var msSinceTrade=nowMs-lastTradeTs;
-        // Market is closed if: explicit closed state, OR last trade was >2 hours ago on weekday, OR it's weekend
-        var nowNY=new Date(nowMs-5*3600000); // approx NY time (UTC-5)
-        var dayNY=nowNY.getUTCDay(); // 0=Sun,6=Sat
-        var isWeekend=(dayNY===0||dayNY===6);
+        var lastTradeTs=(meta.regularMarketTime||0)*1000,nowMs=Date.now(),msSinceTrade=nowMs-lastTradeTs;
+        var nowNY=new Date(nowMs-5*3600000),dayNY=nowNY.getUTCDay(),isWeekend=(dayNY===0||dayNY===6);
         var isClosed=(mktState==='CLOSED'||mktState==='PRE'||mktState==='PREPRE'||mktState==='POST'||mktState==='POSTPOST'||mktState===''&&(isWeekend||msSinceTrade>7200000));
-        var pel=document.getElementById('p-'+item.s);
-        var cel=document.getElementById('c-'+item.s);
-        var lbl=document.getElementById('lbl-'+item.s);
+        var pel=document.getElementById('p-'+item.s),cel=document.getElementById('c-'+item.s),lbl=document.getElementById('lbl-'+item.s);
+        var closes=d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].indicators&&d.chart.result[0].indicators.quote&&d.chart.result[0].indicators.quote[0]?d.chart.result[0].indicators.quote[0].close:null;
+        var validCloses=closes?closes.filter(function(c){return c!=null&&!isNaN(c);}):[];
         if(tf&&tf!=='24h'){
-          // Range mode: show % change over period
-          var closes=d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].indicators&&d.chart.result[0].indicators.quote&&d.chart.result[0].indicators.quote[0]?d.chart.result[0].indicators.quote[0].close:null;
-          var firstClose=null;
-          if(closes){for(var i=0;i<closes.length;i++){if(closes[i]!=null){firstClose=closes[i];break;}}}
+          var firstClose=null;if(closes){for(var i=0;i<closes.length;i++){if(closes[i]!=null){firstClose=closes[i];break;}}}
           var pct2=firstClose&&firstClose>0?((price-firstClose)/firstClose*100):0;
           if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
           if(cel){cel.textContent=(pct2>=0?'+':'')+pct2.toFixed(2)+'%';cel.style.color=pct2>=0?'#3FB950':'#F85149';}
-          if(lbl){lbl.style.display='none';}
+          if(lbl) lbl.style.display='none';
         } else {
-          // 24h mode
           var prevClose=meta.chartPreviousClose||meta.previousClose||price;
           var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
           if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
           if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
-          // Show "Ult. cierre" label when market closed
-          if(lbl){
-            if(isClosed){lbl.textContent='Ult. cierre';lbl.style.display='inline';}
-            else{lbl.style.display='none';}
-          }
+          if(lbl){if(isClosed){lbl.textContent='Ult. cierre';lbl.style.display='inline';}else{lbl.style.display='none';}}
+        }
+        // Sparkline from Yahoo closes
+        if(validCloses.length>=2){
+          var isUp=validCloses[validCloses.length-1]>=validCloses[0];
+          var sparkEl=document.getElementById('spark-'+item.s);
+          if(sparkEl) sparkEl.innerHTML=_buildSparklineSVG(validCloses,isUp);
         }
       }).catch(function(){});
   }));
+}
+
+// === BACKGROUND LOADING: carga activos adicionales ===
+var _BG_EXTRA = {
+  cripto: ['DOGE','SHIB','PEPE','TON','SUI','APT','ARB','OP','INJ','TIA','SEI','NEAR','FIL','LTC','BCH','ETC','ATOM','ALGO','VET','HBAR','MANA','SAND','CRV','AAVE','UNI','SUSHI','CAKE','1INCH','IMX','PENDLE','WLD','STRK','BLUR','ORDI','SATS','BONK','WIF','FLOKI','GALA','CHZ','DYDX','SNX','COMP','ZRX','BAL','BAND','SKL','NKN','CTSI','STMX','ANKR','CELR','COTI','GAS'],
+  acciones_usa: ['HOOD','MSTR','COIN','RBLX','PLTR','SNOW','DKNG','RIVN','LCID','NIO','BABA','JD','PDD','BIDU','DJT','GME','AMC','BBBYQ','SOFI','UPST','AFRM','OPEN','WISH','CLOV','UWMC','SPCE','NKLA','RIDE','HYLN','XL','SUNW','BEEM','MAXN','ARRY','NOVA','RUN','SEDG','ENPH','FSLR','CSIQ','DAQO'],
+  etf: ['IBIT','FBTC','ARKK','ARKG','ARKW','ARKF','ARKQ','SARK','TQQQ','SQQQ','SPXU','UPRO','TNA','TZA','UVXY','VXX','SVXY','EEM','EFA','VEA','VWO','VXUS','IXUS','ACWI','VT','IVV','IWM','MDY','VBR','VBK','VTWO','VIG','VYM','SCHD','HDV','DVY','PFF','PFFD','PFIG','PFRL'],
+  comm: ['ZC=F','ZW=F','ZS=F','ZO=F','ZM=F','ZL=F','KC=F','CT=F','OJ=F','SB=F','CC=F','LE=F','HE=F','GF=F','LH=F','PL=F','PA=F','HG=F'],
+  futuros: ['YM=F','RTY=F','NKD=F','FDAX=F','FGBL=F','ZN=F','ZB=F','ZF=F','ZT=F','GE=F','6E=F','6J=F','6B=F','6C=F','6A=F','BTC=F','MBT=F'],
+  divisas: ['EURUSD=X','USDJPY=X','GBPUSD=X','USDCAD=X','AUDUSD=X','USDCHF=X','NZDUSD=X','USDMXN=X','USDBRL=X','USDARS=X','USDCNY=X','USDKRW=X','USDSGD=X','USDHKD=X','USDNOK=X','USDSEK=X','USDDKK=X']
+};
+
+function _loadMktBackground(tab, pais){
+  var cnt=document.getElementById('cnt');
+  if(!cnt||window._activeTab!==tab) return;
+  var extras=[];
+  if(tab==='cripto'||tab==='stable'){
+    // For cripto, fetch top volume pairs from Binance
+    fetch('https://api.binance.com/api/v3/ticker/24hr')
+      .then(function(r){return r.json();})
+      .then(function(all){
+        if(window._activeTab!==tab) return;
+        var usdtPairs=all.filter(function(t){return t.symbol.endsWith('USDT')&&parseFloat(t.quoteVolume)>1000000;});
+        usdtPairs.sort(function(a,b){return parseFloat(b.quoteVolume)-parseFloat(a.quoteVolume);});
+        var added=0;
+        usdtPairs.slice(0,120).forEach(function(t){
+          var sym=t.symbol.replace('USDT','');
+          if(window._mktRenderedSyms[sym]) return;
+          if(added>=60) return;
+          added++;
+          var item={s:sym,n:sym,tab:tab};
+          _appendMktRow(cnt,item,tab);
+          // Set price immediately from ticker data
+          var price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
+          var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
+          if(pel) pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+          // Sparkline
+          fetch('https://api.binance.com/api/v3/klines?symbol='+sym+'USDT&interval=1d&limit=7')
+            .then(function(r2){return r2.json();})
+            .then(function(kl){
+              var closes=kl.map(function(k){return parseFloat(k[4]);});
+              var isUp=closes.length>1&&closes[closes.length-1]>=closes[0];
+              var sparkEl=document.getElementById('spark-'+sym);
+              if(sparkEl) sparkEl.innerHTML=_buildSparklineSVG(closes,isUp);
+            }).catch(function(){});
+        });
+        // Loading indicator removed
+        var li=document.getElementById('mkt-bg-loading');
+        if(li) li.remove();
+      }).catch(function(){});
+  } else {
+    // For acciones/etf/comm etc - load extended list
+    var bgKey = tab==='acciones'?'acciones_'+(pais||'usa'):tab;
+    var bgList = _BG_EXTRA[bgKey] || _BG_EXTRA[tab] || [];
+    bgList.forEach(function(sym){
+      if(window._mktRenderedSyms[sym]) return;
+      var item={s:sym,n:sym};
+      _appendMktRow(cnt,item,tab);
+    });
+    if(bgList.length>0) fetchYahoo(tab, pais, window._activeTf||'24h');
+  }
 }
 
 // === sw: cambio de tab en Mercados ===
