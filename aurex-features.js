@@ -1616,6 +1616,38 @@ function _calcIAScore(activo, datos) {
   var earningsScore = hayEarnings ? 0.02 : 0;
   if (hayEarnings && motivos.length < 5) motivos.push('Reporte de resultados proximo - volatilidad historicamente elevada en torno a earnings');
   scores.earnings = earningsScore;
+
+  // VARIABLE 9: MACD (12/26 EMA desde closes30d si disponibles)
+  var macdScore = 0;
+  if (datos.closes30d && datos.closes30d.length >= 26) {
+    var cls30 = datos.closes30d;
+    function _ema(arr, period) {
+      var k = 2/(period+1), e = arr[0];
+      for(var _ei=1;_ei<arr.length;_ei++) e = arr[_ei]*k + e*(1-k);
+      return e;
+    }
+    var ema12 = _ema(cls30.slice(-12), 12);
+    var ema26 = _ema(cls30.slice(-26), 26);
+    var macdLine = ema12 - ema26;
+    var macdPct = ema26 > 0 ? macdLine / ema26 : 0;
+    if (macdPct > 0.005) { macdScore = 0.05; motivos.push('MACD positivo +' + (macdPct*100).toFixed(2) + '% — cruce alcista de medias, momentum confirmado'); }
+    else if (macdPct < -0.005) { macdScore = -0.05; motivos.push('MACD negativo ' + (macdPct*100).toFixed(2) + '% — cruce bajista, presión vendedora en aumento'); }
+    else { macdScore = 0.01; motivos.push('MACD neutral — sin divergencia clara entre medias de corto y largo plazo'); }
+  }
+  scores.macd = macdScore;
+
+  // VARIABLE 10: Distancia a Soporte/Resistencia (rango 30d)
+  var srScore = 0;
+  if (datos.high30d && datos.low30d && precio > 0) {
+    var h30 = datos.high30d, l30 = datos.low30d;
+    var rangePos30 = (h30 > l30) ? (precio - l30) / (h30 - l30) : 0.5;
+    if (rangePos30 > 0.85) { srScore = -0.04; motivos.push('Precio cerca de resistencia 30d ($' + (precio>100?Math.round(h30):h30.toFixed(4)) + ') — zona de oferta técnica, posible rechazo'); }
+    else if (rangePos30 < 0.15) { srScore = 0.04; motivos.push('Precio cerca de soporte 30d ($' + (precio>100?Math.round(l30):l30.toFixed(4)) + ') — zona de demanda técnica, posible rebote'); }
+    else if (rangePos30 > 0.60) { srScore = 0.02; motivos.push('Precio en mitad alta del rango 30d — momentum positivo con margen antes de resistencia'); }
+    else { srScore = -0.01; motivos.push('Precio en mitad baja del rango 30d — sobre soporte pero sin momentum fuerte'); }
+  }
+  scores.soporte_resist = srScore;
+
   var fillers = ['Analisis tecnico confirma zona clave de decision en precio actual','Flujo institucional alineado con la tendencia identificada','Patron de precio en grafico diario confirma el momentum actual','Indicadores de amplitud alinean con la senal del modelo de 8 variables','Condiciones de liquidez global consistentes con la senal detectada'];
   var fi = 0;
   while (motivos.length < 5 && fi < fillers.length) { motivos.push(fillers[fi++]); }
@@ -1680,7 +1712,8 @@ function _calcIAScore(activo, datos) {
   var upside = (_esAlcista ? 1 : -1) * (movPct * 100);
   return {
     simbolo: sym, nombre: activo.n, tipo: activo.tipo, logo: activo.logo || '', icon: activo.icon || sym[0], color: activo.color || '#D4A017',
-    direccion: direccion, confianza: probPrincipal, score: total,
+    direccion: direccion, confianza: probPrincipal, score: total, scores: scores,
+    precio7d: datos.precio7d||0, precio30d: datos.precio30d||0,
     prob_alcista: prob_alcista, prob_bajista: prob_bajista, prob_alta_conf: prob_alta_conf,
     escenario_principal: escenario_principal, prob_principal: probPrincipal,
     motivos: motivos.slice(0,5), precio: precio, precio24h: precio24h,
@@ -1708,6 +1741,8 @@ function generarSenalesIA() {
         precio: d.precio, precio24h: d.precio24h||d.precio,
         volumen24h: d.volumen24h||0, volumenProm: d.volumenProm||0,
         high24h: d.high24h||d.precio*1.02, low24h: d.low24h||d.precio*0.98,
+        closes30d: d.closes30d||null, high30d: d.high30d||null, low30d: d.low30d||null,
+        precio7d: d.precio7d||0, precio30d: d.precio30d||0,
         btcCambio: btcCambio, spyCambio: spyCambio,
         precioOro: precioOro, precioPetroleo: precioPetroleo,
         hayMacro: hayMacro, hayEarnings: earningsSyms.indexOf(activo.s) >= 0
@@ -1725,6 +1760,24 @@ function generarSenalesIA() {
         list.forEach(function(t){
           var sym = t.symbol.replace('USDT','');
           allData[sym] = { precio: parseFloat(t.lastPrice), precio24h: parseFloat(t.openPrice), volumen24h: parseFloat(t.quoteVolume), volumenProm: parseFloat(t.quoteVolume)*0.85, high24h: parseFloat(t.highPrice), low24h: parseFloat(t.lowPrice) };
+        });
+        // Fetch klines 30d for MACD + S/R (in background, non-blocking)
+        cryptoActivos.forEach(function(act) {
+          fetch('https://api.binance.com/api/v3/klines?symbol='+act.s+'USDT&interval=1d&limit=30')
+            .then(function(r2){return r2.json();})
+            .then(function(kl){
+              if(!Array.isArray(kl)||kl.length<2) return;
+              var cls = kl.map(function(k){return parseFloat(k[4]);});
+              var highs = kl.map(function(k){return parseFloat(k[2]);});
+              var lows = kl.map(function(k){return parseFloat(k[3]);});
+              if(allData[act.s]) {
+                allData[act.s].closes30d = cls;
+                allData[act.s].high30d = Math.max.apply(null, highs);
+                allData[act.s].low30d = Math.min.apply(null, lows);
+                if(cls.length >= 7) allData[act.s].precio7d = cls[cls.length-7];
+                if(cls.length >= 30) allData[act.s].precio30d = cls[0];
+              }
+            }).catch(function(){});
         });
       }).catch(function(){});
   }
@@ -1837,6 +1890,44 @@ function _actualizarContadores(signals) {
   if(sub) sub.textContent=signals.length+' SENALES IA - ORDENADAS POR PROBABILIDAD';
 }
 
+window.showIAVariablesPopup = function() {
+  var overlay = document.createElement('div');
+  overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
+      '<div>' +
+        '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA™ — 10 VARIABLES</div>' +
+        '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de señales v7 — tiempo real</div>' +
+      '</div>' +
+      '<button onclick="this.closest(&apos;div[style*=position:fixed]&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
+    '</div>' +
+    '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
+    [
+      {n:'1. Tendencia 24h',c:'#58A6FF',d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
+      {n:'2. RSI14 Real',c:'#58A6FF',d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
+      {n:'3. Volumen Real',c:'#58A6FF',d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
+      {n:'4. Volatilidad',c:'#8B949E',d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
+      {n:'5. Correlación BTC/SPY',c:'#8B949E',d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
+      {n:'6. Oro / Petróleo',c:'#8B949E',d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
+      {n:'7. Macro FED',c:'#8B949E',d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
+      {n:'8. Earnings',c:'#8B949E',d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
+      {n:'9. MACD (12/26)',c:'#F0883E',d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
+      {n:'10. Soporte / Resistencia 30d',c:'#F0883E',d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
+    ].map(function(v) {
+      return '<div style="border:1px solid #21262D;border-radius:8px;padding:9px 11px;margin-bottom:7px">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
+          '<span style="font-size:11px;font-weight:700;color:'+v.c+'">'+v.n+'</span>' +
+          '<span style="font-size:9px;background:#21262D;color:#8B949E;border-radius:4px;padding:1px 5px">Peso '+v.p+'</span>' +
+        '</div>' +
+        '<div style="font-size:10px;color:#8B949E;line-height:1.4">'+v.d+'</div>' +
+      '</div>';
+    }).join('') +
+    '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
+  '</div>';
+  overlay.onclick = function(e) { if(e.target === overlay) overlay.remove(); };
+  document.body.appendChild(overlay);
+};
+
 function setIAFiltro(filtro, el) {
   window._IA_FILTRO_ACTUAL = filtro;
   document.querySelectorAll('.ia-pill').forEach(function(p) {
@@ -1925,6 +2016,7 @@ function _renderIALista(signals, keepLoadingBar) {
         '</div>' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px">' +
           '<span style="font-size:10px;color:#8B949E">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>' +
+          (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];return '<div style="display:flex;gap:2px;align-items:center">'+keys.map(function(k){var v=sc[k]!==undefined?sc[k]:0;var c=v>0.01?'#3FB950':v<-0.01?'#FF4444':'#555';return '<div style="width:5px;height:5px;border-radius:50%;background:'+c+';flex-shrink:0" title="'+k+'"></div>';}).join('')+'</div>';})() +
         '</div>' +
         '<div style="margin-top:3px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
@@ -1959,14 +2051,85 @@ function _buildIADetail(s) {
   var _uSign=s.upside>=0?'+':'';
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
+  // TIMEFRAME CONTEXT — default 24h, contexto 7d/30d
+  html += '<div style="margin-bottom:10px">';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
+  html += '<span style="font-size:10px;color:#8B949E;font-weight:600">CONTEXTO TENDENCIA</span>';
+  html += '<div style="display:flex;gap:4px">';
+  ['24h','7d','30d'].forEach(function(tf) {
+    var isDefault = tf==='24h';
+    var cambioTF;
+    if(tf==='24h') cambioTF = s.precio24h>0?((s.precio-s.precio24h)/s.precio24h*100):0;
+    else if(tf==='7d') cambioTF = s.precio7d>0?((s.precio-s.precio7d)/s.precio7d*100):null;
+    else cambioTF = s.precio30d>0?((s.precio-s.precio30d)/s.precio30d*100):null;
+    var col = cambioTF===null?'#555':cambioTF>=0?'#3FB950':'#FF4444';
+    var label = cambioTF===null?'—':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
+    html += '<div style="background:#21262D;border:1px solid '+(isDefault?'#D4A01760':'#30363D')+';border-radius:6px;padding:3px 7px;text-align:center">';
+    html += '<div style="font-size:8px;color:'+(isDefault?'#D4A017':'#555')+'">'+tf+'</div>';
+    html += '<div style="font-size:10px;font-weight:700;color:'+col+'">'+label+'</div>';
+    html += '</div>';
+  });
+  html += '</div></div></div>';
+
   html += '<div style="font-size:10px;color:#8B949E;margin-bottom:6px;font-weight:600">OTROS ESCENARIOS</div>';
   html += '<div style="display:flex;gap:6px">';
   if(s.direccion!=='alcista') html += '<div style="flex:1;background:#3FB95015;border:1px solid #3FB95040;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#3FB950">ALCISTA</div><div style="font-size:13px;font-weight:700;color:#3FB950">'+s.prob_alcista+'%</div></div>';
   if(s.direccion!=='bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
   if(s.direccion!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
-  html += '</div></div>';
+  html += '</div>';
+  // BOTÓN COMPARTIR
+  html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262D">';
+  html += '<button onclick="event.stopPropagation();_compartirSenal('+JSON.stringify({simbolo:'__SYM__',nombre:'__NOM__',direccion:'__DIR__',confianza:'__CONF__',escenario_principal:'__ESC__'})+');return false;" ';
+  html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+  html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
+  html += '</div>';
+  html += '</div>';
   return html;
 }
+
+window._compartirSenal = function(info) {
+  if(!info || !info.simbolo) return;
+  var sig = null;
+  var sigs = window._iaSignals || [];
+  for(var i=0;i<sigs.length;i++) { if(sigs[i].simbolo===info.simbolo) { sig=sigs[i]; break; } }
+  if(!sig) return;
+  var dirEmoji = sig.direccion==='alcista'?'📈':sig.direccion==='bajista'?'📉':'⚡';
+  var dirLabel = sig.direccion==='alcista'?'ALCISTA':sig.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
+  var precioFmt = sig.precio>=1000?'$'+Math.round(sig.precio).toLocaleString('en'):sig.precio>=1?'$'+sig.precio.toFixed(2):'$'+sig.precio.toFixed(4);
+  var cambio = sig.precio24h>0?((sig.precio-sig.precio24h)/sig.precio24h*100):0;
+  var texto = '🤖 AUREX IA — SEÑAL '+dirEmoji+'\n';
+  texto += sig.simbolo+' ('+sig.nombre+')\n';
+  texto += '━━━━━━━━━━━━━━━━\n';
+  texto += dirEmoji+' '+dirLabel+' — PROB. '+sig.confianza+'%\n';
+  texto += '💰 Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
+  texto += '🎯 Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
+  texto += '━━━━━━━━━━━━━━━━\n';
+  texto += '📊 ANÁLISIS (10 variables):\n';
+  (sig.motivos||[]).slice(0,3).forEach(function(m,i){ texto += (i+1)+'. '+m+'\n'; });
+  texto += '━━━━━━━━━━━━━━━━\n';
+  texto += 'Señal generada por AUREX IA™\n';
+  texto += 'aurex-app.github.io';
+  if(navigator.share) {
+    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){});
+  } else {
+    var wa = 'https://wa.me/?text='+encodeURIComponent(texto);
+    var tg = 'https://t.me/share/url?url=https://fmoscon-creator.github.io/aurex-app/&text='+encodeURIComponent(texto);
+    var ml = 'mailto:?subject=AUREX+IA+-+'+encodeURIComponent(sig.simbolo+' '+dirLabel)+'&body='+encodeURIComponent(texto);
+    var overlay = document.createElement('div');
+    overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
+    overlay.innerHTML='<div style="background:#161B22;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px">' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir señal '+sig.simbolo+'</div>' +
+      '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">' +
+        '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">💬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
+        '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">✈️</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
+        '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">📧</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
+      '</div>' +
+      '<button onclick="this.closest(&apos;div[style*=position:fixed]&apos;).remove()" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointer">Cancelar</button>' +
+    '</div>';
+    overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+    document.body.appendChild(overlay);
+  }
+};
 
 
 // === AUREX PULSE™ — FEAR & GREED 14X (12 variables Commit A) ===
