@@ -365,6 +365,18 @@ function _refreshPortPrices(items){
         if(!window._pcChange24) window._pcChange24 = {};
         if(d.lastPrice){ window._pcPrices[sym] = parseFloat(d.lastPrice); }
         if(d.priceChangePercent !== undefined){ window._pcChange24[sym] = parseFloat(d.priceChangePercent); }
+        // Fetch 52-week high/low via Binance klines (weekly, 52 bars)
+        fetch('https://api.binance.com/api/v3/klines?symbol='+pair+'&interval=1w&limit=52')
+          .then(function(kr){ return kr.json(); })
+          .then(function(kd){
+            if(!Array.isArray(kd)||kd.length===0) return;
+            var lows = kd.map(function(k){ return parseFloat(k[3]); });
+            var highs = kd.map(function(k){ return parseFloat(k[2]); });
+            if(!window._pc52Low) window._pc52Low={};
+            if(!window._pc52High) window._pc52High={};
+            window._pc52Low[sym] = Math.min.apply(null, lows);
+            window._pc52High[sym] = Math.max.apply(null, highs);
+          }).catch(function(){});
         done();
       }).catch(done);
   });
@@ -383,11 +395,11 @@ function _refreshPortPrices(items){
             window._pcMarketState[sym]=meta.marketState||'CLOSED';
             if(!window._pcPrevClose) window._pcPrevClose={};
             window._pcPrevClose[sym]=meta.previousClose;
-            if(!window._pc52Low) window._pc52Low={};
-            if(!window._pc52High) window._pc52High={};
-            if(meta.fiftyTwoWeekLow) window._pc52Low[sym]=meta.fiftyTwoWeekLow;
-            if(meta.fiftyTwoWeekHigh) window._pc52High[sym]=meta.fiftyTwoWeekHigh;
           }
+          if(!window._pc52Low) window._pc52Low={};
+          if(!window._pc52High) window._pc52High={};
+          if(meta.fiftyTwoWeekLow) window._pc52Low[sym]=meta.fiftyTwoWeekLow;
+          if(meta.fiftyTwoWeekHigh) window._pc52High[sym]=meta.fiftyTwoWeekHigh;
         }catch(e){}
         done();
       }).catch(done);
@@ -422,6 +434,7 @@ function _renderPortfolioItems(items){
   var prcs = window._pcPrices || {};
   var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
+    var rowActs = window._IA_ACTIVOS||[]; var rowAct=null; for(var ri2=0;ri2<rowActs.length;ri2++){if(rowActs[ri2].s===item.simbolo){rowAct=rowActs[ri2];break;}}
     var precio = prcs[item.simbolo] || item.precio_compra;
     var valor = item.cantidad * precio;
     var ch24 = window._pcChange24 && window._pcChange24[item.simbolo] !== undefined ? window._pcChange24[item.simbolo] : (precio > 0 && item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0);
@@ -449,9 +462,7 @@ function _renderPortfolioItems(items){
         minsToOpen = (24*60 - nowMin) + nyseOpenMin;
       }
     }
-    var closedLabel = mktClosed ? ' <span style="font-size:9px;color:#666;font-weight:400;">\u25CF cierre</span>' : '';
-    var openLabel = mktClosed ? '<div style="font-size:9px;color:#666;margin-top:1px;">Abre en '+Math.floor(minsToOpen/60)+'h '+( minsToOpen%60)+'m</div>' : '';
-    var upColor = idx === 0 ? '#333' : '#8B949E';
+            var upColor = idx === 0 ? '#333' : '#8B949E';
     var dnColor = idx === items.length-1 ? '#333' : '#8B949E';
     var upCursor = idx === 0 ? 'default' : 'pointer';
     var dnCursor = idx === items.length-1 ? 'default' : 'pointer';
@@ -460,7 +471,8 @@ function _renderPortfolioItems(items){
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', 1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+dnColor+';cursor:'+dnCursor+';">&#9660;</div>' +
       '</div>' +
-      '<div style="flex:1;min-width:0;cursor:pointer;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
+      (rowAct && rowAct.logo ? '<img src="'+rowAct.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;flex-shrink:0;" onerror="this.style.display=\'none\'" />' : '<div style="width:28px;height:28px;border-radius:50%;background:'+(rowAct&&rowAct.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>') +
+      '<div style="flex:1;min-width:0;cursor:pointer;overflow:hidden;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
         '<div style="display:flex;align-items:center;gap:6px;">' +
           '<span style="font-weight:700;color:#E6EDF3;font-size:14px;">'+item.simbolo+'</span>' +
           '<span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E;">'+(item.tipo||'cripto')+'</span>' +
@@ -470,9 +482,10 @@ function _renderPortfolioItems(items){
       '<div style="text-align:right;margin-right:8px;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$'+fmtNum(valor)+'</div>' +
         '<div style="display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:3px;">' +
-          '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%'+closedLabel : cs+ch24.toFixed(2)+'%')+'</span>'+openLabel +
+          '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>'+(mktClosed && prevClosePct!==null ? '<span style="font-size:8px;color:#555;margin-left:2px;">ult.cierre</span>' : '') +
+          (mktClosed ? '<div style="font-size:8px;color:#555;margin-top:1px;" id="oc-'+item.id+'"></div>' : '') +
           '<span style="display:flex;gap:1px;">' +
-            ['24h','7d','1m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
+            ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
           '</span>' +
         '</div>' +
       '</div>' +
@@ -610,9 +623,21 @@ function _renderThermoRisk(items){
   var leg = segs.filter(function(s){ return s.p>1; }).map(function(s){
     return '<span style="color:'+s.c+';font-size:10px;margin-right:8px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+s.c+';margin-right:3px;vertical-align:middle;"></span>'+s.l+' '+s.p.toFixed(0)+'%</span>';
   }).join('');
-  el.innerHTML = '<div style="font-size:10px;color:#555;margin-bottom:4px;font-weight:600;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+  var explanation = '';
+  if(pBaj >= 50) explanation = '⚠️ Más de la mitad de tu cartera tiene señal BAJISTA — considerá revisar tu exposición.';
+  else if(pAlc >= 50) explanation = '✅ La mayoría de tu cartera tiene momentum positivo según la IA.';
+  else if(pHC >= 20) explanation = '🔥 Tenés capital en zona de MÁXIMA ATENCIÓN — la IA detecta movimiento fuerte inminente.';
+  else if(pSin >= 80) explanation = '💤 Sin señales activas hoy para tus activos.';
+  else explanation = 'Tu cartera tiene exposición mixta. Revisá cada activo para más detalle.';
+  el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
+    '<div style="font-size:10px;color:#8B949E;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+    '<div onclick="showThermoInfo()" style="font-size:9px;color:#555;cursor:pointer;border:1px solid #21262D;border-radius:4px;padding:0 4px;">?</div>' +
+    '</div>' +
     '<div style="height:6px;border-radius:4px;overflow:hidden;display:flex;background:#21262D;">'+bar+'</div>' +
-    '<div style="margin-top:4px;">'+leg+'</div>';
+    '<div style="margin-top:3px;display:flex;justify-content:space-between;align-items:flex-end;">' +
+    '<div style="font-size:9px;color:#555;flex:1;">'+explanation+'</div>' +
+    '</div>' +
+    '<div style="margin-top:3px;">'+leg+'</div>';
 }
 
 function _renderMarketBanner(){
@@ -685,6 +710,21 @@ window.toggleMktPref = function(m){
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
   _renderMarketBanner();
+};
+window.showThermoInfo = function(){
+  var body = document.getElementById('port-modal-body');
+  var modal = document.getElementById('port-modal');
+  if(!body||!modal) return;
+  body.innerHTML = '<div style="color:#E6EDF3;font-size:15px;font-weight:700;margin-bottom:12px;">🌡️ Termómetro de Riesgo</div>' +
+    '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
+    '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> — La señal más valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
+    '</div>' +
+    '<div onclick="closePortModal()" style="background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
+  modal.style.display = 'flex';
 };
 // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ABRIR / CERRAR modal Agregar activo ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 var _ACTIVOS_MODAL = [
@@ -876,6 +916,8 @@ window.openPortItemDetail = function(itemId){
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Cantidad</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">'+item.cantidad+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L USD</div><div style="font-size:13px;color:'+pnlColor+';font-weight:600;">'+pnlSign+'$'+fmtP(Math.abs(pnlUsd))+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Entrada</div><div style="font-size:11px;color:#8B949E;">'+fechaStr+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">↓ Mín 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">↑ Máx 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
     '</div>' +
     rangeBar +
     '<div id="port-det-pct" style="margin:6px 0;"><span id="pd-24h-val" style="font-size:13px;font-weight:600;color:#8B949E;">--</span><span style="display:flex;gap:4px;margin-top:4px;">' +
