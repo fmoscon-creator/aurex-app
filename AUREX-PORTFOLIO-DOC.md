@@ -1,268 +1,363 @@
-# AUREX — Documentación Completa: Tab Portfolio
+# AUREX — Documentación Completa: Portfolio & Mercados
 
-**Versión:** 1.1 (Marzo 2026)
+**Versión:** 2.0 (Marzo 2026)
 **Plataforma:** GitHub Pages + Supabase | Vanilla HTML/CSS/JS
-**Objetivo:** Aplicación financiera con señales IA para inversores retail
+**Objetivo:** Aplicación financiera con señales IA para inversores retail y profesionales
 
 ---
 
-## 1. DESCRIPCIÓN GENERAL DEL PORTFOLIO
+## 🏆 POSICIONAMIENTO COMPETITIVO
 
-El Portfolio de AUREX es un simulador de inversión inteligente que permite al usuario construir y monitorear una cartera de activos financieros en tiempo real. Combina datos de mercado en vivo, análisis de señales de inteligencia artificial y herramientas de gestión de riesgo únicas en el mercado.
+AUREX compite directamente con Yahoo Finance, Investing.com, Bloomberg y Binance App, diferenciándose por:
 
-**Activos soportados:** Criptomonedas, Acciones USA, Acciones ARG, ETFs, Metales, Bonos (74 activos totales en 6 categorías)
-
-**Fuentes de datos:**
-- Criptomonedas: Binance API (tiempo real 24/7)
-- Acciones, ETFs, Metales, Bonos: Yahoo Finance via corsproxy.io
-- Señales IA: Algoritmo interno AUREX de 8 variables
-
----
-
-## 2. FUNCIONES Y HERRAMIENTAS DEL PORTFOLIO
-
-### 2.1 Resumen de Cartera (Header)
-
-En la parte superior del portfolio se muestra un resumen inmediato de la situación del usuario:
-
-- **Valor Total:** Suma del valor actual de todos los activos (precio de mercado x cantidad)
-- **P&L USD:** Ganancia o pérdida en dólares desde el precio de compra
-- **P&L %:** Porcentaje de rentabilidad total de la cartera desde la inversión inicial
-- **Activos:** Cantidad de activos diferentes en cartera
-- **Mejor:** El activo con mayor % de retorno desde la compra
-
----
-
-### 2.2 Banner Dinámico de Mercados (EXCLUSIVO AUREX)
-
-Ubicado justo debajo del header, muestra en tiempo real el estado de los principales mercados financieros del mundo:
-
-**Mercados disponibles:**
-- US EEUU (NYSE/NASDAQ): Horario 9:30am–4:00pm ET (13:30–20:00 UTC)
-- ASIA (Tokyo): Horario 9:00am–3:00pm JST (0:00–6:00 UTC)
-- ARG (BYMA): Horario 11:00am–6:00pm ART (14:00–21:00 UTC)
-
-**Información que muestra por mercado:**
-- Estado: ABIERTO (verde) o CERRADO (rojo)
-- Contador dinámico: "Cierra en Xh Ym" o "Abre en Xh Ym"
-- Actualización automática cada vez que se renderiza el portfolio
-
-**Configuración personalizada:** El usuario puede tocar el icono editar para elegir qué mercados quiere ver. La preferencia se guarda en localStorage (persiste entre sesiones).
-
-**Diferencial:** Yahoo Finance tiene un indicador de mercado cerrado pero es estático y no personalizable. En AUREX es configurable por el usuario en mobile-first gratuito.
-
----
-
-### 2.3 Termómetro de Riesgo (EXCLUSIVO AUREX)
-
-Una barra visual debajo del banner que muestra la distribución del capital del usuario según las señales AUREX activas:
-
-**Cómo leerlo:**
-- Verde (ALCISTA): % del capital total en activos con señal alcista
-- Amarillo (ALTA CONV-IA): % del capital en activos con la señal más valiosa
-- Rojo (BAJISTA): % del capital en activos con señal bajista
-- Gris (SIN SEÑAL): % del capital en activos sin señal activa hoy
-
-**Texto explicativo dinámico:** El termómetro siempre muestra una frase que interpreta el resultado para usuarios principiantes:
-- Si BAJISTA > 50%: "⚠️ Más de la mitad de tu cartera tiene señal BAJISTA — considerá revisar tu exposición."
-- Si ALCISTA > 50%: "✅ La mayoría de tu cartera tiene momentum positivo según la IA."
-- Si ALTA CONV-IA > 20%: "🔥 Tenés capital en zona de MÁXIMA ATENCIÓN — movimiento fuerte inminente."
-- Si SIN SEÑAL > 80%: "💤 Sin señales activas hoy para tus activos."
-
-**Botón ?:** Tocá el ? para ver una explicación completa de cada tipo de señal en lenguaje simple.
-
-**Diferencial:** Esta función no existe en ninguna app financiera retail. En Bloomberg Terminal existe algo similar pero cuesta $24,000/año. En AUREX es gratuita.
-
----
-
-### 2.4 Listado de Activos
-
-Cada activo en el portfolio muestra:
-- **Logo del activo** (via CoinGecko para cripto, Clearbit para acciones) o inicial del símbolo si no hay logo disponible
-- **Símbolo** y **categoría** (cripto/accion/ETF/etc.)
-- **Cantidad** y **precio de compra promedio**
-- **Valor actual** en USD (precio de mercado x cantidad)
-- **% de cambio** con indicador de período seleccionado
-- **Tabs de período:** 24h | 7d | 1m | 3m | 1y (seleccionables por activo)
-- **Flechas de ordenamiento** para personalizar el orden de la lista
-- **ícono de eliminar** para sacar un activo de la cartera
-
-**Lógica del % para mercados cerrados:**
-- Cripto: Siempre muestra % real de las últimas 24h (cotiza 24/7)
-- Acciones/ETFs/Bonos fuera de horario: Muestra el % del último cierre con leyenda "ult.cierre" y el tiempo hasta la apertura
-
----
-
-### 2.5 Agregar Activo
-
-El botón + Agregar (verde, sticky en el header) abre un modal centrado en pantalla con:
-
-1. **Buscador en tiempo real:** El usuario escribe el nombre o ticker y los resultados aparecen instantáneamente con logos
-2. **Selección del activo:** Al tocar un resultado, aparece el formulario de ingreso
-3. **Campos a completar:**
-   - Cantidad: Cuántas unidades compró (soporta decimales para cripto)
-   - Precio de compra (USD): Precio al que ingresó al activo
-4. **Botón Confirmar:** Guarda en Supabase con user_id de la sesión
-
-Los datos se persisten en Supabase. El portfolio se carga en cada sesión desde Supabase, no desde localStorage, lo que permite verlo desde cualquier dispositivo.
-
----
-
-### 2.6 Panel de Detalle del Activo (Click en activo)
-
-Al hacer click en el símbolo/nombre de cualquier activo del listado, se abre un panel completo con:
-
-**Bloque 1 — Posición actual:**
-- Logo + nombre del activo
-- Precio de mercado actual (en tiempo real)
-- P&L % desde precio de compra (verde si ganancia, rojo si pérdida)
-- Grid 2x3: Precio de compra | Cantidad | P&L en USD | Fecha de entrada | Min 52 sem. | Max 52 sem.
-
-**Bloque 2 — Rendimiento por período:**
-- % de cambio con tabs seleccionables: 24h | 7d | 1m | 3m | 1y
-- 24h por defecto
-- Datos históricos desde Binance (cripto) o Yahoo Finance (acciones)
-
-**Bloque 3 — Indicador 52 Semanas:**
-- Barra visual con gradiente Rojo→Amarillo→Verde
-- Marcador blanco indicando la posición actual del precio en el rango anual
-- Etiquetas: "Min 52s: $X" y "Max 52s: $X"
-- Texto: "Posición en rango anual: X%"
-- Cómo leerlo: 0% = precio en mínimo anual; 100% = precio en máximo anual
-- Datos: Binance klines semanales (52 barras) para cripto; Yahoo Finance meta para acciones
-
-**Bloque 4 — Señal AUREX:**
-La señal de inteligencia artificial para ese activo específico, mostrando:
-- Dirección: ALCISTA / BAJISTA / ALTA CONV-IA
-- Probabilidad: Porcentaje en grande (ej: "82%") — indica la confianza del modelo
-- Objetivo de precio: Nivel al que la IA proyecta puede llegar el activo
-- Stop Loss: Nivel donde la señal se invalida
-- Upside/Downside: % de potencial recorrido del precio
-- 5 argumentos objetivos: Las razones concretas que sustentan la señal
-
-Si no hay señal activa para ese activo, muestra: "Sin señal activa hoy"
-
-**Bloque 5 — Simulador de Escenarios (EXCLUSIVO AUREX):**
-- Slider interactivo de -50% a +50%
-- Al mover el slider, actualiza en tiempo real:
-  - Nuevo precio: Cuánto valdría el activo si cambia ese %
-  - P&L del activo: La nueva ganancia o pérdida en USD y %
-  - Impacto en portfolio total: Cuánto cambia el valor de toda la cartera
-
-**Diferencial:** El Simulador de Escenarios es equivalente a funciones de Bloomberg Terminal ($24k/año). Yahoo Finance no tiene nada similar en mobile.
-
----
-
-### 2.7 Conversor de Activos
-
-El botón Conversor (celeste, sticky en el header) permite convertir entre cualquier par de activos.
-
----
-
-## 3. SEÑALES IA — DESCRIPCIÓN TÉCNICA
-
-### 3.1 Tipos de señales
-
-**BAJISTA:** El activo tiene momentum negativo claro. Precio cayendo, volumen vendedor, correlación negativa. La IA dice: "alta probabilidad de que siga bajando".
-
-**ALCISTA:** El activo tiene momentum positivo claro. Precio subiendo, volumen comprador, correlación positiva. La IA dice: "alta probabilidad de que siga subiendo".
-
-**ALTA CONV-IA:** La señal MAS valiosa y MAS rara. Aparece SOLO cuando score >= 78% + catalizador activo. El activo está en un punto de indecisión técnica extrema. Solo 1-2 activos máximo por día.
-
-### 3.2 Rango de probabilidades
-
-- Mínimo: 55% (por debajo no se emite señal)
-- Máximo: 88% (certeza imposible en mercados)
-- Las probabilidades suman exactamente 100% entre ALCISTA + BAJISTA + ALTA CONV-IA
-
-### 3.3 Las 8 variables del modelo
-
-1. RSI Simulado (Momentum): Compara precio actual vs hace 24hs.
-2. Tendencia de Precio 24hs: Variación porcentual real desde Binance/Yahoo.
-3. Volumen Relativo: Compara volumen actual con promedio histórico.
-4. Volatilidad: Amplitud del rango de precio en últimas horas.
-5. Correlación de Mercado: Correlación BTC/altcoins, S&P500/acciones.
-6. Precio del Oro y Petróleo: Indicadores de aversión al riesgo global.
-7. Dato Macro del Día: Fed, IPC, IPP, PBI, datos de empleo.
-8. Earnings Proximity: Resultados corporativos en los próximos 7 días.
-
----
-
-## 4. VENTAJAS COMPARATIVAS VS COMPETENCIA GLOBAL
-
-| Función | AUREX | Yahoo Finance | Investing.com | Bloomberg Terminal |
+| Característica | Yahoo Finance | Investing.com | Binance | **AUREX** |
 |---|---|---|---|---|
-| Portfolio P&L real time | Gratis | Solo Premium | Solo Premium | $24k/año |
-| Señales IA con probabilidades | Gratis | No tiene | No tiene | $24k/año |
-| 5 argumentos por señal | Gratis | No tiene | No tiene | Parcial |
-| Banner mercados configurable | Gratis | Estático | Solo web | Solo Premium |
-| Termómetro de Riesgo | Gratis | No tiene | No tiene | No tiene |
-| Simulador de Escenarios | Gratis | No tiene | No tiene | $24k/año |
-| Min/Max 52 semanas visual | Gratis | Solo web | Solo web | Si |
-| Indicador posicion 52s barra | Gratis | No tiene | No tiene | Si |
-| Señal ALTA CONV-IA (rara) | Exclusivo | No tiene | No tiene | No tiene |
-| Texto educativo en indicadores | Gratis | No tiene | No tiene | No tiene |
-| Mobile-first gratuito | Si | Parcial | Parcial | No |
-| Costo | Gratis | Gratis/Premium | Gratis/Premium | $24,000/año |
+| Señales IA propias | ❌ | ❌ | Parcial | ✅ 8 variables |
+| Fear & Greed multi-asset | ❌ | ❌ | Solo crypto | ✅ Crypto + Acciones |
+| Futuros + Bonos + VIX en tiempo real | ✅ | ✅ | ❌ | ✅ |
+| Termómetro de riesgo del portfolio | ❌ | ❌ | ❌ | ✅ |
+| Simulador de escenarios | ❌ | ❌ | ❌ | ✅ |
+| 52 semanas con texto educativo | Parcial | Parcial | ❌ | ✅ |
+| Banner de mercados globales | ❌ | ❌ | ❌ | ✅ 11 mercados |
+| Texto educativo para principiantes | ❌ | ❌ | ❌ | ✅ |
 
 ---
 
-## 5. ESTADO TÉCNICO (Marzo 2026)
+## 📊 TAB PORTFOLIO — Funciones Completas
 
-**Features.js SHA:** d562037b
-**Index.html SHA:** f3888498
-**Timestamp:** 1774833269047
+### 1. RESUMEN DE CARTERA (Header)
 
-**Funciones globales activas:**
-- window.openAddActivo() — abre modal de agregar activo
-- window.closePortModal() — cierra modal
-- window.filterPortSearch() — filtra búsqueda en tiempo real
-- window.selectPortActivo(s,n,t,l) — selecciona activo del buscador
-- window.savePortActivo() — guarda activo en Supabase
-- window.openPortItemDetail(id) — abre panel de detalle
-- window.closePortItemDetail() — cierra panel de detalle
-- window.portDetPeriod(s,t,p) — cambia período en detalle
-- window.portPeriod(id,s,t,p) — cambia período en listado
-- window.portSimUpdate(id,s,pct) — actualiza simulador en tiempo real
-- window.movePortfolioItem(id,dir) — reordena activos
-- window.deletePortfolioItem(id) — elimina activo
-- window.editMarketBanner() — abre configuración del banner
-- window.toggleMktPref(m) — toggle mercado en banner
-- window.showThermoInfo() — muestra explicación del termómetro
+Panel superior con métricas globales de la cartera en tiempo real:
 
-**Variables globales clave:**
-- window._portItems — array de activos en portfolio
-- window._pcPrices — precios actuales por símbolo
-- window._pcChange24 — % cambio 24h por símbolo
-- window._pcMarketState — estado de mercado por símbolo
-- window._pcPrevClose — precio cierre anterior por símbolo
-- window._pc52Low / window._pc52High — mínimo/máximo 52 semanas por símbolo (Binance klines para cripto, Yahoo meta para acciones)
-- window._iaSignals — señales IA activas
-- window._IA_ACTIVOS — 74 activos con logos, colores, categorías
-- window._portSimBase — datos base del simulador de escenarios
-- window._portSimTotal — valor total del portfolio
+- **VALOR TOTAL**: Suma de valor actual de todos los activos (precio de mercado × cantidad)
+- **P&L USD**: Ganancia o pérdida en dólares desde el precio de compra (en verde si positivo, rojo si negativo)
+- **P&L %**: Variación porcentual global de la cartera
+- **ACTIVOS**: Cantidad de activos distintos en cartera
+- **MEJOR**: Activo con mayor % de ganancia en el período seleccionado
 
-**Supabase:**
-- URL: dklljnfhlzmfsfmxrpie.supabase.co
-- Tabla: portfolio_items
-- Campos: id, user_id, simbolo, nombre, cantidad, precio_compra, tipo, created_at
+Fuentes: Binance (cripto) + Yahoo Finance via corsproxy.io (acciones, ETFs, metales, bonos)
 
 ---
 
-## 6. PITCH PARA INVERSORES
+### 2. BANNER DE MERCADOS GLOBALES
 
-AUREX democratiza herramientas que hoy solo existen en Bloomberg Terminal ($24,000/año) y las lleva al bolsillo del inversor retail de forma gratuita. El diferencial no es solo el portfolio — es la inteligencia: señales con probabilidades reales, 5 argumentos concretos, el Termómetro de Riesgo que nadie más tiene, y el Simulador de Escenarios que convierte al usuario en su propio analista. El texto educativo integrado hace que hasta un usuario principiante pueda entender y actuar sobre sus inversiones. Apuntamos a competir directamente con Yahoo Finance e Investing.com en el segmento mobile, con una propuesta de valor que ninguna de las dos puede replicar sin una reingeniería profunda.
+Banner horizontal scrolleable con estado en tiempo real de los principales mercados financieros mundiales.
+
+**Mercados disponibles (11 total):**
+
+| Mercado | Zona horaria | Horario (UTC) |
+|---|---|---|
+| 🇺🇸 EEUU | New York | 13:30–20:00 |
+| 🇦🇷 ARG | Buenos Aires | 14:00–21:00 |
+| 🇧🇷 BRASIL | São Paulo | 13:00–19:35 |
+| 🇬🇧 LONDRES | London | 08:00–16:30 |
+| 🇪🇸 ESPAÑA | Madrid | 08:00–16:30 |
+| 🇩🇪 ALEMANIA | Frankfurt | 08:00–16:30 |
+| 🇫🇷 FRANCIA | Paris | 08:00–16:30 |
+| 🇯🇵 JAPÓN | Tokyo | 00:00–06:30 |
+| 🇨🇳 CHINA | Shanghai | 01:30–07:00 |
+| 🇭🇰 HONG KONG | HK | 01:30–08:00 |
+| 🌏 ASIA | Regional | 00:00–06:00 |
+
+**Por cada mercado muestra:**
+- Estado: 🟢 ABIERTO / 🔴 CERRADO
+- Tiempo restante: "Abre en Xh Ym" / "Cierra en Xh Ym"
+- Fin de semana: calcula reapertura del lunes
+
+**Configurable:** botón ✏️ permite activar/desactivar mercados (guarda en localStorage). Activos por defecto: EEUU, ARG, ASIA.
 
 ---
 
-## 7. PRÓXIMAS FUNCIONES (Roadmap)
+### 3. BANNER DE FUTUROS, ÍNDICES, BONOS Y COMMODITIES ⭐ NUEVO
 
-- Señales IA funcionales: Algoritmo RSI real + tendencia + volumen (LUN 30/03)
-- Watchlist persistente: Botón estrella en Mercados (MAR 31/03)
-- Revisión conjunta Semana 1 (MIE 01/04)
-- Buffer fixes + cierre Semana 1 "PWA base lista" (JUE 02/04)
-- Semana 2: Conversor con rotación parcial o total del portfolio simulado
+Banner horizontal scrolleable con datos en tiempo real de los principales instrumentos financieros globales. Equivalente a lo que usan traders profesionales en terminales Bloomberg.
+
+**Instrumentos incluidos:**
+
+| Categoría | Símbolo | Nombre |
+|---|---|---|
+| 🔵 FUTUROS | ES=F | S&P500 Futuro |
+| 🔵 FUTUROS | NQ=F | Nasdaq Futuro |
+| 🔵 FUTUROS | YM=F | Dow Jones Futuro |
+| 🔵 FUTUROS | RTY=F | Russell 2000 Futuro |
+| 🟡 COMOD | GC=F | Oro |
+| 🟡 COMOD | CL=F | Petróleo WTI |
+| 🟡 COMOD | SI=F | Plata |
+| ⚪ BONOS | ^TNX | US Treasury 10Y Yield |
+| ⚪ BONOS | ^IRX | US Treasury 2Y Yield |
+| 🟣 MACRO | DX-Y.NYB | Dólar Index (DXY) |
+| 🔴 SENTIM | ^VIX | VIX (Índice de Volatilidad) |
+
+**Por cada instrumento muestra:**
+- Categoría con color identificador
+- Nombre corto + indicador de estado (● verde = operando, ○ gris = cerrado)
+- Precio actual
+- % cambio en verde (sube) o rojo (baja)
+
+**Actualización:** automática cada 60 segundos. Fuente: Yahoo Finance.
+
+**Valor para el usuario:** Permite leer el "pulso" del mercado global antes de que abran las bolsas — información antes exclusiva de traders institucionales, ahora disponible en AUREX.
 
 ---
 
-*Documento generado automáticamente por AUREX AI Assistant — Marzo 2026*
+### 4. ÍNDICE MIEDO / CODICIA ⭐ NUEVO
+
+Gauge semicircular visual que mide el sentimiento general del mercado en una escala de 0 a 100, inspirado en el Fear & Greed Index pero **único en AUREX** porque combina datos de crypto Y mercados tradicionales.
+
+**Zonas del índice:**
+
+| Valor | Zona | Color | Interpretación |
+|---|---|---|---|
+| 0–20 | Miedo Extremo | 🔴 Rojo oscuro | Pánico. Históricamente zona de oportunidad de compra |
+| 21–40 | Miedo | 🟠 Rojo | Cautela. Analizar antes de actuar |
+| 41–60 | Neutral | 🟡 Amarillo | Mercado equilibrado. Momento de analizar fundamentals |
+| 61–80 | Codicia | 🟢 Verde | Optimismo. Cuidado con sobrevaluación |
+| 81–100 | Codicia Extrema | 💚 Verde claro | Euforia. Alta probabilidad de corrección próxima |
+
+**Variables utilizadas (4 fuentes en tiempo real):**
+
+| Variable | Fuente | Peso |
+|---|---|---|
+| BTC momentum 24h | Binance API | 35% |
+| ETH momentum 24h | Binance API | 15% |
+| VIX (volatilidad S&P500) | Yahoo Finance | 35% |
+| S&P500 momentum | Yahoo Finance | 15% |
+
+**Muestra además:**
+- Valor VIX actual
+- % cambio BTC 24h
+- % cambio S&P500
+- Texto educativo dinámico según zona
+
+**Botón ?:** Popup explicativo completo para usuarios sin experiencia.
+
+**Actualización:** automática cada 5 minutos.
+
+**Diferenciador vs Binance:** El Fear & Greed de Binance solo mide cripto. El de AUREX integra también la volatilidad del S&P500 (VIX) y el momentum de acciones USA, dando una visión multi-mercado única.
+
+---
+
+### 5. TERMÓMETRO DE RIESGO DEL PORTFOLIO
+
+Barra visual que muestra cómo está distribuido el capital del portfolio según las señales de la IA.
+
+**Colores de la barra:**
+
+| Segmento | Color | Significado |
+|---|---|---|
+| ALCISTA | 🟢 Verde | Capital en activos con señal alcista (sube) |
+| ALTA CONV-IA | 🟡 Dorado | Capital en activos con señal de alta convicción IA |
+| BAJISTA | 🔴 Rojo | Capital en activos con señal bajista (baja) |
+| SIN SEÑAL | ⚫ Gris | Capital en activos sin señal activa |
+
+**Texto explicativo dinámico:** El sistema detecta la situación dominante y genera un mensaje en lenguaje natural. Ejemplos:
+- "✅ Portafolio mayormente ALCISTA — la IA detecta momentum positivo en tus activos"
+- "⚠️ Tenés capital en zona de MÁXIMA ATENCIÓN — la IA detecta movimiento fuerte inminente"
+- "🔴 Portafolio en zona de PRECAUCIÓN — más de la mitad de tu capital está en activos bajistas"
+
+**Botón ?:** Popup educativo que explica cada señal:
+- BAJISTA: "El activo tiene momentum negativo claro. Precio cayendo, volumen vendedor."
+- ALCISTA: "El activo tiene momentum positivo claro. Precio subiendo, volumen comprador."
+- CONF. IA (Alta Convicción): "Señal más valiosa y rara. El activo está en punto de indecisión técnica extrema. 1–2 activos máximo por día."
+
+---
+
+### 6. LISTADO DE ACTIVOS DEL PORTFOLIO
+
+Lista de todos los activos incorporados con diseño de 2 líneas por fila, optimizado para iPhone 390px:
+
+**Línea 1 (superior):**
+- Logo del activo (imagen o inicial coloreada)
+- Símbolo + categoría (cripto/accion/ETF/etc.)
+- Valor actual en USD (precio × cantidad)
+- Botón eliminar (🗑️)
+
+**Línea 2 (inferior):**
+- Cantidad @ precio de compra
+- % de cambio (verde positivo, rojo negativo)
+- Tabs de período: **24h | 7d | 1m | 3m | 1y**
+
+**Nota para acciones fuera de horario:** cuando el mercado está cerrado, el % se muestra en gris con etiqueta "ult.cierre" para indicar que es el último precio de cierre.
+
+---
+
+### 7. PANEL DE DETALLE DEL ACTIVO
+
+Al tocar cualquier activo del listado se abre un panel modal centrado con 5 bloques:
+
+**Bloque 1 — Métricas principales:**
+
+| Dato | Descripción |
+|---|---|
+| Precio de compra | Precio al que se incorporó al portfolio |
+| Cantidad | Unidades en cartera |
+| P&L USD | Ganancia/pérdida en dólares |
+| Fecha entrada | Fecha de incorporación |
+| Mín 52 semanas | Mínimo histórico del último año |
+| Máx 52 semanas | Máximo histórico del último año |
+
+**Bloque 2 — Indicador 52 Semanas:**
+
+Barra visual que muestra dónde está el precio actual dentro del rango anual:
+
+| Posición | Zona | Texto |
+|---|---|---|
+| 0–30% | 🟢 Zona Baja | "El activo cotiza cerca de sus mínimos del año. Históricamente zona de acumulación." |
+| 30–70% | 🟡 Zona Media | "El activo está en zona intermedia. Sin sesgo claro de dirección." |
+| 70–100% | 🔴 Zona Alta | "El activo cotiza cerca de sus máximos del año. Posible zona de distribución." |
+
+Fuentes: Binance klines interval=1w limit=52 (cripto) | Yahoo Finance meta.fiftyTwoWeekLow/High (acciones)
+
+**Bloque 3 — Señal de la IA:**
+- Dirección: ALCISTA / BAJISTA / ALTA CONV-IA
+- Probabilidades: % de subida, % de baja, % de alta convicción
+- Argumentos: 5 razones técnicas y fundamentales
+
+**Bloque 4 — Análisis de Variables IA:**
+- RSI, Tendencia, Volumen, Volatilidad, Correlación de mercado, Oro/Petróleo, Dato Macro, Earnings Proximity
+- Cada variable con valor numérico y estado (positivo/negativo/neutro)
+
+**Bloque 5 — Simulador de Escenarios:**
+- Slider interactivo: -50% a +50% de variación del precio actual
+- Muestra en tiempo real: nuevo precio estimado | nuevo P&L | impacto en portfolio total
+- Ideal para planificar toma de ganancias o evaluar posibles pérdidas
+
+---
+
+## 📈 TAB MERCADOS — Funciones Completas
+
+### 1. BANNER DE MERCADOS GLOBALES
+Igual al de Portfolio — mismos 11 mercados con estado ABIERTO/CERRADO en tiempo real.
+
+### 2. BANNER DE FUTUROS, ÍNDICES, BONOS ⭐ NUEVO
+Igual al de Portfolio — S&P500 fut, Nasdaq fut, Oro, Petróleo, US 10Y, VIX y más. Actualización cada 60 segundos.
+
+### 3. ÍNDICE MIEDO / CODICIA ⭐ NUEVO
+Igual al de Portfolio — gauge semicircular con valor 0–100, texto educativo y botón ? explicativo.
+
+### 4. TABS DE CATEGORÍAS
+- **Cripto** (BTC, ETH, SOL, BNB, XRP, ADA, AVAX, DOT, LINK, MATIC, DOGE, SHIB...)
+- **Acciones** (USA: AAPL, MSFT, GOOGL, AMZN, NVDA, TSLA... | ARG: GGAL, YPF, BMA...)
+- **Stable & DeFi** (USDT, USDC, DAI, WBTC...)
+- **Futuros** (ES=F, NQ=F, GC=F, CL=F, SI=F...)
+- **Metales** (GC=F, SI=F, PL=F, HG=F...)
+- **Bonos** (TLT, IEF, LQD, HYG, ^TNX...)
+
+### 5. LISTADO POR CATEGORÍA
+Cada activo muestra: símbolo + nombre | precio actual | % cambio 24h
+
+---
+
+## 🤖 MOTOR DE SEÑALES IA — Variables y Probabilidades
+
+### Las 3 señales posibles:
+
+**BAJISTA** → El activo tiene momentum negativo claro. Precio cayendo, volumen vendedor, correlación negativa. La IA dice: "alta probabilidad de que siga bajando".
+
+**ALCISTA** → El activo tiene momentum positivo claro. Precio subiendo, volumen comprador, correlación positiva. La IA dice: "alta probabilidad de que siga subiendo".
+
+**ALTA CONV-IA** → Es la señal MÁS valiosa y MÁS rara. Significa que el activo está en un punto de indecisión técnica extrema — está a punto de romper fuerte en alguna dirección, pero todavía no se definió. Alta volatilidad, señales contradictorias, confluencia de factores. El usuario lo lee como: "este activo está en zona de decisión, puede explotar para cualquier lado, máxima atención". No es un residuo ni la mayoría — debe ser 1 a 2 activos máximo por día cuando realmente se da.
+
+### Las 8 variables del algoritmo:
+
+| # | Variable | Descripción | Fuente |
+|---|---|---|---|
+| 1 | RSI Simulado | Momentum: compara precio actual vs hace 24h. Determina sobrecomprado/sobrevendido | Binance / Yahoo |
+| 2 | Tendencia 24h | Variación % real desde Binance o Yahoo Finance. Dirección y fuerza del movimiento | Binance / Yahoo |
+| 3 | Volumen Relativo | Volumen actual vs promedio histórico. Volumen alto + precio subiendo = señal fuerte | Binance / Yahoo |
+| 4 | Volatilidad | Amplitud del rango de precio en últimas horas. Alta volatilidad = ruptura inminente | Calculada |
+| 5 | Correlación de Mercado | Si BTC sube fuerte → altcoins tienden a seguirlo. Si S&P500 cae → acciones correlacionan | Binance + Yahoo |
+| 6 | Oro y Petróleo | Oro al alza = aversión al riesgo = presión bajista en crypto/growth. Petróleo al alza = presión inflacionaria | Yahoo Finance (GC=F, CL=F) |
+| 7 | Dato Macro del Día | Fed, IPC, IPP, PBI, empleo. Aumenta factor de incertidumbre y ajusta probabilidades | FRED API + calendario económico |
+| 8 | Earnings Proximity | Si empresa reporta balances en próximos 7 días → aumenta volatilidad esperada | Yahoo Finance earnings calendar |
+
+### Rango realista de probabilidades:
+
+| Señal | Probabilidad típica | Significado |
+|---|---|---|
+| BAJISTA 75% | 55%–88% | 75% de probabilidad de que el precio siga bajando en 24–48hs según modelo de 8 variables |
+| ALCISTA 68% | 55%–88% | 68% de probabilidad de suba en próximas 24–48hs |
+| ALTA CONV-IA 85% ALCISTA | 55%–88% | 85% de confianza en movimiento fuerte inminente con dirección confirmada |
+
+**Nunca por debajo de 52% (sin señal) ni por encima de 90% (certeza imposible en mercados).**
+
+---
+
+## 🛠️ ESPECIFICACIONES TÉCNICAS
+
+### Stack tecnológico:
+- **Frontend:** Vanilla HTML5 / CSS3 / JavaScript ES2020+
+- **Hosting:** GitHub Pages (zero cost, alta disponibilidad)
+- **Base de datos:** Supabase (PostgreSQL) con Row Level Security
+- **Autenticación:** Supabase Auth (anónima + email/password)
+- **APIs de datos:** Binance REST API + Yahoo Finance via corsproxy.io + FRED API
+
+### APIs utilizadas:
+
+| API | Datos | Frecuencia |
+|---|---|---|
+| Binance /ticker/24hr | Precio, % 24h, volumen cripto | Cada 30s |
+| Binance /klines?interval=1w&limit=52 | Min/Max 52 semanas cripto | Al abrir detalle |
+| Yahoo Finance /v8/finance/chart | Precio, meta, histórico acciones | Cada 60s |
+| Yahoo Finance ^VIX, ^GSPC | VIX + S&P500 para Fear&Greed | Cada 5min |
+| Yahoo Finance ES=F, NQ=F, GC=F... | Futuros e índices | Cada 60s |
+| Supabase | Portfolio del usuario (CRUD) | En tiempo real |
+
+### Arquitectura del portfolio:
+- Datos guardados en Supabase: simbolo, cantidad, precio_compra, fecha_entrada, user_id
+- Precios en tiempo real cacheados en window._pcPrices
+- Señales IA cacheadas en window._iaSignals (refresh cada 5 minutos)
+- Fear & Greed cacheado en window._fearGreedCache (refresh cada 5 minutos)
+- Futuros cacheados en window._futuresCache (refresh cada 60 segundos)
+
+---
+
+## 📅 ROADMAP DE DESARROLLO
+
+### ✅ Completado (Sesión actual — Marzo 2026)
+
+| Función | Estado |
+|---|---|
+| Modales centrados (agregar activo + detalle) | ✅ |
+| Banner mercados globales (11 países) | ✅ |
+| Banner configurable con toggle + localStorage | ✅ |
+| Banner replicado en tab Mercados | ✅ |
+| Termómetro de Riesgo con texto educativo + ? | ✅ |
+| Listado 2 líneas (logos + tabs visibles en iPhone) | ✅ |
+| Tabs 24h | 7d | 1m | 3m | 1y en listado | ✅ |
+| Indicador 52 semanas (barra + texto interpretativo) | ✅ |
+| Mín/Máx 52 semanas en grid de detalle | ✅ |
+| Simulador de Escenarios (slider -50%/+50%) | ✅ |
+| **Índice Miedo/Codicia — gauge SVG** | ✅ |
+| **Banner Futuros/Índices/Bonos/VIX** | ✅ |
+| **Ambos indicadores en Portfolio Y Mercados** | ✅ |
+
+### 🔜 Próximo (Semana 2 — Abril 2026)
+
+| Función | Fecha objetivo |
+|---|---|
+| Señales IA con RSI real + tendencia + volumen | Lun 30/03 |
+| Watchlist persistente (botón estrella en Mercados) | Mar 31/03 |
+| Revisión conjunta Semana 1 | Mié 01/04 |
+| Buffer fixes + commit cierre Semana 1 | Jue 02/04 |
+| Conversor — rotación parcial/total de activos | Semana 2 |
+
+---
+
+## 💡 PROPUESTA DE VALOR PARA INVERSORES
+
+AUREX combina en una sola app lo que antes requería 4 herramientas diferentes:
+
+1. **Bloomberg Terminal** → datos de futuros, bonos, VIX, mercados globales en tiempo real
+2. **TradingView** → análisis técnico, señales, indicadores visuales
+3. **Binance App** → Fear & Greed Index, datos de cripto
+4. **Portfolio tracker** → seguimiento P&L, simulador de escenarios
+
+Todo en una interfaz mobile-first, diseñada para ser entendida por usuarios principiantes sin sacrificar la profundidad que exigen los expertos.
+
+**Diferenciador principal:** texto educativo en TODOS los indicadores — el usuario siempre sabe QUÉ significa el dato y QUÉ acción tomar.
+
+---
+
+*Documento generado y mantenido automáticamente por AUREX Dev System*
+*Última actualización: Marzo 2026 — v2.0*
