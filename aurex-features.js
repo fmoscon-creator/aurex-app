@@ -2023,7 +2023,7 @@ function _renderIALista(signals, keepLoadingBar) {
         '</div>' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px">' +
           '<span style="font-size:10px;color:#8B949E">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>' +
-          (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];return '<div style="display:flex;gap:2px;align-items:center">'+keys.map(function(k){var v=sc[k]!==undefined?sc[k]:0;var c=v>0.01?'#3FB950':v<-0.01?'#FF4444':'#555';return '<div style="width:5px;height:5px;border-radius:50%;background:'+c+';flex-shrink:0" title="'+k+'"></div>';}).join('')+'</div>';})() +
+          (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var pos=keys.filter(function(k){return (sc[k]||0)>0.01;}).length;var neg=keys.filter(function(k){return (sc[k]||0)<-0.01;}).length;return pos+neg>0?'<span style="font-size:9px;color:#3FB950;font-weight:700;margin-left:6px">↑'+pos+'</span><span style="font-size:9px;color:#555;margin:0 2px">·</span><span style="font-size:9px;color:#FF4444;font-weight:700">↓'+neg+'</span>':'';})() +
         '</div>' +
         '<div style="margin-top:3px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
@@ -2058,6 +2058,55 @@ function _buildIADetail(s) {
   var _uSign=s.upside>=0?'+':'';
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
+
+  // VARIABLES DEL MODELO — lista con colores verde/rojo
+  if(s.scores) {
+    var sc = s.scores;
+    var varDefs = [
+      {k:'tendencia',      label:'Tendencia 24h',         fmt:function(v){ return (v>0?'+':'')+(v*12.5).toFixed(1)+'%'; }},
+      {k:'rsi',            label:'RSI14',                 fmt:function(v){ var rsi=s.rsi||50; return 'RSI '+rsi; }},
+      {k:'volumen',        label:'Volumen',               fmt:function(v){ return (s.volRel||1).toFixed(1)+'x prom.'; }},
+      {k:'volatilidad',    label:'Volatilidad',           fmt:function(v){ return v>0.01?'baja':'v>-0.01'?'normal':'alta'; }},
+      {k:'correlacion',    label:'Correlación BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
+      {k:'oro_petroleo',   label:'Oro / Petróleo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
+      {k:'macro',          label:'Macro FED',             fmt:function(v){ return v<-0.01?'evento activo':'sin eventos'; }},
+      {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'próximos':'sin reporte'; }},
+      {k:'macd',           label:'MACD (12/26)',          fmt:function(v){ return v>0.01?'alcista':v<-0.01?'bajista':'neutral'; }},
+      {k:'soporte_resist', label:'Soporte / Resist. 30d', fmt:function(v){ return v>0.01?'cerca soporte':v<-0.01?'cerca resist.':'zona media'; }}
+    ];
+    var posVars = varDefs.filter(function(d){ return (sc[d.k]||0)>0.01; });
+    var negVars = varDefs.filter(function(d){ return (sc[d.k]||0)<-0.01; });
+    var neuVars = varDefs.filter(function(d){ return Math.abs(sc[d.k]||0)<=0.01; });
+    html += '<div style="margin-bottom:10px">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">';
+    html += '<span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span>';
+    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">↑ '+posVars.length+' alcistas</span><span style="color:#555;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">↓ '+negVars.length+' bajistas</span></span>';
+    html += '</div>';
+    // Positivas primero
+    posVars.forEach(function(d) {
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#3FB95010;border-left:2px solid #3FB950;border-radius:0 6px 6px 0;margin-bottom:3px">';
+      html += '<span style="font-size:10px;color:#3FB950;font-weight:600">↑ '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#3FB950">'+d.fmt(sc[d.k])+'</span>';
+      html += '</div>';
+    });
+    // Negativas
+    negVars.forEach(function(d) {
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#FF444410;border-left:2px solid #FF4444;border-radius:0 6px 6px 0;margin-bottom:3px">';
+      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">↓ '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#FF4444">'+d.fmt(sc[d.k])+'</span>';
+      html += '</div>';
+    });
+    // Neutrales (gris, compacto)
+    if(neuVars.length > 0) {
+      html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">';
+      neuVars.forEach(function(d) {
+        html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">— '+d.label+'</span>';
+      });
+      html += '</div>';
+    }
+    html += '</div>';
+  }
+
   // TIMEFRAME CONTEXT — default 24h, contexto 7d/30d
   html += '<div style="margin-bottom:10px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
@@ -2118,12 +2167,12 @@ window._compartirSenal = function(info) {
   texto += '━━━━━━━━━━━━━━━━\n';
   texto += 'Señal generada por AUREX IA™\n';
   texto += 'aurex-app.github.io';
-  if(navigator.share) {
-    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){});
-  } else {
+  var _showShareOverlay = function() {
     var wa = 'https://wa.me/?text='+encodeURIComponent(texto);
     var tg = 'https://t.me/share/url?url=https://fmoscon-creator.github.io/aurex-app/&text='+encodeURIComponent(texto);
     var ml = 'mailto:?subject=AUREX+IA+-+'+encodeURIComponent(sig.simbolo+' '+dirLabel)+'&body='+encodeURIComponent(texto);
+    var existing2 = document.getElementById('ia-share-overlay');
+    if(existing2) existing2.remove();
     var overlay = document.createElement('div');
     overlay.id = 'ia-share-overlay';
     overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
@@ -2138,6 +2187,11 @@ window._compartirSenal = function(info) {
     '</div>';
     overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
+  };
+  if(navigator.share) {
+    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
+  } else {
+    _showShareOverlay();
   }
 };
 
