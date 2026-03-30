@@ -632,6 +632,43 @@ function _renderPortfolioItems(items){
   _updateTotals(items);
 }
 
+
+// === Portfolio currency switch: USD / USDT / BTC ===
+window._portCurrency = 'USD'; // default
+
+window._updatePortTotalDisplay = function() {
+  var el = document.getElementById('port-total');
+  var badge = document.getElementById('port-curr-badge');
+  var total = window._portTotalUSD || 0;
+  var cur = window._portCurrency || 'USD';
+  var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d!==undefined?d:2,maximumFractionDigits:d!==undefined?d:2}); };
+
+  if(cur === 'BTC') {
+    var btcPrice = window._pcPrices && window._pcPrices['BTC'] ? window._pcPrices['BTC'] : 0;
+    if(btcPrice > 0) {
+      var btcVal = total / btcPrice;
+      if(el) el.textContent = '₿ ' + fmtNum(btcVal, 5);
+    } else {
+      if(el) el.textContent = '₿ ---';
+    }
+    if(badge) { badge.textContent = 'BTC'; badge.style.color='#F7931A'; badge.style.borderColor='#F7931A40'; }
+  } else if(cur === 'USDT') {
+    if(el) el.textContent = '₮ ' + fmtNum(total);
+    if(badge) { badge.textContent = 'USDT₮'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
+  } else {
+    if(el) el.textContent = '$' + fmtNum(total);
+    if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
+  }
+};
+
+window._cyclePortCurrency = function() {
+  var cur = window._portCurrency || 'USD';
+  if(cur === 'USD') window._portCurrency = 'USDT';
+  else if(cur === 'USDT') window._portCurrency = 'BTC';
+  else window._portCurrency = 'USD';
+  window._updatePortTotalDisplay();
+};
+
 window.movePortfolioItem = function(id, direction){
   var items = window._portItems;
   if(!items) return;
@@ -710,7 +747,8 @@ function _updateTotals(items){
   var pnlPct = totalCosto > 0 ? (pnlUsd / totalCosto * 100) : 0;
   var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
-  if(el('port-total')) el('port-total').textContent = '$' + fmtNum(total);
+  window._portTotalUSD = total;
+  _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
   if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
   if(el('port-pnl-usd')){
@@ -2051,10 +2089,10 @@ function _calcPulseScore(raw, cat) {
     totalW += weight;
   }
   if(cat==='CRIPTO'||cat==='GLOBAL') {
-    add('BTC', _pctToScore(raw.btcPct,8), cat==='CRIPTO'?40:12);
-    add('ETH', _pctToScore(raw.ethPct,8), cat==='CRIPTO'?35:8);
-    if(cat==='CRIPTO'&&raw.vix) add('VIX', _vixToScore(raw.vix.price), 15);
-    if(cat==='CRIPTO'&&raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), 10);
+    add('BTC', _pctToScore(raw.btcPct,8), cat==='CRIPTO'?45:12);
+    add('ETH', _pctToScore(raw.ethPct,8), cat==='CRIPTO'?30:8);
+    if(raw.vix) add('VIX', _vixToScore(raw.vix.price), cat==='CRIPTO'?15:14);
+    if(raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), cat==='CRIPTO'?10:8);
   }
   if(cat==='ACCIONES'||cat==='GLOBAL') {
     if(raw.vix)  add('VIX',    _vixToScore(raw.vix.price),   cat==='ACCIONES'?35:14);
@@ -2075,9 +2113,11 @@ function _calcPulseScore(raw, cat) {
     if(raw.clf) add('Petroleo', _oilToScore(raw.clf.pct),  cat==='COMOD'?25:5);
     if(raw.hgf) add('Cobre',    _pctToScore(raw.hgf.pct,2),cat==='COMOD'?20:4);
   }
-  // Macro FED + Geopolitics (available after _fetchMacroGeo runs)
-  if(raw.macro) add('Macro_FED', raw.macro.score, 12);
-  if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
+  // Macro FED + Geopolitics: only for GLOBAL/ACCIONES/FUTUROS/COMOD, NOT pure CRIPTO
+  if(cat !== 'CRIPTO') {
+    if(raw.macro) add('Macro_FED', raw.macro.score, 12);
+    if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
+  }
   if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
