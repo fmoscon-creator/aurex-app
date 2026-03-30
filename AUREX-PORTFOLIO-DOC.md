@@ -106,11 +106,28 @@ AUREX es una aplicación financiera avanzada desarrollada en HTML/CSS/JavaScript
 ### 4.4 Filtros por categoría
 El PULSE puede mostrarse segmentado por tipo de activo:
 - **GLOBAL** — todas las variables combinadas (valor global del mercado)
-- **CRIPTO** — ponderado hacia BTC/ETH momentum + VIX adaptado
+- **CRIPTO** — set de variables propio, metodología estructural (ver 4.5)
 - **ACCIONES** — ponderado hacia S&P500, futuros, VIX
 - **COMODITIES** — ponderado hacia Oro, Plata, Petróleo, Cobre
+- **FUTUROS** — ponderado hacia ES=F, NQ=F, YM=F, RTY=F
 
 **En Mercados:** el filtro se activa automáticamente según la tab seleccionada (Cripto → CRIPTO, Acciones → ACCIONES, etc.)
+
+### 4.5 Variables PULSE™ — CRIPTO (ponderación exclusiva)
+
+> El índice CRIPTO usa un set de variables **diferente al GLOBAL**, diseñado para acercarse a la metodología estructural de referencia del mercado (Alternative.me Fear & Greed). Se basa en **posición histórica de BTC, RSI14 y momentum multiperiodo** — no en variación diaria de precio (que es muy ruidosa).
+
+| # | Variable | Fuente | Peso | Descripción |
+|---|----------|--------|------|-------------|
+| 1 | **BTC Posición 90d** | Binance klines | **35%** | Dónde está BTC dentro de su rango de 90 días. 0 = en mínimo de 90d (miedo extremo), 100 = en máximo de 90d (euforia). Mejor proxy estructural de sentimiento. |
+| 2 | **BTC RSI14** | Binance klines | **25%** | RSI de 14 períodos de BTC. Escala: <30 = pánico (score 5), 30–40 = miedo (18), 40–50 = cautela (35), 50–60 = neutral (55), 60–70 = optimismo (72), >70 = euforia (90). |
+| 3 | **BTC Momentum 30d** | Binance klines | **15%** | Variación % de BTC en los últimos 30 días. Escala ±30% → score 0–100. Captura tendencia media sin ruido del día. |
+| 4 | **VIX** | Yahoo Finance | **20%** | Índice de volatilidad implícita del S&P500. Proxy de miedo sistémico global que arrastra directamente al cripto. |
+| 5 | **SP500 Futuros** | Yahoo Finance | **5%** | Cambio % de ES=F. Peso mínimo, correlación secundaria con cripto. |
+
+**Total: 100% | Fuentes: Binance API + Yahoo Finance**
+
+**Nota para inversores:** *AUREX PULSE™ CRIPTO y Alternative.me Fear & Greed usan metodologías distintas. AUREX incorpora VIX y macro sistémica que Alternative.me no incluye. Una diferencia de 15–25 puntos entre ambos índices es esperable y no representa un error — refleja que AUREX tiene una visión más amplia del riesgo cripto.*
 
 ### 4.5 Diferencia con el índice de Binance y CNN
 | | AUREX PULSE™ | Binance Fear & Greed | CNN Fear & Greed |
