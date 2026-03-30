@@ -514,6 +514,8 @@ function _refreshPortPrices(items){
             window._pcChange24[sym] = ((meta.regularMarketPrice - meta.previousClose) / meta.previousClose * 100);
             if(!window._pcMarketState) window._pcMarketState={};
             window._pcMarketState[sym]=meta.marketState||'CLOSED';
+            if(!window._pcMarketTime) window._pcMarketTime={};
+            window._pcMarketTime[sym]=(meta.regularMarketTime||0)*1000;
             if(!window._pcPrevClose) window._pcPrevClose={};
             window._pcPrevClose[sym]=meta.previousClose;
           }
@@ -563,7 +565,16 @@ function _renderPortfolioItems(items){
     var cs = ch24 >= 0 ? '+' : '';
     var isCrypto = item.tipo === 'Cripto';
     var mktState = !isCrypto && window._pcMarketState && window._pcMarketState[item.simbolo];
-    var mktClosed = mktState && mktState !== 'REGULAR' && mktState !== 'PRE';
+    // Time-based fallback: if no marketState yet, detect by regularMarketTime or weekend
+    var _mktTime = !isCrypto && window._pcMarketTime && window._pcMarketTime[item.simbolo];
+    var _nowNY = new Date(Date.now() - 5*3600000);
+    var _dayNY = _nowNY.getUTCDay();
+    var _isWeekend = (_dayNY === 0 || _dayNY === 6);
+    var _stalePrice = _mktTime ? (Date.now() - _mktTime > 7200000) : false;
+    var mktClosed = !isCrypto && (
+      (mktState && mktState !== 'REGULAR' && mktState !== 'PRE') ||
+      (!mktState && (_isWeekend || _stalePrice))
+    );
     var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
     var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
     if(mktClosed && prevClosePct !== null){ cc = '#888'; cs = prevClosePct >= 0 ? '+' : ''; }
