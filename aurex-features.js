@@ -1890,8 +1890,15 @@ function _actualizarContadores(signals) {
   if(sub) sub.textContent=signals.length+' SENALES IA - ORDENADAS POR PROBABILIDAD';
 }
 
+window._closeIAVarsPopup = function() {
+  var el = document.getElementById('ia-vars-overlay');
+  if(el) el.remove();
+};
 window.showIAVariablesPopup = function() {
+  var existing = document.getElementById('ia-vars-overlay');
+  if(existing) { existing.remove(); return; }
   var overlay = document.createElement('div');
+  overlay.id = 'ia-vars-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
   overlay.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
@@ -1899,7 +1906,7 @@ window.showIAVariablesPopup = function() {
         '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA™ — 10 VARIABLES</div>' +
         '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de señales v7 — tiempo real</div>' +
       '</div>' +
-      '<button onclick="this.closest(&apos;div[style*=position:fixed]&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
+      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
     '</div>' +
     '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
     [
@@ -1924,7 +1931,7 @@ window.showIAVariablesPopup = function() {
     }).join('') +
     '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
-  overlay.onclick = function(e) { if(e.target === overlay) overlay.remove(); };
+  overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
   document.body.appendChild(overlay);
 };
 
@@ -2079,7 +2086,7 @@ function _buildIADetail(s) {
   html += '</div>';
   // BOTÓN COMPARTIR
   html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262D">';
-  html += '<button onclick="event.stopPropagation();_compartirSenal('+JSON.stringify({simbolo:'__SYM__',nombre:'__NOM__',direccion:'__DIR__',confianza:'__CONF__',escenario_principal:'__ESC__'})+');return false;" ';
+  html += '<button onclick="event.stopPropagation();_compartirSenal(\'' + s.simbolo + '\');return false;" ';
   html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
   html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
   html += '</div>';
@@ -2088,10 +2095,12 @@ function _buildIADetail(s) {
 }
 
 window._compartirSenal = function(info) {
-  if(!info || !info.simbolo) return;
+  // Accept either a symbol string or an object with .simbolo
+  var symBuscar = (typeof info === 'string') ? info : (info && info.simbolo ? info.simbolo : null);
+  if(!symBuscar) return;
   var sig = null;
   var sigs = window._iaSignals || [];
-  for(var i=0;i<sigs.length;i++) { if(sigs[i].simbolo===info.simbolo) { sig=sigs[i]; break; } }
+  for(var i=0;i<sigs.length;i++) { if(sigs[i].simbolo===symBuscar) { sig=sigs[i]; break; } }
   if(!sig) return;
   var dirEmoji = sig.direccion==='alcista'?'📈':sig.direccion==='bajista'?'📉':'⚡';
   var dirLabel = sig.direccion==='alcista'?'ALCISTA':sig.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
@@ -2116,6 +2125,7 @@ window._compartirSenal = function(info) {
     var tg = 'https://t.me/share/url?url=https://fmoscon-creator.github.io/aurex-app/&text='+encodeURIComponent(texto);
     var ml = 'mailto:?subject=AUREX+IA+-+'+encodeURIComponent(sig.simbolo+' '+dirLabel)+'&body='+encodeURIComponent(texto);
     var overlay = document.createElement('div');
+    overlay.id = 'ia-share-overlay';
     overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
     overlay.innerHTML='<div style="background:#161B22;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px">' +
       '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir señal '+sig.simbolo+'</div>' +
@@ -2124,9 +2134,9 @@ window._compartirSenal = function(info) {
         '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">✈️</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
         '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">📧</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
       '</div>' +
-      '<button onclick="this.closest(&apos;div[style*=position:fixed]&apos;).remove()" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointer">Cancelar</button>' +
+      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointer">Cancelar</button>' +
     '</div>';
-    overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+    overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
   }
 };
