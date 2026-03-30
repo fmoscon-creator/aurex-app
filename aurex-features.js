@@ -2051,6 +2051,14 @@ async function _fetchPulseRaw() {
     ]);
     raw.btcPct = parseFloat(bArr[0].priceChangePercent) || 0;
     raw.ethPct = parseFloat(bArr[1].priceChangePercent) || 0;
+    // BTC 90-day range position (for CRIPTO PULSE calibration)
+    try {
+      var klines = await fetch('https://api.binance.com/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=90').then(function(r){return r.json();});
+      var cls = klines.map(function(k){return parseFloat(k[4]);});
+      var hi90 = Math.max.apply(null,cls), lo90 = Math.min.apply(null,cls), cur = cls[cls.length-1];
+      raw.btc90dPos = hi90>lo90 ? ((cur-lo90)/(hi90-lo90))*100 : 50;
+      raw.btcMom30 = cls.length>=30 ? ((cur-cls[cls.length-30])/cls[cls.length-30])*100 : raw.btcPct;
+    } catch(e2) { raw.btc90dPos = null; raw.btcMom30 = null; }
   } catch(e) { raw.btcPct = 0; raw.ethPct = 0; }
   var yahooSyms = ['^VIX','^GSPC','ES=F','NQ=F','YM=F','RTY=F','GC=F','SI=F','CL=F','HG=F'];
   var yahooKeys = ['vix','sp500','esf','nqf','ymf','rtyf','gcf','sif','clf','hgf'];
@@ -2089,10 +2097,30 @@ function _calcPulseScore(raw, cat) {
     totalW += weight;
   }
   if(cat==='CRIPTO'||cat==='GLOBAL') {
-    add('BTC', _pctToScore(raw.btcPct,8), cat==='CRIPTO'?45:12);
-    add('ETH', _pctToScore(raw.ethPct,8), cat==='CRIPTO'?30:8);
-    if(raw.vix) add('VIX', _vixToScore(raw.vix.price), cat==='CRIPTO'?15:14);
-    if(raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), cat==='CRIPTO'?10:8);
+    if(cat==='CRIPTO') {
+      // CRIPTO-specific: uses structural sentiment (90d position, RSI14, 30d momentum, VIX)
+      // Much closer to Alternative.me methodology vs noisy 24h price pct
+      if(raw.btc90dPos !== null && raw.btc90dPos !== undefined) {
+        add('BTC_Pos90d', raw.btc90dPos, 35); // position in 90d range: 0=at 90d low, 100=at 90d high
+      }
+      var btcRsi14 = (window._rsiCache && window._rsiCache['BTCUSDT']) ? window._rsiCache['BTCUSDT'] : null;
+      if(btcRsi14 !== null) {
+        var rsiSc = btcRsi14<30?5 : btcRsi14<40?18 : btcRsi14<50?35 : btcRsi14<60?55 : btcRsi14<70?72 : 90;
+        add('BTC_RSI14', rsiSc, 25);
+      }
+      if(raw.btcMom30 !== null && raw.btcMom30 !== undefined) {
+        add('BTC_Mom30d', Math.min(100,Math.max(0,50+(raw.btcMom30/30)*50)), 15);
+      } else {
+        add('BTC_Mom1d', _pctToScore(raw.btcPct,6), 15);
+      }
+      if(raw.vix) add('VIX', _vixToScore(raw.vix.price), 20);
+      if(raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), 5);
+    } else {
+      add('BTC', _pctToScore(raw.btcPct,8), 12);
+      add('ETH', _pctToScore(raw.ethPct,8), 8);
+      if(raw.vix) add('VIX', _vixToScore(raw.vix.price), 14);
+      if(raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), 8);
+    }
   }
   if(cat==='ACCIONES'||cat==='GLOBAL') {
     if(raw.vix)  add('VIX',    _vixToScore(raw.vix.price),   cat==='ACCIONES'?35:14);
