@@ -597,11 +597,10 @@ function _renderPortfolioItems(items){
       '</div>' +
       '<div onclick="deletePortfolioItem(\''+item.id+'\')" style="font-size:15px;color:#555;cursor:pointer;padding:4px;" title="Eliminar">&#128465;</div>' +
     '</div>' +
-    '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;padding-left:50px;">' +
-      '<div style="font-size:10px;color:#888;">'+item.cantidad+' u. @ $'+fmtNum(item.precio_compra)+'</div>' +
+    '<div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;padding-left:50px;">' +
       '<div style="display:flex;align-items:center;gap:4px;">' +
-        '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>'+(mktClosed && prevClosePct!==null ? '<span style="font-size:8px;color:#555;margin-left:2px;">ult.cierre</span>' : '') +
-          (mktClosed ? '<div style="font-size:8px;color:#555;margin-top:1px;" id="oc-'+item.id+'"></div>' : '') +
+        (mktClosed ? '<span style="font-size:9px;color:#D4A017;font-weight:700;margin-right:2px;">Ult. cierre</span>' : '') +
+        '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>' +
         '<div style="display:flex;gap:2px;">' +
           ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
         '</div>' +
@@ -2080,7 +2079,7 @@ async function _fetchPulseForCategory(cat) {
   return result;
 }
 
-function _renderFearGreedGauge(value, color, compact) {
+function _renderFearGreedGauge(value, color, compact, value2) {
   var R=compact?40:52, cx=compact?50:65, cy=compact?52:68, sw=compact?9:12;
   var ang=(value/100)*Math.PI;
   var nx=cx+R*Math.cos(Math.PI-ang), ny=cy-R*Math.sin(ang);
@@ -2090,10 +2089,18 @@ function _renderFearGreedGauge(value, color, compact) {
     var x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2-Math.PI);
     return '<path d="M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+R+' '+R+' 0 '+((e-s)>50?1:0)+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
   }
+  // Second needle for Binance index (only when value2 provided)
+  var needle2 = '';
+  if(value2 !== undefined && value2 !== null) {
+    var ang2=(value2/100)*Math.PI;
+    var nx2=cx+R*Math.cos(Math.PI-ang2), ny2=cy-R*Math.sin(ang2);
+    needle2 = '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx2.toFixed(1)+'" y2="'+ny2.toFixed(1)+'" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2"/>';
+  }
   return '<svg viewBox="0 0 '+(compact?'100 58':'130 75')+'" style="width:'+(compact?'88px':'120px')+';height:'+(compact?'52px':'70px')+';flex-shrink:0;">' +
     arcSeg(0,20,'#C62828')+arcSeg(22,40,'#FF6B6B')+arcSeg(42,60,'#D4A017')+arcSeg(62,80,'#3FB950')+arcSeg(82,100,'#00E676') +
-    '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>' +
-    '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#fff"/>' +
+    needle2 +
+    '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>' +
+    '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#D4A017"/>' +
     '</svg>';
 }
 
@@ -2113,7 +2120,22 @@ function _renderFearGreed(containerId) {
   }
   var d = cached;
   var compact = elId.indexOf('port') >= 0;
-  var gauge = _renderFearGreedGauge(d.value, d.color, compact);
+  var binanceIdx = (cat === 'CRIPTO') ? (window._binanceFnG || null) : null;
+  var gauge = _renderFearGreedGauge(d.value, d.color, compact, binanceIdx);
+  // Fetch Binance F&G index for CRIPTO category (cache 10 min)
+  if(cat === 'CRIPTO' && (Date.now()-(window._binanceFnGTs||0)) > 600000) {
+    window._binanceFnGTs = Date.now();
+    fetch('https://api.alternative.me/fng/?limit=1')
+      .then(function(r){return r.json();})
+      .then(function(d2){
+        var val2 = d2 && d2.data && d2.data[0] ? parseInt(d2.data[0].value) : null;
+        if(val2 !== null) {
+          window._binanceFnG = val2;
+          // Re-render to show updated needle
+          setTimeout(function(){ _renderFearGreed(containerId); }, 100);
+        }
+      }).catch(function(){});
+  }
   var edu;
   if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
   else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
@@ -2149,6 +2171,11 @@ function _renderFearGreed(containerId) {
         gauge +
         '<div style="flex:1;min-width:0;">' +
           '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          (cat==='CRIPTO' && binanceIdx !== null ?
+            '<div style="display:flex;gap:8px;align-items:center;margin-top:3px;">' +
+              '<span style="font-size:10px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:13px;">'+d.value+'</b></span>' +
+              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Mercado <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
+            '</div>' : '') +
           dataLine +
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
         '</div>' +
