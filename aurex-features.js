@@ -59,6 +59,7 @@ function renderTab(tab, pais){
   _activeTab=tab; _activePais=pais||'usa';
   var cnt=document.getElementById('cnt');
   if(!cnt) return;
+  if(typeof _renderMarketBanner === 'function') _renderMarketBanner('mkt-market-banner');
   var arr = tab==='acciones' ? (DATA.acciones[pais]||DATA.acciones.usa) : (DATA[tab]||[]);
   cnt.innerHTML='';
   arr.forEach(function(item){
@@ -466,8 +467,9 @@ function _renderPortfolioItems(items){
     var dnColor = idx === items.length-1 ? '#333' : '#8B949E';
     var upCursor = idx === 0 ? 'default' : 'pointer';
     var dnCursor = idx === items.length-1 ? 'default' : 'pointer';
-    return '<div id="port-row-'+item.id+'" style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:0.5px solid #21262D;">' +
-      '<div style="display:flex;flex-direction:column;gap:1px;margin-right:6px;">' +
+    return '<div id="port-row-'+item.id+'" style="padding:10px 12px 8px;border-bottom:0.5px solid #21262D;">' +
+      '<div style="display:flex;align-items:center;gap:6px;">' +
+      '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px;flex-shrink:0;">' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', 1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+dnColor+';cursor:'+dnCursor+';">&#9660;</div>' +
       '</div>' +
@@ -479,18 +481,22 @@ function _renderPortfolioItems(items){
         '</div>' +
         '<div style="font-size:11px;color:#8B949E;margin-top:2px;">'+item.cantidad+' u. @ $'+fmtNum(item.precio_compra)+'</div>' +
       '</div>' +
-      '<div style="text-align:right;margin-right:8px;">' +
+      '<div style="margin-left:auto;text-align:right;flex-shrink:0;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$'+fmtNum(valor)+'</div>' +
-        '<div style="display:flex;align-items:center;justify-content:flex-end;gap:3px;margin-top:3px;">' +
-          '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>'+(mktClosed && prevClosePct!==null ? '<span style="font-size:8px;color:#555;margin-left:2px;">ult.cierre</span>' : '') +
-          (mktClosed ? '<div style="font-size:8px;color:#555;margin-top:1px;" id="oc-'+item.id+'"></div>' : '') +
-          '<span style="display:flex;gap:1px;">' +
-            ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
-          '</span>' +
-        '</div>' +
       '</div>' +
       '<div onclick="deletePortfolioItem(\''+item.id+'\')" style="font-size:15px;color:#555;cursor:pointer;padding:4px;" title="Eliminar">&#128465;</div>' +
-    '</div>';
+    '</div>' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px;padding-left:50px;">' +
+      '<div style="font-size:10px;color:#888;">'+item.cantidad+' u. @ $'+fmtNum(item.precio_compra)+'</div>' +
+      '<div style="display:flex;align-items:center;gap:4px;">' +
+        '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>'+(mktClosed && prevClosePct!==null ? '<span style="font-size:8px;color:#555;margin-left:2px;">ult.cierre</span>' : '') +
+          (mktClosed ? '<div style="font-size:8px;color:#555;margin-top:1px;" id="oc-'+item.id+'"></div>' : '') +
+        '<div style="display:flex;gap:2px;">' +
+          ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
   }).join('');
   _updateTotals(items);
 }
@@ -640,46 +646,56 @@ function _renderThermoRisk(items){
     '<div style="margin-top:3px;">'+leg+'</div>';
 }
 
-function _renderMarketBanner(){
-  var el = document.getElementById('port-market-banner');
+function _renderMarketBanner(containerId){
+  var elId = containerId || 'port-market-banner';
+  var el = document.getElementById(elId);
   if(!el) return;
   var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
   var now = new Date();
-  var utcH = now.getUTCHours(), utcM = now.getUTCMinutes();
+  var utcH = now.getUTCHours(), utcM = now.getUTCMinutes(), utcDay = now.getUTCDay();
   var utcMin = utcH*60+utcM;
-  var day = now.getUTCDay();
-  var isWknd = day===0||day===6;
-  function mktItem(name, openUtc, closeUtc, flag){
-    if(!prefs.includes(name)) return '';
-    var open = !isWknd && utcMin >= openUtc && utcMin < closeUtc;
-    var color = open ? '#3FB950' : '#FF4444';
+  var isWknd = utcDay===0||utcDay===6;
+  var ALL_MKTS = [
+    {id:'EEUU', flag:'🇺🇸', open:810,  close:1200},
+    {id:'ARG',  flag:'🇦🇷', open:840,  close:1260},
+    {id:'BRASIL',flag:'🇧🇷',open:780,  close:1175},
+    {id:'LONDRES',flag:'🇬🇧',open:480, close:990},
+    {id:'ESPANA', flag:'🇪🇸',open:480, close:990},
+    {id:'ALEMANIA',flag:'🇩🇪',open:480,close:990},
+    {id:'FRANCIA', flag:'🇫🇷',open:480,close:990},
+    {id:'JAPON',  flag:'🇯🇵', open:0,   close:390},
+    {id:'CHINA',  flag:'🇨🇳', open:90,  close:420},
+    {id:'HONGKONG',flag:'🇭🇰',open:90,  close:480},
+    {id:'ASIA',   flag:'🌏',              open:0,   close:360}
+  ];
+  function mktItem(mkt){
+    if(!prefs.includes(mkt.id)) return '';
+    var open = !isWknd && utcMin >= mkt.open && utcMin < mkt.close;
+    var color = open ? '#3FB950' : '#FF6B6B';
     var mins, lbl;
     if(open){
-      mins = closeUtc - utcMin;
+      mins = mkt.close - utcMin;
       lbl = 'Cierra en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
     } else {
-      if(isWknd){ var daysM=(8-day)%7||7; mins=daysM*24*60-utcMin+openUtc; }
-      else if(utcMin < openUtc){ mins=openUtc-utcMin; }
-      else { mins=(24*60-utcMin)+openUtc; }
+      if(isWknd){ var dm=(8-utcDay)%7||7; mins=dm*24*60-utcMin+mkt.open; }
+      else if(utcMin < mkt.open){ mins=mkt.open-utcMin; }
+      else { mins=(24*60-utcMin)+mkt.open; }
       lbl = 'Abre en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
     }
-    var status = open ? 'ABIERTO' : 'CERRADO';
-    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:72px;">' +
-      '<div style="font-size:9px;font-weight:700;color:#E6EDF3;">'+flag+' '+name+'</div>' +
-      '<div style="font-size:9px;color:'+color+';font-weight:600;">'+status+'</div>' +
-      '<div style="font-size:8px;color:#666;">'+lbl+'</div></div>';
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:68px;padding:0 4px;">' +
+      '<div style="font-size:10px;font-weight:700;color:#E6EDF3;white-space:nowrap;">'+mkt.flag+' '+mkt.id+'</div>' +
+      '<div style="font-size:10px;color:'+color+';font-weight:700;margin-top:1px;">'+(open?'ABIERTO':'CERRADO')+'</div>' +
+      '<div style="font-size:9px;color:#aaa;margin-top:1px;white-space:nowrap;">'+lbl+'</div>' +
+    '</div>';
   }
-  var eeuuHtml = mktItem('EEUU', 810,  1200, '🇺🇸');
-  var asiaHtml = mktItem('ASIA', 0,    360,  '🌏');
-  var argHtml  = mktItem('ARG',  840,  1260, '🇦🇷');
-  var editBtn = '<div onclick="editMarketBanner()" style="font-size:11px;color:#555;cursor:pointer;padding:2px 5px;border-radius:4px;border:1px solid #21262D;margin-left:auto;">&#9998;</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;">' +
-    eeuuHtml + asiaHtml + argHtml + editBtn + '</div>';
+  var items = ALL_MKTS.map(mktItem).filter(Boolean).join('');
+  var editBtn = '<div onclick="editMarketBanner()" style="font-size:10px;color:#555;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #21262D;margin-left:auto;flex-shrink:0;">&#9998;</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">'+items+editBtn+'</div>';
 }
 
 window.editMarketBanner = function(){
   var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
-  var opts = ['EEUU','ASIA','ARG'];
+  var opts = ['EEUU','ARG','BRASIL','LONDRES','ESPANA','ALEMANIA','FRANCIA','JAPON','CHINA','HONGKONG','ASIA'];
   var rows = opts.map(function(m){
     var on = prefs.includes(m);
     var onBg = on ? '#3FB950' : '#333';
@@ -877,7 +893,28 @@ window.openPortItemDetail = function(itemId){
   var rangeBar = '';
   if(low52 && high52 && high52 > low52 && precio > 0){
     var pct52 = Math.max(0, Math.min(100, ((precio - low52)/(high52 - low52)*100)));
-    rangeBar = '<div style="margin:10px 0 4px;"><div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;"><span>Min 52s: $'+fmtP(low52)+'</span><span>Max 52s: $'+fmtP(high52)+'</span></div><div style="background:#21262D;border-radius:4px;height:5px;position:relative;"><div style="background:linear-gradient(90deg,#FF4444,#D4A017,#3FB950);border-radius:4px;height:5px;width:'+pct52.toFixed(0)+'%;"></div><div style="position:absolute;top:-3px;left:calc('+pct52.toFixed(0)+'% - 5px);width:10px;height:10px;border-radius:50%;background:#E6EDF3;border:2px solid #0D1117;"></div></div><div style="text-align:center;font-size:9px;color:#8B949E;margin-top:3px;">Posicion en rango anual: '+pct52.toFixed(0)+'%</div></div>';
+    var zone52, zoneColor52, zoneIcon52;
+    if(pct52 <= 30){ zone52 = 'Precio cerca del mínimo anual — zona históricamente baja'; zoneColor52 = '#3FB950'; zoneIcon52 = '🟢'; }
+    else if(pct52 <= 70){ zone52 = 'Precio en zona media del rango anual'; zoneColor52 = '#D4A017'; zoneIcon52 = '🟡'; }
+    else { zone52 = 'Precio cerca del máximo anual — zona históricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = '🔴'; }
+    rangeBar = '<div style="margin:10px 0 4px;">' +
+      '<div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;">' +
+        '<span>↓ Mín: $'+fmtP(low52)+'</span>' +
+        '<span style="font-size:9px;color:#8B949E;">52 semanas</span>' +
+        '<span>↑ Máx: $'+fmtP(high52)+'</span>' +
+      '</div>' +
+      '<div style="background:#21262D;border-radius:4px;height:6px;position:relative;">' +
+        '<div style="background:linear-gradient(90deg,#3FB950,#D4A017,#FF4444);border-radius:4px;height:6px;width:'+pct52.toFixed(0)+'%;"></div>' +
+        '<div style="position:absolute;top:-3px;left:calc('+pct52.toFixed(0)+'% - 5px);width:10px;height:10px;border-radius:50%;background:#E6EDF3;border:2px solid #0D1117;box-shadow:0 0 4px rgba(255,255,255,.3);"></div>' +
+      '</div>' +
+      '<div style="display:flex;align-items:center;gap:5px;margin-top:6px;padding:6px 8px;background:#0D1117;border-radius:6px;border-left:3px solid '+zoneColor52+';">' +
+        '<span style="font-size:12px;">'+zoneIcon52+'</span>' +
+        '<div>' +
+          '<div style="font-size:10px;font-weight:600;color:'+zoneColor52+';">'+pct52.toFixed(0)+'% del rango anual</div>' +
+          '<div style="font-size:9px;color:#8B949E;margin-top:1px;">'+zone52+'</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
   }
   // Find signal for this asset
   var sigs = window._iaSignals || [];
