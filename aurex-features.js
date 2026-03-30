@@ -510,14 +510,15 @@ function _refreshPortPrices(items){
           if(!window._pcPrices) window._pcPrices = {};
           if(!window._pcChange24) window._pcChange24 = {};
           if(meta.regularMarketPrice){ window._pcPrices[sym] = parseFloat(meta.regularMarketPrice); }
-          if(meta.previousClose && meta.regularMarketPrice){
-            window._pcChange24[sym] = ((meta.regularMarketPrice - meta.previousClose) / meta.previousClose * 100);
+          var _prevClose = meta.previousClose || meta.chartPreviousClose;
+          if(_prevClose && meta.regularMarketPrice){
+            window._pcChange24[sym] = ((meta.regularMarketPrice - _prevClose) / _prevClose * 100);
             if(!window._pcMarketState) window._pcMarketState={};
             window._pcMarketState[sym]=meta.marketState||'CLOSED';
             if(!window._pcMarketTime) window._pcMarketTime={};
             window._pcMarketTime[sym]=(meta.regularMarketTime||0)*1000;
             if(!window._pcPrevClose) window._pcPrevClose={};
-            window._pcPrevClose[sym]=meta.previousClose;
+            window._pcPrevClose[sym]=_prevClose;
           }
           if(!window._pc52Low) window._pc52Low={};
           if(!window._pc52High) window._pc52High={};
