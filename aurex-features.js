@@ -60,8 +60,13 @@ function renderTab(tab, pais){
   var cnt=document.getElementById('cnt');
   if(!cnt) return;
   if(typeof _renderMarketBanner === 'function') _renderMarketBanner('mkt-market-banner');
-  if(typeof _renderFearGreed === 'function') _renderFearGreed('mkt-fear-greed');
   if(typeof _renderFuturesBanner === 'function') _renderFuturesBanner('mkt-futures-banner');
+  // Set pulse category based on active tab
+  var pulseMap = {cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
+  if(typeof _renderFearGreed === 'function') {
+    window._pulseActiveFilter = pulseMap[tab] || 'GLOBAL';
+    _renderFearGreed('mkt-fear-greed');
+  }
   var arr = tab==='acciones' ? (DATA.acciones[pais]||DATA.acciones.usa) : (DATA[tab]||[]);
   cnt.innerHTML='';
   arr.forEach(function(item){
@@ -1751,64 +1756,114 @@ function _buildIADetail(s) {
 }
 
 
-// === FEAR & GREED INDEX (Multi-source calculation) ===
-window._fearGreedCache = null;
-window._fearGreedTs = 0;
+// === AUREX PULSE™ — FEAR & GREED 14X (12 variables Commit A) ===
+window._pulseCache = {};
+window._pulseTs   = {};
+window._pulseActiveFilter = 'GLOBAL';
 
-async function _fetchFearGreedData() {
+async function _fetchPulseRaw() {
+  var raw = {};
   try {
-    var btcRes = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT');
-    var btcData = await btcRes.json();
-    var btcPct = parseFloat(btcData.priceChangePercent) || 0;
-    var ethRes = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT');
-    var ethData = await ethRes.json();
-    var ethPct = parseFloat(ethData.priceChangePercent) || 0;
-    var vixRes = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/%5EVIX?interval=1d&range=5d'));
-    var vixData = await vixRes.json();
-    var vixClose = (vixData.chart && vixData.chart.result && vixData.chart.result[0]) ?
-      (vixData.chart.result[0].meta.regularMarketPrice || 20) : 20;
-    var sp5Res = await fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/%5EGSPC?interval=1d&range=5d'));
-    var sp5Data = await sp5Res.json();
-    var spPct = 0;
-    if(sp5Data.chart && sp5Data.chart.result && sp5Data.chart.result[0]) {
-      var spMeta = sp5Data.chart.result[0].meta;
-      spPct = ((spMeta.regularMarketPrice - spMeta.previousClose) / spMeta.previousClose * 100) || 0;
-    }
-    var btcScore = Math.min(100, Math.max(0, 50 + btcPct * 3));
-    var ethScore = Math.min(100, Math.max(0, 50 + ethPct * 3));
-    var vixScore = Math.min(100, Math.max(0, 100 - (vixClose - 10) * 3.5));
-    var spScore  = Math.min(100, Math.max(0, 50 + spPct * 15));
-    var composite = Math.round(btcScore * 0.35 + ethScore * 0.15 + vixScore * 0.35 + spScore * 0.15);
-    var label, color;
-    if(composite <= 20)      { label='Miedo Extremo';  color='#C62828'; }
-    else if(composite <= 40) { label='Miedo';           color='#FF6B6B'; }
-    else if(composite <= 60) { label='Neutral';         color='#D4A017'; }
-    else if(composite <= 80) { label='Codicia';         color='#3FB950'; }
-    else                     { label='Codicia Extrema'; color='#00E676'; }
-    window._fearGreedCache = { value: composite, label: label, color: color, vix: vixClose.toFixed(1), btcPct: btcPct.toFixed(2), spPct: spPct.toFixed(2) };
-    window._fearGreedTs = Date.now();
-    return window._fearGreedCache;
-  } catch(e) {
-    return window._fearGreedCache || { value: 50, label: 'Neutral', color: '#D4A017', vix: '--', btcPct: '--', spPct: '--' };
+    var bArr = await Promise.all([
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT').then(function(r){return r.json();}),
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ETHUSDT').then(function(r){return r.json();})
+    ]);
+    raw.btcPct = parseFloat(bArr[0].priceChangePercent) || 0;
+    raw.ethPct = parseFloat(bArr[1].priceChangePercent) || 0;
+  } catch(e) { raw.btcPct = 0; raw.ethPct = 0; }
+  var yahooSyms = ['^VIX','^GSPC','ES=F','NQ=F','YM=F','RTY=F','GC=F','SI=F','CL=F','HG=F'];
+  var yahooKeys = ['vix','sp500','esf','nqf','ymf','rtyf','gcf','sif','clf','hgf'];
+  var yPromises = yahooSyms.map(async function(sym, idx) {
+    try {
+      var url = 'https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
+      var res = await fetch(url);
+      var data = await res.json();
+      if(data.chart && data.chart.result && data.chart.result[0]) {
+        var meta = data.chart.result[0].meta;
+        var price = meta.regularMarketPrice || 0;
+        var prev = meta.previousClose || meta.chartPreviousClose || price;
+        raw[yahooKeys[idx]] = { price: price, pct: prev > 0 ? ((price-prev)/prev*100) : 0 };
+      }
+    } catch(e) { raw[yahooKeys[idx]] = { price: 0, pct: 0 }; }
+  });
+  await Promise.all(yPromises);
+  window._pulseRaw = raw;
+  window._pulseRawTs = Date.now();
+  return raw;
+}
+
+function _pctToScore(pct, scale) { return Math.min(100, Math.max(0, 50 + (pct/scale)*50)); }
+function _vixToScore(vix) { return Math.min(100, Math.max(0, 100 - (vix-10)*3.0)); }
+function _goldToScore(pct) { return Math.min(100, Math.max(0, 50 - pct*25)); }
+function _oilToScore(pct) { return Math.min(100, Math.max(0, 50 - Math.abs(pct)*15)); }
+
+function _calcPulseScore(raw, cat) {
+  if(!raw) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:{} };
+  var scores = {}, weighted = 0, totalW = 0;
+  function add(key, score, weight) {
+    scores[key] = Math.round(score);
+    weighted += score * weight;
+    totalW += weight;
   }
+  if(cat==='CRIPTO'||cat==='GLOBAL') {
+    add('BTC', _pctToScore(raw.btcPct,8), cat==='CRIPTO'?40:12);
+    add('ETH', _pctToScore(raw.ethPct,8), cat==='CRIPTO'?35:8);
+    if(cat==='CRIPTO'&&raw.vix) add('VIX', _vixToScore(raw.vix.price), 15);
+    if(cat==='CRIPTO'&&raw.esf) add('SP500_Fut', _pctToScore(raw.esf.pct,1.5), 10);
+  }
+  if(cat==='ACCIONES'||cat==='GLOBAL') {
+    if(raw.vix)  add('VIX',    _vixToScore(raw.vix.price),   cat==='ACCIONES'?35:14);
+    if(raw.sp500)add('SP500',  _pctToScore(raw.sp500.pct,1.5),cat==='ACCIONES'?25:8);
+    if(raw.esf)  add('ES_Fut', _pctToScore(raw.esf.pct,1.5), cat==='ACCIONES'?20:8);
+    if(raw.nqf)  add('NQ_Fut', _pctToScore(raw.nqf.pct,2),   cat==='ACCIONES'?12:6);
+    if(raw.ymf)  add('YM_Fut', _pctToScore(raw.ymf.pct,1.5), cat==='ACCIONES'?8:4);
+  }
+  if(cat==='FUTUROS'||cat==='GLOBAL') {
+    if(raw.esf)  add('ES_Fut',  _pctToScore(raw.esf.pct,1.5),  cat==='FUTUROS'?30:8);
+    if(raw.nqf)  add('NQ_Fut',  _pctToScore(raw.nqf.pct,2),    cat==='FUTUROS'?25:6);
+    if(raw.ymf)  add('YM_Fut',  _pctToScore(raw.ymf.pct,1.5),  cat==='FUTUROS'?20:4);
+    if(raw.rtyf) add('RTY_Fut', _pctToScore(raw.rtyf.pct,2),   cat==='FUTUROS'?25:3);
+  }
+  if(cat==='COMOD'||cat==='GLOBAL') {
+    if(raw.gcf) add('Oro',      _goldToScore(raw.gcf.pct), cat==='COMOD'?35:8);
+    if(raw.sif) add('Plata',    _goldToScore(raw.sif.pct), cat==='COMOD'?20:4);
+    if(raw.clf) add('Petroleo', _oilToScore(raw.clf.pct),  cat==='COMOD'?25:5);
+    if(raw.hgf) add('Cobre',    _pctToScore(raw.hgf.pct,2),cat==='COMOD'?20:4);
+  }
+  if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:scores };
+  var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
+  var label, color, emoji;
+  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='😱'; }
+  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='😰'; }
+  else if(v<=60) { label='Neutral';         color='#D4A017'; emoji='😐'; }
+  else if(v<=80) { label='Codicia';         color='#3FB950'; emoji='😏'; }
+  else           { label='Codicia Extrema'; color='#00E676'; emoji='🤑'; }
+  return { value:v, label:label, color:color, emoji:emoji, vars:scores };
+}
+
+async function _fetchPulseForCategory(cat) {
+  var raw = window._pulseRaw;
+  if(!raw || (Date.now()-(window._pulseRawTs||0))>300000) {
+    raw = await _fetchPulseRaw();
+  }
+  var result = _calcPulseScore(raw, cat);
+  window._pulseCache[cat] = result;
+  window._pulseTs[cat] = Date.now();
+  return result;
 }
 
 function _renderFearGreedGauge(value, color) {
-  var R = 52, cx = 65, cy = 68, sw = 12;
-  var ang = (value / 100) * Math.PI;
-  var nx = cx + R * Math.cos(Math.PI - ang);
-  var ny = cy - R * Math.sin(ang);
-  function arcSeg(s, e, col) {
-    var a1 = Math.PI - (s/100)*Math.PI;
-    var a2 = Math.PI - (e/100)*Math.PI;
-    var x1 = cx + R*Math.cos(a1), y1 = cy + R*Math.sin(a1 - Math.PI);
-    var x2 = cx + R*Math.cos(a2), y2 = cy + R*Math.sin(a2 - Math.PI);
-    var laf = (e - s) > 50 ? 1 : 0;
-    return '<path d="M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+R+' '+R+' 0 '+laf+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+  var R=52, cx=65, cy=68, sw=12;
+  var ang=(value/100)*Math.PI;
+  var nx=cx+R*Math.cos(Math.PI-ang), ny=cy-R*Math.sin(ang);
+  function arcSeg(s,e,col){
+    var a1=Math.PI-(s/100)*Math.PI, a2=Math.PI-(e/100)*Math.PI;
+    var x1=cx+R*Math.cos(a1), y1=cy+R*Math.sin(a1-Math.PI);
+    var x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2-Math.PI);
+    return '<path d="M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+R+' '+R+' 0 '+((e-s)>50?1:0)+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
   }
-  var segs = arcSeg(0,20,'#C62828') + arcSeg(22,40,'#FF6B6B') + arcSeg(42,60,'#D4A017') + arcSeg(62,80,'#3FB950') + arcSeg(82,100,'#00E676');
   return '<svg viewBox="0 0 130 75" style="width:120px;height:70px;flex-shrink:0;">' +
-    segs +
+    arcSeg(0,20,'#C62828')+arcSeg(22,40,'#FF6B6B')+arcSeg(42,60,'#D4A017')+arcSeg(62,80,'#3FB950')+arcSeg(82,100,'#00E676') +
     '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>' +
     '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#fff"/>' +
     '</svg>';
@@ -1818,68 +1873,126 @@ function _renderFearGreed(containerId) {
   var elId = containerId || 'port-fear-greed';
   var el = document.getElementById(elId);
   if(!el) return;
-  var cached = window._fearGreedCache;
+  var cat = window._pulseActiveFilter || 'GLOBAL';
+  var cached = window._pulseCache[cat];
   if(!cached) {
-    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Cargando índice miedo/codicia...</div>';
-    _fetchFearGreedData().then(function(){ _renderFearGreed(containerId); });
+    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Calculando AUREX PULSE™...</div>';
+    _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
     return;
   }
-  var now = Date.now();
-  if(now - window._fearGreedTs > 300000) {
-    _fetchFearGreedData().then(function(){ _renderFearGreed(containerId); });
+  if(Date.now()-(window._pulseTs[cat]||0)>300000) {
+    _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
   }
   var d = cached;
   var gauge = _renderFearGreedGauge(d.value, d.color);
   var edu;
-  if(d.value <= 20)      edu = 'Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
-  else if(d.value <= 40) edu = 'Temor en el mercado. Inversores vendiendo. Posibles oportunidades si el contexto es sólido.';
-  else if(d.value <= 60) edu = 'Mercado equilibrado. Ni euforia ni pánico. Momento de analizar fundamentals.';
-  else if(d.value <= 80) edu = 'Optimismo en el mercado. Precios pueden estar elevados. Considerar toma de ganancias.';
-  else                   edu = 'Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
-  var inputs = '<div style="display:flex;flex-wrap:wrap;gap:6px;font-size:9px;color:#8B949E;margin-top:3px;">' +
-    '<span>VIX: <b style="color:#E6EDF3">'+d.vix+'</b></span>' +
-    '<span>BTC: <b style="color:'+(parseFloat(d.btcPct)>=0?'#3FB950':'#FF4444')+';">'+(parseFloat(d.btcPct)>=0?'+':'')+d.btcPct+'%</b></span>' +
-    '<span>S&P: <b style="color:'+(parseFloat(d.spPct)>=0?'#3FB950':'#FF4444')+';">'+(parseFloat(d.spPct)>=0?'+':'')+d.spPct+'%</b></span>' +
-    '</div>';
-  el.innerHTML = '<div style="padding:8px 14px;border-bottom:1px solid #21262D;background:#0D1117;">' +
-    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-      '<span style="font-size:10px;font-weight:700;color:#8B949E;letter-spacing:0.5px;">&#x1F4CA; ÍNDICE MIEDO / CODICIA</span>' +
-      '<span onclick="showFearGreedInfo()" style="font-size:11px;color:#58A6FF;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #21262D;">?</span>' +
-    '</div>' +
-    '<div style="display:flex;align-items:center;gap:8px;">' +
-      gauge +
-      '<div style="flex:1;min-width:0;">' +
-        '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.value+' &#x2014; '+d.label+'</div>' +
-        inputs +
-        '<div style="font-size:9px;color:#8B949E;margin-top:4px;line-height:1.4;">'+edu+'</div>' +
+  if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
+  else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
+  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pánico. Momento ideal para analizar fundamentals.';
+  else if(d.value<=80) edu='Optimismo en el mercado. Precios pueden estar elevados. Considerar toma de ganancias.';
+  else                 edu='Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
+  var raw = window._pulseRaw || {};
+  var bits = [];
+  if(raw.vix)              bits.push('VIX: <b style="color:#E6EDF3">'+raw.vix.price.toFixed(1)+'</b>');
+  if(raw.btcPct!==undefined)bits.push('BTC: <b style="color:'+(raw.btcPct>=0?'#3FB950':'#FF4444')+'">'+(raw.btcPct>=0?'+':'')+raw.btcPct.toFixed(2)+'%</b>');
+  if(raw.sp500)            bits.push('S&P: <b style="color:'+(raw.sp500.pct>=0?'#3FB950':'#FF4444')+'">'+(raw.sp500.pct>=0?'+':'')+raw.sp500.pct.toFixed(2)+'%</b>');
+  if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'#3FB950':'#FF4444')+'">'+(raw.gcf.pct>=0?'+':'')+raw.gcf.pct.toFixed(2)+'%</b>');
+  var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:#8B949E;margin-top:3px;">'+bits.join('')+'</div>';
+  var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
+  var catLabels = {GLOBAL:'🌐 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🛢️ COMOD',FUTUROS:'⚡ FUTUROS'};
+  var filterBtns = '';
+  cats.forEach(function(c) {
+    var active = c===cat;
+    var bg = active ? d.color : '#21262D';
+    var col = active ? '#0D1117' : '#8B949E';
+    var fw = active ? '700' : '400';
+    filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:8px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:4px;padding:2px 5px;cursor:pointer;white-space:nowrap;flex-shrink:0;">'+catLabels[c]+'</div>';
+  });
+  var nvars = Object.keys(d.vars).length;
+  el.innerHTML =
+    '<div style="padding:8px 14px 6px;border-bottom:1px solid #21262D;background:#0D1117;">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
+        '<span style="font-size:10px;font-weight:700;color:#D4A017;letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
+        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:2px 7px;border-radius:4px;border:1px solid #30363D;white-space:nowrap;">&#x2139; Ver variables</div>' +
       '</div>' +
-    '</div>' +
-  '</div>';
+      '<div id="pulse-filters-'+elId+'" style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:6px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
+      '<div style="display:flex;align-items:center;gap:8px;">' +
+        gauge +
+        '<div style="flex:1;min-width:0;">' +
+          '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          dataLine +
+          '<div style="font-size:9px;color:#8B949E;margin-top:4px;line-height:1.4;">'+edu+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:8px;color:#555;margin-top:5px;line-height:1.3;">* Índice AUREX propio. Difiere de Binance (solo cripto) y CNN (solo acciones). AUREX PULSE integra '+nvars+' variables activas de múltiples mercados.</div>' +
+    '</div>';
+  // Attach event listeners after render (avoids inline onclick single-quote issue)
+  var filterEl = document.getElementById('pulse-filters-'+elId);
+  if(filterEl) {
+    filterEl.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-pulse-cat]');
+      if(!btn) return;
+      window._pulseActiveFilter = btn.getAttribute('data-pulse-cat');
+      var targetEl = btn.getAttribute('data-pulse-el');
+      _renderFearGreed(targetEl);
+    });
+  }
+  var infoBtn = document.getElementById('pulse-info-btn-'+elId);
+  if(infoBtn) {
+    infoBtn.addEventListener('click', function() { showFearGreedInfo(); });
+  }
 }
 
 window.showFearGreedInfo = function() {
   var ov = document.createElement('div');
-  ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;box-sizing:border-box;';
-  ov.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:20px;max-width:340px;width:100%;">' +
-    '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:12px;">&#x1F4CA; Índice Miedo / Codicia AUREX</div>' +
-    '<div style="font-size:11px;color:#8B949E;line-height:1.6;">' +
-      'Mide el <b style="color:#E6EDF3">sentimiento general</b> del mercado de 0 a 100, combinando 4 fuentes en tiempo real:<br><br>' +
-      '&#x1F534; <b style="color:#C62828">0&#x2013;20 Miedo Extremo:</b> Pánico. Posible oportunidad.<br>' +
-      '&#x1F7E0; <b style="color:#FF6B6B">21&#x2013;40 Miedo:</b> Cautela. Analizar antes de actuar.<br>' +
-      '&#x1F7E1; <b style="color:#D4A017">41&#x2013;60 Neutral:</b> Mercado equilibrado.<br>' +
-      '&#x1F7E2; <b style="color:#3FB950">61&#x2013;80 Codicia:</b> Optimismo. Cuidado con sobrevaluación.<br>' +
-      '&#x1F49A; <b style="color:#00E676">81&#x2013;100 Codicia Extrema:</b> Euforia. Alta probabilidad de corrección.<br><br>' +
-      '<b style="color:#E6EDF3">Variables:</b><br>' +
-      '&#x2022; BTC momentum 24h &#x2014; 35%<br>' +
-      '&#x2022; ETH momentum 24h &#x2014; 15%<br>' +
-      '&#x2022; VIX (volatilidad S&P500) &#x2014; 35%<br>' +
-      '&#x2022; S&P500 momentum &#x2014; 15%<br><br>' +
-      '<i>Actualizado cada 5 min. Datos: Binance + Yahoo Finance.</i>' +
-    '</div>' +
-    '<div onclick="this.parentElement.parentElement.remove()" style="margin-top:14px;text-align:center;padding:10px;background:#3FB950;border-radius:8px;color:#0D1117;font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
-  '</div>';
+  ov.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.88);z-index:9999;display:flex;align-items:flex-start;justify-content:center;padding:16px;box-sizing:border-box;overflow-y:auto;';
+  var raw = window._pulseRaw || {};
+  function fmtPct(val) { return val!==undefined ? ((val>=0?'+':'')+val.toFixed(2)+'%') : '--'; }
+  function fmtPrice(obj) { return obj ? obj.price.toFixed(obj.price>10?0:2) : '--'; }
+  var rows = [
+    ['&#x1FA99;','BTC momentum','Binance','12%', fmtPct(raw.btcPct),'#58A6FF'],
+    ['&#x1FA99;','ETH momentum','Binance','8%',  fmtPct(raw.ethPct),'#58A6FF'],
+    ['&#x1F4C9;','VIX volatilidad','Yahoo','14%',fmtPrice(raw.vix),'#FF6B6B'],
+    ['&#x1F4C8;','S&P500 momentum','Yahoo','8%', fmtPct(raw.sp500&&raw.sp500.pct),'#3FB950'],
+    ['&#x26A1;','ES=F S&P Futuro','Yahoo','8%',  fmtPct(raw.esf&&raw.esf.pct),'#3FB950'],
+    ['&#x26A1;','NQ=F Nasdaq Fut','Yahoo','6%',  fmtPct(raw.nqf&&raw.nqf.pct),'#3FB950'],
+    ['&#x26A1;','YM=F Dow Futuro','Yahoo','4%',  fmtPct(raw.ymf&&raw.ymf.pct),'#3FB950'],
+    ['&#x26A1;','RTY=F Russell Fut','Yahoo','3%',fmtPct(raw.rtyf&&raw.rtyf.pct),'#3FB950'],
+    ['&#x1F947;','Oro GC=F','Yahoo','8%',         fmtPct(raw.gcf&&raw.gcf.pct),'#D4A017'],
+    ['&#x26AA;','Plata SI=F','Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'#D4A017'],
+    ['&#x1F6E2;','Petróleo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
+    ['&#x1FA9C;','Cobre HG=F','Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'#D4A017'],
+    ['&#x1F3E6;','Macro FED','FRED API','12%','Próximamente','#444'],
+    ['&#x1F30D;','Geopolítica','GDELT','4%', 'Próximamente','#444']
+  ];
+  var tableRows = rows.map(function(r) {
+    return '<tr><td style="padding:2px 4px;color:'+r[5]+';">'+r[0]+' '+r[1]+'</td><td style="color:#555;font-size:8px;padding:2px 4px;">'+r[2]+'</td><td style="color:#8B949E;padding:2px 4px;">'+r[3]+'</td><td style="color:#E6EDF3;padding:2px 4px;">'+r[4]+'</td></tr>';
+  }).join('');
+  ov.innerHTML =
+    '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:18px;max-width:360px;width:100%;margin:auto;">' +
+      '<div style="font-size:13px;font-weight:700;color:#D4A017;margin-bottom:3px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
+      '<div style="font-size:9px;color:#58A6FF;margin-bottom:10px;">El índice de sentimiento más completo del mercado</div>' +
+      '<div style="font-size:10px;color:#8B949E;line-height:1.6;margin-bottom:8px;">' +
+        '<b style="color:#E6EDF3;">Las 5 zonas:</b> ' +
+        '&#x1F534; 0-20 Miedo Extremo &nbsp;' +
+        '&#x1F7E0; 21-40 Miedo &nbsp;' +
+        '&#x1F7E1; 41-60 Neutral &nbsp;' +
+        '&#x1F7E2; 61-80 Codicia &nbsp;' +
+        '&#x1F49A; 81-100 Codicia Extrema' +
+      '</div>' +
+      '<div style="font-size:10px;font-weight:700;color:#E6EDF3;margin-bottom:6px;">Variables activas (12 de 14):</div>' +
+      '<table style="width:100%;font-size:9px;border-collapse:collapse;">' +
+        '<tr style="color:#444;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
+        tableRows +
+      '</table>' +
+      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopolítica (GDELT) se integran en la próxima actualización. Las 12 variables activas cubren el 84% del peso total.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este índice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra múltiples mercados.</div>' +
+      '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:10px;background:#D4A017;border-radius:8px;color:#0D1117;font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
+    '</div>';
   document.body.appendChild(ov);
+  document.getElementById('pulse-info-close').addEventListener('click', function(){ ov.remove(); });
 };
+
 
 // === BANNER FUTUROS / INDICES / BONOS / COMMODITIES ===
 window._futuresCache = null;
@@ -1974,7 +2087,7 @@ document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     generarSenalesIA();
     setInterval(generarSenalesIA, 5*60*1000);
-    _fetchFearGreedData().then(function(){
+    _fetchPulseForCategory('GLOBAL').then(function(){
       _renderFearGreed();
       _renderFearGreed('mkt-fear-greed');
     });
@@ -1982,7 +2095,7 @@ document.addEventListener('DOMContentLoaded', function(){
       _renderFuturesBanner();
       _renderFuturesBanner('mkt-futures-banner');
     });
-    setInterval(function(){ _fetchFearGreedData().then(function(){ _renderFearGreed(); _renderFearGreed('mkt-fear-greed'); }); }, 300000);
+    setInterval(function(){ _fetchPulseForCategory(window._pulseActiveFilter||'GLOBAL').then(function(){ _renderFearGreed(); _renderFearGreed('mkt-fear-greed'); }); }, 300000);
     setInterval(function(){ _fetchFuturesData().then(function(){ _renderFuturesBanner(); _renderFuturesBanner('mkt-futures-banner'); }); }, 60000);
   }, 1500);
 });
