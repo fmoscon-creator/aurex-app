@@ -75,12 +75,18 @@ function renderTab(tab, pais){
     row.className='item-row'; row.id='row-'+item.s;
     row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #21262D;cursor:pointer;';
     row.innerHTML='<div style="display:flex;flex-direction:column;"><span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span><span style="color:#8B949E;font-size:11px;">'+item.n+'</span></div>'
-      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</span></div>';
+      +'<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;"><span id="p-'+item.s+'" style="color:#E6EDF3;font-size:14px;font-weight:600;">···</span><span id="lbl-'+item.s+'" style="font-size:9px;color:#D4A017;font-weight:700;display:none;"></span><span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">···</span></div>';
     cnt.appendChild(row);
   });
   // Lanzar fetch de datos para este tab
+  window._editMode=false;
+  var ebtn=document.getElementById('edit-btn');
+  var ebanner=document.getElementById('edit-banner');
+  if(ebtn){ebtn.textContent=' Editar orden';ebtn.classList.remove('on');}
+  if(ebanner) ebanner.style.display='none';
+  window._activeTf=window._activeTf||'24h';
   if(tab==='cripto'||tab==='stable') fetchBinance(tab);
-  else fetchYahoo(tab, pais);
+  else fetchYahoo(tab, pais, window._activeTf);
 }
 
 // === BINANCE: cripto y stable ===
@@ -114,21 +120,43 @@ function fetchBinance(tab){
 }
 
 // === YAHOO: acciones, etf, comm, futuros, divisas ===
-function fetchYahoo(tab,pais){
+function fetchYahoo(tab,pais,tf){
+  var range = tf==='7d'?'7d':tf==='1m'?'1mo':tf==='3m'?'3mo':tf==='1a'?'1y':'2d';
+  var interval = (tf==='3m'||tf==='1a')?'1wk':'1d';
   var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
-    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval=1d&range=2d'))
+    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval='+interval+'&range='+range))
       .then(function(r){return r.json();})
       .then(function(d){
         var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
         if(!meta)return;
         var price=meta.regularMarketPrice;if(!price)return;
-        var prevClose=meta.chartPreviousClose||meta.previousClose||price;
-        var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
+        var mktState=meta.marketState||'';
+        var isClosed=(mktState==='CLOSED'||mktState==='PRE'||mktState==='PREPRE'||mktState==='POST'||mktState==='POSTPOST');
         var pel=document.getElementById('p-'+item.s);
         var cel=document.getElementById('c-'+item.s);
-        if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
-        if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+        var lbl=document.getElementById('lbl-'+item.s);
+        if(tf&&tf!=='24h'){
+          // Range mode: show % change over period
+          var closes=d.chart&&d.chart.result&&d.chart.result[0]&&d.chart.result[0].indicators&&d.chart.result[0].indicators.quote&&d.chart.result[0].indicators.quote[0]?d.chart.result[0].indicators.quote[0].close:null;
+          var firstClose=null;
+          if(closes){for(var i=0;i<closes.length;i++){if(closes[i]!=null){firstClose=closes[i];break;}}}
+          var pct2=firstClose&&firstClose>0?((price-firstClose)/firstClose*100):0;
+          if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(cel){cel.textContent=(pct2>=0?'+':'')+pct2.toFixed(2)+'%';cel.style.color=pct2>=0?'#3FB950':'#F85149';}
+          if(lbl){lbl.style.display='none';}
+        } else {
+          // 24h mode
+          var prevClose=meta.chartPreviousClose||meta.previousClose||price;
+          var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
+          if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+          // Show "Ult. cierre" label when market closed
+          if(lbl){
+            if(isClosed){lbl.textContent='Ult. cierre';lbl.style.display='inline';}
+            else{lbl.style.display='none';}
+          }
+        }
       }).catch(function(){});
   }));
 }
@@ -150,6 +178,81 @@ window.swPais=function(pais,el){
 };
 
 ;
+
+// === stf: cambio de timeframe ===
+window.stf=function(el,tf){
+  window._activeTf=tf;
+  document.querySelectorAll('.tfs .tf').forEach(function(t){t.classList.remove('on');});
+  if(el) el.classList.add('on');
+  var tfEl=document.getElementById('tf-time');
+  if(tfEl){
+    var labels={'24h':'Act. ahora','7d':'Últimos 7d','1m':'Último mes','3m':'Últimos 3m','1a':'Último año'};
+    tfEl.textContent=labels[tf]||'Act. ahora';
+  }
+  if(_activeTab==='cripto'||_activeTab==='stable'){
+    // Cripto: use Binance for 24h, Yahoo for historical
+    if(tf==='24h') fetchBinance(_activeTab);
+    else fetchYahoo(_activeTab, _activePais, tf);
+  } else {
+    fetchYahoo(_activeTab, _activePais, tf);
+  }
+};
+
+// === toggleEdit: modo edición con flechas ▲▼ ===
+window._editMode=false;
+window.toggleEdit=function(){
+  window._editMode=!window._editMode;
+  var btn=document.getElementById('edit-btn');
+  var banner=document.getElementById('edit-banner');
+  if(btn){
+    btn.textContent=window._editMode?' Listo':' Editar orden';
+    btn.classList.toggle('on',window._editMode);
+  }
+  if(banner) banner.style.display=window._editMode?'flex':'none';
+  // Add/remove arrow buttons on each row
+  var rows=document.querySelectorAll('#cnt .item-row');
+  rows.forEach(function(row,idx){
+    var existing=row.querySelector('.reorder-arrows');
+    if(window._editMode){
+      if(!existing){
+        var arrowDiv=document.createElement('div');
+        arrowDiv.className='reorder-arrows';
+        arrowDiv.style.cssText='display:flex;flex-direction:column;gap:2px;margin-left:8px;';
+        var upBtn=document.createElement('button');
+        upBtn.textContent='▲';
+        upBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
+        upBtn.onclick=function(e){e.stopPropagation();_moveRow(row,-1);};
+        var dnBtn=document.createElement('button');
+        dnBtn.textContent='▼';
+        dnBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
+        dnBtn.onclick=function(e){e.stopPropagation();_moveRow(row,1);};
+        arrowDiv.appendChild(upBtn);
+        arrowDiv.appendChild(dnBtn);
+        row.appendChild(arrowDiv);
+      }
+    } else {
+      if(existing) existing.remove();
+    }
+  });
+};
+
+// === _moveRow: move row up (-1) or down (+1) ===
+window._moveRow=function(row,dir){
+  var cnt=document.getElementById('cnt');
+  if(!cnt)return;
+  var rows=[...cnt.querySelectorAll('.item-row')];
+  var idx=rows.indexOf(row);
+  var newIdx=idx+dir;
+  if(newIdx<0||newIdx>=rows.length)return;
+  if(dir===-1){
+    cnt.insertBefore(row,rows[newIdx]);
+  } else {
+    var next=rows[newIdx].nextSibling;
+    if(next) cnt.insertBefore(row,next);
+    else cnt.appendChild(row);
+  }
+};
+
 function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+Math.round(price).toLocaleString('en'):price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4);it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;}
 
 function yahooFinanceRT(){}
