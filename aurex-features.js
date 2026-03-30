@@ -548,7 +548,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
 
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
-  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
   items.forEach(function(item){
     var precio = prcs[item.simbolo] || item.precio_compra;
     total += item.cantidad * precio;
@@ -562,7 +562,7 @@ function _updateTotals(items){
   var el = function(id){ return document.getElementById(id); };
   if(el('port-total')) el('port-total').textContent = '$' + fmtNum(total);
   if(el('port-count')) el('port-count').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ';
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
@@ -572,8 +572,120 @@ function _updateTotals(items){
     el('port-pnl-pct').style.background = pnlPct >= 0 ? '#1A3A2A' : '#3A1A1A';
     el('port-pnl-pct').style.color = pnlPct >= 0 ? '#3FB950' : '#FF4444';
   }
+  _renderThermoRisk(items);
+  _renderMarketBanner();
 }
 
+function _renderThermoRisk(items){
+  var el = document.getElementById('port-thermo');
+  if(!el) return;
+  if(!items || items.length === 0){ el.innerHTML = ''; return; }
+  var prcs = window._pcPrices || {};
+  var sigs = window._iaSignals || [];
+  var totVal = 0;
+  var buckets = {ALCISTA:0, BAJISTA:0, HC:0, SIN:0};
+  items.forEach(function(item){
+    var precio = prcs[item.simbolo] || item.precio_compra;
+    var val = item.cantidad * precio;
+    totVal += val;
+    var sig = null;
+    for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===item.simbolo){ sig=sigs[i]; break; } }
+    if(sig){
+      if(sig.direccion==='ALCISTA') buckets.ALCISTA += val;
+      else if(sig.direccion==='BAJISTA') buckets.BAJISTA += val;
+      else buckets.HC += val;
+    } else { buckets.SIN += val; }
+  });
+  if(totVal <= 0){ el.innerHTML = ''; return; }
+  var pAlc = buckets.ALCISTA/totVal*100;
+  var pBaj = buckets.BAJISTA/totVal*100;
+  var pHC  = buckets.HC/totVal*100;
+  var pSin = buckets.SIN/totVal*100;
+  var segs = [];
+  if(pAlc>0) segs.push({p:pAlc,c:'#3FB950',l:'ALCISTA'});
+  if(pHC>0)  segs.push({p:pHC, c:'#D4A017',l:'ALTA CONV-IA'});
+  if(pBaj>0) segs.push({p:pBaj,c:'#FF4444',l:'BAJISTA'});
+  if(pSin>0) segs.push({p:pSin,c:'#333',   l:'SIN SEÑAL'});
+  var bar = segs.map(function(s){ return '<div style="width:'+s.p.toFixed(0)+'%;background:'+s.c+';height:100%;"></div>'; }).join('');
+  var leg = segs.filter(function(s){ return s.p>1; }).map(function(s){
+    return '<span style="color:'+s.c+';font-size:10px;margin-right:8px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+s.c+';margin-right:3px;vertical-align:middle;"></span>'+s.l+' '+s.p.toFixed(0)+'%</span>';
+  }).join('');
+  el.innerHTML = '<div style="font-size:10px;color:#555;margin-bottom:4px;font-weight:600;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+    '<div style="height:6px;border-radius:4px;overflow:hidden;display:flex;background:#21262D;">'+bar+'</div>' +
+    '<div style="margin-top:4px;">'+leg+'</div>';
+}
+
+function _renderMarketBanner(){
+  var el = document.getElementById('port-market-banner');
+  if(!el) return;
+  var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
+  var now = new Date();
+  var utcH = now.getUTCHours(), utcM = now.getUTCMinutes();
+  var utcMin = utcH*60+utcM;
+  var day = now.getUTCDay();
+  var isWknd = day===0||day===6;
+  function mktItem(name, openUtc, closeUtc, flag){
+    if(!prefs.includes(name)) return '';
+    var open = !isWknd && utcMin >= openUtc && utcMin < closeUtc;
+    var color = open ? '#3FB950' : '#FF4444';
+    var mins, lbl;
+    if(open){
+      mins = closeUtc - utcMin;
+      lbl = 'Cierra en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
+    } else {
+      if(isWknd){ var daysM=(8-day)%7||7; mins=daysM*24*60-utcMin+openUtc; }
+      else if(utcMin < openUtc){ mins=openUtc-utcMin; }
+      else { mins=(24*60-utcMin)+openUtc; }
+      lbl = 'Abre en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
+    }
+    var status = open ? 'ABIERTO' : 'CERRADO';
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:72px;">' +
+      '<div style="font-size:9px;font-weight:700;color:#E6EDF3;">'+flag+' '+name+'</div>' +
+      '<div style="font-size:9px;color:'+color+';font-weight:600;">'+status+'</div>' +
+      '<div style="font-size:8px;color:#666;">'+lbl+'</div></div>';
+  }
+  var eeuuHtml = mktItem('EEUU', 810,  1200, '🇺🇸');
+  var asiaHtml = mktItem('ASIA', 0,    360,  '🌏');
+  var argHtml  = mktItem('ARG',  840,  1260, '🇦🇷');
+  var editBtn = '<div onclick="editMarketBanner()" style="font-size:11px;color:#555;cursor:pointer;padding:2px 5px;border-radius:4px;border:1px solid #21262D;margin-left:auto;">&#9998;</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:6px;padding:8px 12px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;">' +
+    eeuuHtml + asiaHtml + argHtml + editBtn + '</div>';
+}
+
+window.editMarketBanner = function(){
+  var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
+  var opts = ['EEUU','ASIA','ARG'];
+  var rows = opts.map(function(m){
+    var on = prefs.includes(m);
+    var onBg = on ? '#3FB950' : '#333';
+    var knobL = on ? '18px' : '2px';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #21262D;">' +
+      '<span style="color:#E6EDF3;font-size:13px;">'+m+'</span>' +
+      '<div onclick="toggleMktPref(\'' + m + '\')" id="mkt-tog-'+m+'" style="width:36px;height:20px;border-radius:10px;background:'+onBg+';cursor:pointer;position:relative;">' +
+      '<div style="position:absolute;top:2px;left:'+knobL+';width:16px;height:16px;border-radius:50%;background:#fff;"></div></div></div>';
+  }).join('');
+  var body = document.getElementById('port-modal-body');
+  var modal = document.getElementById('port-modal');
+  if(!body||!modal) return;
+  body.innerHTML = '<div style="color:#E6EDF3;font-size:14px;font-weight:700;margin-bottom:12px;">Mercados en banner</div>' +
+    rows +
+    '<div onclick="closePortModal()" style="margin-top:14px;background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Listo</div>';
+  modal.style.display = 'flex';
+};
+window.toggleMktPref = function(m){
+  var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
+  var idx = prefs.indexOf(m);
+  if(idx >= 0) prefs.splice(idx,1); else prefs.push(m);
+  localStorage.setItem('aurex_markets_pref', JSON.stringify(prefs));
+  var tog = document.getElementById('mkt-tog-'+m);
+  if(tog){
+    var on = prefs.includes(m);
+    tog.style.background = on ? '#3FB950' : '#333';
+    var knob = tog.querySelector('div');
+    if(knob) knob.style.left = on ? '18px' : '2px';
+  }
+  _renderMarketBanner();
+};
 // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ ABRIR / CERRAR modal Agregar activo ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
 var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
@@ -769,7 +881,20 @@ window.openPortItemDetail = function(itemId){
     '<div id="port-det-pct" style="margin:6px 0;"><span id="pd-24h-val" style="font-size:13px;font-weight:600;color:#8B949E;">--</span><span style="display:flex;gap:4px;margin-top:4px;">' +
     ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portDetPeriod(\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pd-tab-'+p+'" style="font-size:9px;padding:2px 6px;border-radius:4px;cursor:pointer;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';">'+p+'</span>'; }).join('') +
     '</span></div>' +
-    sigHtml;
+    sigHtml +
+    '<div style="margin-top:10px;background:#161B22;border-radius:9px;padding:12px;border:1px solid #21262D;">' +
+    '<div style="font-size:10px;color:#555;font-weight:600;letter-spacing:.3px;margin-bottom:8px;">SIMULADOR DE ESCENARIOS</div>' +
+    '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">' +
+    '<span style="font-size:11px;color:#8B949E;">Si el precio cambia:</span>' +
+    '<input id="pd-sim-pct" type="range" min="-50" max="50" value="0" step="1" style="flex:1;accent-color:#D4A017;" oninput="portSimUpdate(\'' + item.id + '\',\'' + item.simbolo + '\',this.value)" />' +
+    '<span id="pd-sim-label" style="font-size:12px;font-weight:700;color:#D4A017;min-width:38px;text-align:right;">0%</span>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">' +
+    '<div style="background:#0D1117;border-radius:7px;padding:7px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Nuevo precio</div><div id="pd-sim-newprice" style="font-size:12px;color:#E6EDF3;font-weight:600;">$' + fmtP(precio) + '</div></div>' +
+    '<div style="background:#0D1117;border-radius:7px;padding:7px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L del activo</div><div id="pd-sim-pnl" style="font-size:12px;color:#E6EDF3;font-weight:600;">' + pnlSign + '$' + fmtP(Math.abs(pnlUsd)) + '</div></div>' +
+    '<div style="background:#0D1117;border-radius:7px;padding:7px;grid-column:span 2;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Impacto en portfolio total</div><div id="pd-sim-portimpact" style="font-size:12px;color:#E6EDF3;font-weight:600;">--</div></div>' +
+    '</div></div>';
+  window._portSimBase = {precio: precio, cantidad: item.cantidad, precioCompra: item.precio_compra};
   modal.style.display = 'flex';
   portDetPeriod(item.simbolo, item.tipo, '24h');
 };
@@ -820,7 +945,27 @@ window.portDetPeriod = function(simbolo, tipo, period){
       }catch(e){ if(valEl) valEl.textContent='--'; }
     }).catch(function(){ if(valEl) valEl.textContent='--'; });
   }
-};
+}
+window.portSimUpdate = function(itemId, simbolo, pctStr){
+  var pct = parseFloat(pctStr) || 0;
+  var base = window._portSimBase || {};
+  var lbl = document.getElementById('pd-sim-label');
+  var npEl = document.getElementById('pd-sim-newprice');
+  var pnlEl = document.getElementById('pd-sim-pnl');
+  var piEl = document.getElementById('pd-sim-portimpact');
+  if(!base.precio) return;
+  var newPrice = base.precio * (1 + pct/100);
+  var newPnlUsd = base.cantidad * (newPrice - base.precioCompra);
+  var newPnlPct = base.precioCompra > 0 ? ((newPrice - base.precioCompra)/base.precioCompra*100) : 0;
+  var portImpact = base.precio > 0 ? (base.cantidad * (newPrice - base.precio)) : 0;
+  var pnlColor = newPnlUsd >= 0 ? '#3FB950' : '#FF4444';
+  var piColor = portImpact >= 0 ? '#3FB950' : '#FF4444';
+  var fmt = function(n){ return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  if(lbl) { lbl.textContent = (pct>=0?'+':'')+pct+'%'; lbl.style.color = pct===0?'#D4A017':(pct>0?'#3FB950':'#FF4444'); }
+  if(npEl) npEl.textContent = '$'+fmt(newPrice);
+  if(pnlEl){ pnlEl.textContent = (newPnlUsd>=0?'+':'-')+'$'+fmt(Math.abs(newPnlUsd))+' ('+( newPnlPct>=0?'+':'')+newPnlPct.toFixed(1)+'%)'; pnlEl.style.color = pnlColor; }
+  if(piEl){ piEl.textContent = (portImpact>=0?'+':'-')+'$'+fmt(Math.abs(portImpact)); piEl.style.color = piColor; }
+};;
 
 
 // ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ AGREGAR activo al portfolio en Supabase ÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ
