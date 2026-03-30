@@ -1897,6 +1897,53 @@ window._closeIAVarsPopup = function() {
 window.showIAVariablesPopup = function() {
   var existing = document.getElementById('ia-vars-overlay');
   if(existing) { existing.remove(); return; }
+  // Calcular estado promedio de cada variable sobre las señales actuales
+  var signals = window._iaSignals || [];
+  var varKeys = ['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];
+  var varScoreAvg = {};
+  varKeys.forEach(function(k) {
+    var sum = 0, cnt = 0;
+    signals.forEach(function(s) { if(s.scores && typeof s.scores[k] !== 'undefined') { sum += s.scores[k]; cnt++; } });
+    varScoreAvg[k] = cnt > 0 ? sum / cnt : 0;
+  });
+  var varDefs = [
+    {k:'tendencia',      n:'1. Tendencia 24h',         d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
+    {k:'rsi',            n:'2. RSI14 Real',             d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
+    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
+    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
+    {k:'correlacion',    n:'5. Correlación BTC/SPY',    d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
+    {k:'oro_petroleo',   n:'6. Oro / Petróleo',         d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
+    {k:'macro',          n:'7. Macro FED',              d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
+    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
+    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
+    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
+  ];
+  var posCount = varDefs.filter(function(v){ return varScoreAvg[v.k] > 0.01; }).length;
+  var negCount = varDefs.filter(function(v){ return varScoreAvg[v.k] < -0.01; }).length;
+  var summaryHtml = signals.length > 0
+    ? '<div style="display:flex;align-items:center;gap:8px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:8px 12px;margin-bottom:12px">' +
+        '<span style="font-size:11px;color:#8B949E">Mercado ahora:</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#3FB950">↑ ' + posCount + ' al alza</span>' +
+        '<span style="color:#555;font-size:11px">·</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#FF4444">↓ ' + negCount + ' a la baja</span>' +
+      '</div>'
+    : '';
+  var varsHtml = varDefs.map(function(v) {
+    var avg = varScoreAvg[v.k];
+    var isPos = avg > 0.01;
+    var isNeg = avg < -0.01;
+    var color = isPos ? '#3FB950' : isNeg ? '#FF4444' : '#8B949E';
+    var bg = isPos ? '#3FB95012' : isNeg ? '#FF444412' : 'transparent';
+    var border = isPos ? '#3FB95030' : isNeg ? '#FF444430' : '#21262D';
+    var arrow = isPos ? '↑ ' : isNeg ? '↓ ' : '— ';
+    return '<div style="border:1px solid ' + border + ';border-radius:8px;padding:9px 11px;margin-bottom:7px;background:' + bg + '">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
+        '<span style="font-size:11px;font-weight:700;color:' + color + '">' + arrow + v.n + '</span>' +
+        '<span style="font-size:9px;background:#21262D;color:#8B949E;border-radius:4px;padding:1px 5px">Peso ' + v.p + '</span>' +
+      '</div>' +
+      '<div style="font-size:10px;color:#8B949E;line-height:1.4">' + v.d + '</div>' +
+    '</div>';
+  }).join('');
   var overlay = document.createElement('div');
   overlay.id = 'ia-vars-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
@@ -1908,27 +1955,9 @@ window.showIAVariablesPopup = function() {
       '</div>' +
       '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
     '</div>' +
+    summaryHtml +
     '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
-    [
-      {n:'1. Tendencia 24h',c:'#58A6FF',d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
-      {n:'2. RSI14 Real',c:'#58A6FF',d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
-      {n:'3. Volumen Real',c:'#58A6FF',d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
-      {n:'4. Volatilidad',c:'#8B949E',d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
-      {n:'5. Correlación BTC/SPY',c:'#8B949E',d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
-      {n:'6. Oro / Petróleo',c:'#8B949E',d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
-      {n:'7. Macro FED',c:'#8B949E',d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
-      {n:'8. Earnings',c:'#8B949E',d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
-      {n:'9. MACD (12/26)',c:'#F0883E',d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
-      {n:'10. Soporte / Resistencia 30d',c:'#F0883E',d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
-    ].map(function(v) {
-      return '<div style="border:1px solid #21262D;border-radius:8px;padding:9px 11px;margin-bottom:7px">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
-          '<span style="font-size:11px;font-weight:700;color:'+v.c+'">'+v.n+'</span>' +
-          '<span style="font-size:9px;background:#21262D;color:#8B949E;border-radius:4px;padding:1px 5px">Peso '+v.p+'</span>' +
-        '</div>' +
-        '<div style="font-size:10px;color:#8B949E;line-height:1.4">'+v.d+'</div>' +
-      '</div>';
-    }).join('') +
+    varsHtml +
     '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
