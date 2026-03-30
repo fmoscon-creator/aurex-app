@@ -61,6 +61,7 @@ function renderTab(tab, pais){
   if(!cnt) return;
   if(typeof _renderMarketBanner === 'function') _renderMarketBanner('mkt-market-banner');
   if(typeof _renderFuturesBanner === 'function') _renderFuturesBanner('mkt-futures-banner');
+  if(typeof _renderMktNewsBanner === 'function') _renderMktNewsBanner('mkt-news-banner');
   // Set pulse category based on active tab
   var pulseMap = {cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
   if(typeof _renderFearGreed === 'function') {
@@ -1325,6 +1326,54 @@ function cerrarEventosPanel() {
   if (modal) modal.style.display = 'none';
 }
 
+
+// === RSI REAL desde datos históricos ===
+window._rsiCache = {};  // sym → rsi value (0-100)
+
+function _calcRSI14(closes) {
+  if(!closes || closes.length < 15) return 50; // not enough data
+  var gains = 0, losses = 0;
+  for(var i = closes.length - 14; i < closes.length; i++) {
+    var diff = closes[i] - closes[i-1];
+    if(diff > 0) gains += diff;
+    else losses += Math.abs(diff);
+  }
+  if(losses === 0) return 100;
+  var rs = (gains/14) / (losses/14);
+  return Math.min(100, Math.max(0, 100 - (100/(1+rs))));
+}
+
+function _fetchRSIBatch(activos) {
+  // Fetch RSI for each activo in parallel (14+1 = 15 closes needed)
+  var promises = activos.map(function(activo) {
+    if(activo.tipo === 'cripto') {
+      // Binance daily klines, limit=16
+      return fetch('https://api.binance.com/api/v3/klines?symbol='+activo.s+'USDT&interval=1d&limit=16')
+        .then(function(r){ return r.json(); })
+        .then(function(data) {
+          if(!Array.isArray(data) || data.length < 15) return;
+          var closes = data.map(function(k){ return parseFloat(k[4]); });
+          window._rsiCache[activo.s] = _calcRSI14(closes);
+        })
+        .catch(function(){});
+    } else {
+      // Yahoo Finance, range=30d for enough closes
+      var sym = activo.ySymbol || activo.s;
+      return fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=30d'))
+        .then(function(r){ return r.json(); })
+        .then(function(data) {
+          if(!data.chart || !data.chart.result || !data.chart.result[0]) return;
+          var closes = (data.chart.result[0].indicators.quote[0].close||[]).filter(function(x){return x!=null;});
+          if(closes.length < 15) return;
+          window._rsiCache[activo.s] = _calcRSI14(closes);
+        })
+        .catch(function(){});
+    }
+  });
+  return Promise.all(promises);
+}
+
+
 function _calcIAScore(activo, datos) {
   var sym = activo.s;
   var precio = datos.precio || 0;
@@ -1347,14 +1396,15 @@ function _calcIAScore(activo, datos) {
     if (tendencia > 0) motivos.push('Precio subio +' + (tendencia*100).toFixed(2) + '% en 24hs - momentum alcista activo con presion compradora sostenida');
     else motivos.push('Precio bajo ' + (tendencia*100).toFixed(2) + '% en 24hs - momentum bajista con presion vendedora dominante');
   } else { motivos.push('Precio lateral en 24hs - consolidacion en rango sin direccion definida'); }
-  var rsi = 50 + (tendencia * 500);
-  rsi = Math.max(10, Math.min(90, rsi));
+  // Use real RSI from cache if available, otherwise estimate from tendencia
+  var rsi = (window._rsiCache && window._rsiCache[sym] !== undefined) ? window._rsiCache[sym] : Math.min(90, Math.max(10, 50 + tendencia * 500));
+  var rsiSource = (window._rsiCache && window._rsiCache[sym] !== undefined) ? 'RSI14' : 'est.';
   var rsiScore = 0;
-  if (rsi > 70) { rsiScore = -0.06; motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona de sobrecompra tecnica, probabilidad de correccion elevada'); }
-  else if (rsi > 60) { rsiScore = 0.04; motivos.push('RSI en ' + rsi.toFixed(0) + ' - momentum alcista saludable sin sobrecompra extrema'); }
-  else if (rsi < 30) { rsiScore = 0.06; motivos.push('RSI en ' + rsi.toFixed(0) + ' - sobreventa tecnica extrema, rebote probable a corto plazo'); }
-  else if (rsi < 40) { rsiScore = -0.03; motivos.push('RSI en ' + rsi.toFixed(0) + ' - momentum bajista moderado, presion vendedora activa'); }
-  else { rsiScore = 0.01; motivos.push('RSI en ' + rsi.toFixed(0) + ' - zona neutral, sin senales extremas de momentum tecnico'); }
+  if (rsi > 70) { rsiScore = -0.06; motivos.push('RSI'+rsiSource+' en ' + rsi.toFixed(0) + ' - zona de sobrecompra tecnica, probabilidad de correccion elevada'); }
+  else if (rsi > 60) { rsiScore = 0.04; motivos.push('RSI'+rsiSource+' en ' + rsi.toFixed(0) + ' - momentum alcista saludable sin sobrecompra extrema'); }
+  else if (rsi < 30) { rsiScore = 0.06; motivos.push('RSI'+rsiSource+' en ' + rsi.toFixed(0) + ' - sobreventa tecnica extrema, rebote probable a corto plazo'); }
+  else if (rsi < 40) { rsiScore = -0.03; motivos.push('RSI'+rsiSource+' en ' + rsi.toFixed(0) + ' - momentum bajista moderado, presion vendedora activa'); }
+  else { rsiScore = 0.01; motivos.push('RSI'+rsiSource+' en ' + rsi.toFixed(0) + ' - zona neutral, sin senales extremas de momentum tecnico'); }
   scores.rsi = rsiScore;
   var volRel = volumenProm > 0 ? volumen24h / volumenProm : 1;
   var volScore = 0;
@@ -1544,7 +1594,7 @@ function generarSenalesIA() {
     }));
   }
   // FASE 1: cargar los 20 principales y mostrar inmediatamente
-  Promise.all([fetchBinanceBatch(phase1Activos), fetchYahooBatch(phase1Activos)]).then(function(){
+  Promise.all([fetchBinanceBatch(phase1Activos), fetchYahooBatch(phase1Activos), _fetchRSIBatch(phase1Activos)]).then(function(){
     var pBTC=(allData['BTC']||{}).precio||0; var p24BTC=(allData['BTC']||{}).precio24h||pBTC;
     btcCambio = p24BTC>0?(pBTC-p24BTC)/p24BTC:0;
     var pSPY=(allData['SPY']||{}).precio||0; var p24SPY=(allData['SPY']||{}).precio24h||pSPY;
@@ -1568,6 +1618,8 @@ function generarSenalesIA() {
 }
 
 function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, fetchYahooBatch) {
+  // Fetch RSI for phase2 in background (non-blocking)
+  if(typeof _fetchRSIBatch === 'function') _fetchRSIBatch(phase2Activos).catch(function(){});
   var listEl = document.getElementById('ia-list');
   var loadingBar = document.getElementById('ia-loading-bar');
   if (!loadingBar && listEl) {
@@ -1925,8 +1977,8 @@ async function _fetchPulseForCategory(cat) {
   return result;
 }
 
-function _renderFearGreedGauge(value, color) {
-  var R=52, cx=65, cy=68, sw=12;
+function _renderFearGreedGauge(value, color, compact) {
+  var R=compact?40:52, cx=compact?50:65, cy=compact?52:68, sw=compact?9:12;
   var ang=(value/100)*Math.PI;
   var nx=cx+R*Math.cos(Math.PI-ang), ny=cy-R*Math.sin(ang);
   function arcSeg(s,e,col){
@@ -1935,7 +1987,7 @@ function _renderFearGreedGauge(value, color) {
     var x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2-Math.PI);
     return '<path d="M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+R+' '+R+' 0 '+((e-s)>50?1:0)+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
   }
-  return '<svg viewBox="0 0 130 75" style="width:120px;height:70px;flex-shrink:0;">' +
+  return '<svg viewBox="0 0 '+(compact?'100 58':'130 75')+'" style="width:'+(compact?'88px':'120px')+';height:'+(compact?'52px':'70px')+';flex-shrink:0;">' +
     arcSeg(0,20,'#C62828')+arcSeg(22,40,'#FF6B6B')+arcSeg(42,60,'#D4A017')+arcSeg(62,80,'#3FB950')+arcSeg(82,100,'#00E676') +
     '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>' +
     '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#fff"/>' +
@@ -1957,7 +2009,8 @@ function _renderFearGreed(containerId) {
     _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
   }
   var d = cached;
-  var gauge = _renderFearGreedGauge(d.value, d.color);
+  var compact = elId.indexOf('port') >= 0;
+  var gauge = _renderFearGreedGauge(d.value, d.color, compact);
   var edu;
   if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
   else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
@@ -1983,9 +2036,9 @@ function _renderFearGreed(containerId) {
   });
   var nvars = Object.keys(d.vars).length;
   el.innerHTML =
-    '<div style="padding:8px 14px 6px;border-bottom:1px solid #21262D;background:#0D1117;">' +
+    '<div style="padding:'+(elId.indexOf('port')>=0?'4px 10px 4px':'8px 14px 6px')+';border-bottom:1px solid #21262D;background:#0D1117;">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-        '<span style="font-size:10px;font-weight:700;color:#D4A017;letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
+        '<span style="font-size:'+(compact?'9':'10')+'px;font-weight:700;color:#D4A017;letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
         '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:2px 7px;border-radius:4px;border:1px solid #30363D;white-space:nowrap;">&#x2139; Ver variables</div>' +
       '</div>' +
       '<div id="pulse-filters-'+elId+'" style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:6px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
@@ -1994,7 +2047,7 @@ function _renderFearGreed(containerId) {
         '<div style="flex:1;min-width:0;">' +
           '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
           dataLine +
-          '<div style="font-size:9px;color:#8B949E;margin-top:4px;line-height:1.4;">'+edu+'</div>' +
+          '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
         '</div>' +
       '</div>' +
       '<div style="font-size:8px;color:#555;margin-top:5px;line-height:1.3;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
@@ -2134,16 +2187,48 @@ function _renderFuturesBanner(containerId) {
     var catColor = catColors[item.cat] || '#8B949E';
     var priceStr = item.dec === 0 ? Math.round(d.price).toLocaleString() : d.price.toFixed(item.dec);
     return '<div style="display:flex;flex-direction:column;align-items:center;min-width:68px;padding:2px 5px;border-right:1px solid #21262D;flex-shrink:0;">' +
-      '<div style="font-size:8px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
+      '<div style="font-size:'+(isPortfolio?'7':'8')+'px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:#E6EDF3;white-space:nowrap;display:flex;align-items:center;gap:2px;"><span style="font-size:7px;color:'+stCol+';">&#x25CF;</span>'+item.n+'</div>' +
       '<div style="font-size:9px;color:#E6EDF3;">'+priceStr+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  el.innerHTML = '<div style="display:flex;align-items:center;padding:5px 8px;background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
+  var isPortfolio = elId.indexOf('port') >= 0;
+  el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 8px':'5px 8px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
     '<div style="font-size:8px;font-weight:700;color:#444;flex-shrink:0;padding-right:6px;margin-right:2px;border-right:1px solid #21262D;line-height:1.3;white-space:nowrap;">FUTUROS<br>&amp; MACRO</div>' +
     chips +
   '</div>';
+}
+
+
+
+// === MERCADOS: BANNER DE NOTICIAS DEL DIA ===
+function _renderMktNewsBanner(containerId) {
+  var elId = containerId || 'mkt-news-banner';
+  var el = document.getElementById(elId);
+  if(!el) return;
+  var eventos = window._IA_EVENTOS || [];
+  if(!eventos.length) {
+    el.style.display = 'none';
+    return;
+  }
+  // Show only high-impact events
+  var high = eventos.filter(function(e){ return e.impacto === 'ALTO' || e.impacto === 'MEDIO'; });
+  if(!high.length) { el.style.display = 'none'; return; }
+  var ev = high[0];
+  var ticker = high.map(function(e){ return e.label + ': ' + e.text; }).join('     |     ');
+  el.style.display = 'block';
+  el.innerHTML =
+    '<div style="background:' + (ev.bg||'#1A0D00') + ';border-bottom:1px solid ' + (ev.border||'#D4A017') + ';padding:5px 12px;display:flex;align-items:center;gap:8px;overflow:hidden;">' +
+      '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'#D4A017') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
+      '<div style="overflow:hidden;flex:1;">' +
+        '<div id="mkt-news-ticker" style="display:flex;animation:tkScroll 14s linear infinite;">' +
+          '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
+          '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<span onclick="this.parentElement.parentElement.style.display=&apos;none&apos;" style="color:#8B949E;font-size:12px;cursor:pointer;flex-shrink:0;padding:0 4px;">&#x2715;</span>' +
+    '</div>';
 }
 
 
