@@ -132,7 +132,16 @@ function fetchYahoo(tab,pais,tf){
         if(!meta)return;
         var price=meta.regularMarketPrice;if(!price)return;
         var mktState=meta.marketState||'';
-        var isClosed=(mktState==='CLOSED'||mktState==='PRE'||mktState==='PREPRE'||mktState==='POST'||mktState==='POSTPOST');
+        // Market closed detection: use marketState OR regularMarketTime age
+        // Yahoo often returns empty marketState when closed - use time-based fallback
+        var lastTradeTs=(meta.regularMarketTime||0)*1000;
+        var nowMs=Date.now();
+        var msSinceTrade=nowMs-lastTradeTs;
+        // Market is closed if: explicit closed state, OR last trade was >2 hours ago on weekday, OR it's weekend
+        var nowNY=new Date(nowMs-5*3600000); // approx NY time (UTC-5)
+        var dayNY=nowNY.getUTCDay(); // 0=Sun,6=Sat
+        var isWeekend=(dayNY===0||dayNY===6);
+        var isClosed=(mktState==='CLOSED'||mktState==='PRE'||mktState==='PREPRE'||mktState==='POST'||mktState==='POSTPOST'||mktState===''&&(isWeekend||msSinceTrade>7200000));
         var pel=document.getElementById('p-'+item.s);
         var cel=document.getElementById('c-'+item.s);
         var lbl=document.getElementById('lbl-'+item.s);
@@ -2174,7 +2183,7 @@ function _renderFearGreed(containerId) {
           (cat==='CRIPTO' && binanceIdx !== null ?
             '<div style="display:flex;gap:8px;align-items:center;margin-top:3px;">' +
               '<span style="font-size:10px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:13px;">'+d.value+'</b></span>' +
-              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Mercado <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
+              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Cripto FnG <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
             '</div>' : '') +
           dataLine +
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
