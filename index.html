@@ -382,7 +382,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=1774895119380"></script>
+<script src="aurex-features.js?v=1774897427590"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -902,6 +902,13 @@ function runConversion(){
   </div>
 </div>
 
+<!-- BUSQUEDA UNIVERSAL -->
+<div id="mkt-search-bar" style="padding:8px 14px 4px;flex-shrink:0;">
+  <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" autocomplete="off"
+    style="width:100%;box-sizing:border-box;background:#161B22;border:1px solid #30363D;border-radius:10px;padding:9px 12px;color:#E6EDF3;font-size:13px;outline:none;"
+    oninput="filterMktSearch()" />
+  <div id="mkt-search-results" style="display:none;background:#161B22;border:1px solid #30363D;border-radius:10px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;"></div>
+</div>
 <!-- TABS -->
 <div class="tabs">
   <div class="tab on"  onclick="sw('cripto',this)"> Cripto</div>
@@ -945,6 +952,46 @@ function runConversion(){
 
 <div class="cnt" id="cnt"></div>
 </div>
+<script>
+function filterMktSearch(){
+  var q = document.getElementById('mkt-universal-search').value.trim();
+  var res = document.getElementById('mkt-search-results');
+  if(!res) return;
+  if(q.length < 2){ res.style.display='none'; return; }
+  res.style.display='flex';
+  res.style.flexDirection='column';
+  res.style.gap='3px';
+  res.style.padding='6px';
+  res.innerHTML='<div style="font-size:11px;color:#555;padding:6px;text-align:center;">Buscando...</div>';
+  if(window._buscarActivos){
+    window._buscarActivos(q, function(results){
+      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#555;padding:6px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
+      window._mktSearchActs = results;
+      res.innerHTML = results.map(function(a,i){
+        var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
+        var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'#8B949E';
+        var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
+        var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;background:#0D1117;border:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#E6EDF3;">'+a.s+tag+'</div><div style="font-size:10px;color:#8B949E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+      }).join('');
+    });
+  }
+}
+window._mktOpenDetail = function(idx){
+  var acts = window._mktSearchActs || [];
+  var a = acts[idx]; if(!a) return;
+  // Close search and navigate to a detail view or show price info
+  var inp = document.getElementById('mkt-universal-search');
+  var res = document.getElementById('mkt-search-results');
+  if(inp) inp.value = '';
+  if(res) res.style.display = 'none';
+  // Try to show in the existing market detail modal if available
+  if(window.openMktDetail) { window.openMktDetail(a.s, a.tipo); }
+  else if(window.verDetalle) { window.verDetalle(a.s); }
+  else { alert(a.s + ' - ' + a.n + '\n\nTicker: ' + (a.ySymbol||a.s) + '\nTipo: ' + (a.tipo||'accion')); }
+};
+</script>
+
 
 <div class="screen" id="screen-ia" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
 
