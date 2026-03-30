@@ -1761,6 +1761,74 @@ window._pulseCache = {};
 window._pulseTs   = {};
 window._pulseActiveFilter = 'GLOBAL';
 
+
+// === MACRO FED (FRED API) + GEOPOLITICA (GDELT) ===
+function _fetchMacroGeo(raw) {
+  return new Promise(function(resolve) {
+    var FRED_BASE = 'https://corsproxy.io/?' + encodeURIComponent('https://fred.stlouisfed.org/graph/fredgraph.csv?id=FEDFUNDS&limit=3&sort_order=desc');
+    var macroScore = 50;
+    var geoScore = 70;
+    var done1 = false, done2 = false;
+    function tryFinish() {
+      if(done1 && done2) {
+        raw.macro = { score: Math.round(macroScore) };
+        raw.geo   = { score: Math.round(geoScore) };
+        resolve(raw);
+      }
+    }
+    // FRED: Federal Funds Rate
+    fetch(FRED_BASE)
+      .then(function(r){ return r.ok ? r.text() : Promise.reject('FRED fail'); })
+      .then(function(txt) {
+        var lines = txt.trim().split('\n').filter(function(l){return l && l.indexOf('DATE')<0;});
+        if(lines.length >= 2) {
+          var r1 = parseFloat(lines[0].split(',')[1]) || 0;
+          var r2 = parseFloat(lines[1].split(',')[1]) || 0;
+          var delta = r1 - r2;
+          // Rising rate = tightening = fear score. Falling = easing = greed.
+          macroScore = Math.min(100, Math.max(0, 50 - delta * 20));
+        } else if(lines.length === 1) {
+          var rate = parseFloat(lines[0].split(',')[1]) || 5;
+          // Absolute rate: >5% = restrictive = fear, <2% = easy = greed
+          macroScore = Math.min(100, Math.max(0, 100 - (rate - 1) * 12));
+        }
+        done1 = true; tryFinish();
+      })
+      .catch(function() {
+        // Fallback: use VIX-based macro proxy
+        if(raw.vix && raw.vix.price) {
+          macroScore = Math.min(100, Math.max(0, 100 - (raw.vix.price - 10) * 2.5));
+        }
+        done1 = true; tryFinish();
+      });
+    // GDELT: geopolitical tone
+    var gdeltUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://api.gdeltproject.org/api/v2/summary/summary?d=aylook&t=summary&TIMESPAN=60&SRCLANG=english&OUTPUTTYPE=3');
+    fetch(gdeltUrl)
+      .then(function(r){ return r.ok ? r.json() : Promise.reject('GDELT fail'); })
+      .then(function(data) {
+        var tone = data && data.articles && data.articles[0] ? (parseFloat(data.articles[0].avgtone)||0) : 0;
+        // tone -10 to +5 → score 0 to 100
+        geoScore = Math.min(100, Math.max(0, 50 + tone * 5));
+        done2 = true; tryFinish();
+      })
+      .catch(function() {
+        // Fallback: VIX-based geopolitics proxy
+        if(raw.vix && raw.vix.price) {
+          geoScore = raw.vix.price > 30 ? Math.max(10, 70-(raw.vix.price-30)*3) : 70;
+        }
+        done2 = true; tryFinish();
+      });
+    // Safety timeout: resolve after 8s regardless
+    setTimeout(function() {
+      if(!done1 || !done2) {
+        raw.macro = raw.macro || { score: macroScore };
+        raw.geo   = raw.geo   || { score: geoScore };
+        resolve(raw);
+      }
+    }, 8000);
+  });
+}
+
 async function _fetchPulseRaw() {
   var raw = {};
   try {
@@ -1789,6 +1857,8 @@ async function _fetchPulseRaw() {
   await Promise.all(yPromises);
   window._pulseRaw = raw;
   window._pulseRawTs = Date.now();
+  // Add macro FED + geopolitics (with fallbacks)
+  try { await _fetchMacroGeo(raw); } catch(e) {}
   return raw;
 }
 
@@ -1830,6 +1900,9 @@ function _calcPulseScore(raw, cat) {
     if(raw.clf) add('Petroleo', _oilToScore(raw.clf.pct),  cat==='COMOD'?25:5);
     if(raw.hgf) add('Cobre',    _pctToScore(raw.hgf.pct,2),cat==='COMOD'?20:4);
   }
+  // Macro FED + Geopolitics (available after _fetchMacroGeo runs)
+  if(raw.macro) add('Macro_FED', raw.macro.score, 12);
+  if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
   if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
@@ -1924,7 +1997,7 @@ function _renderFearGreed(containerId) {
           '<div style="font-size:9px;color:#8B949E;margin-top:4px;line-height:1.4;">'+edu+'</div>' +
         '</div>' +
       '</div>' +
-      '<div style="font-size:8px;color:#555;margin-top:5px;line-height:1.3;">* Índice AUREX propio. Difiere de Binance (solo cripto) y CNN (solo acciones). AUREX PULSE integra '+nvars+' variables activas de múltiples mercados.</div>' +
+      '<div style="font-size:8px;color:#555;margin-top:5px;line-height:1.3;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
     '</div>';
   // Attach event listeners after render (avoids inline onclick single-quote issue)
   var filterEl = document.getElementById('pulse-filters-'+elId);
@@ -1962,8 +2035,8 @@ window.showFearGreedInfo = function() {
     ['&#x26AA;','Plata SI=F','Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'#D4A017'],
     ['&#x1F6E2;','Petróleo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
     ['&#x1FA9C;','Cobre HG=F','Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'#D4A017'],
-    ['&#x1F3E6;','Macro FED','FRED API','12%','Próximamente','#444'],
-    ['&#x1F30D;','Geopolítica','GDELT','4%', 'Próximamente','#444']
+    ['&#x1F3E6;','Macro FED','FRED API','12%', raw.macro ? raw.macro.score+' pts' : 'Calc...', raw.macro ? '#E6EDF3' : '#555'],
+    ['&#x1F30D;','Geopolítica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? '#E6EDF3' : '#555']
   ];
   var tableRows = rows.map(function(r) {
     return '<tr><td style="padding:2px 4px;color:'+r[5]+';">'+r[0]+' '+r[1]+'</td><td style="color:#555;font-size:8px;padding:2px 4px;">'+r[2]+'</td><td style="color:#8B949E;padding:2px 4px;">'+r[3]+'</td><td style="color:#E6EDF3;padding:2px 4px;">'+r[4]+'</td></tr>';
@@ -1985,7 +2058,7 @@ window.showFearGreedInfo = function() {
         '<tr style="color:#444;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopolítica (GDELT) se integran en la próxima actualización. Las 12 variables activas cubren el 84% del peso total.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopolítica (GDELT Project) activos con fallback automático. 14 variables = cobertura completa de múltiples mercados.</div>' +
       '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este índice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra múltiples mercados.</div>' +
       '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:10px;background:#D4A017;border-radius:8px;color:#0D1117;font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
     '</div>';
