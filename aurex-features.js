@@ -953,20 +953,15 @@ function _openAddActivoModal(){
   var title = document.getElementById('port-modal-title');
   if(!modal || !body) return;
   if(title) title.textContent = 'Agregar activo';
-  var allActs = window._IA_ACTIVOS || [];
   body.innerHTML =
     '<div style="display:flex;flex-direction:column;gap:10px;">' +
-    '<div style="position:relative;">' +
-    '<input id="pa-search" type="text" placeholder="Buscar por nombre o ticker..." autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;" oninput="filterPortSearch()" />' +
-    '</div>' +
-    '<div id="pa-results" style="max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>' +
+    '<div><input id="pa-search" type="text" placeholder="Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)" autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;" oninput="filterPortSearch()" /></div>' +
+    '<div id="pa-results" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>' +
     '<div id="pa-selected" style="display:none;background:#161B22;border-radius:9px;padding:10px;border:1px solid #D4A017;">' +
     '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#E6EDF3;margin-bottom:8px;"></div>' +
     '<div style="display:flex;gap:8px;">' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div>' +
-    '<input id="pa-qty" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div>' +
-    '<input id="pa-price" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="number" min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
     '</div>' +
     '<div id="pa-err" style="color:#FF4444;font-size:11px;margin-top:4px;display:none;"></div>' +
     '<div onclick="savePortActivo()" style="margin-top:10px;background:#3FB950;color:#0D1117;border-radius:9px;padding:11px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Confirmar</div>' +
@@ -974,26 +969,80 @@ function _openAddActivoModal(){
     '<input id="pa-sym" type="hidden" value="" />' +
     '</div>';
   modal.style.display = 'flex';
-  window._portSearchActs = allActs;
   setTimeout(function(){ var el = document.getElementById('pa-search'); if(el) el.focus(); }, 100);
+  window._portSearchActs = [];
   window.filterPortSearch();
 }
+
+window._buscarActivos = function(q, cb) {
+  var local = window._IA_ACTIVOS || [];
+  var ql = q.toLowerCase().trim();
+  var localMatches = ql.length < 1
+    ? local.slice(0, 20)
+    : local.filter(function(a){ return a.s.toLowerCase().indexOf(ql)>=0 || a.n.toLowerCase().indexOf(ql)>=0; });
+  if(ql.length < 2) { cb(localMatches); return; }
+  var done = false;
+  var timer = setTimeout(function(){ if(!done){ done=true; cb(localMatches); } }, 3500);
+  var yahooUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v1/finance/search?q=' + encodeURIComponent(q) + '&lang=en-US&newsCount=0&quotesCount=10');
+  fetch(yahooUrl, {signal: AbortSignal.timeout(4000)})
+    .then(function(r){ return r.json(); })
+    .then(function(data) {
+      if(done) return;
+      var quotes = (data.quotes||[]).filter(function(qt){
+        return qt.isYahooFinance && qt.symbol && ['EQUITY','ETF','CRYPTOCURRENCY','MUTUALFUND','INDEX'].indexOf(qt.quoteType)>=0;
+      });
+      var yahooResults = quotes.map(function(qt){
+        var tipo = qt.quoteType==='EQUITY'?'accion':qt.quoteType==='ETF'?'etf':qt.quoteType==='CRYPTOCURRENCY'?'cripto':'otro';
+        return { s:qt.symbol, n:qt.shortname||qt.longname||qt.symbol, tipo:tipo, ySymbol:qt.symbol, logo:'', color:tipo==='cripto'?'#F7931A':tipo==='accion'?'#58A6FF':tipo==='etf'?'#F0883E':'#D4A017', abbr:qt.symbol.replace(/-USD$/,'').substring(0,3).toUpperCase(), _fromYahoo:true };
+      });
+      var seen = {}; var merged = [];
+      localMatches.forEach(function(a){ if(!seen[a.s]){ seen[a.s]=true; merged.push(a); } });
+      yahooResults.forEach(function(a){ if(!seen[a.s]){ seen[a.s]=true; merged.push(a); } });
+      done=true; clearTimeout(timer);
+      cb(merged.slice(0,20));
+    })
+    .catch(function(){ if(!done){ done=true; clearTimeout(timer); cb(localMatches); } });
+};
+
+window._renderSearchResult = function(a, idx, onclickFnName) {
+  var logoHtml = a.logo
+    ? '<img src="' + a.logo + '" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />'
+    : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'#333') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
+  var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'#8B949E';
+  var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':a.tipo==='bono'?'Bono':a.tipo==='metal'?'Metal':a.tipo==='materia_prima'?'Commodity':(a.tipo||'Activo');
+  var yahooTag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 4px;">YAHOO</span>' : '';
+  return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;background:#161B22;border:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
+    logoHtml +
+    '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#E6EDF3;">' + a.s + yahooTag + '</div>' +
+    '<div style="font-size:10px;color:#8B949E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + a.n + ' <span style="color:' + tipoColor + '">&#9830; ' + tipoLabel + '</span></div></div>' +
+    '</div>';
+};
+
 window.filterPortSearch = function(){
-  var q = (document.getElementById('pa-search') ? document.getElementById('pa-search').value : '').toLowerCase().trim();
-  var acts = window._portSearchActs || [];
+  var q = (document.getElementById('pa-search') ? document.getElementById('pa-search').value : '').trim();
   var res = document.getElementById('pa-results');
   if(!res) return;
-  var filtered = q.length < 1 ? acts.slice(0,20) : acts.filter(function(a){ return a.s.toLowerCase().indexOf(q) >= 0 || a.n.toLowerCase().indexOf(q) >= 0; }).slice(0,20);
-  res.innerHTML = filtered.map(function(a){
-    var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\x27none\x27" />' : '<div style="width:22px;height:22px;border-radius:50%;background:'+(a.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">'+(a.s[0]||'?')+'</div>';
-    var tipoLabel = a.tipo === 'cripto' ? 'cripto' : (a.tipo === 'accion' ? 'accion' : (a.tipo||''));
-    var sEsc = a.s.replace(/'/g, '');
-    var nEsc = a.n.replace(/'/g, '');
-    return '<div onclick="window.selectPortActivo(\x27'+sEsc+'\x27,\x27'+nEsc+'\x27)" style="display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:7px;cursor:pointer;background:#161B22;border:0.5px solid #21262D;">' +
-      logoHtml +
-      '<div><div style="font-size:12px;font-weight:600;color:#E6EDF3;">'+a.s+'</div><div style="font-size:10px;color:#8B949E;">'+a.n+' &bull; '+tipoLabel+'</div></div>' +
-      '</div>';
-  }).join('');
+  if(q.length === 0) {
+    var local = (window._IA_ACTIVOS||[]).slice(0,20);
+    window._portSearchActs = local;
+    res.innerHTML = local.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');
+    return;
+  }
+  res.innerHTML = '<div style="font-size:11px;color:#555;padding:8px;text-align:center;">Buscando...</div>';
+  window._buscarActivos(q, function(results){
+    window._portSearchActs = results;
+    if(!results.length){
+      res.innerHTML = '<div style="font-size:11px;color:#555;padding:8px;text-align:center;">Sin resultados para "' + q + '"</div>';
+      return;
+    }
+    res.innerHTML = results.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');
+  });
+};
+window._portPickIdx = function(idx){
+  var acts = window._portSearchActs || [];
+  var a = acts[idx];
+  if(!a) return;
+  window.selectPortActivo(a.s, a.n);
 };
 window.selectPortActivo = function(sym, nombre){
   var sel = document.getElementById('pa-selected');
@@ -1002,37 +1051,63 @@ window.selectPortActivo = function(sym, nombre){
   var acts = window._portSearchActs || [];
   var act = null;
   for(var i=0;i<acts.length;i++){ if(acts[i].s===sym){ act=acts[i]; break; } }
+  if(!act) act = {s:sym, n:nombre, tipo:'accion'};
   if(sel) sel.style.display = 'block';
-  if(selName) selName.innerHTML = (act && act.logo ? '<img src="'+act.logo+'" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\x27none\x27" />' : '') + sym + ' <span style="color:#8B949E;font-weight:400;font-size:11px;">'+nombre+'</span>';
+  var logoStr = act.logo ? '<img src="' + act.logo + '" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\'none\';" />' : '';
+  if(selName) selName.innerHTML = logoStr + sym + ' <span style="color:#8B949E;font-weight:400;font-size:11px;">' + nombre + '</span>';
   if(symInput) symInput.value = sym + '|' + nombre + '|' + (act ? act.tipo : 'accion');
   var res = document.getElementById('pa-results');
   if(res) res.style.display = 'none';
 };
 window.openPortModal = _openAddActivoModal;
 window.openAddActivo = _openAddActivoModal;
-window.closePortModal = function(){ var m = document.getElementById('port-modal'); if(m) m.style.display = 'none'; var errEl = document.getElementById('pa-err'); if(errEl){ errEl.style.display='none'; errEl.textContent=''; } var res = document.getElementById('pa-results'); if(res) res.style.display='flex'; };
-Modal = function(){
-  var modal = document.getElementById('port-modal');
-  if(modal) modal.style.display = 'none';
+window.closePortModal = function(){ var m = document.getElementById('port-modal'); if(m) m.style.display='none'; var errEl=document.getElementById('pa-err'); if(errEl){errEl.style.display='none';errEl.textContent='';} var res=document.getElementById('pa-results'); if(res) res.style.display='flex'; };
+Modal = function(){ var modal=document.getElementById('port-modal'); if(modal) modal.style.display='none'; };
+
+window.openAddWatch = function(){
+  var modal = document.getElementById('watch-modal');
+  var body = document.getElementById('watch-modal-body');
+  if(!modal || !body) return;
+  window._watchSearchActs = [];
+  body.innerHTML =
+    '<input id="wl-search" type="text" placeholder="Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)" autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:10px;" oninput="filterWatchSearch()" />' +
+    '<div id="wl-results" style="max-height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>';
+  modal.style.display = 'flex';
+  setTimeout(function(){ var el=document.getElementById('wl-search'); if(el) el.focus(); }, 100);
+  window.filterWatchSearch();
+};
+window.closeWatchModal = function(){ var m=document.getElementById('watch-modal'); if(m) m.style.display='none'; };
+window.filterWatchSearch = function(){
+  var q = (document.getElementById('wl-search') ? document.getElementById('wl-search').value : '').trim();
+  var res = document.getElementById('wl-results');
+  if(!res) return;
+  if(q.length === 0) {
+    var local = (window._IA_ACTIVOS||[]).slice(0,20);
+    window._watchSearchActs = local;
+    res.innerHTML = local.map(function(a,i){ return window._renderSearchResult(a, i, 'window._watchPickIdx'); }).join('');
+    return;
+  }
+  res.innerHTML = '<div style="font-size:11px;color:#555;padding:8px;text-align:center;">Buscando...</div>';
+  window._buscarActivos(q, function(results){
+    window._watchSearchActs = results;
+    if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#555;padding:8px;text-align:center;">Sin resultados</div>'; return; }
+    res.innerHTML = results.map(function(a,i){ return window._renderSearchResult(a, i, 'window._watchPickIdx'); }).join('');
+  });
+};
+window._watchPickIdx = function(idx){
+  var acts = window._watchSearchActs || [];
+  var a = acts[idx]; if(!a) return;
+  window.addToWatch(a.s, a.n, a.tipo||'accion');
+};
+window.addToWatch = function(sym, nombre, tipo){
+  var wl = JSON.parse(localStorage.getItem('aurex_watchlist')||'[]');
+  if(wl.find(function(w){ return w.s===sym; })){ window.closeWatchModal(); return; }
+  wl.push({s:sym, n:nombre, tipo:tipo||'accion', added:Date.now()});
+  localStorage.setItem('aurex_watchlist', JSON.stringify(wl));
+  window.closeWatchModal();
+  if(typeof renderWatchCnt === 'function') renderWatchCnt();
 };
 
-window.savePortActivo = function(){
-  var symEl = document.getElementById('pa-sym');
-  var qtyEl = document.getElementById('pa-qty');
-  var priceEl = document.getElementById('pa-price');
-  var errEl = document.getElementById('pa-err');
-  if(!symEl || !qtyEl || !priceEl) return;
-  var parts = symEl.value.split('|');
-  var simbolo = parts[0], nombre = parts[1], tipo = parts[2];
-  var cantidad = parseFloat(qtyEl.value);
-  var precio = parseFloat(priceEl.value);
-  if(!simbolo){ showPortErr('SeleccionÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un activo.'); return; }
-  if(!cantidad || cantidad <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ una cantidad vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lida.'); return; }
-  if(!precio || precio <= 0){ showPortErr('IngresÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡ un precio de compra vÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¡lido.'); return; }
-  if(errEl) errEl.style.display = 'none';
-  addPortfolioItem(simbolo, nombre, cantidad, precio, tipo);
-  closePortModal();
-};
 
 function showPortErr(msg){
   var errEl = document.getElementById('pa-err');
