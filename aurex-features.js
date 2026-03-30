@@ -656,7 +656,7 @@ window._updatePortTotalDisplay = function() {
     if(el) el.textContent = '₮ ' + fmtNum(total);
     if(badge) { badge.textContent = 'USDT₮'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
-    if(el) el.textContent = '$' + fmtNum(total);
+    if(el) el.textContent = 'USD ' + fmtNum(total);
     if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
   }
 };
