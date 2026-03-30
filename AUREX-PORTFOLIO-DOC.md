@@ -1,258 +1,297 @@
-# AUREX — Documentación Completa: Portfolio & Mercados
-
-**Versión:** 3.0 (Marzo 2026)
-**Plataforma:** GitHub Pages + Supabase | Vanilla HTML/CSS/JS
-**Objetivo:** Aplicación financiera con señales IA para inversores retail y profesionales
+# AUREX — Documentación Técnica y Funcional v4.0
+*Actualizado: 30/03/2026 — Para consultas de usuarios e inversores*
 
 ---
 
-## 🏆 POSICIONAMIENTO COMPETITIVO
+## 1. QUÉ ES AUREX
 
-| Característica | Yahoo Finance | Investing.com | Binance | **AUREX** |
-|---|---|---|---|---|
-| Señales IA propias | ❌ | ❌ | Parcial | ✅ 8 variables |
-| AUREX PULSE™ (F&G 14 variables) | ❌ | ❌ | 5 vars solo cripto | ✅ 14 vars, 6 categorías |
-| Futuros + Bonos + VIX en tiempo real | ✅ | ✅ | ❌ | ✅ |
-| Macro FED (FRED API) | ❌ | ❌ | ❌ | ✅ |
-| Geopolítica algorítmica (GDELT) | ❌ | ❌ | ❌ | ✅ |
-| Termómetro de riesgo del portfolio | ❌ | ❌ | ❌ | ✅ |
-| Simulador de escenarios | ❌ | ❌ | ❌ | ✅ |
-| 52 semanas con texto educativo | Parcial | Parcial | ❌ | ✅ |
-| Banner mercados globales (11 países) | ❌ | ❌ | ❌ | ✅ |
-| Texto educativo para principiantes | ❌ | ❌ | ❌ | ✅ |
+AUREX es una aplicación financiera avanzada desarrollada en HTML/CSS/JavaScript Vanilla, desplegada en GitHub Pages con backend de datos en Supabase. Combina seguimiento de portafolio en tiempo real, mercados globales, análisis IA y un índice propietario multivariable de sentimiento de mercado.
+
+**Competidores de referencia:** Yahoo Finance, Investing.com, Bloomberg Mobile  
+**Diferenciador clave:** Integración algorítmica de geopolítica cuantitativa (GDELT) + macro FED (FRED API) + cripto + acciones en UN SOLO índice propietario.
 
 ---
 
-## ⚡ AUREX PULSE™ — Fear & Greed 14X
+## 2. ARQUITECTURA
 
-### Nombre comercial
+- **Frontend:** HTML5 + CSS3 + JavaScript Vanilla (sin frameworks)
+- **Hosting:** GitHub Pages (fmoscon-creator.github.io/aurex-app)
+- **Base de datos:** Supabase (PostgreSQL)
+- **Fuentes de datos en tiempo real:**
+  - Binance API (cripto: precios 24h, klines para RSI)
+  - Yahoo Finance via corsproxy.io (acciones, ETFs, futuros, materias primas)
+  - FRED API / Federal Reserve (tasas FED, CPI, PBI, PPI)
+  - GDELT Project (eventos geopolíticos globales en tiempo real)
+  - VIX / Yahoo Finance (volatilidad implícita S&P 500)
+
+---
+
+## 3. TABS Y SECCIONES
+
+### 3.1 PORTAFOLIO
+- Valor total del portafolio en USD
+- Variación desde precio de compra (ganancia/pérdida)
+- Mejor activo del período
+- Indicador de señales de Mercados del Mundo (banderas con estado abierto/cerrado)
+- **AUREX PULSE™** — índice de sentimiento multivariable
+- **Banner Futuros & Macro** — 11 instrumentos en tiempo real
+- **Termómetro de Riesgo** — señal de alta convicción IA
+- Lista de activos del portafolio con precios y variaciones
+
+### 3.2 MERCADOS
+- **Banner de EVENTOS** — ticker de noticias de alto impacto de Señales IA
+- Indicadores de mercados del mundo
+- **Banner Futuros & Macro** — idéntico al de Portafolio
+- **AUREX PULSE™** — filtrado automáticamente por categoría activa
+- Tabs de categorías: Cripto, Acciones, Stable & DeFi, Futuros, Metales, Bonos
+- Selector de timeframe: 24h, 7d, 1m, 3m, 1a
+- Indicador de mercado cerrado: **"Ult. cierre"** en dorado cuando el mercado está fuera de horario
+- Botón "Editar orden" con flechas ▲▼ para reordenar activos
+
+### 3.3 WATCHLIST
+- Lista de seguimiento personalizada
+
+### 3.4 SEÑALES IA
+- Motor algorítmico de señales (BAJISTA / ALCISTA / CONF. IA)
+- RSI14 real desde klines de Binance y Yahoo Finance
+- Banner de noticias del día
+
+### 3.5 ALERTAS
+- Alertas de precio configurables
+
+### 3.6 PERFIL
+- Gestión de cuenta usuario
+
+---
+
+## 4. AUREX PULSE™ — ÍNDICE DE SENTIMIENTO
+
+### 4.1 Nombre comercial
 - **En la app:** AUREX PULSE™
-- **En el popup / pitch:** AUREX FEAR & GREED 14X™
-- **Tagline:** *"El índice de sentimiento más completo del mercado. 14 variables. Un solo número."*
+- **En pitch/popup:** AUREX FEAR & GREED 14X™
+- **Tagline:** "El índice de sentimiento más completo del mercado"
 
-### ¿Qué es?
-Índice propietario que mide en tiempo real el estado emocional y técnico de los mercados financieros globales en una escala de 0 a 100. Combina 14 variables de 6 categorías y 4 fuentes de datos. Disponible en **Portfolio** y **Mercados**, con filtros de categoría clickeables.
+### 4.2 Las 5 zonas del gauge
+| Rango | Color | Significado |
+|-------|-------|-------------|
+| 0–20 | Rojo intenso | Miedo Extremo |
+| 21–40 | Naranja | Miedo |
+| 41–60 | Amarillo | Neutral |
+| 61–80 | Verde claro | Codicia |
+| 81–100 | Verde intenso | Codicia Extrema |
 
-### Las 5 Zonas
+**El gauge es semicircular**, va de rojo (izquierda) a verde (derecha), con aguja indicando el valor actual.
 
-| Valor | Emoji | Zona | Color | Significado |
-|---|---|---|---|---|
-| 0–20 | 😱 | Miedo Extremo | 🔴 Rojo oscuro | Pánico. Históricamente zona de oportunidad de compra. |
-| 21–40 | 😰 | Miedo | 🟠 Naranja | Cautela. Inversores vendiendo. Analizar antes de actuar. |
-| 41–60 | 😐 | Neutral | 🟡 Amarillo | Mercado equilibrado. Analizar fundamentals. |
-| 61–80 | 😏 | Codicia | 🟢 Verde | Optimismo. Precios pueden estar elevados. |
-| 81–100 | 🤑 | Codicia Extrema | 💚 Verde brillante | Euforia. Alta probabilidad de corrección próxima. |
+### 4.3 Variables activas (12 de 14 en producción)
 
-### Las 14 Variables — AUREX FEAR & GREED 14X™
+| Variable | Fuente | Peso | Descripción | Interpretación |
+|----------|--------|------|-------------|----------------|
+| **BTC momentum** | Binance | 12% | Variación % de precio BTC en las últimas 24h | Positivo = codicia cripto activa |
+| **ETH momentum** | Binance | 8% | Variación % de precio ETH en las últimas 24h | Confirma tendencia cripto |
+| **VIX volatilidad** | Yahoo Finance | 14% | Índice de volatilidad implícita S&P 500 | VIX > 30 = miedo extremo; VIX < 15 = codicia |
+| **S&P500 momentum** | Yahoo Finance | 8% | Variación % S&P 500 últimas 24h | Pulso del mercado acciones USA |
+| **ES=F S&P Futuro** | Yahoo Finance | 8% | Futuro del S&P 500 (ES=F) | Expectativa mercado antes de apertura |
+| **NQ=F Nasdaq Fut** | Yahoo Finance | 6% | Futuro del Nasdaq (NQ=F) | Expectativa tecnología |
+| **YM=F Dow Futuro** | Yahoo Finance | 4% | Futuro del Dow Jones (YM=F) | Expectativa industria/blue chips |
+| **RTY=F Russell Fut** | Yahoo Finance | 3% | Futuro del Russell 2000 | Expectativa small caps |
+| **Oro GC=F** | Yahoo Finance | 8% | Precio del Oro (GC=F) | Activo refugio: sube = miedo; baja = codicia |
+| **Plata SI=F** | Yahoo Finance | 4% | Precio de la Plata (SI=F) | Confirma tendencia metales preciosos |
+| **Petróleo CL=F** | Yahoo Finance | 5% | Precio del petróleo WTI (CL=F) | Sube = actividad económica/inflación |
+| **Cobre HG=F** | Yahoo Finance | 4% | Precio del cobre (HG=F) | "Doctor Copper": indicador de crecimiento global |
+| **Macro FED** | FRED API | 12% | Tasa FED + CPI + PBI + PPI | Presión macro: tasas altas = miedo; datos fuertes = codicia |
+| **Geopolítica** | GDELT Project | 4% | Eventos bélicos y catástrofes en tiempo real | Conflictos activos = miedo extremo |
 
-#### 🪙 CRIPTO (20% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 1 | BTC momentum 24h | Binance | 12% | BTC subiendo = codicia. Cayendo = miedo. Termómetro principal del cripto. |
-| 2 | ETH momentum 24h | Binance | 8% | Confirma o contradice BTC. Divergencia = señal de precaución. |
+*Total pesos: 100% | Variables en producción: 12/14 activas*
 
-#### 📈 SENTIMIENTO ACCIONES (22% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 3 | VIX — Índice de Volatilidad | Yahoo Finance | 14% | VIX > 30 = pánico. VIX < 15 = calma y codicia. Indicador más usado por institucionales. |
-| 4 | S&P500 momentum | Yahoo Finance | 8% | Salud del índice más representativo del mundo. |
+### 4.4 Filtros por categoría
+El PULSE puede mostrarse segmentado por tipo de activo:
+- **GLOBAL** — todas las variables combinadas (valor global del mercado)
+- **CRIPTO** — ponderado hacia BTC/ETH momentum + VIX adaptado
+- **ACCIONES** — ponderado hacia S&P500, futuros, VIX
+- **COMODITIES** — ponderado hacia Oro, Plata, Petróleo, Cobre
 
-#### ⚡ FUTUROS DE ÍNDICES (21% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 5 | ES=F — S&P500 Futuro | Yahoo Finance | 8% | Anticipa apertura de bolsa. Futuro verde = expectativa alcista. |
-| 6 | NQ=F — Nasdaq Futuro | Yahoo Finance | 6% | Tecnología y growth. Alta correlación con cripto. |
-| 7 | YM=F — Dow Jones Futuro | Yahoo Finance | 4% | Empresas industriales/financieras. Ancla de estabilidad. |
-| 8 | RTY=F — Russell 2000 Futuro | Yahoo Finance | 3% | Empresas pequeñas EEUU. Sube = inversores tomando riesgo = alcista. |
+**En Mercados:** el filtro se activa automáticamente según la tab seleccionada (Cripto → CRIPTO, Acciones → ACCIONES, etc.)
 
-#### 🛢️ COMMODITIES (21% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 9 | GC=F — Oro | Yahoo Finance | 8% | Activo refugio. Oro subiendo = huida al refugio = miedo. Invertido al score. |
-| 10 | SI=F — Plata | Yahoo Finance | 4% | Confirma señal del oro. Oro + Plata subiendo = refugio confirmado. |
-| 11 | CL=F — Petróleo WTI | Yahoo Finance | 5% | Muy alto = presión inflacionaria. Muy bajo = recesión. Variable de doble filo. |
-| 12 | HG=F — Cobre ("Dr. Copper") | Yahoo Finance | 4% | Mejor predictor del crecimiento económico global. Cobre sube = economía crece = alcista. Exclusivo AUREX. |
+### 4.5 Diferencia con el índice de Binance y CNN
+| | AUREX PULSE™ | Binance Fear & Greed | CNN Fear & Greed |
+|--|--|--|--|
+| Variables | 14 de 6 fuentes | 5 variables cripto | 7 variables acciones |
+| Cobertura | Global (cripto + acciones + macro + geo) | Solo cripto | Solo acciones USA |
+| Geopolítica | ✅ GDELT en tiempo real | ❌ | ❌ |
+| Macro FED | ✅ FRED API | ❌ | Parcial |
+| Futuros | ✅ 4 contratos | ❌ | ❌ |
+| Commodities | ✅ Oro, Plata, Petróleo, Cobre | ❌ | ❌ |
 
-#### 🏦 MACRO FED (12% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 13 | Tasa Federal Funds Rate | FRED API (Fed Reserve) | 12% | Tasa subiendo = tightening = presión bajista. Tasa bajando = easing = alcista. Score 0–100 calculado desde delta mensual. Fallback: VIX-based proxy si FRED no responde. |
+**Por eso** el índice AUREX puede diferir del de Binance (ej: AUREX=47 Neutral vs Binance=25 Miedo) — son metodologías distintas con universos distintos.
 
-#### 🌍 GEOPOLÍTICA (4% en GLOBAL)
-| # | Variable | Fuente | Peso Global | Lógica |
-|---|---|---|---|---|
-| 14 | Tensión Geopolítica Global | GDELT Project | 4% | Análisis de millones de noticias globales en tiempo real. Tono promedio de noticias → score. Solo empuja hacia miedo (asimétrico). Fallback: VIX-proxy si GDELT no responde. Actualización cada 15 min. |
+### 4.6 Ponderación del cálculo MACRO FED (FRED API)
+Se toman 4 indicadores macro con fallback automático:
+- **Tasa FED** — tasa de fondos federales (mensual): alta tasa = más miedo
+- **CPI** — inflación anual: > 3% = presión = miedo; < 2% = confianza = codicia
+- **PBI** — crecimiento real: > 2% = codicia; < 0% = miedo extremo
+- **PPI** — inflación productora: anticipa CPI futuro
 
-### Filtros de Categoría
-El gauge cambia dinámicamente al seleccionar: 🌐 GLOBAL | 🪙 CRIPTO | 📈 ACCIONES | 🛢️ COMOD | ⚡ FUTUROS. En Mercados, el filtro cambia automáticamente al cambiar de tab.
+Conversión: cada indicador se normaliza a 0-100, luego se promedia con la ponderación del 12% global.
 
-### Aclaración importante
-*"* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars)."*
-
-### Diferenciador vs competencia
-| | CNN F&G | Binance F&G | **AUREX PULSE 14X™** |
-|---|---|---|---|
-| Variables | 7 | 5-6 | **14** |
-| Cripto | ❌ | ✅ | ✅ |
-| Acciones/VIX | ✅ | ❌ | ✅ |
-| Futuros de índices | ❌ | ❌ | ✅ |
-| Commodities (Oro, Cobre, Petróleo) | ❌ | ❌ | ✅ |
-| Macro FED (tasa de interés) | ❌ | ❌ | ✅ |
-| Geopolítica algorítmica (GDELT) | ❌ | ❌ | ✅ |
-| Segmentado por categoría de activo | ❌ | ❌ | ✅ |
-| Texto educativo para principiantes | ❌ | Parcial | ✅ |
+### 4.7 Cálculo de Geopolítica (GDELT Project)
+GDELT registra eventos globales en tiempo real (guerras, catástrofes, conflictos). El algoritmo:
+1. Consulta los últimos 7 días de eventos con intensidad media y alta
+2. Penaliza el índice según frecuencia de eventos negativos
+3. Sin eventos = 50 (neutral); conflictos activos = < 20 (miedo extremo)
+4. Incluye fallback automático si GDELT no responde
 
 ---
 
-## 📊 TAB PORTFOLIO — Funciones Completas
+## 5. BANNER FUTUROS & MACRO
 
-### 1. RESUMEN DE CARTERA (Header)
-- **VALOR TOTAL**: Suma de valor actual (precio de mercado × cantidad)
-- **P&L USD**: Ganancia/pérdida en dólares desde precio de compra
-- **P&L %**: Variación porcentual global
-- **ACTIVOS**: Cantidad de activos distintos
-- **MEJOR**: Activo con mayor % de ganancia
+Presente en **Portafolio** y **Mercados**. Muestra en tiempo real (Yahoo Finance):
 
-### 2. BANNER MERCADOS GLOBALES
-11 mercados con estado ABIERTO/CERRADO + tiempo restante. Configurable con toggle + localStorage.
-
-Mercados: 🇺🇸 EEUU | 🇦🇷 ARG | 🇧🇷 BRASIL | 🇬🇧 LONDRES | 🇪🇸 ESPAÑA | 🇩🇪 ALEMANIA | 🇫🇷 FRANCIA | 🇯🇵 JAPÓN | 🇨🇳 CHINA | 🇭🇰 HONG KONG | 🌏 ASIA
-
-### 3. BANNER FUTUROS & MACRO
-11 instrumentos en tiempo real: ES=F, NQ=F, YM=F, RTY=F, GC=F, CL=F, SI=F, ^TNX, ^IRX, DX-Y.NYB, ^VIX. Actualización cada 60 segundos.
-
-### 4. AUREX PULSE™ (ver sección completa arriba)
-Gauge con 14 variables. Disponible en Portfolio Y Mercados.
-
-### 5. TERMÓMETRO DE RIESGO
-Barra que muestra distribución del capital por señal IA: ALCISTA | ALTA CONV-IA | BAJISTA | SIN SEÑAL. Texto educativo dinámico + botón ? con popup explicativo.
-
-### 6. LISTADO DE ACTIVOS (2 líneas por fila)
-- Línea 1: Logo + Símbolo + Categoría + Valor actual USD + botón eliminar
-- Línea 2: Cantidad @ precio + % cambio + tabs 24h|7d|1m|3m|1y
-- Mercado cerrado: % en gris con etiqueta "ult.cierre"
-
-### 7. PANEL DE DETALLE DEL ACTIVO (5 bloques)
-- **Bloque 1**: Precio compra | Cantidad | P&L USD | Fecha entrada | Mín 52s | Máx 52s
-- **Bloque 2**: Barra 52 semanas con texto interpretativo (🟢 Zona Baja / 🟡 Zona Media / 🔴 Zona Alta)
-- **Bloque 3**: Señal IA (ALCISTA/BAJISTA/ALTA CONV-IA) con probabilidades
-- **Bloque 4**: 8 variables del algoritmo IA con valores en tiempo real
-- **Bloque 5**: Simulador de Escenarios (slider -50%/+50% → nuevo precio, P&L, impacto portfolio)
+| Chip | Instrumento | Ticker |
+|------|-------------|--------|
+| S&P500 | S&P 500 Spot | ^GSPC |
+| ES=F | S&P 500 Futuro | ES=F |
+| Nasdaq | Nasdaq Composite | ^IXIC |
+| NQ=F | Nasdaq Futuro | NQ=F |
+| Dow | Dow Jones | ^DJI |
+| YM=F | Dow Futuro | YM=F |
+| Russell | Russell 2000 | ^RUT |
+| Oro | Gold Futuro | GC=F |
+| Plata | Silver Futuro | SI=F |
+| Petróleo | WTI Crude | CL=F |
+| Brent | Brent Crude | BNO |
 
 ---
 
-## 📈 TAB MERCADOS — Funciones Completas
+## 6. SEÑALES IA — MOTOR ALGORÍTMICO
 
-- **Banner Mercados Globales** — igual que Portfolio
-- **Banner Futuros & Macro** — igual que Portfolio (actualización 60s)
-- **AUREX PULSE™** — igual que Portfolio, cambia por categoría al cambiar de tab automáticamente
-- **Tabs de categorías**: Cripto | Acciones USA | Acciones ARG | Stable & DeFi | Futuros | Metales | Bonos
-- **Listado por categoría**: símbolo + nombre + precio + % 24h
+### 6.1 Tipos de señal
+- **BAJISTA** — precio cayendo, volumen vendedor, correlación negativa. IA: "alta probabilidad de que siga bajando"
+- **ALCISTA** — precio subiendo, volumen comprador, correlación positiva. IA: "alta probabilidad de que siga subiendo"
+- **CONF. IA (Confluencia IA)** — señal más valiosa y rara. El activo está en indecisión técnica extrema, punto de ruptura en cualquier dirección. Máx. 1-2 por día.
 
----
+### 6.2 Cómo leer las probabilidades
+- **BAJISTA 75%** = 75% de probabilidad de que el precio siga bajando en las próximas 24-48hs
+- **ALCISTA 68%** = 68% de probabilidad de subida en próximas 24-48hs
+- **ALTA CONV-IA 85% ALCISTA** = señal más fuerte del día, 85% de convicción
+- **Rango realista:** 55% a 88%. Nunca < 52% (sin señal) ni > 90% (certeza imposible)
 
-## 🤖 MOTOR DE SEÑALES IA — Variables y Probabilidades
-
-### Las 3 señales
-- **BAJISTA**: Momentum negativo claro. Precio cayendo, volumen vendedor. IA: "alta probabilidad de que siga bajando".
-- **ALCISTA**: Momentum positivo claro. Precio subiendo, volumen comprador. IA: "alta probabilidad de que siga subiendo".
-- **ALTA CONV-IA**: Señal más valiosa y rara. Indecisión técnica extrema. A punto de romper fuerte en alguna dirección. 1-2 activos máximo por día.
-
-### Las 8 variables del algoritmo IA
-| # | Variable | Fuente | Lógica |
-|---|---|---|---|
-| 1 | RSI Simulado | Binance/Yahoo | Momentum vs hace 24h. Sobrecomprado/sobrevendido. |
-| 2 | Tendencia 24h | Binance/Yahoo | Variación % real. Dirección y fuerza. |
-| 3 | Volumen Relativo | Binance/Yahoo | Volumen actual vs promedio. Volumen alto + precio sube = señal fuerte. |
-| 4 | Volatilidad | Calculada | Amplitud del rango de precio. Alta volatilidad = ruptura inminente. |
-| 5 | Correlación de Mercado | Binance + Yahoo | Si BTC sube → altcoins suelen seguir. Si S&P500 cae → acciones correlacionan. |
-| 6 | Oro y Petróleo | Yahoo Finance | Oro alto = aversión riesgo = presión bajista. Petróleo alto = inflación = presión FED. |
-| 7 | Dato Macro del Día | FRED API | Fed, IPC, PBI, empleo. Aumenta incertidumbre. |
-| 8 | Earnings Proximity | Yahoo Finance | Balance en próximos 7 días → aumenta volatilidad esperada. |
-
-### Probabilidades
-- Rango realista: **55% a 88%**. Nunca < 52% (sin señal) ni > 90% (certeza imposible).
-- BAJISTA 75% = 75% de probabilidad de que el precio siga bajando en 24-48hs
-- ALCISTA 68% = 68% de probabilidad de suba en próximas 24-48hs
-- ALTA CONV-IA 85% ALCISTA = 85% de confianza en movimiento fuerte inminente con dirección confirmada
+### 6.3 Variables del algoritmo IA (en implementación)
+1. **RSI14 real** — calculado desde 16 velas diarias (Binance klines para cripto, Yahoo range=30d para acciones)
+2. **Tendencia multiperiodo** — comparación 1d/7d/30d
+3. **Volumen real** — ratio volumen actual vs promedio 14 días
+4. **Momentum precio** — variación % 24h normalizada
+5. **Correlación BTC** — para cripto: correlación con BTC últimos 7 días
+6. **Señal MACD** — dirección de la divergencia
+7. **Soporte/Resistencia** — distancia % al nivel técnico más cercano
+8. **Macro contexto** — alineación con índice AUREX PULSE
 
 ---
 
-## 🛠️ ESPECIFICACIONES TÉCNICAS
+## 7. RSI14 REAL — IMPLEMENTACIÓN TÉCNICA
 
-### Stack
-- Frontend: Vanilla HTML5 / CSS3 / JavaScript ES2020+
-- Hosting: GitHub Pages
-- Base de datos: Supabase (PostgreSQL + RLS)
-- Auth: Supabase Auth (anónima + email/password)
+### 7.1 Fuentes de datos
+- **Cripto:** Binance klines API (/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=16)
+- **Acciones/ETFs:** Yahoo Finance chart API (interval=1d&range=30d)
 
-### APIs utilizadas
-| API | Datos | Frecuencia |
-|---|---|---|
-| Binance /ticker/24hr | Precio, % 24h, volumen cripto | Cada 30s |
-| Binance /klines?interval=1w&limit=52 | Min/Max 52 semanas cripto | Al abrir detalle |
-| Yahoo Finance /v8/finance/chart | Precio, meta, histórico acciones/ETFs | Cada 60s |
-| Yahoo Finance ^VIX, ^GSPC | VIX + S&P500 para AUREX PULSE | Cada 5min |
-| Yahoo Finance ES=F, NQ=F, GC=F... | Futuros, commodities, bonos | Cada 60s |
-| FRED API (stlouisfed.org) | Tasa Federal Funds Rate | Cada 5min |
-| GDELT Project API v2 | Tensión geopolítica global | Cada 5min |
-| Supabase | Portfolio usuario (CRUD) | En tiempo real |
+### 7.2 Cálculo RSI14
+```
+RSI = 100 - (100 / (1 + RS))
+RS = Promedio de ganancias (14 días) / Promedio de pérdidas (14 días)
+```
+- Se obtienen los últimos 16 cierres diarios
+- Se calculan 15 variaciones día a día
+- Se separan ganancias y pérdidas
+- Se promedian con suavizado Wilder (EMA exponencial)
 
-### Caches en memoria
-- window._pulseRaw: datos crudos de las 14 variables (refresh 5min)
-- window._pulseCache: scores calculados por categoría (GLOBAL/CRIPTO/ACCIONES/COMOD/FUTUROS)
-- window._futuresCache: datos del banner futuros (refresh 60s)
-- window._pcPrices: precios actuales del portfolio
-- window._iaSignals: señales IA (refresh 5min)
+### 7.3 Cache en tiempo de sesión
+Los valores RSI se cachean en `window._rsiCache[symbol]` para no refetchar en cada render. En producción hay hasta **74 activos** en cache simultáneamente.
 
----
-
-## ✅ FUNCIONES IMPLEMENTADAS
-
-| Función | Estado |
-|---|---|
-| Modales centrados (agregar activo + detalle) | ✅ |
-| Banner mercados globales 11 países | ✅ |
-| Banner Futuros & Macro (11 instrumentos) | ✅ |
-| **AUREX PULSE™ — Gauge SVG** | ✅ |
-| **AUREX PULSE™ — 12 variables activas** | ✅ |
-| **AUREX PULSE™ — Macro FED (FRED API)** | ✅ |
-| **AUREX PULSE™ — Geopolítica (GDELT)** | ✅ |
-| **AUREX PULSE™ — Filtros por categoría** | ✅ |
-| **AUREX PULSE™ — Cambia por tab en Mercados** | ✅ |
-| **AUREX PULSE™ — Botón "Ver variables" visible** | ✅ |
-| **AUREX PULSE™ — Asterisco con aclaración** | ✅ |
-| Termómetro de Riesgo con texto educativo + ? | ✅ |
-| Listado 2 líneas (logos + tabs iPhone) | ✅ |
-| Tabs 24h | 7d | 1m | 3m | 1y | ✅ |
-| Indicador 52 semanas con texto interpretativo | ✅ |
-| Mín/Máx 52 semanas en grid de detalle | ✅ |
-| Simulador de Escenarios (slider -50%/+50%) | ✅ |
-
-## 🔜 ROADMAP PRÓXIMO
-
-| Función | Fecha |
-|---|---|
-| Señales IA con RSI real + tendencia + volumen | Lun 30/03 |
-| Watchlist persistente (botón estrella) | Mar 31/03 |
-| Revisión conjunta Semana 1 | Mié 01/04 |
-| Conversor — rotación de activos simulada | Semana 2 |
+### 7.4 Interpretación del RSI
+| Valor | Zona | Señal |
+|-------|------|-------|
+| < 30 | Sobreventa extrema | Posible reversión alcista |
+| 30-45 | Territorio bajista | Confirmación bajista |
+| 45-55 | Neutral | Sin señal clara |
+| 55-70 | Territorio alcista | Confirmación alcista |
+| > 70 | Sobrecompra | Posible reversión bajista |
 
 ---
 
-## 💡 PROPUESTA DE VALOR PARA INVERSORES
+## 8. BANNER DE NOTICIAS (EVENTOS) EN MERCADOS
 
-AUREX combina en una sola app lo que antes requería 4 herramientas:
-1. **Bloomberg Terminal** → futuros, bonos, VIX, mercados globales en tiempo real
-2. **TradingView** → análisis técnico, señales, indicadores visuales
-3. **Binance App + CNN** → Fear & Greed Index, pero AUREX tiene 14X variables
-4. **Portfolio tracker** → P&L, simulador de escenarios, termómetro de riesgo
-
-Todo mobile-first, diseñado para ser entendido por principiantes sin sacrificar la profundidad que exigen los expertos.
-
-**Diferenciador principal:** AUREX PULSE™ es el único índice de sentimiento del mercado que combina cripto, acciones, futuros, commodities, macro FED y geopolítica en un solo número — con texto educativo en cada indicador.
+Ticker horizontal animado que muestra eventos de alto y medio impacto registrados por el motor de Señales IA (`window._IA_EVENTOS`). Idéntico al banner que corre en la tab Señales IA. Muestra el tipo de evento y descripción. Tiene botón X para cerrar. Se actualiza en tiempo real con cada refresh de Señales IA.
 
 ---
 
-*AUREX-PORTFOLIO-DOC.md v3.0 — Marzo 2026*
-*Mantenido automáticamente por AUREX Dev System*
+## 9. TIMEFRAMES EN MERCADOS
+
+### 9.1 Opciones disponibles
+| Botón | Rango Yahoo | Descripción |
+|-------|-------------|-------------|
+| **24h** | range=2d, interval=1d | Variación respecto al cierre anterior |
+| **7d** | range=7d, interval=1d | Variación últimos 7 días |
+| **1m** | range=1mo, interval=1d | Variación último mes |
+| **3m** | range=3mo, interval=1wk | Variación últimos 3 meses |
+| **1a** | range=1y, interval=1wk | Variación último año |
+
+### 9.2 Indicador de mercado cerrado
+Cuando el mercado está **fuera de horario** (marketState = CLOSED / PRE / POST), aparece la etiqueta **"Ult. cierre"** en color dorado (D4A017) en negrita debajo del precio, indicando que el valor mostrado es el último precio de cierre registrado.
+
+---
+
+## 10. EDITAR ORDEN EN MERCADOS
+
+Al hacer click en **"Editar orden"**, se activa el modo de reordenamiento:
+- Aparece banner superior: "Arrastrar para reordenar — Tocar para ocultar"
+- Cada activo muestra botones **▲** (subir) y **▼** (bajar)
+- Los cambios de orden son inmediatos y visuales dentro de la sesión
+- Al hacer click en **"Listo"**, se desactiva el modo edición y los botones desaparecen
+
+---
+
+## 11. INDICADORES DE MERCADO DEL MUNDO
+
+Banner superior en ambas tabs mostrando el estado de 6 bolsas globales:
+- 🇺🇸 EEUU (NYSE/NASDAQ)
+- 🇦🇷 ARG (BYMA)
+- 🇪🇸 ESPAÑA (BME)
+- 🇯🇵 JAPÓN (TSE)
+- 🇬🇧 UK (LSE)
+- 🇩🇪 ALEMANIA (XETRA)
+
+**Estados:** 🟢 ABIERTO (verde) / 🔴 CERRADO (rojo) con cuenta regresiva hasta apertura/cierre.
+
+---
+
+## 12. HISTORIAL DE COMMITS (SESIONES TÉCNICAS)
+
+| SHA | Descripción |
+|-----|-------------|
+| ec3818f3 | Fear&Greed gauge + Futures/Indices/Bonds banner Portfolio & Mercados |
+| babb609b | AUREX PULSE 14X — 12 variables, filtros por categoría, asterisco |
+| c85df014 | AUREX PULSE Commit B — FRED API + GDELT integrados con fallback |
+| f2d82a99 | Compact Portfolio, news banner Mercados, RSI14 real (74 activos) |
+| b3e1e541 | Mercados: Ult.cierre label, timeframes 3m/1a, stf(), toggleEdit() flechas |
+
+---
+
+## 13. ROADMAP
+
+### Semana del 30/03 — 05/04/2026
+- ✅ RSI14 real implementado
+- ✅ Timeframes 3m y 1a en Mercados
+- ✅ Indicador "Ult. cierre" mercado cerrado
+- ✅ Editar orden con flechas ▲▼
+- 🔄 **Señales IA completas** (algoritmo 8 variables: RSI + tendencia + volumen)
+- ⬜ Watchlist persistente
+- ⬜ Revisión conjunta Semana 1
+
+### Semana 2 — 07/04/2026+
+- ⬜ Conversor de activos
+- ⬜ Alertas de precio (push notifications)
+- ⬜ Portafolio social / comparación con benchmark
+
+---
+
+*AUREX — Inteligencia financiera al alcance de todos*  
+*Documentación mantenida en GitHub: AUREX-PORTFOLIO-DOC.md*
