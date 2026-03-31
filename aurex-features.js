@@ -1529,6 +1529,7 @@ window.deletePortfolioItem = function(id){
 // Inicializar portfolio cuando hay sesión
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
+    if(window._initPortDropdowns) window._initPortDropdowns();
     if(window._supabase){
       window._supabase.auth.onAuthStateChange(function(event, session){
         if(event === 'SIGNED_IN') loadPortfolioSupa();
