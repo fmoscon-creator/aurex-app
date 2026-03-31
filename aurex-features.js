@@ -712,6 +712,7 @@ function _renderPortfolioItems(items){
         '</div>' +
         '<div style="font-size:11px;color:#8B949E;margin-top:2px;">'+item.cantidad+' u. @ $'+fmtNum(item.precio_compra)+'</div>' +
       '</div>' +
+      '<div style="display:flex;align-items:center;justify-content:center;min-width:48px;max-width:64px;">'+_buildDotsHTML(_getActivoScores(item.simbolo))+'</div>' +
       '<div style="margin-left:auto;text-align:right;flex-shrink:0;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$'+fmtNum(valor)+'</div>' +
       '</div>' +
