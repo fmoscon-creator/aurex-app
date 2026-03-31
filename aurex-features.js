@@ -730,6 +730,7 @@ function _renderPortfolioItems(items){
   '</div>';
   }).join('');
   _updateTotals(items);
+  setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 50);
 }
 
 
