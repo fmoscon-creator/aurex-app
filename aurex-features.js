@@ -955,7 +955,7 @@ function _renderThermoRisk(items){
   if(pAlc>0) segs.push({p:pAlc,c:'#3FB950',l:'ALCISTA'});
   if(pHC>0)  segs.push({p:pHC, c:'#D4A017',l:'ALTA CONV-IA'});
   if(pBaj>0) segs.push({p:pBaj,c:'#FF4444',l:'BAJISTA'});
-  if(pSin>0) segs.push({p:pSin,c:'#333',   l:'SIN SEÑAL'});
+  if(pSin>0) segs.push({p:pSin,c:'#6E7681',l:'SIN SEÑAL'});
   var bar = segs.map(function(s){ return '<div style="width:'+s.p.toFixed(0)+'%;background:'+s.c+';height:100%;"></div>'; }).join('');
   var leg = segs.filter(function(s){ return s.p>1; }).map(function(s){
     return '<span style="color:'+s.c+';font-size:10px;margin-right:8px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+s.c+';margin-right:3px;vertical-align:middle;"></span>'+s.l+' '+s.p.toFixed(0)+'%</span>';
@@ -967,14 +967,14 @@ function _renderThermoRisk(items){
   else if(pSin >= 80) explanation = '💤 Sin señales activas hoy para tus activos.';
   else explanation = 'Tu cartera tiene exposición mixta. Revisá cada activo para más detalle.';
   el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-    '<div style="font-size:10px;color:#8B949E;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
-    '<div style="font-size:8px;color:#666;letter-spacing:.5px;margin-top:1px;font-weight:500;">DISTRIBUC CAPITAL DE LA CARTERA</div>' +
+    '<div style="font-size:10px;color:#C9D1D9;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+    '<div style="font-size:8px;color:#8B949E;letter-spacing:.5px;margin-top:1px;font-weight:500;">DISTRIBUC CAPITAL DE LA CARTERA</div>' +
     '' +
     '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
     '<div style="height:6px;border-radius:4px;overflow:hidden;display:flex;background:#21262D;">'+bar+'</div>' +
     '<div style="margin-top:3px;display:flex;justify-content:space-between;align-items:flex-end;">' +
-    '<div style="font-size:9px;color:#555;flex:1;">'+explanation+'</div>' +
+    '<div style="font-size:9px;color:#8B949E;flex:1;">'+explanation+'</div>' +
     '</div>' +
     '<div style="margin-top:3px;">'+leg+'</div>';
 }
@@ -2997,7 +2997,7 @@ function _renderFearGreed(containerId) {
   cats.forEach(function(c) {
     var active = c===cat;
     var bg = active ? d.color : '#21262D';
-    var col = active ? '#0D1117' : '#8B949E';
+    var col = active ? '#0D1117' : '#C9D1D9';
     var fw = active ? '700' : '400';
     filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:8px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:4px;padding:2px 5px;cursor:pointer;white-space:nowrap;flex-shrink:0;">'+catLabels[c]+'</div>';
   });
@@ -3022,7 +3022,7 @@ function _renderFearGreed(containerId) {
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
         '</div>' +
       '</div>' +
-      '<div style="font-size:8px;color:#555;margin-top:5px;line-height:1.3;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
+      '<div style="font-size:8px;color:#8B949E;margin-top:5px;line-height:1.3;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
     '</div>';
   // Attach event listeners after render (avoids inline onclick single-quote issue)
   var filterEl = document.getElementById('pulse-filters-'+elId);
