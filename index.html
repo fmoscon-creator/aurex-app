@@ -575,14 +575,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="flex:1;background:#0D1117;border-radius:10px;padding:10px 12px;border:1px solid #D4A01740">
       <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;cursor:pointer;" onclick="_cyclePortCurrency()">
         <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;">Valor total</div>
-        <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 5px;border-radius:4px;">USD</div>
+        <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 5px;border-radius:4px;;cursor:pointer" onclick="_cyclePortCurrency()">USD</div>
       </div>
       <div id="port-total" style="font-size:22px;font-weight:500;color:#E6EDF3;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
       <div id="port-pnl-row" style="display:flex;align-items:center;gap:6px;margin-top:3px">
         <span id="port-pnl-usd" style="font-size:11px;font-weight:600;color:#3FB950">+$0</span>
         <span id="port-pnl-pct" style="font-size:10px;padding:1px 6px;border-radius:6px;background:#1A3A2A;color:#3FB950">+0%</span>
         <span style="font-size:9px;color:#555">desde compra</span>
-      </div>
+      </div><div id="port-period-row" style="display:flex;gap:5px;margin:6px 0 0 0;flex-wrap:wrap"><div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#F59E0B;color:#000;font-weight:700">24h</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'7d')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">7d</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1m</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1a</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'max')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">Compra</div></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px">
       <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center;min-width:64px">
