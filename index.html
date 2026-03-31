@@ -410,7 +410,6 @@ if (SUPABASE_URL && SUPABASE_ANON_KEY) {
       if (event === 'SIGNED_IN') {
         console.log('[Aurex Auth] Usuario logueado:', _currentUser.email);
         upsertUserDB(_currentUser);
-        if(typeof navTo==='function') navTo('portfolio');
       }
       if (event === 'SIGNED_OUT') {
         console.log('[Aurex Auth] Usuario deslogueado');
@@ -1047,7 +1046,7 @@ window._mktOpenDetail = function(idx){
   </div>
   <!-- Ver Variables button -->
   <div style="display:flex;justify-content:flex-end;margin-top:8px">
-    <button onclick="showIAVariablesPopup()" style="background:#21262D;border:1px solid #D4A01740;border-radius:8px;padding:5px 10px;color:#D4A017;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0)">ÃÂ¢ÃÂÃÂ¹ÃÂ¯ÃÂ¸ÃÂ Ver Variables del Modelo</button>
+    <button onclick="showIAVariablesPopup()" style="background:#21262D;border:1px solid #D4A01740;border-radius:8px;padding:5px 10px;color:#D4A017;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0)">Ã¢ÂÂ¹Ã¯Â¸Â Ver Variables del Modelo</button>
   </div>
 </div>
 
@@ -1105,16 +1104,7 @@ window._mktOpenDetail = function(idx){
   <div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div>
   <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos<br><span style="color:#D4A017;font-size:11px">Proximamente</span></div>
 </div>
-
-<div id="alertas-cel-banner" style="margin:12px 14px 0;background:#1A1200;border:1px solid #D4A01760;border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:10px;">
-  <span style="font-size:18px;flex-shrink:0;">ð±</span>
-  <div style="flex:1;min-width:0;">
-    <div style="font-size:12px;font-weight:700;color:#D4A017;margin-bottom:2px;">RecibÃ­ alertas por WhatsApp</div>
-    <div style="font-size:10px;color:#8B949E;">Agrega tu celular en Perfil para recibir alertas de precio al instante.</div>
-  </div>
-  <div onclick="navTo('perfil')" style="background:#D4A017;color:#0D1117;border:none;border-radius:7px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;-webkit-tap-highlight-color:rgba(0,0,0,0);">Ir a Perfil</div>
-</div></div>
-
+</div>
 
 <div id="screen-perfil" class="screen" style="display:none">
 <style>
@@ -1209,21 +1199,10 @@ window._mktOpenDetail = function(idx){
       <input id="celular-input" type="tel" placeholder="+54 9 11 1234-5678" style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none;" oninput="syncCelularDisplay()" />
       <button onclick="authSaveCelular()" style="background:#c9a84c;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:10px 16px;cursor:pointer;">Guardar</button>
     </div>
-    <div style="font-size:11px;color:#666;margin-top:6px;">* Necesario para recibir alertas automÃÂ¡ticas</div>
+    <div style="font-size:11px;color:#666;margin-top:6px;">* Necesario para recibir alertas automÃ¡ticas</div>
   </div>
-  
-<!-- CELULAR OPTATIVO -->
-<div id="perfil-cel-section" style="margin:0 14px 12px;background:#161B22;border:1px solid #21262D;border-radius:10px;padding:12px 14px;">
-  <div style="font-size:11px;font-weight:700;color:#8B949E;letter-spacing:0.5px;margin-bottom:8px;">ð± CELULAR (OPCIONAL)</div>
-  <div style="font-size:10px;color:#555;margin-bottom:8px;">Para recibir alertas de precio por WhatsApp. Opcional.</div>
-  <div style="display:flex;gap:8px;align-items:center;">
-    <input id="perfil-celular-input" type="tel" placeholder="+54 9 11 XXXX-XXXX" style="flex:1;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:13px;outline:none;" />
-    <button onclick="perfilGuardarCelular()" style="background:#3FB950;color:#0D1117;border:none;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;flex-shrink:0;">Guardar</button>
-  </div>
-  <div id="perfil-cel-ok" style="display:none;font-size:11px;color:#3FB950;margin-top:6px;">â Celular guardado</div>
-</div>
-<div id="auth-msg" class="auth-msg"></div>
-  <button onclick="logoutUser()" style="width:100%;border:1.5px solid #e74c3c;background:transparent;color:#e74c3c;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;">Cerrar sesiÃÂ³n</button>
+  <div id="auth-msg" class="auth-msg"></div>
+  <button onclick="logoutUser()" style="width:100%;border:1.5px solid #e74c3c;background:transparent;color:#e74c3c;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;">Cerrar sesiÃ³n</button>
 </div>
 <script>
 (function(){
@@ -1243,7 +1222,7 @@ window.authDoLogin=function(){
   var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
   var email=document.getElementById('auth-email').value.trim();
   var pass=document.getElementById('auth-pass').value;
-  if(!email||!pass){showAuthMsg('CompletÃÂ¡ todos los campos');return;}
+  if(!email||!pass){showAuthMsg('CompletÃ¡ todos los campos');return;}
   showAuthMsg('Ingresando...');
   c.auth.signInWithPassword({email:email,password:pass}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('');}});
 };
@@ -1252,8 +1231,8 @@ window.authDoRegister=function(){
   var email=document.getElementById('reg-email').value.trim();
   var pass=document.getElementById('reg-pass').value;
   var cel=document.getElementById('reg-celular').value.trim();
-  if(!email||!pass){showAuthMsg('CompletÃÂ¡ email y contraseÃÂ±a');return;}
-  if(pass.length<6){showAuthMsg('La contraseÃÂ±a debe tener al menos 6 caracteres');return;}
+  if(!email||!pass){showAuthMsg('CompletÃ¡ email y contraseÃ±a');return;}
+  if(pass.length<6){showAuthMsg('La contraseÃ±a debe tener al menos 6 caracteres');return;}
   showAuthMsg('Creando cuenta...');
   c.auth.signUp({email:email,password:pass,options:{data:{celular:cel||''}}}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('\u00a1Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}});
 };
@@ -1261,13 +1240,13 @@ window.authSaveCelular=function(){
   var c=getSB();
   var msgEl=document.getElementById('auth-msg');
   if(!c){
-    if(msgEl){msgEl.textContent='Error: sesiÃÂ³n no iniciada';msgEl.style.color='#e74c3c';}
+    if(msgEl){msgEl.textContent='Error: sesiÃ³n no iniciada';msgEl.style.color='#e74c3c';}
     return;
   }
   var celInput=document.getElementById('celular-input');
   var cel=celInput?celInput.value.trim():'';
   if(!cel){
-    if(msgEl){msgEl.textContent='IngresÃÂ¡ un nÃÂºmero de celular';msgEl.style.color='#e74c3c';}
+    if(msgEl){msgEl.textContent='IngresÃ¡ un nÃºmero de celular';msgEl.style.color='#e74c3c';}
     return;
   }
   if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
@@ -1299,7 +1278,7 @@ window.updateUserUI=function(user){
   var emailEl=document.getElementById('auth-email-txt');
   var avatarEl=document.getElementById('auth-avatar-initial');
   var celEl=document.getElementById('auth-celular-txt');
-  // Si el usuario es anÃÂ³nimo, tratarlo como no logueado
+  // Si el usuario es anÃ³nimo, tratarlo como no logueado
   var isAnon=user&&(user.is_anonymous===true||(user.identities&&user.identities.length===0&&!user.email));
   if(user&&!isAnon){
     document.getElementById('auth-guest').style.display='none';
@@ -1604,46 +1583,6 @@ document.addEventListener("DOMContentLoaded", function(){
     if(ob) ob.style.display = "block";
     if(ph) ph.style.display = "none";
   }
-});
-
-
-// === CELULAR FUNCTIONS ===
-window.perfilGuardarCelular = function(){
-  var inp = document.getElementById('perfil-celular-input');
-  if(!inp) return;
-  var val = inp.value.trim();
-  if(!val){ inp.style.borderColor='#FF4444'; setTimeout(function(){ inp.style.borderColor='#30363D'; }, 1500); return; }
-  localStorage.setItem('aurex_wa_numero', val);
-  if(window._supabase){
-    window._supabase.auth.getSession().then(function(res){
-      if(res.data && res.data.session){
-        var uid = res.data.session.user.id;
-        var token = res.data.session.access_token;
-        fetch('https://dklljnfhlzmfsfmxrpie.supabase.co/rest/v1/usuarios?id=eq.'+uid, {
-          method:'PATCH',
-          headers:{'apikey':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k','Authorization':'Bearer '+token,'Content-Type':'application/json'},
-          body: JSON.stringify({celular: val})
-        }).catch(function(){});
-      }
-    });
-  }
-  var ok = document.getElementById('perfil-cel-ok');
-  if(ok){ ok.style.display='block'; setTimeout(function(){ ok.style.display='none'; }, 3000); }
-  // Cargar valor actual si existe
-  var savedVal = localStorage.getItem('aurex_wa_numero');
-  if(savedVal && inp) inp.value = savedVal;
-};
-window.alertasGuardarCelular = window.perfilGuardarCelular;
-
-// Auto-cargar celular guardado en perfil
-document.addEventListener('DOMContentLoaded', function(){
-  setTimeout(function(){
-    var inp = document.getElementById('perfil-celular-input');
-    if(inp){
-      var saved = localStorage.getItem('aurex_wa_numero');
-      if(saved) inp.value = saved;
-    }
-  }, 1500);
 });
 </script>
 </body>
