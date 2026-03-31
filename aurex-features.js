@@ -758,7 +758,7 @@ window._updatePortTotalDisplay = function() {
     if(badge) { badge.innerHTML = 'USDT <span style="font-size:7px;color:#555;">▾</span>'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
     if(el) el.textContent = 'USD ' + fmtNum(total);
-    if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
+    if(badge) { badge.innerHTML = 'USD <span style="font-size:7px;color:#555;">\u25be</span>'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
   }
 };
 
