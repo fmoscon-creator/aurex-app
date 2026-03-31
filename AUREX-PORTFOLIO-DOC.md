@@ -312,3 +312,57 @@ Banner superior en ambas tabs mostrando el estado de 6 bolsas globales:
 
 *AUREX — Inteligencia financiera al alcance de todos*  
 *Documentación mantenida en GitHub: AUREX-PORTFOLIO-DOC.md*
+
+
+---
+
+## ⛔ REGLAS CRÍTICAS DE TRABAJO — APRENDIDAS EN PRODUCCIÓN
+
+### ERROR 31/03/2026 — HTML roto por div no cerrado
+
+**Qué pasó:**
+Al implementar el dropdown de moneda (USD ▾) en index.html, se agregó un `<div style="position:relative;">` como wrapper pero NO se agregó el `</div>` de cierre correspondiente. Esto cascadeó y rompió toda la estructura del DOM — todas las tabs se veían negras y vacías en iPhone aunque en desktop se veía bien.
+
+**Causa raíz:**
+Se reemplazó un string de HTML en memoria (JavaScript) usando `.replace()` sin verificar que la estructura de divs abiertos/cerrados quedara balanceada. El browser desktop es más tolerante con HTML mal formado que Safari iOS, por eso no se detectó en el preview del chat.
+
+**Regla aprendida:**
+> ⛔ NUNCA modificar HTML del index.html en memoria con .replace() sin contar manualmente los `<div>` abiertos y cerrados del bloque nuevo. Antes de subir cualquier cambio de HTML, verificar que la cantidad de `<div>` y `</div>` del bloque nuevo sea igual.
+
+---
+
+### REGLAS OBLIGATORIAS ANTES DE CADA COMMIT
+
+1. **NUNCA subir cambios de HTML sin verificar balance de divs:**
+   ```javascript
+   // Contar divs en el bloque nuevo antes de subir
+   const opens = (newBlock.match(/<div/g)||[]).length;
+   const closes = (newBlock.match(/<\/div>/g)||[]).length;
+   console.log('divs abiertos:', opens, 'cerrados:', closes); // deben ser iguales
+   ```
+
+2. **SIEMPRE hacer preview visual antes de commitear cualquier cambio de layout** — no solo el área modificada sino hacer scroll completo para ver que el resto de la app no se rompió.
+
+3. **NUNCA reemplazar funciones JS en memoria si no se confirmó que el string viejo se encontró exactamente** (oldBlock found: true antes de proceder).
+
+4. **SIEMPRE verificar en consola que las funciones nuevas están definidas** después de recargar:
+   ```javascript
+   typeof window._toggleCurrDropdown // debe ser "function", no "undefined"
+   ```
+
+5. **ENCODING:** SIEMPRE usar TextEncoder → Uint8Array → btoa en chunks de 8192. NUNCA btoa(unescape(encodeURIComponent())).
+
+6. **ANTES de hacer cualquier commit** de index.html o aurex-features.js, leer el archivo actual de GitHub con su SHA y trabajar sobre esa base — no sobre versiones en memoria de sesiones anteriores.
+
+7. **Cuando algo se rompe en producción:** NO hacer múltiples reverts encadenados. Identificar el SHA del último commit bueno, obtener el contenido de ese SHA específico, y subirlo en UN solo commit limpio.
+
+---
+
+### ÚLTIMO ESTADO BUENO CONOCIDO (31/03/2026 mañana)
+
+| Archivo | Commit SHA | Descripción |
+|---------|------------|-------------|
+| index.html | 57cbeb37 | Punto 10+11: badge USD + botones periodo |
+| aurex-features.js | fc01542f | Punto 10+11: funciones portTotalPeriod + _cyclePortCurrency |
+| Versión cargada | v=1774940765002 | Cache buster activo |
+
