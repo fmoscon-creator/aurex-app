@@ -286,7 +286,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     history.replaceState(null,'',u.toString());
   }
 
-  var _done = localStorage.getItem('aurex_onboarding_done')==='1';
+  localStorage.setItem('aurex_onboarding_done','1'); var _done = true;
 
   // 2. Mover phone al body
   function _movePhone(){
