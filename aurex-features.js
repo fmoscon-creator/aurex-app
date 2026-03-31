@@ -769,6 +769,65 @@ window._cyclePortCurrency = function() {
   window._updatePortTotalDisplay();
 };
 
+window.portTotalPeriod = function(btn, period) {
+  // Update active button styles
+  var btns = document.querySelectorAll('#port-period-row .port-period-btn');
+  btns.forEach(function(b) {
+    b.style.background = '#222';
+    b.style.color = '#aaa';
+    b.style.fontWeight = '400';
+    b.classList.remove('on');
+  });
+  btn.style.background = '#F59E0B';
+  btn.style.color = '#000';
+  btn.style.fontWeight = '700';
+  btn.classList.add('on');
+
+  var items = window._portItems;
+  var prices = window._IA_PRECIOS;
+  if(!items || !prices) return;
+
+  var totalNow = 0, totalBefore = 0;
+  var allHavePrev = true;
+
+  items.forEach(function(item) {
+    var p = prices[item.simbolo];
+    if(!p) return;
+    var qty = parseFloat(item.cantidad) || 0;
+    var pNow = parseFloat(p.precio) || 0;
+    totalNow += qty * pNow;
+
+    if(period === 'max') {
+      // Desde compra
+      var pBefore = parseFloat(item.precio_compra) || pNow;
+      totalBefore += qty * pBefore;
+    } else if(period === '24h') {
+      var p24 = parseFloat(p.precio24h) || pNow;
+      totalBefore += qty * p24;
+    } else {
+      // For 7d, 1m, 1y - use available data or fallback
+      var pPrev = parseFloat(p.precio24h) || pNow;
+      totalBefore += qty * pPrev;
+      allHavePrev = false;
+    }
+  });
+
+  var diffUSD = totalNow - totalBefore;
+  var diffPct = totalBefore > 0 ? ((totalNow - totalBefore) / totalBefore * 100) : 0;
+
+  var pnlUSD = document.getElementById('port-pnl-usd');
+  var pnlPct = document.getElementById('port-pnl-pct');
+  var pnlSpan = document.querySelector('#port-pnl-row span:last-child');
+
+  if(pnlUSD) pnlUSD.textContent = (diffUSD >= 0 ? '+' : '') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(pnlPct) pnlPct.textContent = (diffPct >= 0 ? '+' : '') + diffPct.toFixed(2) + '%';
+  if(pnlSpan) pnlSpan.textContent = period === 'max' ? 'desde compra' : period;
+
+  if(pnlUSD) pnlUSD.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
+  if(pnlPct) pnlPct.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
+};
+
+
 window.movePortfolioItem = function(id, direction){
   var items = window._portItems;
   if(!items) return;
