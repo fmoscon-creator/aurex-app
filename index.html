@@ -382,7 +382,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=1774961381605"></script>
+<script src="aurex-features.js?v=1774940765002"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -573,35 +573,16 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- RESUMEN TOTAL -->
   <div style="display:flex;gap:8px;align-items:stretch">
     <div style="flex:1;background:#0D1117;border-radius:10px;padding:10px 12px;border:1px solid #D4A01740">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;cursor:pointer;" onclick="_cyclePortCurrency()">
         <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;">Valor total</div>
-        <div style="position:relative;">
-          <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 6px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:2px;" onclick="_toggleCurrDropdown(event)">USD <span style="font-size:7px;color:#555;">▾</span></div>
-        <div id="port-curr-dropdown" style="display:none;position:absolute;left:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:8px;overflow:hidden;min-width:70px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:999;">
-          <div onclick="_selectPortCurr('USD')" style="padding:7px 12px;font-size:11px;color:#FFD700;font-weight:700;background:#2a2a3e;cursor:pointer;">USD ✓</div>
-          <div onclick="_selectPortCurr('BTC')" style="padding:7px 12px;font-size:11px;color:#ccc;cursor:pointer;">BTC</div>
-          <div onclick="_selectPortCurr('USDT')" style="padding:7px 12px;font-size:11px;color:#ccc;cursor:pointer;">USDT</div>
-        </div>
-        </div>
+        <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 5px;border-radius:4px;;cursor:pointer" onclick="_cyclePortCurrency()">USD</div>
       </div>
       <div id="port-total" style="font-size:22px;font-weight:500;color:#E6EDF3;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
-      <div id="port-pnl-row" style="display:flex;align-items:center;gap:6px;margin-top:3px;justify-content:space-between;">
-        <div style="display:flex;align-items:center;gap:6px;">
-          <span id="port-pnl-usd" style="font-size:11px;font-weight:600;color:#3FB950">+$0</span>
-          <span id="port-pnl-pct" style="font-size:10px;padding:1px 6px;border-radius:6px;background:#1A3A2A;color:#3FB950">+0%</span>
-        </div>
-        <div style="position:relative;">
-          <div id="port-period-badge" onclick="_togglePeriodDropdown(event)" style="font-size:10px;color:#F59E0B;border:1px solid #444;padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:#2a2a3e;">24h <span style="font-size:8px;color:#888;">▾</span></div>
-          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:110px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:999;">
-            <div onclick="_selectPortPeriod(this,'24h')" style="padding:8px 14px;font-size:12px;color:#F59E0B;font-weight:700;background:#2a2a3e;cursor:pointer;">24 horas ✓</div>
-            <div onclick="_selectPortPeriod(this,'7d')" style="padding:8px 14px;font-size:12px;color:#ccc;cursor:pointer;">7 días</div>
-            <div onclick="_selectPortPeriod(this,'1m')" style="padding:8px 14px;font-size:12px;color:#ccc;cursor:pointer;">1 mes</div>
-            <div onclick="_selectPortPeriod(this,'3m')" style="padding:8px 14px;font-size:12px;color:#ccc;cursor:pointer;">3 meses</div>
-            <div onclick="_selectPortPeriod(this,'1y')" style="padding:8px 14px;font-size:12px;color:#ccc;cursor:pointer;">1 año</div>
-            <div onclick="_selectPortPeriod(this,'buy')" style="padding:8px 14px;font-size:12px;color:#ccc;cursor:pointer;border-top:1px solid #333;">Desde compra</div>
-          </div>
-        </div>
-      </div>
+      <div id="port-pnl-row" style="display:flex;align-items:center;gap:6px;margin-top:3px">
+        <span id="port-pnl-usd" style="font-size:11px;font-weight:600;color:#3FB950">+$0</span>
+        <span id="port-pnl-pct" style="font-size:10px;padding:1px 6px;border-radius:6px;background:#1A3A2A;color:#3FB950">+0%</span>
+        <span style="font-size:9px;color:#555">desde compra</span>
+      </div><div id="port-period-row" style="display:flex;gap:5px;margin:6px 0 0 0;flex-wrap:wrap"><div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#F59E0B;color:#000;font-weight:700">24h</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'7d')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">7d</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1m</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1a</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'max')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">Compra</div></div>
     </div>
     <div style="display:flex;flex-direction:column;gap:6px">
       <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center;min-width:64px">
