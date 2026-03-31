@@ -755,7 +755,7 @@ window._updatePortTotalDisplay = function() {
     if(badge) { badge.textContent = 'BTC'; badge.style.color='#F7931A'; badge.style.borderColor='#F7931A40'; }
   } else if(cur === 'USDT') {
     if(el) el.textContent = 'â® ' + fmtNum(total);
-    if(badge) { badge.textContent = 'USDTâ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
+    if(badge) { badge.innerHTML = 'USDT <span style="font-size:7px;color:#555;">▾</span>'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
     if(el) el.textContent = 'USD ' + fmtNum(total);
     if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
