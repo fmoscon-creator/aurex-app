@@ -730,6 +730,7 @@ function _renderPortfolioItems(items){
   '</div>';
   }).join('');
   _updateTotals(items);
+  setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 50);
 }
 
 
@@ -2353,7 +2354,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       window._iaSignals = allSignals;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, false);
-      if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); }
+      if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
       return;
     }
     var batch = batches[batchIdx];
@@ -3227,3 +3228,198 @@ document.addEventListener('DOMContentLoaded', function(){
     setInterval(function(){ _fetchFuturesData().then(function(){ _renderFuturesBanner(); _renderFuturesBanner('mkt-futures-banner'); }); }, 60000);
   }, 1500);
 });
+
+
+// ============================================================
+// AUREX — Port Dropdowns: moneda y periodo (implementado via JS)
+// NO modifica index.html — todo via DOM manipulation
+// ============================================================
+
+window._initPortDropdowns = function() {
+
+  // --- 1. Eliminar texto fijo "desde compra" ---
+  var pnlRow = document.getElementById('port-pnl-row');
+  if(pnlRow) {
+    pnlRow.querySelectorAll('span').forEach(function(sp) {
+      if(sp.textContent.trim() === 'desde compra') sp.remove();
+    });
+  }
+
+  // --- 2. Eliminar fila extra de botones port-period-row ---
+  var periodRow = document.getElementById('port-period-row');
+  if(periodRow) periodRow.remove();
+
+  // --- 3. Agregar selector 24h a la derecha del % en port-pnl-row ---
+  if(pnlRow && !document.getElementById('port-period-badge')) {
+    pnlRow.style.cssText = 'display:flex;align-items:center;justify-content:space-between;margin-top:3px;';
+
+    var pnlUSD = document.getElementById('port-pnl-usd');
+    var pnlPct = document.getElementById('port-pnl-pct');
+    var usdClone = pnlUSD ? pnlUSD.cloneNode(true) : null;
+    var pctClone = pnlPct ? pnlPct.cloneNode(true) : null;
+
+    pnlRow.innerHTML = '';
+
+    var leftWrap = document.createElement('div');
+    leftWrap.style.cssText = 'display:flex;align-items:center;gap:6px;';
+    if(usdClone) { usdClone.id = 'port-pnl-usd'; leftWrap.appendChild(usdClone); }
+    if(pctClone) { pctClone.id = 'port-pnl-pct'; leftWrap.appendChild(pctClone); }
+    pnlRow.appendChild(leftWrap);
+
+    var rightWrap = document.createElement('div');
+    rightWrap.style.cssText = 'position:relative;';
+
+    var badge = document.createElement('div');
+    badge.id = 'port-period-badge';
+    badge.style.cssText = 'font-size:10px;color:#F59E0B;border:1px solid #444;padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:#2a2a3e;user-select:none;';
+    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">▾</span>';
+    badge.onclick = function(e) { e.stopPropagation(); window._togglePortPeriodDD(); };
+
+    var dd = document.createElement('div');
+    dd.id = 'port-period-dropdown';
+    dd.style.cssText = 'display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:120px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
+
+    var opts = [
+      {key:'24h',label:'24 horas'},
+      {key:'7d',label:'7 días'},
+      {key:'1m',label:'1 mes'},
+      {key:'3m',label:'3 meses'},
+      {key:'1y',label:'1 año'},
+      {key:'buy',label:'Desde compra',border:true}
+    ];
+    opts.forEach(function(o, i) {
+      var item = document.createElement('div');
+      item.dataset.key = o.key;
+      item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;' +
+        (i===0 ? 'color:#F59E0B;font-weight:700;background:#2a2a3e;' : 'color:#ccc;') +
+        (o.border ? 'border-top:1px solid #333;' : '');
+      item.textContent = o.label + (i===0 ? ' ✓' : '');
+      item.onclick = function(e) { e.stopPropagation(); window._selectPortPeriod(o.key); };
+      dd.appendChild(item);
+    });
+
+    rightWrap.appendChild(badge);
+    rightWrap.appendChild(dd);
+    pnlRow.appendChild(rightWrap);
+  }
+
+  // --- 4. Convertir badge USD en desplegable ---
+  var currBadge = document.getElementById('port-curr-badge');
+  if(currBadge && !document.getElementById('port-curr-dropdown')) {
+    currBadge.style.cssText = 'font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 6px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:2px;user-select:none;';
+    currBadge.innerHTML = 'USD <span style="font-size:7px;color:#555;">▾</span>';
+    currBadge.onclick = function(e) { e.stopPropagation(); window._togglePortCurrDD(); };
+
+    var parent = currBadge.parentNode;
+    var wrap = document.createElement('div');
+    wrap.style.cssText = 'position:relative;display:inline-block;';
+    parent.insertBefore(wrap, currBadge);
+    wrap.appendChild(currBadge);
+
+    var ddCurr = document.createElement('div');
+    ddCurr.id = 'port-curr-dropdown';
+    ddCurr.style.cssText = 'display:none;position:absolute;left:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:8px;overflow:hidden;min-width:80px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
+    ['USD','BTC','USDT'].forEach(function(c, i) {
+      var item = document.createElement('div');
+      item.dataset.curr = c;
+      item.style.cssText = 'padding:8px 12px;font-size:11px;cursor:pointer;' +
+        (i===0 ? 'color:#FFD700;font-weight:700;background:#2a2a3e;' : 'color:#ccc;');
+      item.textContent = c + (i===0 ? ' ✓' : '');
+      item.onclick = function(e) { e.stopPropagation(); window._selectPortCurr(c); };
+      ddCurr.appendChild(item);
+    });
+    wrap.appendChild(ddCurr);
+  }
+
+  // --- Cerrar dropdowns al tocar fuera ---
+  if(!window._portDropdownListenerAdded) {
+    document.addEventListener('click', function() {
+      var dd1 = document.getElementById('port-period-dropdown');
+      var dd2 = document.getElementById('port-curr-dropdown');
+      if(dd1) dd1.style.display = 'none';
+      if(dd2) dd2.style.display = 'none';
+    });
+    window._portDropdownListenerAdded = true;
+  }
+};
+
+window._togglePortPeriodDD = function() {
+  var dd = document.getElementById('port-period-dropdown');
+  var dd2 = document.getElementById('port-curr-dropdown');
+  if(!dd) return;
+  if(dd2) dd2.style.display = 'none';
+  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+};
+
+window._togglePortCurrDD = function() {
+  var dd = document.getElementById('port-curr-dropdown');
+  var dd2 = document.getElementById('port-period-dropdown');
+  if(!dd) return;
+  if(dd2) dd2.style.display = 'none';
+  dd.style.display = dd.style.display === 'none' ? 'block' : 'none';
+};
+
+window._selectPortCurr = function(cur) {
+  window._portCurrency = cur;
+  var badge = document.getElementById('port-curr-badge');
+  if(badge) badge.innerHTML = cur + ' <span style="font-size:7px;color:#555;">▾</span>';
+  var dd = document.getElementById('port-curr-dropdown');
+  if(dd) {
+    dd.querySelectorAll('div').forEach(function(it) {
+      var c = it.dataset.curr;
+      it.style.color = c===cur ? '#FFD700' : '#ccc';
+      it.style.fontWeight = c===cur ? '700' : '400';
+      it.style.background = c===cur ? '#2a2a3e' : '';
+      it.textContent = c + (c===cur ? ' ✓' : '');
+    });
+    dd.style.display = 'none';
+  }
+  window._updatePortTotalDisplay();
+};
+
+window._selectPortPeriod = function(key) {
+  var labels = {'24h':'24h','7d':'7d','1m':'1m','3m':'3m','1y':'1a','buy':'Compra'};
+  var full = {'24h':'24 horas','7d':'7 días','1m':'1 mes','3m':'3 meses','1y':'1 año','buy':'Desde compra'};
+  var badge = document.getElementById('port-period-badge');
+  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">▾</span>';
+  var dd = document.getElementById('port-period-dropdown');
+  if(dd) {
+    dd.querySelectorAll('div').forEach(function(it) {
+      var k = it.dataset.key;
+      it.style.color = k===key ? '#F59E0B' : '#ccc';
+      it.style.fontWeight = k===key ? '700' : '400';
+      it.style.background = k===key ? '#2a2a3e' : '';
+      it.textContent = (full[k]||k) + (k===key ? ' ✓' : '');
+    });
+    dd.style.display = 'none';
+  }
+  window._calcPortPeriod(key);
+};
+
+window._calcPortPeriod = function(period) {
+  var items = window._portItems;
+  var prices = window._IA_PRECIOS;
+  if(!items || !prices) return;
+  var totalNow = 0, totalBefore = 0;
+  items.forEach(function(item) {
+    var p = prices[item.simbolo];
+    if(!p) return;
+    var qty = parseFloat(item.cantidad)||0;
+    var pNow = parseFloat(p.precio)||0;
+    totalNow += qty*pNow;
+    if(period==='buy') totalBefore += qty*(parseFloat(item.precio_compra)||pNow);
+    else if(period==='24h') totalBefore += qty*(parseFloat(p.precio24h)||pNow);
+    else totalBefore += qty*(parseFloat(p.precio24h)||pNow);
+  });
+  var diff = totalNow-totalBefore;
+  var pct = totalBefore>0 ? (diff/totalBefore*100) : 0;
+  var isPos = diff>=0;
+  var color = isPos?'#3fb950':'#f85149';
+  var bg = isPos?'#1A3A2A':'#3A1A1A';
+  var el1 = document.getElementById('port-pnl-usd');
+  var el2 = document.getElementById('port-pnl-pct');
+  if(el1){el1.textContent=(isPos?'+':'-')+'$'+Math.abs(diff).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});el1.style.color=color;}
+  if(el2){el2.textContent=(isPos?'+':'')+pct.toFixed(2)+'%';el2.style.color=color;el2.style.background=bg;}
+};
+
+window.portTotalPeriod = window._calcPortPeriod;
