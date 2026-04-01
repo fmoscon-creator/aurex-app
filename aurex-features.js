@@ -2729,7 +2729,7 @@ function _buildIADetail(s) {
     html += '<div style="margin-bottom:10px">';
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">';
     html += '<span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span>';
-    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#555;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">â '+negVars.length+' bajistas</span></span>';
+    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">â '+negVars.length+' bajistas</span></span>';
     html += '</div>';
     // Positivas primero
     posVars.forEach(function(d) {
