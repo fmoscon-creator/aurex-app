@@ -1091,8 +1091,8 @@ function _renderThermoRisk(items){
   else if(pSin >= 80) explanation = '💤 Sin señales activas hoy para tus activos.';
   else explanation = 'Tu cartera tiene exposición mixta. Revisá cada activo para más detalle.';
   el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-    '<div style="font-size:10px;color:#8B949E;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
-    '<div style="font-size:8px;color:#666;letter-spacing:.5px;margin-top:1px;font-weight:500;">DISTRIBUC CAPITAL DE LA CARTERA</div>' +
+    '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+    '<div style="font-size:8px;color:#E6EDF3;letter-spacing:.5px;margin-top:1px;font-weight:500;">DISTRIBUC CAPITAL DE LA CARTERA</div>' +
     '' +
     '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
