@@ -3405,15 +3405,15 @@ function _initHeaderLogos() {
 
   function _makeSVG(suffix) {
     return svgBase
-      .replace(/id="gAhd"/g, "id=\"gAhd"+suffix+"'")
+      .replace(/id="gAhd"/g, "id=\"gAhd"+suffix+"\"")
       .replace(/url\(#gAhd\)/g, "url(#gAhd"+suffix+")")
-      .replace(/id="gChd"/g, "id=\"gChd"+suffix+"'")
+      .replace(/id="gChd"/g, "id=\"gChd"+suffix+"\"")
       .replace(/url\(#gChd\)/g, "url(#gChd"+suffix+")")
-      .replace(/id="gShd"/g, "id=\"gShd"+suffix+"'")
+      .replace(/id="gShd"/g, "id=\"gShd"+suffix+"\"")
       .replace(/url\(#gShd\)/g, "url(#gShd"+suffix+")")
-      .replace(/id="gHhd"/g, "id=\"gHhd"+suffix+"'")
+      .replace(/id="gHhd"/g, "id=\"gHhd"+suffix+"\"")
       .replace(/url\(#gHhd\)/g, "url(#gHhd"+suffix+")")
-      .replace(/id="gBhd"/g, "id=\"gBhd"+suffix+"'")
+      .replace(/id="gBhd"/g, "id=\"gBhd"+suffix+"\"")
       .replace(/url\(#gBhd\)/g, "url(#gBhd"+suffix+")")
       .replace(/id="clip/g, "id=\"clip"+suffix)
       .replace(/url\(#clip/g, "url(#clip"+suffix);
