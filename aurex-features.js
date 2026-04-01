@@ -3401,14 +3401,30 @@ function _initHeaderLogos() {
   if (!hlEl) return;
   var svgEl = hlEl.querySelector('svg');
   if (!svgEl) return;
-  var svgHTML = svgEl.outerHTML;
+  var svgBase = svgEl.outerHTML;
 
-  function _insertLogo(spanEl) {
+  function _makeSVG(suffix) {
+    return svgBase
+      .replace(/id='gAhd'/g, "id='gAhd"+suffix+"'")
+      .replace(/url\(#gAhd\)/g, "url(#gAhd"+suffix+")")
+      .replace(/id='gChd'/g, "id='gChd"+suffix+"'")
+      .replace(/url\(#gChd\)/g, "url(#gChd"+suffix+")")
+      .replace(/id='gShd'/g, "id='gShd"+suffix+"'")
+      .replace(/url\(#gShd\)/g, "url(#gShd"+suffix+")")
+      .replace(/id='gHhd'/g, "id='gHhd"+suffix+"'")
+      .replace(/url\(#gHhd\)/g, "url(#gHhd"+suffix+")")
+      .replace(/id='gBhd'/g, "id='gBhd"+suffix+"'")
+      .replace(/url\(#gBhd\)/g, "url(#gBhd"+suffix+")")
+      .replace(/id='clip/g, "id='clip"+suffix)
+      .replace(/url\(#clip/g, "url(#clip"+suffix);
+  }
+
+  function _insertLogo(spanEl, suffix) {
     if (!spanEl || spanEl.dataset.logoAdded) return;
     var parent = spanEl.parentElement;
     if (!parent) return;
     var svgNode = document.createElement('div');
-    svgNode.innerHTML = svgHTML;
+    svgNode.innerHTML = _makeSVG(suffix);
     var svgChild = svgNode.firstChild;
     parent.insertBefore(svgChild, spanEl);
     spanEl.dataset.logoAdded = '1';
@@ -3419,7 +3435,7 @@ function _initHeaderLogos() {
     var spans = portScreen.querySelectorAll('span');
     for (var i = 0; i < spans.length; i++) {
       if (spans[i].textContent.trim() === 'AUREX' && !spans[i].closest('.tab-btn') && !spans[i].closest('.hdr')) {
-        _insertLogo(spans[i]);
+        _insertLogo(spans[i], '_pt');
         break;
       }
     }
@@ -3430,7 +3446,7 @@ function _initHeaderLogos() {
     var spans = wlScreen.querySelectorAll('span');
     for (var i = 0; i < spans.length; i++) {
       if (spans[i].textContent.trim() === 'AUREX' && !spans[i].closest('.tab-btn')) {
-        _insertLogo(spans[i]);
+        _insertLogo(spans[i], '_wl');
         break;
       }
     }
@@ -3441,7 +3457,7 @@ function _initHeaderLogos() {
     var spans = iaScreen.querySelectorAll('span');
     for (var i = 0; i < spans.length; i++) {
       if (spans[i].textContent.trim().indexOf('AUREX') === 0 && !spans[i].closest('.tab-btn')) {
-        _insertLogo(spans[i]);
+        _insertLogo(spans[i], '_ia');
         break;
       }
     }
@@ -3452,7 +3468,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = svgHTML + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Alertas</span>';
+    hdrDiv.innerHTML = _makeSVG('_al') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Alertas</span>';
     alertasScreen.insertBefore(hdrDiv, alertasScreen.firstChild);
   }
 
@@ -3461,11 +3477,10 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = svgHTML + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Perfil</span>';
+    hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
   }
 }
-
 
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
