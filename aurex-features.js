@@ -3332,7 +3332,7 @@ window._openBannerEdit = function(elId) {
   popup.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;">' +
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
       '<span style="font-size:14px;font-weight:700;color:#E6EDF3;">Editar Banner</span>' +
-      '<button onclick="document.getElementById('aurex-banner-edit-popup').remove()" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;">&#x2715;</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;">&#x2715;</button>' +
     '</div>' +
     rows +
     '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">Guardar</button>' +
