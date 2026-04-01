@@ -302,7 +302,7 @@ function fetchYahoo(tab,pais,tf){
   var interval=(tf==='3m'||tf==='1a')?'1wk':'1d';
   var _paisMap={br:'brasil',eu:'europa',es:'europa',jp:'japon',cn:'china'};var _paisKey=_paisMap[pais]||pais;var arr=tab==='acciones'?(DATA.acciones[_paisKey]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
-    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval='+interval+'&range='+range))
+    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+(pais==='arg'?({PAMP:'PAM',TECO2:'TEO',CRES:'CRESY',IRSA:'IRS',TXAR:'TX',BYMA:'BYMA.BA',HARG:'HARG.BA',DGCU2:'DGCU2.BA',TRAN:'TRAN.BA',COME:'COME.BA',AUSO:'AUSO.BA',INVJ:'INVJ.BA',MOLI:'MOLI.BA',SAMI:'SAMI.BA',RICH:'RICH.BA',METR:'METR.BA',BOLT:'BOLT.BA'}[item.s]||item.s):item.s)+'?interval='+interval+'&range='+range))
       .then(function(r){return r.json();})
       .then(function(d){
         var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
