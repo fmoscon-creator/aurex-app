@@ -191,6 +191,11 @@ function _buildDotsHTML(scores) {
 function _getActivoScores(sym) {
   var signals = window._iaSignals || [];
   for(var i=0;i<signals.length;i++){ if(signals[i].simbolo===sym) return signals[i].scores||null; }
+  // fallback: buscar por ySymbol en _IA_ACTIVOS
+  var act = (window._IA_ACTIVOS||[]).find(function(a){return a.s===sym;});
+  if(act && act.ySymbol && act.ySymbol!==sym){
+    for(var j=0;j<signals.length;j++){ if(signals[j].simbolo===act.ySymbol) return signals[j].scores||null; }
+  }
   return null;
 }
 
@@ -2003,7 +2008,7 @@ window._IA_ACTIVOS = [
   {s:'CPER', n:'Cobre ETF', tipo:'metal', logo:'', icon:'C', color:'#B87333', ySymbol:'CPER'},
   {s:'PPLT', n:'Platino ETF', tipo:'metal', logo:'', icon:'P', color:'#E5E4E2', ySymbol:'PPLT'},
   {s:'PALL', n:'Paladio ETF', tipo:'metal', logo:'', icon:'P', color:'#CED0CF', ySymbol:'PALL'},
-  {s:'ALUM', n:'Aluminio ETF', tipo:'metal', logo:'', icon:'A', color:'#848484', ySymbol:'JJU'},
+  {s:'ALUM', n:'Aluminio ETF', tipo:'metal', logo:'', icon:'A', color:'#848484', ySymbol:'ALUM'},
   {s:'ZINC', n:'Zinc ETF', tipo:'metal', logo:'', icon:'Z', color:'#4A4A4A', ySymbol:'JJZ'},
   {s:'IRON', n:'Hierro/Steel ETF', tipo:'metal', logo:'', icon:'I', color:'#8B4513', ySymbol:'SLX'},
   {s:'ORO', n:'Oro', tipo:'metal', logo:'', icon:'O', color:'#D4A017', ySymbol:'GLD'},
@@ -2335,7 +2340,7 @@ function generarSenalesIA() {
   var listEl = document.getElementById('ia-list');
   if (listEl) listEl.innerHTML = '<div style="text-align:center;padding:32px 20px;color:#8B949E;font-size:13px"><div style="width:24px;height:24px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px"></div>Analizando mercados en tiempo real...</div>';
   var allData = {};
-  var phase1Syms = ['BTC','ETH','SOL','BNB','XRP','AAPL','NVDA','TSLA','MSFT','META','GOOGL','AMZN','SPY','QQQ','GLD','SLV','USO','BNO','TLT','AGG'];
+  var phase1Syms = ['BTC','ETH','SOL','BNB','XRP','AAPL','NVDA','TSLA','MSFT','META','GOOGL','AMZN','SPY','QQQ','GLD','SLV','USO','BNO','TLT','AGG','JO','ALUM'];
   var phase1Activos = window._IA_ACTIVOS.filter(function(a){ return phase1Syms.indexOf(a.s) >= 0; });
   var phase2Activos = window._IA_ACTIVOS.filter(function(a){ return phase1Syms.indexOf(a.s) < 0; });
   var btcCambio = 0, spyCambio = 0, precioOro = 2050, precioPetroleo = 80;
