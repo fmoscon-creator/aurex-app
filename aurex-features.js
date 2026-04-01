@@ -394,7 +394,7 @@ window.sw=function(tab,el){
 
 // === swPais: cambio de país en acciones ===
 window.swPais=function(pais,el){
-  document.querySelectorAll('#pais-row .tab').forEach(function(t){t.classList.remove('on');});
+  document.querySelectorAll('#pais-row .pais').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
   renderTab('acciones', pais);
 };
