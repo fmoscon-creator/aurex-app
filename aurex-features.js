@@ -203,7 +203,7 @@ function renderTab(tab, pais){
   if(typeof _renderMktNewsBanner==='function') _renderMktNewsBanner('mkt-news-banner');
   var pulseMap={cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
   if(typeof _renderFearGreed==='function'){window._pulseActiveFilter=pulseMap[tab]||'GLOBAL';_renderFearGreed('mkt-fear-greed');}
-  var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
+  var _paisMap={br:'brasil',eu:'europa',es:'europa',jp:'japon',cn:'china'};var _paisKey=_paisMap[pais]||pais;var arr=tab==='acciones'?(DATA.acciones[_paisKey]||DATA.acciones.usa):(DATA[tab]||[]);
   cnt.innerHTML='';
   window._mktRenderedSyms={};
   arr.forEach(function(item){ _appendMktRow(cnt, item, tab); });
@@ -283,7 +283,7 @@ function fetchBinance(tab){
 function fetchYahoo(tab,pais,tf){
   var range=tf==='7d'?'7d':tf==='1m'?'1mo':tf==='3m'?'3mo':tf==='1a'?'1y':'2d';
   var interval=(tf==='3m'||tf==='1a')?'1wk':'1d';
-  var arr=tab==='acciones'?(DATA.acciones[pais]||DATA.acciones.usa):(DATA[tab]||[]);
+  var _paisMap={br:'brasil',eu:'europa',es:'europa',jp:'japon',cn:'china'};var _paisKey=_paisMap[pais]||pais;var arr=tab==='acciones'?(DATA.acciones[_paisKey]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
     return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval='+interval+'&range='+range))
       .then(function(r){return r.json();})
