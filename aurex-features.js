@@ -3220,17 +3220,22 @@ window._futuresCache = null;
 window._futuresTs = 0;
 
 var FUTURES_ITEMS = [
-  {s:'ES=F',    rawS:'ES=F',    n:'S&P500',  cat:'FUTUROS', dec:0},
-  {s:'NQ=F',    rawS:'NQ=F',    n:'Nasdaq',  cat:'FUTUROS', dec:0},
-  {s:'YM=F',    rawS:'YM=F',    n:'Dow',     cat:'FUTUROS', dec:0},
-  {s:'^VIX',    rawS:'^VIX',    n:'VIX',     cat:'SENTIM',  dec:2},
-  {s:'BZ=F',    rawS:'BZ=F',    n:'Brent',   cat:'COMOD',   dec:2},
-  {s:'GC=F',    rawS:'GC=F',    n:'Oro',     cat:'COMOD',   dec:0},
-  {s:'CL=F',    rawS:'CL=F',    n:'WTI',     cat:'COMOD',   dec:2},
-  {s:'SI=F',    rawS:'SI=F',    n:'Plata',   cat:'COMOD',   dec:2},
-  {s:'^TNX',    rawS:'^TNX',    n:'US 10Y',  cat:'BONOS',   dec:2},
-  {s:'^IRX',    rawS:'^IRX',    n:'US 2Y',   cat:'BONOS',   dec:2},
-  {s:'DX-Y.NYB',rawS:'DX-Y.NYB',n:'DXY',    cat:'MACRO',   dec:2}
+  {s:'ES=F',    rawS:'ES=F',     n:'S&P500',  cat:'FUTUROS', dec:0},
+  {s:'NQ=F',    rawS:'NQ=F',     n:'Nasdaq',  cat:'FUTUROS', dec:0},
+  {s:'YM=F',    rawS:'YM=F',     n:'Dow',     cat:'FUTUROS', dec:0},
+  {s:'RTY=F',   rawS:'RTY=F',    n:'Russell', cat:'FUTUROS', dec:0},
+  {s:'^VIX',    rawS:'^VIX',     n:'VIX',     cat:'SENTIM',  dec:2},
+  {s:'BZ=F',    rawS:'BZ=F',     n:'Brent',   cat:'COMOD',   dec:2},
+  {s:'GC=F',    rawS:'GC=F',     n:'Oro',     cat:'COMOD',   dec:0},
+  {s:'CL=F',    rawS:'CL=F',     n:'WTI',     cat:'COMOD',   dec:2},
+  {s:'SI=F',    rawS:'SI=F',     n:'Plata',   cat:'COMOD',   dec:2},
+  {s:'^TNX',    rawS:'^TNX',     n:'US 10Y',  cat:'BONOS',   dec:2},
+  {s:'^IRX',    rawS:'^IRX',     n:'US 2Y',   cat:'BONOS',   dec:2},
+  {s:'DX-Y.NYB',rawS:'DX-Y.NYB', n:'DXY',    cat:'MACRO',   dec:2},
+  {s:'EURUSD=X',rawS:'EURUSD=X', n:'EUR/USD', cat:'MACRO',   dec:4},
+  {s:'^MERV',   rawS:'^MERV',    n:'Merval',  cat:'LATAM',   dec:0},
+  {s:'^BVSP',   rawS:'^BVSP',    n:'Bovespa', cat:'LATAM',   dec:0},
+  {s:'^IBEX',   rawS:'^IBEX',    n:'IBEX',    cat:'EUR',     dec:0}
 ];
 
 async function _fetchFuturesData() {
@@ -3271,12 +3276,12 @@ function _renderFuturesBanner(containerId) {
   if(now - window._futuresTs > 60000) {
     _fetchFuturesData().then(function(){ _renderFuturesBanner(containerId); });
   }
-  // Active items from localStorage
-  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F'];
+  // Active slots from localStorage — default 6
+  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
   var activeSlots;
   try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
   catch(e) { activeSlots = defaultSlots; }
-  var catColors = {FUTUROS:'#58A6FF', COMOD:'#D4A017', BONOS:'#8B949E', MACRO:'#A78BFA', SENTIM:'#FF6B6B'};
+  var catColors = {FUTUROS:'#58A6FF', COMOD:'#D4A017', BONOS:'#8B949E', MACRO:'#A78BFA', SENTIM:'#FF6B6B', LATAM:'#3FB950', EUR:'#58A6FF'};
   var isPortfolio = elId.indexOf('port') >= 0;
   var chips = activeSlots.map(function(rawS) {
     var item = FUTURES_ITEMS.find(function(x){ return x.rawS === rawS; });
@@ -3289,18 +3294,18 @@ function _renderFuturesBanner(containerId) {
     var stCol = d.open ? '#3FB950' : '#555';
     var catColor = catColors[item.cat] || '#8B949E';
     var priceStr = item.dec === 0 ? Math.round(d.price).toLocaleString() : d.price.toFixed(item.dec);
-    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:60px;padding:2px 6px;border-right:1px solid #21262D;flex-shrink:0;">' +
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:58px;padding:2px 5px;border-right:1px solid #21262D;flex-shrink:0;">' +
       '<div style="font-size:'+(isPortfolio?'7':'8')+'px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:#E6EDF3;white-space:nowrap;display:flex;align-items:center;gap:2px;"><span style="font-size:7px;color:'+stCol+';">&#x25CF;</span>'+item.n+'</div>' +
       '<div style="font-size:9px;color:#E6EDF3;">'+priceStr+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  // Edit button
-  var editBtn = '<div onclick="window._openBannerEdit(\'' + elId + '\')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:28px;padding:2px 4px;flex-shrink:0;cursor:pointer;opacity:0.5;">' +
-    '<div style="font-size:11px;color:#8B949E;">&#x270F;</div>' +
+  // Edit button — visible, labeled
+  var editBtn = '<div onclick="window._openBannerEdit(\'' + elId + '\')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 7px;flex-shrink:0;cursor:pointer;border-left:1px solid #30363D;">' +
+    '<div style="font-size:8px;color:#58A6FF;font-weight:700;white-space:nowrap;">&#x270F; EDITAR</div>' +
   '</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 8px':'5px 8px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
+  el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 4px':'5px 4px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
     chips + editBtn +
   '</div>';
 }
@@ -3308,35 +3313,34 @@ function _renderFuturesBanner(containerId) {
 window._openBannerEdit = function(elId) {
   var existing = document.getElementById('aurex-banner-edit-popup');
   if(existing) { existing.remove(); return; }
-  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F'];
+  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
   var activeSlots;
   try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
   catch(e) { activeSlots = defaultSlots; }
-  var allOpts = FUTURES_ITEMS.map(function(x){
-    return '<option value="'+x.rawS+'">'+x.n+'</option>';
-  }).join('');
   var rows = activeSlots.map(function(s, i) {
-    var sel = '<select data-slot="'+i+'" style="background:#21262D;color:#E6EDF3;border:1px solid #30363D;border-radius:6px;padding:4px 8px;font-size:13px;width:100%;">' +
-      FUTURES_ITEMS.map(function(x){
-        return '<option value="'+x.rawS+'"'+(x.rawS===s?' selected':'')+'>'+x.n+' ('+x.rawS+')</option>';
-      }).join('') +
-    '</select>';
+    var opts = FUTURES_ITEMS.map(function(x){
+      return '<option value="'+x.rawS+'"'+(x.rawS===s?' selected':'')+'>'+x.n+' ('+x.rawS+')</option>';
+    }).join('');
     return '<div style="margin-bottom:8px;">' +
       '<div style="font-size:10px;color:#8B949E;margin-bottom:3px;">Slot '+(i+1)+'</div>' +
-      sel +
+      '<select data-slot="'+i+'" style="background:#21262D;color:#E6EDF3;border:1px solid #30363D;border-radius:6px;padding:5px 8px;font-size:13px;width:100%;">' +
+        opts +
+      '</select>' +
     '</div>';
   }).join('');
   var popup = document.createElement('div');
   popup.id = 'aurex-banner-edit-popup';
-  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
-  popup.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;">' +
-    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-      '<span style="font-size:14px;font-weight:700;color:#E6EDF3;">Editar Banner</span>' +
-      '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;">&#x2715;</button>' +
-    '</div>' +
-    rows +
-    '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">Guardar</button>' +
-  '</div>';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  popup.innerHTML =
+    '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;max-height:85vh;overflow-y:auto;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
+        '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">&#x270F; Editar Banner</span>' +
+        '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
+      '</div>' +
+      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">Elegí qué ver en el banner. Los cambios se guardan automáticamente.</div>' +
+      rows +
+      '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;">Guardar cambios</button>' +
+    '</div>';
   document.body.appendChild(popup);
 };
 
@@ -3346,7 +3350,6 @@ window._saveBannerEdit = function() {
   selects.forEach(function(s){ newSlots.push(s.value); });
   localStorage.setItem('aurex_banner_slots', JSON.stringify(newSlots));
   document.getElementById('aurex-banner-edit-popup').remove();
-  // Refresh both banners
   if(typeof _renderFuturesBanner === 'function') {
     _renderFuturesBanner('port-futures-banner');
     _renderFuturesBanner('mkt-futures-banner');
