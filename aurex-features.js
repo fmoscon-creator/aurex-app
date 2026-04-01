@@ -2699,13 +2699,13 @@ function _buildIADetail(s) {
   html += '</div>';
   html += '<div style="display:flex;gap:8px;margin-bottom:10px">';
   var _cObj=s.direccion==='bajista'?'#FF4444':'#3FB950';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:cent✕><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:'+_cObj+'">$'+s.objetivo+'</div></div>';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:'+_cObj+'">$'+s.objetivo+'</div></div>';
   var _cStop=s.direccion==='bajista'?'#FF9500':'#FF4444';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:cent✕><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:'+_cStop+'">$'+s.stop+'</div></div>';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:'+_cStop+'">$'+s.stop+'</div></div>';
   var _uLabel=s.upside<0?'Downside':'Upside';
   var _uColor=s.upside<0?'#FF4444':'#3FB950';
   var _uSign=s.upside>=0?'+':'';
-  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:cent✕><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
+  html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
 
   // VARIABLES DEL MODELO — lista con colores verde/rojo
@@ -2769,7 +2769,7 @@ function _buildIADetail(s) {
     else cambioTF = s.precio30d>0?((s.precio-s.precio30d)/s.precio30d*100):null;
     var col = cambioTF===null?'#555':cambioTF>=0?'#3FB950':'#FF4444';
     var label = cambioTF===null?'—':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
-    html += '<div style="background:#21262D;border:1px solid '+(isDefault?'#D4A01760':'#30363D')+';border-radius:6px;padding:3px 7px;text-align:cent✕>';
+    html += '<div style="background:#21262D;border:1px solid '+(isDefault?'#D4A01760':'#30363D')+';border-radius:6px;padding:3px 7px;text-align:center">';
     html += '<div style="font-size:8px;color:'+(isDefault?'#D4A017':'#555')+'">'+tf+'</div>';
     html += '<div style="font-size:10px;font-weight:700;color:'+col+'">'+label+'</div>';
     html += '</div>';
@@ -2778,9 +2778,9 @@ function _buildIADetail(s) {
 
   html += '<div style="font-size:10px;color:#8B949E;margin-bottom:6px;font-weight:600">OTROS ESCENARIOS</div>';
   html += '<div style="display:flex;gap:6px">';
-  if(s.direccion!=='alcista') html += '<div style="flex:1;background:#3FB95015;border:1px solid #3FB95040;border-radius:8px;padding:6px;text-align:cent✕><div style="font-size:9px;color:#3FB950">ALCISTA</div><div style="font-size:13px;font-weight:700;color:#3FB950">'+s.prob_alcista+'%</div></div>';
-  if(s.direccion!=='bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:cent✕><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
-  if(s.direccion!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:cent✕><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
+  if(s.direccion!=='alcista') html += '<div style="flex:1;background:#3FB95015;border:1px solid #3FB95040;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#3FB950">ALCISTA</div><div style="font-size:13px;font-weight:700;color:#3FB950">'+s.prob_alcista+'%</div></div>';
+  if(s.direccion!=='bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
+  if(s.direccion!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
   html += '</div>';
   // BOTÓN COMPARTIR
   html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262D">';
@@ -2826,7 +2826,7 @@ window._compartirSenal = function(info) {
     overlay.id = 'ia-share-overlay';
     overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
     overlay.innerHTML='<div style="background:#161B22;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px">' +
-      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:cent✕>Compartir señal '+sig.simbolo+'</div>' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir señal '+sig.simbolo+'</div>' +
       '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">' +
         '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">💬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
         '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">âï¸</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
