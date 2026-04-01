@@ -134,4 +134,1456 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 
 /* IA PREDICCIN */
 .dp-ai{background:#0D1117;border:1px solid #D4A01740;border-radius:10px;padding:10px 12px;margin:0 14px 10px}
-.dp-ai-top{display:flex;align-items:center;gap:6px;margin-
+.dp-ai-top{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.dp-ai-icon{width:22px;height:22px;border-radius:6px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:11px}
+.dp-ai-title{font-size:10px;font-weight:600;color:#D4A017;text-transform:uppercase;letter-spacing:.5px}
+.dp-ai-badge{font-size:8px;padding:1px 7px;border-radius:10px;font-weight:600;margin-left:auto}
+.badge-bull{background:#1A3A2A;color:#3FB950}
+.badge-bear{background:#3A1A1A;color:#F85149}
+.badge-neu{background:#1A1A2A;color:#8B949E}
+.dp-ai-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.dp-ai-item{background:#0A0E14;border-radius:7px;padding:7px 9px}
+.dp-ai-lbl{font-size:8px;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px}
+.dp-ai-val{font-size:14px;font-weight:600;color:#E6EDF3}
+.dp-ai-sub{font-size:9px;color:#8B949E;margin-top:2px}
+.prob-wrap{margin:8px 0 2px}
+.prob-bar-bg{background:#21262D;border-radius:4px;height:6px;overflow:hidden;margin-top:4px}
+.prob-bar-fill{height:100%;border-radius:4px;transition:width .6s ease}
+.dp-metrics{display:flex;gap:6px;padding:0 14px 10px}
+.dm{flex:1;background:#0D1117;border-radius:8px;padding:7px 8px;text-align:center;border:0.5px solid #21262D}
+.dm-lbl{font-size:8px;color:#555;text-transform:uppercase;letter-spacing:.3px}
+.dm-val{font-size:11px;font-weight:600;color:#E6EDF3;margin-top:2px}
+
+/* BOTTOM NAV  NICA DEFINICIN CON TODOS LOS FIXES iOS */
+.bnav{background:#161B22;border-top:0.5px solid #21262D;display:flex;padding:7px 0 5px;flex-shrink:0}
+.bni{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;opacity:.5;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;user-select:none;-webkit-user-select:none}
+.bni.on{opacity:1}
+.bni svg{width:19px;height:19px}
+.bni span{font-size:9px;color:#8B949E}
+.bni.on span{color:#D4A017}
+
+/* PERFIL */
+.avatar-sec{padding:24px 16px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:1px solid #21262D;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)}
+.avatar{width:76px;height:76px;border-radius:50%;background:#D4A01720;border:2.5px solid #D4A017;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:#D4A017;position:relative;cursor:pointer}
+.avatar-edit{position:absolute;bottom:2px;right:2px;width:22px;height:22px;border-radius:50%;background:#D4A017;display:flex;align-items:center;justify-content:center;font-size:10px;color:#1A0D00}
+.user-name{font-size:19px;font-weight:500;color:#E6EDF3}
+.user-email{font-size:12px;color:#8B949E}
+.plan-row{display:flex;gap:8px;align-items:center;margin-top:2px}
+.plan-badge{font-size:10px;font-weight:700;padding:3px 12px;border-radius:20px;letter-spacing:.5px}
+.badge-free{background:#21262D;color:#8B949E;border:1px solid #30363D}
+.badge-pro{background:#A78BFA20;color:#A78BFA;border:1px solid #A78BFA50}
+.badge-elite{background:#D4A01720;color:#D4A017;border:1px solid #D4A01750}
+.sec-lbl{padding:12px 16px 6px;font-size:10px;font-weight:600;color:#555;text-transform:uppercase;letter-spacing:1px;background:#0D1117;position:sticky;top:0;z-index:1}
+.row{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:0.5px solid #13171D;cursor:pointer;transition:filter .15s;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation}
+.row:hover{filter:brightness(1.2)}
+.row-ico{width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.row-main{flex:1;min-width:0}
+.row-title{font-size:13px;font-weight:500;color:#E6EDF3}
+.row-sub{font-size:10px;color:#555;margin-top:2px}
+.row-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.row-val{font-size:12px;color:#8B949E}
+.arrow{font-size:14px;color:#555}
+.tog{width:42px;height:24px;border-radius:12px;background:#21262D;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation}
+.tog.on{background:#3FB950}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px #00000060}
+.tog.on::after{transform:translateX(18px)}
+.plans-wrap{padding:8px 12px}
+.plan-card{border-radius:12px;padding:14px;border:1px solid #21262D;background:#161B22;margin-bottom:8px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation}
+.plan-card:hover{filter:brightness(1.1)}
+.plan-card.current{border-color:#D4A01760;background:#D4A01708}
+.plan-card.pro-c{border-color:#A78BFA60;background:#A78BFA08}
+.plan-card.elite-c{border-color:#D4A01760;background:#D4A01708}
+.plan-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.plan-name{font-size:15px;font-weight:600}
+.plan-pricing{text-align:right}
+.plan-price{font-size:14px;font-weight:600}
+.plan-period{font-size:10px;color:#555}
+.feats{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.feat{font-size:11px;display:flex;align-items:center;gap:7px}
+.feat.ok::before{content:'';font-size:10px;font-weight:700;flex-shrink:0}
+.feat.no::before{content:'';font-size:10px;flex-shrink:0;color:#555}
+.feat.no{color:#555}
+.plan-btn{width:100%;padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s}
+.plan-btn:hover{opacity:.85}
+.btn-curr{background:#21262D;color:#555}
+.btn-pro{background:#A78BFA;color:#fff}
+.btn-elite{background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00}
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 12px}
+.lang-item{background:#161B22;border-radius:9px;padding:10px 12px;border:0.5px solid #21262D;cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s}
+.lang-item.on{border-color:#D4A017;background:#D4A01715}
+.lang-flag{font-size:18px}
+.lang-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.lang-native{font-size:9px;color:#555;margin-top:1px}
+.curr-grid{display:flex;gap:6px;flex-wrap:wrap;padding:8px 12px}
+.curr-item{padding:6px 14px;border-radius:20px;font-size:11px;font-weight:500;border:0.5px solid #21262D;cursor:pointer;color:#8B949E;transition:all .15s}
+.curr-item.on{background:#D4A01720;color:#D4A017;border-color:#D4A017}
+.sec2fa{margin:0 12px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #21262D;margin-bottom:1px}
+.method-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:0.5px solid #21262D}
+.method-row:last-child{border-bottom:none;padding-bottom:0}
+.method-ico{font-size:18px;width:32px}
+.method-info{flex:1}
+.method-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.method-status{font-size:10px;margin-top:1px}
+.status-on{color:#3FB950}
+.status-off{color:#555}
+.session-item{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:0.5px solid #13171D}
+.sess-ico{font-size:20px;width:32px;text-align:center}
+.sess-info{flex:1}
+.sess-device{font-size:12px;font-weight:500;color:#E6EDF3}
+.sess-detail{font-size:10px;color:#555;margin-top:1px}
+.sess-current{font-size:9px;padding:2px 7px;border-radius:10px;background:#1A3A2A;color:#3FB950;font-weight:600}
+.sess-revoke{font-size:10px;color:#F85149;cursor:pointer}
+.notif-item{padding:10px 16px;border-bottom:0.5px solid #13171D}
+.notif-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.notif-sub{font-size:10px;color:#555}
+.disclaimer{margin:8px 12px;border-radius:12px;background:#080C10;border:0.5px solid #21262D;padding:16px}
+.dis-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid #21262D}
+.dis-icon{width:32px;height:32px;border-radius:8px;background:#D4A01720;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.dis-title{font-size:12px;font-weight:600;color:#D4A017}
+.dis-sub{font-size:10px;color:#555;margin-top:2px}
+.dis-section{margin-bottom:10px}
+.dis-section-title{font-size:10px;font-weight:600;color:#8B949E;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.dis-section-body{font-size:10px;color:#444;line-height:1.7}
+.dis-footer{margin-top:10px;padding-top:10px;border-top:0.5px solid #21262D;font-size:9px;color:#333;text-align:center;line-height:1.6}
+.dis-link{color:#D4A01770;text-decoration:underline}
+.data-item{padding:10px 16px;border-bottom:0.5px solid #13171D;display:flex;align-items:center;gap:10px}
+.data-ico{font-size:18px;width:28px}
+.data-info{flex:1}
+.data-name{font-size:12px;font-weight:500;color:#E6EDF3}
+.data-sub{font-size:10px;color:#555;margin-top:1px}
+.data-btn{font-size:10px;padding:4px 10px;border-radius:8px;border:0.5px solid #F85149;color:#F85149;cursor:pointer;background:transparent}
+.logout-btn{margin:12px 12px 4px;padding:13px;border-radius:10px;background:#1A0808;border:0.5px solid #F8514940;text-align:center;color:#F85149;font-size:13px;font-weight:500;cursor:pointer;transition:filter .15s}
+.logout-btn:hover{filter:brightness(1.2)}
+.delete-btn{margin:0 12px 8px;padding:10px;border-radius:10px;background:transparent;border:0.5px solid #21262D;text-align:center;color:#555;font-size:11px;cursor:pointer}
+.ver{text-align:center;padding:10px 16px 16px;font-size:10px;color:#333;line-height:1.8}
+.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:#161B22;border-radius:20px 20px 0 0;width:100%;max-width:100%;padding:20px 16px 32px;border-top:1px solid #30363D;max-height:80vh;overflow-y:auto}
+.modal-handle{width:36px;height:4px;border-radius:2px;background:#30363D;margin:0 auto 16px}
+.modal-title{font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:4px}
+.modal-sub{font-size:11px;color:#555;margin-bottom:16px}
+.modal-close{position:absolute;right:16px;top:20px;color:#8B949E;font-size:20px;cursor:pointer}
+
+/* === TAB-BAR NAVEGACIN INFERIOR === */
+.tab-bar{position:fixed;bottom:0;left:0;right:0;height:60px;background:#0D1117;border-top:1px solid #21262D;display:flex;align-items:center;justify-content:space-around;z-index:2000;}
+.tab-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;height:100%;color:#8B949E;font-size:9px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;gap:3px;}
+.tab-btn.active{color:#D4A017;}
+.tab-btn svg{width:22px;height:22px;flex-shrink:0;}
+.tab-btn span{font-size:9px;margin-top:1px;}
+.screen{padding-bottom:60px;}
+
+@keyframes tkScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes spin{to{transform:rotate(360deg)}}</style>
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aurex">
+<script>
+(function(){
+  // 1. Reset onboarding si viene con ?resetOnboarding=1
+  if(new URLSearchParams(window.location.search).get('resetOnboarding')==='1'){
+    ['aurex_onboarding_done','onboardingDone','aurex_ob_done'].forEach(function(k){localStorage.removeItem(k);});
+    var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');
+    history.replaceState(null,'',u.toString());
+  }
+
+  localStorage.setItem('aurex_onboarding_done','1'); var _done = true;
+
+  // 2. Mover phone al body
+  function _movePhone(){
+    var ph=document.querySelector('.phone');
+    var onb=document.getElementById('onboarding');
+    if(!ph||!onb) return;
+    if(ph.parentElement!==document.body) document.body.insertBefore(ph,onb.nextSibling);
+    ph.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;background:#0D1117;overflow:hidden;';
+    if(_done){
+      onb.style.display='none';
+      setTimeout(function(){ if(window.navTo) window.navTo('portfolio'); },100);
+    }
+  }
+
+  // 3. showObs2
+  window.showObs2=function(){
+    var o2=document.getElementById('obs2');
+    if(!o2) return;
+    o2.style.cssText='position:fixed!important;top:0!important;left:0!important;width:100vw!important;height:100vh!important;z-index:100001!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important;background:#0D1117!important;overflow:hidden!important;box-sizing:border-box!important;';
+    // Inicializar estrellas OBS2
+    initObs2Canvas();
+  };
+
+  // 4. startApp
+  window.startApp=function(){
+    localStorage.setItem('aurex_onboarding_done','1');
+    _done=true;
+    var onb=document.getElementById('onboarding');
+    if(onb) onb.style.display='none';
+    _movePhone();
+    setTimeout(function(){ if(window.navTo) window.navTo('portfolio'); },100);
+  };
+
+  // 5. Neutralizar initOnboarding del features.js
+  window.initOnboarding=function(){};
+
+  // 6. Aplicar segun estado
+  if(_done){
+    if(document.readyState==='loading'){
+      document.addEventListener('DOMContentLoaded',_movePhone);
+    } else {
+      setTimeout(_movePhone,50);
+    }
+  } else {
+    document.addEventListener('DOMContentLoaded',function(){
+      var ph=document.querySelector('.phone');
+      if(ph) ph.style.display='none';
+      var onb=document.getElementById('onboarding');
+      if(onb) onb.style.display='flex';
+      var o1=document.getElementById('obs1');
+      if(o1) o1.style.display='flex';
+      var o2=document.getElementById('obs2');
+      if(o2) o2.style.display='none';
+    initObs1Canvas();
+    });
+  }
+  function initObs1Canvas(){
+    var canvas=document.getElementById('obs1Stars');
+    if(!canvas||canvas._init) return;
+    canvas._init=true;
+    var W=canvas.width=window.innerWidth||390;
+    var H=canvas.height=window.innerHeight||844;
+    var ctx=canvas.getContext('2d');
+    var stars=[];
+    for(var k=0;k<70;k++){
+      stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+0.3,alpha:Math.random(),da:(Math.random()*0.006+0.002)*(Math.random()<0.5?1:-1),vx:(Math.random()-0.5)*0.06,vy:(Math.random()-0.5)*0.06});
+    }
+    function drawObs1(){
+      ctx.clearRect(0,0,W,H);
+      for(var i=0;i<stars.length;i++){
+        for(var j=i+1;j<stars.length;j++){
+          var dx=stars[i].x-stars[j].x,dy=stars[i].y-stars[j].y;
+          var dist=Math.sqrt(dx*dx+dy*dy);
+          if(dist<100){
+            ctx.strokeStyle='rgba(212,160,23,'+(0.12*(1-dist/100))+')';
+            ctx.lineWidth=0.5;
+            ctx.beginPath();ctx.moveTo(stars[i].x,stars[i].y);ctx.lineTo(stars[j].x,stars[j].y);ctx.stroke();
+          }
+        }
+      }
+      stars.forEach(function(s){
+        ctx.fillStyle='rgba(255,255,255,'+s.alpha+')';
+        ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();
+        s.alpha+=s.da; if(s.alpha>1||s.alpha<0.05) s.da*=-1;
+        s.x+=s.vx; s.y+=s.vy;
+        if(s.x<0)s.x=W; if(s.x>W)s.x=0;
+        if(s.y<0)s.y=H; if(s.y>H)s.y=0;
+      });
+      var o1=document.getElementById('obs1');
+      if(o1&&o1.style.display!=='none') requestAnimationFrame(drawObs1);
+    }
+    drawObs1();
+  }
+})();
+</script>
+<script src="aurex-features.js?v=1775078589173"></script>
+
+<!-- SUPABASE AUTH -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// ===== SUPABASE CONFIG =====
+// Para activar: reemplaza estos valores con los de tu proyecto Supabase
+// Settings > API > Project URL y anon/public key
+var SUPABASE_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
+var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
+var GOOGLE_CLIENT_ID = 'TU_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+// ===========================
+
+var _supabase = null;
+var _currentUser = null;
+
+// Solo inicializa si las keys estan configuradas
+if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+  try {
+    _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    
+    // Escuchar cambios de auth
+    _supabase.auth.onAuthStateChange(function(event, session) {
+      _currentUser = session ? session.user : null;
+      updateUserUI(_currentUser);
+      if (event === 'SIGNED_IN') {
+        console.log('[Aurex Auth] Usuario logueado:', _currentUser.email);
+        upsertUserDB(_currentUser);
+      }
+      if (event === 'SIGNED_OUT') {
+        console.log('[Aurex Auth] Usuario deslogueado');
+      }
+    });
+    
+    console.log('[Aurex] Supabase inicializado correctamente');
+  } catch(e) {
+    console.log('[Aurex] Error Supabase:', e.message);
+  }
+} else {
+  console.log('[Aurex] Supabase: pendiente de configuracion de keys');
+}
+
+// Login con Google
+function loginGoogle() {
+  if (!_supabase) { alert('Supabase no configurado. Contacta al administrador.'); return; }
+  _supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: window.location.origin + window.location.pathname
+    }
+  });
+}
+
+// Logout
+function logoutUser() {
+  if (!_supabase) return;
+  _supabase.auth.signOut().then(function() {
+    _currentUser = null;
+    updateUserUI(null);
+  });
+}
+
+// Guardar/actualizar usuario en DB
+function upsertUserDB(user) {
+  if (!_supabase || !user) return;
+  _supabase.from('usuarios').upsert({
+    id: user.id,
+    email: user.email,
+    nombre: user.user_metadata.full_name || user.email.split('@')[0],
+    foto_url: user.user_metadata.avatar_url || '',
+    plan: 'FREE',
+    updated_at: new Date().toISOString()
+  }, { onConflict: 'id' }).then(function(result) {
+    if (result.error) console.log('[Aurex DB] Error upsert user:', result.error.message);
+    else console.log('[Aurex DB] Usuario guardado en DB');
+  });
+}
+
+// Actualizar la UI del perfil con datos del usuario
+function updateUserUI(user) {
+  var nameEl = document.getElementById('user-name-display');
+  var emailEl = document.getElementById('user-email-display');
+  var avatarEl = document.getElementById('user-avatar-img');
+  var loginBtn = document.getElementById('btn-login-google');
+  var logoutBtn = document.getElementById('btn-logout');
+  var userPanel = document.getElementById('user-logged-panel');
+  var guestPanel = document.getElementById('user-guest-panel');
+  
+  if (user) {
+    var name = user.user_metadata.full_name || user.email.split('@')[0];
+    var email = user.email;
+    var foto = user.user_metadata.avatar_url || '';
+    
+    if (nameEl) nameEl.textContent = name;
+    if (emailEl) emailEl.textContent = email;
+    if (avatarEl && foto) { avatarEl.src = foto; avatarEl.style.display = 'block'; }
+    if (loginBtn) loginBtn.style.display = 'none';
+    if (logoutBtn) logoutBtn.style.display = 'block';
+    if (userPanel) userPanel.style.display = 'block';
+    if (guestPanel) guestPanel.style.display = 'none';
+  } else {
+    if (nameEl) nameEl.textContent = 'Invitado';
+    if (emailEl) emailEl.textContent = 'Sin cuenta';
+    if (loginBtn) loginBtn.style.display = 'block';
+    if (logoutBtn) logoutBtn.style.display = 'none';
+    if (userPanel) userPanel.style.display = 'none';
+    if (guestPanel) guestPanel.style.display = 'block';
+  }
+}
+
+// Verificar sesion al cargar
+document.addEventListener('DOMContentLoaded', function() {
+  if (_supabase) {
+    _supabase.auth.getSession().then(function(result) {
+      _currentUser = result.data.session ? result.data.session.user : null;
+      updateUserUI(_currentUser);
+    });
+  }
+});
+</script>
+</head>
+<body ontouchstart="">
+<div id="onboarding" style="display:block;position:fixed;inset:0;z-index:99999;background:#0D0D1A;font-family:-apple-system,BlinkMacSystemFont,sans-serif">
+<div id="obs1" style="position:fixed;inset:0;z-index:99999;background:#0D1117;display:none;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;width:100%;height:100%;">
+  <canvas id="obs1Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:40px 24px 20px;box-sizing:border-box;">
+    <div style="margin-bottom:24px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="130" height="130"><defs><linearGradient id="gAo1" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCo1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo1)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo1)" stroke-width="1.5"/><circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo1)" stroke-width="1"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo1)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo1)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg></div>
+    <div style="font-size:34px;font-weight:900;color:#D4A017;letter-spacing:10px;text-align:center;margin-bottom:8px;">AUREX</div>
+    <div style="font-size:11px;font-weight:600;color:#D4A017;letter-spacing:6px;text-align:center;margin-bottom:28px;opacity:0.8;">INVEST  AI</div>
+    <div style="font-size:10px;color:#8B949E;letter-spacing:2px;text-align:center;line-height:1.8;text-transform:uppercase;">La primera plataforma global<br>de multiactivos con seales IA</div>
+  </div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:20px;"><div style="width:22px;height:3px;background:#D4A017;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;width:100%;padding:0 24px 44px;box-sizing:border-box;"><button onclick="showObs2()" style="width:100%;padding:17px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Comenzar </button></div>
+</div>
+<div id="obs2" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99998;background:#0D1117;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
+  <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
+  <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:32px 24px 16px;box-sizing:border-box;">
+    <div style="margin-bottom:20px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="90" height="90"><defs><linearGradient id="gAo2" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCo2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo2)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo2)" stroke-width="1.5"/><circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCo2)" stroke-width="1"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo2)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo2)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg></div>
+    <div style="font-size:24px;font-weight:900;color:#FFFFFF;letter-spacing:6px;text-align:center;margin-bottom:4px;">AUREX  IA</div>
+    <div style="font-size:9px;font-weight:700;color:#D4A017;letter-spacing:4px;text-align:center;margin-bottom:24px;">ANLISIS DE MERCADOS 24 HS</div>
+    <div style="width:100%;display:flex;flex-direction:column;gap:10px;">
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #00D4AA;box-sizing:border-box;"><span style="font-size:20px;min-width:28px;"></span><div><div style="font-size:13px;font-weight:700;color:#00D4AA;margin-bottom:2px;">Explo Mercados</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">Acciones  7 Mercados  Criptos  ETFs  Bonos  Metales  Materias Primas  DeFi</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #4A9EFF;box-sizing:border-box;"><span style="font-size:20px;min-width:28px;"></span><div><div style="font-size:13px;font-weight:700;color:#4A9EFF;margin-bottom:2px;">Seales IA en tiempo real</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">Anlisis objetivo basado en 5 variables: Tendencia  Volumen  Momentum  Correlacin Macro  Valuacin</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #D4A017;box-sizing:border-box;"><span style="font-size:20px;min-width:28px;"></span><div><div style="font-size:13px;font-weight:700;color:#D4A017;margin-bottom:2px;">Alertas automticas las 24 hs</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">WhatsApp + Push cuando se activa una seal  Siempre activo</div></div></div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:12px 14px;border-radius:10px;background:rgba(255,255,255,0.04);border-left:3px solid #9B59B6;box-sizing:border-box;"><span style="font-size:20px;min-width:28px;"></span><div><div style="font-size:13px;font-weight:700;color:#9B59B6;margin-bottom:2px;">Mercados Globales</div><div style="font-size:10px;color:#8B949E;line-height:1.4;">NYSE  NASDAQ  Merval  San Pablo  Londres  Tokio  Hong Kong  Shanghai</div></div></div>
+    </div>
+  </div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:22px;height:3px;background:#D4A017;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
+    <button onclick="startApp()" style="width:100%;padding:17px;background:linear-gradient(135deg,#D4A017,#F0C040);color:#0D1117;font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Entrar a Aurex </button>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
+    <div onclick="startApp();setTimeout(function(){navTo('perfil');authSwitchTab('register');},300);" style="font-size:12px;color:#D4A017;font-weight:700;cursor:pointer;padding:6px 14px;border:1px solid #D4A01760;border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);"> Crear cuenta gratis</div>
+    <div onclick="window._openRegister=true;startApp();setTimeout(function(){navTo('perfil');},400);" style="font-size:12px;color:#8B949E;cursor:pointer;padding:6px 14px;border:1px solid #30363D;border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);">Ya tengo cuenta </div>
+  </div>
+  </div>
+</div>
+<div class="phone">
+
+<!-- BANNER URGENTE GLOBAL -->
+<div id="urgent-banner" style="display:none;background:#1A0800;border-bottom:2px solid #FF4500;padding:8px 14px;flex-shrink:0;z-index:50">
+  <div style="display:flex;align-items:center;gap:8px">
+    <div style="width:7px;height:7px;border-radius:50%;background:#FF4500;animation:lp 1s infinite;flex-shrink:0"></div>
+    <div style="flex:1">
+      <div style="font-size:10px;font-weight:700;color:#FF4500;text-transform:uppercase;letter-spacing:.6px" id="ub-label">EVENTO CRTICO</div>
+      <div style="font-size:11px;color:#E6EDF3;margin-top:1px" id="ub-desc">Evento de alto impacto</div>
+    </div>
+    <div style="text-align:center;flex-shrink:0;background:#FF450020;border-radius:7px;padding:4px 8px;border:0.5px solid #FF450060">
+      <div style="font-size:14px;font-weight:700;color:#FF4500" id="ub-countdown">--</div>
+      <div style="font-size:7px;color:#FF450080;text-transform:uppercase">restantes</div>
+    </div>
+    <div onclick="closeUrgentBanner()" style="color:#FF450080;font-size:16px;cursor:pointer;padding:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;flex-shrink:0"></div>
+  </div>
+</div>
+
+<div class="screen" id="screen-portfolio" class="screen" style="flex-direction:column;flex:1;min-height:0">
+
+<!-- HEADER PORTFOLIO -->
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
+      <span style="font-size:13px;color:#8B949E"> Portfolio</span>
+    </div>
+    <div style="display:flex;gap:6px">
+      <div onclick="openPortConversor()" style="display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:10px;background:#58A6FF20;border:1px solid #58A6FF60;color:#58A6FF;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;box-shadow:0 0 12px #58A6FF20;"><span style="font-size:14px;">&#x21C4;</span> Conversor</div>
+      <div onclick="openAddActivo()" style="display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:10px;background:#3FB950;color:#0D1117;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;box-shadow:0 0 12px #3FB95040;"><span style="font-size:16px;line-height:1;">+</span> Agregar</div>
+    </div>
+  </div>
+  <!-- RESUMEN TOTAL -->
+  <div style="display:flex;gap:8px;align-items:stretch">
+    <div style="flex:1;background:#0D1117;border-radius:10px;padding:10px 12px;border:1px solid #D4A01740">
+      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;cursor:pointer;" onclick="_cyclePortCurrency()">
+        <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;">Valor total</div>
+        <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 5px;border-radius:4px;;cursor:pointer" onclick="_cyclePortCurrency()">USD</div>
+      </div>
+      <div id="port-total" style="font-size:22px;font-weight:500;color:#E6EDF3;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
+      <div id="port-pnl-row" style="display:flex;align-items:center;gap:6px;margin-top:3px">
+        <span id="port-pnl-usd" style="font-size:11px;font-weight:600;color:#3FB950">+$0</span>
+        <span id="port-pnl-pct" style="font-size:10px;padding:1px 6px;border-radius:6px;background:#1A3A2A;color:#3FB950">+0%</span>
+        <span style="font-size:9px;color:#555">desde compra</span>
+      </div><div id="port-period-row" style="display:flex;gap:5px;margin:6px 0 0 0;flex-wrap:wrap"><div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#F59E0B;color:#000;font-weight:700">24h</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'7d')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">7d</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1m</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1a</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'max')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">Compra</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center;min-width:64px">
+        <div style="font-size:8px;color:#555;text-transform:uppercase">Activos</div>
+        <div id="port-count" style="font-size:16px;font-weight:600;color:#E6EDF3;margin-top:1px">0</div>
+      </div>
+      <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center">
+        <div style="font-size:8px;color:#555;text-transform:uppercase">Mejor</div>
+        <div id="port-best" style="font-size:10px;font-weight:600;color:#3FB950;margin-top:1px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- MODAL DETALLE ACTIVO -->
+<div id="port-detail-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:101;align-items:center;justify-content:center;padding:0 8px;box-sizing:border-box;" onclick="if(event.target===this)closePortItemDetail()">
+  <div style="background:#161B22;border-radius:16px;width:100%;max-width:440px;max-height:88vh;overflow-y:auto;padding:20px 16px 24px;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div id="port-detail-modal-title" style="font-size:12px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;">Detalle</div>
+      <span onclick="closePortItemDetail()" style="color:#8B949E;font-size:20px;cursor:pointer;padding:0 4px;">&#215;</span>
+    </div>
+    <div id="port-detail-body"></div>
+  </div>
+</div>
+
+<!-- BANNER MERCADOS -->
+<div id="port-market-banner"></div>
+<div id="port-futures-banner"></div>
+<div id="port-fear-greed"></div>
+<!-- LISTA ACTIVOS -->
+<div id="port-thermo" style="padding:8px 14px 0;"></div>
+<div class="cnt" id="port-cnt"></div>
+
+<!-- MODAL AGREGAR / EDITAR ACTIVO -->
+<div id="port-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:center;justify-content:center;padding:0 8px;box-sizing:border-box;" onclick="if(event.target===this)closePortModal()">
+  <div style="background:#161B22;border-radius:16px;width:100%;max-width:440px;padding:20px 16px 24px;border:1px solid #30363D;max-height:88vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span id="port-modal-title" style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar activo</span>
+      <span onclick="closePortModal()" style="font-size:20px;color:#8B949E;cursor:pointer"></span>
+    </div>
+    <div id="port-modal-body"></div>
+  </div>
+</div>
+
+<!-- MODAL CONVERSOR PORTFOLIO -->
+<div id="port-conv-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);" onclick="if(event.target===this)closePortConvModal()">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#0d1117;border-radius:20px 20px 0 0;padding:20px 16px 40px;max-height:90vh;overflow-y:auto;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;"></span><span style="color:#fff;font-size:18px;font-weight:700;">Conversor</span></div>
+      <div onclick="closePortConvModal()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;"></div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
+      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:14px 16px;color:#fff;font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;align-items:end;margin-bottom:20px;">
+      <div>
+        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
+        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;"/>
+          <div style="overflow:hidden;flex:1;">
+            <div id="pc-from-ticker" style="color:#fff;font-size:14px;font-weight:700;">BTC</div>
+            <div id="pc-from-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
+          </div>
+          <span style="color:#888;font-size:11px;flex-shrink:0;"></span>
+        </div>
+      </div>
+      <div onclick="swapPortConv()" style="height:56px;background:#D4A017;border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#000;font-weight:bold;"></div>
+      <div>
+        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
+        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-to-logo" src="https://flagcdn.com/w40/us.png" style="width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;"/>
+          <div style="overflow:hidden;flex:1;">
+            <div id="pc-to-ticker" style="color:#fff;font-size:14px;font-weight:700;">USD</div>
+            <div id="pc-to-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dlar USA</div>
+          </div>
+          <span style="color:#888;font-size:11px;flex-shrink:0;"></span>
+        </div>
+      </div>
+    </div>
+    <div style="background:#1a1a2e;border-radius:16px;padding:24px;text-align:center;border:1px solid #2a2a3e;">
+      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
+      <div id="pc-result" style="color:#D4A017;font-size:30px;font-weight:800;margin-bottom:8px;line-height:1.2;"></div>
+      <div id="pc-rate" style="color:#666;font-size:12px;">Ingres un monto para convertir</div>
+    </div>
+  </div>
+</div>
+<div id="asset-picker-modal" style="display:none;position:fixed;inset:0;z-index:1001;background:rgba(0,0,0,0.85);" onclick="if(event.target===this)closeAssetPicker()">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#0d1117;border-radius:20px 20px 0 0;padding:20px 16px 40px;height:80vh;display:flex;flex-direction:column;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <span style="color:#fff;font-size:16px;font-weight:700;" id="picker-title">Seleccionar activo</span>
+      <div onclick="closeAssetPicker()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;"></div>
+    </div>
+    <div style="position:relative;margin-bottom:12px;">
+      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;"></span>
+      <input id="asset-search" type="text" placeholder="Buscar por nombre o ticker..." oninput="filterAssets(this.value)" autocomplete="off" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 14px 12px 42px;color:#fff;font-size:15px;box-sizing:border-box;outline:none;"/>
+    </div>
+    <div id="asset-list" style="flex:1;overflow-y:auto;padding-right:2px;"></div>
+  </div>
+</div>
+<script>
+var _convAssets=[
+{ticker:'BTC',name:'Bitcoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png',cgId:'bitcoin'},
+{ticker:'ETH',name:'Ethereum',type:'crypto',logo:'https://assets.coingecko.com/coins/images/279/thumb/ethereum.png',cgId:'ethereum'},
+{ticker:'BNB',name:'BNB',type:'crypto',logo:'https://assets.coingecko.com/coins/images/825/thumb/bnb-icon2_2x.png',cgId:'binancecoin'},
+{ticker:'SOL',name:'Solana',type:'crypto',logo:'https://assets.coingecko.com/coins/images/4128/thumb/solana.png',cgId:'solana'},
+{ticker:'XRP',name:'XRP',type:'crypto',logo:'https://assets.coingecko.com/coins/images/44/thumb/xrp-symbol-white-128.png',cgId:'ripple'},
+{ticker:'ADA',name:'Cardano',type:'crypto',logo:'https://assets.coingecko.com/coins/images/975/thumb/cardano.png',cgId:'cardano'},
+{ticker:'AVAX',name:'Avalanche',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12559/thumb/Avalanche_Circle_RedWhite_Trans.png',cgId:'avalanche-2'},
+{ticker:'DOT',name:'Polkadot',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12171/thumb/polkadot.png',cgId:'polkadot'},
+{ticker:'MATIC',name:'Polygon',type:'crypto',logo:'https://assets.coingecko.com/coins/images/4713/thumb/matic-token-icon.png',cgId:'matic-network'},
+{ticker:'LINK',name:'Chainlink',type:'crypto',logo:'https://assets.coingecko.com/coins/images/877/thumb/chainlink-new-logo.png',cgId:'chainlink'},
+{ticker:'LTC',name:'Litecoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/2/thumb/litecoin.png',cgId:'litecoin'},
+{ticker:'DOGE',name:'Dogecoin',type:'crypto',logo:'https://assets.coingecko.com/coins/images/5/thumb/dogecoin.png',cgId:'dogecoin'},
+{ticker:'UNI',name:'Uniswap',type:'crypto',logo:'https://assets.coingecko.com/coins/images/12504/thumb/uniswap-uni.png',cgId:'uniswap'},
+{ticker:'ATOM',name:'Cosmos',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1481/thumb/cosmos_hub.png',cgId:'cosmos'},
+{ticker:'TRX',name:'TRON',type:'crypto',logo:'https://assets.coingecko.com/coins/images/1094/thumb/tron-logo.png',cgId:'tron'},
+{ticker:'USDT',name:'Tether',type:'stable',logo:'https://assets.coingecko.com/coins/images/325/thumb/Tether.png',cgId:'tether'},
+{ticker:'USDC',name:'USD Coin',type:'stable',logo:'https://assets.coingecko.com/coins/images/6319/thumb/usdc.png',cgId:'usd-coin'},
+{ticker:'DAI',name:'Dai',type:'stable',logo:'https://assets.coingecko.com/coins/images/9956/thumb/Badge_Dai.png',cgId:'dai'},
+{ticker:'USD',name:'Dolar USA',type:'fiat',logo:'https://flagcdn.com/w40/us.png'},
+{ticker:'EUR',name:'Euro',type:'fiat',logo:'https://flagcdn.com/w40/eu.png'},
+{ticker:'ARS',name:'Peso Argentino',type:'fiat',logo:'https://flagcdn.com/w40/ar.png'},
+{ticker:'BRL',name:'Real Brasileiro',type:'fiat',logo:'https://flagcdn.com/w40/br.png'},
+{ticker:'MXN',name:'Peso Mexicano',type:'fiat',logo:'https://flagcdn.com/w40/mx.png'},
+{ticker:'CLP',name:'Peso Chileno',type:'fiat',logo:'https://flagcdn.com/w40/cl.png'},
+{ticker:'COP',name:'Peso Colombiano',type:'fiat',logo:'https://flagcdn.com/w40/co.png'},
+{ticker:'PEN',name:'Sol Peruano',type:'fiat',logo:'https://flagcdn.com/w40/pe.png'},
+{ticker:'GBP',name:'Libra Esterlina',type:'fiat',logo:'https://flagcdn.com/w40/gb.png'},
+{ticker:'JPY',name:'Yen Japones',type:'fiat',logo:'https://flagcdn.com/w40/jp.png'},
+{ticker:'CHF',name:'Franco Suizo',type:'fiat',logo:'https://flagcdn.com/w40/ch.png'},
+{ticker:'CAD',name:'Dolar Canadiense',type:'fiat',logo:'https://flagcdn.com/w40/ca.png'},
+{ticker:'AAPL',name:'Apple',type:'stock',logo:'https://logo.clearbit.com/apple.com'},
+{ticker:'TSLA',name:'Tesla',type:'stock',logo:'https://logo.clearbit.com/tesla.com'},
+{ticker:'NVDA',name:'NVIDIA',type:'stock',logo:'https://logo.clearbit.com/nvidia.com'},
+{ticker:'MSFT',name:'Microsoft',type:'stock',logo:'https://logo.clearbit.com/microsoft.com'},
+{ticker:'GOOGL',name:'Alphabet',type:'stock',logo:'https://logo.clearbit.com/google.com'},
+{ticker:'AMZN',name:'Amazon',type:'stock',logo:'https://logo.clearbit.com/amazon.com'},
+{ticker:'META',name:'Meta',type:'stock',logo:'https://logo.clearbit.com/meta.com'},
+{ticker:'NFLX',name:'Netflix',type:'stock',logo:'https://logo.clearbit.com/netflix.com'},
+{ticker:'XAU',name:'Oro Gold',type:'commodity',logo:'https://assets.coingecko.com/coins/images/14800/thumb/pax_gold.png'},
+{ticker:'XAG',name:'Plata Silver',type:'commodity',logo:'https://assets.coingecko.com/coins/images/14916/thumb/silver.png'}
+];
+var _convFrom=_convAssets[0];
+var _convTo=_convAssets.find(function(a){return a.ticker==='USD';});
+var _pickerTarget='from';
+var _convPriceCache={};
+function openPortConversor(){
+  var el=document.getElementById('port-conv-modal');
+  el.style.display='flex';el.style.alignItems='flex-end';
+  refreshPickerDisplay();runConversion();
+}
+function closePortConvModal(){document.getElementById('port-conv-modal').style.display='none';}
+function openAssetPicker(t){
+  _pickerTarget=t;
+  document.getElementById('picker-title').textContent=t==='from'?'Convertir de...':'Convertir a...';
+  document.getElementById('asset-search').value='';
+  renderAssetList(_convAssets);
+  var el=document.getElementById('asset-picker-modal');
+  el.style.display='flex';el.style.alignItems='flex-end';
+  setTimeout(function(){document.getElementById('asset-search').focus();},300);
+}
+function closeAssetPicker(){document.getElementById('asset-picker-modal').style.display='none';}
+function filterAssets(q){
+  if(!q){renderAssetList(_convAssets);return;}
+  var ql=q.toLowerCase();
+  renderAssetList(_convAssets.filter(function(a){return a.ticker.toLowerCase().indexOf(ql)>-1||a.name.toLowerCase().indexOf(ql)>-1;}));
+}
+function renderAssetList(assets){
+  var typeOrder={crypto:0,stable:1,fiat:2,stock:3,commodity:4};
+  var typeName={crypto:'Crypto',stable:'Stablecoins',fiat:'Monedas Fiat',stock:'Acciones USA',commodity:'Commodities'};
+  var sorted=assets.slice().sort(function(a,b){return (typeOrder[a.type]||9)-(typeOrder[b.type]||9);});
+  var html='';var lastType='';
+  sorted.forEach(function(a){
+    if(a.type!==lastType){
+      html+='<div style="color:#D4A017;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:10px 4px 4px;">'+typeName[a.type]+'</div>';
+      lastType=a.type;
+    }
+    var isFlag=a.logo&&a.logo.indexOf('flagcdn')>-1;
+    var ls=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    html+='<div onclick="selectAsset(this.dataset.t)" data-t="'+a.ticker+'" style="display:flex;align-items:center;gap:12px;padding:12px 8px;border-radius:10px;cursor:pointer;">'
+      +'<img src="'+a.logo+'" style="'+ls+'" onerror="convLogoFallback(this)"/>'
+      +'<div style="flex:1;"><div style="color:#fff;font-size:14px;font-weight:700;">'+a.ticker+'</div><div style="color:#888;font-size:11px;">'+a.name+'</div></div>'
+      +'</div>';
+  });
+  document.getElementById('asset-list').innerHTML=html||'<div style="color:#888;text-align:center;padding:30px;">Sin resultados</div>';
+}
+function convLogoFallback(img){
+  img.onerror=null;
+  img.style.cssText='width:28px;height:28px;border-radius:50%;background:#D4A017;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;';
+  img.src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+}
+function selectAsset(ticker){
+  var asset=_convAssets.find(function(a){return a.ticker===ticker;});
+  if(!asset)return;
+  if(_pickerTarget==='from')_convFrom=asset;else _convTo=asset;
+  closeAssetPicker();refreshPickerDisplay();runConversion();
+}
+function refreshPickerDisplay(){
+  var setD=function(prefix,asset){
+    var isFlag=asset.logo&&asset.logo.indexOf('flagcdn')>-1;
+    var logoEl=document.getElementById(prefix+'-logo');
+    if(!logoEl)return;
+    logoEl.src=asset.logo;
+    logoEl.style.cssText=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    document.getElementById(prefix+'-ticker').textContent=asset.ticker;
+    document.getElementById(prefix+'-name').textContent=asset.name;
+  };
+  setD('pc-from',_convFrom);setD('pc-to',_convTo);
+}
+function swapPortConv(){var t=_convFrom;_convFrom=_convTo;_convTo=t;refreshPickerDisplay();runConversion();}
+function getAssetPriceUSD(asset){
+  if(asset.type==='fiat'){
+    if(asset.ticker==='USD')return Promise.resolve(1);
+    return fetch('https://open.er-api.com/v6/latest/USD')
+      .then(function(r){return r.json();})
+      .then(function(d){return d.rates&&d.rates[asset.ticker]?1/d.rates[asset.ticker]:null;})
+      .catch(function(){return null;});
+  }
+  if(asset.type==='crypto'||asset.type==='stable'){
+    if(_convPriceCache[asset.ticker])return Promise.resolve(_convPriceCache[asset.ticker]);
+    return fetch('https://api.binance.com/api/v3/ticker/price?symbol='+asset.ticker+'USDT')
+      .then(function(r){return r.json();})
+      .then(function(d){
+        if(d.price){_convPriceCache[asset.ticker]=parseFloat(d.price);return parseFloat(d.price);}
+        return fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd')
+          .then(function(r2){return r2.json();})
+          .then(function(d2){var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}return null;})
+          .catch(function(){return null;});
+      })
+      .catch(function(){
+        return fetch('https://api.coingecko.com/api/v3/simple/price?ids='+(asset.cgId||asset.ticker.toLowerCase())+'&vs_currencies=usd')
+          .then(function(r2){return r2.json();})
+          .then(function(d2){var k=asset.cgId||asset.ticker.toLowerCase();if(d2[k]&&d2[k].usd){_convPriceCache[asset.ticker]=d2[k].usd;return d2[k].usd;}return null;})
+          .catch(function(){return null;});
+      });
+  }
+  if(asset.type==='stock'||asset.type==='commodity'){
+    return fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+asset.ticker+'?interval=1d&range=1d')
+      .then(function(r3){return r3.json();})
+      .then(function(d3){var p=d3.chart&&d3.chart.result&&d3.chart.result[0]&&d3.chart.result[0].meta&&d3.chart.result[0].meta.regularMarketPrice;return p||null;})
+      .catch(function(){return null;});
+  }
+  return Promise.resolve(null);
+}
+function runConversion(){
+  var amountEl=document.getElementById('pc-amount');
+  var resultEl=document.getElementById('pc-result');
+  var rateEl=document.getElementById('pc-rate');
+  if(!amountEl||!resultEl||!rateEl)return;
+  var amount=parseFloat(amountEl.value)||1;
+  resultEl.textContent='...';rateEl.textContent='Obteniendo tasas...';
+  Promise.all([getAssetPriceUSD(_convFrom),getAssetPriceUSD(_convTo)]).then(function(prices){
+    var fromUSD=prices[0];var toUSD=prices[1];
+    if(!fromUSD||!toUSD){resultEl.textContent='N/D';rateEl.textContent='No se pudo obtener la tasa';return;}
+    var rate=fromUSD/toUSD;var result=amount*rate;
+    var fmt=function(n){return n>=1000?n.toLocaleString('es-AR',{maximumFractionDigits:2}):n>=0.01?n.toLocaleString('es-AR',{maximumFractionDigits:6}):n.toExponential(4);};
+    resultEl.textContent=fmt(result)+' '+_convTo.ticker;
+    rateEl.textContent='1 '+_convFrom.ticker+' = '+fmt(rate)+' '+_convTo.ticker;
+  });
+}
+</script>
+</div>
+
+<!-- SCREEN MERCADOS -->
+<div class="screen" id="screen-mercados">
+<!-- STATUS BAR -->
+<div class="sbar">
+  <span class="st" id="clock">9:41</span>
+  <div class="sr"><span></span><span>WiFi</span><span></span></div>
+</div>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="hl">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32">
+  <defs>
+    <linearGradient id="gAhd" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/>
+    </linearGradient>
+    <linearGradient id="gChd" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/>
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gChd)" stroke-width="3.5"/>
+  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gChd)" stroke-width="1.5"/>
+  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gChd)" stroke-width="1" opacity="0.8"/>
+  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round"/>
+  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAhd)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="164" r="5" fill="#F7D060"/>
+</svg>
+    <span class="hn">AUREX</span>
+    <span class="hp"> Mercados</span>
+  </div>
+  <div class="live"><div class="ldot"></div><span id="liveLabel">LIVE</span></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="sumrow" id="sumrow"></div>
+<div id="mkt-news-banner" style="display:none;"></div>
+<div id="mkt-market-banner"></div>
+<div id="mkt-futures-banner"></div>
+<div id="mkt-fear-greed"></div>
+
+<!-- MODAL PARA EDITAR LOS 4 ACTIVOS DESTACADOS -->
+<div id="pin-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
+  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;max-width:100%;padding:20px 16px 32px;border-top:1px solid #30363D">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <span style="font-size:15px;font-weight:500;color:#E6EDF3">Editar activos destacados</span>
+      <span onclick="closePinModal()" style="font-size:13px;color:#D4A017;cursor:pointer">Listo </span>
+    </div>
+    <p style="font-size:11px;color:#555;margin-bottom:12px">Toc cualquier activo para fijarlo o quitarlo de los 4 destacados</p>
+    <div id="pin-list" style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto"></div>
+  </div>
+</div>
+
+<!-- BUSQUEDA UNIVERSAL -->
+<div id="mkt-search-bar" style="padding:8px 14px 4px;flex-shrink:0;">
+  <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" autocomplete="off"
+    style="width:100%;box-sizing:border-box;background:#161B22;border:1px solid #30363D;border-radius:10px;padding:9px 12px;color:#E6EDF3;font-size:13px;outline:none;"
+    oninput="filterMktSearch()" />
+  <div id="mkt-search-results" style="display:none;background:#161B22;border:1px solid #30363D;border-radius:10px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;"></div>
+</div>
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab on"  onclick="sw('cripto',this)"> Cripto</div>
+  <div class="tab"     onclick="sw('acciones',this)"> Acciones</div>
+  <div class="tab"     onclick="sw('stable',this)"> Stable & DeFi</div>
+  <div class="tab"     onclick="sw('futuros',this)"> Futuros</div>
+  <div class="tab"     onclick="sw('comm',this)"> Commodities</div>
+  <div class="tab"     onclick="sw('divisas',this)"> Divisas</div>
+  <div class="tab"     onclick="sw('etf',this)"> ETF & Bonos</div>
+</div>
+
+<!-- FILTRO PASES -->
+<div class="pais-row" id="pais-row">
+  <div class="pais on" onclick="swPais('usa',this)"> EE.UU.</div>
+  <div class="pais"    onclick="swPais('arg',this)"> Argentina</div>
+  <div class="pais"    onclick="swPais('br',this)"> Brasil</div>
+  <div class="pais"    onclick="swPais('eu',this)"> Europa</div>
+  <div class="pais"    onclick="swPais('es',this)"> Espaa</div>
+  <div class="pais"    onclick="swPais('jp',this)"> Japn</div>
+  <div class="pais"    onclick="swPais('cn',this)"> China</div>
+</div>
+
+<!-- TIMEFRAME + EDITAR -->
+<div class="tfrow">
+  <div class="tfs">
+    <div class="tf on" onclick="stf(this,'24h')">24h</div>
+    <div class="tf" onclick="stf(this,'7d')">7d</div>
+    <div class="tf" onclick="stf(this,'1m')">1m</div>
+    <div class="tf" onclick="stf(this,'3m')">3m</div>
+    <div class="tf" onclick="stf(this,'1a')">1a</div>
+  </div>
+  <span class="tf-time" id="tf-time">Act. ahora</span>
+  <div class="edit-btn" id="edit-btn" onclick="toggleEdit()"> Editar orden</div>
+</div>
+
+<!-- BANNER MODO EDICIN -->
+<div class="edit-banner" id="edit-banner">
+  <span>Arrastr para reordenar  Toc  para ocultar</span>
+  <span onclick="toggleEdit()" style="color:#D4A017;cursor:pointer">Listo </span>
+</div>
+
+<div class="cnt" id="cnt"></div>
+</div>
+<script>
+function filterMktSearch(){
+  var q = document.getElementById('mkt-universal-search').value.trim();
+  var res = document.getElementById('mkt-search-results');
+  if(!res) return;
+  if(q.length < 2){ res.style.display='none'; return; }
+  res.style.display='flex';
+  res.style.flexDirection='column';
+  res.style.gap='3px';
+  res.style.padding='6px';
+  res.innerHTML='<div style="font-size:11px;color:#555;padding:6px;text-align:center;">Buscando...</div>';
+  if(window._buscarActivos){
+    window._buscarActivos(q, function(results){
+      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#555;padding:6px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
+      window._mktSearchActs = results;
+      res.innerHTML = results.map(function(a,i){
+        var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
+        var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'#8B949E';
+        var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
+        var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;background:#0D1117;border:0.5px solid #21262D;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#E6EDF3;">'+a.s+tag+'</div><div style="font-size:10px;color:#8B949E;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+      }).join('');
+    });
+  }
+}
+window._mktOpenDetail = function(idx){
+  var acts = window._mktSearchActs || [];
+  var a = acts[idx]; if(!a) return;
+  // Close search and navigate to a detail view or show price info
+  var inp = document.getElementById('mkt-universal-search');
+  var res = document.getElementById('mkt-search-results');
+  if(inp) inp.value = '';
+  if(res) res.style.display = 'none';
+  // Try to show in the existing market detail modal if available
+  if(window.openMktDetail) { window.openMktDetail(a.s, a.tipo); }
+  else if(window.verDetalle) { window.verDetalle(a.s); }
+  else { alert(a.s + ' - ' + a.n + '\n\nTicker: ' + (a.ySymbol||a.s) + '\nTipo: ' + (a.tipo||'accion')); }
+};
+</script>
+
+
+<div class="screen" id="screen-ia" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
+
+<!-- BANNER EVENTOS -->
+<div id="ia-banner" style="display:none;flex-shrink:0">
+  <div id="ia-banner-inner" onclick="abrirEventosPanel()" style="cursor:pointer;padding:7px 14px 0;display:flex;justify-content:space-between;align-items:center">
+    <span id="ia-banner-label" style="font-size:9px;font-weight:700;color:#D4A017;letter-spacing:1px">EVENTO</span>
+    <div style="display:flex;align-items:center;gap:8px">
+      <div id="ia-banner-time" style="background:#D4A01730;border:1px solid #D4A017;border-radius:5px;padding:2px 7px;font-size:10px;font-weight:700;color:#D4A017"></div>
+      <span onclick="event.stopPropagation();cerrarBanner()" style="color:#8B949E;font-size:13px;padding:2px 4px">X</span>
+    </div>
+  </div>
+  <div style="overflow:hidden;padding:2px 14px 7px;border-bottom:1px solid #21262D">
+    <div id="ia-banner-ticker" style="display:flex">
+      <span id="ia-banner-text1" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
+      <span id="ia-banner-text2" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL TODOS LOS EVENTOS -->
+<div id="ia-eventos-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.96);z-index:9999;flex-direction:column;overflow-y:auto;padding:20px 16px 40px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <span style="color:#D4A017;font-size:14px;font-weight:700;letter-spacing:1px">EVENTOS DEL DIA</span>
+    <span onclick="cerrarEventosPanel()" style="color:#8B949E;font-size:22px;cursor:pointer;padding:4px 8px">X</span>
+  </div>
+  <div id="ia-eventos-lista"></div>
+</div>
+
+<!-- HEADER 3 CONTADORES -->
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:#0D1117">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+    <span style="font-size:15px;font-weight:600;color:#E6EDF3">AUREX <span style="color:#8B949E;font-weight:400;font-size:13px">- Senales IA</span></span>
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#A78BFA;font-weight:700">
+      <div style="width:5px;height:5px;border-radius:50%;background:#A78BFA;animation:lp 1.5s infinite"></div>
+      <span>LIVE</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <div id="ia-cnt-alcista" onclick="setIAFiltro('alcista')" style="flex:1;background:#3FB95020;border:1.5px solid #3FB95060;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-alcista" style="font-size:26px;font-weight:800;color:#3FB950;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#3FB950;margin-top:3px">ALCISTAS</div>
+    </div>
+    <div id="ia-cnt-bajista" onclick="setIAFiltro('bajista')" style="flex:1;background:#FF444420;border:1.5px solid #FF444460;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-bajista" style="font-size:26px;font-weight:800;color:#FF4444;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#FF4444;margin-top:3px">BAJISTAS</div>
+    </div>
+    <div id="ia-cnt-altaconf" onclick="setIAFiltro('alta_conf')" style="flex:1;background:#D4A01720;border:1.5px solid #D4A01760;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-altaconf" style="font-size:26px;font-weight:800;color:#D4A017;line-height:1">0</div>
+      <div style="font-size:9px;font-weight:700;color:#D4A017;margin-top:3px">ALTA CONV-IA</div>
+    </div>
+  </div>
+  <!-- Ver Variables button -->
+  <div style="display:flex;justify-content:flex-end;margin-top:8px">
+    <button onclick="showIAVariablesPopup()" style="background:#21262D;border:1px solid #D4A01740;border-radius:8px;padding:5px 10px;color:#D4A017;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0)">Ã¢ÃÂÃÂ¹Ã¯ÃÂ¸ÃÂ Ver Variables del Modelo</button>
+  </div>
+</div>
+
+<!-- PILLS FILTRO -->
+<div style="padding:8px 14px;border-bottom:1px solid #21262D;flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
+  <div id="ia-filtros" style="display:flex;gap:6px;white-space:nowrap">
+    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#000;border:1px solid #D4A017;-webkit-tap-highlight-color:rgba(0,0,0,0)">Todo</div>
+    <div class="ia-pill" onclick="setIAFiltro('alcista',this)" data-filtro="alcista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#3FB950;border:1px solid #3FB95060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Alcista</div>
+    <div class="ia-pill" onclick="setIAFiltro('bajista',this)" data-filtro="bajista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FF4444;border:1px solid #FF444460;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bajista</div>
+    <div class="ia-pill" onclick="setIAFiltro('alta_conf',this)" data-filtro="alta_conf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#D4A017;border:1px solid #D4A01760;-webkit-tap-highlight-color:rgba(0,0,0,0)">Conf. IA</div>
+    <div class="ia-pill" onclick="setIAFiltro('cripto',this)" data-filtro="cripto" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#A78BFA;border:1px solid #A78BFA60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Cripto</div>
+    <div class="ia-pill" onclick="setIAFiltro('accion',this)" data-filtro="accion" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#58A6FF;border:1px solid #58A6FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Acciones</div>
+    <div class="ia-pill" onclick="setIAFiltro('etf',this)" data-filtro="etf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#F0883E;border:1px solid #F0883E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">ETF</div>
+    <div class="ia-pill" onclick="setIAFiltro('metal',this)" data-filtro="metal" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FFD700;border:1px solid #FFD70060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Metales</div>
+    <div class="ia-pill" onclick="setIAFiltro('materia_prima',this)" data-filtro="materia_prima" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#C8A96E;border:1px solid #C8A96E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Mat. Primas</div>
+    <div class="ia-pill" onclick="setIAFiltro('bono',this)" data-filtro="bono" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#79C0FF;border:1px solid #79C0FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bonos</div>
+  </div>
+</div>
+
+<!-- SUBTITULO -->
+<div style="padding:6px 14px 4px;flex-shrink:0;display:flex;justify-content:space-between;align-items:center">
+  <span id="ia-subtitulo" style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:0.5px">SENALES IA</span>
+  <span id="ia-updated" style="font-size:10px;color:#8B949E">-</span>
+</div>
+
+<div class="cnt" id="ia-list" style="overflow-y:auto;flex:1"></div>
+
+</div>
+
+<div class="screen" id="screen-watchlist" style="flex-direction:column;flex:1;min-height:0">
+<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#001A2A 0%,#0D1117 100%)">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
+      <span style="font-size:13px;color:#8B949E"> Watchlist</span>
+    </div>
+    <div onclick="openAddWatch()" style="padding:4px 10px;border-radius:9px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Seguir activo</div>
+  </div>
+</div>
+<div class="cnt" id="watch-cnt"></div>
+<div id="watch-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
+  <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:85vh;overflow-y:auto">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar a Watchlist</span>
+      <span onclick="closeWatchModal()" style="font-size:20px;color:#8B949E;cursor:pointer">X</span>
+    </div>
+    <div id="watch-modal-body"></div>
+  </div>
+</div>
+</div>
+
+<div class="screen" id="screen-alertas">
+<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
+  <div style="font-size:52px"></div>
+  <div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div>
+  <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos<br><span style="color:#D4A017;font-size:11px">Proximamente</span></div>
+</div>
+</div>
+
+<div id="screen-perfil" class="screen" style="display:none">
+<style>
+#screen-perfil{padding:0;background:#0D1117;position:relative;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+#perfil-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.auth-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 20px 100px;min-height:100%;position:relative;z-index:1;box-sizing:border-box;}
+.auth-logo{margin-bottom:16px}
+.auth-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:4px;text-align:center}
+.auth-sub{font-size:11px;color:#D4A017;letter-spacing:3px;text-align:center;margin-bottom:28px}
+.auth-tabs{display:flex;gap:0;background:#161B22;border-radius:10px;padding:3px;margin-bottom:20px;width:100%}
+.auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:#8B949E;border-radius:8px;cursor:pointer;transition:all .2s}
+.auth-tab.on{background:#D4A017;color:#000}
+.auth-form{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
+.auth-input{width:100%;padding:13px 14px;background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;color:#fff;font-size:14px;box-sizing:border-box;outline:none}
+.auth-input:focus{border-color:#D4A017}
+.auth-input-hint{font-size:10px;color:#D4A017;margin-top:-8px;margin-left:4px;margin-bottom:2px}
+.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,#D4A017,#8B6208);border:none;border-radius:10px;color:#000;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px}
+.auth-msg{font-size:13px;color:#D4A017;min-height:20px;text-align:center}
+.auth-logged{display:flex;flex-direction:column;align-items:center;width:100%;gap:10px}
+.auth-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#D4A017,#8B6208);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#000;margin-bottom:4px}
+.auth-username{font-size:18px;font-weight:800;color:#fff;letter-spacing:1px}
+.auth-email-txt{font-size:12px;color:#8B949E}
+.auth-badge{background:#161B22;border:1px solid #D4A017;border-radius:20px;padding:4px 14px;font-size:11px;color:#D4A017;font-weight:700;margin:4px 0 8px}
+.auth-celular-row{width:100%;background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;padding:13px 14px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
+.auth-celular-label{font-size:11px;color:#8B949E}
+.auth-celular-value{font-size:14px;color:#fff}
+.auth-celular-hint{font-size:10px;color:#D4A017}
+.auth-logout{width:100%;padding:12px;background:transparent;border:1px solid #F85149;border-radius:10px;color:#F85149;font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
+</style>
+<canvas id="perfil-canvas"></canvas>
+<!-- ESTADO NO LOGUEADO -->
+<div id="auth-guest" class="auth-wrap" style="display:none">
+<div class="auth-logo">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="60" height="60">
+<defs>
+<linearGradient id="gApr" x1="20%" y1="0%" x2="80%" y2="100%">
+<stop offset="0%" stop-color="#F7D060"/>
+<stop offset="50%" stop-color="#D4A017"/>
+<stop offset="100%" stop-color="#8B6208"/>
+</linearGradient>
+<linearGradient id="gCpr" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#F0C030"/>
+<stop offset="100%" stop-color="#9A7010"/>
+</linearGradient>
+</defs>
+<circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCpr)" stroke-width="3.5"/>
+<circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCpr)" stroke-width="1.5"/>
+<circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCpr)" stroke-width="1" opacity="0.8"/>
+<line x1="150" y1="78" x2="108" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
+<line x1="150" y1="78" x2="192" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
+<line x1="120" y1="148" x2="180" y2="148" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round"/>
+<polyline points="132,178 150,195 168,178" fill="none" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="150" cy="195" r="3" fill="url(#gApr)"/>
+</svg>
+</div>
+<div class="auth-title">AUREX</div>
+<div class="auth-sub">TU VENTAJA EN EL MERCADO</div>
+<div class="auth-tabs">
+<div id="tab-login" class="auth-tab on" onclick="authSwitchTab('login')">Ingresar</div>
+<div id="tab-register" class="auth-tab" onclick="authSwitchTab('register')">Registrarse</div>
+</div>
+<div id="form-login" class="auth-form">
+<input id="auth-email" class="auth-input" type="email" placeholder="Email" autocomplete="email"/>
+<input id="auth-pass" class="auth-input" type="password" placeholder="Contrase&ntilde;a" autocomplete="current-password"/>
+<button class="auth-btn" onclick="authDoLogin()">INGRESAR</button>
+</div>
+<div id="form-register" class="auth-form" style="display:none">
+<input id="reg-email" class="auth-input" type="email" placeholder="Email" autocomplete="email"/>
+<input id="reg-pass" class="auth-input" type="password" placeholder="Contrase&ntilde;a (m&iacute;n 6 car.)" autocomplete="new-password"/>
+<div style="display:flex;gap:6px;align-items:stretch;position:relative;">
+  <button type="button" id="reg-pais-btn" onclick="togglePaisPicker()" style="background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;color:#fff;padding:0 10px;outline:none;flex-shrink:0;cursor:pointer;min-width:90px;height:48px;display:flex;align-items:center;justify-content:center;gap:6px;"><span id="reg-pais-flag"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"></span><span id="reg-pais-code" style="font-size:13px;font-weight:600;letter-spacing:-0.3px;">+54</span><span style="font-size:9px;opacity:0.5;margin-left:2px;">&#9660;</span></button>
+  <input id="reg-celular-num" class="auth-input" type="tel" placeholder="9 11 1234-5678" autocomplete="tel" style="flex:1;margin:0;" oninput="syncPhoneField()"/>
+  <input id="reg-celular" type="hidden" value="+54"/><div id="reg-pais-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:99999;background:#1a1f28;border:1px solid #30363D;border-radius:12px;width:195px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.6);"><div onclick="selectPais('ar','+54')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"><span style="font-size:14px;">Argentina</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+54</span></div><div onclick="selectPais('us','+1')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/us.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="us"><span style="font-size:14px;">USA</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+1</span></div><div onclick="selectPais('br','+55')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/br.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="br"><span style="font-size:14px;">Brasil</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+55</span></div><div onclick="selectPais('uy','+598')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/uy.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="uy"><span style="font-size:14px;">Uruguay</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+598</span></div><div onclick="selectPais('cl','+56')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/cl.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="cl"><span style="font-size:14px;">Chile</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+56</span></div><div onclick="selectPais('mx','+52')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/mx.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="mx"><span style="font-size:14px;">Mxico</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+52</span></div><div onclick="selectPais('co','+57')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/co.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="co"><span style="font-size:14px;">Colombia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+57</span></div><div onclick="selectPais('pe','+51')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/pe.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="pe"><span style="font-size:14px;">Per</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+51</span></div><div onclick="selectPais('ve','+58')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ve.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ve"><span style="font-size:14px;">Venezuela</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+58</span></div><div onclick="selectPais('es','+34')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/es.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="es"><span style="font-size:14px;">Espaa</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+34</span></div><div onclick="selectPais('gb','+44')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="gb"><span style="font-size:14px;">UK</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+44</span></div><div onclick="selectPais('de','+49')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/de.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="de"><span style="font-size:14px;">Alemania</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+49</span></div><div onclick="selectPais('fr','+33')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/fr.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="fr"><span style="font-size:14px;">Francia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+33</span></div><div onclick="selectPais('it','+39')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;"><img src="https://flagcdn.com/24x18/it.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="it"><span style="font-size:14px;">Italia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+39</span></div></div>
+</div>
+<div class="auth-input-hint">* Para recibir alertas autom&aacute;ticas de se&ntilde;ales IA</div>
+<button class="auth-btn" onclick="authDoRegister()">CREAR CUENTA</button>
+</div>
+<div id="auth-msg" class="auth-msg"></div>
+</div>
+<!-- ESTADO LOGUEADO -->
+<div id="auth-logged" class="auth-logged" style="display:none;text-align:center;padding:24px 16px;">
+  <div id="auth-avatar-initial" style="width:64px;height:64px;border-radius:50%;background:#c9a84c;color:#000;font-size:28px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;"></div>
+  <div id="auth-username-txt" style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;"></div>
+  <div id="auth-email-txt" style="font-size:13px;color:#aaa;margin-bottom:10px;"></div>
+  <div id="auth-celular-txt" style="font-size:13px;color:#c9a84c;background:rgba(201,168,76,0.12);border-radius:20px;padding:4px 16px;display:inline-block;margin-bottom:12px;"></div>
+  <div style="margin-bottom:20px;">
+    <button  style="background:transparent;border:1px solid #c9a84c;color:#c9a84c;border-radius:20px;padding:6px 20px;font-size:13px;cursor:pointer;">Plan Gratis</button>
+  </div>
+  <div style="background:#1a1a2e;border-radius:12px;padding:16px;margin-bottom:12px;text-align:left;">
+    <div style="font-size:12px;color:#888;margin-bottom:8px;"> Celular para alertas IA</div>
+    <div id="auth-celular-edit" style="display:flex;align-items:center;gap:8px;">
+      <input id="celular-input" type="tel" placeholder="+54 9 11 1234-5678" style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none;" oninput="syncCelularDisplay()" />
+      <button onclick="authSaveCelular()" style="background:#c9a84c;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:10px 16px;cursor:pointer;">Guardar</button>
+    </div>
+    <div style="font-size:11px;color:#666;margin-top:6px;">* Necesario para recibir alertas automÃ¡ticas</div>
+  </div>
+  <div id="auth-msg" class="auth-msg"></div>
+  <button onclick="logoutUser()" style="width:100%;border:1.5px solid #e74c3c;background:transparent;color:#e74c3c;border-radius:10px;padding:14px;font-size:15px;font-weight:600;cursor:pointer;margin-top:8px;">Cerrar sesiÃ³n</button>
+</div>
+<script>
+(function(){
+var SURL='https://dklljnfhlzmfsfmxrpie.supabase.co';
+var SKEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRrbGxqbmZobHptZnNmbXhycGllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQ1MzI3NDcsImV4cCI6MjA5MDEwODc0N30.FxegnijMue_K9jPqzY7gwNABaVpyyB6Io_ZkWLMSX9k';
+function getSB(){
+  return window._supabase || null;
+}
+window.authSwitchTab=function(tab){
+  document.getElementById('tab-login').classList.toggle('on',tab==='login');
+  document.getElementById('tab-register').classList.toggle('on',tab==='register');
+  document.getElementById('form-login').style.display=tab==='login'?'flex':'none';
+  document.getElementById('form-register').style.display=tab==='register'?'flex':'none';
+  document.getElementById('auth-msg').textContent='';
+};
+window.authDoLogin=function(){
+  var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
+  var email=document.getElementById('auth-email').value.trim();
+  var pass=document.getElementById('auth-pass').value;
+  if(!email||!pass){showAuthMsg('CompletÃ¡ todos los campos');return;}
+  showAuthMsg('Ingresando...');
+  c.auth.signInWithPassword({email:email,password:pass}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('');}});
+};
+window.authDoRegister=function(){
+  var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
+  var email=document.getElementById('reg-email').value.trim();
+  var pass=document.getElementById('reg-pass').value;
+  var cel=document.getElementById('reg-celular').value.trim();
+  if(!email||!pass){showAuthMsg('CompletÃ¡ email y contraseÃ±a');return;}
+  if(pass.length<6){showAuthMsg('La contraseÃ±a debe tener al menos 6 caracteres');return;}
+  showAuthMsg('Creando cuenta...');
+  c.auth.signUp({email:email,password:pass,options:{data:{celular:cel||''}}}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('\u00a1Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}});
+};
+window.authSaveCelular=function(){
+  var c=getSB();
+  var msgEl=document.getElementById('auth-msg');
+  if(!c){
+    if(msgEl){msgEl.textContent='Error: sesiÃ³n no iniciada';msgEl.style.color='#e74c3c';}
+    return;
+  }
+  var celInput=document.getElementById('celular-input');
+  var cel=celInput?celInput.value.trim():'';
+  if(!cel){
+    if(msgEl){msgEl.textContent='IngresÃ¡ un nÃºmero de celular';msgEl.style.color='#e74c3c';}
+    return;
+  }
+  if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
+  c.auth.updateUser({data:{celular:cel}}).then(function(r){
+  if(r.error){
+    if(msgEl){msgEl.textContent='Error: '+r.error.message;msgEl.style.color='#e74c3c';}
+    return;
+  }
+  var user=r.data&&r.data.user?r.data.user:null;
+  if(user){
+    c.from('usuarios').upsert({id:user.id,email:user.email,celular:cel},{onConflict:'id'});
+  }
+  var el=document.getElementById('auth-celular-txt');
+  if(el)el.textContent=cel;
+  if(msgEl){msgEl.textContent='Celular guardado';msgEl.style.color='#2ecc71';setTimeout(function(){if(msgEl)msgEl.textContent='';},3000);}
+});
+}
+window.syncCelularDisplay=function(){
+  var cel=document.getElementById('celular-input');
+  var txt=document.getElementById('auth-celular-txt');
+  if(cel&&txt)txt.textContent=cel.value.trim()||'';
+};;
+function showAuthMsg(msg){
+  var el=document.getElementById('auth-msg');
+  if(el) el.textContent=msg;
+}
+window.updateUserUI=function(user){
+  var nameEl=document.getElementById('auth-username-txt');
+  var emailEl=document.getElementById('auth-email-txt');
+  var avatarEl=document.getElementById('auth-avatar-initial');
+  var celEl=document.getElementById('auth-celular-txt');
+  // Si el usuario es anÃ³nimo, tratarlo como no logueado
+  var isAnon=user&&(user.is_anonymous===true||(user.identities&&user.identities.length===0&&!user.email));
+  if(user&&!isAnon){
+    document.getElementById('auth-guest').style.display='none';
+    document.getElementById('auth-logged').style.display='flex';
+    var em=user.email||'';
+    var meta=user.user_metadata||{};
+    var cel=meta.celular||'';
+    var name=meta.nombre||em.split('@')[0]||'Usuario';
+    if(nameEl) nameEl.textContent=name;
+    if(emailEl) emailEl.textContent=em;
+    if(avatarEl) avatarEl.textContent=(name[0]||'A').toUpperCase();
+    if(celEl) celEl.textContent=cel?cel:'Sin celular cargado';
+    var cinput=document.getElementById('celular-input');
+    if(cinput) cinput.value=cel;
+  } else {
+    document.getElementById('auth-guest').style.display='flex';
+    document.getElementById('auth-logged').style.display='none';
+  }
+};
+window.logoutUser=function(){
+  var c=getSB(); if(!c) return;
+  c.auth.signOut();
+  updateUserUI(null);
+};
+window.upsertUserDB=function(user){};
+// Init auth listener
+setTimeout(function(){
+  var c=getSB();
+  if(!c) return;
+  c.auth.getSession().then(function(r){
+    if(r.data&&r.data.session) updateUserUI(r.data.session.user);
+    else updateUserUI(null);
+  });
+  c.auth.onAuthStateChange(function(event,session){
+    if(session) updateUserUI(session.user);
+    else updateUserUI(null);
+  });
+},500);
+// Canvas estrellas perfil
+function initPerfilCanvas(){
+  var canvas=document.getElementById('perfil-canvas');
+  if(!canvas) return;
+  var screen=document.getElementById('screen-perfil');
+  canvas.width=screen.offsetWidth||390;
+  canvas.height=screen.offsetHeight||700;
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width, H=canvas.height;
+  var stars=[];
+  for(var i=0;i<70;i++){
+    stars.push({
+      x:Math.random()*W,
+      y:Math.random()*H,
+      r:Math.random()*1.4+0.3,
+      alpha:Math.random(),
+      da:(Math.random()*0.008+0.003)*(Math.random()<0.5?1:-1),
+      vx:(Math.random()-0.5)*0.08,
+      vy:(Math.random()-0.5)*0.08
+    });
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    // Lineas entre estrellas cercanas
+    for(var i=0;i<stars.length;i++){
+      for(var j=i+1;j<stars.length;j++){
+        var dx=stars[i].x-stars[j].x;
+        var dy=stars[i].y-stars[j].y;
+        var dist=Math.sqrt(dx*dx+dy*dy);
+        if(dist<90){
+          var lineAlpha=(1-dist/90)*0.18;
+          ctx.beginPath();
+          ctx.moveTo(stars[i].x,stars[i].y);
+          ctx.lineTo(stars[j].x,stars[j].y);
+          ctx.strokeStyle='rgba(212,160,23,'+lineAlpha+')';
+          ctx.lineWidth=0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    // Estrellas
+    for(var i=0;i<stars.length;i++){
+      var s=stars[i];
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(212,160,23,'+Math.max(0,Math.min(1,s.alpha))+')';
+      ctx.fill();
+      // Actualizar
+      s.alpha+=s.da;
+      if(s.alpha>1||s.alpha<0) s.da*=-1;
+      s.x+=s.vx; s.y+=s.vy;
+      if(s.x<0) s.x=W; if(s.x>W) s.x=0;
+      if(s.y<0) s.y=H; if(s.y>H) s.y=0;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+// Inicializar canvas cuando se muestra la pantalla de perfil
+var origShow=window.showScreen;
+window.showScreen=function(id){
+  if(origShow) origShow(id);
+  if(id==='screen-perfil'){
+    setTimeout(initPerfilCanvas,50);
+    setTimeout(function(){
+      if(window._openRegister){
+        window._openRegister=false;
+        if(window.authSwitchTab) window.authSwitchTab('register');
+      }
+    },200);
+  }
+};
+// Tambin init si ya est visible
+setTimeout(function(){
+  if(document.getElementById('screen-perfil').style.display!=='none'){
+    initPerfilCanvas();
+  }
+},800);
+})();
+</script>
+
+
+<!-- SUSCRIPCIN -->
+<div class="sec-lbl"> Mi suscripcin</div>
+<div class="plans-wrap">
+
+  <!-- FREE: pequeo y discreto -->
+  <div class="plan-card current" style="padding:10px 14px;opacity:0.7;margin-bottom:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="plan-name" style="font-size:13px;color:#8B949E">Free</div>
+        <div style="font-size:10px;color:#8B949E;background:#21262D;padding:2px 8px;border-radius:10px">Plan actual</div>
+      </div>
+      <div style="font-size:12px;color:#555">$0</div>
+    </div>
+    <div style="font-size:10px;color:#555;margin-top:6px">5 activos  3 seales IA/da  Con publicidad</div>
+    <button class="plan-btn btn-curr" style="margin-top:8px;font-size:11px;padding:7px" onclick="obSelectPlan('free')">Plan actual </button>
+  </div>
+
+  <!-- PRO: grande y destacado -->
+  <div class="plan-card pro-c" style="border:1.5px solid #A78BFA80;background:linear-gradient(135deg,#A78BFA10,#7C3AED08);position:relative;margin-bottom:10px">
+    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap"> MS POPULAR</div>
+    <div class="plan-top" style="margin-top:8px">
+      <div>
+        <div class="plan-name" style="font-size:18px;color:#A78BFA">PRO</div>
+        <div style="font-size:11px;color:#8B949E">Para el inversor activo</div>
+      </div>
+      <div class="plan-pricing">
+        <div class="plan-price" style="font-size:22px;color:#fff">$9.99</div>
+        <div class="plan-period">/mes</div>
+      </div>
+    </div>
+    <div style="background:#A78BFA15;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #A78BFA30">
+      <div style="font-size:10px;color:#A78BFA;font-weight:600;margin-bottom:4px"> ANUAL: $7.79/mes  Ahorrs $26/ao</div>
+    </div>
+    <div class="feats">
+      <div class="feat ok">Portfolio ilimitado</div>
+      <div class="feat ok">Mercados completo</div>
+      <div class="feat ok">Seales IA ilimitadas</div>
+      <div class="feat ok">Alertas push en tiempo real</div>
+      <div class="feat ok">Sin publicidad</div>
+      <div class="feat ok">Soporte prioritario</div>
+    </div>
+    <button class="plan-btn btn-pro" style="margin-top:12px;font-size:14px;padding:13px;font-weight:800;letter-spacing:0.5px" onclick="obSelectPlan('pro')">QUIERO PRO </button>
+  </div>
+
+  <!-- ELITE: premium -->
+  <div class="plan-card elite-c" style="border:1.5px solid #D4A01780;background:linear-gradient(135deg,#D4A01710,#8B620808);position:relative;margin-bottom:8px">
+    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#D4A017,#F5C842);color:#1A0D00;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap"> MXIMO RENDIMIENTO</div>
+    <div class="plan-top" style="margin-top:8px">
+      <div>
+        <div class="plan-name" style="font-size:18px;background:linear-gradient(135deg,#F7D060,#D4A017);-webkit-background-clip:text;-webkit-text-fill-color:transparent">ELITE</div>
+        <div style="font-size:11px;color:#8B949E">Para traders profesionales</div>
+      </div>
+      <div class="plan-pricing">
+        <div class="plan-price" style="font-size:22px;color:#D4A017">$19.99</div>
+        <div class="plan-period">/mes</div>
+      </div>
+    </div>
+    <div style="background:#D4A01715;border-radius:8px;padding:8px 10px;margin-bottom:10px;border:0.5px solid #D4A01730">
+      <div style="font-size:10px;color:#D4A017;font-weight:600;margin-bottom:4px"> ANUAL: $15.99/mes  Ahorrs $48/ao</div>
+    </div>
+    <div class="feats">
+      <div class="feat ok">Todo lo de PRO</div>
+      <div class="feat ok">Seales IA prioritarias</div>
+      <div class="feat ok">API de trading automtico</div>
+      <div class="feat ok">Alertas WhatsApp + Email</div>
+      <div class="feat ok">Reporte semanal personalizado</div>
+      <div class="feat ok">Acceso anticipado a funciones</div>
+    </div>
+    <button class="plan-btn btn-elite" style="margin-top:12px;font-size:14px;padding:13px;font-weight:800;letter-spacing:0.5px" onclick="obSelectPlan('elite')">QUIERO ELITE </button>
+  </div>
+
+</div>
+</div>
+
+  <!-- TAB-BAR NAVEGACIN -->
+  <nav class="tab-bar" id="main-tab-bar">
+    <div class="tab-btn active" id="btn-portfolio" onclick="navTo('portfolio')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span>Portfolio</span>
+    </div>
+    <div class="tab-btn" id="btn-mercados" onclick="navTo('mercados')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>Mercados</span>
+    </div>
+    <div class="tab-btn" id="btn-watchlist" onclick="navTo('watchlist')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Watchlist</span>
+    </div>
+    <div class="tab-btn" id="btn-ia" onclick="navTo('ia')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      <span>IA</span>
+    </div>
+    <div class="tab-btn" id="btn-alertas" onclick="navTo('alertas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alertas</span>
+    </div>
+    <div class="tab-btn" id="btn-perfil" onclick="navTo('perfil')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Perfil</span>
+    </div>
+  </nav>
+</div>
+</div>
+
+<script>
+// Fix estructura: mover screens y tab-bar al .phone si estn fuera
+(function fixPhoneStructure(){
+  var phone = document.querySelector('.phone');
+  if(!phone) return;
+  var screenIds = ['screen-ia','screen-watchlist','screen-alertas','screen-perfil'];
+  var tabBar = document.getElementById('main-tab-bar');
+  screenIds.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.parentElement !== phone){
+      phone.appendChild(el);
+    }
+  });
+  if(tabBar && tabBar.parentElement !== phone){
+    phone.appendChild(tabBar);
+  }
+})();
+
+window.navTo = function(screen) {
+  var screens = document.querySelectorAll('.screen');
+  screens.forEach(function(s){ s.style.display = 'none'; });
+  var target = document.getElementById('screen-' + screen);
+  if(target) target.style.display = 'flex';
+  var btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  var activeBtn = document.getElementById('btn-' + screen);
+  if(activeBtn) activeBtn.classList.add('active');
+  if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
+  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
+};
+
+//  Selector de pas para telfono 
+
+// Init: mostrar portfolio por defecto
+navTo('portfolio');
+
+window.updatePhonePrefix = function(){
+  var sel = document.getElementById('reg-pais');
+  var hidden = document.getElementById('reg-celular');
+  var numInput = document.getElementById('reg-celular-num');
+  if(!sel) return;
+  var prefix = sel.value;
+  if(hidden) hidden.value = prefix + ' ' + ((numInput && numInput.value) || '');
+};
+window.syncPhoneField = function(){var codeEl=document.getElementById('reg-pais-code');var hidden=document.getElementById('reg-celular');var numInput=document.getElementById('reg-celular-num');if(!hidden||!numInput)return;var prefix=codeEl?codeEl.textContent.trim():'+54';hidden.value=prefix+' '+numInput.value.trim();};
+
+</script>
+
+
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(r){ r.unregister(); });
+  });
+}
+</script>
+<script>
+// Init inline - no depende de aurex-features.js
+document.addEventListener("DOMContentLoaded", function(){
+  var done = localStorage.getItem("aurex_onboarding_done");
+  var ob = document.getElementById("onboarding");
+  var ph = document.querySelector(".phone");
+  if(done){
+    // Ya hizo onboarding - mostrar app
+    if(ob) ob.style.display = "none";
+    if(ph) ph.style.display = "flex";
+    // navTo portfolio si existe
+    if(typeof window.navTo === "function") window.navTo("portfolio");
+    else {
+      // Fallback: mostrar screen-portfolio directamente
+      var screens = document.querySelectorAll(".screen");
+      for(var i=0;i<screens.length;i++) screens[i].style.display="none";
+      var port = document.getElementById("screen-portfolio");
+      if(port) port.style.display="flex";
+    }
+  } else {
+    // Mostrar onboarding
+    if(ob) ob.style.display = "block";
+    if(ph) ph.style.display = "none";
+  }
+});
+</script>
+</body>
+</html>
