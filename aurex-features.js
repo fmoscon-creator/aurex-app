@@ -3223,14 +3223,14 @@ var FUTURES_ITEMS = [
   {s:'ES=F',    rawS:'ES=F',    n:'S&P500',  cat:'FUTUROS', dec:0},
   {s:'NQ=F',    rawS:'NQ=F',    n:'Nasdaq',  cat:'FUTUROS', dec:0},
   {s:'YM=F',    rawS:'YM=F',    n:'Dow',     cat:'FUTUROS', dec:0},
-  {s:'RTY=F',   rawS:'RTY=F',   n:'Russell', cat:'FUTUROS', dec:0},
+  {s:'^VIX',    rawS:'^VIX',    n:'VIX',     cat:'SENTIM',  dec:2},
+  {s:'BZ=F',    rawS:'BZ=F',    n:'Brent',   cat:'COMOD',   dec:2},
   {s:'GC=F',    rawS:'GC=F',    n:'Oro',     cat:'COMOD',   dec:0},
-  {s:'CL=F',    rawS:'CL=F',    n:'Petróleo',cat:'COMOD',   dec:2},
+  {s:'CL=F',    rawS:'CL=F',    n:'WTI',     cat:'COMOD',   dec:2},
   {s:'SI=F',    rawS:'SI=F',    n:'Plata',   cat:'COMOD',   dec:2},
   {s:'^TNX',    rawS:'^TNX',    n:'US 10Y',  cat:'BONOS',   dec:2},
   {s:'^IRX',    rawS:'^IRX',    n:'US 2Y',   cat:'BONOS',   dec:2},
-  {s:'DX-Y.NYB',rawS:'DX-Y.NYB',n:'DXY',    cat:'MACRO',   dec:2},
-  {s:'^VIX',    rawS:'^VIX',    n:'VIX',     cat:'SENTIM',  dec:2}
+  {s:'DX-Y.NYB',rawS:'DX-Y.NYB',n:'DXY',    cat:'MACRO',   dec:2}
 ];
 
 async function _fetchFuturesData() {
@@ -3263,7 +3263,7 @@ function _renderFuturesBanner(containerId) {
   if(!el) return;
   var cached = window._futuresCache;
   if(!cached || Object.keys(cached).length === 0) {
-    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Cargando futuros e índices...</div>';
+    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Cargando...</div>';
     _fetchFuturesData().then(function(){ _renderFuturesBanner(containerId); });
     return;
   }
@@ -3271,8 +3271,16 @@ function _renderFuturesBanner(containerId) {
   if(now - window._futuresTs > 60000) {
     _fetchFuturesData().then(function(){ _renderFuturesBanner(containerId); });
   }
+  // Active items from localStorage
+  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F'];
+  var activeSlots;
+  try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
+  catch(e) { activeSlots = defaultSlots; }
   var catColors = {FUTUROS:'#58A6FF', COMOD:'#D4A017', BONOS:'#8B949E', MACRO:'#A78BFA', SENTIM:'#FF6B6B'};
-  var chips = FUTURES_ITEMS.map(function(item) {
+  var isPortfolio = elId.indexOf('port') >= 0;
+  var chips = activeSlots.map(function(rawS) {
+    var item = FUTURES_ITEMS.find(function(x){ return x.rawS === rawS; });
+    if(!item) return '';
     var d = cached[item.rawS];
     if(!d || !d.price) return '';
     var pct = d.pct || 0;
@@ -3281,21 +3289,69 @@ function _renderFuturesBanner(containerId) {
     var stCol = d.open ? '#3FB950' : '#555';
     var catColor = catColors[item.cat] || '#8B949E';
     var priceStr = item.dec === 0 ? Math.round(d.price).toLocaleString() : d.price.toFixed(item.dec);
-    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:68px;padding:2px 5px;border-right:1px solid #21262D;flex-shrink:0;">' +
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:60px;padding:2px 6px;border-right:1px solid #21262D;flex-shrink:0;">' +
       '<div style="font-size:'+(isPortfolio?'7':'8')+'px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:#E6EDF3;white-space:nowrap;display:flex;align-items:center;gap:2px;"><span style="font-size:7px;color:'+stCol+';">&#x25CF;</span>'+item.n+'</div>' +
       '<div style="font-size:9px;color:#E6EDF3;">'+priceStr+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  var isPortfolio = elId.indexOf('port') >= 0;
+  // Edit button
+  var editBtn = '<div onclick="window._openBannerEdit(\'' + elId + '\')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:28px;padding:2px 4px;flex-shrink:0;cursor:pointer;opacity:0.5;">' +
+    '<div style="font-size:11px;color:#8B949E;">&#x270F;</div>' +
+  '</div>';
   el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 8px':'5px 8px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
-    '<div style="font-size:8px;font-weight:700;color:#aaa;flex-shrink:0;padding-right:6px;margin-right:2px;border-right:1px solid #21262D;line-height:1.3;white-space:nowrap;">FUTUROS<br>&amp; MACRO</div>' +
-    chips +
+    chips + editBtn +
   '</div>';
 }
 
+window._openBannerEdit = function(elId) {
+  var existing = document.getElementById('aurex-banner-edit-popup');
+  if(existing) { existing.remove(); return; }
+  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F'];
+  var activeSlots;
+  try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
+  catch(e) { activeSlots = defaultSlots; }
+  var allOpts = FUTURES_ITEMS.map(function(x){
+    return '<option value="'+x.rawS+'">'+x.n+'</option>';
+  }).join('');
+  var rows = activeSlots.map(function(s, i) {
+    var sel = '<select data-slot="'+i+'" style="background:#21262D;color:#E6EDF3;border:1px solid #30363D;border-radius:6px;padding:4px 8px;font-size:13px;width:100%;">' +
+      FUTURES_ITEMS.map(function(x){
+        return '<option value="'+x.rawS+'"'+(x.rawS===s?' selected':'')+'>'+x.n+' ('+x.rawS+')</option>';
+      }).join('') +
+    '</select>';
+    return '<div style="margin-bottom:8px;">' +
+      '<div style="font-size:10px;color:#8B949E;margin-bottom:3px;">Slot '+(i+1)+'</div>' +
+      sel +
+    '</div>';
+  }).join('');
+  var popup = document.createElement('div');
+  popup.id = 'aurex-banner-edit-popup';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  popup.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
+      '<span style="font-size:14px;font-weight:700;color:#E6EDF3;">Editar Banner</span>' +
+      '<button onclick="document.getElementById('aurex-banner-edit-popup').remove()" style="background:none;border:none;color:#8B949E;font-size:18px;cursor:pointer;">&#x2715;</button>' +
+    '</div>' +
+    rows +
+    '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:10px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:4px;">Guardar</button>' +
+  '</div>';
+  document.body.appendChild(popup);
+};
 
+window._saveBannerEdit = function() {
+  var selects = document.querySelectorAll('#aurex-banner-edit-popup select');
+  var newSlots = [];
+  selects.forEach(function(s){ newSlots.push(s.value); });
+  localStorage.setItem('aurex_banner_slots', JSON.stringify(newSlots));
+  document.getElementById('aurex-banner-edit-popup').remove();
+  // Refresh both banners
+  if(typeof _renderFuturesBanner === 'function') {
+    _renderFuturesBanner('port-futures-banner');
+    _renderFuturesBanner('mkt-futures-banner');
+  }
+};
 
 // === MERCADOS: BANNER DE NOTICIAS DEL DIA ===
 function _renderMktNewsBanner(containerId) {
