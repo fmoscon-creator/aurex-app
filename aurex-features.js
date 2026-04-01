@@ -243,7 +243,7 @@ function _appendMktRow(cnt, item, tab) {
   row.className='item-row'; row.id='row-'+item.s;
   row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #21262D;cursor:pointer;gap:8px;';
   row.innerHTML=
-    '<img src="'+_getMktLogo(item)+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:6px;" onerror="this.style.display='none'">'+
+    '<img src="'+_getMktLogo(item)+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:6px;" onerror="this.style.display=\x27none\x27">'+
     '<div style="display:flex;flex-direction:column;min-width:70px;flex-shrink:0;">'+
       '<span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span>'+
       '<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
