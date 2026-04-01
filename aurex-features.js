@@ -31,7 +31,7 @@ var DATA={
     {s:'INJ',n:'Injective',tab:'cripto'},{s:'TIA',n:'Celestia',tab:'cripto'},{s:'JUP',n:'Jupiter',tab:'cripto'},
     {s:'NEAR',n:'NEAR Protocol',tab:'cripto'},{s:'FTM',n:'Fantom',tab:'cripto'},{s:'ROSE',n:'Oasis Network',tab:'cripto'},
     {s:'ZEC',n:'Zcash',tab:'cripto'},{s:'DASH',n:'Dash',tab:'cripto'},{s:'XMR',n:'Monero',tab:'cripto'},
-    {s:'BCH',n:'Bitcoin Cash',tab:'cripto'},{s:'BSV',n:'Bitcoin SV',tab:'cripto'}
+    {s:'BCH',n:'Bitcoin Cash',tab:'cripto'},{s:'TON',n:'Toncoin',tab:'cripto'}
   ],
   stable: [
     {s:'USDT',n:'Tether',tab:'stable'},{s:'USDC',n:'USD Coin',tab:'stable'},{s:'DAI',n:'Dai',tab:'stable'}
