@@ -1450,7 +1450,7 @@ window.openPortItemDetail = function(itemId){
     else { zone52 = 'Precio cerca del máximo anual — zona históricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = '🔴'; }
     rangeBar = '<div style="margin:10px 0 4px;">' +
       '<div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;">' +
-        '<span>â Mín: $'+fmtP(low52)+'</span>' +
+        '<span>↓ Mín: $'+fmtP(low52)+'</span>' +
         '<span style="font-size:9px;color:#8B949E;">52 semanas</span>' +
         '<span>→ Máx: $'+fmtP(high52)+'</span>' +
       '</div>' +
@@ -1504,7 +1504,7 @@ window.openPortItemDetail = function(itemId){
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Cantidad</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">'+item.cantidad+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L USD</div><div style="font-size:13px;color:'+pnlColor+';font-weight:600;">'+pnlSign+'$'+fmtP(Math.abs(pnlUsd))+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Entrada</div><div style="font-size:11px;color:#8B949E;">'+fechaStr+'</div></div>' +
-    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">â Mín 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">↓ Mín 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">→ Máx 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
     '</div>' +
     rangeBar +
@@ -2573,7 +2573,7 @@ window.showIAVariablesPopup = function() {
         '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA ⚡ — 10 VARIABLES</div>' +
         '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de señales v7 — tiempo real</div>' +
       '</div>' +
-      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:point✕>â</button>' +
+      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
     '</div>' +
     summaryHtml +
     '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
@@ -2729,7 +2729,7 @@ function _buildIADetail(s) {
     html += '<div style="margin-bottom:10px">';
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">';
     html += '<span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span>';
-    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">â '+negVars.length+' bajistas</span></span>';
+    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">↓ '+negVars.length+' bajistas</span></span>';
     html += '</div>';
     // Positivas primero
     posVars.forEach(function(d) {
@@ -2741,7 +2741,7 @@ function _buildIADetail(s) {
     // Negativas
     negVars.forEach(function(d) {
       html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#FF444410;border-left:2px solid #FF4444;border-radius:0 6px 6px 0;margin-bottom:3px">';
-      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">â '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">↓ '+d.label+'</span>';
       html += '<span style="font-size:10px;color:#FF4444">'+d.fmt(sc[d.k])+'</span>';
       html += '</div>';
     });
