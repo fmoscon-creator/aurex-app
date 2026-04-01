@@ -196,7 +196,7 @@ function _getActivoScores(sym) {
   if(act && act.ySymbol && act.ySymbol!==sym){
     for(var j=0;j<signals.length;j++){ if(signals[j].simbolo===act.ySymbol) return signals[j].scores||null; }
   }
-  // fallback: scores sintÃ©ticos basados en seed del sÃ­mbolo
+  // fallback: scores sintéticos basados en seed del símbolo
   if(act) {
     var seed=_iaSeed(sym);
     return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
@@ -228,63 +228,6 @@ function renderTab(tab, pais){
   setTimeout(function(){ _loadMktBackground(tab, pais); }, 1200);
 }
 
-// === AUREX: Logo map para Mercados ===
-function _getMktLogo(s) {
-  var CG = 'https://assets.coingecko.com/coins/images/';
-  var FMP = 'https://financialmodelingprep.com/image-stock/';
-  var map = {
-    'BTC':CG+'1/small/bitcoin.png',
-    'ETH':CG+'279/small/ethereum.png',
-    'SOL':CG+'4128/small/solana.png',
-    'BNB':CG+'825/small/bnb-icon2_2x.png',
-    'XRP':CG+'44/small/xrp-symbol-white-128.png',
-    'ADA':CG+'975/small/cardano.png',
-    'AVAX':CG+'12559/small/Avalanche_Circle_RedWhite_Trans.png',
-    'DOGE':CG+'5/small/dogecoin.png',
-    'LINK':CG+'877/small/chainlink-new-logo.png',
-    'MATIC':CG+'4713/small/matic-token-icon.png',
-    'DOT':CG+'12171/small/polkadot.png',
-    'UNI':CG+'12504/small/uniswap-uni-logo.png',
-    'AAVE':CG+'12645/small/AAVE.png',
-    'LTC':CG+'2/small/litecoin.png',
-    'ATOM':CG+'1481/small/cosmos_hub.png',
-    'FIL':CG+'12817/small/filecoin.png',
-    'ALGO':CG+'4030/small/algorand.png',
-    'VET':CG+'1167/small/VeChain-Logo-768x725.png',
-    'ICP':CG+'28205/small/icp.png',
-    'NEAR':CG+'10365/small/near.png',
-    'FTM':CG+'4001/small/Fantom.png',
-    'SAND':CG+'12129/small/sandbox_logo.jpg',
-    'MANA':CG+'878/small/decentraland-mana.png',
-    'AXS':CG+'13029/small/axie_infinity_logo.png',
-    'GRT':CG+'13397/small/graph-token.png',
-    'COMP':CG+'10775/small/COMP.png',
-    'MKR':CG+'1364/small/Mark_Maker.png',
-    'SNX':CG+'3406/small/SNX.png',
-    'CRV':CG+'12124/small/Curve.png',
-    'LDO':CG+'13573/small/lido_dao.png',
-    'APE':CG+'24383/small/apecoin.jpg',
-    'OP':CG+'25244/small/OP.jpeg',
-    'ARB':CG+'16547/small/photo_2023-03-29_18.07.24.jpeg',
-    'INJ':CG+'12882/small/Secondary_Symbol.png',
-    'TIA':CG+'33951/small/tia.png',
-    'SEI':CG+'28205/small/Sei_Logo_-_Transparent.png',
-    'SUI':CG+'26375/small/sui_asset.jpeg',
-    'APT':CG+'26455/small/aptos_round.png',
-    'TON':CG+'17980/small/ton_symbol.png',
-    'ROSE':CG+'13046/small/oasis_logo.jpg',
-    'ZEC':CG+'486/small/zcash.png',
-    'XMR':CG+'69/small/monero_logo.png',
-    'BCH':CG+'780/small/bitcoin-cash-circle.png',
-    '1INCH':CG+'13469/small/1inch-token.png',
-    'USDT':CG+'325/small/Tether.png',
-    'USDC':CG+'6319/small/USD_Coin_icon.png',
-    'DAI':CG+'9956/small/4943.png',
-  };
-  return map[s] || FMP + s + '.png';
-}
-
-
 function _appendMktRow(cnt, item, tab) {
   if(window._mktRenderedSyms[item.s]) return;
   window._mktRenderedSyms[item.s]=true;
@@ -294,20 +237,17 @@ function _appendMktRow(cnt, item, tab) {
   row.className='item-row'; row.id='row-'+item.s;
   row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #21262D;cursor:pointer;gap:8px;';
   row.innerHTML=
-    '<div style="display:flex;flex-direction:row;align-items:center;gap:8px;min-width:78px;flex-shrink:0;">'
-      +'<img src="'+_getMktLogo(item.s)+'" style="width:28px;height:28px;border-radius:50%;object-fit:contain;flex-shrink:0;" onerror="this.style.display=\'none\'">'
-      +'<div style="display:flex;flex-direction:column;">'
-      +'<span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span>'
-      +'<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80px;">'+item.n+'</span>'
-      +'</div>'
-      +'</div>'
+    '<div style="display:flex;flex-direction:column;min-width:70px;flex-shrink:0;">'+
+      '<span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span>'+
+      '<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
+    '</div>'+
     '<div id="spark-'+item.s+'" style="flex:1;display:flex;align-items:center;justify-content:center;min-width:64px;max-width:80px;">'+
       '<div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2px;">'+_buildDotsHTML(_getActivoScores(item.simbolo))+'</div>'+
     '</div>'+
     '<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;">'+
-      '<span id="p-'+item.s+'" style="color:#E6EDF3;font-size:13px;font-weight:600;">Â·Â·Â·</span>'+
+      '<span id="p-'+item.s+'" style="color:#E6EDF3;font-size:13px;font-weight:600;">···</span>'+
       '<span id="lbl-'+item.s+'" style="font-size:9px;color:#D4A017;font-weight:700;display:none;"></span>'+
-      '<span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">Â·Â·Â·</span>'+
+      '<span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">···</span>'+
       dotsHtml+
     '</div>';
   cnt.appendChild(row);
@@ -462,7 +402,7 @@ window.sw=function(tab,el){
   renderTab(tab, _activePais);
 };
 
-// === swPais: cambio de paÃ­s en acciones ===
+// === swPais: cambio de país en acciones ===
 window.swPais=function(pais,el){
   document.querySelectorAll('#pais-row .pais').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
@@ -478,7 +418,7 @@ window.stf=function(el,tf){
   if(el) el.classList.add('on');
   var tfEl=document.getElementById('tf-time');
   if(tfEl){
-    var labels={'24h':'Act. ahora','7d':'Ãltimos 7d','1m':'Ãltimo mes','3m':'Ãltimos 3m','1a':'Ãltimo aÃ±o'};
+    var labels={'24h':'Act. ahora','7d':'Últimos 7d','1m':'Último mes','3m':'Últimos 3m','1a':'Último año'};
     tfEl.textContent=labels[tf]||'Act. ahora';
   }
   if(_activeTab==='cripto'||_activeTab==='stable'){
@@ -490,7 +430,7 @@ window.stf=function(el,tf){
   }
 };
 
-// === toggleEdit: modo ediciÃ³n con flechas Ã¢ÂÂ²Ã¢ÂÂ¼ ===
+// === toggleEdit: modo edición con flechas â²â¼ ===
 window._editMode=false;
 window.toggleEdit=function(){
   window._editMode=!window._editMode;
@@ -511,11 +451,11 @@ window.toggleEdit=function(){
         arrowDiv.className='reorder-arrows';
         arrowDiv.style.cssText='display:flex;flex-direction:column;gap:2px;margin-left:8px;';
         var upBtn=document.createElement('button');
-        upBtn.textContent='Ã¢ÂÂ²';
+        upBtn.textContent='â²';
         upBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
         upBtn.onclick=function(e){e.stopPropagation();_moveRow(row,-1);};
         var dnBtn=document.createElement('button');
-        dnBtn.textContent='Ã¢ÂÂ¼';
+        dnBtn.textContent='â¼';
         dnBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
         dnBtn.onclick=function(e){e.stopPropagation();_moveRow(row,1);};
         arrowDiv.appendChild(upBtn);
@@ -553,7 +493,7 @@ renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
-function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
+function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'Recibirás alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
 function showAlertNotification(s,p,o){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+p.toLocaleString('en')+' obj:$'+o.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
 function updateNotifButton(on){var b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'#D4A017';b.textContent=on?'Activas':'Activar';}
 initPushNotifications();
@@ -562,7 +502,7 @@ setInterval(checkAlertasLocal,30000);
 fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d.status==='ok')console.log('Backend v'+d.version+' OK');}).catch(function(){});
 
 // ============================================================
-// === CONVERSOR DE MONEDAS â Binance + fallback fiat =========
+// === CONVERSOR DE MONEDAS — Binance + fallback fiat =========
 // ============================================================
 
 window._pcPrices = {};
@@ -622,7 +562,7 @@ window.updatePortConv = function(){
   if(!amtEl || !fromEl || !toEl || !resEl) return;
 
   var amt  = parseFloat(amtEl.value);
-  if(isNaN(amt) || amt < 0) { resEl.textContent = 'â'; return; }
+  if(isNaN(amt) || amt < 0) { resEl.textContent = '—'; return; }
   var from = fromEl.value;
   var to   = toEl.value;
   var p    = window._pcPrices;
@@ -692,7 +632,7 @@ window.swapPortConv = function(){
 
 
 // ============================================================
-// === PORTFOLIO PERSISTENTE â Supabase ========================
+// === PORTFOLIO PERSISTENTE — Supabase ========================
 // ============================================================
 
 var SUPA_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
@@ -710,7 +650,7 @@ function supaHeaders(token){
   return h;
 }
 
-// Obtener el token de sesiÃ³n actual del usuario
+// Obtener el token de sesión actual del usuario
 function getSupaToken(){
   try {
     var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
@@ -719,7 +659,7 @@ function getSupaToken(){
   } catch(e) { return Promise.resolve({ data: { session: null } }); }
 }
 
-// Ã¢ÂÂÃ¢ÂÂ CARGAR portfolio del usuario desde Supabase Ã¢ÂÂÃ¢ÂÂ
+// ââ CARGAR portfolio del usuario desde Supabase ââ
 window.loadPortfolioSupa = function(){
   try {
     if(window._supabase){
@@ -745,7 +685,7 @@ function _fetchPortfolio(token, userId){
     if(!items || items.length===0){ _renderPortfolioEmpty(); return; }
     // Primero renderizar con precios de cache
     _renderPortfolioItems(items);
-    // Luego buscar precios frescos para los sÃ­mbolos del portfolio
+    // Luego buscar precios frescos para los símbolos del portfolio
     _refreshPortPrices(items);
   })
   .catch(function(){ _renderPortfolioEmpty(); });
@@ -932,14 +872,14 @@ window._updatePortTotalDisplay = function() {
     var btcPrice = window._pcPrices && window._pcPrices['BTC'] ? window._pcPrices['BTC'] : 0;
     if(btcPrice > 0) {
       var btcVal = total / btcPrice;
-      if(el) el.textContent = 'Ã¢ÂÂ¿ ' + fmtNum(btcVal, 5);
+      if(el) el.textContent = 'â¿ ' + fmtNum(btcVal, 5);
     } else {
-      if(el) el.textContent = 'Ã¢ÂÂ¿ ---';
+      if(el) el.textContent = 'â¿ ---';
     }
     if(badge) { badge.textContent = 'BTC'; badge.style.color='#F7931A'; badge.style.borderColor='#F7931A40'; }
   } else if(cur === 'USDT') {
-    if(el) el.textContent = 'Ã¢ÂÂ® ' + fmtNum(total);
-    if(badge) { badge.textContent = 'USDTÃ¢ÂÂ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
+    if(el) el.textContent = 'â® ' + fmtNum(total);
+    if(badge) { badge.textContent = 'USDTâ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
     if(el) el.textContent = 'USD ' + fmtNum(total);
     if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
@@ -1079,7 +1019,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
 
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
-  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'â';
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
   items.forEach(function(item){
     var precio = prcs[item.simbolo] || item.precio_compra;
     total += item.cantidad * precio;
@@ -1094,7 +1034,7 @@ function _updateTotals(items){
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : 'â';
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
@@ -1139,19 +1079,19 @@ function _renderThermoRisk(items){
   if(pAlc>0) segs.push({p:pAlc,c:'#3FB950',l:'ALCISTA'});
   if(pHC>0)  segs.push({p:pHC, c:'#D4A017',l:'ALTA CONV-IA'});
   if(pBaj>0) segs.push({p:pBaj,c:'#FF4444',l:'BAJISTA'});
-  if(pSin>0) segs.push({p:pSin,c:'#8B949E',l:'SIN SEÃAL'});
+  if(pSin>0) segs.push({p:pSin,c:'#8B949E',l:'SIN SEÑAL'});
   var bar = segs.map(function(s){ return '<div style="width:'+s.p.toFixed(0)+'%;background:'+s.c+';height:100%;"></div>'; }).join('');
   var leg = segs.filter(function(s){ return s.p>1; }).map(function(s){
     return '<span style="color:'+s.c+';font-size:10px;margin-right:8px;"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:'+s.c+';margin-right:3px;vertical-align:middle;"></span>'+s.l+' '+s.p.toFixed(0)+'%</span>';
   }).join('');
   var explanation = '';
-  if(pBaj >= 50) explanation = 'â ï¸ MÃ¡s de la mitad de tu cartera tiene seÃ±al BAJISTA â considerÃ¡ revisar tu exposiciÃ³n.';
-  else if(pAlc >= 50) explanation = 'Ã¢ÂÂ La mayorÃ­a de tu cartera tiene momentum positivo segÃºn la IA.';
-  else if(pHC >= 20) explanation = 'ð¥ TenÃ©s capital en zona de MÃXIMA ATENCIÃN â la IA detecta movimiento fuerte inminente.';
-  else if(pSin >= 80) explanation = 'ð¤ Sin seÃ±ales activas hoy para tus activos.';
-  else explanation = 'Tu cartera tiene exposiciÃ³n mixta. RevisÃ¡ cada activo para mÃ¡s detalle.';
+  if(pBaj >= 50) explanation = '⚠️ Más de la mitad de tu cartera tiene señal BAJISTA — considerá revisar tu exposición.';
+  else if(pAlc >= 50) explanation = 'â La mayoría de tu cartera tiene momentum positivo según la IA.';
+  else if(pHC >= 20) explanation = '🔥 Tenés capital en zona de MÁXIMA ATENCIÓN — la IA detecta movimiento fuerte inminente.';
+  else if(pSin >= 80) explanation = '💤 Sin señales activas hoy para tus activos.';
+  else explanation = 'Tu cartera tiene exposición mixta. Revisá cada activo para más detalle.';
   el.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-    '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÃMETRO DE RIESGO</div>' +
+    '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
     '<div style="font-size:8px;color:#E6EDF3;letter-spacing:.5px;margin-top:1px;font-weight:500;">DISTRIBUC CAPITAL DE LA CARTERA</div>' +
     '' +
     '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
@@ -1173,17 +1113,17 @@ function _renderMarketBanner(containerId){
   var utcMin = utcH*60+utcM;
   var isWknd = utcDay===0||utcDay===6;
   var ALL_MKTS = [
-    {id:'EEUU', flag:'ðºð¸', open:810,  close:1200},
-    {id:'ARG',  flag:'ð¦ð·', open:840,  close:1260},
-    {id:'BRASIL',flag:'ð§ð·',open:780,  close:1175},
-    {id:'LONDRES',flag:'ð¬ð§',open:480, close:990},
-    {id:'ESPANA', flag:'ðªð¸',open:480, close:990},
-    {id:'ALEMANIA',flag:'ð©ðª',open:480,close:990},
-    {id:'FRANCIA', flag:'ð«ð·',open:480,close:990},
-    {id:'JAPON',  flag:'ð¯ðµ', open:0,   close:390},
-    {id:'CHINA',  flag:'ð¨ð³', open:90,  close:420},
-    {id:'HONGKONG',flag:'ð­ð°',open:90,  close:480},
-    {id:'ASIA',   flag:'ð',              open:0,   close:360}
+    {id:'EEUU', flag:'🇺🇸', open:810,  close:1200},
+    {id:'ARG',  flag:'🇦🇷', open:840,  close:1260},
+    {id:'BRASIL',flag:'🇧🇷',open:780,  close:1175},
+    {id:'LONDRES',flag:'🇬🇧',open:480, close:990},
+    {id:'ESPANA', flag:'🇪🇸',open:480, close:990},
+    {id:'ALEMANIA',flag:'🇩🇪',open:480,close:990},
+    {id:'FRANCIA', flag:'🇫🇷',open:480,close:990},
+    {id:'JAPON',  flag:'🇯🇵', open:0,   close:390},
+    {id:'CHINA',  flag:'🇨🇳', open:90,  close:420},
+    {id:'HONGKONG',flag:'🇭🇰',open:90,  close:480},
+    {id:'ASIA',   flag:'🌏',              open:0,   close:360}
   ];
   function mktItem(mkt){
     if(!prefs.includes(mkt.id)) return '';
@@ -1250,18 +1190,18 @@ window.showThermoInfo = function(){
   var body = document.getElementById('port-modal-body');
   var modal = document.getElementById('port-modal');
   if(!body||!modal) return;
-  body.innerHTML = '<div style="color:#E6EDF3;font-size:15px;font-weight:700;margin-bottom:12px;">ð¡ï¸ TermÃ³metro de Riesgo</div>' +
-    '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cÃ³mo estÃ¡ distribuido el capital de tu cartera segÃºn las seÃ±ales activas de AUREX IA:</div>' +
+  body.innerHTML = '<div style="color:#E6EDF3;font-size:15px;font-weight:700;margin-bottom:12px;">🌡️ Termómetro de Riesgo</div>' +
+    '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> â La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> â La seÃ±al mÃ¡s valiosa y rara. MÃ¡xima atenciÃ³n: movimiento fuerte inminente. Solo 1-2 activos por dÃ­a reciben esta seÃ±al.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> â La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÃAL</b> â No hay seÃ±al activa hoy para ese activo. No es una alerta, simplemente el modelo no detectÃ³ nada destacable.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> — La señal más valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
     '</div>' +
     '<div onclick="closePortModal()" style="background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
   modal.style.display = 'flex';
 };
-// Ã¢ÂÂÃ¢ÂÂ ABRIR / CERRAR modal Agregar activo Ã¢ÂÂÃ¢ÂÂ
+// ââ ABRIR / CERRAR modal Agregar activo ââ
 var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
   {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
@@ -1271,7 +1211,7 @@ var _ACTIVOS_MODAL = [
 ];
 
 window.openAddActivo = function(){
-  // Si no hay sesiÃ³n, mostrar aviso de login
+  // Si no hay sesión, mostrar aviso de login
   if(!window._supabase){ navTo('perfil'); return; }
   window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){
@@ -1280,10 +1220,10 @@ window.openAddActivo = function(){
       if(cnt){
         var old = cnt.innerHTML;
         cnt.innerHTML = '<div style="background:#1A0D00;border:1px solid #D4A01780;border-radius:12px;margin:20px 14px;padding:20px;text-align:center;">' +
-          '<div style="font-size:28px;margin-bottom:8px;">ð</div>' +
-          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃ¡s una cuenta</div>' +
-          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃ¡ tu cuenta gratis.</div>' +
-          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis â</div>' +
+          '<div style="font-size:28px;margin-bottom:8px;">🔐</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">Necesitás una cuenta</div>' +
+          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creá tu cuenta gratis.</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
           '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
@@ -1306,8 +1246,8 @@ function _openAddActivoModal(){
     '<div id="pa-selected" style="display:none;background:#161B22;border-radius:9px;padding:10px;border:1px solid #D4A017;">' +
     '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#E6EDF3;margin-bottom:8px;"></div>' +
     '<div style="display:flex;gap:8px;">' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="numbâ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="numbâ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
     '</div>' +
     '<div id="pa-err" style="color:#FF4444;font-size:11px;margin-top:4px;display:none;"></div>' +
     '<div onclick="savePortActivo()" style="margin-top:10px;background:#3FB950;color:#0D1117;border-radius:9px;padding:11px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Confirmar</div>' +
@@ -1505,14 +1445,14 @@ window.openPortItemDetail = function(itemId){
   if(low52 && high52 && high52 > low52 && precio > 0){
     var pct52 = Math.max(0, Math.min(100, ((precio - low52)/(high52 - low52)*100)));
     var zone52, zoneColor52, zoneIcon52;
-    if(pct52 <= 30){ zone52 = 'Precio cerca del mÃ­nimo anual â zona histÃ³ricamente baja'; zoneColor52 = '#3FB950'; zoneIcon52 = 'ð¢'; }
-    else if(pct52 <= 70){ zone52 = 'Precio en zona media del rango anual'; zoneColor52 = '#D4A017'; zoneIcon52 = 'ð¡'; }
-    else { zone52 = 'Precio cerca del mÃ¡ximo anual â zona histÃ³ricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = 'ð´'; }
+    if(pct52 <= 30){ zone52 = 'Precio cerca del mínimo anual — zona históricamente baja'; zoneColor52 = '#3FB950'; zoneIcon52 = '🟢'; }
+    else if(pct52 <= 70){ zone52 = 'Precio en zona media del rango anual'; zoneColor52 = '#D4A017'; zoneIcon52 = '🟡'; }
+    else { zone52 = 'Precio cerca del máximo anual — zona históricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = '🔴'; }
     rangeBar = '<div style="margin:10px 0 4px;">' +
       '<div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;">' +
-        '<span>â MÃ­n: $'+fmtP(low52)+'</span>' +
+        '<span>↓ Mín: $'+fmtP(low52)+'</span>' +
         '<span style="font-size:9px;color:#8B949E;">52 semanas</span>' +
-        '<span>â MÃ¡x: $'+fmtP(high52)+'</span>' +
+        '<span>→ Máx: $'+fmtP(high52)+'</span>' +
       '</div>' +
       '<div style="background:#21262D;border-radius:4px;height:6px;position:relative;">' +
         '<div style="background:linear-gradient(90deg,#3FB950,#D4A017,#FF4444);border-radius:4px;height:6px;width:'+pct52.toFixed(0)+'%;"></div>' +
@@ -1564,8 +1504,8 @@ window.openPortItemDetail = function(itemId){
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Cantidad</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">'+item.cantidad+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L USD</div><div style="font-size:13px;color:'+pnlColor+';font-weight:600;">'+pnlSign+'$'+fmtP(Math.abs(pnlUsd))+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Entrada</div><div style="font-size:11px;color:#8B949E;">'+fechaStr+'</div></div>' +
-    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">â MÃ­n 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
-    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">â MÃ¡x 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">↓ Mín 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">→ Máx 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
     '</div>' +
     rangeBar +
     '<div id="port-det-pct" style="margin:6px 0;"><span id="pd-24h-val" style="font-size:13px;font-weight:600;color:#8B949E;">--</span><span style="display:flex;gap:4px;margin-top:4px;">' +
@@ -1587,9 +1527,9 @@ window.openPortItemDetail = function(itemId){
     '<div style="border-top:1px solid #21262D;margin-top:12px;padding-top:12px;">' +
     '<div style="font-size:10px;color:#8B949E;margin-bottom:8px;text-align:center;">Compartir</div>' +
     '<div style="display:flex;justify-content:center;gap:10px;">' +
-    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">ð¬</div>WhatsApp</a>' +
-    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">âï¸</div>Telegram</a>' +
-    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">ð§</div>Mail</a>' +
+    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">💬</div>WhatsApp</a>' +
+    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">✈️</div>Telegram</a>' +
+    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">📧</div>Mail</a>' +
     '</div>' +
     '</div>' +
     '</div></div>';
@@ -1667,7 +1607,7 @@ window.portSimUpdate = function(itemId, simbolo, pctStr){
 };;
 
 
-// Ã¢ÂÂÃ¢ÂÂ AGREGAR activo al portfolio en Supabase Ã¢ÂÂÃ¢ÂÂ
+// ââ AGREGAR activo al portfolio en Supabase ââ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
   if(!window._supabase){ console.warn('Supabase no disponible'); return; }
   window._supabase.auth.getSession().then(function(res){
@@ -1694,7 +1634,7 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
   });
 };
 
-// Ã¢ÂÂÃ¢ÂÂ ELIMINAR activo del portfolio Ã¢ÂÂÃ¢ÂÂ
+// ââ ELIMINAR activo del portfolio ââ
 window.deletePortfolioItem = function(id){
   if(!window._supabase) return;
   if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
@@ -1710,7 +1650,7 @@ window.deletePortfolioItem = function(id){
   });
 };
 
-// Inicializar portfolio cuando hay sesiÃ³n
+// Inicializar portfolio cuando hay sesión
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     if(window._supabase){
@@ -1829,269 +1769,269 @@ window._IA_ACTIVOS = [
   {s:'ALGO', n:'Algorand', tipo:'cripto', logo:'https://assets.coingecko.com/coins/images/4380/small/download.png', color:'#000000', ySymbol:'ALGO-USD'},
   {s:'EGLD', n:'MultiversX', tipo:'cripto', logo:'https://assets.coingecko.com/coins/images/12335/small/egld-token-logo.png', color:'#1B46C2', ySymbol:'EGLD-USD'},
   {s:'THETA', n:'Theta Network', tipo:'cripto', logo:'https://assets.coingecko.com/coins/images/2538/small/theta-token-logo.png', color:'#2AB8E6', ySymbol:'THETA-USD'},
-  {s:'AAPL', n:'Apple', tipo:'accion', logo:'https://logo.clearbit.com/apple.com', icon:'A', color:'#555', ySymbol:'AAPL'},
-  {s:'NVDA', n:'NVIDIA', tipo:'accion', logo:'https://logo.clearbit.com/nvidia.com', icon:'N', color:'#76B900', ySymbol:'NVDA'},
-  {s:'MSFT', n:'Microsoft', tipo:'accion', logo:'https://logo.clearbit.com/microsoft.com', icon:'M', color:'#00A4EF', ySymbol:'MSFT'},
-  {s:'GOOGL', n:'Alphabet A', tipo:'accion', logo:'https://logo.clearbit.com/google.com', icon:'G', color:'#4285F4', ySymbol:'GOOGL'},
-  {s:'GOOG', n:'Alphabet C', tipo:'accion', logo:'https://logo.clearbit.com/google.com', icon:'G', color:'#34A853', ySymbol:'GOOG'},
-  {s:'AMZN', n:'Amazon', tipo:'accion', logo:'https://logo.clearbit.com/amazon.com', icon:'A', color:'#FF9900', ySymbol:'AMZN'},
-  {s:'META', n:'Meta', tipo:'accion', logo:'https://logo.clearbit.com/meta.com', icon:'M', color:'#1877F2', ySymbol:'META'},
-  {s:'TSLA', n:'Tesla', tipo:'accion', logo:'https://logo.clearbit.com/tesla.com', icon:'T', color:'#CC0000', ySymbol:'TSLA'},
-  {s:'AVGO', n:'Broadcom', tipo:'accion', logo:'https://logo.clearbit.com/broadcom.com', icon:'A', color:'#CC0000', ySymbol:'AVGO'},
-  {s:'ORCL', n:'Oracle', tipo:'accion', logo:'https://logo.clearbit.com/oracle.com', icon:'O', color:'#C74634', ySymbol:'ORCL'},
-  {s:'JPM', n:'JPMorgan', tipo:'accion', logo:'https://logo.clearbit.com/jpmorganchase.com', icon:'J', color:'#003087', ySymbol:'JPM'},
-  {s:'V', n:'Visa', tipo:'accion', logo:'https://logo.clearbit.com/visa.com', icon:'V', color:'#1A1F71', ySymbol:'V'},
-  {s:'MA', n:'Mastercard', tipo:'accion', logo:'https://logo.clearbit.com/mastercard.com', icon:'M', color:'#EB001B', ySymbol:'MA'},
-  {s:'BAC', n:'Bank of America', tipo:'accion', logo:'https://logo.clearbit.com/bankofamerica.com', icon:'B', color:'#E31837', ySymbol:'BAC'},
-  {s:'WFC', n:'Wells Fargo', tipo:'accion', logo:'https://logo.clearbit.com/wellsfargo.com', icon:'W', color:'#CC0000', ySymbol:'WFC'},
-  {s:'GS', n:'Goldman Sachs', tipo:'accion', logo:'https://logo.clearbit.com/goldmansachs.com', icon:'G', color:'#003087', ySymbol:'GS'},
-  {s:'MS', n:'Morgan Stanley', tipo:'accion', logo:'https://logo.clearbit.com/morganstanley.com', icon:'M', color:'#003087', ySymbol:'MS'},
-  {s:'AXP', n:'AmEx', tipo:'accion', logo:'https://logo.clearbit.com/americanexpress.com', icon:'A', color:'#016FD0', ySymbol:'AXP'},
-  {s:'BLK', n:'BlackRock', tipo:'accion', logo:'https://logo.clearbit.com/blackrock.com', icon:'B', color:'#003087', ySymbol:'BLK'},
-  {s:'SCHW', n:'Charles Schwab', tipo:'accion', logo:'https://logo.clearbit.com/schwab.com', icon:'S', color:'#003087', ySymbol:'SCHW'},
-  {s:'LLY', n:'Eli Lilly', tipo:'accion', logo:'https://logo.clearbit.com/lilly.com', icon:'L', color:'#CC0000', ySymbol:'LLY'},
-  {s:'UNH', n:'UnitedHealth', tipo:'accion', logo:'https://logo.clearbit.com/unitedhealthgroup.com', icon:'U', color:'#003087', ySymbol:'UNH'},
-  {s:'JNJ', n:'J&J', tipo:'accion', logo:'https://logo.clearbit.com/jnj.com', icon:'J', color:'#CC0000', ySymbol:'JNJ'},
-  {s:'MRK', n:'Merck', tipo:'accion', logo:'https://logo.clearbit.com/merck.com', icon:'M', color:'#009999', ySymbol:'MRK'},
-  {s:'ABBV', n:'AbbVie', tipo:'accion', logo:'https://logo.clearbit.com/abbvie.com', icon:'A', color:'#003087', ySymbol:'ABBV'},
-  {s:'PFE', n:'Pfizer', tipo:'accion', logo:'https://logo.clearbit.com/pfizer.com', icon:'P', color:'#0044CC', ySymbol:'PFE'},
-  {s:'TMO', n:'Thermo Fisher', tipo:'accion', logo:'https://logo.clearbit.com/thermofisher.com', icon:'T', color:'#003087', ySymbol:'TMO'},
-  {s:'ABT', n:'Abbott Labs', tipo:'accion', logo:'https://logo.clearbit.com/abbott.com', icon:'A', color:'#003087', ySymbol:'ABT'},
-  {s:'DHR', n:'Danaher', tipo:'accion', logo:'https://logo.clearbit.com/danaher.com', icon:'D', color:'#003087', ySymbol:'DHR'},
-  {s:'BMY', n:'Bristol Myers', tipo:'accion', logo:'https://logo.clearbit.com/bms.com', icon:'B', color:'#003087', ySymbol:'BMY'},
-  {s:'COST', n:'Costco', tipo:'accion', logo:'https://logo.clearbit.com/costco.com', icon:'C', color:'#005DAA', ySymbol:'COST'},
-  {s:'WMT', n:'Walmart', tipo:'accion', logo:'https://logo.clearbit.com/walmart.com', icon:'W', color:'#0071CE', ySymbol:'WMT'},
-  {s:'HD', n:'Home Depot', tipo:'accion', logo:'https://logo.clearbit.com/homedepot.com', icon:'H', color:'#F96302', ySymbol:'HD'},
-  {s:'PG', n:'Procter Gamble', tipo:'accion', logo:'https://logo.clearbit.com/pg.com', icon:'P', color:'#003087', ySymbol:'PG'},
-  {s:'KO', n:'Coca-Cola', tipo:'accion', logo:'https://logo.clearbit.com/coca-cola.com', icon:'K', color:'#F40009', ySymbol:'KO'},
-  {s:'PEP', n:'PepsiCo', tipo:'accion', logo:'https://logo.clearbit.com/pepsico.com', icon:'P', color:'#004B93', ySymbol:'PEP'},
-  {s:'MCD', n:'McDonalds', tipo:'accion', logo:'https://logo.clearbit.com/mcdonalds.com', icon:'M', color:'#FFC72C', ySymbol:'MCD'},
-  {s:'SBUX', n:'Starbucks', tipo:'accion', logo:'https://logo.clearbit.com/starbucks.com', icon:'S', color:'#00704A', ySymbol:'SBUX'},
-  {s:'NKE', n:'Nike', tipo:'accion', logo:'https://logo.clearbit.com/nike.com', icon:'N', color:'#000000', ySymbol:'NKE'},
-  {s:'TGT', n:'Target', tipo:'accion', logo:'https://logo.clearbit.com/target.com', icon:'T', color:'#CC0000', ySymbol:'TGT'},
-  {s:'AMD', n:'AMD', tipo:'accion', logo:'https://logo.clearbit.com/amd.com', icon:'A', color:'#ED1C24', ySymbol:'AMD'},
-  {s:'INTC', n:'Intel', tipo:'accion', logo:'https://logo.clearbit.com/intel.com', icon:'I', color:'#0071C5', ySymbol:'INTC'},
-  {s:'QCOM', n:'Qualcomm', tipo:'accion', logo:'https://logo.clearbit.com/qualcomm.com', icon:'Q', color:'#3253DC', ySymbol:'QCOM'},
-  {s:'TXN', n:'Texas Instruments', tipo:'accion', logo:'https://logo.clearbit.com/ti.com', icon:'T', color:'#CC0000', ySymbol:'TXN'},
-  {s:'AMAT', n:'Applied Materials', tipo:'accion', logo:'https://logo.clearbit.com/appliedmaterials.com', icon:'A', color:'#003087', ySymbol:'AMAT'},
-  {s:'MU', n:'Micron', tipo:'accion', logo:'https://logo.clearbit.com/micron.com', icon:'M', color:'#003087', ySymbol:'MU'},
-  {s:'LRCX', n:'Lam Research', tipo:'accion', logo:'https://logo.clearbit.com/lamresearch.com', icon:'L', color:'#003087', ySymbol:'LRCX'},
-  {s:'NOW', n:'ServiceNow', tipo:'accion', logo:'https://logo.clearbit.com/servicenow.com', icon:'N', color:'#81B5A1', ySymbol:'NOW'},
-  {s:'CRM', n:'Salesforce', tipo:'accion', logo:'https://logo.clearbit.com/salesforce.com', icon:'C', color:'#00A1E0', ySymbol:'CRM'},
-  {s:'ADBE', n:'Adobe', tipo:'accion', logo:'https://logo.clearbit.com/adobe.com', icon:'A', color:'#FF0000', ySymbol:'ADBE'},
-  {s:'NFLX', n:'Netflix', tipo:'accion', logo:'https://logo.clearbit.com/netflix.com', icon:'N', color:'#E50914', ySymbol:'NFLX'},
-  {s:'DIS', n:'Disney', tipo:'accion', logo:'https://logo.clearbit.com/disney.com', icon:'D', color:'#113CCF', ySymbol:'DIS'},
-  {s:'CMCSA', n:'Comcast', tipo:'accion', logo:'https://logo.clearbit.com/comcast.com', icon:'C', color:'#CC0000', ySymbol:'CMCSA'},
-  {s:'SPOT', n:'Spotify', tipo:'accion', logo:'https://logo.clearbit.com/spotify.com', icon:'S', color:'#1DB954', ySymbol:'SPOT'},
-  {s:'RBLX', n:'Roblox', tipo:'accion', logo:'https://logo.clearbit.com/roblox.com', icon:'R', color:'#CC0000', ySymbol:'RBLX'},
-  {s:'COIN', n:'Coinbase', tipo:'accion', logo:'https://logo.clearbit.com/coinbase.com', icon:'C', color:'#0052FF', ySymbol:'COIN'},
-  {s:'HOOD', n:'Robinhood', tipo:'accion', logo:'https://logo.clearbit.com/robinhood.com', icon:'H', color:'#00C805', ySymbol:'HOOD'},
-  {s:'PYPL', n:'PayPal', tipo:'accion', logo:'https://logo.clearbit.com/paypal.com', icon:'P', color:'#003087', ySymbol:'PYPL'},
-  {s:'SQ', n:'Block (Square)', tipo:'accion', logo:'https://logo.clearbit.com/block.xyz', icon:'S', color:'#000000', ySymbol:'SQ'},
-  {s:'MSTR', n:'MicroStrategy', tipo:'accion', logo:'https://logo.clearbit.com/microstrategy.com', icon:'M', color:'#CC0000', ySymbol:'MSTR'},
-  {s:'MARA', n:'Marathon Digital', tipo:'accion', logo:'https://logo.clearbit.com/mara.com', icon:'M', color:'#F7931A', ySymbol:'MARA'},
-  {s:'RIOT', n:'Riot Platforms', tipo:'accion', logo:'https://logo.clearbit.com/riotplatforms.com', icon:'R', color:'#CC0000', ySymbol:'RIOT'},
-  {s:'XOM', n:'ExxonMobil', tipo:'accion', logo:'https://logo.clearbit.com/exxonmobil.com', icon:'X', color:'#003087', ySymbol:'XOM'},
-  {s:'CVX', n:'Chevron', tipo:'accion', logo:'https://logo.clearbit.com/chevron.com', icon:'C', color:'#009DD9', ySymbol:'CVX'},
-  {s:'COP', n:'ConocoPhillips', tipo:'accion', logo:'https://logo.clearbit.com/conocophillips.com', icon:'C', color:'#CC0000', ySymbol:'COP'},
-  {s:'SLB', n:'Schlumberger', tipo:'accion', logo:'https://logo.clearbit.com/slb.com', icon:'S', color:'#003087', ySymbol:'SLB'},
-  {s:'EOG', n:'EOG Resources', tipo:'accion', logo:'https://logo.clearbit.com/eogresources.com', icon:'E', color:'#003087', ySymbol:'EOG'},
-  {s:'F', n:'Ford', tipo:'accion', logo:'https://logo.clearbit.com/ford.com', icon:'F', color:'#003087', ySymbol:'F'},
-  {s:'GM', n:'General Motors', tipo:'accion', logo:'https://logo.clearbit.com/gm.com', icon:'G', color:'#003087', ySymbol:'GM'},
-  {s:'RIVN', n:'Rivian', tipo:'accion', logo:'https://logo.clearbit.com/rivian.com', icon:'R', color:'#52D48E', ySymbol:'RIVN'},
-  {s:'LCID', n:'Lucid Motors', tipo:'accion', logo:'https://logo.clearbit.com/lucidmotors.com', icon:'L', color:'#CC0000', ySymbol:'LCID'},
-  {s:'PLTR', n:'Palantir', tipo:'accion', logo:'https://logo.clearbit.com/palantir.com', icon:'P', color:'#000000', ySymbol:'PLTR'},
-  {s:'ARM', n:'ARM Holdings', tipo:'accion', logo:'https://logo.clearbit.com/arm.com', icon:'A', color:'#0091BD', ySymbol:'ARM'},
-  {s:'SMCI', n:'Super Micro', tipo:'accion', logo:'https://logo.clearbit.com/supermicro.com', icon:'S', color:'#003087', ySymbol:'SMCI'},
-  {s:'AI', n:'C3.ai', tipo:'accion', logo:'https://logo.clearbit.com/c3.ai', icon:'A', color:'#003087', ySymbol:'AI'},
-  {s:'SOUN', n:'SoundHound AI', tipo:'accion', logo:'https://logo.clearbit.com/soundhound.com', icon:'S', color:'#CC0000', ySymbol:'SOUN'},
-  {s:'UBER', n:'Uber', tipo:'accion', logo:'https://logo.clearbit.com/uber.com', icon:'U', color:'#000000', ySymbol:'UBER'},
-  {s:'LYFT', n:'Lyft', tipo:'accion', logo:'https://logo.clearbit.com/lyft.com', icon:'L', color:'#FF00BF', ySymbol:'LYFT'},
-  {s:'ABNB', n:'Airbnb', tipo:'accion', logo:'https://logo.clearbit.com/airbnb.com', icon:'A', color:'#FF5A5F', ySymbol:'ABNB'},
-  {s:'DASH', n:'DoorDash', tipo:'accion', logo:'https://logo.clearbit.com/doordash.com', icon:'D', color:'#FF3008', ySymbol:'DASH'},
-  {s:'T', n:'AT&T', tipo:'accion', logo:'https://logo.clearbit.com/att.com', icon:'T', color:'#00A8E0', ySymbol:'T'},
-  {s:'VZ', n:'Verizon', tipo:'accion', logo:'https://logo.clearbit.com/verizon.com', icon:'V', color:'#CD040B', ySymbol:'VZ'},
-  {s:'TMUS', n:'T-Mobile', tipo:'accion', logo:'https://logo.clearbit.com/t-mobile.com', icon:'T', color:'#E20074', ySymbol:'TMUS'},
-  {s:'BA', n:'Boeing', tipo:'accion', logo:'https://logo.clearbit.com/boeing.com', icon:'B', color:'#003087', ySymbol:'BA'},
-  {s:'CAT', n:'Caterpillar', tipo:'accion', logo:'https://logo.clearbit.com/caterpillar.com', icon:'C', color:'#FFCD11', ySymbol:'CAT'},
-  {s:'DE', n:'John Deere', tipo:'accion', logo:'https://logo.clearbit.com/deere.com', icon:'D', color:'#367C2B', ySymbol:'DE'},
-  {s:'GE', n:'GE Aerospace', tipo:'accion', logo:'https://logo.clearbit.com/geaerospace.com', icon:'G', color:'#003087', ySymbol:'GE'},
-  {s:'RTX', n:'RTX Corp', tipo:'accion', logo:'https://logo.clearbit.com/rtx.com', icon:'R', color:'#003087', ySymbol:'RTX'},
-  {s:'LMT', n:'Lockheed Martin', tipo:'accion', logo:'https://logo.clearbit.com/lockheedmartin.com', icon:'L', color:'#003087', ySymbol:'LMT'},
-  {s:'AMT', n:'American Tower', tipo:'accion', logo:'https://logo.clearbit.com/americantower.com', icon:'A', color:'#003087', ySymbol:'AMT'},
-  {s:'PLD', n:'Prologis', tipo:'accion', logo:'https://logo.clearbit.com/prologis.com', icon:'P', color:'#003087', ySymbol:'PLD'},
-  {s:'BRK-B', n:'Berkshire B', tipo:'accion', logo:'https://logo.clearbit.com/berkshirehathaway.com', icon:'B', color:'#4A4A4A', ySymbol:'BRK-B'},
-  {s:'BABA', n:'Alibaba ADR', tipo:'accion', logo:'https://logo.clearbit.com/alibabagroup.com', icon:'A', color:'#FF6A00', ySymbol:'BABA'},
-  {s:'SPGI', n:'S&P Global', tipo:'accion', logo:'https://logo.clearbit.com/spglobal.com', icon:'S', color:'#003087', ySymbol:'SPGI'},
-  {s:'BX', n:'Blackstone', tipo:'accion', logo:'https://logo.clearbit.com/blackstone.com', icon:'B', color:'#003087', ySymbol:'BX'},
-  {s:'NDAQ', n:'Nasdaq Inc', tipo:'accion', logo:'https://logo.clearbit.com/nasdaq.com', icon:'N', color:'#003087', ySymbol:'NDAQ'},
-  {s:'YPF', n:'YPF Argentina', tipo:'accion', logo:'https://logo.clearbit.com/ypf.com', icon:'Y', color:'#005FAD', ySymbol:'YPF'},
-  {s:'PBR', n:'Petrobras', tipo:'accion', logo:'https://logo.clearbit.com/petrobras.com.br', icon:'P', color:'#009B3A', ySymbol:'PBR'},
-  {s:'VALE', n:'Vale', tipo:'accion', logo:'https://logo.clearbit.com/vale.com', icon:'V', color:'#009B3A', ySymbol:'VALE'},
-  {s:'MELI', n:'MercadoLibre', tipo:'accion', logo:'https://logo.clearbit.com/mercadolibre.com', icon:'M', color:'#FFE600', ySymbol:'MELI'},
-  {s:'GLOB', n:'Globant', tipo:'accion', logo:'https://logo.clearbit.com/globant.com', icon:'G', color:'#00A651', ySymbol:'GLOB'},
-  {s:'NU', n:'Nubank', tipo:'accion', logo:'https://logo.clearbit.com/nu.com.br', icon:'N', color:'#8A05BE', ySymbol:'NU'},
-  {s:'ITUB', n:'Itau Unibanco', tipo:'accion', logo:'https://logo.clearbit.com/itau.com.br', icon:'I', color:'#F48024', ySymbol:'ITUB'},
-  {s:'BBD', n:'Bradesco', tipo:'accion', logo:'https://logo.clearbit.com/bradesco.com.br', icon:'B', color:'#CC0000', ySymbol:'BBD'},
-  {s:'SQM', n:'SQM Chile', tipo:'accion', logo:'https://logo.clearbit.com/sqm.com', icon:'S', color:'#003087', ySymbol:'SQM'},
-  {s:'ABEV', n:'Ambev', tipo:'accion', logo:'https://logo.clearbit.com/ambev.com', icon:'A', color:'#F4A700', ySymbol:'ABEV'},
-  {s:'CIB', n:'Bancolombia', tipo:'accion', logo:'https://logo.clearbit.com/bancolombia.com', icon:'C', color:'#FFCC00', ySymbol:'CIB'},
-  {s:'TV', n:'Televisa', tipo:'accion', logo:'https://logo.clearbit.com/televisa.com', icon:'T', color:'#003087', ySymbol:'TV'},
-  {s:'ERJ', n:'Embraer', tipo:'accion', logo:'https://logo.clearbit.com/embraer.com', icon:'E', color:'#003087', ySymbol:'ERJ'},
-  {s:'DESP', n:'Despegar', tipo:'accion', logo:'https://logo.clearbit.com/despegar.com', icon:'D', color:'#003087', ySymbol:'DESP'},
-  {s:'LREN3', n:'Lojas Renner', tipo:'accion', logo:'https://logo.clearbit.com/lojasrenner.com.br', icon:'L', color:'#CC0000', ySymbol:'LRENY'},
-  {s:'VIVA', n:'Viva Aerobus', tipo:'accion', logo:'https://logo.clearbit.com/vivaaerobus.com', icon:'V', color:'#CC0000', ySymbol:'VIVA'},
-  {s:'GGAL', n:'Galicia Arg', tipo:'accion', logo:'https://logo.clearbit.com/galicia.ar', icon:'G', color:'#003087', ySymbol:'GGAL'},
-  {s:'BMA', n:'Banco Macro', tipo:'accion', logo:'https://logo.clearbit.com/macro.com.ar', icon:'B', color:'#003087', ySymbol:'BMA'},
-  {s:'CEPU', n:'Central Puerto', tipo:'accion', logo:'https://logo.clearbit.com/cepu.com', icon:'C', color:'#003087', ySymbol:'CEPU'},
-  {s:'PAMP', n:'Pampa Energia', tipo:'accion', logo:'https://logo.clearbit.com/pampa.com.ar', icon:'P', color:'#003087', ySymbol:'PAM'},
-  {s:'LOMA', n:'Loma Negra', tipo:'accion', logo:'https://logo.clearbit.com/lomanegra.com.ar', icon:'L', color:'#CC0000', ySymbol:'LOMA'},
-  {s:'ARCO', n:'Arcos Dorados', tipo:'accion', logo:'https://logo.clearbit.com/arcor.com', icon:'A', color:'#FFC72C', ySymbol:'ARCO'},
-  {s:'XPEV', n:'XPeng (China)', tipo:'accion', logo:'https://logo.clearbit.com/xiaopeng.com', icon:'X', color:'#CC0000', ySymbol:'XPEV'},
-  {s:'VTEX', n:'VTEX', tipo:'accion', logo:'https://logo.clearbit.com/vtex.com', icon:'V', color:'#CC0000', ySymbol:'VTEX'},
-  {s:'BRFS', n:'BRF Foods', tipo:'accion', logo:'https://logo.clearbit.com/brf-global.com', icon:'B', color:'#003087', ySymbol:'BRFS'},
-  {s:'ASML', n:'ASML', tipo:'accion', logo:'https://logo.clearbit.com/asml.com', icon:'A', color:'#003087', ySymbol:'ASML'},
-  {s:'SAP', n:'SAP', tipo:'accion', logo:'https://logo.clearbit.com/sap.com', icon:'S', color:'#1872B4', ySymbol:'SAP'},
-  {s:'NVS', n:'Novartis', tipo:'accion', logo:'https://logo.clearbit.com/novartis.com', icon:'N', color:'#CC0000', ySymbol:'NVS'},
-  {s:'NSRGY', n:'Nestle', tipo:'accion', logo:'https://logo.clearbit.com/nestle.com', icon:'N', color:'#003087', ySymbol:'NSRGY'},
-  {s:'RHHBY', n:'Roche', tipo:'accion', logo:'https://logo.clearbit.com/roche.com', icon:'R', color:'#CC0000', ySymbol:'RHHBY'},
-  {s:'VWAGY', n:'Volkswagen', tipo:'accion', logo:'https://logo.clearbit.com/volkswagen.com', icon:'V', color:'#003087', ySymbol:'VWAGY'},
-  {s:'SIEGY', n:'Siemens', tipo:'accion', logo:'https://logo.clearbit.com/siemens.com', icon:'S', color:'#009999', ySymbol:'SIEGY'},
-  {s:'SHEL', n:'Shell', tipo:'accion', logo:'https://logo.clearbit.com/shell.com', icon:'S', color:'#DD1D21', ySymbol:'SHEL'},
-  {s:'BP', n:'BP', tipo:'accion', logo:'https://logo.clearbit.com/bp.com', icon:'B', color:'#009900', ySymbol:'BP'},
-  {s:'GSK', n:'GSK', tipo:'accion', logo:'https://logo.clearbit.com/gsk.com', icon:'G', color:'#F36200', ySymbol:'GSK'},
-  {s:'UL', n:'Unilever', tipo:'accion', logo:'https://logo.clearbit.com/unilever.com', icon:'U', color:'#003087', ySymbol:'UL'},
-  {s:'RIO', n:'Rio Tinto', tipo:'accion', logo:'https://logo.clearbit.com/riotinto.com', icon:'R', color:'#CC0000', ySymbol:'RIO'},
-  {s:'BHP', n:'BHP Group', tipo:'accion', logo:'https://logo.clearbit.com/bhp.com', icon:'B', color:'#CC0000', ySymbol:'BHP'},
-  {s:'AZN', n:'AstraZeneca', tipo:'accion', logo:'https://logo.clearbit.com/astrazeneca.com', icon:'A', color:'#CC0000', ySymbol:'AZN'},
-  {s:'HSBC', n:'HSBC', tipo:'accion', logo:'https://logo.clearbit.com/hsbc.com', icon:'H', color:'#CC0000', ySymbol:'HSBC'},
-  {s:'STM', n:'STMicroelectronics', tipo:'accion', logo:'https://logo.clearbit.com/st.com', icon:'S', color:'#003087', ySymbol:'STM'},
-  {s:'EADSF', n:'Airbus', tipo:'accion', logo:'https://logo.clearbit.com/airbus.com', icon:'A', color:'#003087', ySymbol:'EADSF'},
-  {s:'IDEXY', n:'Inditex/Zara', tipo:'accion', logo:'https://logo.clearbit.com/inditex.com', icon:'I', color:'#003087', ySymbol:'IDEXY'},
-  {s:'LVMUY', n:'LVMH', tipo:'accion', logo:'https://logo.clearbit.com/lvmh.com', icon:'L', color:'#8B7355', ySymbol:'LVMUY'},
-  {s:'HNNMY', n:'Hennes & Mauritz', tipo:'accion', logo:'https://logo.clearbit.com/hennessy.com', icon:'H', color:'#CC0000', ySymbol:'HNNMY'},
-  {s:'ALIZF', n:'Allianz', tipo:'accion', logo:'https://logo.clearbit.com/allianz.com', icon:'A', color:'#003087', ySymbol:'ALIZF'},
-  {s:'BAYZF', n:'Bayer', tipo:'accion', logo:'https://logo.clearbit.com/bayer.com', icon:'B', color:'#10384F', ySymbol:'BAYRY'},
-  {s:'SAN', n:'Santander', tipo:'accion', logo:'https://logo.clearbit.com/santander.com', icon:'S', color:'#CC0000', ySymbol:'SAN'},
-  {s:'BBVA', n:'BBVA', tipo:'accion', logo:'https://logo.clearbit.com/bbva.com', icon:'B', color:'#004481', ySymbol:'BBVA'},
-  {s:'INGA', n:'ING Group', tipo:'accion', logo:'https://logo.clearbit.com/ing.com', icon:'I', color:'#FF6200', ySymbol:'ING'},
-  {s:'TSM', n:'TSMC', tipo:'accion', logo:'https://logo.clearbit.com/tsmc.com', icon:'T', color:'#003087', ySymbol:'TSM'},
-  {s:'TM', n:'Toyota', tipo:'accion', logo:'https://logo.clearbit.com/toyota.com', icon:'T', color:'#CC0000', ySymbol:'TM'},
-  {s:'SONY', n:'Sony', tipo:'accion', logo:'https://logo.clearbit.com/sony.com', icon:'S', color:'#003087', ySymbol:'SONY'},
-  {s:'HMC', n:'Honda', tipo:'accion', logo:'https://logo.clearbit.com/honda.com', icon:'H', color:'#CC0000', ySymbol:'HMC'},
-  {s:'NTDOY', n:'Nintendo', tipo:'accion', logo:'https://logo.clearbit.com/nintendo.com', icon:'N', color:'#CC0000', ySymbol:'NTDOY'},
-  {s:'BIDU', n:'Baidu', tipo:'accion', logo:'https://logo.clearbit.com/baidu.com', icon:'B', color:'#2932E1', ySymbol:'BIDU'},
-  {s:'JD', n:'JD.com', tipo:'accion', logo:'https://logo.clearbit.com/jd.com', icon:'J', color:'#CC0000', ySymbol:'JD'},
-  {s:'PDD', n:'PDD Holdings', tipo:'accion', logo:'https://logo.clearbit.com/pinduoduo.com', icon:'P', color:'#CC0000', ySymbol:'PDD'},
-  {s:'NTES', n:'NetEase', tipo:'accion', logo:'https://logo.clearbit.com/netease.com', icon:'N', color:'#CC0000', ySymbol:'NTES'},
-  {s:'SFTBY', n:'SoftBank', tipo:'accion', logo:'https://logo.clearbit.com/softbank.com', icon:'S', color:'#CC0000', ySymbol:'SFTBY'},
-  {s:'INFY', n:'Infosys', tipo:'accion', logo:'https://logo.clearbit.com/infosys.com', icon:'I', color:'#003087', ySymbol:'INFY'},
-  {s:'HDB', n:'HDFC Bank', tipo:'accion', logo:'https://logo.clearbit.com/hdfcbank.com', icon:'H', color:'#004A97', ySymbol:'HDB'},
-  {s:'IBN', n:'ICICI Bank', tipo:'accion', logo:'https://logo.clearbit.com/icicibank.com', icon:'I', color:'#CC0000', ySymbol:'IBN'},
-  {s:'WIT', n:'Wipro', tipo:'accion', logo:'https://logo.clearbit.com/wipro.com', icon:'W', color:'#003087', ySymbol:'WIT'},
-  {s:'RELX', n:'Reliance Industries', tipo:'accion', logo:'https://logo.clearbit.com/relx.com', icon:'R', color:'#003087', ySymbol:'RELIANCE.NS'},
-  {s:'SE', n:'Sea Limited', tipo:'accion', logo:'https://logo.clearbit.com/sea.com', icon:'S', color:'#000000', ySymbol:'SE'},
-  {s:'GRAB', n:'Grab', tipo:'accion', logo:'https://logo.clearbit.com/grab.com', icon:'G', color:'#00B14F', ySymbol:'GRAB'},
-  {s:'GOTO', n:'GoTo Indonesia', tipo:'accion', logo:'https://logo.clearbit.com/gotogroup.com', icon:'G', color:'#CC0000', ySymbol:'GOTO-USD'},
-  {s:'KPELY', n:'Korea Electric', tipo:'accion', logo:'https://logo.clearbit.com/keppel.com', icon:'K', color:'#003087', ySymbol:'KEP'},
-  {s:'LG', n:'LG Electronics', tipo:'accion', logo:'https://logo.clearbit.com/lg.com', icon:'L', color:'#CC0000', ySymbol:'LGEIY'},
-  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'S', color:'#003087', ySymbol:'SPY'},
-  {s:'QQQ', n:'Nasdaq 100 ETF', tipo:'etf', logo:'https://logo.clearbit.com/invesco.com', icon:'Q', color:'#003087', ySymbol:'QQQ'},
-  {s:'DIA', n:'Dow Jones ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'D', color:'#003087', ySymbol:'DIA'},
-  {s:'IWM', n:'Russell 2000', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#003087', ySymbol:'IWM'},
-  {s:'VTI', n:'Total Market', tipo:'etf', logo:'https://logo.clearbit.com/vanguard.com', icon:'V', color:'#003087', ySymbol:'VTI'},
-  {s:'VOO', n:'Vanguard S&P 500', tipo:'etf', logo:'https://logo.clearbit.com/vanguard.com', icon:'V', color:'#003087', ySymbol:'VOO'},
-  {s:'ARKK', n:'ARK Innovation', tipo:'etf', logo:'https://logo.clearbit.com/ark-invest.com', icon:'A', color:'#00B0D7', ySymbol:'ARKK'},
-  {s:'ARKG', n:'ARK Genomics', tipo:'etf', logo:'https://logo.clearbit.com/ark-invest.com', icon:'A', color:'#00B0D7', ySymbol:'ARKG'},
-  {s:'XLF', n:'Financials ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLF'},
-  {s:'XLE', n:'Energy ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#333', ySymbol:'XLE'},
-  {s:'XLK', n:'Tech ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLK'},
-  {s:'XLV', n:'Health ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#CC0000', ySymbol:'XLV'},
-  {s:'XLI', n:'Industrial ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLI'},
-  {s:'XLU', n:'Utilities ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLU'},
-  {s:'XLB', n:'Materials ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLB'},
-  {s:'XLP', n:'Consumer Stap ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XLP'},
-  {s:'GDX', n:'Gold Miners ETF', tipo:'etf', logo:'https://logo.clearbit.com/vaneck.com', icon:'G', color:'#D4A017', ySymbol:'GDX'},
-  {s:'GDXJ', n:'Jr Gold Miners', tipo:'etf', logo:'https://logo.clearbit.com/vaneck.com', icon:'G', color:'#D4A017', ySymbol:'GDXJ'},
-  {s:'IBIT', n:'iShares Bitcoin', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#F7931A', ySymbol:'IBIT'},
-  {s:'FBTC', n:'Fidelity Bitcoin', tipo:'etf', logo:'https://logo.clearbit.com/fidelity.com', icon:'F', color:'#F7931A', ySymbol:'FBTC'},
-  {s:'GBTC', n:'Grayscale BTC', tipo:'etf', logo:'https://logo.clearbit.com/grayscale.com', icon:'G', color:'#F7931A', ySymbol:'GBTC'},
-  {s:'GLD', n:'SPDR Gold', tipo:'etf', logo:'https://logo.clearbit.com/spdrgoldshares.com', icon:'G', color:'#D4A017', ySymbol:'GLD'},
-  {s:'SLV', n:'iShares Silver', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'S', color:'#C0C0C0', ySymbol:'SLV'},
-  {s:'IAU', n:'iShares Gold', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#D4A017', ySymbol:'IAU'},
-  {s:'EWZ', n:'Brazil ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#009B3A', ySymbol:'EWZ'},
-  {s:'EWJ', n:'Japan ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#CC0000', ySymbol:'EWJ'},
-  {s:'FXI', n:'China ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'F', color:'#CC0000', ySymbol:'FXI'},
-  {s:'EEM', n:'Emerging Markets', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#003087', ySymbol:'EEM'},
-  {s:'EWW', n:'Mexico ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#006847', ySymbol:'EWW'},
-  {s:'EWY', n:'Korea ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#003087', ySymbol:'EWY'},
-  {s:'EWG', n:'Germany ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#003087', ySymbol:'EWG'},
-  {s:'EWU', n:'UK ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#CC0000', ySymbol:'EWU'},
-  {s:'EWQ', n:'France ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#003087', ySymbol:'EWQ'},
-  {s:'SOXX', n:'Semiconductors', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'S', color:'#003087', ySymbol:'SOXX'},
-  {s:'XBI', n:'Biotech ETF', tipo:'etf', logo:'https://logo.clearbit.com/ssga.com', icon:'X', color:'#003087', ySymbol:'XBI'},
-  {s:'KWEB', n:'China Internet', tipo:'etf', logo:'https://logo.clearbit.com/kraneshares.com', icon:'K', color:'#CC0000', ySymbol:'KWEB'},
-  {s:'VNQ', n:'Real Estate ETF', tipo:'etf', logo:'https://logo.clearbit.com/vanguard.com', icon:'V', color:'#003087', ySymbol:'VNQ'},
-  {s:'TAN', n:'Solar ETF', tipo:'etf', logo:'https://logo.clearbit.com/invesco.com', icon:'T', color:'#FF9900', ySymbol:'TAN'},
-  {s:'ICLN', n:'Clean Energy ETF', tipo:'etf', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#00A651', ySymbol:'ICLN'},
-  {s:'BOTZ', n:'Robotics AI ETF', tipo:'etf', logo:'https://logo.clearbit.com/globalxetfs.com', icon:'B', color:'#003087', ySymbol:'BOTZ'},
-  {s:'ES=F', n:'S&P 500 Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'E', color:'#003087', ySymbol:'ES=F'},
-  {s:'NQ=F', n:'Nasdaq Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'N', color:'#003087', ySymbol:'NQ=F'},
-  {s:'YM=F', n:'Dow Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'Y', color:'#003087', ySymbol:'YM=F'},
-  {s:'RTY=F', n:'Russell Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'R', color:'#003087', ySymbol:'RTY=F'},
-  {s:'GC=F', n:'Oro Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'O', color:'#D4A017', ySymbol:'GC=F'},
-  {s:'SI=F', n:'Plata Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'P', color:'#C0C0C0', ySymbol:'SI=F'},
-  {s:'CL=F', n:'Petroleo WTI', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'P', color:'#333', ySymbol:'CL=F'},
-  {s:'BZ=F', n:'Petroleo Brent', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'B', color:'#444', ySymbol:'BZ=F'},
-  {s:'NG=F', n:'Gas Natural', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'G', color:'#FF6600', ySymbol:'NG=F'},
-  {s:'HG=F', n:'Cobre Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'C', color:'#B87333', ySymbol:'HG=F'},
-  {s:'ZB=F', n:'US Bond 30Y', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'Z', color:'#003087', ySymbol:'ZB=F'},
-  {s:'ZN=F', n:'US Note 10Y', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'Z', color:'#003087', ySymbol:'ZN=F'},
-  {s:'6E=F', n:'Euro Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'E', color:'#003087', ySymbol:'6E=F'},
-  {s:'6J=F', n:'Yen Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'J', color:'#CC0000', ySymbol:'6J=F'},
-  {s:'6B=F', n:'GBP Futuro', tipo:'futuro', logo:'https://logo.clearbit.com/cmegroup.com', icon:'G', color:'#CC0000', ySymbol:'6B=F'},
-  {s:'USO', n:'US Oil ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/uscfinvestments.com', icon:'U', color:'#333', ySymbol:'USO'},
-  {s:'BNO', n:'Brent Oil ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/uscfinvestments.com', icon:'B', color:'#444', ySymbol:'BNO'},
-  {s:'UNG', n:'Natural Gas ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/uscfinvestments.com', icon:'G', color:'#FF6600', ySymbol:'UNG'},
-  {s:'WEAT', n:'Wheat ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/teucrium.com', icon:'W', color:'#C8A951', ySymbol:'WEAT'},
-  {s:'CORN', n:'Corn ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/teucrium.com', icon:'C', color:'#F5C800', ySymbol:'CORN'},
-  {s:'SOYB', n:'Soybean ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/teucrium.com', icon:'S', color:'#7BAE36', ySymbol:'SOYB'},
-  {s:'JO', n:'Cafe OJ ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/teucrium.com', icon:'J', color:'#FF8C00', ySymbol:'JO'},
-  {s:'SGG', n:'Sugar ETF', tipo:'materia_prima', logo:'https://logo.clearbit.com/ipathetn.com', icon:'S', color:'#EEE', ySymbol:'SGG'},
-  {s:'KC=F', n:'Cafe Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'C', color:'#6F4E37', ySymbol:'KC=F'},
-  {s:'SB=F', n:'Azucar Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'A', color:'#EEE', ySymbol:'SB=F'},
-  {s:'CC=F', n:'Cacao Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'C', color:'#7B3F00', ySymbol:'CC=F'},
-  {s:'ZW=F', n:'Trigo Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'T', color:'#C8A951', ySymbol:'ZW=F'},
-  {s:'ZC=F', n:'Maiz Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'M', color:'#F5C800', ySymbol:'ZC=F'},
-  {s:'ZS=F', n:'Soja Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'S', color:'#7BAE36', ySymbol:'ZS=F'},
-  {s:'CT=F', n:'Algodon Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'A', color:'#EEE', ySymbol:'CT=F'},
-  {s:'OJ=F', n:'OJ Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'O', color:'#FF8C00', ySymbol:'OJ=F'},
-  {s:'LB=F', n:'Madera Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'M', color:'#8B4513', ySymbol:'LBS=F'},
-  {s:'LE=F', n:'Ganado Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'G', color:'#8B4513', ySymbol:'LE=F'},
-  {s:'HE=F', n:'Cerdo Futuro', tipo:'materia_prima', logo:'https://logo.clearbit.com/cmegroup.com', icon:'C', color:'#FF69B4', ySymbol:'HE=F'},
-  {s:'PDBC', n:'Diversified Comm', tipo:'materia_prima', logo:'https://logo.clearbit.com/invesco.com', icon:'P', color:'#333', ySymbol:'PDBC'},
-  {s:'CPER', n:'Cobre ETF', tipo:'metal', logo:'https://logo.clearbit.com/uscopper.com', icon:'C', color:'#B87333', ySymbol:'CPER'},
-  {s:'PPLT', n:'Platino ETF', tipo:'metal', logo:'https://logo.clearbit.com/aberdeen-asset.com', icon:'P', color:'#E5E4E2', ySymbol:'PPLT'},
-  {s:'PALL', n:'Paladio ETF', tipo:'metal', logo:'https://logo.clearbit.com/aberdeen-asset.com', icon:'P', color:'#CED0CF', ySymbol:'PALL'},
-  {s:'ALUM', n:'Aluminio ETF', tipo:'metal', logo:'https://logo.clearbit.com/ishares.com', icon:'A', color:'#848484', ySymbol:'ALUM'},
-  {s:'ZINC', n:'Zinc ETF', tipo:'metal', logo:'https://logo.clearbit.com/ishares.com', icon:'Z', color:'#4A4A4A', ySymbol:'JJZ'},
-  {s:'IRON', n:'Hierro/Steel ETF', tipo:'metal', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#8B4513', ySymbol:'SLX'},
-  {s:'ORO', n:'Oro', tipo:'metal', logo:'https://logo.clearbit.com/spdrgoldshares.com', icon:'O', color:'#D4A017', ySymbol:'GLD'},
-  {s:'PLATA', n:'Plata', tipo:'metal', logo:'https://logo.clearbit.com/ishares.com', icon:'P', color:'#C0C0C0', ySymbol:'SLV'},
-  {s:'COBRE', n:'Cobre', tipo:'metal', logo:'https://logo.clearbit.com/ishares.com', icon:'C', color:'#B87333', ySymbol:'CPER'},
-  {s:'DBB', n:'Base Metals ETF', tipo:'metal', logo:'https://logo.clearbit.com/invesco.com', icon:'D', color:'#848484', ySymbol:'DBB'},
-  {s:'TLT', n:'US 20Y Bond', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'T', color:'#003087', ySymbol:'TLT'},
-  {s:'AGG', n:'US Bond Agg', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'A', color:'#003087', ySymbol:'AGG'},
-  {s:'IEF', n:'US 7-10Y Bond', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'I', color:'#003087', ySymbol:'IEF'},
-  {s:'SHY', n:'US 1-3Y Bond', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'S', color:'#003087', ySymbol:'SHY'},
-  {s:'HYG', n:'High Yield Bond', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'H', color:'#CC0000', ySymbol:'HYG'},
-  {s:'LQD', n:'Inv Grade Corp', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'L', color:'#003087', ySymbol:'LQD'},
-  {s:'EMB', n:'Emerging Bonds', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'E', color:'#003087', ySymbol:'EMB'},
-  {s:'BND', n:'Total Bond ETF', tipo:'bono', logo:'https://logo.clearbit.com/vanguard.com', icon:'B', color:'#003087', ySymbol:'BND'},
-  {s:'TIP', n:'TIPS Inflation', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'T', color:'#003087', ySymbol:'TIP'},
-  {s:'JNK', n:'Junk Bonds', tipo:'bono', logo:'https://logo.clearbit.com/ssga.com', icon:'J', color:'#CC0000', ySymbol:'JNK'},
-  {s:'MUB', n:'Muni Bond ETF', tipo:'bono', logo:'https://logo.clearbit.com/ishares.com', icon:'M', color:'#003087', ySymbol:'MUB'},
-  {s:'BNDX', n:'Intl Bond ETF', tipo:'bono', logo:'https://logo.clearbit.com/vanguard.com', icon:'B', color:'#003087', ySymbol:'BNDX'}
+  {s:'AAPL', n:'Apple', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AAPL.png', icon:'A', color:'#555', ySymbol:'AAPL'},
+  {s:'NVDA', n:'NVIDIA', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NVDA.png', icon:'N', color:'#76B900', ySymbol:'NVDA'},
+  {s:'MSFT', n:'Microsoft', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MSFT.png', icon:'M', color:'#00A4EF', ySymbol:'MSFT'},
+  {s:'GOOGL', n:'Alphabet A', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GOOGL.png', icon:'G', color:'#4285F4', ySymbol:'GOOGL'},
+  {s:'GOOG', n:'Alphabet C', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GOOG.png', icon:'G', color:'#34A853', ySymbol:'GOOG'},
+  {s:'AMZN', n:'Amazon', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AMZN.png', icon:'A', color:'#FF9900', ySymbol:'AMZN'},
+  {s:'META', n:'Meta', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/META.png', icon:'M', color:'#1877F2', ySymbol:'META'},
+  {s:'TSLA', n:'Tesla', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TSLA.png', icon:'T', color:'#CC0000', ySymbol:'TSLA'},
+  {s:'AVGO', n:'Broadcom', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AVGO.png', icon:'A', color:'#CC0000', ySymbol:'AVGO'},
+  {s:'ORCL', n:'Oracle', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ORCL.png', icon:'O', color:'#C74634', ySymbol:'ORCL'},
+  {s:'JPM', n:'JPMorgan', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/JPM.png', icon:'J', color:'#003087', ySymbol:'JPM'},
+  {s:'V', n:'Visa', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/V.png', icon:'V', color:'#1A1F71', ySymbol:'V'},
+  {s:'MA', n:'Mastercard', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MA.png', icon:'M', color:'#EB001B', ySymbol:'MA'},
+  {s:'BAC', n:'Bank of America', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BAC.png', icon:'B', color:'#E31837', ySymbol:'BAC'},
+  {s:'WFC', n:'Wells Fargo', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/WFC.png', icon:'W', color:'#CC0000', ySymbol:'WFC'},
+  {s:'GS', n:'Goldman Sachs', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GS.png', icon:'G', color:'#003087', ySymbol:'GS'},
+  {s:'MS', n:'Morgan Stanley', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MS.png', icon:'M', color:'#003087', ySymbol:'MS'},
+  {s:'AXP', n:'AmEx', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AXP.png', icon:'A', color:'#016FD0', ySymbol:'AXP'},
+  {s:'BLK', n:'BlackRock', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BLK.png', icon:'B', color:'#003087', ySymbol:'BLK'},
+  {s:'SCHW', n:'Charles Schwab', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SCHW.png', icon:'S', color:'#003087', ySymbol:'SCHW'},
+  {s:'LLY', n:'Eli Lilly', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LLY.png', icon:'L', color:'#CC0000', ySymbol:'LLY'},
+  {s:'UNH', n:'UnitedHealth', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/UNH.png', icon:'U', color:'#003087', ySymbol:'UNH'},
+  {s:'JNJ', n:'J&J', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/JNJ.png', icon:'J', color:'#CC0000', ySymbol:'JNJ'},
+  {s:'MRK', n:'Merck', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MRK.png', icon:'M', color:'#009999', ySymbol:'MRK'},
+  {s:'ABBV', n:'AbbVie', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ABBV.png', icon:'A', color:'#003087', ySymbol:'ABBV'},
+  {s:'PFE', n:'Pfizer', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PFE.png', icon:'P', color:'#0044CC', ySymbol:'PFE'},
+  {s:'TMO', n:'Thermo Fisher', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TMO.png', icon:'T', color:'#003087', ySymbol:'TMO'},
+  {s:'ABT', n:'Abbott Labs', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ABT.png', icon:'A', color:'#003087', ySymbol:'ABT'},
+  {s:'DHR', n:'Danaher', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/DHR.png', icon:'D', color:'#003087', ySymbol:'DHR'},
+  {s:'BMY', n:'Bristol Myers', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BMY.png', icon:'B', color:'#003087', ySymbol:'BMY'},
+  {s:'COST', n:'Costco', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/COST.png', icon:'C', color:'#005DAA', ySymbol:'COST'},
+  {s:'WMT', n:'Walmart', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/WMT.png', icon:'W', color:'#0071CE', ySymbol:'WMT'},
+  {s:'HD', n:'Home Depot', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HD.png', icon:'H', color:'#F96302', ySymbol:'HD'},
+  {s:'PG', n:'Procter Gamble', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PG.png', icon:'P', color:'#003087', ySymbol:'PG'},
+  {s:'KO', n:'Coca-Cola', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/KO.png', icon:'K', color:'#F40009', ySymbol:'KO'},
+  {s:'PEP', n:'PepsiCo', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PEP.png', icon:'P', color:'#004B93', ySymbol:'PEP'},
+  {s:'MCD', n:'McDonalds', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MCD.png', icon:'M', color:'#FFC72C', ySymbol:'MCD'},
+  {s:'SBUX', n:'Starbucks', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SBUX.png', icon:'S', color:'#00704A', ySymbol:'SBUX'},
+  {s:'NKE', n:'Nike', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NKE.png', icon:'N', color:'#000000', ySymbol:'NKE'},
+  {s:'TGT', n:'Target', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TGT.png', icon:'T', color:'#CC0000', ySymbol:'TGT'},
+  {s:'AMD', n:'AMD', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AMD.png', icon:'A', color:'#ED1C24', ySymbol:'AMD'},
+  {s:'INTC', n:'Intel', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/INTC.png', icon:'I', color:'#0071C5', ySymbol:'INTC'},
+  {s:'QCOM', n:'Qualcomm', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/QCOM.png', icon:'Q', color:'#3253DC', ySymbol:'QCOM'},
+  {s:'TXN', n:'Texas Instruments', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TXN.png', icon:'T', color:'#CC0000', ySymbol:'TXN'},
+  {s:'AMAT', n:'Applied Materials', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AMAT.png', icon:'A', color:'#003087', ySymbol:'AMAT'},
+  {s:'MU', n:'Micron', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MU.png', icon:'M', color:'#003087', ySymbol:'MU'},
+  {s:'LRCX', n:'Lam Research', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LRCX.png', icon:'L', color:'#003087', ySymbol:'LRCX'},
+  {s:'NOW', n:'ServiceNow', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NOW.png', icon:'N', color:'#81B5A1', ySymbol:'NOW'},
+  {s:'CRM', n:'Salesforce', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CRM.png', icon:'C', color:'#00A1E0', ySymbol:'CRM'},
+  {s:'ADBE', n:'Adobe', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ADBE.png', icon:'A', color:'#FF0000', ySymbol:'ADBE'},
+  {s:'NFLX', n:'Netflix', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NFLX.png', icon:'N', color:'#E50914', ySymbol:'NFLX'},
+  {s:'DIS', n:'Disney', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/DIS.png', icon:'D', color:'#113CCF', ySymbol:'DIS'},
+  {s:'CMCSA', n:'Comcast', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CMCSA.png', icon:'C', color:'#CC0000', ySymbol:'CMCSA'},
+  {s:'SPOT', n:'Spotify', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SPOT.png', icon:'S', color:'#1DB954', ySymbol:'SPOT'},
+  {s:'RBLX', n:'Roblox', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RBLX.png', icon:'R', color:'#CC0000', ySymbol:'RBLX'},
+  {s:'COIN', n:'Coinbase', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/COIN.png', icon:'C', color:'#0052FF', ySymbol:'COIN'},
+  {s:'HOOD', n:'Robinhood', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HOOD.png', icon:'H', color:'#00C805', ySymbol:'HOOD'},
+  {s:'PYPL', n:'PayPal', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PYPL.png', icon:'P', color:'#003087', ySymbol:'PYPL'},
+  {s:'SQ', n:'Block (Square)', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SQ.png', icon:'S', color:'#000000', ySymbol:'SQ'},
+  {s:'MSTR', n:'MicroStrategy', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MSTR.png', icon:'M', color:'#CC0000', ySymbol:'MSTR'},
+  {s:'MARA', n:'Marathon Digital', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MARA.png', icon:'M', color:'#F7931A', ySymbol:'MARA'},
+  {s:'RIOT', n:'Riot Platforms', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RIOT.png', icon:'R', color:'#CC0000', ySymbol:'RIOT'},
+  {s:'XOM', n:'ExxonMobil', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/XOM.png', icon:'X', color:'#003087', ySymbol:'XOM'},
+  {s:'CVX', n:'Chevron', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CVX.png', icon:'C', color:'#009DD9', ySymbol:'CVX'},
+  {s:'COP', n:'ConocoPhillips', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/COP.png', icon:'C', color:'#CC0000', ySymbol:'COP'},
+  {s:'SLB', n:'Schlumberger', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SLB.png', icon:'S', color:'#003087', ySymbol:'SLB'},
+  {s:'EOG', n:'EOG Resources', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/EOG.png', icon:'E', color:'#003087', ySymbol:'EOG'},
+  {s:'F', n:'Ford', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/F.png', icon:'F', color:'#003087', ySymbol:'F'},
+  {s:'GM', n:'General Motors', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GM.png', icon:'G', color:'#003087', ySymbol:'GM'},
+  {s:'RIVN', n:'Rivian', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RIVN.png', icon:'R', color:'#52D48E', ySymbol:'RIVN'},
+  {s:'LCID', n:'Lucid Motors', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LCID.png', icon:'L', color:'#CC0000', ySymbol:'LCID'},
+  {s:'PLTR', n:'Palantir', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PLTR.png', icon:'P', color:'#000000', ySymbol:'PLTR'},
+  {s:'ARM', n:'ARM Holdings', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ARM.png', icon:'A', color:'#0091BD', ySymbol:'ARM'},
+  {s:'SMCI', n:'Super Micro', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SMCI.png', icon:'S', color:'#003087', ySymbol:'SMCI'},
+  {s:'AI', n:'C3.ai', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AI.png', icon:'A', color:'#003087', ySymbol:'AI'},
+  {s:'SOUN', n:'SoundHound AI', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SOUN.png', icon:'S', color:'#CC0000', ySymbol:'SOUN'},
+  {s:'UBER', n:'Uber', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/UBER.png', icon:'U', color:'#000000', ySymbol:'UBER'},
+  {s:'LYFT', n:'Lyft', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LYFT.png', icon:'L', color:'#FF00BF', ySymbol:'LYFT'},
+  {s:'ABNB', n:'Airbnb', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ABNB.png', icon:'A', color:'#FF5A5F', ySymbol:'ABNB'},
+  {s:'DASH', n:'DoorDash', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/DASH.png', icon:'D', color:'#FF3008', ySymbol:'DASH'},
+  {s:'T', n:'AT&T', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/T.png', icon:'T', color:'#00A8E0', ySymbol:'T'},
+  {s:'VZ', n:'Verizon', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/VZ.png', icon:'V', color:'#CD040B', ySymbol:'VZ'},
+  {s:'TMUS', n:'T-Mobile', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TMUS.png', icon:'T', color:'#E20074', ySymbol:'TMUS'},
+  {s:'BA', n:'Boeing', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BA.png', icon:'B', color:'#003087', ySymbol:'BA'},
+  {s:'CAT', n:'Caterpillar', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CAT.png', icon:'C', color:'#FFCD11', ySymbol:'CAT'},
+  {s:'DE', n:'John Deere', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/DE.png', icon:'D', color:'#367C2B', ySymbol:'DE'},
+  {s:'GE', n:'GE Aerospace', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GE.png', icon:'G', color:'#003087', ySymbol:'GE'},
+  {s:'RTX', n:'RTX Corp', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RTX.png', icon:'R', color:'#003087', ySymbol:'RTX'},
+  {s:'LMT', n:'Lockheed Martin', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LMT.png', icon:'L', color:'#003087', ySymbol:'LMT'},
+  {s:'AMT', n:'American Tower', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AMT.png', icon:'A', color:'#003087', ySymbol:'AMT'},
+  {s:'PLD', n:'Prologis', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PLD.png', icon:'P', color:'#003087', ySymbol:'PLD'},
+  {s:'BRK-B', n:'Berkshire B', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BRK-B.png', icon:'B', color:'#4A4A4A', ySymbol:'BRK-B'},
+  {s:'BABA', n:'Alibaba ADR', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BABA.png', icon:'A', color:'#FF6A00', ySymbol:'BABA'},
+  {s:'SPGI', n:'S&P Global', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SPGI.png', icon:'S', color:'#003087', ySymbol:'SPGI'},
+  {s:'BX', n:'Blackstone', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BX.png', icon:'B', color:'#003087', ySymbol:'BX'},
+  {s:'NDAQ', n:'Nasdaq Inc', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NDAQ.png', icon:'N', color:'#003087', ySymbol:'NDAQ'},
+  {s:'YPF', n:'YPF Argentina', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/YPF.png', icon:'Y', color:'#005FAD', ySymbol:'YPF'},
+  {s:'PBR', n:'Petrobras', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PBR.png', icon:'P', color:'#009B3A', ySymbol:'PBR'},
+  {s:'VALE', n:'Vale', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/VALE.png', icon:'V', color:'#009B3A', ySymbol:'VALE'},
+  {s:'MELI', n:'MercadoLibre', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/MELI.png', icon:'M', color:'#FFE600', ySymbol:'MELI'},
+  {s:'GLOB', n:'Globant', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GLOB.png', icon:'G', color:'#00A651', ySymbol:'GLOB'},
+  {s:'NU', n:'Nubank', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NU.png', icon:'N', color:'#8A05BE', ySymbol:'NU'},
+  {s:'ITUB', n:'Itau Unibanco', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ITUB.png', icon:'I', color:'#F48024', ySymbol:'ITUB'},
+  {s:'BBD', n:'Bradesco', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BBD.png', icon:'B', color:'#CC0000', ySymbol:'BBD'},
+  {s:'SQM', n:'SQM Chile', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SQM.png', icon:'S', color:'#003087', ySymbol:'SQM'},
+  {s:'ABEV', n:'Ambev', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ABEV.png', icon:'A', color:'#F4A700', ySymbol:'ABEV'},
+  {s:'CIB', n:'Bancolombia', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CIB.png', icon:'C', color:'#FFCC00', ySymbol:'CIB'},
+  {s:'TV', n:'Televisa', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TV.png', icon:'T', color:'#003087', ySymbol:'TV'},
+  {s:'ERJ', n:'Embraer', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ERJ.png', icon:'E', color:'#003087', ySymbol:'ERJ'},
+  {s:'DESP', n:'Despegar', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/DESP.png', icon:'D', color:'#003087', ySymbol:'DESP'},
+  {s:'LREN3', n:'Lojas Renner', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LREN3.png', icon:'L', color:'#CC0000', ySymbol:'LRENY'},
+  {s:'VIVA', n:'Viva Aerobus', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/VIVA.png', icon:'V', color:'#CC0000', ySymbol:'VIVA'},
+  {s:'GGAL', n:'Galicia Arg', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GGAL.png', icon:'G', color:'#003087', ySymbol:'GGAL'},
+  {s:'BMA', n:'Banco Macro', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BMA.png', icon:'B', color:'#003087', ySymbol:'BMA'},
+  {s:'CEPU', n:'Central Puerto', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/CEPU.png', icon:'C', color:'#003087', ySymbol:'CEPU'},
+  {s:'PAMP', n:'Pampa Energia', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PAMP.png', icon:'P', color:'#003087', ySymbol:'PAM'},
+  {s:'LOMA', n:'Loma Negra', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LOMA.png', icon:'L', color:'#CC0000', ySymbol:'LOMA'},
+  {s:'ARCO', n:'Arcos Dorados', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ARCO.png', icon:'A', color:'#FFC72C', ySymbol:'ARCO'},
+  {s:'XPEV', n:'XPeng (China)', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/XPEV.png', icon:'X', color:'#CC0000', ySymbol:'XPEV'},
+  {s:'VTEX', n:'VTEX', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/VTEX.png', icon:'V', color:'#CC0000', ySymbol:'VTEX'},
+  {s:'BRFS', n:'BRF Foods', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BRFS.png', icon:'B', color:'#003087', ySymbol:'BRFS'},
+  {s:'ASML', n:'ASML', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ASML.png', icon:'A', color:'#003087', ySymbol:'ASML'},
+  {s:'SAP', n:'SAP', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SAP.png', icon:'S', color:'#1872B4', ySymbol:'SAP'},
+  {s:'NVS', n:'Novartis', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NVS.png', icon:'N', color:'#CC0000', ySymbol:'NVS'},
+  {s:'NSRGY', n:'Nestle', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NSRGY.png', icon:'N', color:'#003087', ySymbol:'NSRGY'},
+  {s:'RHHBY', n:'Roche', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RHHBY.png', icon:'R', color:'#CC0000', ySymbol:'RHHBY'},
+  {s:'VWAGY', n:'Volkswagen', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/VWAGY.png', icon:'V', color:'#003087', ySymbol:'VWAGY'},
+  {s:'SIEGY', n:'Siemens', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SIEGY.png', icon:'S', color:'#009999', ySymbol:'SIEGY'},
+  {s:'SHEL', n:'Shell', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SHEL.png', icon:'S', color:'#DD1D21', ySymbol:'SHEL'},
+  {s:'BP', n:'BP', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BP.png', icon:'B', color:'#009900', ySymbol:'BP'},
+  {s:'GSK', n:'GSK', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GSK.png', icon:'G', color:'#F36200', ySymbol:'GSK'},
+  {s:'UL', n:'Unilever', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/UL.png', icon:'U', color:'#003087', ySymbol:'UL'},
+  {s:'RIO', n:'Rio Tinto', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RIO.png', icon:'R', color:'#CC0000', ySymbol:'RIO'},
+  {s:'BHP', n:'BHP Group', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BHP.png', icon:'B', color:'#CC0000', ySymbol:'BHP'},
+  {s:'AZN', n:'AstraZeneca', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/AZN.png', icon:'A', color:'#CC0000', ySymbol:'AZN'},
+  {s:'HSBC', n:'HSBC', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HSBC.png', icon:'H', color:'#CC0000', ySymbol:'HSBC'},
+  {s:'STM', n:'STMicroelectronics', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/STM.png', icon:'S', color:'#003087', ySymbol:'STM'},
+  {s:'EADSF', n:'Airbus', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/EADSF.png', icon:'A', color:'#003087', ySymbol:'EADSF'},
+  {s:'IDEXY', n:'Inditex/Zara', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/IDEXY.png', icon:'I', color:'#003087', ySymbol:'IDEXY'},
+  {s:'LVMUY', n:'LVMH', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LVMUY.png', icon:'L', color:'#8B7355', ySymbol:'LVMUY'},
+  {s:'HNNMY', n:'Hennes & Mauritz', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HNNMY.png', icon:'H', color:'#CC0000', ySymbol:'HNNMY'},
+  {s:'ALIZF', n:'Allianz', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/ALIZF.png', icon:'A', color:'#003087', ySymbol:'ALIZF'},
+  {s:'BAYZF', n:'Bayer', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BAYZF.png', icon:'B', color:'#10384F', ySymbol:'BAYRY'},
+  {s:'SAN', n:'Santander', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SAN.png', icon:'S', color:'#CC0000', ySymbol:'SAN'},
+  {s:'BBVA', n:'BBVA', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BBVA.png', icon:'B', color:'#004481', ySymbol:'BBVA'},
+  {s:'INGA', n:'ING Group', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/INGA.png', icon:'I', color:'#FF6200', ySymbol:'ING'},
+  {s:'TSM', n:'TSMC', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TSM.png', icon:'T', color:'#003087', ySymbol:'TSM'},
+  {s:'TM', n:'Toyota', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/TM.png', icon:'T', color:'#CC0000', ySymbol:'TM'},
+  {s:'SONY', n:'Sony', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SONY.png', icon:'S', color:'#003087', ySymbol:'SONY'},
+  {s:'HMC', n:'Honda', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HMC.png', icon:'H', color:'#CC0000', ySymbol:'HMC'},
+  {s:'NTDOY', n:'Nintendo', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NTDOY.png', icon:'N', color:'#CC0000', ySymbol:'NTDOY'},
+  {s:'BIDU', n:'Baidu', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/BIDU.png', icon:'B', color:'#2932E1', ySymbol:'BIDU'},
+  {s:'JD', n:'JD.com', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/JD.png', icon:'J', color:'#CC0000', ySymbol:'JD'},
+  {s:'PDD', n:'PDD Holdings', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/PDD.png', icon:'P', color:'#CC0000', ySymbol:'PDD'},
+  {s:'NTES', n:'NetEase', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/NTES.png', icon:'N', color:'#CC0000', ySymbol:'NTES'},
+  {s:'SFTBY', n:'SoftBank', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SFTBY.png', icon:'S', color:'#CC0000', ySymbol:'SFTBY'},
+  {s:'INFY', n:'Infosys', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/INFY.png', icon:'I', color:'#003087', ySymbol:'INFY'},
+  {s:'HDB', n:'HDFC Bank', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/HDB.png', icon:'H', color:'#004A97', ySymbol:'HDB'},
+  {s:'IBN', n:'ICICI Bank', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/IBN.png', icon:'I', color:'#CC0000', ySymbol:'IBN'},
+  {s:'WIT', n:'Wipro', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/WIT.png', icon:'W', color:'#003087', ySymbol:'WIT'},
+  {s:'RELX', n:'Reliance Industries', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/RELX.png', icon:'R', color:'#003087', ySymbol:'RELIANCE.NS'},
+  {s:'SE', n:'Sea Limited', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/SE.png', icon:'S', color:'#000000', ySymbol:'SE'},
+  {s:'GRAB', n:'Grab', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GRAB.png', icon:'G', color:'#00B14F', ySymbol:'GRAB'},
+  {s:'GOTO', n:'GoTo Indonesia', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/GOTO.png', icon:'G', color:'#CC0000', ySymbol:'GOTO-USD'},
+  {s:'KPELY', n:'Korea Electric', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/KPELY.png', icon:'K', color:'#003087', ySymbol:'KEP'},
+  {s:'LG', n:'LG Electronics', tipo:'accion', logo:'https://financialmodelingprep.com/image-stock/LG.png', icon:'L', color:'#CC0000', ySymbol:'LGEIY'},
+  {s:'SPY', n:'S&P 500 ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/SPY.png', icon:'S', color:'#003087', ySymbol:'SPY'},
+  {s:'QQQ', n:'Nasdaq 100 ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/QQQ.png', icon:'Q', color:'#003087', ySymbol:'QQQ'},
+  {s:'DIA', n:'Dow Jones ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/DIA.png', icon:'D', color:'#003087', ySymbol:'DIA'},
+  {s:'IWM', n:'Russell 2000', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/IWM.png', icon:'I', color:'#003087', ySymbol:'IWM'},
+  {s:'VTI', n:'Total Market', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/VTI.png', icon:'V', color:'#003087', ySymbol:'VTI'},
+  {s:'VOO', n:'Vanguard S&P 500', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/VOO.png', icon:'V', color:'#003087', ySymbol:'VOO'},
+  {s:'ARKK', n:'ARK Innovation', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/ARKK.png', icon:'A', color:'#00B0D7', ySymbol:'ARKK'},
+  {s:'ARKG', n:'ARK Genomics', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/ARKG.png', icon:'A', color:'#00B0D7', ySymbol:'ARKG'},
+  {s:'XLF', n:'Financials ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLF.png', icon:'X', color:'#003087', ySymbol:'XLF'},
+  {s:'XLE', n:'Energy ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLE.png', icon:'X', color:'#333', ySymbol:'XLE'},
+  {s:'XLK', n:'Tech ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLK.png', icon:'X', color:'#003087', ySymbol:'XLK'},
+  {s:'XLV', n:'Health ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLV.png', icon:'X', color:'#CC0000', ySymbol:'XLV'},
+  {s:'XLI', n:'Industrial ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLI.png', icon:'X', color:'#003087', ySymbol:'XLI'},
+  {s:'XLU', n:'Utilities ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLU.png', icon:'X', color:'#003087', ySymbol:'XLU'},
+  {s:'XLB', n:'Materials ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLB.png', icon:'X', color:'#003087', ySymbol:'XLB'},
+  {s:'XLP', n:'Consumer Stap ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XLP.png', icon:'X', color:'#003087', ySymbol:'XLP'},
+  {s:'GDX', n:'Gold Miners ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/GDX.png', icon:'G', color:'#D4A017', ySymbol:'GDX'},
+  {s:'GDXJ', n:'Jr Gold Miners', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/GDXJ.png', icon:'G', color:'#D4A017', ySymbol:'GDXJ'},
+  {s:'IBIT', n:'iShares Bitcoin', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/IBIT.png', icon:'I', color:'#F7931A', ySymbol:'IBIT'},
+  {s:'FBTC', n:'Fidelity Bitcoin', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/FBTC.png', icon:'F', color:'#F7931A', ySymbol:'FBTC'},
+  {s:'GBTC', n:'Grayscale BTC', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/GBTC.png', icon:'G', color:'#F7931A', ySymbol:'GBTC'},
+  {s:'GLD', n:'SPDR Gold', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/GLD.png', icon:'G', color:'#D4A017', ySymbol:'GLD'},
+  {s:'SLV', n:'iShares Silver', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/SLV.png', icon:'S', color:'#C0C0C0', ySymbol:'SLV'},
+  {s:'IAU', n:'iShares Gold', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/IAU.png', icon:'I', color:'#D4A017', ySymbol:'IAU'},
+  {s:'EWZ', n:'Brazil ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWZ.png', icon:'E', color:'#009B3A', ySymbol:'EWZ'},
+  {s:'EWJ', n:'Japan ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWJ.png', icon:'E', color:'#CC0000', ySymbol:'EWJ'},
+  {s:'FXI', n:'China ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/FXI.png', icon:'F', color:'#CC0000', ySymbol:'FXI'},
+  {s:'EEM', n:'Emerging Markets', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EEM.png', icon:'E', color:'#003087', ySymbol:'EEM'},
+  {s:'EWW', n:'Mexico ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWW.png', icon:'E', color:'#006847', ySymbol:'EWW'},
+  {s:'EWY', n:'Korea ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWY.png', icon:'E', color:'#003087', ySymbol:'EWY'},
+  {s:'EWG', n:'Germany ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWG.png', icon:'E', color:'#003087', ySymbol:'EWG'},
+  {s:'EWU', n:'UK ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWU.png', icon:'E', color:'#CC0000', ySymbol:'EWU'},
+  {s:'EWQ', n:'France ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/EWQ.png', icon:'E', color:'#003087', ySymbol:'EWQ'},
+  {s:'SOXX', n:'Semiconductors', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/SOXX.png', icon:'S', color:'#003087', ySymbol:'SOXX'},
+  {s:'XBI', n:'Biotech ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/XBI.png', icon:'X', color:'#003087', ySymbol:'XBI'},
+  {s:'KWEB', n:'China Internet', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/KWEB.png', icon:'K', color:'#CC0000', ySymbol:'KWEB'},
+  {s:'VNQ', n:'Real Estate ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/VNQ.png', icon:'V', color:'#003087', ySymbol:'VNQ'},
+  {s:'TAN', n:'Solar ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/TAN.png', icon:'T', color:'#FF9900', ySymbol:'TAN'},
+  {s:'ICLN', n:'Clean Energy ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/ICLN.png', icon:'I', color:'#00A651', ySymbol:'ICLN'},
+  {s:'BOTZ', n:'Robotics AI ETF', tipo:'etf', logo:'https://financialmodelingprep.com/image-stock/BOTZ.png', icon:'B', color:'#003087', ySymbol:'BOTZ'},
+  {s:'ES=F', n:'S&P 500 Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/ES=F.png', icon:'E', color:'#003087', ySymbol:'ES=F'},
+  {s:'NQ=F', n:'Nasdaq Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/NQ=F.png', icon:'N', color:'#003087', ySymbol:'NQ=F'},
+  {s:'YM=F', n:'Dow Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/YM=F.png', icon:'Y', color:'#003087', ySymbol:'YM=F'},
+  {s:'RTY=F', n:'Russell Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/RTY=F.png', icon:'R', color:'#003087', ySymbol:'RTY=F'},
+  {s:'GC=F', n:'Oro Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/GC=F.png', icon:'O', color:'#D4A017', ySymbol:'GC=F'},
+  {s:'SI=F', n:'Plata Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/SI=F.png', icon:'P', color:'#C0C0C0', ySymbol:'SI=F'},
+  {s:'CL=F', n:'Petroleo WTI', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/CL=F.png', icon:'P', color:'#333', ySymbol:'CL=F'},
+  {s:'BZ=F', n:'Petroleo Brent', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/BZ=F.png', icon:'B', color:'#444', ySymbol:'BZ=F'},
+  {s:'NG=F', n:'Gas Natural', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/NG=F.png', icon:'G', color:'#FF6600', ySymbol:'NG=F'},
+  {s:'HG=F', n:'Cobre Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/HG=F.png', icon:'C', color:'#B87333', ySymbol:'HG=F'},
+  {s:'ZB=F', n:'US Bond 30Y', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/ZB=F.png', icon:'Z', color:'#003087', ySymbol:'ZB=F'},
+  {s:'ZN=F', n:'US Note 10Y', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/ZN=F.png', icon:'Z', color:'#003087', ySymbol:'ZN=F'},
+  {s:'6E=F', n:'Euro Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/6E=F.png', icon:'E', color:'#003087', ySymbol:'6E=F'},
+  {s:'6J=F', n:'Yen Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/6J=F.png', icon:'J', color:'#CC0000', ySymbol:'6J=F'},
+  {s:'6B=F', n:'GBP Futuro', tipo:'futuro', logo:'https://financialmodelingprep.com/image-stock/6B=F.png', icon:'G', color:'#CC0000', ySymbol:'6B=F'},
+  {s:'USO', n:'US Oil ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/USO.png', icon:'U', color:'#333', ySymbol:'USO'},
+  {s:'BNO', n:'Brent Oil ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/BNO.png', icon:'B', color:'#444', ySymbol:'BNO'},
+  {s:'UNG', n:'Natural Gas ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/UNG.png', icon:'G', color:'#FF6600', ySymbol:'UNG'},
+  {s:'WEAT', n:'Wheat ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/WEAT.png', icon:'W', color:'#C8A951', ySymbol:'WEAT'},
+  {s:'CORN', n:'Corn ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/CORN.png', icon:'C', color:'#F5C800', ySymbol:'CORN'},
+  {s:'SOYB', n:'Soybean ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/SOYB.png', icon:'S', color:'#7BAE36', ySymbol:'SOYB'},
+  {s:'JO', n:'Cafe OJ ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/JO.png', icon:'J', color:'#FF8C00', ySymbol:'JO'},
+  {s:'SGG', n:'Sugar ETF', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/SGG.png', icon:'S', color:'#EEE', ySymbol:'SGG'},
+  {s:'KC=F', n:'Cafe Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/KC=F.png', icon:'C', color:'#6F4E37', ySymbol:'KC=F'},
+  {s:'SB=F', n:'Azucar Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/SB=F.png', icon:'A', color:'#EEE', ySymbol:'SB=F'},
+  {s:'CC=F', n:'Cacao Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/CC=F.png', icon:'C', color:'#7B3F00', ySymbol:'CC=F'},
+  {s:'ZW=F', n:'Trigo Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/ZW=F.png', icon:'T', color:'#C8A951', ySymbol:'ZW=F'},
+  {s:'ZC=F', n:'Maiz Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/ZC=F.png', icon:'M', color:'#F5C800', ySymbol:'ZC=F'},
+  {s:'ZS=F', n:'Soja Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/ZS=F.png', icon:'S', color:'#7BAE36', ySymbol:'ZS=F'},
+  {s:'CT=F', n:'Algodon Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/CT=F.png', icon:'A', color:'#EEE', ySymbol:'CT=F'},
+  {s:'OJ=F', n:'OJ Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/OJ=F.png', icon:'O', color:'#FF8C00', ySymbol:'OJ=F'},
+  {s:'LB=F', n:'Madera Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/LB=F.png', icon:'M', color:'#8B4513', ySymbol:'LBS=F'},
+  {s:'LE=F', n:'Ganado Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/LE=F.png', icon:'G', color:'#8B4513', ySymbol:'LE=F'},
+  {s:'HE=F', n:'Cerdo Futuro', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/HE=F.png', icon:'C', color:'#FF69B4', ySymbol:'HE=F'},
+  {s:'PDBC', n:'Diversified Comm', tipo:'materia_prima', logo:'https://financialmodelingprep.com/image-stock/PDBC.png', icon:'P', color:'#333', ySymbol:'PDBC'},
+  {s:'CPER', n:'Cobre ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/CPER.png', icon:'C', color:'#B87333', ySymbol:'CPER'},
+  {s:'PPLT', n:'Platino ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/PPLT.png', icon:'P', color:'#E5E4E2', ySymbol:'PPLT'},
+  {s:'PALL', n:'Paladio ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/PALL.png', icon:'P', color:'#CED0CF', ySymbol:'PALL'},
+  {s:'ALUM', n:'Aluminio ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/ALUM.png', icon:'A', color:'#848484', ySymbol:'ALUM'},
+  {s:'ZINC', n:'Zinc ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/ZINC.png', icon:'Z', color:'#4A4A4A', ySymbol:'JJZ'},
+  {s:'IRON', n:'Hierro/Steel ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/IRON.png', icon:'I', color:'#8B4513', ySymbol:'SLX'},
+  {s:'ORO', n:'Oro', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/ORO.png', icon:'O', color:'#D4A017', ySymbol:'GLD'},
+  {s:'PLATA', n:'Plata', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/PLATA.png', icon:'P', color:'#C0C0C0', ySymbol:'SLV'},
+  {s:'COBRE', n:'Cobre', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/COBRE.png', icon:'C', color:'#B87333', ySymbol:'CPER'},
+  {s:'DBB', n:'Base Metals ETF', tipo:'metal', logo:'https://financialmodelingprep.com/image-stock/DBB.png', icon:'D', color:'#848484', ySymbol:'DBB'},
+  {s:'TLT', n:'US 20Y Bond', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/TLT.png', icon:'T', color:'#003087', ySymbol:'TLT'},
+  {s:'AGG', n:'US Bond Agg', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/AGG.png', icon:'A', color:'#003087', ySymbol:'AGG'},
+  {s:'IEF', n:'US 7-10Y Bond', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/IEF.png', icon:'I', color:'#003087', ySymbol:'IEF'},
+  {s:'SHY', n:'US 1-3Y Bond', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/SHY.png', icon:'S', color:'#003087', ySymbol:'SHY'},
+  {s:'HYG', n:'High Yield Bond', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/HYG.png', icon:'H', color:'#CC0000', ySymbol:'HYG'},
+  {s:'LQD', n:'Inv Grade Corp', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/LQD.png', icon:'L', color:'#003087', ySymbol:'LQD'},
+  {s:'EMB', n:'Emerging Bonds', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/EMB.png', icon:'E', color:'#003087', ySymbol:'EMB'},
+  {s:'BND', n:'Total Bond ETF', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/BND.png', icon:'B', color:'#003087', ySymbol:'BND'},
+  {s:'TIP', n:'TIPS Inflation', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/TIP.png', icon:'T', color:'#003087', ySymbol:'TIP'},
+  {s:'JNK', n:'Junk Bonds', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/JNK.png', icon:'J', color:'#CC0000', ySymbol:'JNK'},
+  {s:'MUB', n:'Muni Bond ETF', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/MUB.png', icon:'M', color:'#003087', ySymbol:'MUB'},
+  {s:'BNDX', n:'Intl Bond ETF', tipo:'bono', logo:'https://financialmodelingprep.com/image-stock/BNDX.png', icon:'B', color:'#003087', ySymbol:'BNDX'}
 ];
 
 // EVENTOS MACRO SEMANALES
@@ -2167,8 +2107,8 @@ function cerrarEventosPanel() {
 }
 
 
-// === RSI REAL desde datos histÃ³ricos ===
-window._rsiCache = {};  // sym â rsi value (0-100)
+// === RSI REAL desde datos históricos ===
+window._rsiCache = {};  // sym → rsi value (0-100)
 
 function _calcRSI14(closes) {
   if(!closes || closes.length < 15) return 50; // not enough data
@@ -2309,9 +2249,9 @@ function _calcIAScore(activo, datos) {
     var ema26 = _ema(cls30.slice(-26), 26);
     var macdLine = ema12 - ema26;
     var macdPct = ema26 > 0 ? macdLine / ema26 : 0;
-    if (macdPct > 0.005) { macdScore = 0.05; motivos.push('MACD positivo +' + (macdPct*100).toFixed(2) + '% â cruce alcista de medias, momentum confirmado'); }
-    else if (macdPct < -0.005) { macdScore = -0.05; motivos.push('MACD negativo ' + (macdPct*100).toFixed(2) + '% â cruce bajista, presiÃ³n vendedora en aumento'); }
-    else { macdScore = 0.01; motivos.push('MACD neutral â sin divergencia clara entre medias de corto y largo plazo'); }
+    if (macdPct > 0.005) { macdScore = 0.05; motivos.push('MACD positivo +' + (macdPct*100).toFixed(2) + '% — cruce alcista de medias, momentum confirmado'); }
+    else if (macdPct < -0.005) { macdScore = -0.05; motivos.push('MACD negativo ' + (macdPct*100).toFixed(2) + '% — cruce bajista, presión vendedora en aumento'); }
+    else { macdScore = 0.01; motivos.push('MACD neutral — sin divergencia clara entre medias de corto y largo plazo'); }
   }
   scores.macd = macdScore;
 
@@ -2320,10 +2260,10 @@ function _calcIAScore(activo, datos) {
   if (datos.high30d && datos.low30d && precio > 0) {
     var h30 = datos.high30d, l30 = datos.low30d;
     var rangePos30 = (h30 > l30) ? (precio - l30) / (h30 - l30) : 0.5;
-    if (rangePos30 > 0.85) { srScore = -0.04; motivos.push('Precio cerca de resistencia 30d ($' + (precio>100?Math.round(h30):h30.toFixed(4)) + ') â zona de oferta tÃ©cnica, posible rechazo'); }
-    else if (rangePos30 < 0.15) { srScore = 0.04; motivos.push('Precio cerca de soporte 30d ($' + (precio>100?Math.round(l30):l30.toFixed(4)) + ') â zona de demanda tÃ©cnica, posible rebote'); }
-    else if (rangePos30 > 0.60) { srScore = 0.02; motivos.push('Precio en mitad alta del rango 30d â momentum positivo con margen antes de resistencia'); }
-    else { srScore = -0.01; motivos.push('Precio en mitad baja del rango 30d â sobre soporte pero sin momentum fuerte'); }
+    if (rangePos30 > 0.85) { srScore = -0.04; motivos.push('Precio cerca de resistencia 30d ($' + (precio>100?Math.round(h30):h30.toFixed(4)) + ') — zona de oferta técnica, posible rechazo'); }
+    else if (rangePos30 < 0.15) { srScore = 0.04; motivos.push('Precio cerca de soporte 30d ($' + (precio>100?Math.round(l30):l30.toFixed(4)) + ') — zona de demanda técnica, posible rebote'); }
+    else if (rangePos30 > 0.60) { srScore = 0.02; motivos.push('Precio en mitad alta del rango 30d — momentum positivo con margen antes de resistencia'); }
+    else { srScore = -0.01; motivos.push('Precio en mitad baja del rango 30d — sobre soporte pero sin momentum fuerte'); }
   }
   scores.soporte_resist = srScore;
 
@@ -2577,7 +2517,7 @@ window._closeIAVarsPopup = function() {
 window.showIAVariablesPopup = function() {
   var existing = document.getElementById('ia-vars-overlay');
   if(existing) { existing.remove(); return; }
-  // Calcular estado promedio de cada variable sobre las seÃ±ales actuales
+  // Calcular estado promedio de cada variable sobre las señales actuales
   var signals = window._iaSignals || [];
   var varKeys = ['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];
   var varScoreAvg = {};
@@ -2587,25 +2527,25 @@ window.showIAVariablesPopup = function() {
     varScoreAvg[k] = cnt > 0 ? sum / cnt : 0;
   });
   var varDefs = [
-    {k:'tendencia',      n:'1. Tendencia 24h',         d:'VariaciÃ³n % del precio en las Ãºltimas 24hs. Mide el momentum inmediato.',p:'Alta'},
-    {k:'rsi',            n:'2. RSI14 Real',             d:'Ãndice de Fuerza Relativa de 14 perÃ­odos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
-    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los Ãºltimos 5 dÃ­as. Confirma si el movimiento tiene convicciÃ³n.',p:'Alta'},
-    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (highâlow / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
-    {k:'correlacion',    n:'5. CorrelaciÃ³n BTC/SPY',    d:'Para cripto: correlaciÃ³n con BTC. Para acciones: con S&P500. Detecta arrastre sistÃ©mico.',p:'Media'},
-    {k:'oro_petroleo',   n:'6. Oro / PetrÃ³leo',         d:'Precios de activos refugio. Oro alto = aversiÃ³n al riesgo. Impacta segÃºn tipo de activo.',p:'Media'},
+    {k:'tendencia',      n:'1. Tendencia 24h',         d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
+    {k:'rsi',            n:'2. RSI14 Real',             d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
+    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
+    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
+    {k:'correlacion',    n:'5. Correlación BTC/SPY',    d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
+    {k:'oro_petroleo',   n:'6. Oro / Petróleo',         d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
     {k:'macro',          n:'7. Macro FED',              d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
-    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados prÃ³ximos. HistÃ³ricamente elevan la volatilidad del activo.',p:'Media'},
-    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los Ãºltimos 30 dÃ­as de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
-    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al mÃ¡ximo y mÃ­nimo de los Ãºltimos 30 dÃ­as. Detecta zonas de oferta y demanda tÃ©cnica.',p:'Alta'}
+    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
+    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
+    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
   ];
   var posCount = varDefs.filter(function(v){ return varScoreAvg[v.k] > 0.01; }).length;
   var negCount = varDefs.filter(function(v){ return varScoreAvg[v.k] < -0.01; }).length;
   var summaryHtml = signals.length > 0
     ? '<div style="display:flex;align-items:center;gap:8px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:8px 12px;margin-bottom:12px">' +
         '<span style="font-size:11px;color:#8B949E">Mercado ahora:</span>' +
-        '<span style="font-size:13px;font-weight:800;color:#3FB950">â ' + posCount + ' al alza</span>' +
-        '<span style="color:#555;font-size:11px">Â·</span>' +
-        '<span style="font-size:13px;font-weight:800;color:#FF4444">â ' + negCount + ' a la baja</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#3FB950">→ ' + posCount + ' al alza</span>' +
+        '<span style="color:#555;font-size:11px">·</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#FF4444">↓ ' + negCount + ' a la baja</span>' +
       '</div>'
     : '';
   var varsHtml = varDefs.map(function(v) {
@@ -2615,7 +2555,7 @@ window.showIAVariablesPopup = function() {
     var color = isPos ? '#3FB950' : isNeg ? '#FF4444' : '#8B949E';
     var bg = isPos ? '#3FB95012' : isNeg ? '#FF444412' : 'transparent';
     var border = isPos ? '#3FB95030' : isNeg ? '#FF444430' : '#21262D';
-    var arrow = isPos ? 'â ' : isNeg ? 'â ' : 'â ';
+    var arrow = isPos ? '→ ' : isNeg ? '↓ ' : '— ';
     return '<div style="border:1px solid ' + border + ';border-radius:8px;padding:9px 11px;margin-bottom:7px;background:' + bg + '">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
         '<span style="font-size:11px;font-weight:700;color:' + color + '">' + arrow + v.n + '</span>' +
@@ -2630,15 +2570,15 @@ window.showIAVariablesPopup = function() {
   overlay.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
       '<div>' +
-        '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA â¡ â 10 VARIABLES</div>' +
-        '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de seÃ±ales v7 â tiempo real</div>' +
+        '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA ⚡ — 10 VARIABLES</div>' +
+        '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de señales v7 — tiempo real</div>' +
       '</div>' +
-      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">â</button>' +
+      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
     '</div>' +
     summaryHtml +
-    '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada seÃ±al es el resultado de puntuar 10 variables independientes. El score total determina la direcciÃ³n y la probabilidad. Rango de probabilidad: 55%â88%.</div>' +
+    '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
     varsHtml +
-    '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%â88%. Nunca &lt;52% (sin seÃ±al) ni &gt;90% (certeza imposible en mercados)</div>' +
+    '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
   document.body.appendChild(overlay);
@@ -2684,7 +2624,7 @@ function _renderIALista(signals, keepLoadingBar) {
     var dirColor = s.direccion==='alcista'?'#3FB950':s.direccion==='bajista'?'#FF4444':'#D4A017';
     var dirBg = s.direccion==='alcista'?'#3FB95020':s.direccion==='bajista'?'#FF444420':'#D4A01720';
     var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
-    // Para ALTA CONV-IA, obtener la sub-direcciÃ³n del escenario_principal
+    // Para ALTA CONV-IA, obtener la sub-dirección del escenario_principal
     var altaConfDirLabel = '';
     var altaConfDirColor = '';
     if (s.direccion === 'alta_conf') {
@@ -2768,7 +2708,7 @@ function _buildIADetail(s) {
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
 
-  // VARIABLES DEL MODELO â lista con colores verde/rojo
+  // VARIABLES DEL MODELO — lista con colores verde/rojo
   if(s.scores) {
     var sc = s.scores;
     var varDefs = [
@@ -2776,10 +2716,10 @@ function _buildIADetail(s) {
       {k:'rsi',            label:'RSI14',                 fmt:function(v){ var rsi=s.rsi||50; return 'RSI '+rsi; }},
       {k:'volumen',        label:'Volumen',               fmt:function(v){ return (s.volRel||1).toFixed(1)+'x prom.'; }},
       {k:'volatilidad',    label:'Volatilidad',           fmt:function(v){ return v>0.01?'baja':'v>-0.01'?'normal':'alta'; }},
-      {k:'correlacion',    label:'CorrelaciÃ³n BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
-      {k:'oro_petroleo',   label:'Oro / PetrÃ³leo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
+      {k:'correlacion',    label:'Correlación BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
+      {k:'oro_petroleo',   label:'Oro / Petróleo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
       {k:'macro',          label:'Macro FED',             fmt:function(v){ return v<-0.01?'evento activo':'sin eventos'; }},
-      {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'prÃ³ximos':'sin reporte'; }},
+      {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'próximos':'sin reporte'; }},
       {k:'macd',           label:'MACD (12/26)',          fmt:function(v){ return v>0.01?'alcista':v<-0.01?'bajista':'neutral'; }},
       {k:'soporte_resist', label:'Soporte / Resist. 30d', fmt:function(v){ return v>0.01?'cerca soporte':v<-0.01?'cerca resist.':'zona media'; }}
     ];
@@ -2789,19 +2729,19 @@ function _buildIADetail(s) {
     html += '<div style="margin-bottom:10px">';
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">';
     html += '<span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span>';
-    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">â '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">Â·</span><span style="color:#FF4444;font-weight:700">â '+negVars.length+' bajistas</span></span>';
+    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">↓ '+negVars.length+' bajistas</span></span>';
     html += '</div>';
     // Positivas primero
     posVars.forEach(function(d) {
       html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#3FB95010;border-left:2px solid #3FB950;border-radius:0 6px 6px 0;margin-bottom:3px">';
-      html += '<span style="font-size:10px;color:#3FB950;font-weight:600">â '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#3FB950;font-weight:600">→ '+d.label+'</span>';
       html += '<span style="font-size:10px;color:#3FB950">'+d.fmt(sc[d.k])+'</span>';
       html += '</div>';
     });
     // Negativas
     negVars.forEach(function(d) {
       html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#FF444410;border-left:2px solid #FF4444;border-radius:0 6px 6px 0;margin-bottom:3px">';
-      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">â '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">↓ '+d.label+'</span>';
       html += '<span style="font-size:10px;color:#FF4444">'+d.fmt(sc[d.k])+'</span>';
       html += '</div>';
     });
@@ -2809,14 +2749,14 @@ function _buildIADetail(s) {
     if(neuVars.length > 0) {
       html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">';
       neuVars.forEach(function(d) {
-        html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">â '+d.label+'</span>';
+        html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">— '+d.label+'</span>';
       });
       html += '</div>';
     }
     html += '</div>';
   }
 
-  // TIMEFRAME CONTEXT â default 24h, contexto 7d/30d
+  // TIMEFRAME CONTEXT — default 24h, contexto 7d/30d
   html += '<div style="margin-bottom:10px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
   html += '<span style="font-size:10px;color:#8B949E;font-weight:600">CONTEXTO TENDENCIA</span>';
@@ -2828,7 +2768,7 @@ function _buildIADetail(s) {
     else if(tf==='7d') cambioTF = s.precio7d>0?((s.precio-s.precio7d)/s.precio7d*100):null;
     else cambioTF = s.precio30d>0?((s.precio-s.precio30d)/s.precio30d*100):null;
     var col = cambioTF===null?'#555':cambioTF>=0?'#3FB950':'#FF4444';
-    var label = cambioTF===null?'â':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
+    var label = cambioTF===null?'—':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
     html += '<div style="background:#21262D;border:1px solid '+(isDefault?'#D4A01760':'#30363D')+';border-radius:6px;padding:3px 7px;text-align:center">';
     html += '<div style="font-size:8px;color:'+(isDefault?'#D4A017':'#555')+'">'+tf+'</div>';
     html += '<div style="font-size:10px;font-weight:700;color:'+col+'">'+label+'</div>';
@@ -2842,11 +2782,11 @@ function _buildIADetail(s) {
   if(s.direccion!=='bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
   if(s.direccion!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
   html += '</div>';
-  // BOTÃN COMPARTIR
+  // BOTÓN COMPARTIR
   html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262D">';
   html += '<button onclick="event.stopPropagation();_compartirSenal(\'' + s.simbolo + '\');return false;" ';
   html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
-  html += '<span style="font-size:15px">&#128257;</span> Compartir seÃ±al</button>';
+  html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
   html += '</div>';
   html += '</div>';
   return html;
@@ -2860,21 +2800,21 @@ window._compartirSenal = function(info) {
   var sigs = window._iaSignals || [];
   for(var i=0;i<sigs.length;i++) { if(sigs[i].simbolo===symBuscar) { sig=sigs[i]; break; } }
   if(!sig) return;
-  var dirEmoji = sig.direccion==='alcista'?'ð':sig.direccion==='bajista'?'ð':'â¡';
+  var dirEmoji = sig.direccion==='alcista'?'📈':sig.direccion==='bajista'?'📉':'⚡';
   var dirLabel = sig.direccion==='alcista'?'ALCISTA':sig.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
   var precioFmt = sig.precio>=1000?'$'+Math.round(sig.precio).toLocaleString('en'):sig.precio>=1?'$'+sig.precio.toFixed(2):'$'+sig.precio.toFixed(4);
   var cambio = sig.precio24h>0?((sig.precio-sig.precio24h)/sig.precio24h*100):0;
-  var texto = 'ð¤ AUREX IA â SEÃAL '+dirEmoji+'\n';
+  var texto = '🤖 AUREX IA — SEÑAL '+dirEmoji+'\n';
   texto += sig.simbolo+' ('+sig.nombre+')\n';
-  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
-  texto += dirEmoji+' '+dirLabel+' â PROB. '+sig.confianza+'%\n';
-  texto += 'ð° Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
-  texto += 'ð¯ Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
-  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
-  texto += 'ð ANÃLISIS (10 variables):\n';
+  texto += 'ââââââââââââââââ\n';
+  texto += dirEmoji+' '+dirLabel+' — PROB. '+sig.confianza+'%\n';
+  texto += '💰 Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
+  texto += '🎯 Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
+  texto += 'ââââââââââââââââ\n';
+  texto += '📊 ANÁLISIS (10 variables):\n';
   (sig.motivos||[]).slice(0,3).forEach(function(m,i){ texto += (i+1)+'. '+m+'\n'; });
-  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
-  texto += 'SeÃ±al generada por AUREX IAâ¡\n';
+  texto += 'ââââââââââââââââ\n';
+  texto += 'Señal generada por AUREX IA⚡\n';
   texto += 'aurex-app.github.io';
   var _showShareOverlay = function() {
     var wa = 'https://wa.me/?text='+encodeURIComponent(texto);
@@ -2886,26 +2826,26 @@ window._compartirSenal = function(info) {
     overlay.id = 'ia-share-overlay';
     overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
     overlay.innerHTML='<div style="background:#161B22;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px">' +
-      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir seÃ±al '+sig.simbolo+'</div>' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir señal '+sig.simbolo+'</div>' +
       '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">' +
-        '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">ð¬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
-        '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">Ã¢ÂÂÃ¯Â¸Â</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
-        '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">ð§</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
+        '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">💬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
+        '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">âï¸</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
+        '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">📧</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
       '</div>' +
-      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointâ>Cancelar</button>' +
+      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:point✕>Cancelar</button>' +
     '</div>';
     overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
   };
   if(navigator.share) {
-    navigator.share({ title: 'AUREX IA â '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
+    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
   } else {
     _showShareOverlay();
   }
 };
 
 
-// === AUREX PULSEÃ¢ÂÂ¢ â FEAR & GREED 14X (12 variables Commit A) ===
+// === AUREX PULSEâ¢ — FEAR & GREED 14X (12 variables Commit A) ===
 window._pulseCache = {};
 window._pulseTs   = {};
 window._pulseActiveFilter = 'GLOBAL';
@@ -2956,7 +2896,7 @@ function _fetchMacroGeo(raw) {
       .then(function(r){ return r.ok ? r.json() : Promise.reject('GDELT fail'); })
       .then(function(data) {
         var tone = data && data.articles && data.articles[0] ? (parseFloat(data.articles[0].avgtone)||0) : 0;
-        // tone -10 to +5 â score 0 to 100
+        // tone -10 to +5 → score 0 to 100
         geoScore = Math.min(100, Math.max(0, 50 + tone * 5));
         done2 = true; tryFinish();
       })
@@ -3025,7 +2965,7 @@ function _goldToScore(pct) { return Math.min(100, Math.max(0, 50 - pct*25)); }
 function _oilToScore(pct) { return Math.min(100, Math.max(0, 50 - Math.abs(pct)*15)); }
 
 function _calcPulseScore(raw, cat) {
-  if(!raw) return { value:50, label:'Neutral', color:'#D4A017', emoji:'ð', vars:{} };
+  if(!raw) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:{} };
   var scores = {}, weighted = 0, totalW = 0;
   function add(key, score, weight) {
     scores[key] = Math.round(score);
@@ -3082,14 +3022,14 @@ function _calcPulseScore(raw, cat) {
     if(raw.macro) add('Macro_FED', raw.macro.score, 12);
     if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
   }
-  if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'ð', vars:scores };
+  if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
-  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='ð±'; }
-  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='ð°'; }
-  else if(v<=60) { label='Neutral';         color='#D4A017'; emoji='ð'; }
-  else if(v<=80) { label='Codicia';         color='#3FB950'; emoji='ð'; }
-  else           { label='Codicia Extrema'; color='#00E676'; emoji='ð¤'; }
+  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='😱'; }
+  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='😰'; }
+  else if(v<=60) { label='Neutral';         color='#D4A017'; emoji='😐'; }
+  else if(v<=80) { label='Codicia';         color='#3FB950'; emoji='😏'; }
+  else           { label='Codicia Extrema'; color='#00E676'; emoji='🤑'; }
   return { value:v, label:label, color:color, emoji:emoji, vars:scores };
 }
 
@@ -3136,7 +3076,7 @@ function _renderFearGreed(containerId) {
   var cat = window._pulseActiveFilter || 'GLOBAL';
   var cached = window._pulseCache[cat];
   if(!cached) {
-    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Calculando AUREX PULSEÃ¢ÂÂ¢...</div>';
+    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Calculando AUREX PULSEâ¢...</div>';
     _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
     return;
   }
@@ -3162,11 +3102,11 @@ function _renderFearGreed(containerId) {
       }).catch(function(){});
   }
   var edu;
-  if(d.value<=20)      edu='PÃ¡nico extremo. HistÃ³ricamente zonas de oportunidad para inversores de largo plazo.';
-  else if(d.value<=40) edu='Temor generalizado. Los inversores estÃ¡n vendiendo. Posibles oportunidades si el contexto es sÃ³lido.';
-  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pÃ¡nico. Momento ideal para analizar fundamentals.';
+  if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
+  else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
+  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pánico. Momento ideal para analizar fundamentals.';
   else if(d.value<=80) edu='Optimismo en el mercado. Precios pueden estar elevados. Considerar toma de ganancias.';
-  else                 edu='Euforia extrema. Alta probabilidad de correcciÃ³n prÃ³xima. MÃ¡xima precauciÃ³n.';
+  else                 edu='Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
   var raw = window._pulseRaw || {};
   var bits = [];
   if(raw.vix)              bits.push('VIX: <b style="color:#E6EDF3">'+raw.vix.price.toFixed(1)+'</b>');
@@ -3175,7 +3115,7 @@ function _renderFearGreed(containerId) {
   if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'#3FB950':'#FF4444')+'">'+(raw.gcf.pct>=0?'+':'')+raw.gcf.pct.toFixed(2)+'%</b>');
   var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:#8B949E;margin-top:3px;">'+bits.join('')+'</div>';
   var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
-  var catLabels = {GLOBAL:'ð GLOBAL',CRIPTO:'ðª CRIPTO',ACCIONES:'ð ACCIONES',COMOD:'ð¢ï¸ COMOD',FUTUROS:'â¡ FUTUROS'};
+  var catLabels = {GLOBAL:'🌐 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🛢️ COMOD',FUTUROS:'⚡ FUTUROS'};
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
@@ -3205,7 +3145,7 @@ function _renderFearGreed(containerId) {
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
         '</div>' +
       '</div>' +
-      '<div style="font-size:10px;color:#8B949E;margin-top:5px;line-height:1.4;">* Ãndice AUREX propio â 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
+      '<div style="font-size:10px;color:#8B949E;margin-top:5px;line-height:1.4;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
     '</div>';
   // Attach event listeners after render (avoids inline onclick single-quote issue)
   var filterEl = document.getElementById('pulse-filters-'+elId);
@@ -3241,10 +3181,10 @@ window.showFearGreedInfo = function() {
     ['&#x26A1;','RTY=F Russell Fut','Yahoo','3%',fmtPct(raw.rtyf&&raw.rtyf.pct),'#3FB950'],
     ['&#x1F947;','Oro GC=F','Yahoo','8%',         fmtPct(raw.gcf&&raw.gcf.pct),'#D4A017'],
     ['&#x26AA;','Plata SI=F','Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'#D4A017'],
-    ['&#x1F6E2;','PetrÃ³leo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
+    ['&#x1F6E2;','Petróleo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
     ['&#x1FA9C;','Cobre HG=F','Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'#D4A017'],
     ['&#x1F3E6;','Macro FED','FRED API','12%', raw.macro ? raw.macro.score+' pts' : 'Calc...', raw.macro ? '#E6EDF3' : '#555'],
-    ['&#x1F30D;','GeopolÃ­tica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? '#E6EDF3' : '#555']
+    ['&#x1F30D;','Geopolítica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? '#E6EDF3' : '#555']
   ];
   var tableRows = rows.map(function(r) {
     return '<tr><td style="padding:2px 4px;color:'+r[5]+';">'+r[0]+' '+r[1]+'</td><td style="color:#555;font-size:8px;padding:2px 4px;">'+r[2]+'</td><td style="color:#8B949E;padding:2px 4px;">'+r[3]+'</td><td style="color:#E6EDF3;padding:2px 4px;">'+r[4]+'</td></tr>';
@@ -3252,7 +3192,7 @@ window.showFearGreedInfo = function() {
   ov.innerHTML =
     '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:18px;max-width:360px;width:100%;margin:auto;">' +
       '<div style="font-size:13px;font-weight:700;color:#D4A017;margin-bottom:3px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
-      '<div style="font-size:9px;color:#58A6FF;margin-bottom:10px;">El Ã­ndice de sentimiento mÃ¡s completo del mercado</div>' +
+      '<div style="font-size:9px;color:#58A6FF;margin-bottom:10px;">El índice de sentimiento más completo del mercado</div>' +
       '<div style="font-size:10px;color:#8B949E;line-height:1.6;margin-bottom:8px;">' +
         '<b style="color:#E6EDF3;">Las 5 zonas:</b> ' +
         '&#x1F534; 0-20 Miedo Extremo &nbsp;' +
@@ -3266,8 +3206,8 @@ window.showFearGreedInfo = function() {
         '<tr style="color:#444;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y GeopolÃ­tica (GDELT Project) activos con fallback automÃ¡tico. 14 variables = cobertura completa de mÃºltiples mercados.</div>' +
-      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este Ã­ndice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra mÃºltiples mercados.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopolítica (GDELT Project) activos con fallback automático. 14 variables = cobertura completa de múltiples mercados.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este índice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra múltiples mercados.</div>' +
       '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:10px;background:#D4A017;border-radius:8px;color:#0D1117;font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
     '</div>';
   document.body.appendChild(ov);
@@ -3336,7 +3276,7 @@ function _renderFuturesBanner(containerId) {
   if(now - window._futuresTs > 60000) {
     _fetchFuturesData().then(function(){ _renderFuturesBanner(containerId); });
   }
-  // Active slots from localStorage â default 6
+  // Active slots from localStorage — default 6
   var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
   var activeSlots;
   try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
@@ -3361,7 +3301,7 @@ function _renderFuturesBanner(containerId) {
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  // Edit button â visible, labeled
+  // Edit button — visible, labeled
   var editBtn = '<div onclick="window._openBannerEdit(\'' + elId + '\')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 7px;flex-shrink:0;cursor:pointer;border-left:1px solid #30363D;">' +
     '<div style="font-size:8px;color:#58A6FF;font-weight:700;white-space:nowrap;">&#x270F; EDITAR</div>' +
   '</div>';
@@ -3397,7 +3337,7 @@ window._openBannerEdit = function(elId) {
         '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">&#x270F; Editar Banner</span>' +
         '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
       '</div>' +
-      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">ElegÃ­ quÃ© ver en el banner. Los cambios se guardan automÃ¡ticamente.</div>' +
+      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">Elegí qué ver en el banner. Los cambios se guardan automáticamente.</div>' +
       rows +
       '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;">Guardar cambios</button>' +
     '</div>';
@@ -3436,7 +3376,7 @@ function _renderMktNewsBanner(containerId) {
     '<div style="background:' + (ev.bg||'#1A0D00') + ';border-bottom:1px solid ' + (ev.border||'#D4A017') + ';padding:5px 12px;display:flex;align-items:center;gap:8px;overflow:hidden;">' +
       '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'#D4A017') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
       '<div style="overflow:hidden;flex:1;">' +
-        '<div id="mkt-news-tickâ style="display:flex;animation:tkScroll 14s linear infinite;">' +
+        '<div id="mkt-news-tick✕ style="display:flex;animation:tkScroll 14s linear infinite;">' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
         '</div>' +
@@ -3562,8 +3502,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 // ============================================================
-// AUREX â Port Dropdowns: moneda y periodo (implementado via JS)
-// NO modifica index.html â todo via DOM manipulation
+// AUREX — Port Dropdowns: moneda y periodo (implementado via JS)
+// NO modifica index.html — todo via DOM manipulation
 // ============================================================
 
 window._initPortDropdowns = function() {
@@ -3603,7 +3543,7 @@ window._initPortDropdowns = function() {
     var badge = document.createElement('div');
     badge.id = 'port-period-badge';
     badge.style.cssText = 'font-size:10px;color:#F59E0B;border:1px solid #444;padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:#2a2a3e;user-select:none;';
-    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">â¾</span>';
+    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">▾</span>';
     badge.onclick = function(e) { e.stopPropagation(); window._togglePortPeriodDD(); };
 
     var dd = document.createElement('div');
@@ -3612,10 +3552,10 @@ window._initPortDropdowns = function() {
 
     var opts = [
       {key:'24h',label:'24 horas'},
-      {key:'7d',label:'7 dÃ­as'},
+      {key:'7d',label:'7 días'},
       {key:'1m',label:'1 mes'},
       {key:'3m',label:'3 meses'},
-      {key:'1y',label:'1 aÃ±o'},
+      {key:'1y',label:'1 año'},
       {key:'buy',label:'Desde compra',border:true}
     ];
     opts.forEach(function(o, i) {
@@ -3624,7 +3564,7 @@ window._initPortDropdowns = function() {
       item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;' +
         (i===0 ? 'color:#F59E0B;font-weight:700;background:#2a2a3e;' : 'color:#ccc;') +
         (o.border ? 'border-top:1px solid #333;' : '');
-      item.textContent = o.label + (i===0 ? ' â' : '');
+      item.textContent = o.label + (i===0 ? ' ✓' : '');
       item.onclick = function(e) { e.stopPropagation(); window._selectPortPeriod(o.key); };
       dd.appendChild(item);
     });
@@ -3638,7 +3578,7 @@ window._initPortDropdowns = function() {
   var currBadge = document.getElementById('port-curr-badge');
   if(currBadge && !document.getElementById('port-curr-dropdown')) {
     currBadge.style.cssText = 'font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 6px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:2px;user-select:none;';
-    currBadge.innerHTML = 'USD <span style="font-size:7px;color:#555;">â¾</span>';
+    currBadge.innerHTML = 'USD <span style="font-size:7px;color:#555;">▾</span>';
     currBadge.onclick = function(e) { e.stopPropagation(); window._togglePortCurrDD(); };
 
     var parent = currBadge.parentNode;
@@ -3655,7 +3595,7 @@ window._initPortDropdowns = function() {
       item.dataset.curr = c;
       item.style.cssText = 'padding:8px 12px;font-size:11px;cursor:pointer;' +
         (i===0 ? 'color:#FFD700;font-weight:700;background:#2a2a3e;' : 'color:#ccc;');
-      item.textContent = c + (i===0 ? ' â' : '');
+      item.textContent = c + (i===0 ? ' ✓' : '');
       item.onclick = function(e) { e.stopPropagation(); window._selectPortCurr(c); };
       ddCurr.appendChild(item);
     });
@@ -3693,7 +3633,7 @@ window._togglePortCurrDD = function() {
 window._selectPortCurr = function(cur) {
   window._portCurrency = cur;
   var badge = document.getElementById('port-curr-badge');
-  if(badge) badge.innerHTML = cur + ' <span style="font-size:7px;color:#555;">â¾</span>';
+  if(badge) badge.innerHTML = cur + ' <span style="font-size:7px;color:#555;">▾</span>';
   var dd = document.getElementById('port-curr-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
@@ -3701,7 +3641,7 @@ window._selectPortCurr = function(cur) {
       it.style.color = c===cur ? '#FFD700' : '#ccc';
       it.style.fontWeight = c===cur ? '700' : '400';
       it.style.background = c===cur ? '#2a2a3e' : '';
-      it.textContent = c + (c===cur ? ' â' : '');
+      it.textContent = c + (c===cur ? ' ✓' : '');
     });
     dd.style.display = 'none';
   }
@@ -3710,9 +3650,9 @@ window._selectPortCurr = function(cur) {
 
 window._selectPortPeriod = function(key) {
   var labels = {'24h':'24h','7d':'7d','1m':'1m','3m':'3m','1y':'1a','buy':'Compra'};
-  var full = {'24h':'24 horas','7d':'7 dÃ­as','1m':'1 mes','3m':'3 meses','1y':'1 aÃ±o','buy':'Desde compra'};
+  var full = {'24h':'24 horas','7d':'7 días','1m':'1 mes','3m':'3 meses','1y':'1 año','buy':'Desde compra'};
   var badge = document.getElementById('port-period-badge');
-  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">â¾</span>';
+  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">▾</span>';
   var dd = document.getElementById('port-period-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
@@ -3720,7 +3660,7 @@ window._selectPortPeriod = function(key) {
       it.style.color = k===key ? '#F59E0B' : '#ccc';
       it.style.fontWeight = k===key ? '700' : '400';
       it.style.background = k===key ? '#2a2a3e' : '';
-      it.textContent = (full[k]||k) + (k===key ? ' â' : '');
+      it.textContent = (full[k]||k) + (k===key ? ' ✓' : '');
     });
     dd.style.display = 'none';
   }
