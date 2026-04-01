@@ -3395,8 +3395,81 @@ function toggleIARow(idx) {
 }
 
 
+// === AUREX: Logo unificado en todas las tabs ===
+function _initHeaderLogos() {
+  var hlEl = document.querySelector('.hl');
+  if (!hlEl) return;
+  var svgEl = hlEl.querySelector('svg');
+  if (!svgEl) return;
+  var svgHTML = svgEl.outerHTML;
+
+  function _insertLogo(spanEl) {
+    if (!spanEl || spanEl.dataset.logoAdded) return;
+    var parent = spanEl.parentElement;
+    if (!parent) return;
+    var svgNode = document.createElement('div');
+    svgNode.innerHTML = svgHTML;
+    var svgChild = svgNode.firstChild;
+    parent.insertBefore(svgChild, spanEl);
+    spanEl.dataset.logoAdded = '1';
+  }
+
+  var portScreen = document.getElementById('screen-portfolio');
+  if (portScreen) {
+    var spans = portScreen.querySelectorAll('span');
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].textContent.trim() === 'AUREX' && !spans[i].closest('.tab-btn') && !spans[i].closest('.hdr')) {
+        _insertLogo(spans[i]);
+        break;
+      }
+    }
+  }
+
+  var wlScreen = document.getElementById('screen-watchlist');
+  if (wlScreen) {
+    var spans = wlScreen.querySelectorAll('span');
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].textContent.trim() === 'AUREX' && !spans[i].closest('.tab-btn')) {
+        _insertLogo(spans[i]);
+        break;
+      }
+    }
+  }
+
+  var iaScreen = document.getElementById('screen-ia');
+  if (iaScreen) {
+    var spans = iaScreen.querySelectorAll('span');
+    for (var i = 0; i < spans.length; i++) {
+      if (spans[i].textContent.trim().indexOf('AUREX') === 0 && !spans[i].closest('.tab-btn')) {
+        _insertLogo(spans[i]);
+        break;
+      }
+    }
+  }
+
+  var alertasScreen = document.getElementById('screen-alertas');
+  if (alertasScreen && !alertasScreen.querySelector('.aurex-hdr-added')) {
+    var hdrDiv = document.createElement('div');
+    hdrDiv.className = 'aurex-hdr-added';
+    hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
+    hdrDiv.innerHTML = svgHTML + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Alertas</span>';
+    alertasScreen.insertBefore(hdrDiv, alertasScreen.firstChild);
+  }
+
+  var perfilScreen = document.getElementById('screen-perfil');
+  if (perfilScreen && !perfilScreen.querySelector('.aurex-hdr-added')) {
+    var hdrDiv = document.createElement('div');
+    hdrDiv.className = 'aurex-hdr-added';
+    hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
+    hdrDiv.innerHTML = svgHTML + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Perfil</span>';
+    perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
+    _initHeaderLogos();
     generarSenalesIA();
     setInterval(generarSenalesIA, 5*60*1000);
     _fetchPulseForCategory('GLOBAL').then(function(){
