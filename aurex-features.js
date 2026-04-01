@@ -15,42 +15,156 @@ var YF_MAP={'AAPL':{tab:'acciones',pais:'usa',s:'AAPL'},'NVDA':{tab:'acciones',p
 // === DATA: items de cada tab de Mercados ===
 var DATA={
   cripto: [
-    {s:'BTC',n:'Bitcoin',      tab:'cripto'},
-    {s:'ETH',n:'Ethereum',     tab:'cripto'},
-    {s:'SOL',n:'Solana',       tab:'cripto'},
-    {s:'BNB',n:'BNB',          tab:'cripto'},
-    {s:'XRP',n:'XRP',          tab:'cripto'},
-    {s:'ADA',n:'Cardano',      tab:'cripto'},
-    {s:'AVAX',n:'Avalanche',   tab:'cripto'},
-    {s:'DOT',n:'Polkadot',     tab:'cripto'},
-    {s:'LINK',n:'Chainlink',   tab:'cripto'},
-    {s:'MATIC',n:'Polygon',    tab:'cripto'}
+    {s:'BTC',n:'Bitcoin',tab:'cripto'},{s:'ETH',n:'Ethereum',tab:'cripto'},{s:'SOL',n:'Solana',tab:'cripto'},
+    {s:'BNB',n:'BNB',tab:'cripto'},{s:'XRP',n:'XRP',tab:'cripto'},{s:'ADA',n:'Cardano',tab:'cripto'},
+    {s:'AVAX',n:'Avalanche',tab:'cripto'},{s:'DOT',n:'Polkadot',tab:'cripto'},{s:'LINK',n:'Chainlink',tab:'cripto'},
+    {s:'MATIC',n:'Polygon',tab:'cripto'},{s:'DOGE',n:'Dogecoin',tab:'cripto'},{s:'SHIB',n:'Shiba Inu',tab:'cripto'},
+    {s:'LTC',n:'Litecoin',tab:'cripto'},{s:'UNI',n:'Uniswap',tab:'cripto'},{s:'ATOM',n:'Cosmos',tab:'cripto'},
+    {s:'ETC',n:'Ethereum Classic',tab:'cripto'},{s:'XLM',n:'Stellar',tab:'cripto'},{s:'ALGO',n:'Algorand',tab:'cripto'},
+    {s:'ICP',n:'Internet Computer',tab:'cripto'},{s:'FIL',n:'Filecoin',tab:'cripto'},{s:'HBAR',n:'Hedera',tab:'cripto'},
+    {s:'VET',n:'VeChain',tab:'cripto'},{s:'SAND',n:'The Sandbox',tab:'cripto'},{s:'MANA',n:'Decentraland',tab:'cripto'},
+    {s:'THETA',n:'Theta Network',tab:'cripto'},{s:'AAVE',n:'Aave',tab:'cripto'},{s:'MKR',n:'Maker',tab:'cripto'},
+    {s:'GRT',n:'The Graph',tab:'cripto'},{s:'SNX',n:'Synthetix',tab:'cripto'},{s:'COMP',n:'Compound',tab:'cripto'},
+    {s:'CRV',n:'Curve DAO',tab:'cripto'},{s:'1INCH',n:'1inch',tab:'cripto'},{s:'LDO',n:'Lido DAO',tab:'cripto'},
+    {s:'ARB',n:'Arbitrum',tab:'cripto'},{s:'OP',n:'Optimism',tab:'cripto'},{s:'IMX',n:'Immutable X',tab:'cripto'},
+    {s:'APT',n:'Aptos',tab:'cripto'},{s:'SUI',n:'Sui',tab:'cripto'},{s:'SEI',n:'Sei',tab:'cripto'},
+    {s:'INJ',n:'Injective',tab:'cripto'},{s:'TIA',n:'Celestia',tab:'cripto'},{s:'JUP',n:'Jupiter',tab:'cripto'},
+    {s:'NEAR',n:'NEAR Protocol',tab:'cripto'},{s:'FTM',n:'Fantom',tab:'cripto'},{s:'ROSE',n:'Oasis Network',tab:'cripto'},
+    {s:'ZEC',n:'Zcash',tab:'cripto'},{s:'DASH',n:'Dash',tab:'cripto'},{s:'XMR',n:'Monero',tab:'cripto'},
+    {s:'BCH',n:'Bitcoin Cash',tab:'cripto'},{s:'BSV',n:'Bitcoin SV',tab:'cripto'}
   ],
   stable: [
-    {s:'USDT',n:'Tether',      tab:'stable'},
-    {s:'USDC',n:'USD Coin',    tab:'stable'},
-    {s:'DAI',n:'Dai',           tab:'stable'}
+    {s:'USDT',n:'Tether',tab:'stable'},{s:'USDC',n:'USD Coin',tab:'stable'},{s:'DAI',n:'Dai',tab:'stable'}
   ],
   acciones: {
     usa: [
-      {s:'AAPL',n:'Apple'},
-      {s:'NVDA',n:'NVIDIA'},
-      {s:'MSFT',n:'Microsoft'},
-      {s:'TSLA',n:'Tesla'},
-      {s:'META',n:'Meta'},
-      {s:'GOOGL',n:'Alphabet'},
-      {s:'AMZN',n:'Amazon'}
+      {s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'GOOGL',n:'Alphabet A'},
+      {s:'AMZN',n:'Amazon'},{s:'META',n:'Meta'},{s:'TSLA',n:'Tesla'},{s:'AVGO',n:'Broadcom'},
+      {s:'ORCL',n:'Oracle'},{s:'JPM',n:'JPMorgan'},{s:'V',n:'Visa'},{s:'MA',n:'Mastercard'},
+      {s:'BAC',n:'Bank of America'},{s:'WFC',n:'Wells Fargo'},{s:'GS',n:'Goldman Sachs'},
+      {s:'MS',n:'Morgan Stanley'},{s:'AXP',n:'AmEx'},{s:'BLK',n:'BlackRock'},{s:'SCHW',n:'Schwab'},
+      {s:'LLY',n:'Eli Lilly'},{s:'UNH',n:'UnitedHealth'},{s:'JNJ',n:'J&J'},{s:'MRK',n:'Merck'},
+      {s:'ABBV',n:'AbbVie'},{s:'PFE',n:'Pfizer'},{s:'TMO',n:'Thermo Fisher'},{s:'ABT',n:'Abbott'},
+      {s:'COST',n:'Costco'},{s:'WMT',n:'Walmart'},{s:'HD',n:'Home Depot'},{s:'PG',n:'Procter Gamble'},
+      {s:'KO',n:'Coca-Cola'},{s:'PEP',n:'PepsiCo'},{s:'MCD',n:'McDonalds'},{s:'SBUX',n:'Starbucks'},
+      {s:'NKE',n:'Nike'},{s:'AMD',n:'AMD'},{s:'INTC',n:'Intel'},{s:'QCOM',n:'Qualcomm'},
+      {s:'TXN',n:'Texas Instruments'},{s:'AMAT',n:'Applied Materials'},{s:'MU',n:'Micron'},
+      {s:'NFLX',n:'Netflix'},{s:'DIS',n:'Disney'},{s:'SPOT',n:'Spotify'},{s:'COIN',n:'Coinbase'},
+      {s:'HOOD',n:'Robinhood'},{s:'PYPL',n:'PayPal'},{s:'SQ',n:'Block'},{s:'MSTR',n:'MicroStrategy'},
+      {s:'MARA',n:'Marathon Digital'},{s:'RIOT',n:'Riot Platforms'},{s:'PLTR',n:'Palantir'},
+      {s:'ARM',n:'ARM Holdings'},{s:'SMCI',n:'Super Micro'},{s:'AI',n:'C3.ai'},
+      {s:'UBER',n:'Uber'},{s:'ABNB',n:'Airbnb'},{s:'DASH',n:'DoorDash'},
+      {s:'XOM',n:'ExxonMobil'},{s:'CVX',n:'Chevron'},{s:'COP',n:'ConocoPhillips'},
+      {s:'F',n:'Ford'},{s:'GM',n:'General Motors'},{s:'RIVN',n:'Rivian'},
+      {s:'BA',n:'Boeing'},{s:'CAT',n:'Caterpillar'},{s:'GE',n:'GE Aerospace'},
+      {s:'RTX',n:'RTX Corp'},{s:'LMT',n:'Lockheed Martin'},{s:'T',n:'AT&T'},
+      {s:'VZ',n:'Verizon'},{s:'TMUS',n:'T-Mobile'},{s:'CMCSA',n:'Comcast'},
+      {s:'AMT',n:'American Tower'},{s:'PLD',n:'Prologis'},{s:'BRK-B',n:'Berkshire B'},
+      {s:'SPGI',n:'S&P Global'},{s:'BX',n:'Blackstone'},{s:'NDAQ',n:'Nasdaq Inc'},
+      {s:'NOW',n:'ServiceNow'},{s:'CRM',n:'Salesforce'},{s:'ADBE',n:'Adobe'},
+      {s:'BABA',n:'Alibaba ADR'},{s:'RBLX',n:'Roblox'},{s:'LYFT',n:'Lyft'},
+      {s:'SOUN',n:'SoundHound AI'},{s:'LCID',n:'Lucid Motors'},{s:'SLB',n:'Schlumberger'},
+      {s:'EOG',n:'EOG Resources'},{s:'DHR',n:'Danaher'},{s:'BMY',n:'Bristol Myers'},
+      {s:'TGT',n:'Target'},{s:'LRCX',n:'Lam Research'}
     ],
     arg: [
-      {s:'GGAL',n:'Galicia'},
-      {s:'YPF',n:'YPF'},
-      {s:'BMA',n:'Macro'}
+      {s:'GGAL',n:'Galicia'},{s:'YPF',n:'YPF'},{s:'BMA',n:'Banco Macro'},{s:'CEPU',n:'Central Puerto'},
+      {s:'PAMP',n:'Pampa Energia'},{s:'LOMA',n:'Loma Negra'},{s:'SUPV',n:'Supervielle'},
+      {s:'BBAR',n:'BBVA Argentina'},{s:'TECO2',n:'Telecom Argentina'},{s:'TXAR',n:'Ternium Argentina'},
+      {s:'CRES',n:'Cresud'},{s:'IRSA',n:'IRSA'},{s:'BYMA',n:'Bolsas y Mercados'},
+      {s:'HARG',n:'Holcim Argentina'},{s:'DGCU2',n:'Distribuidora Gas'},{s:'TRAN',n:'Transener'},
+      {s:'EDN',n:'Edenor'},{s:'COME',n:'Sociedad Comercial'},{s:'AUSO',n:'Autopistas Urbanas'},
+      {s:'BOLT',n:'Boldt'},{s:'INVJ',n:'Inversiones y Representaciones'},{s:'MOLI',n:'Molinos Rio'},
+      {s:'SAMI',n:'San Miguel'},{s:'RICH',n:'Laboratorio Richmond'},{s:'METR',n:'Metrogas'}
+    ],
+    brasil: [
+      {s:'PBR',n:'Petrobras'},{s:'VALE',n:'Vale'},{s:'ITUB',n:'Itau Unibanco'},{s:'BBD',n:'Bradesco'},
+      {s:'ABEV',n:'Ambev'},{s:'ERJ',n:'Embraer'},{s:'BRFS',n:'BRF Foods'},{s:'VTEX',n:'VTEX'},
+      {s:'NU',n:'Nubank'},{s:'MELI',n:'MercadoLibre'},{s:'XP',n:'XP Inc'},{s:'STNE',n:'StoneCo'},
+      {s:'PAGS',n:'PagSeguro'},{s:'ARCO',n:'Arcos Dorados'},{s:'DESP',n:'Despegar'},
+      {s:'CIB',n:'Bancolombia'},{s:'SQM',n:'SQM Chile'},{s:'BSAC',n:'Banco Santander Chile'},
+      {s:'IFS',n:'Intercorp Financial'},{s:'BAP',n:'Credicorp Peru'},
+      {s:'VNET',n:'21Vianet Group'},{s:'CPFE3.SA',n:'CPFL Energia'},
+      {s:'WEGE3.SA',n:'WEG SA'},{s:'RENT3.SA',n:'Localiza'},{s:'RAIL3.SA',n:'Rumo Logistica'}
+    ],
+    europa: [
+      {s:'ASML',n:'ASML'},{s:'SAP',n:'SAP'},{s:'NVS',n:'Novartis'},{s:'NSRGY',n:'Nestle'},
+      {s:'RHHBY',n:'Roche'},{s:'VWAGY',n:'Volkswagen'},{s:'SIEGY',n:'Siemens'},
+      {s:'SHEL',n:'Shell'},{s:'BP',n:'BP'},{s:'GSK',n:'GSK'},{s:'UL',n:'Unilever'},
+      {s:'RIO',n:'Rio Tinto'},{s:'BHP',n:'BHP Group'},{s:'AZN',n:'AstraZeneca'},
+      {s:'HSBC',n:'HSBC'},{s:'STM',n:'STMicroelectronics'},{s:'EADSF',n:'Airbus'},
+      {s:'IDEXY',n:'Inditex/Zara'},{s:'LVMUY',n:'LVMH'},{s:'SAN',n:'Santander'},
+      {s:'BBVA',n:'BBVA'},{s:'ALIZF',n:'Allianz'},{s:'BAYZF',n:'Bayer'},
+      {s:'HNNMY',n:'H&M'},{s:'INGA',n:'ING Group'}
+    ],
+    japon: [
+      {s:'TM',n:'Toyota'},{s:'SONY',n:'Sony'},{s:'HMC',n:'Honda'},{s:'NTDOY',n:'Nintendo'},
+      {s:'SFTBY',n:'SoftBank'},{s:'7267.T',n:'Honda Motor'},{s:'6758.T',n:'Sony Group'},
+      {s:'9984.T',n:'SoftBank Group'},{s:'7203.T',n:'Toyota Motor'},{s:'6861.T',n:'Keyence'},
+      {s:'6367.T',n:'Daikin'},{s:'8306.T',n:'Mitsubishi UFJ'},{s:'9432.T',n:'NTT'},
+      {s:'7974.T',n:'Nintendo Co'},{s:'6501.T',n:'Hitachi'},{s:'6702.T',n:'Fujitsu'},
+      {s:'4519.T',n:'Chugai Pharma'},{s:'2914.T',n:'Japan Tobacco'},{s:'8058.T',n:'Mitsubishi Corp'},
+      {s:'6594.T',n:'Nidec'}
+    ],
+    china: [
+      {s:'BABA',n:'Alibaba'},{s:'BIDU',n:'Baidu'},{s:'JD',n:'JD.com'},{s:'PDD',n:'PDD Holdings'},
+      {s:'NTES',n:'NetEase'},{s:'XPEV',n:'XPeng'},{s:'NIO',n:'NIO'},{s:'LI',n:'Li Auto'},
+      {s:'TCEHY',n:'Tencent'},{s:'9988.HK',n:'Alibaba HK'},{s:'0700.HK',n:'Tencent HK'},
+      {s:'3690.HK',n:'Meituan'},{s:'9618.HK',n:'JD HK'},{s:'2318.HK',n:'Ping An'},
+      {s:'1398.HK',n:'ICBC'},{s:'0941.HK',n:'China Mobile'},{s:'2628.HK',n:'China Life'},
+      {s:'0388.HK',n:'HK Exchanges'},{s:'1810.HK',n:'Xiaomi'},{s:'9999.HK',n:'NetEase HK'}
     ]
   },
-  etf:      [{s:'SPY',n:'S&P 500'},{s:'QQQ',n:'Nasdaq'},{s:'GLD',n:'Gold ETF'},{s:'TLT',n:'Bono 20Y US'},{s:'IEF',n:'Bono 7-10Y'},{s:'VTI',n:'Total Mkt'}],
-  comm:     [{s:'GC=F',n:'Oro'},{s:'CL=F',n:'Petroleo'},{s:'SI=F',n:'Plata'},{s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre'}],
-  futuros:  [{s:'ES=F',n:'S&P Fut'},{s:'NQ=F',n:'Nasdaq Fut'}],
-  divisas:  [{s:'EURUSD=X',n:'EUR/USD'}]
+  etf: [
+    {s:'SPY',n:'S&P 500 ETF'},{s:'QQQ',n:'Nasdaq 100'},{s:'IWM',n:'Russell 2000'},
+    {s:'VTI',n:'Total Market'},{s:'VOO',n:'Vanguard S&P'},{s:'DIA',n:'Dow Jones'},
+    {s:'GLD',n:'Gold ETF'},{s:'SLV',n:'Silver ETF'},{s:'IAU',n:'iShares Gold'},
+    {s:'GDX',n:'Gold Miners'},{s:'GDXJ',n:'Jr Gold Miners'},
+    {s:'IBIT',n:'iShares Bitcoin'},{s:'GBTC',n:'Grayscale BTC'},{s:'BITO',n:'Bitcoin Futures'},
+    {s:'TLT',n:'US 20Y Bond'},{s:'IEF',n:'US 7-10Y Bond'},{s:'SHY',n:'US 1-3Y Bond'},
+    {s:'HYG',n:'High Yield Bond'},{s:'LQD',n:'Inv Grade Corp'},{s:'EMB',n:'Emerging Bonds'},
+    {s:'XLE',n:'Energy ETF'},{s:'XLF',n:'Financial ETF'},{s:'XLK',n:'Tech ETF'},
+    {s:'XLV',n:'Health ETF'},{s:'XLI',n:'Industrial ETF'},{s:'XLP',n:'Consumer Staples'},
+    {s:'ARKK',n:'ARK Innovation'},{s:'ARKG',n:'ARK Genomic'},{s:'ARKW',n:'ARK Web 3.0'},
+    {s:'EEM',n:'Emerging Markets'},{s:'EWZ',n:'Brazil ETF'},{s:'FXI',n:'China ETF'},
+    {s:'EWJ',n:'Japan ETF'},{s:'VGK',n:'Europe ETF'},{s:'EWG',n:'Germany ETF'},
+    {s:'PDBC',n:'Diversified Comm'},{s:'USO',n:'Oil ETF'},{s:'UNG',n:'Natural Gas ETF'},
+    {s:'CPER',n:'Copper ETF'},{s:'DBB',n:'Base Metals ETF'}
+  ],
+  comm: [
+    {s:'GC=F',n:'Oro Futuro'},{s:'CL=F',n:'Petroleo WTI'},{s:'SI=F',n:'Plata Futuro'},
+    {s:'NG=F',n:'Gas Natural'},{s:'HG=F',n:'Cobre Futuro'},{s:'BZ=F',n:'Brent Crude'},
+    {s:'RB=F',n:'Nafta RBOB'},{s:'KC=F',n:'Cafe Futuro'},{s:'SB=F',n:'Azucar Futuro'},
+    {s:'CC=F',n:'Cacao Futuro'},{s:'ZW=F',n:'Trigo Futuro'},{s:'ZC=F',n:'Maiz Futuro'},
+    {s:'ZS=F',n:'Soja Futuro'},{s:'CT=F',n:'Algodon Futuro'},{s:'LE=F',n:'Ganado Futuro'},
+    {s:'HE=F',n:'Cerdo Futuro'},{s:'LBS=F',n:'Madera Futuro'},{s:'OJ=F',n:'Jugo Naranja'},
+    {s:'JO',n:'Cafe ETN'},{s:'WEAT',n:'Trigo ETF'}
+  ],
+  metales: [
+    {s:'GLD',n:'Oro'},{s:'SLV',n:'Plata'},{s:'CPER',n:'Cobre ETF'},{s:'PPLT',n:'Platino ETF'},
+    {s:'PALL',n:'Paladio ETF'},{s:'JJU',n:'Aluminio ETF'},{s:'JJZ',n:'Zinc ETF'},
+    {s:'SLX',n:'Steel/Hierro ETF'},{s:'DBB',n:'Base Metals ETF'},{s:'ALUM',n:'Aluminio'}
+  ],
+  futuros: [
+    {s:'ES=F',n:'S&P 500 Fut'},{s:'NQ=F',n:'Nasdaq Fut'},{s:'YM=F',n:'Dow Fut'},
+    {s:'RTY=F',n:'Russell Fut'},{s:'GC=F',n:'Oro Fut'},{s:'SI=F',n:'Plata Fut'},
+    {s:'CL=F',n:'WTI Crude Fut'},{s:'BZ=F',n:'Brent Fut'},{s:'NG=F',n:'Gas Natural Fut'},
+    {s:'ZB=F',n:'T-Bond Fut'},{s:'ZN=F',n:'T-Note 10Y Fut'},{s:'ZF=F',n:'T-Note 5Y Fut'},
+    {s:'HG=F',n:'Cobre Fut'},{s:'VX=F',n:'VIX Fut'},{s:'DX=F',n:'Dolar Index Fut'},
+    {s:'6E=F',n:'Euro Fut'},{s:'6J=F',n:'Yen Fut'},{s:'6B=F',n:'Libra Fut'},
+    {s:'ZC=F',n:'Maiz Fut'},{s:'ZS=F',n:'Soja Fut'}
+  ],
+  bonos: [
+    {s:'TLT',n:'US 20Y Bond'},{s:'IEF',n:'US 7-10Y Bond'},{s:'SHY',n:'US 1-3Y Bond'},
+    {s:'HYG',n:'High Yield'},{s:'LQD',n:'Inv Grade Corp'},{s:'AGG',n:'US Bond Agg'},
+    {s:'EMB',n:'Emerging Bonds'},{s:'BND',n:'Total Bond ETF'},{s:'TIP',n:'TIPS Inflation'},
+    {s:'JNK',n:'Junk Bonds'},{s:'MUB',n:'Muni Bond ETF'},{s:'BNDX',n:'Intl Bond ETF'},
+    {s:'AL30',n:'Bono ARG 2030'},{s:'GD30',n:'Global ARG 2030'},{s:'AL35',n:'Bono ARG 2035'}
+  ],
+  divisas: [
+    {s:'EURUSD=X',n:'EUR/USD'},{s:'USDJPY=X',n:'USD/JPY'},{s:'GBPUSD=X',n:'GBP/USD'},
+    {s:'USDCNY=X',n:'USD/CNY'},{s:'USDARS=X',n:'USD/ARS'}
+  ]
 };
 var _activeTab='cripto', _activePais='usa';
 
