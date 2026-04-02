@@ -232,7 +232,7 @@ function _getMktLogo(item,tab){
   var t=tab||item.tab||'';
   if(t==='cripto'||t==='stable') return 'https://assets.coincap.io/assets/icons/'+item.s.toLowerCase().replace('=f','').replace('=x','')+'@2x.png';
   if(t==='acciones'||t==='etf') return 'https://financialmodelingprep.com/image-stock/'+item.s+'.png';
-  return '';
+  var lbl=item.s.replace(/[^A-Z0-9]/g,'').substring(0,4);var fs=lbl.length>3?'9':'11';return 'data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22><circle cx=%2214%22 cy=%2214%22 r=%2214%22 fill=%22%23334%22/><text x=%2214%22 y=%2218%22 text-anchor=%22middle%22 font-size=%22'+fs+'%22 font-family=%22Arial,sans-serif%22 font-weight=%22bold%22 fill=%22%23ccc%22>'+lbl+'</text></svg>';
 }
 function _appendMktRow(cnt, item, tab) {
   if(window._mktRenderedSyms[item.s]) return;
@@ -243,7 +243,7 @@ function _appendMktRow(cnt, item, tab) {
   row.className='item-row'; row.id='row-'+item.s;
   row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #21262D;cursor:pointer;gap:8px;';
   row.innerHTML=
-    '<img src="'+_getMktLogo(item,tab)+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:6px;" onerror="this.style.display=\x27none\x27">'+
+    '<img src="'+_getMktLogo(item,tab)+'" data-s="'+item.s+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:6px;" onerror="var _s=this.dataset.s.replace(/[^A-Z0-9]/g,\x27\x27).substring(0,4);var _f=_s.length>3?\x279\x27:\x2711\x27;this.src=\x27data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22><circle cx=%2214%22 cy=%2214%22 r=%2214%22 fill=%22%23334%22/><text x=%2214%22 y=%2218%22 text-anchor=%22middle%22 font-size=%22\x27+_f+\x27%22 font-family=%22Arial,sans-serif%22 font-weight=%22bold%22 fill=%22%23ccc%22>\x27+_s+\x27</text></svg>\x27;this.onerror=null;">'+
     '<div style="display:flex;flex-direction:column;min-width:70px;flex-shrink:0;">'+
       '<span style="color:#E6EDF3;font-weight:600;font-size:14px;">'+item.s+'</span>'+
       '<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
@@ -302,7 +302,7 @@ function fetchYahoo(tab,pais,tf){
   var interval=(tf==='3m'||tf==='1a')?'1wk':'1d';
   var _paisMap={br:'brasil',eu:'europa',es:'europa',jp:'japon',cn:'china'};var _paisKey=_paisMap[pais]||pais;var arr=tab==='acciones'?(DATA.acciones[_paisKey]||DATA.acciones.usa):(DATA[tab]||[]);
   Promise.all(arr.map(function(item){
-    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+(pais==='arg'?({PAMP:'PAM',TECO2:'TEO',CRES:'CRESY',IRSA:'IRS',TXAR:'TX',BYMA:'BYMA.BA',HARG:'HARG.BA',DGCU2:'DGCU2.BA',TRAN:'TRAN.BA',COME:'COME.BA',AUSO:'AUSO.BA',INVJ:'INVJ.BA',MOLI:'MOLI.BA',SAMI:'SAMI.BA',RICH:'RICH.BA',METR:'METR.BA',BOLT:'BOLT.BA'}[item.s]||item.s):item.s)+'?interval='+interval+'&range='+range))
+    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+(pais==='arg'?({PAMP:'PAM',TECO2:'TEO',CRES:'CRESY',IRSA:'IRS',TXAR:'TX',BYMA:'BYMA.BA',HARG:'HARG.BA',DGCU2:'DGCU2.BA',TRAN:'TRAN.BA',COME:'COME.BA',AUSO:'AUSO.BA',INVJ:'INVJ.BA',MOLI:'MOLI.BA',SAMI:'SAMI.BA',RICH:'RICH.BA',METR:'METR.BA',BOLT:'BOLT.BA'}[item.s]||item.s):(pais==='eu'||pais==='es')?({INGA:'ING'}[item.s]||item.s):item.s)+'?interval='+interval+'&range='+range))
       .then(function(r){return r.json();})
       .then(function(d){
         var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
