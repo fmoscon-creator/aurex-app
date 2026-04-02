@@ -3399,11 +3399,11 @@ function _renderFuturesBanner(containerId) {
     var d = cached[item.rawS];
     if(!d || !d.price) return '';
     var pct = d.pct || 0;
-    var pctStr = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+    var pctStr = _fmt(pct,'pct');
     var pctColor = pct >= 0 ? '#3FB950' : '#FF4444';
     var stCol = d.open ? '#3FB950' : '#555';
     var catColor = catColors[item.cat] || '#8B949E';
-    var priceStr = item.dec === 0 ? Math.round(d.price).toLocaleString() : d.price.toFixed(item.dec);
+    var priceStr = item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio');
     return '<div style="display:flex;flex-direction:column;align-items:center;min-width:58px;padding:2px 5px;border-right:1px solid #21262D;flex-shrink:0;">' +
       '<div style="font-size:'+(isPortfolio?'7':'8')+'px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:#E6EDF3;white-space:nowrap;display:flex;align-items:center;gap:2px;"><span style="font-size:7px;color:'+stCol+';">&#x25CF;</span>'+item.n+'</div>' +
