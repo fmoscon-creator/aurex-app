@@ -317,7 +317,7 @@ function fetchBinance(tab){
         var sym=t.symbol.replace('USDT',''),price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
         var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
         if(pel) pel.textContent=_fmt(price,'precio');
-        if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+        if(cel){cel.textContent=_fmt(pct,'pct');cel.style.color=pct>=0?'#3FB950':'#F85149';}
       });
     }).catch(function(){});
   // Fetch sparklines for cripto (batch klines)
@@ -362,7 +362,7 @@ function fetchYahoo(tab,pais,tf){
           var prevClose=meta.chartPreviousClose||meta.previousClose||price;
           var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
           if(pel)pel.textContent=_fmt(price,'precio');
-          if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+          if(cel){cel.textContent=_fmt(pct,'pct');cel.style.color=pct>=0?'#3FB950':'#F85149';}
           if(lbl){if(isClosed){lbl.textContent='Ult. cierre';lbl.style.display='inline';}else{lbl.style.display='none';}}
         }
         // Sparkline from Yahoo closes
@@ -409,7 +409,7 @@ function _loadMktBackground(tab, pais){
           var price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
           var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
           if(pel) pel.textContent=_fmt(price,'precio');
-          if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
+          if(cel){cel.textContent=_fmt(pct,'pct');cel.style.color=pct>=0?'#3FB950':'#F85149';}
           // Sparkline
           fetch('https://api.binance.com/api/v3/klines?symbol='+sym+'USDT&interval=1d&limit=7')
             .then(function(r2){return r2.json();})
@@ -529,7 +529,7 @@ window._moveRow=function(row,dir){
   }
 };
 
-function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+_fmt(price,'precio'):_fmt(price,'precio');it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;}
+function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+_fmt(price,'precio'):_fmt(price,'precio');it.c=_fmt(pct,'pct');it.up=pct>=0?1:0;}
 
 function yahooFinanceRT(){}
 
@@ -889,7 +889,7 @@ function _renderPortfolioItems(items){
     '<div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;padding-left:50px;">' +
       '<div style="display:flex;align-items:center;gap:4px;">' +
         (mktClosed ? '<span style="font-size:9px;color:#D4A017;font-weight:700;margin-right:2px;">Ult. cierre</span>' : '') +
-        '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+prevClosePct.toFixed(2)+'%' : cs+ch24.toFixed(2)+'%')+'</span>' +
+        '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? cs+_fmt(prevClosePct,'pct') : cs+_fmt(ch24,'pct'))+'</span>' +
         '<div style="display:flex;gap:2px;">' +
           ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
         '</div>' +
@@ -989,13 +989,13 @@ window.portTotalPeriod = function(btn, period) {
   var pnlSpan = document.querySelector('#port-pnl-row span:last-child');
 
   if(pnlUSD) pnlUSD.textContent = (diffUSD >= 0 ? '+' : '') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-  if(pnlPct) pnlPct.textContent = (diffPct >= 0 ? '+' : '') + diffPct.toFixed(2) + '%';
+  if(pnlPct) pnlPct.textContent = _fmt(diffPct,'pct');
   if(pnlSpan) pnlSpan.textContent = period === 'max' ? 'desde compra' : period;
 
   if(pnlUSD) pnlUSD.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
   if(pnlPct) pnlPct.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
   var pColor = diffUSD >= 0 ? '#22c55e' : '#ef4444';
-  var pctTxt = (diffPct >= 0 ? '+' : '') + diffPct.toFixed(2) + '%';
+  var pctTxt = _fmt(diffPct,'pct');
   var amtTxt = (diffUSD >= 0 ? '+' : '-') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   var pPct = document.getElementById('port-period-pct');
   var pAmt = document.getElementById('port-period-amt');
@@ -1027,7 +1027,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
   if(!pctEl) return;
   if(period === '24h'){
     var cv = window._pcChange24 && window._pcChange24[simbolo] !== undefined ? window._pcChange24[simbolo] : null;
-    if(cv !== null){ pctEl.style.color = cv>=0?'#3FB950':'#FF4444'; pctEl.textContent = (cv>=0?'+':'')+cv.toFixed(2)+'%'; }
+    if(cv !== null){ pctEl.style.color = cv>=0?'#3FB950':'#FF4444'; pctEl.textContent = _fmt(cv,'pct'); }
     return;
   }
   pctEl.textContent = '...';
@@ -1045,7 +1045,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
         var last = parseFloat(d[d.length-1][4]);
         var pct = first > 0 ? ((last-first)/first*100) : 0;
         pctEl.style.color = pct>=0?'#3FB950':'#FF4444';
-        pctEl.textContent = (pct>=0?'+':'')+pct.toFixed(2)+'%';
+        pctEl.textContent = _fmt(pct,'pct');
       }).catch(function(){ pctEl.textContent = '--'; });
   } else {
     var now = Math.floor(Date.now()/1000);
@@ -1062,7 +1062,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
         if(!fp || !lp){ pctEl.textContent = '--'; return; }
         var pct = ((lp-fp)/fp*100);
         pctEl.style.color = pct>=0?'#3FB950':'#FF4444';
-        pctEl.textContent = (pct>=0?'+':'')+pct.toFixed(2)+'%';
+        pctEl.textContent = _fmt(pct,'pct');
       }).catch(function(){ pctEl.textContent = '--'; });
   }
 };
