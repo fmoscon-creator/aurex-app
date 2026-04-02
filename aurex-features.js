@@ -3053,7 +3053,7 @@ async function _fetchPulseForCategory(cat) {
   return result;
 }
 
-function _renderFearGreedGauge(value, color, compact, value2) {
+function _renderFearGreedGauge(value, color, compact, value2, value3) {
   var R=compact?40:52, cx=compact?50:65, cy=compact?52:68, sw=compact?9:12;
   var ang=(value/100)*Math.PI;
   var nx=cx+R*Math.cos(Math.PI-ang), ny=cy-R*Math.sin(ang);
@@ -3063,15 +3063,26 @@ function _renderFearGreedGauge(value, color, compact, value2) {
     var x2=cx+R*Math.cos(a2), y2=cy+R*Math.sin(a2-Math.PI);
     return '<path d="M '+x1.toFixed(1)+' '+y1.toFixed(1)+' A '+R+' '+R+' 0 '+((e-s)>50?1:0)+' 1 '+x2.toFixed(1)+' '+y2.toFixed(1)+'" fill="none" stroke="'+col+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
   }
-  // Second needle for Binance index (only when value2 provided)
+  // BTC Sentiment marker (value2) - azul punteado
   var needle2 = '';
   if(value2 !== undefined && value2 !== null) {
     var ang2=(value2/100)*Math.PI;
     var nx2=cx+R*Math.cos(Math.PI-ang2), ny2=cy-R*Math.sin(ang2);
-    needle2 = '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx2.toFixed(1)+'" y2="'+ny2.toFixed(1)+'" stroke="#00BFFF" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 2"/>';
+    var mx2=(cx+nx2)/2, my2=(cy+ny2)/2;
+    needle2 = '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx2.toFixed(1)+'" y2="'+ny2.toFixed(1)+'" stroke="#00BFFF" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 2" opacity="0.9"/>' +
+              '<circle cx="'+nx2.toFixed(1)+'" cy="'+ny2.toFixed(1)+'" r="3.5" fill="#00BFFF" opacity="0.95"/>';
+  }
+  // Crypto F&G marker (value3) - rojo punteado
+  var needle3 = '';
+  if(value3 !== undefined && value3 !== null) {
+    var ang3=(value3/100)*Math.PI;
+    var nx3=cx+R*Math.cos(Math.PI-ang3), ny3=cy-R*Math.sin(ang3);
+    needle3 = '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx3.toFixed(1)+'" y2="'+ny3.toFixed(1)+'" stroke="#FF6B6B" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="3 2" opacity="0.9"/>' +
+              '<circle cx="'+nx3.toFixed(1)+'" cy="'+ny3.toFixed(1)+'" r="3.5" fill="#FF6B6B" opacity="0.95"/>';
   }
   return '<svg viewBox="0 0 '+(compact?'100 58':'130 75')+'" style="width:'+(compact?'88px':'120px')+';height:'+(compact?'52px':'70px')+';flex-shrink:0;">' +
     arcSeg(0,20,'#C62828')+arcSeg(22,40,'#FF6B6B')+arcSeg(42,60,'#D4A017')+arcSeg(62,80,'#3FB950')+arcSeg(82,100,'#00E676') +
+    needle3 +
     needle2 +
     '<line x1="'+cx+'" y1="'+cy+'" x2="'+nx.toFixed(1)+'" y2="'+ny.toFixed(1)+'" stroke="#D4A017" stroke-width="2.5" stroke-linecap="round"/>' +
     '<circle cx="'+cx+'" cy="'+cy+'" r="4" fill="#D4A017"/>' +
@@ -3094,18 +3105,41 @@ function _renderFearGreed(containerId) {
   }
   var d = cached;
   var compact = elId.indexOf('port') >= 0;
-  var binanceIdx = (cat === 'CRIPTO') ? (window._binanceFnG || null) : null;
-  var gauge = _renderFearGreedGauge(d.value, d.color, compact, binanceIdx);
-  // Fetch Binance F&G index for CRIPTO category (cache 10 min)
-  if(cat === 'CRIPTO' && (Date.now()-(window._binanceFnGTs||0)) > 600000) {
-    window._binanceFnGTs = Date.now();
+  var btcSentIdx = (cat === 'CRIPTO') ? (window._btcSentiment || null) : null;
+  var altFngIdx  = (cat === 'CRIPTO') ? (window._altFnG || null) : null;
+  var gauge = _renderFearGreedGauge(d.value, d.color, compact, btcSentIdx, altFngIdx);
+  // Fetch BTC Sentiment (calculado en tiempo real desde Binance) - cache 5 min
+  if(cat === 'CRIPTO' && (Date.now()-(window._btcSentTs||0)) > 300000) {
+    window._btcSentTs = Date.now();
+    Promise.all([
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=BTCUSDT').then(function(r){return r.json();}),
+      fetch('https://api.coingecko.com/api/v3/global').then(function(r){return r.json();})
+    ]).then(function(res){
+      var btc = res[0], glob = res[1];
+      var priceChg = parseFloat(btc.priceChangePercent);
+      var volB = parseFloat(btc.quoteVolume)/1e9;
+      var dom = glob && glob.data ? glob.data.market_cap_percentage.btc : 50;
+      var avgRatio = parseFloat(btc.weightedAvgPrice)/parseFloat(btc.lastPrice);
+      // Formula: precio+vol+dominancia+momentum
+      var score = 50;
+      score += priceChg * 2.5;
+      score += (volB > 2 ? 5 : volB > 1 ? 2 : -3);
+      score += (dom > 60 ? -5 : dom > 50 ? 0 : 5);
+      score += (avgRatio < 0.99 ? 8 : avgRatio > 1.01 ? -5 : 0);
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      window._btcSentiment = score;
+      setTimeout(function(){ _renderFearGreed(containerId); }, 100);
+    }).catch(function(){});
+  }
+  // Fetch Crypto F&G Alternative.me - cache 60 min (se actualiza 1x día)
+  if(cat === 'CRIPTO' && (Date.now()-(window._altFnGTs||0)) > 3600000) {
+    window._altFnGTs = Date.now();
     fetch('https://api.alternative.me/fng/?limit=1')
       .then(function(r){return r.json();})
       .then(function(d2){
         var val2 = d2 && d2.data && d2.data[0] ? parseInt(d2.data[0].value) : null;
         if(val2 !== null) {
-          window._binanceFnG = val2;
-          // Re-render to show updated needle
+          window._altFnG = val2;
           setTimeout(function(){ _renderFearGreed(containerId); }, 100);
         }
       }).catch(function(){});
@@ -3146,9 +3180,10 @@ function _renderFearGreed(containerId) {
         '<div style="flex:1;min-width:0;">' +
           '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
           (cat==='CRIPTO' && binanceIdx !== null ?
-            '<div style="display:flex;gap:8px;align-items:center;margin-top:3px;">' +
-              '<span style="font-size:10px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:13px;">'+d.value+'</b></span>' +
-              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Alt F&G <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
+            '<div style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap;">' +
+              '<span style="font-size:9px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:12px;">'+d.value+'</b></span>' +
+              (btcSentIdx !== null ? '<span style="font-size:9px;color:#00BFFF;font-weight:700;">&#x25B6; BTC Sent. <b style="font-size:12px;">'+btcSentIdx+'</b></span>' : '') +
+              (altFngIdx !== null ? '<span style="font-size:9px;color:#FF6B6B;font-weight:700;">&#x25B6; Crypto F&G <b style="font-size:12px;">'+altFngIdx+'</b></span>' : '') +
             '</div>' : '') +
           dataLine +
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
