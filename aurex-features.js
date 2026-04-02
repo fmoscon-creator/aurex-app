@@ -2607,7 +2607,7 @@ window.showIAVariablesPopup = function() {
     {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los 煤ltimos 5 d铆as. Confirma si el movimiento tiene convicci贸n.',p:'Alta'},
     {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (high鈥搇ow / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
     {k:'correlacion',    n:'5. Correlaci贸n BTC/SPY',    d:'Para cripto: correlaci贸n con BTC. Para acciones: con S&P500. Detecta arrastre sist茅mico.',p:'Media'},
-    {k:'oro_petroleo',   n:'6. Oro / Petr髄eo',         d:'Precios de activos refugio. Oro alto = aversi贸n al riesgo. Impacta seg煤n tipo de activo.',p:'Media'},
+    {k:'oro_petroleo',   n:'6. Oro / Petr&#xF3;leo',         d:'Precios de activos refugio. Oro alto = aversi贸n al riesgo. Impacta seg煤n tipo de activo.',p:'Media'},
     {k:'macro',          n:'7. Macro FED',              d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
     {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados pr贸ximos. Hist贸ricamente elevan la volatilidad del activo.',p:'Media'},
     {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los 煤ltimos 30 d铆as de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
@@ -2792,7 +2792,7 @@ function _buildIADetail(s) {
       {k:'volumen',        label:'Volumen',               fmt:function(v){ return (s.volRel||1).toFixed(1)+'x prom.'; }},
       {k:'volatilidad',    label:'Volatilidad',           fmt:function(v){ return v>0.01?'baja':'v>-0.01'?'normal':'alta'; }},
       {k:'correlacion',    label:'Correlaci贸n BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
-      {k:'oro_petroleo',   label:'Oro / Petr髄eo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
+      {k:'oro_petroleo',   label:'Oro / Petr&#xF3;leo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
       {k:'macro',          label:'Macro FED',             fmt:function(v){ return v<-0.01?'evento activo':'sin eventos'; }},
       {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'pr贸ximos':'sin reporte'; }},
       {k:'macd',           label:'MACD (12/26)',          fmt:function(v){ return v>0.01?'alcista':v<-0.01?'bajista':'neutral'; }},
@@ -3291,10 +3291,10 @@ window.showFearGreedInfo = function() {
     ['&#x26A1;','RTY=F Russell Fut','Yahoo','3%',fmtPct(raw.rtyf&&raw.rtyf.pct),'#3FB950'],
     ['&#x1F947;','Oro GC=F','Yahoo','8%',         fmtPct(raw.gcf&&raw.gcf.pct),'#D4A017'],
     ['&#x26AA;','Plata SI=F','Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'#D4A017'],
-    ['&#x1F6E2;','Petr髄eo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
+    ['&#x1F6E2;','Petr&#xF3;leo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'#D4A017'],
     ['&#x1FA9C;','Cobre HG=F','Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'#D4A017'],
     ['&#x1F3E6;','Macro FED','FRED API','12%', raw.macro ? raw.macro.score+' pts' : 'Calc...', raw.macro ? '#E6EDF3' : '#555'],
-    ['&#x1F30D;','Geopol韙ica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? '#E6EDF3' : '#555']
+    ['&#x1F30D;','Geopol&#xED;tica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? '#E6EDF3' : '#555']
   ];
   var tableRows = rows.map(function(r) {
     return '<tr><td style="padding:2px 4px;color:'+r[5]+';">'+r[0]+' '+r[1]+'</td><td style="color:#555;font-size:8px;padding:2px 4px;">'+r[2]+'</td><td style="color:#8B949E;padding:2px 4px;">'+r[3]+'</td><td style="color:#E6EDF3;padding:2px 4px;">'+r[4]+'</td></tr>';
@@ -3302,7 +3302,7 @@ window.showFearGreedInfo = function() {
   ov.innerHTML =
     '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:18px;max-width:360px;width:100%;margin:auto;">' +
       '<div style="font-size:13px;font-weight:700;color:#D4A017;margin-bottom:3px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
-      '<div style="font-size:9px;color:#58A6FF;margin-bottom:10px;">El 韓dice de sentimiento m醩 completo del mercado</div>' +
+      '<div style="font-size:9px;color:#58A6FF;margin-bottom:10px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
       '<div style="font-size:10px;color:#8B949E;line-height:1.6;margin-bottom:8px;">' +
         '<b style="color:#E6EDF3;">Las 5 zonas:</b> ' +
         '&#x1F534; 0-20 Miedo Extremo &nbsp;' +
@@ -3316,8 +3316,8 @@ window.showFearGreedInfo = function() {
         '<tr style="color:#444;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol韙ica (GDELT Project) activos con fallback autom醫ico. 14 variables = cobertura completa de m鷏tiples mercados.</div>' +
-      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este 韓dice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra m鷏tiples mercados.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos con fallback autom&#xE1;tico. 14 variables = cobertura completa de m&#xFA;ltiples mercados.</div>' +
+      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este &#xED;ndice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra m&#xFA;ltiples mercados.</div>' +
       '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:10px;background:#D4A017;border-radius:8px;color:#0D1117;font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
     '</div>';
   document.body.appendChild(ov);
