@@ -3179,7 +3179,7 @@ function _renderFearGreed(containerId) {
         gauge +
         '<div style="flex:1;min-width:0;">' +
           '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
-          (cat==='CRIPTO' && binanceIdx !== null ?
+          (cat==='CRIPTO' && (btcSentIdx !== null || altFngIdx !== null) ?
             '<div style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap;">' +
               '<span style="font-size:9px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:12px;">'+d.value+'</b></span>' +
               (btcSentIdx !== null ? '<span style="font-size:9px;color:#00BFFF;font-weight:700;">&#x25B6; BTC Sent. <b style="font-size:12px;">'+btcSentIdx+'</b></span>' : '') +
