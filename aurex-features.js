@@ -891,7 +891,7 @@ window._updatePortTotalDisplay = function() {
     if(badge) { badge.textContent = 'USDTâ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
     if(el) el.textContent = 'USD ' + fmtNum(total);
-    if(badge) { badge.textContent = 'USD'; badge.style.color='#8B949E'; badge.style.borderColor='#30363D'; }
+    if(badge) { badge.textContent = '$'; badge.style.color='#000'; badge.style.borderColor='#D4A017'; }
   }
 };
 
@@ -959,6 +959,13 @@ window.portTotalPeriod = function(btn, period) {
 
   if(pnlUSD) pnlUSD.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
   if(pnlPct) pnlPct.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
+  var pColor = diffUSD >= 0 ? '#22c55e' : '#ef4444';
+  var pctTxt = (diffPct >= 0 ? '+' : '') + diffPct.toFixed(2) + '%';
+  var amtTxt = (diffUSD >= 0 ? '+' : '-') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var pPct = document.getElementById('port-period-pct');
+  var pAmt = document.getElementById('port-period-amt');
+  if(pPct) { pPct.textContent = pctTxt; pPct.style.color = pColor; }
+  if(pAmt) { pAmt.textContent = amtTxt; pAmt.style.color = pColor; }
 };
 
 
@@ -1043,7 +1050,9 @@ function _updateTotals(items){
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
+  if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
   if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
+  if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
