@@ -75,14 +75,13 @@ var DATA={
       {s:'HARG',n:'Holcim Argentina'},{s:'DGCU2',n:'Distribuidora Gas'},{s:'TRAN',n:'Transener'},
       {s:'EDN',n:'Edenor'},{s:'COME',n:'Sociedad Comercial'},{s:'AUSO',n:'Autopistas Urbanas'},
       {s:'BOLT',n:'Boldt'},{s:'INVJ',n:'Inversiones y Representaciones'},{s:'MOLI',n:'Molinos Rio'},
-      {s:'SAMI',n:'San Miguel'},{s:'RICH',n:'Laboratorio Richmond'},{s:'METR',n:'Metrogas'}
+      {s:'SAMI',n:'San Miguel'},{s:'RICH',n:'Laboratorio Richmond'},{s:'METR',n:'Metrogas'},{s:'DESP',n:'Despegar'}
     ],
     brasil: [
       {s:'PBR',n:'Petrobras'},{s:'VALE',n:'Vale'},{s:'ITUB',n:'Itau Unibanco'},{s:'BBD',n:'Bradesco'},
       {s:'ABEV',n:'Ambev'},{s:'ERJ',n:'Embraer'},{s:'BRFS',n:'BRF Foods'},{s:'VTEX',n:'VTEX'},
       {s:'NU',n:'Nubank'},{s:'MELI',n:'MercadoLibre'},{s:'XP',n:'XP Inc'},{s:'STNE',n:'StoneCo'},
-      {s:'PAGS',n:'PagSeguro'},{s:'ARCO',n:'Arcos Dorados'},{s:'DESP',n:'Despegar'},
-      {s:'CIB',n:'Bancolombia'},{s:'SQM',n:'SQM Chile'},{s:'BSAC',n:'Banco Santander Chile'},
+      {s:'PAGS',n:'PagSeguro'},{s:'ARCO',n:'Arcos Dorados'},{s:'CIB',n:'Bancolombia'},{s:'SQM',n:'SQM Chile'},{s:'BSAC',n:'Banco Santander Chile'},
       {s:'IFS',n:'Intercorp Financial'},{s:'BAP',n:'Credicorp Peru'},
       {s:'VNET',n:'21Vianet Group'},{s:'CPFE3.SA',n:'CPFL Energia'},
       {s:'WEGE3.SA',n:'WEG SA'},{s:'RENT3.SA',n:'Localiza'},{s:'RAIL3.SA',n:'Rumo Logistica'}
@@ -201,7 +200,9 @@ function _getActivoScores(sym) {
     var seed=_iaSeed(sym);
     return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
   }
-  return null;
+  // fallback universal: score sintético para cualquier ticker no registrado
+  var seed=_iaSeed(sym);
+  return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
 }
 
 function renderTab(tab, pais){
