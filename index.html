@@ -559,41 +559,60 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="screen" id="screen-portfolio" class="screen" style="flex-direction:column;flex:1;min-height:0">
 
 <!-- HEADER PORTFOLIO -->
-<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+<div style="padding:10px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)">
+
+  <!-- Fila título AUREX + Agregar Activos -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
     <div style="display:flex;align-items:center;gap:8px">
       <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
       <span style="font-size:13px;color:#8B949E"> Portfolio</span>
     </div>
-    <div style="display:flex;gap:6px">
-      <div onclick="openPortConversor()" style="display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:10px;background:#58A6FF20;border:1px solid #58A6FF60;color:#58A6FF;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;box-shadow:0 0 12px #58A6FF20;"><span style="font-size:14px;">&#x21C4;</span> Conversor</div>
-      <div onclick="openAddActivo()" style="display:flex;align-items:center;gap:5px;padding:8px 14px;border-radius:10px;background:#3FB950;color:#0D1117;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;box-shadow:0 0 12px #3FB95040;"><span style="font-size:16px;line-height:1;">+</span> Agregar</div>
-    </div>
+    <div onclick="openAddActivo()" style="background:#D4A017;color:#0D1117;border-radius:9px;padding:9px 16px;font-size:13px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">&#xFF0B; Agregar Activos</div>
   </div>
-  <!-- RESUMEN TOTAL -->
-  <div style="display:flex;gap:8px;align-items:stretch">
-    <div style="flex:1;background:#0D1117;border-radius:10px;padding:10px 12px;border:1px solid #D4A01740">
-      <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;cursor:pointer;" onclick="_cyclePortCurrency()">
-        <div style="font-size:9px;color:#555;text-transform:uppercase;letter-spacing:.5px;">Valor total</div>
-        <div id="port-curr-badge" style="font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 5px;border-radius:4px;;cursor:pointer" onclick="_cyclePortCurrency()">USD</div>
-      </div>
-      <div id="port-total" style="font-size:22px;font-weight:500;color:#E6EDF3;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
-      <div id="port-pnl-row" style="display:flex;align-items:center;gap:6px;margin-top:3px">
-        <span id="port-pnl-usd" style="font-size:11px;font-weight:600;color:#3FB950">+$0</span>
-        <span id="port-pnl-pct" style="font-size:10px;padding:1px 6px;border-radius:6px;background:#1A3A2A;color:#3FB950">+0%</span>
-        <span style="font-size:9px;color:#555">desde compra</span>
-      </div><div id="port-period-row" style="display:flex;gap:5px;margin:6px 0 0 0;flex-wrap:wrap"><div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#F59E0B;color:#000;font-weight:700">24h</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'7d')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">7d</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1m</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">1a</div><div class="port-period-btn tf" onclick="portTotalPeriod(this,'max')" style="font-size:10px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#222;color:#aaa">Compra</div></div>
+
+  <!-- Cuadro VALOR TOTAL ancho completo -->
+  <div style="background:#161B22;border:1px solid #30363D;border-radius:12px;padding:12px 14px;">
+
+    <!-- FILA 1: VALOR TOTAL + USD▾ -->
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;">
+      <span style="font-size:9px;color:#8B949E;font-weight:500;letter-spacing:.5px;">VALOR TOTAL</span>
+      <div onclick="_cyclePortCurrency()" style="background:#D4A017;color:#0D1117;padding:3px 8px;border-radius:5px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;"><span id="port-curr-badge">USD</span> &#9660;</div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:6px">
-      <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center;min-width:64px">
-        <div style="font-size:8px;color:#555;text-transform:uppercase">Activos</div>
-        <div id="port-count" style="font-size:16px;font-weight:600;color:#E6EDF3;margin-top:1px">0</div>
+
+    <!-- FILA 2: Valor total grande -->
+    <div id="port-total" style="font-size:26px;font-weight:800;color:#E6EDF3;letter-spacing:-.5px;margin-bottom:8px;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
+
+    <!-- FILA 3: Bloque RESULTADO con selector período integrado -->
+    <div id="port-period-block" style="background:#0d2818;border:1.5px solid #3FB950;border-radius:8px;padding:8px 12px;margin-bottom:10px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
+        <div id="port-period-label" style="font-size:8px;color:#3FB950;font-weight:700;">&#x25B2; RESULTADO</div>
+        <div style="display:flex;gap:4px;">
+          <div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#D4A017;color:#000;font-weight:700;-webkit-tap-highlight-color:rgba(0,0,0,0);">24h</div>
+          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1m</div>
+          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'3m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">3m</div>
+          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1y</div>
+          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'max')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">Origen</div>
+        </div>
       </div>
-      <div style="background:#0D1117;border-radius:8px;padding:6px 10px;border:0.5px solid #21262D;text-align:center">
-        <div style="font-size:8px;color:#555;text-transform:uppercase">Mejor</div>
-        <div id="port-best" style="font-size:10px;font-weight:600;color:#3FB950;margin-top:1px"></div>
+      <div style="display:flex;align-items:baseline;gap:10px;">
+        <div id="port-pnl-usd" style="font-size:20px;font-weight:800;color:#3FB950;">+$0</div>
+        <div id="port-pnl-pct" style="font-size:13px;font-weight:700;color:#3FB950;">+0%</div>
       </div>
     </div>
+
+    <!-- FILA 4: Activos + Mejor 24h + Conversor -->
+    <div style="display:flex;align-items:center;justify-content:flex-end;gap:7px;">
+      <div style="background:#21262D;border:1px solid #30363D;border-radius:7px;padding:4px 10px;text-align:center;">
+        <div style="font-size:8px;color:#8B949E;line-height:1.2;">Activos</div>
+        <div id="port-count" style="font-size:14px;font-weight:800;color:#E6EDF3;line-height:1.2;">0</div>
+      </div>
+      <div style="background:#21262D;border:1px solid #30363D;border-radius:7px;padding:4px 10px;text-align:center;">
+        <div style="font-size:8px;color:#8B949E;line-height:1.2;">&#x1F3C6; Mejor 24h</div>
+        <div id="port-best" style="font-size:11px;font-weight:800;color:#3FB950;line-height:1.2;"></div>
+      </div>
+      <div onclick="openPortConversor()" style="background:#1C2A3A;color:#58A6FF;border:1.5px solid #58A6FF;border-radius:8px;padding:8px 12px;font-size:11px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;white-space:nowrap;">&#x21C4; Conversor</div>
+    </div>
+
   </div>
 </div>
 
