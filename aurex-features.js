@@ -1628,7 +1628,7 @@ window.portDetPeriod = function(simbolo, tipo, period){
     var cv = window._pcChange24 && window._pcChange24[simbolo];
     if(cv !== undefined && cv !== null){
       valEl.style.color = cv >= 0 ? '#3FB950' : '#FF4444';
-      valEl.textContent = (cv>=0?'+':'')+cv.toFixed(2)+'% (24h)';
+      valEl.textContent = _fmt(cv,'pct')+' (24h)';
     } else { valEl.textContent = '--'; valEl.style.color = '#8B949E'; }
     return;
   }
@@ -1642,7 +1642,7 @@ window.portDetPeriod = function(simbolo, tipo, period){
       var oldest = parseFloat(d[0][1]);
       var newest = parseFloat(d[d.length-1][4]);
       var pct = oldest > 0 ? ((newest-oldest)/oldest*100) : 0;
-      if(valEl){ valEl.style.color = pct>=0?'#3FB950':'#FF4444'; valEl.textContent = (pct>=0?'+':'')+pct.toFixed(2)+'% ('+period+')'; }
+      if(valEl){ valEl.style.color = pct>=0?'#3FB950':'#FF4444'; valEl.textContent = _fmt(pct,'pct')+' ('+period+')'; }
     }).catch(function(){ if(valEl) valEl.textContent = '--'; });
   } else {
     var now = Math.floor(Date.now()/1000);
@@ -3799,7 +3799,7 @@ window._calcPortPeriod = function(period) {
   var el1 = document.getElementById('port-pnl-usd');
   var el2 = document.getElementById('port-pnl-pct');
   if(el1){el1.textContent=(isPos?'+':'-')+'$'+Math.abs(diff).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});el1.style.color=color;}
-  if(el2){el2.textContent=(isPos?'+':'')+pct.toFixed(2)+'%';el2.style.color=color;el2.style.background=bg;}
+  if(el2){el2.textContent=_fmt(pct,'pct');el2.style.color=color;el2.style.background=bg;}
 };
 
 window.portTotalPeriod = window._calcPortPeriod;
