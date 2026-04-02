@@ -4,8 +4,8 @@
 */
 function _fmt(n, tipo) {
   if (n === null || n === undefined || isNaN(n)) return '--';
-  var lang = (navigator.language || 'en-US').toLowerCase();
-  var isLatam = /^(es|pt)/.test(lang);
+  var langs = (navigator.languages && navigator.languages.length ? Array.from(navigator.languages) : [navigator.language||'en-US']).map(function(l){return l.toLowerCase();});
+  var isLatam = langs.some(function(l){return /^(es|pt)/.test(l);}) || !langs.some(function(l){return /^(en|de|fr|ar|zh|hi)/.test(l);});
   var sep = isLatam
     ? { thousands: '.', decimal: ',' }
     : { thousands: ',', decimal: '.' };
