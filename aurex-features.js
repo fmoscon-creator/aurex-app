@@ -823,7 +823,7 @@ function _renderPortfolioItems(items){
   }
   window._portItems = items;
   var prcs = window._pcPrices || {};
-  var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
     var rowActs = window._IA_ACTIVOS||[]; var rowAct=null; for(var ri2=0;ri2<rowActs.length;ri2++){if(rowActs[ri2].s===item.simbolo){rowAct=rowActs[ri2];break;}}
     var precio = prcs[item.simbolo] || item.precio_compra;
@@ -910,7 +910,7 @@ window._updatePortTotalDisplay = function() {
   var badge = document.getElementById('port-curr-badge');
   var total = window._portTotalUSD || 0;
   var cur = window._portCurrency || 'USD';
-  var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d!==undefined?d:2,maximumFractionDigits:d!==undefined?d:2}); };
+  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d!==undefined?d:2,maximumFractionDigits:d!==undefined?d:2}); };
 
   if(cur === 'BTC') {
     var btcPrice = window._pcPrices && window._pcPrices['BTC'] ? window._pcPrices['BTC'] : 0;
@@ -988,7 +988,7 @@ window.portTotalPeriod = function(btn, period) {
   var pnlPct = document.getElementById('port-pnl-pct');
   var pnlSpan = document.querySelector('#port-pnl-row span:last-child');
 
-  if(pnlUSD) pnlUSD.textContent = (diffUSD >= 0 ? '+' : '') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  if(pnlUSD) pnlUSD.textContent = (diffUSD >= 0 ? '+' : '') + '$' + Math.abs(diffUSD).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   if(pnlPct) pnlPct.textContent = _fmt(diffPct,'pct');
   if(pnlSpan) pnlSpan.textContent = period === 'max' ? 'desde compra' : period;
 
@@ -996,7 +996,7 @@ window.portTotalPeriod = function(btn, period) {
   if(pnlPct) pnlPct.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
   var pColor = diffUSD >= 0 ? '#22c55e' : '#ef4444';
   var pctTxt = _fmt(diffPct,'pct');
-  var amtTxt = (diffUSD >= 0 ? '+' : '-') + '$' + Math.abs(diffUSD).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var amtTxt = (diffUSD >= 0 ? '+' : '-') + '$' + Math.abs(diffUSD).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   var pPct = document.getElementById('port-period-pct');
   var pAmt = document.getElementById('port-period-amt');
   if(pPct) { pPct.textContent = pctTxt; pPct.style.color = pColor; }
@@ -1080,7 +1080,7 @@ function _updateTotals(items){
   });
   var pnlUsd = total - totalCosto;
   var pnlPct = totalCosto > 0 ? (pnlUsd / totalCosto * 100) : 0;
-  var fmtNum = function(n,d){ return n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
@@ -1512,7 +1512,7 @@ window.openPortItemDetail = function(itemId){
   for(var i=0;i<acts.length;i++){ if(acts[i].s===item.simbolo){ act=acts[i]; break; } }
   var logoHtml = (act && act.logo) ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin-right:10px;" onerror="this.style.display=\'none\'"/>' : '<div style="width:32px;height:32px;border-radius:50%;background:'+(act&&act.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;margin-right:10px;">'+(item.simbolo[0]||'?')+'</div>';
   var fechaStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '--';
-  var fmtP = function(n,d){ return n ? n.toLocaleString('en-US',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--'; };
+  var fmtP = function(n,d){ var loc=(navigator.language||'en-US'); return n ? n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--'; };
   // 52-week range
   var low52 = window._pc52Low && window._pc52Low[item.simbolo];
   var high52 = window._pc52High && window._pc52High[item.simbolo];
@@ -1674,7 +1674,7 @@ window.portSimUpdate = function(itemId, simbolo, pctStr){
   var portImpact = base.precio > 0 ? (base.cantidad * (newPrice - base.precio)) : 0;
   var pnlColor = newPnlUsd >= 0 ? '#3FB950' : '#FF4444';
   var piColor = portImpact >= 0 ? '#3FB950' : '#FF4444';
-  var fmt = function(n){ return n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); };
+  var fmt = function(n){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:2,maximumFractionDigits:2}); };
   if(lbl) { lbl.textContent = (pct>=0?'+':'')+pct+'%'; lbl.style.color = pct===0?'#D4A017':(pct>0?'#3FB950':'#FF4444'); }
   if(npEl) npEl.textContent = '$'+fmt(newPrice);
   if(pnlEl){ pnlEl.textContent = (newPnlUsd>=0?'+':'-')+'$'+fmt(Math.abs(newPnlUsd))+' ('+( newPnlPct>=0?'+':'')+newPnlPct.toFixed(1)+'%)'; pnlEl.style.color = pnlColor; }
@@ -3799,7 +3799,7 @@ window._calcPortPeriod = function(period) {
   var bg = isPos?'#1A3A2A':'#3A1A1A';
   var el1 = document.getElementById('port-pnl-usd');
   var el2 = document.getElementById('port-pnl-pct');
-  if(el1){el1.textContent=(isPos?'+':'-')+'$'+Math.abs(diff).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});el1.style.color=color;}
+  if(el1){el1.textContent=(isPos?'+':'-')+'$'+Math.abs(diff).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});el1.style.color=color;}
   if(el2){el2.textContent=(isPos?'+':'')+pct.toFixed(2)+'%';el2.style.color=color;el2.style.background=bg;}
 };
 
