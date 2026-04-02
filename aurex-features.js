@@ -305,7 +305,7 @@ function fetchBinance(tab){
     arr.forEach(function(item){
       var pel=document.getElementById('p-'+item.s),cel=document.getElementById('c-'+item.s);
       if(item.s==='USDT'||stableFixed[item.s]){if(pel)pel.textContent='$1.0000';if(cel){cel.textContent='+0.00%';cel.style.color='#8B949E';}return;}
-      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice),pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent='$'+pr.toFixed(4);if(cel){cel.textContent=(pc>=0?'+':'')+pc.toFixed(3)+'%';cel.style.color=pc>=0?'#3FB950':'#F85149';}}).catch(function(){});
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice),pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent='$'+_fmt(pr,'precio');if(cel){cel.textContent=_fmt(pc,'pct');cel.style.color=pc>=0?'#3FB950':'#F85149';}}).catch(function(){});
     });
     return;
   }
@@ -356,7 +356,7 @@ function fetchYahoo(tab,pais,tf){
           var firstClose=null;if(closes){for(var i=0;i<closes.length;i++){if(closes[i]!=null){firstClose=closes[i];break;}}}
           var pct2=firstClose&&firstClose>0?((price-firstClose)/firstClose*100):0;
           if(pel)pel.textContent=_fmt(price,'precio');
-          if(cel){cel.textContent=(pct2>=0?'+':'')+pct2.toFixed(2)+'%';cel.style.color=pct2>=0?'#3FB950':'#F85149';}
+          if(cel){cel.textContent=_fmt(pct2,'pct');cel.style.color=pct2>=0?'#3FB950':'#F85149';}
           if(lbl) lbl.style.display='none';
         } else {
           var prevClose=meta.chartPreviousClose||meta.previousClose||price;
@@ -2716,10 +2716,10 @@ function _renderIALista(signals, keepLoadingBar) {
     var tipoLabel = s.tipo==='cripto'?'Cripto':s.tipo==='accion'?'Acciones':s.tipo==='etf'?'ETF':s.tipo==='metal'?'Metal':s.tipo==='materia_prima'?'Mat. Prima':s.tipo==='bono'?'Bono':'Otro';
     var estrellas = '';
     for(var e=0;e<5;e++) estrellas += e<s.estrellas?'<span style="color:#D4A017">&#9733;</span>':'<span style="color:#30363D">&#9733;</span>';
-    var precioFmt = s.precio>=1000?'$'+Math.round(s.precio).toLocaleString('en'):s.precio>=1?'$'+s.precio.toFixed(2):s.precio>0?'$'+s.precio.toFixed(4):'-';
+    var precioFmt = _fmt(s.precio,'precio');
     var cambio24h = s.precio24h>0?((s.precio-s.precio24h)/s.precio24h*100):0;
     var pctColor = cambio24h>=0?'#3FB950':'#FF4444';
-    var pctStr = (cambio24h>=0?'+':'')+cambio24h.toFixed(2)+'%';
+    var pctStr = _fmt(cambio24h,'pct');
     var abbr = s.abbr || s.simbolo.substring(0,3);
     var logoHtml = s.logo ?
       '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
@@ -3218,10 +3218,10 @@ function _renderFearGreed(containerId) {
   else                 edu='Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
   var raw = window._pulseRaw || {};
   var bits = [];
-  if(raw.vix)              bits.push('VIX: <b style="color:#E6EDF3">'+raw.vix.price.toFixed(1)+'</b>');
-  if(raw.btcPct!==undefined)bits.push('BTC: <b style="color:'+(raw.btcPct>=0?'#3FB950':'#FF4444')+'">'+(raw.btcPct>=0?'+':'')+raw.btcPct.toFixed(2)+'%</b>');
-  if(raw.sp500)            bits.push('S&P: <b style="color:'+(raw.sp500.pct>=0?'#3FB950':'#FF4444')+'">'+(raw.sp500.pct>=0?'+':'')+raw.sp500.pct.toFixed(2)+'%</b>');
-  if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'#3FB950':'#FF4444')+'">'+(raw.gcf.pct>=0?'+':'')+raw.gcf.pct.toFixed(2)+'%</b>');
+  if(raw.vix)              bits.push('VIX: <b style="color:#E6EDF3">'+_fmt(raw.vix.price,'precio')+'</b>');
+  if(raw.btcPct!==undefined)bits.push('BTC: <b style="color:'+(raw.btcPct>=0?'#3FB950':'#FF4444')+'">'+_fmt(raw.btcPct,'pct')+'</b>');
+  if(raw.sp500)            bits.push('S&P: <b style="color:'+(raw.sp500.pct>=0?'#3FB950':'#FF4444')+'">'+_fmt(raw.sp500.pct,'pct')+'</b>');
+  if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'#3FB950':'#FF4444')+'">'+_fmt(raw.gcf.pct,'pct')+'</b>');
   var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:#8B949E;margin-top:3px;">'+bits.join('')+'</div>';
   var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
   var catLabels = {GLOBAL:'🌐 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🛢️ COMOD',FUTUROS:'⚡ FUTUROS'};
