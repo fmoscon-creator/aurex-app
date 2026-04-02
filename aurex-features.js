@@ -201,6 +201,7 @@ function _getActivoScores(sym) {
     return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
   }
   // fallback universal: score sintético para cualquier ticker no registrado
+  if(!sym) return null;
   var seed=_iaSeed(sym);
   return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
 }
@@ -250,7 +251,7 @@ function _appendMktRow(cnt, item, tab) {
       '<span style="color:#8B949E;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
     '</div>'+
     '<div id="spark-'+item.s+'" style="flex:1;display:flex;align-items:center;justify-content:center;min-width:64px;max-width:80px;">'+
-      '<div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2px;">'+_buildDotsHTML(_getActivoScores(item.simbolo))+'</div>'+
+      '<div style="display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:2px;">'+_buildDotsHTML(_getActivoScores(item.s))+'</div>'+
     '</div>'+
     '<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;">'+
       '<span id="p-'+item.s+'" style="color:#E6EDF3;font-size:13px;font-weight:600;">···</span>'+
@@ -844,7 +845,7 @@ function _renderPortfolioItems(items){
         '</div>' +
         '<div style="font-size:11px;color:#8B949E;margin-top:2px;">'+item.cantidad+' u. @ $'+fmtNum(item.precio_compra)+'</div>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;justify-content:center;min-width:48px;max-width:64px;">'+_buildDotsHTML(_getActivoScores(item.simbolo))+'</div>' +
+      '<div style="display:flex;align-items:center;justify-content:center;min-width:48px;max-width:64px;">'+_buildDotsHTML(_getActivoScores(item.s))+'</div>' +
       '<div style="margin-left:auto;text-align:right;flex-shrink:0;">' +
         '<div style="font-size:14px;font-weight:700;color:#E6EDF3;">$'+fmtNum(valor)+'</div>' +
       '</div>' +
