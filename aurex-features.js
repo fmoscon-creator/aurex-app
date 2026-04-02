@@ -3630,7 +3630,7 @@ window._initPortDropdowns = function() {
   // --- 4. Convertir badge USD en desplegable ---
   var currBadge = document.getElementById('port-curr-badge');
   if(currBadge && !document.getElementById('port-curr-dropdown')) {
-    currBadge.style.cssText = 'font-size:9px;color:#000;background:#D4A017;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
+    currBadge.style.cssText = 'font-size:11px;color:#000;background:#D4A017;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
     currBadge.innerHTML = '$ ▾';
     currBadge.onclick = function(e) { e.stopPropagation(); window._togglePortCurrDD(); };
 
