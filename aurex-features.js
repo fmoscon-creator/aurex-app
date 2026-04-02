@@ -3630,8 +3630,8 @@ window._initPortDropdowns = function() {
   // --- 4. Convertir badge USD en desplegable ---
   var currBadge = document.getElementById('port-curr-badge');
   if(currBadge && !document.getElementById('port-curr-dropdown')) {
-    currBadge.style.cssText = 'font-size:8px;color:#8B949E;border:1px solid #30363D;padding:1px 6px;border-radius:4px;cursor:pointer;display:flex;align-items:center;gap:2px;user-select:none;';
-    currBadge.innerHTML = 'USD <span style="font-size:7px;color:#555;">▾</span>';
+    currBadge.style.cssText = 'font-size:9px;color:#000;background:#D4A017;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
+    currBadge.innerHTML = '$ ▾';
     currBadge.onclick = function(e) { e.stopPropagation(); window._togglePortCurrDD(); };
 
     var parent = currBadge.parentNode;
@@ -3686,7 +3686,7 @@ window._togglePortCurrDD = function() {
 window._selectPortCurr = function(cur) {
   window._portCurrency = cur;
   var badge = document.getElementById('port-curr-badge');
-  if(badge) badge.innerHTML = cur + ' <span style="font-size:7px;color:#555;">▾</span>';
+  if(badge) { var dispCur = (cur === 'USD') ? '$' : cur; badge.textContent = dispCur + ' ▾'; badge.style.color='#000'; badge.style.background='#D4A017'; badge.style.borderColor='#D4A017'; }
   var dd = document.getElementById('port-curr-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
