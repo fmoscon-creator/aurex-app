@@ -4,7 +4,8 @@
 */
 function _fmt(n, tipo) {
   if (n === null || n === undefined || isNaN(n)) return '--';
-  var isLatam = true; // LATAM format: punto miles, coma decimal
+  var langs = (navigator.languages && navigator.languages.length ? Array.from(navigator.languages) : [navigator.language||'en-US']).map(function(l){return l.toLowerCase();});
+  var isLatam = langs.some(function(l){return /^(es|pt)/.test(l);}) || !langs.some(function(l){return /^(en|de|fr|ar|zh|hi)/.test(l);});
   var sep = isLatam
     ? { thousands: '.', decimal: ',' }
     : { thousands: ',', decimal: '.' };
@@ -822,7 +823,7 @@ function _renderPortfolioItems(items){
   }
   window._portItems = items;
   var prcs = window._pcPrices || {};
-  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+  var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
     var rowActs = window._IA_ACTIVOS||[]; var rowAct=null; for(var ri2=0;ri2<rowActs.length;ri2++){if(rowActs[ri2].s===item.simbolo){rowAct=rowActs[ri2];break;}}
     var precio = prcs[item.simbolo] || item.precio_compra;
@@ -909,7 +910,7 @@ window._updatePortTotalDisplay = function() {
   var badge = document.getElementById('port-curr-badge');
   var total = window._portTotalUSD || 0;
   var cur = window._portCurrency || 'USD';
-  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d!==undefined?d:2,maximumFractionDigits:d!==undefined?d:2}); };
+  var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d!==undefined?d:2,maximumFractionDigits:d!==undefined?d:2}); };
 
   if(cur === 'BTC') {
     var btcPrice = window._pcPrices && window._pcPrices['BTC'] ? window._pcPrices['BTC'] : 0;
@@ -1079,7 +1080,7 @@ function _updateTotals(items){
   });
   var pnlUsd = total - totalCosto;
   var pnlPct = totalCosto > 0 ? (pnlUsd / totalCosto * 100) : 0;
-  var fmtNum = function(n,d){ var loc=(navigator.language||'en-US'); return n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
+  var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
