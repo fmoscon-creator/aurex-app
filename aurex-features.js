@@ -1086,14 +1086,14 @@ function _updateTotals(items){
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
   if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—';
-  if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + (bestPct>=0?'+':'') + bestPct.toFixed(1) + '%') : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—';
+  if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
   }
   if(el('port-pnl-pct')){
-    el('port-pnl-pct').textContent = (pnlPct>=0?'+':'') + pnlPct.toFixed(2) + '%';
+    el('port-pnl-pct').textContent = _fmt(pnlPct,'pct');
     el('port-pnl-pct').style.background = pnlPct >= 0 ? '#1A3A2A' : '#3A1A1A';
     el('port-pnl-pct').style.color = pnlPct >= 0 ? '#3FB950' : '#FF4444';
   }
