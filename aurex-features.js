@@ -1,4 +1,39 @@
-/* v=1774807550559 */
+/* v=1774807550559 *//* _fmt(n, tipo) - formato visual de numeros segun idioma del usuario
+   tipos: 'precio' | 'pct' | 'usd' | 'qty'
+   Solo usar en capa visual - NUNCA en calculos
+*/
+function _fmt(n, tipo) {
+  if (n === null || n === undefined || isNaN(n)) return '--';
+  var lang = (navigator.language || 'en-US').toLowerCase();
+  var isLatam = /^(es|pt)/.test(lang);
+  var sep = isLatam
+    ? { thousands: '.', decimal: ',' }
+    : { thousands: ',', decimal: '.' };
+  function applyFormat(num, decimals) {
+    var fixed = Math.abs(num).toFixed(decimals);
+    var parts = fixed.split('.');
+    var intPart = parts[0];
+    var decPart = parts[1] || '';
+    var intFormatted = intPart.replace(/\B(?=(\d{3})+(?!\d))/g, sep.thousands);
+    var result = decPart.length > 0
+      ? intFormatted + sep.decimal + decPart
+      : intFormatted;
+    return (num < 0 ? '-' : '') + result;
+  }
+  if (tipo === 'qty') return applyFormat(n, 0);
+  if (tipo === 'pct') { var sign = n >= 0 ? '+' : ''; return sign + applyFormat(n, 2) + '%'; }
+  if (tipo === 'usd') return '$' + applyFormat(n, 2);
+  var abs = Math.abs(n);
+  var dec;
+  if (abs >= 1000)        dec = 2;
+  else if (abs >= 1)      dec = 2;
+  else if (abs >= 0.01)   dec = 4;
+  else if (abs >= 0.0001) dec = 6;
+  else                    dec = 8;
+  return '$' + applyFormat(n, dec);
+}
+
+
 (function(){var p=new URLSearchParams(window.location.search);if(p.get('resetOnboarding')==='1'){['aurex_onboarding_done','onboardingDone','aurex_onboarding','onboarding_done'].forEach(function(k){localStorage.removeItem(k);});var u=new URL(window.location.href);u.searchParams.delete('resetOnboarding');history.replaceState(null,'',u.toString());}})();
 var BACKEND_URL='https://aurex-app-production.up.railway.app';
 var USER_WA=localStorage.getItem('aurex_wa_numero')||'';
@@ -281,7 +316,7 @@ function fetchBinance(tab){
       list.forEach(function(t){
         var sym=t.symbol.replace('USDT',''),price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
         var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
-        if(pel) pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+        if(pel) pel.textContent=_fmt(price,'precio');
         if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
       });
     }).catch(function(){});
@@ -320,13 +355,13 @@ function fetchYahoo(tab,pais,tf){
         if(tf&&tf!=='24h'){
           var firstClose=null;if(closes){for(var i=0;i<closes.length;i++){if(closes[i]!=null){firstClose=closes[i];break;}}}
           var pct2=firstClose&&firstClose>0?((price-firstClose)/firstClose*100):0;
-          if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(pel)pel.textContent=_fmt(price,'precio');
           if(cel){cel.textContent=(pct2>=0?'+':'')+pct2.toFixed(2)+'%';cel.style.color=pct2>=0?'#3FB950':'#F85149';}
           if(lbl) lbl.style.display='none';
         } else {
           var prevClose=meta.chartPreviousClose||meta.previousClose||price;
           var pct=prevClose>0?((price-prevClose)/prevClose*100):0;
-          if(pel)pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(pel)pel.textContent=_fmt(price,'precio');
           if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
           if(lbl){if(isClosed){lbl.textContent='Ult. cierre';lbl.style.display='inline';}else{lbl.style.display='none';}}
         }
@@ -373,7 +408,7 @@ function _loadMktBackground(tab, pais){
           // Set price immediately from ticker data
           var price=parseFloat(t.lastPrice),pct=parseFloat(t.priceChangePercent);
           var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
-          if(pel) pel.textContent=price>=1000?'$'+Math.round(price).toLocaleString('en'):(price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4));
+          if(pel) pel.textContent=_fmt(price,'precio');
           if(cel){cel.textContent=(pct>=0?'+':'')+pct.toFixed(2)+'%';cel.style.color=pct>=0?'#3FB950':'#F85149';}
           // Sparkline
           fetch('https://api.binance.com/api/v3/klines?symbol='+sym+'USDT&interval=1d&limit=7')
@@ -494,7 +529,7 @@ window._moveRow=function(row,dir){
   }
 };
 
-function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+Math.round(price).toLocaleString('en'):price>=1?'$'+price.toFixed(2):'$'+price.toFixed(4);it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;}
+function updateItemRT(tab,pais,sk,price,pct){var arr=tab==='acciones'?DATA.acciones[pais]||[]:DATA[tab]||[];var it=arr.find(function(x){return x.s===sk;});if(!it||!price)return;it.p=price>=1000?'$'+_fmt(price,'precio'):_fmt(price,'precio');it.c=(pct>=0?'+':'')+pct.toFixed(2)+'%';it.up=pct>=0?1:0;}
 
 function yahooFinanceRT(){}
 
