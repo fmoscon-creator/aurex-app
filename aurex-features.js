@@ -3148,7 +3148,7 @@ function _renderFearGreed(containerId) {
           (cat==='CRIPTO' && binanceIdx !== null ?
             '<div style="display:flex;gap:8px;align-items:center;margin-top:3px;">' +
               '<span style="font-size:10px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:13px;">'+d.value+'</b></span>' +
-              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Cripto FnG <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
+              '<span style="font-size:10px;color:#00BFFF;font-weight:700;">&#x25B6; Alt F&G <b style="font-size:13px;">'+binanceIdx+'</b></span>' +
             '</div>' : '') +
           dataLine +
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
