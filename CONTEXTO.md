@@ -1,5 +1,5 @@
 # CONTEXTO DEL PROYECTO AUREX
-Ultima actualizacion: 27 de Marzo de 2026 — fin de sesion Sabado
+Ultima actualizacion: 3 de Abril de 2026 - fin de sesion Viernes
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
@@ -10,20 +10,66 @@ App: https://fmoscon-creator.github.io/aurex-app
 Lee CONTEXTO.md y docs/PLAN-OPERATIVO.md del repo.
 Token GitHub: [TOKEN]
 Tarea de hoy segun cronograma: [FECHA] - [TAREA]
-Credenciales necesarias hoy: [solo las del dia]
 
-## ESTADO HOY 27/03/2026 — FIN DE SESION
+## ESTADO HOY 3/04/2026 - FIN DE SESION
 
-### COMPLETADO HOY:
-- fix encoding UTF-8 definitivo: doble-encoding corregido en todo el HTML
-- OBS1 nuevo diseno aprobado: 4 tarjetas (verde/azul/dorado/violeta) + boton Entrar a Aurex
-- OBS2 implementada: Senales IA en tiempo real — 3 features + boton Continuar
-- Conversor fiat con ExchangeRate API real: ARS/EUR/BRL se actualizan cada 30 min
-- PLAN-OPERATIVO.md creado en docs/ con cronograma completo 12 semanas
-- Flujo onboarding: OBS1 -> OBS2 -> App (sin formulario WhatsApp al inicio)
-- 4 commits exitosos en produccion
+### HEAD ACTUAL
+Commit: 3fe0e7d34d9ad2b7b6aef903c69cb7f8b05c1998
+Fecha: 2026-04-03T07:36:05Z
+Descripcion: Fix: reemplaza ... UTF-8 por ASCII en _appendMktRow
 
-### ESTADO DE CADA FEATURE:
+### SHA DE REVERSION DISPONIBLE
+151ae4945061ee9b1078b0ab211e26e3d7f269ba
+(HEAD al inicio de sesion del 3/04/2026)
+
+### COMPLETADO HOY 3/04/2026:
+- Fix iOS: clicks dropdown Portfolio (24h/7d/1m/3m/1y/Origen) - anti-double-fire
+- Fix iOS: boton Ver Variables del Modelo en IA - ontouchstart
+- Tabs Mercados/Futuros: mas chicos (10px) alineados a la derecha
+- Mercados: filtros tf (24h/7d/1m/3m/1a) dentro de cada activo (no en tfrow)
+- Docs: AUREX-PORTFOLIO-DOC.md actualizado
+- Docs: AUREX-MERCADOS-DOC.md creado
+
+### CONFIRMACIONES DE FERNANDO:
+- Fix iOS dropdown Portfolio: OK en iPhone
+- Fix iOS Ver Variables: OK en iPhone
+- Tabs mas chicos a la derecha: 'se ve bien en el iphone'
+- Filtros tf dentro de activos Mercados: OK en desktop, pendiente confirmar iPhone
+
+## ARCHIVOS DE DOCUMENTACION
+- AUREX-PORTFOLIO-DOC.md: documentacion tecnica completa del tab Portfolio
+- AUREX-MERCADOS-DOC.md: documentacion tecnica completa del tab Mercados
+- AUREX-IA-DOC.md: documentacion tecnica del tab IA
+- BUGFIX_HISTORIAL.md: historial de bugs y soluciones
+- REGLAS-DE-ORO-AUREX.md: reglas tecnicas para Claude
+- docs/PLAN-OPERATIVO.md: cronograma del proyecto
+
+## COMMITS SESION 3/04/2026 (orden cronologico)
+
+| SHA (completo) | Descripcion | Fecha UTC |
+|---|---|---|
+| 3fe0e7d34d9ad2b7b6aef903c69cb7f8b05c1998 | Fix: ... UTF-8 -> ASCII en _appendMktRow | 2026-04-03T07:36:05Z |
+| e1103a4578513fe2450a52597e91d5188d25fff5 | Fix: botones tf Mercados - quita + duplicado | 2026-04-03T07:31:55Z |
+| ecffeec9e8dbb663d952de9c331f669081ef4d05 | Mercados: filtros tf dentro de activos + oculta tfrow | 2026-04-03T07:29:01Z |
+| 2856c82023eed7b866f005c7c125fb9c69f99140 | Mercados: tabs mas chicos a la derecha | 2026-04-03T07:22:39Z |
+| 40e8d4b9664cbc1450e1de34bc04539579c7314c | Fix iOS: anti-double-fire dropdown portfolio + Ver Variables | 2026-04-03T07:10:23Z |
+| 55de4f84a61ab0fcfb51f759b594a7c4aa5b160c | Fix iOS: ontouchstart dropdown + Ver Variables | 2026-04-03T07:06:35Z |
+| d814fb1b6df6aac6de3bfcb49cf30f1c9f995521 | Fix iOS: touch-action dropdown portfolio | 2026-04-03T06:55:05Z |
+| 151ae4945061ee9b1078b0ab211e26e3d7f269ba | Mercados: tabs + paises compacto + fix Espana/Japon | 2026-04-03T06:11:35Z |
+| 7a739131f06f7b814aa05221f29d8ca054bd5bff | Mercados: elimina espacio banner eventos | 2026-04-03T05:51:41Z |
+| da092ddcd714cef288fbe356354324d1b9f31a18 | Fix combo banner: display switch | 2026-04-03T05:44:10Z |
+| 622cd381b142a0ee9a2751ca56c99faf2fbba125 | Fix combo banner: background slide + dot onclick | 2026-04-03T05:39:54Z |
+| 786d4e48d87c5bec910fe5347246d96d5edd7b34 | Mercados: banner combo + buscador arriba + pulse | 2026-04-03T05:34:59Z |
+| 39dd8013b1b113f714dbeb14715b924429d25d3a | Fix popup ?: _closeThermoHelp global + iPhone | 2026-04-03T05:01:05Z |
+| 0119c928c471bb1af52d861b3f0fa59705249825 | Fix popup ?: overlay+boton Entendido iPhone | 2026-04-03T04:57:50Z |
+| 2663239c270f2285102b854f6f025d830b5075ba | Termometro: frases contexto + boton ? popup | 2026-04-03T04:52:28Z |
+| f66572984871feea72ad31013b1e01bd5f80adf5 | Termometro: mensaje con accion concreta | 2026-04-03T04:41:53Z |
+| e89aaf07d1fb7c6cbee16d0f3ad196ab0e6f5e7f | Fix _calcPortPeriod: precios historicos | 2026-04-03T04:30:41Z |
+| d9b55f30499a1d25f9f1797f9190b0bbe0376134 | Fix 24h dropdown + Agregar grande | 2026-04-03T04:24:58Z |
+| cc13d06b70e16db2be4613b6c3d8f14c535d8d74 | Header portfolio: badge 24h dorado | 2026-04-03T04:18:44Z |
+| 628aadbde85553874a45532023946e1640c840e3 | Rediseno header portfolio: periodos visibles | 2026-04-03T04:11:31Z |
+
+## ESTADO DE CADA FEATURE
 
 REAL (funcionando):
 - App en produccion GitHub Pages
@@ -31,81 +77,38 @@ REAL (funcionando):
 - 6 tabs navegables
 - Precios crypto tiempo real (Binance REST cada 5seg)
 - Conversor crypto (Binance)
-- Conversor fiat ARS/EUR/BRL (ExchangeRate API — NUEVO HOY)
-- Diseno visual completo sin caracteres rotos (NUEVO HOY)
-- OBS1 nuevo diseno aprobado (NUEVO HOY)
-- OBS2 Senales IA info screen (NUEVO HOY)
-- Service Worker v2.0 network-first
+- Conversor fiat ARS/EUR/BRL (ExchangeRate API cada 30min)
+- Portfolio persistente en Supabase (autenticado)
+- Aurex Pulse / Fear & Greed (VIX, S&P, BTC, Oro, Petroleo)
+- Termometro de Riesgo con senales IA
+- Filtros temporales por activo en Mercados
+- Fix iOS touch en dropdown Portfolio y Ver Variables
 
 MOCK (pendiente):
-- Auth: NO EXISTE -> Semana 1 Dom 29/03 (PROXIMO)
-- Portfolio: in-memory -> Semana 1 Lun 30/03
-- Watchlist: in-memory -> Semana 1 Mar 31/03
-- Alertas WhatsApp: simuladas -> Semana 2 Sab 04/04
-- Senales IA: hardcodeadas -> Semana 2 Mar 07/04
-- Pagos Stripe: botones vacios -> Semana 3
-- Acciones USA: estaticas -> Semana 4
-- Push notifications: boton sin funcion -> Semana 2 Lun 06/04
-
-## PROXIMA TAREA INMEDIATA
-Dom 29/03: Supabase + Google OAuth
-- El codigo de integracion ya esta preparado en index.html (PENDIENTE DE KEYS)
-- Fernando necesita:
-  1. Crear proyecto en supabase.com (gratis)
-  2. Ir a Settings > API y copiar: Project URL + anon key
-  3. Ir a Authentication > Providers > Google y habilitar
-  4. En Google Cloud Console: crear OAuth client ID para web
-  5. Pasarle a Claude: URL Supabase + anon key + Google client ID
-- Con esas 3 credenciales Claude completa la integracion en 30 minutos
-
-## AUDITORIA REAL vs MOCK COMPLETA
-TAB MERCADOS:
-- Precios crypto: REAL (Binance REST cada 5seg)
-- Precios acciones: MOCK (hardcodeados)
-- Seniales IA: MOCK (93 hardcodeadas en DATA)
-- Graficas: MOCK (arrays estaticos)
-
-TAB PORTFOLIO:
-- Storage: MOCK (in-memory, se pierde al cerrar)
-- Auth: NO EXISTE
-
-TAB WATCHLIST:
-- Storage: MOCK (in-memory)
-- Precios: REAL (mismos de Binance)
-
-TAB SENALES IA:
-- Fuente: MOCK (objeto DATA hardcodeado)
-- Claude API: NO conectado
-
-TAB ALERTAS:
-- WhatsApp/Twilio: NO conectado
-- Todo simulado
-
-TAB PERFIL:
-- Usuario: MOCK hardcodeado
-- Auth: NO EXISTE
-- Planes: VISUAL solo
-
-CONVERSOR:
-- Crypto rates: REAL (Binance cada 30seg)
-- Fiat rates ARS/EUR/BRL: REAL (ExchangeRate API cada 30min) — NUEVO HOY
+- Alertas WhatsApp: simuladas -> proxima prioridad
+- Senales IA: hardcodeadas -> conectar a Claude API
+- Acciones USA: precios via Yahoo proxy (funciona) / Polygon.io pendiente
+- Push notifications: boton funcional, logica pendiente
 
 ## DATOS TECNICOS
-- Frontend: HTML+CSS+JS Vanilla monolito ~2800 lineas
-- Hosting: GitHub Pages auto-deploy
-- Crypto: Binance REST API
+- Frontend: HTML+CSS+JS Vanilla monolito ~3000 lineas (index.html) + aurex-features.js (~3900 lineas)
+- Hosting: GitHub Pages auto-deploy desde main
+- Crypto: Binance REST API (sin key, publica)
+- Acciones/ETFs: Yahoo Finance via corsproxy.io
 - Fiat: open.er-api.com (gratis, sin key)
-- Acciones: Estaticas (Fase 2: Polygon.io Semana 4)
-- IA: Hardcodeada (Fase 2: Claude API Semana 2)
-- Backend: Railway en construccion (server.js vacio)
-- DB: Supabase planificado (Semana 1)
-- Auth: Google OAuth via Supabase (Semana 1)
-- Pagos: Stripe planificado (Semana 3)
-- Alertas: Twilio planificado (Semana 2)
+- IA: modelo interno _calcIAScore + _iaSeed (datos hardcodeados)
+- Backend: Railway en construccion
+- DB: Supabase (URL: dklljnfhlzmfsfmxrpie.supabase.co)
+- Auth: Google OAuth via Supabase (funcionando)
+- Pagos: Stripe planificado
+- Alertas: Twilio planificado
 
 ## LINKS
 - App: https://fmoscon-creator.github.io/aurex-app
 - Repo: https://github.com/fmoscon-creator/aurex-app
+- Portfolio Doc: https://github.com/fmoscon-creator/aurex-app/blob/main/AUREX-PORTFOLIO-DOC.md
+- Mercados Doc: https://github.com/fmoscon-creator/aurex-app/blob/main/AUREX-MERCADOS-DOC.md
+- IA Doc: https://github.com/fmoscon-creator/aurex-app/blob/main/AUREX-IA-DOC.md
 - Plan operativo: https://github.com/fmoscon-creator/aurex-app/blob/main/docs/PLAN-OPERATIVO.md
 - Fundador: Fernando G. Moscon fmoscon@gmail.com
 
@@ -114,18 +117,15 @@ CONVERSOR:
 - PRO: $9.99/mes, 50 activos, 10 senales, alertas push
 - ELITE: $19.99/mes, ilimitado, 8 idiomas, soporte VIP
 
-## CRONOGRAMA SEMANA 1 (28 Mar - 2 Abr)
-- Sab 28/03: Fix encoding + OBS1 + OBS2 + Conversor fiat COMPLETADO
-- Dom 29/03: Supabase + Google OAuth (PROXIMO)
-- Lun 30/03: Portfolio persistente en Supabase
-- Mar 31/03: Watchlist + Alertas en Supabase
-- Mie 01/04: Testing iOS Safari
-- Jue 02/04: Buffer bugs + update docs
-
 ## NOTA PARA CLAUDE
 - El token GitHub se pasa en el chat al inicio de cada sesion
-- El codigo de Supabase ya tiene los placeholders SUPABASE_URL y SUPABASE_ANON_KEY
-- Para commitear usar GitHub API (fetch PUT a api.github.com) desde la live app page
-- CORS: los fetch a api.github.com funcionan desde fmoscon-creator.github.io
+- SIEMPRE responder en espanol
+- SIEMPRE leer blobs desde Git API, nunca desde Pages
+- SIEMPRE verificar OLD aparece exactamente 1 vez antes de reemplazar
+- SIEMPRE usar split().join() en lugar de replace()
+- Todo HTML/JS nuevo 100% ASCII (tildes como entidades)
+- btoa(unescape(encodeURIComponent(content))) para base64
+- Screenshot obligatorio antes de reportar OK
+- Guardar SHA de reversion antes de cada cambio
 
-Generado: Claude Sonnet 4.6 - 27/03/2026
+Generado: Claude Sonnet 4.6 - 3/04/2026
