@@ -561,51 +561,72 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- HEADER PORTFOLIO -->
 <div style="padding:10px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#1A0D00 0%,#0D1117 100%)">
 
-  <!-- Fila tÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ­tulo AUREX + Agregar Activos -->
+  <!-- Fila titulo AUREX Portfolio -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
     <div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32">
+  <defs>
+    <linearGradient id="gAhd_pt" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#F7D060"></stop><stop offset="50%" stop-color="#D4A017"></stop><stop offset="100%" stop-color="#8B6208"></stop>
+    </linearGradient>
+    <linearGradient id="gChd_pt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F0C030"></stop><stop offset="100%" stop-color="#9A7010"></stop>
+    </linearGradient>
+  </defs>
+  <circle cx="150" cy="150" r="118" fill="none" stroke="url(#gChd_pt)" stroke-width="3.5"></circle>
+  <circle cx="150" cy="150" r="100" fill="none" stroke="url(#gChd_pt)" stroke-width="1.5"></circle>
+  <circle cx="150" cy="150" r="94" fill="none" stroke="url(#gChd_pt)" stroke-width="1" opacity="0.8"></circle>
+  <line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAhd_pt)" stroke-width="11" stroke-linecap="round"></line>
+  <line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAhd_pt)" stroke-width="11" stroke-linecap="round"></line>
+  <line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAhd_pt)" stroke-width="11" stroke-linecap="round"></line>
+  <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAhd_pt)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"></polyline>
+  <circle cx="150" cy="164" r="5" fill="#F7D060"></circle>
+</svg><span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017" data-logo-added="1">AUREX</span>
       <span style="font-size:13px;color:#8B949E"> Portfolio</span>
     </div>
-    <div onclick="openAddActivo()" style="background:#D4A017;color:#0D1117;border-radius:9px;padding:9px 16px;font-size:13px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">&#xFF0B; Agregar Activos</div>
   </div>
 
-  <!-- Cuadro VALOR TOTAL compacto -->
+  <!-- Cuadro VALOR TOTAL -->
   <div style="background:#161B22;border:1px solid #30363D;border-radius:12px;padding:10px 14px;">
 
-    <!-- FILA 1: VALOR TOTAL + $ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¾ | resultado % $ | periodos -->
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;">
+    <!-- FILA 1: VALOR TOTAL + moneda + resultado periodo -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
       <div style="display:flex;align-items:center;gap:5px;">
         <span style="font-size:9px;color:#8B949E;font-weight:500;letter-spacing:.5px;">VALOR TOTAL</span>
         <div onclick="_cyclePortCurrency()" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;"><span id="port-curr-badge" style="color:#000;font-weight:700;">$</span> &#9660;</div>
       </div>
-      <div style="display:flex;align-items:center;gap:3px;">
-        <span id="port-period-pct" style="font-size:10px;font-weight:700;color:#8B949E;"></span>
-        <span id="port-period-amt" style="font-size:9px;color:#8B949E;"></span>
-        <div id="port-period-row" style="display:flex;gap:2px;margin-left:2px;">
-          <div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#D4A017;color:#000;font-weight:700;border:0.5px solid #D4A017;-webkit-tap-highlight-color:rgba(0,0,0,0);">24h</div>
-          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1m</div>
-          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'3m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">3m</div>
-          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1y</div>
-          <div class="port-period-btn tf" onclick="portTotalPeriod(this,'all')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">Orig</div>
-        </div>
+      <div id="port-pnl-row" style="display:flex;align-items:center;gap:4px;">
+        <span id="port-pnl-usd" style="font-size:11px;font-weight:700;color:#8B949E;"></span>
+        <span id="port-pnl-pct" style="font-size:12px;font-weight:800;color:#8B949E;"></span>
       </div>
     </div>
 
     <!-- FILA 2: Valor total grande -->
     <div id="port-total" style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:6px;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
 
-    <!-- FILA 3: Activos + Mejor 24h + Conversor -->
-    <div style="display:flex;gap:6px;align-items:stretch;">
-      <div style="background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:4px 10px;text-align:center;flex:0 0 auto;">
-        <div style="font-size:8px;color:#8B949E;font-weight:500;">Activos</div>
-        <div id="port-cnt-badge" style="font-size:14px;font-weight:800;color:#fff;">0</div>
+    <!-- FILA 3: Botones periodo + Agregar Activos -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+      <div id="port-period-row" style="display:flex;gap:2px;">
+        <div class="port-period-btn tf on" onclick="portTotalPeriod(this,'24h')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#D4A017;color:#000;font-weight:700;border:0.5px solid #D4A017;-webkit-tap-highlight-color:rgba(0,0,0,0);">24h</div>
+        <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1m</div>
+        <div class="port-period-btn tf" onclick="portTotalPeriod(this,'3m')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">3m</div>
+        <div class="port-period-btn tf" onclick="portTotalPeriod(this,'1y')"  style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">1y</div>
+        <div class="port-period-btn tf" onclick="portTotalPeriod(this,'all')" style="font-size:9px;padding:2px 7px;border-radius:4px;cursor:pointer;background:#21262D;color:#8B949E;-webkit-tap-highlight-color:rgba(0,0,0,0);">Orig</div>
       </div>
-      <div style="background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:4px 10px;flex:1;text-align:center;">
-        <div style="font-size:8px;color:#8B949E;">&#x1F3C6; Mejor 24h</div>
-        <div id="port-best-badge" style="font-size:11px;font-weight:700;color:#22c55e;">ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ¢ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ</div>
+      <div onclick="openAddActivo()" style="background:#D4A017;color:#0D1117;border-radius:7px;padding:5px 11px;font-size:11px;font-weight:800;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">&#65291; Agregar</div>
+    </div>
+
+    <!-- FILA 4: Activos + Mejor 24h + Conversor -->
+    <div style="display:flex;gap:5px;align-items:stretch;">
+      <div style="background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:3px 9px;text-align:center;flex:0 0 auto;">
+        <div style="font-size:7px;color:#8B949E;font-weight:500;">Activos</div>
+        <div id="port-cnt-badge" style="font-size:13px;font-weight:800;color:#fff;">0</div>
       </div>
-      <div onclick="openConversor()" style="background:#0D1117;border:1px solid #3B82F6;border-radius:6px;padding:4px 12px;color:#3B82F6;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#x21C4; Conversor</div>
+      <div style="background:#0D1117;border:1px solid #30363D;border-radius:6px;padding:3px 8px;flex:1;text-align:center;min-width:0;">
+        <div style="font-size:7px;color:#8B949E;">&#x1F3C6; Mejor 24h</div>
+        <div id="port-best-badge" style="font-size:10px;font-weight:700;color:#22c55e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">---</div>
+      </div>
+      <div onclick="openConversor()" style="background:#0D1117;border:1px solid #3B82F6;border-radius:6px;padding:3px 9px;color:#3B82F6;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#x21C4; Conv.</div>
     </div>
 
   </div>
