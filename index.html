@@ -589,19 +589,28 @@ document.addEventListener('DOMContentLoaded', function() {
   <!-- Cuadro VALOR TOTAL -->
   <div style="background:#161B22;border:1px solid #30363D;border-radius:12px;padding:10px 14px;">
 
-    <!-- FILA 1: label + moneda + resultado + periodo -->
+    <!-- FILA 1: label + moneda + resultado + periodo dropdown -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
       <div style="display:flex;align-items:center;gap:5px;">
         <span style="font-size:9px;color:#8B949E;font-weight:500;letter-spacing:.5px;">VALOR TOTAL</span>
         <div onclick="_cyclePortCurrency()" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;"><span id="port-curr-badge" style="color:#000;font-weight:700;">$</span> &#9660;</div>
       </div>
-      <div id="port-pnl-row" style="display:flex;align-items:center;gap:4px;">
+      <div id="port-pnl-row" style="display:flex;align-items:center;gap:4px;position:relative;">
         <span id="port-pnl-usd" style="font-size:11px;font-weight:700;color:#8B949E;"></span>
         <span id="port-pnl-pct" style="font-size:12px;font-weight:800;color:#8B949E;"></span>
-        <div id="port-period-badge-wrap" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);" onclick="window._togglePortPeriodDD && window._togglePortPeriodDD()">
-          <span id="port-period-badge">24h</span> &#9660;
+        <div style="position:relative;">
+          <div onclick="event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);">
+            <span id="port-period-badge">24h</span> &#9660;
+          </div>
+          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 16px rgba(0,0,0,.6);z-index:9999;">
+            <div data-key="24h" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;color:#F59E0B;font-weight:700;background:#2a2a3e;">24 horas &#10003;</div>
+            <div data-key="7d"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">7 d&#237;as</div>
+            <div data-key="1m"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">1 mes</div>
+            <div data-key="3m"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">3 meses</div>
+            <div data-key="1y"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">1 a&#241;o</div>
+            <div data-key="buy" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;border-top:1px solid #333;">Desde compra</div>
+          </div>
         </div>
-        <div id="port-period-dropdown" style="display:none;position:absolute;right:14px;top:auto;background:#1e1e2e;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 16px rgba(0,0,0,.6);z-index:9999;"></div>
       </div>
     </div>
 
@@ -618,8 +627,8 @@ document.addEventListener('DOMContentLoaded', function() {
         <div style="font-size:7px;color:#8B949E;white-space:nowrap;">&#x1F3C6; Mejor 24h</div>
         <div id="port-best-badge" style="font-size:9px;font-weight:700;color:#22c55e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">---</div>
       </div>
-      <div onclick="openAddActivo()" style="background:#D4A017;color:#0D1117;border-radius:6px;padding:4px 10px;font-size:10px;font-weight:800;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#65291; Agregar</div>
-      <div onclick="openConversor()" style="background:#0D1117;border:1px solid #3B82F6;border-radius:6px;padding:4px 9px;color:#3B82F6;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#x21C4; Conv.</div>
+      <div onclick="openAddActivo()" style="background:#D4A017;color:#0D1117;border-radius:7px;padding:7px 12px;font-size:11px;font-weight:800;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Agregar Activos &#65291;</div>
+      <div onclick="openConversor()" style="background:#0D1117;border:1px solid #3B82F6;border-radius:7px;padding:7px 9px;color:#3B82F6;font-size:10px;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#x21C4; Conv.</div>
     </div>
 
   </div>
