@@ -3875,10 +3875,10 @@ function _renderComboBanner(containerId){
   document.body.removeChild(tmpMarket);
   document.body.removeChild(tmpFutures);
 
-  var sOn  = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
-  var sOff = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+  var sOn  = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
+  var sOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
 
-  var html = '<div style="display:flex;gap:6px;padding:5px 12px 4px;">'
+  var html = '<div style="display:flex;gap:5px;padding:2px 10px 2px;justify-content:flex-end;">'
     + '<div id="combo-tab-a" style="' + sOn  + '" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()">Mercados</div>'
     + '<div id="combo-tab-b" style="' + sOff + '" onclick="if(window._comboActive!==1&&window._comboBannerFlip)window._comboBannerFlip()">Futuros</div>'
     + '</div>'
@@ -3888,8 +3888,8 @@ function _renderComboBanner(containerId){
   el.innerHTML = html;
 
   window._comboActive = 0;
-  window._comboSOn  = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
-  window._comboSOff = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+  window._comboSOn  = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
+  window._comboSOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
 
   function _comboFlip(){
     window._comboActive = 1 - window._comboActive;
