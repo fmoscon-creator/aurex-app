@@ -3856,7 +3856,6 @@ function _renderComboBanner(containerId){
   var el = document.getElementById(elId);
   if(!el) return;
 
-  // Temp divs for existing renderers
   var tmpMarket = document.createElement('div');
   tmpMarket.id = 'mkt-market-banner';
   tmpMarket.style.display = 'none';
@@ -3876,18 +3875,15 @@ function _renderComboBanner(containerId){
   document.body.removeChild(tmpMarket);
   document.body.removeChild(tmpFutures);
 
-  var bg = 'background:#111;';
-  var html = '<div style="position:relative;overflow:hidden;">'
-    + '<div id="combo-slide-a" style="' + bg + 'transition:opacity 0.4s;opacity:1;">' + slideA + '</div>'
-    + '<div id="combo-slide-b" style="' + bg + 'transition:opacity 0.4s;opacity:0;position:absolute;top:0;left:0;right:0;">' + slideB + '</div>'
+  var html = '<div id="combo-slide-a">' + slideA + '</div>'
+    + '<div id="combo-slide-b" style="display:none;">' + slideB + '</div>'
     + '<div style="display:flex;justify-content:center;gap:5px;padding:3px 0 4px;">'
     + '<div id="combo-dot-a" style="width:6px;height:6px;border-radius:50%;background:#D4A017;cursor:pointer;" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
     + '<div id="combo-dot-b" style="width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer;" onclick="if(window._comboActive!==1&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
-    + '</div></div>';
+    + '</div>';
 
   el.innerHTML = html;
 
-  // Auto-rotate
   window._comboActive = 0;
   function _comboFlip(){
     window._comboActive = 1 - window._comboActive;
@@ -3897,12 +3893,10 @@ function _renderComboBanner(containerId){
     var db = document.getElementById('combo-dot-b');
     if(!sa||!sb) return;
     if(window._comboActive===0){
-      sa.style.opacity='1'; sa.style.position='relative';
-      sb.style.opacity='0'; sb.style.position='absolute';
+      sa.style.display=''; sb.style.display='none';
       if(da){da.style.background='#D4A017';} if(db){db.style.background='#444';}
     } else {
-      sb.style.opacity='1'; sb.style.position='relative';
-      sa.style.opacity='0'; sa.style.position='absolute';
+      sa.style.display='none'; sb.style.display='';
       if(db){db.style.background='#D4A017';} if(da){da.style.background='#444';}
     }
   }
