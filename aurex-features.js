@@ -3400,11 +3400,13 @@ var FUTURES_ITEMS = [
 
 async function _fetchFuturesData() {
   var rawSyms = FUTURES_ITEMS.map(function(x){ return x.rawS; });
-  var results = {};
-  async function fetchOne(sym){
+  if(!window._futuresCache) window._futuresCache = {};
+  var results = window._futuresCache;
+  for(var i=0; i<rawSyms.length; i++){
+    var sym = rawSyms[i];
     try {
       var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
-      var res = await fetch(url, {signal: AbortSignal.timeout(10000)});
+      var res = await fetch(url, {signal: AbortSignal.timeout(12000)});
       var wrapper = await res.json();
       var data = JSON.parse(wrapper.contents);
       if(data.chart && data.chart.result && data.chart.result[0]) {
@@ -3414,13 +3416,12 @@ async function _fetchFuturesData() {
         var pct = prev > 0 ? ((price - prev) / prev * 100) : 0;
         var open = (meta.marketState === 'REGULAR' || meta.marketState === 'PRE' || meta.marketState === 'POST');
         results[sym] = { price: price, pct: pct, open: open, state: meta.marketState || 'CLOSED' };
+        window._futuresCache = results;
+        window._futuresTs = Date.now();
+        if(typeof _renderFuturesBanner === 'function') _renderFuturesBanner();
       }
     } catch(e) {}
-  }
-  var chunkSize = 4;
-  for(var i=0; i<rawSyms.length; i+=chunkSize){
-    var chunk = rawSyms.slice(i, i+chunkSize);
-    await Promise.all(chunk.map(fetchOne));
+    await new Promise(function(r){ setTimeout(r, 400); });
   }
   window._futuresCache = results;
   window._futuresTs = Date.now();
