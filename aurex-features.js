@@ -3401,10 +3401,10 @@ var FUTURES_ITEMS = [
 async function _fetchFuturesData() {
   var rawSyms = FUTURES_ITEMS.map(function(x){ return x.rawS; });
   var results = {};
-  var promises = rawSyms.map(async function(sym) {
+  async function fetchOne(sym){
     try {
       var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
-      var res = await fetch(url, {signal: AbortSignal.timeout(8000)});
+      var res = await fetch(url, {signal: AbortSignal.timeout(10000)});
       var wrapper = await res.json();
       var data = JSON.parse(wrapper.contents);
       if(data.chart && data.chart.result && data.chart.result[0]) {
@@ -3416,8 +3416,12 @@ async function _fetchFuturesData() {
         results[sym] = { price: price, pct: pct, open: open, state: meta.marketState || 'CLOSED' };
       }
     } catch(e) {}
-  });
-  await Promise.all(promises);
+  }
+  var chunkSize = 4;
+  for(var i=0; i<rawSyms.length; i+=chunkSize){
+    var chunk = rawSyms.slice(i, i+chunkSize);
+    await Promise.all(chunk.map(fetchOne));
+  }
   window._futuresCache = results;
   window._futuresTs = Date.now();
   return results;
