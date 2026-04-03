@@ -1252,7 +1252,7 @@ window.editMarketBanner = function(){
         '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="width:100%;background:#3FB950;border:none;border-radius:8px;padding:10px;color:#0D1117;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove();if(typeof _renderMarketBanner===&apos;function&apos;){_renderMarketBanner(&apos;mkt-market-banner&apos;);var _sa=document.getElementById(&apos;combo-slide-a&apos;);var _me=document.getElementById(&apos;mkt-market-banner&apos;);if(_sa&&_me)_sa.innerHTML=_me.innerHTML;}" style="width:100%;background:#3FB950;border:none;border-radius:8px;padding:10px;color:#0D1117;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
@@ -1269,6 +1269,10 @@ window.toggleMktPref = function(m){
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
   _renderMarketBanner();
+  _renderMarketBanner('mkt-market-banner');
+  var _sa = document.getElementById('combo-slide-a');
+  var _mktEl = document.getElementById('mkt-market-banner');
+  if(_sa && _mktEl) _sa.innerHTML = _mktEl.innerHTML;
   _renderFearGreed();
   _renderFuturesBanner();
 };
