@@ -9,10 +9,10 @@
   :root { --gold: #C9A84C; --gold-light: #E8C97A; --black: #080808; --text: #d4c9b0; --text-dim: #7a7060; --white: #f5f0e8; }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--black); color: var(--text); font-family: 'Montserrat', sans-serif; font-weight: 300; line-height: 1.8; min-height: 100vh; }
-  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 15% 20%, rgba(201,168,76,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 72% 8%, rgba(201,168,76,0.3) 0%, transparent 100%), radial-gradient(1px 1px at 92% 75%, rgba(201,168,76,0.35) 0%, transparent 100%); pointer-events: none; z-index: 0; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: radial-gradient(1px 1px at 15% 20%, rgba(201,168,76,0.4) 0%, transparent 100%), radial-gradient(1px 1px at 72% 8%, rgba(201,168,76,0.3) 0%, transparent 100%); pointer-events: none; z-index: 0; }
   .container { max-width: 760px; margin: 0 auto; padding: 60px 24px 80px; position: relative; z-index: 1; }
   header { text-align: center; margin-bottom: 56px; padding-bottom: 40px; border-bottom: 1px solid rgba(201,168,76,0.2); }
-  .logo { font-family: 'Cormorant Garamond', serif; font-size: 13px; font-weight: 300; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 13px; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; display: block; }
   h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(28px, 6vw, 42px); font-weight: 300; color: var(--white); letter-spacing: 0.05em; line-height: 1.2; margin-bottom: 16px; }
   .separator { width: 60px; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 20px auto; }
   .meta { font-size: 13px; color: var(--text-dim); }
@@ -41,45 +41,41 @@
     <span class="logo">AUREX</span>
     <h1>Centro de Soporte</h1>
     <div class="separator"></div>
-    <p class="meta">Estamos para ayudarte con cualquier consulta sobre la aplicación</p>
+    <p class="meta">Estamos para ayudarte con cualquier consulta</p>
   </header>
   <div class="contact-card">
     <h2>¿Necesitás ayuda?</h2>
     <p>Escribinos y te respondemos dentro de las 24 horas hábiles.</p>
-    <a href="mailto:aurex.support@gmail.com" class="email-btn">aurex.support@gmail.com</a>
+    <a href="mailto:app.aurex@gmail.com" class="email-btn">app.aurex@gmail.com</a>
   </div>
   <h2 class="section-title">Preguntas Frecuentes</h2>
   <div class="faq-item">
     <p class="faq-q">¿Qué es AUREX?</p>
-    <p class="faq-a">AUREX es una plataforma de información financiera con inteligencia artificial que ofrece señales de mercado, cotizaciones en tiempo real y alertas personalizadas vía WhatsApp para inversores de habla hispana.</p>
+    <p class="faq-a">AUREX es una plataforma de información financiera con IA que ofrece señales de mercado, cotizaciones en tiempo real y alertas vía WhatsApp para inversores de habla hispana.</p>
   </div>
   <div class="faq-item">
-    <p class="faq-q">¿Las señales de AUREX son asesoramiento financiero?</p>
-    <p class="faq-a">No. Las señales y análisis de AUREX son exclusivamente informativos y no constituyen asesoramiento de inversión. Toda decisión de inversión es responsabilidad del usuario.</p>
+    <p class="faq-q">¿Las señales son asesoramiento financiero?</p>
+    <p class="faq-a">No. Las señales son exclusivamente informativas y no constituyen asesoramiento de inversión. Toda decisión es responsabilidad del usuario.</p>
   </div>
   <div class="faq-item">
     <p class="faq-q">¿Cómo activo las alertas de WhatsApp?</p>
-    <p class="faq-a">Ingresá a la pestaña "Alertas" dentro de la app, ingresá tu número de teléfono con el código de país y tocá "Activar". Recibirás un mensaje de confirmación vía WhatsApp.</p>
+    <p class="faq-a">Ingresá a la pestaña "Alertas", ingresá tu número con el código de país y tocá "Activar".</p>
   </div>
   <div class="faq-item">
     <p class="faq-q">¿Qué mercados cubre AUREX?</p>
-    <p class="faq-a">AUREX cubre acciones (S&amp;P 500, Nasdaq), ETFs, metales preciosos (oro, plata), futuros, criptomonedas y pares de divisas (Forex) con actualizaciones en tiempo real.</p>
+    <p class="faq-a">Acciones (S&amp;P 500, Nasdaq), ETFs, metales preciosos, futuros, criptomonedas y divisas (Forex) en tiempo real.</p>
   </div>
   <div class="faq-item">
     <p class="faq-q">¿Cómo cancelo mi suscripción?</p>
-    <p class="faq-a">Desde Configuración → Apple ID → Suscripciones en tu iPhone, o contactanos a <a href="mailto:aurex.support@gmail.com">aurex.support@gmail.com</a>.</p>
+    <p class="faq-a">Desde Configuración → Apple ID → Suscripciones, o escribinos a <a href="mailto:app.aurex@gmail.com">app.aurex@gmail.com</a>.</p>
   </div>
   <div class="faq-item">
-    <p class="faq-q">¿Cómo elimino mi cuenta y mis datos?</p>
-    <p class="faq-a">Escribinos a <a href="mailto:aurex.support@gmail.com">aurex.support@gmail.com</a> con el asunto "Eliminar cuenta". Procesamos la solicitud dentro de los 5 días hábiles.</p>
+    <p class="faq-q">¿Cómo elimino mi cuenta?</p>
+    <p class="faq-a">Escribinos a <a href="mailto:app.aurex@gmail.com">app.aurex@gmail.com</a> con el asunto "Eliminar cuenta". Lo procesamos en 5 días hábiles.</p>
   </div>
   <div class="faq-item">
     <p class="faq-q">¿AUREX está disponible fuera de Argentina?</p>
-    <p class="faq-a">Sí. AUREX está diseñado para inversores de habla hispana a nivel global. La app funciona en cualquier país con acceso a internet.</p>
-  </div>
-  <div class="faq-item">
-    <p class="faq-q">¿Cómo reporto un problema técnico?</p>
-    <p class="faq-a">Escribinos a <a href="mailto:aurex.support@gmail.com">aurex.support@gmail.com</a> describiendo el problema, el modelo de tu dispositivo y la versión del sistema operativo.</p>
+    <p class="faq-a">Sí. AUREX está diseñado para inversores de habla hispana a nivel global.</p>
   </div>
   <div class="links-row">
     <a href="/privacy" class="link-card">
