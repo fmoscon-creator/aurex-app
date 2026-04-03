@@ -1229,6 +1229,8 @@ function _renderMarketBanner(containerId){
 }
 
 window.editMarketBanner = function(){
+  var existing = document.getElementById('aurex-mkt-edit-popup');
+  if(existing){ existing.remove(); return; }
   var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
   var opts = ['EEUU','ARG','BRASIL','LONDRES','ESPANA','ALEMANIA','FRANCIA','JAPON','CHINA','HONGKONG','ASIA'];
   var rows = opts.map(function(m){
@@ -1240,13 +1242,19 @@ window.editMarketBanner = function(){
       '<div onclick="toggleMktPref(\'' + m + '\')" id="mkt-tog-'+m+'" style="width:36px;height:20px;border-radius:10px;background:'+onBg+';cursor:pointer;position:relative;">' +
       '<div style="position:absolute;top:2px;left:'+knobL+';width:16px;height:16px;border-radius:50%;background:#fff;"></div></div></div>';
   }).join('');
-  var body = document.getElementById('port-modal-body');
-  var modal = document.getElementById('port-modal');
-  if(!body||!modal) return;
-  body.innerHTML = '<div style="color:#E6EDF3;font-size:14px;font-weight:700;margin-bottom:12px;">Mercados en banner</div>' +
-    rows +
-    '<div onclick="closePortModal()" style="margin-top:14px;background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Listo</div>';
-  modal.style.display = 'flex';
+  var popup = document.createElement('div');
+  popup.id = 'aurex-mkt-edit-popup';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  popup.innerHTML =
+    '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;max-height:85vh;overflow-y:auto;">' +
+      '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
+        '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">Mercados en banner</span>' +
+        '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
+      '</div>' +
+      rows +
+      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="width:100%;background:#3FB950;border:none;border-radius:8px;padding:10px;color:#0D1117;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
+    '</div>';
+  document.body.appendChild(popup);
 };
 window.toggleMktPref = function(m){
   var prefs = JSON.parse(localStorage.getItem('aurex_markets_pref') || '["EEUU","ASIA","ARG"]');
