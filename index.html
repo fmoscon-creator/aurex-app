@@ -1706,7 +1706,61 @@ display:flex;align-items:center;justify-content:space-between}
   <div class="pac-titulo" onclick="pacToggle('pac-b9')">
     <span>&#128682; Sesi&#243;n</span><span class="pac-chevron">&#9660;</span>
   </div>
-  <div class="pac-cuerpo"></div>
+  <div class="pac-cuerpo">
+    <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
+      <div style="padding:4px 0 16px;border-bottom:1px solid #21262D">
+        <div style="font-size:12px;color:#8B949E;margin-bottom:12px;line-height:1.4">
+          Vas a salir de tu cuenta en este dispositivo.
+        </div>
+        <button onclick="pacCerrarSesion()"
+          style="width:100%;background:#161B22;border:1px solid #8B949E;
+          border-radius:10px;color:#fff;font-size:15px;font-weight:700;
+          padding:13px;cursor:pointer;letter-spacing:.3px">
+          &#128682; Cerrar sesi&#243;n
+        </button>
+      </div>
+      <div style="margin-top:16px;border:1px solid #e74c3c44;border-radius:10px;padding:14px">
+        <div style="font-size:11px;color:#e74c3c;font-weight:700;letter-spacing:.8px;
+          text-transform:uppercase;margin-bottom:8px">&#9888; Zona de peligro</div>
+        <div style="font-size:12px;color:#8B949E;margin-bottom:12px;line-height:1.4">
+          Eliminar tu cuenta es una acci&#243;n irreversible.
+          Se borrar&#225;n todos tus datos, portafolio y configuraci&#243;n.
+        </div>
+        <button onclick="pacMostrarConfElim()"
+          id="btn-elim-cuenta"
+          style="width:100%;background:transparent;border:1px solid #e74c3c;
+          border-radius:10px;color:#e74c3c;font-size:14px;font-weight:600;
+          padding:11px;cursor:pointer">
+          &#128465; Eliminar mi cuenta
+        </button>
+        <div id="elim-confirm-panel" style="display:none;margin-top:14px">
+          <div style="font-size:12px;color:#e74c3c;margin-bottom:8px;font-weight:600">
+            Escrib&#237; tu email para confirmar:
+          </div>
+          <input id="elim-email-input" type="email"
+            placeholder="tu@email.com"
+            style="width:100%;box-sizing:border-box;background:#0d0d1a;
+            border:1px solid #e74c3c;border-radius:8px;color:#fff;
+            font-size:14px;padding:10px 12px;outline:none;margin-bottom:10px"
+            oninput="pacCheckElimEmail()" />
+          <div style="display:flex;gap:8px">
+            <button onclick="pacCancelarElim()"
+              style="flex:1;background:#21262D;border:none;border-radius:8px;
+              color:#8B949E;font-size:13px;font-weight:600;padding:10px;cursor:pointer">
+              Cancelar
+            </button>
+            <button id="btn-confirmar-elim" onclick="pacEliminarCuenta()"
+              disabled
+              style="flex:1;background:#e74c3c33;border:1px solid #e74c3c;
+              border-radius:8px;color:#e74c3c55;font-size:13px;font-weight:700;
+              padding:10px;cursor:not-allowed;opacity:.5">
+              Confirmar eliminaci&#243;n
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 </div>
 <div id="auth-msg" class="auth-msg"></div>
@@ -2352,6 +2406,68 @@ window.pacCalificar=pacCalificar;
 window.pacContacto=pacContacto;
 window.pacRed=pacRed;
 window.pacLegal=pacLegal;
+function pacCerrarSesion(){
+  if(typeof logoutUser==='function') logoutUser();
+}
+function pacMostrarConfElim(){
+  var p=document.getElementById('elim-confirm-panel');
+  var b=document.getElementById('btn-elim-cuenta');
+  if(p){ p.style.display='block'; }
+  if(b){ b.style.display='none'; }
+}
+function pacCancelarElim(){
+  var p=document.getElementById('elim-confirm-panel');
+  var b=document.getElementById('btn-elim-cuenta');
+  var inp=document.getElementById('elim-email-input');
+  if(p){ p.style.display='none'; }
+  if(b){ b.style.display='block'; }
+  if(inp){ inp.value=''; }
+  pacCheckElimEmail();
+}
+function pacCheckElimEmail(){
+  var inp=document.getElementById('elim-email-input');
+  var btn=document.getElementById('btn-confirmar-elim');
+  if(!inp||!btn) return;
+  var u=window._currentUser;
+  var email=u?u.email:'';
+  var match=inp.value.trim().toLowerCase()===email.toLowerCase();
+  btn.disabled=!match;
+  btn.style.opacity=match?'1':'0.5';
+  btn.style.cursor=match?'pointer':'not-allowed';
+  btn.style.color=match?'#e74c3c':'#e74c3c55';
+  btn.style.background=match?'#e74c3c22':'#e74c3c11';
+}
+async function pacEliminarCuenta(){
+  var btn=document.getElementById('btn-confirmar-elim');
+  var msg=document.getElementById('auth-msg');
+  if(btn){ btn.disabled=true; btn.textContent='Eliminando...'; }
+  try{
+    var sb=window._supabase;
+    var sess=sb?await sb.auth.getSession():null;
+    var token=sess&&sess.data&&sess.data.session?sess.data.session.access_token:null;
+    if(!token){ if(msg) msg.textContent='Error: sesi\u00f3n no v\u00e1lida'; return; }
+    var res=await fetch('https://dklljnfhlzmfsfmxrpie.supabase.co/functions/v1/delete-account',{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+token,'Content-Type':'application/json'}
+    });
+    var data=await res.json();
+    if(data.success){
+      if(msg){ msg.style.color='#2ecc71'; msg.textContent='Cuenta eliminada. Hasta pronto.'; }
+      setTimeout(function(){ if(typeof logoutUser==='function') logoutUser(); },2000);
+    } else {
+      if(msg){ msg.style.color='#e74c3c'; msg.textContent='Error: '+(data.error||'intenta de nuevo'); }
+      if(btn){ btn.disabled=false; btn.textContent='Confirmar eliminaci\u00f3n'; }
+    }
+  } catch(e){
+    if(msg){ msg.style.color='#e74c3c'; msg.textContent='Error de conexi\u00f3n'; }
+    if(btn){ btn.disabled=false; btn.textContent='Confirmar eliminaci\u00f3n'; }
+  }
+}
+window.pacCerrarSesion=pacCerrarSesion;
+window.pacMostrarConfElim=pacMostrarConfElim;
+window.pacCancelarElim=pacCancelarElim;
+window.pacCheckElimEmail=pacCheckElimEmail;
+window.pacEliminarCuenta=pacEliminarCuenta;
 </script>
 </div>
 <script>
