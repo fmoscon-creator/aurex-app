@@ -889,7 +889,7 @@ function _renderPortfolioItems(items){
         (mktClosed ? '<span style="font-size:9px;color:#D4A017;font-weight:700;margin-right:2px;">Ult. cierre</span>' : '') +
         '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? _fmt(prevClosePct,'pct') : _fmt(ch24,'pct'))+'</span>' +
         '<div style="display:flex;gap:2px;">' +
-          ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;">'+p+'</span>'; }).join('') +
+          ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#0D1117':'#8B949E')+';cursor:pointer;touch-action:manipulation;">'+p+'</span>'; }).join('') +
         '</div>' +
       '</div>' +
     '</div>' +
@@ -3701,7 +3701,7 @@ window._initPortDropdowns = function() {
     opts.forEach(function(o, i) {
       var item = document.createElement('div');
       item.dataset.key = o.key;
-      item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;' +
+      item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);' +
         (i===0 ? 'color:#F59E0B;font-weight:700;background:#2a2a3e;' : 'color:#ccc;') +
         (o.border ? 'border-top:1px solid #333;' : '');
       item.textContent = o.label + (i===0 ? ' ✓' : '');
@@ -3744,11 +3744,11 @@ window._initPortDropdowns = function() {
 
   // --- Cerrar dropdowns al tocar fuera ---
   if(!window._portDropdownListenerAdded) {
-    document.addEventListener('click', function() {
+    document.addEventListener('click', function(ev) {
       var dd1 = document.getElementById('port-period-dropdown');
       var dd2 = document.getElementById('port-curr-dropdown');
-      if(dd1) dd1.style.display = 'none';
-      if(dd2) dd2.style.display = 'none';
+      if(dd1 && !dd1.contains(ev.target)) dd1.style.display = 'none';
+      if(dd2 && !dd2.contains(ev.target)) dd2.style.display = 'none';
     });
     window._portDropdownListenerAdded = true;
   }
