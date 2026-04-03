@@ -2045,7 +2045,7 @@ function pacAlerta(el, key){
 function pacInitAlertas(){
   document.querySelectorAll('.pac-toggle').forEach(function(el){
     var k=el.getAttribute('onclick')||'';
-    var m=k.match(/'([^']+)')/);
+    var m=k.match(/'([^']+)'/);
     if(!m) return;
     var saved=localStorage.getItem(m[1]);
     var on=saved===null?true:saved==='1';
