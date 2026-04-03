@@ -230,12 +230,12 @@ function _getActivoScores(sym) {
   if(act && act.ySymbol && act.ySymbol!==sym){
     for(var j=0;j<signals.length;j++){ if(signals[j].simbolo===act.ySymbol) return signals[j].scores||null; }
   }
-  // fallback: scores sintéticos basados en seed del símbolo
+  // fallback: scores sintÃ©ticos basados en seed del sÃ­mbolo
   if(act) {
     var seed=_iaSeed(sym);
     return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
   }
-  // fallback universal: score sintético para cualquier ticker no registrado
+  // fallback universal: score sintÃ©tico para cualquier ticker no registrado
   var seed=_iaSeed(sym);
   return {tendencia:seed>0.5?0.05:-0.05,rsi:seed>0.6?-0.03:0.03,volumen:0.01,volatilidad:-0.02,correlacion:0.02,oro_petroleo:0,macro:-0.01,earnings:0,macd:0,soporte_resist:0};
 }
@@ -445,7 +445,7 @@ window.sw=function(tab,el){
   renderTab(tab, _activePais);
 };
 
-// === swPais: cambio de país en acciones ===
+// === swPais: cambio de paÃ­s en acciones ===
 window.swPais=function(pais,el){
   document.querySelectorAll('#pais-row .pais').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
@@ -462,7 +462,7 @@ window.stf=function(el,tf){
   document.querySelectorAll('.mkt-tf-btn').forEach(function(b){b.style.background=b.dataset.tf===tf?'#D4A017':'#21262D';b.style.color=b.dataset.tf===tf?'#111':'#8B949E';});
   var tfEl=document.getElementById('tf-time');
   if(tfEl){
-    var labels={'24h':'Act. ahora','7d':'Últimos 7d','1m':'Último mes','3m':'Últimos 3m','1a':'Último año'};
+    var labels={'24h':'Act. ahora','7d':'Ãltimos 7d','1m':'Ãltimo mes','3m':'Ãltimos 3m','1a':'Ãltimo aÃ±o'};
     tfEl.textContent=labels[tf]||'Act. ahora';
   }
   if(_activeTab==='cripto'||_activeTab==='stable'){
@@ -474,7 +474,7 @@ window.stf=function(el,tf){
   }
 };
 
-// === toggleEdit: modo edición con flechas â²â¼ ===
+// === toggleEdit: modo ediciÃ³n con flechas Ã¢ÂÂ²Ã¢ÂÂ¼ ===
 window._editMode=false;
 window.toggleEdit=function(){
   window._editMode=!window._editMode;
@@ -495,11 +495,11 @@ window.toggleEdit=function(){
         arrowDiv.className='reorder-arrows';
         arrowDiv.style.cssText='display:flex;flex-direction:column;gap:2px;margin-left:8px;';
         var upBtn=document.createElement('button');
-        upBtn.textContent='â²';
+        upBtn.textContent='Ã¢ÂÂ²';
         upBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
         upBtn.onclick=function(e){e.stopPropagation();_moveRow(row,-1);};
         var dnBtn=document.createElement('button');
-        dnBtn.textContent='â¼';
+        dnBtn.textContent='Ã¢ÂÂ¼';
         dnBtn.style.cssText='background:#21262D;border:none;color:#D4A017;font-size:12px;cursor:pointer;padding:2px 6px;border-radius:4px;';
         dnBtn.onclick=function(e){e.stopPropagation();_moveRow(row,1);};
         arrowDiv.appendChild(upBtn);
@@ -537,7 +537,7 @@ renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
-function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'Recibirás alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
+function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'RecibirÃ¡s alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
 function showAlertNotification(s,p,o){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+p.toLocaleString('en')+' obj:$'+o.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
 function updateNotifButton(on){var b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'#D4A017';b.textContent=on?'Activas':'Activar';}
 initPushNotifications();
@@ -546,7 +546,7 @@ setInterval(checkAlertasLocal,30000);
 fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d.status==='ok')console.log('Backend v'+d.version+' OK');}).catch(function(){});
 
 // ============================================================
-// === CONVERSOR DE MONEDAS — Binance + fallback fiat =========
+// === CONVERSOR DE MONEDAS â Binance + fallback fiat =========
 // ============================================================
 
 window._pcPrices = {};
@@ -606,7 +606,7 @@ window.updatePortConv = function(){
   if(!amtEl || !fromEl || !toEl || !resEl) return;
 
   var amt  = parseFloat(amtEl.value);
-  if(isNaN(amt) || amt < 0) { resEl.textContent = '—'; return; }
+  if(isNaN(amt) || amt < 0) { resEl.textContent = 'â'; return; }
   var from = fromEl.value;
   var to   = toEl.value;
   var p    = window._pcPrices;
@@ -676,7 +676,7 @@ window.swapPortConv = function(){
 
 
 // ============================================================
-// === PORTFOLIO PERSISTENTE — Supabase ========================
+// === PORTFOLIO PERSISTENTE â Supabase ========================
 // ============================================================
 
 var SUPA_URL = 'https://dklljnfhlzmfsfmxrpie.supabase.co';
@@ -694,7 +694,7 @@ function supaHeaders(token){
   return h;
 }
 
-// Obtener el token de sesión actual del usuario
+// Obtener el token de sesiÃ³n actual del usuario
 function getSupaToken(){
   try {
     var sb = window._supabase || (window.supabase && window.supabase.createClient ? null : null);
@@ -703,7 +703,7 @@ function getSupaToken(){
   } catch(e) { return Promise.resolve({ data: { session: null } }); }
 }
 
-// ââ CARGAR portfolio del usuario desde Supabase ââ
+// Ã¢ÂÂÃ¢ÂÂ CARGAR portfolio del usuario desde Supabase Ã¢ÂÂÃ¢ÂÂ
 window.loadPortfolioSupa = function(){
   try {
     if(window._supabase){
@@ -729,7 +729,7 @@ function _fetchPortfolio(token, userId){
     if(!items || items.length===0){ _renderPortfolioEmpty(); return; }
     // Primero renderizar con precios de cache
     _renderPortfolioItems(items);
-    // Luego buscar precios frescos para los símbolos del portfolio
+    // Luego buscar precios frescos para los sÃ­mbolos del portfolio
     _refreshPortPrices(items);
   })
   .catch(function(){ _renderPortfolioEmpty(); });
@@ -916,14 +916,14 @@ window._updatePortTotalDisplay = function() {
     var btcPrice = window._pcPrices && window._pcPrices['BTC'] ? window._pcPrices['BTC'] : 0;
     if(btcPrice > 0) {
       var btcVal = total / btcPrice;
-      if(el) el.textContent = 'â¿ ' + fmtNum(btcVal, 5);
+      if(el) el.textContent = 'Ã¢ÂÂ¿ ' + fmtNum(btcVal, 5);
     } else {
-      if(el) el.textContent = 'â¿ ---';
+      if(el) el.textContent = 'Ã¢ÂÂ¿ ---';
     }
     if(badge) { badge.textContent = 'BTC'; badge.style.color='#F7931A'; badge.style.borderColor='#F7931A40'; }
   } else if(cur === 'USDT') {
-    if(el) el.textContent = 'â® ' + fmtNum(total);
-    if(badge) { badge.textContent = 'USDTâ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
+    if(el) el.textContent = 'Ã¢ÂÂ® ' + fmtNum(total);
+    if(badge) { badge.textContent = 'USDTÃ¢ÂÂ®'; badge.style.color='#26A17B'; badge.style.borderColor='#26A17B40'; }
   } else {
     if(el) el.textContent = 'USD ' + fmtNum(total);
     if(badge) { badge.textContent = '$'; badge.style.color='#000'; badge.style.borderColor='#D4A017'; }
@@ -1070,7 +1070,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
 
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
-  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
+  var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = 'â';
   items.forEach(function(item){
     var precio = prcs[item.simbolo] || item.precio_compra;
     total += item.cantidad * precio;
@@ -1086,8 +1086,8 @@ function _updateTotals(items){
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
   if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
-  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—';
-  if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
+  if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : 'â';
+  if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : 'â'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
   if(el('port-pnl-usd')){
     el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
     el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
@@ -1134,10 +1134,10 @@ function _renderThermoRisk(items){
   var pHC  = buckets.HC.val/totVal*100;
   var pSin = buckets.SIN.val/totVal*100;
   var segs = [];
-  if(pAlc>0) segs.push({p:pAlc, c:'#3FB950', l:'📈 Alcista',       syms:buckets.ALCISTA.syms});
-  if(pBaj>0) segs.push({p:pBaj, c:'#F85149', l:'📉 Bajista',       syms:buckets.BAJISTA.syms});
-  if(pHC>0)  segs.push({p:pHC,  c:'#D4A017', l:'⚡ Sin dirección', syms:buckets.HC.syms});
-  if(pSin>0) segs.push({p:pSin, c:'#8B949E', l:'⚫ Sin señal',      syms:buckets.SIN.syms});
+  if(pAlc>0) segs.push({p:pAlc, c:'#3FB950', l:'ð Alcista',       syms:buckets.ALCISTA.syms});
+  if(pBaj>0) segs.push({p:pBaj, c:'#F85149', l:'ð Bajista',       syms:buckets.BAJISTA.syms});
+  if(pHC>0)  segs.push({p:pHC,  c:'#D4A017', l:'â¡ Sin direcciÃ³n', syms:buckets.HC.syms});
+  if(pSin>0) segs.push({p:pSin, c:'#8B949E', l:'â« Sin seÃ±al',      syms:buckets.SIN.syms});
   var bar = segs.map(function(s){
     return '<div style="width:'+s.p.toFixed(0)+'%;background:'+s.c+';height:100%;border-radius:2px;"></div>';
   }).join('');
@@ -1154,26 +1154,26 @@ function _renderThermoRisk(items){
   var hcSyms  = buckets.HC.syms.join(', ');
   var msg = '';
   if(pBaj >= 50){
-    msg = '🔴 Revisá urgente — <span style="color:#F85149;"><b>'+bajSyms+'</b></span> en baja confirmada.<br><span style="color:#8B949E;font-size:9px;">La IA confirmó caída. Evaluá reducir posición antes de que baje más.</span>';
+    msg = 'ð´ RevisÃ¡ urgente â <span style="color:#F85149;"><b>'+bajSyms+'</b></span> en baja confirmada.<br><span style="color:#8B949E;font-size:9px;">La IA confirmÃ³ caÃ­da. EvaluÃ¡ reducir posiciÃ³n antes de que baje mÃ¡s.</span>';
   } else if(pBaj >= 20){
-    msg = '⚠️ Vigilar: <span style="color:#F85149;"><b>'+bajSyms+'</b></span> con señal bajista.<br><span style="color:#8B949E;font-size:9px;">Señal débil de baja. Monitorea de cerca antes de decidir.</span>';
+    msg = 'â ï¸ Vigilar: <span style="color:#F85149;"><b>'+bajSyms+'</b></span> con seÃ±al bajista.<br><span style="color:#8B949E;font-size:9px;">SeÃ±al dÃ©bil de baja. Monitorea de cerca antes de decidir.</span>';
   } else if(pAlc >= 50){
-    msg = '🟢 Buen momento — <span style="color:#3FB950;"><b>'+alcSyms+'</b></span> con momentum positivo.<br><span style="color:#8B949E;font-size:9px;">La IA confirmó suba. Buen momento para mantener o aumentar posición.</span>';
+    msg = 'ð¢ Buen momento â <span style="color:#3FB950;"><b>'+alcSyms+'</b></span> con momentum positivo.<br><span style="color:#8B949E;font-size:9px;">La IA confirmÃ³ suba. Buen momento para mantener o aumentar posiciÃ³n.</span>';
   } else if(pHC >= 40){
-    msg = '⚡ Esperá señal antes de operar: <span style="color:#D4A017;"><b>'+hcSyms+'</b></span>.<br><span style="color:#8B949E;font-size:9px;">La IA está monitoreando. Confirma dirección cuando el mercado define. Volvé mañana.</span>';
+    msg = 'â¡ EsperÃ¡ seÃ±al antes de operar: <span style="color:#D4A017;"><b>'+hcSyms+'</b></span>.<br><span style="color:#8B949E;font-size:9px;">La IA estÃ¡ monitoreando. Confirma direcciÃ³n cuando el mercado define. VolvÃ© maÃ±ana.</span>';
   } else if(pSin >= 70){
-    msg = '⚫ Sin datos suficientes hoy — no operar hasta nueva señal.<br><span style="color:#8B949E;font-size:9px;">La IA necesita más datos. Sin acción recomendada por ahora.</span>';
+    msg = 'â« Sin datos suficientes hoy â no operar hasta nueva seÃ±al.<br><span style="color:#8B949E;font-size:9px;">La IA necesita mÃ¡s datos. Sin acciÃ³n recomendada por ahora.</span>';
   } else {
     var dom = segs[0];
-    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> — cartera con señales mixtas.<br><span style="color:#8B949E;font-size:9px;">Revisá cada activo individualmente antes de operar.</span>';
+    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> â cartera con seÃ±ales mixtas.<br><span style="color:#8B949E;font-size:9px;">RevisÃ¡ cada activo individualmente antes de operar.</span>';
   }
   el.innerHTML =
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">' +
       '<div style="display:flex;align-items:center;gap:5px;">' +
-        '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+        '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÃMETRO DE RIESGO</div>' +
         '<div onclick="showThermoHelp()" style="font-size:9px;color:#8B949E;font-weight:700;cursor:pointer;border:1px solid #444;border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</div>' +
       '</div>' +
-      '<div style="font-size:8px;color:#8B949E;letter-spacing:.5px;font-weight:500;">CAPITAL POR SEÑAL IA</div>' +
+      '<div style="font-size:8px;color:#8B949E;letter-spacing:.5px;font-weight:500;">CAPITAL POR SEÃAL IA</div>' +
       '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
     '<div style="height:8px;border-radius:6px;overflow:hidden;display:flex;gap:1px;background:#21262D;margin-bottom:6px;">'+bar+'</div>' +
@@ -1191,17 +1191,17 @@ function _renderMarketBanner(containerId){
   var utcMin = utcH*60+utcM;
   var isWknd = utcDay===0||utcDay===6;
   var ALL_MKTS = [
-    {id:'EEUU', flag:'🇺🇸', open:810,  close:1200},
-    {id:'ARG',  flag:'🇦🇷', open:840,  close:1260},
-    {id:'BRASIL',flag:'🇧🇷',open:780,  close:1175},
-    {id:'LONDRES',flag:'🇬🇧',open:480, close:990},
-    {id:'ESPANA', flag:'🇪🇸',open:480, close:990},
-    {id:'ALEMANIA',flag:'🇩🇪',open:480,close:990},
-    {id:'FRANCIA', flag:'🇫🇷',open:480,close:990},
-    {id:'JAPON',  flag:'🇯🇵', open:0,   close:390},
-    {id:'CHINA',  flag:'🇨🇳', open:90,  close:420},
-    {id:'HONGKONG',flag:'🇭🇰',open:90,  close:480},
-    {id:'ASIA',   flag:'🌏',              open:0,   close:360}
+    {id:'EEUU', flag:'ðºð¸', open:810,  close:1200},
+    {id:'ARG',  flag:'ð¦ð·', open:840,  close:1260},
+    {id:'BRASIL',flag:'ð§ð·',open:780,  close:1175},
+    {id:'LONDRES',flag:'ð¬ð§',open:480, close:990},
+    {id:'ESPANA', flag:'ðªð¸',open:480, close:990},
+    {id:'ALEMANIA',flag:'ð©ðª',open:480,close:990},
+    {id:'FRANCIA', flag:'ð«ð·',open:480,close:990},
+    {id:'JAPON',  flag:'ð¯ðµ', open:0,   close:390},
+    {id:'CHINA',  flag:'ð¨ð³', open:90,  close:420},
+    {id:'HONGKONG',flag:'ð­ð°',open:90,  close:480},
+    {id:'ASIA',   flag:'ð',              open:0,   close:360}
   ];
   function mktItem(mkt){
     if(!prefs.includes(mkt.id)) return '';
@@ -1224,7 +1224,7 @@ function _renderMarketBanner(containerId){
       + '</div>';
   }
   var items = ALL_MKTS.map(mktItem).filter(Boolean).join('');
-  var editBtn = '<div onclick="editMarketBanner()" style="font-size:10px;color:#555;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #21262D;margin-left:auto;flex-shrink:0;">&#9998;</div>';
+  var editBtn = '<div onclick="editMarketBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;margin-left:auto;flex-shrink:0;">&#9998;</div>';
   el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">'+items+editBtn+'</div>';
 }
 
@@ -1268,13 +1268,13 @@ window.showThermoInfo = function(){
   var body = document.getElementById('port-modal-body');
   var modal = document.getElementById('port-modal');
   if(!body||!modal) return;
-  body.innerHTML = '<div style="color:#E6EDF3;font-size:15px;font-weight:700;margin-bottom:12px;">🌡️ Termómetro de Riesgo</div>' +
-    '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
+  body.innerHTML = '<div style="color:#E6EDF3;font-size:15px;font-weight:700;margin-bottom:12px;">ð¡ï¸ TermÃ³metro de Riesgo</div>' +
+    '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cÃ³mo estÃ¡ distribuido el capital de tu cartera segÃºn las seÃ±ales activas de AUREX IA:</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> — La señal m�s valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> â La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> â La seÃ±al mï¿½s valiosa y rara. MÃ¡xima atenciÃ³n: movimiento fuerte inminente. Solo 1-2 activos por dÃ­a reciben esta seÃ±al.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> â La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÃAL</b> â No hay seÃ±al activa hoy para ese activo. No es una alerta, simplemente el modelo no detectÃ³ nada destacable.</div></div>' +
     '</div>' +
     '<div onclick="closePortModal()" style="background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
   modal.style.display = 'flex';
@@ -1295,21 +1295,21 @@ window.showThermoHelp = function(){
   box.setAttribute('onclick','event.stopPropagation()');
   box.innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">' +
-      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;">🌡️ Cómo leer el Termómetro</div>' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;">ð¡ï¸ CÃ³mo leer el TermÃ³metro</div>' +
       '<div onclick="window._closeThermoHelp()" style="font-size:24px;color:#8B949E;cursor:pointer;line-height:1;padding:4px 6px;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#215;</div>' +
     '</div>' +
     '<div style="display:flex;flex-direction:column;gap:10px;font-size:11px;line-height:1.5;">' +
-      '<div><span style="color:#3FB950;font-weight:700;">🟢 Verde — Alcista</span><br><span style="color:#8B949E;">Señal confirmada de suba. Buen momento para mantener o aumentar posición.</span></div>' +
-      '<div><span style="color:#F85149;font-weight:700;">🔴 Rojo — Bajista</span><br><span style="color:#8B949E;">Señal confirmada de caída. Evaluá reducir antes de que baje más.</span></div>' +
-      '<div><span style="color:#D4A017;font-weight:700;">⚡ Dorado — Sin dirección</span><br><span style="color:#8B949E;">Movimiento fuerte inminente sin confirmar. Esperá la señal — no operar todavía.</span></div>' +
-      '<div><span style="color:#8B949E;font-weight:700;">⚫ Gris — Sin señal</span><br><span style="color:#8B949E;">La IA no tiene datos suficientes hoy. Sin acción recomendada.</span></div>' +
+      '<div><span style="color:#3FB950;font-weight:700;">ð¢ Verde â Alcista</span><br><span style="color:#8B949E;">SeÃ±al confirmada de suba. Buen momento para mantener o aumentar posiciÃ³n.</span></div>' +
+      '<div><span style="color:#F85149;font-weight:700;">ð´ Rojo â Bajista</span><br><span style="color:#8B949E;">SeÃ±al confirmada de caÃ­da. EvaluÃ¡ reducir antes de que baje mÃ¡s.</span></div>' +
+      '<div><span style="color:#D4A017;font-weight:700;">â¡ Dorado â Sin direcciÃ³n</span><br><span style="color:#8B949E;">Movimiento fuerte inminente sin confirmar. EsperÃ¡ la seÃ±al â no operar todavÃ­a.</span></div>' +
+      '<div><span style="color:#8B949E;font-weight:700;">â« Gris â Sin seÃ±al</span><br><span style="color:#8B949E;">La IA no tiene datos suficientes hoy. Sin acciÃ³n recomendada.</span></div>' +
     '</div>' +
-    '<div style="margin-top:14px;font-size:10px;color:#8B949E;border-top:1px solid #30363D;padding-top:10px;">El % indica cuánto de tu capital está en cada zona. Se actualiza con precios actuales.</div>' +
+    '<div style="margin-top:14px;font-size:10px;color:#8B949E;border-top:1px solid #30363D;padding-top:10px;">El % indica cuÃ¡nto de tu capital estÃ¡ en cada zona. Se actualiza con precios actuales.</div>' +
     '<div onclick="window._closeThermoHelp()" style="margin-top:12px;background:#D4A017;color:#000;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Entendido</div>';
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 };
-// ââ ABRIR / CERRAR modal Agregar activo ââ
+// Ã¢ÂÂÃ¢ÂÂ ABRIR / CERRAR modal Agregar activo Ã¢ÂÂÃ¢ÂÂ
 var _ACTIVOS_MODAL = [
   {g:'Cripto',items:[{s:'BTC',n:'Bitcoin'},{s:'ETH',n:'Ethereum'},{s:'SOL',n:'Solana'},{s:'BNB',n:'BNB'},{s:'XRP',n:'XRP'},{s:'ADA',n:'Cardano'},{s:'AVAX',n:'Avalanche'},{s:'DOT',n:'Polkadot'},{s:'LINK',n:'Chainlink'},{s:'MATIC',n:'Polygon'}],tipo:'cripto'},
   {g:'Acciones USA',items:[{s:'AAPL',n:'Apple'},{s:'NVDA',n:'NVIDIA'},{s:'MSFT',n:'Microsoft'},{s:'TSLA',n:'Tesla'},{s:'META',n:'Meta'},{s:'GOOGL',n:'Alphabet'},{s:'AMZN',n:'Amazon'}],tipo:'accion'},
@@ -1319,7 +1319,7 @@ var _ACTIVOS_MODAL = [
 ];
 
 window.openAddActivo = function(){
-  // Si no hay sesión, mostrar aviso de login
+  // Si no hay sesiÃ³n, mostrar aviso de login
   if(!window._supabase){ navTo('perfil'); return; }
   window._supabase.auth.getSession().then(function(res){
     if(!res.data || !res.data.session){
@@ -1328,10 +1328,10 @@ window.openAddActivo = function(){
       if(cnt){
         var old = cnt.innerHTML;
         cnt.innerHTML = '<div style="background:#1A0D00;border:1px solid #D4A01780;border-radius:12px;margin:20px 14px;padding:20px;text-align:center;">' +
-          '<div style="font-size:28px;margin-bottom:8px;">🔐</div>' +
-          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">Necesitás una cuenta</div>' +
-          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creá tu cuenta gratis.</div>' +
-          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
+          '<div style="font-size:28px;margin-bottom:8px;">ð</div>' +
+          '<div style="font-size:14px;font-weight:700;color:#D4A017;margin-bottom:6px;">NecesitÃ¡s una cuenta</div>' +
+          '<div style="font-size:12px;color:#8B949E;margin-bottom:16px;">Para guardar activos reales, creÃ¡ tu cuenta gratis.</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,#D4A017,#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis â</div>' +
           '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
@@ -1354,8 +1354,8 @@ function _openAddActivoModal(){
     '<div id="pa-selected" style="display:none;background:#161B22;border-radius:9px;padding:10px;border:1px solid #D4A017;">' +
     '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#E6EDF3;margin-bottom:8px;"></div>' +
     '<div style="display:flex;gap:8px;">' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="numbâ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#555;margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="numbâ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:7px;padding:8px 10px;color:#E6EDF3;font-size:14px;outline:none;" /></div>' +
     '</div>' +
     '<div id="pa-err" style="color:#FF4444;font-size:11px;margin-top:4px;display:none;"></div>' +
     '<div onclick="savePortActivo()" style="margin-top:10px;background:#3FB950;color:#0D1117;border-radius:9px;padding:11px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Confirmar</div>' +
@@ -1553,14 +1553,14 @@ window.openPortItemDetail = function(itemId){
   if(low52 && high52 && high52 > low52 && precio > 0){
     var pct52 = Math.max(0, Math.min(100, ((precio - low52)/(high52 - low52)*100)));
     var zone52, zoneColor52, zoneIcon52;
-    if(pct52 <= 30){ zone52 = 'Precio cerca del mínimo anual — zona históricamente baja'; zoneColor52 = '#3FB950'; zoneIcon52 = '🟢'; }
-    else if(pct52 <= 70){ zone52 = 'Precio en zona media del rango anual'; zoneColor52 = '#D4A017'; zoneIcon52 = '🟡'; }
-    else { zone52 = 'Precio cerca del máximo anual — zona históricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = '🔴'; }
+    if(pct52 <= 30){ zone52 = 'Precio cerca del mÃ­nimo anual â zona histÃ³ricamente baja'; zoneColor52 = '#3FB950'; zoneIcon52 = 'ð¢'; }
+    else if(pct52 <= 70){ zone52 = 'Precio en zona media del rango anual'; zoneColor52 = '#D4A017'; zoneIcon52 = 'ð¡'; }
+    else { zone52 = 'Precio cerca del mÃ¡ximo anual â zona histÃ³ricamente alta'; zoneColor52 = '#FF4444'; zoneIcon52 = 'ð´'; }
     rangeBar = '<div style="margin:10px 0 4px;">' +
       '<div style="display:flex;justify-content:space-between;font-size:9px;color:#555;margin-bottom:3px;">' +
-        '<span>↓ Mín: $'+fmtP(low52)+'</span>' +
+        '<span>â MÃ­n: $'+fmtP(low52)+'</span>' +
         '<span style="font-size:9px;color:#8B949E;">52 semanas</span>' +
-        '<span>→ Máx: $'+fmtP(high52)+'</span>' +
+        '<span>â MÃ¡x: $'+fmtP(high52)+'</span>' +
       '</div>' +
       '<div style="background:#21262D;border-radius:4px;height:6px;position:relative;">' +
         '<div style="background:linear-gradient(90deg,#3FB950,#D4A017,#FF4444);border-radius:4px;height:6px;width:'+pct52.toFixed(0)+'%;"></div>' +
@@ -1612,8 +1612,8 @@ window.openPortItemDetail = function(itemId){
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Cantidad</div><div style="font-size:13px;color:#E6EDF3;font-weight:600;">'+item.cantidad+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">P&L USD</div><div style="font-size:13px;color:'+pnlColor+';font-weight:600;">'+pnlSign+'$'+fmtP(Math.abs(pnlUsd))+'</div></div>' +
     '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">Entrada</div><div style="font-size:11px;color:#8B949E;">'+fechaStr+'</div></div>' +
-    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">↓ Mín 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
-    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">→ Máx 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">â MÃ­n 52 sem.</div><div style="font-size:12px;color:#FF4444;font-weight:600;">'+(low52 ? '$'+fmtP(low52) : '--')+'</div></div>' +
+    '<div style="background:#161B22;border-radius:7px;padding:8px;"><div style="font-size:9px;color:#555;margin-bottom:2px;">â MÃ¡x 52 sem.</div><div style="font-size:12px;color:#3FB950;font-weight:600;">'+(high52 ? '$'+fmtP(high52) : '--')+'</div></div>' +
     '</div>' +
     rangeBar +
     '<div id="port-det-pct" style="margin:6px 0;"><span id="pd-24h-val" style="font-size:13px;font-weight:600;color:#8B949E;">--</span><span style="display:flex;gap:4px;margin-top:4px;">' +
@@ -1635,9 +1635,9 @@ window.openPortItemDetail = function(itemId){
     '<div style="border-top:1px solid #21262D;margin-top:12px;padding-top:12px;">' +
     '<div style="font-size:10px;color:#8B949E;margin-bottom:8px;text-align:center;">Compartir</div>' +
     '<div style="display:flex;justify-content:center;gap:10px;">' +
-    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">💬</div>WhatsApp</a>' +
-    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">✈️</div>Telegram</a>' +
-    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">📧</div>Mail</a>' +
+    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">ð¬</div>WhatsApp</a>' +
+    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">âï¸</div>Telegram</a>' +
+    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">ð§</div>Mail</a>' +
     '</div>' +
     '</div>' +
     '</div></div>';
@@ -1715,7 +1715,7 @@ window.portSimUpdate = function(itemId, simbolo, pctStr){
 };;
 
 
-// ââ AGREGAR activo al portfolio en Supabase ââ
+// Ã¢ÂÂÃ¢ÂÂ AGREGAR activo al portfolio en Supabase Ã¢ÂÂÃ¢ÂÂ
 window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo){
   if(!window._supabase){ console.warn('Supabase no disponible'); return; }
   window._supabase.auth.getSession().then(function(res){
@@ -1742,7 +1742,7 @@ window.addPortfolioItem = function(simbolo, nombre, cantidad, precioCompra, tipo
   });
 };
 
-// ââ ELIMINAR activo del portfolio ââ
+// Ã¢ÂÂÃ¢ÂÂ ELIMINAR activo del portfolio Ã¢ÂÂÃ¢ÂÂ
 window.deletePortfolioItem = function(id){
   if(!window._supabase) return;
   if(!confirm('\u00bfEliminar este activo del portfolio?')) return;
@@ -1758,7 +1758,7 @@ window.deletePortfolioItem = function(id){
   });
 };
 
-// Inicializar portfolio cuando hay sesión
+// Inicializar portfolio cuando hay sesiÃ³n
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     if(window._supabase){
@@ -2215,8 +2215,8 @@ function cerrarEventosPanel() {
 }
 
 
-// === RSI REAL desde datos históricos ===
-window._rsiCache = {};  // sym → rsi value (0-100)
+// === RSI REAL desde datos histÃ³ricos ===
+window._rsiCache = {};  // sym â rsi value (0-100)
 
 function _calcRSI14(closes) {
   if(!closes || closes.length < 15) return 50; // not enough data
@@ -2357,9 +2357,9 @@ function _calcIAScore(activo, datos) {
     var ema26 = _ema(cls30.slice(-26), 26);
     var macdLine = ema12 - ema26;
     var macdPct = ema26 > 0 ? macdLine / ema26 : 0;
-    if (macdPct > 0.005) { macdScore = 0.05; motivos.push('MACD positivo +' + (macdPct*100).toFixed(2) + '% — cruce alcista de medias, momentum confirmado'); }
-    else if (macdPct < -0.005) { macdScore = -0.05; motivos.push('MACD negativo ' + (macdPct*100).toFixed(2) + '% — cruce bajista, presión vendedora en aumento'); }
-    else { macdScore = 0.01; motivos.push('MACD neutral — sin divergencia clara entre medias de corto y largo plazo'); }
+    if (macdPct > 0.005) { macdScore = 0.05; motivos.push('MACD positivo +' + (macdPct*100).toFixed(2) + '% â cruce alcista de medias, momentum confirmado'); }
+    else if (macdPct < -0.005) { macdScore = -0.05; motivos.push('MACD negativo ' + (macdPct*100).toFixed(2) + '% â cruce bajista, presiÃ³n vendedora en aumento'); }
+    else { macdScore = 0.01; motivos.push('MACD neutral â sin divergencia clara entre medias de corto y largo plazo'); }
   }
   scores.macd = macdScore;
 
@@ -2368,10 +2368,10 @@ function _calcIAScore(activo, datos) {
   if (datos.high30d && datos.low30d && precio > 0) {
     var h30 = datos.high30d, l30 = datos.low30d;
     var rangePos30 = (h30 > l30) ? (precio - l30) / (h30 - l30) : 0.5;
-    if (rangePos30 > 0.85) { srScore = -0.04; motivos.push('Precio cerca de resistencia 30d ($' + (precio>100?Math.round(h30):h30.toFixed(4)) + ') — zona de oferta técnica, posible rechazo'); }
-    else if (rangePos30 < 0.15) { srScore = 0.04; motivos.push('Precio cerca de soporte 30d ($' + (precio>100?Math.round(l30):l30.toFixed(4)) + ') — zona de demanda técnica, posible rebote'); }
-    else if (rangePos30 > 0.60) { srScore = 0.02; motivos.push('Precio en mitad alta del rango 30d — momentum positivo con margen antes de resistencia'); }
-    else { srScore = -0.01; motivos.push('Precio en mitad baja del rango 30d — sobre soporte pero sin momentum fuerte'); }
+    if (rangePos30 > 0.85) { srScore = -0.04; motivos.push('Precio cerca de resistencia 30d ($' + (precio>100?Math.round(h30):h30.toFixed(4)) + ') â zona de oferta tÃ©cnica, posible rechazo'); }
+    else if (rangePos30 < 0.15) { srScore = 0.04; motivos.push('Precio cerca de soporte 30d ($' + (precio>100?Math.round(l30):l30.toFixed(4)) + ') â zona de demanda tÃ©cnica, posible rebote'); }
+    else if (rangePos30 > 0.60) { srScore = 0.02; motivos.push('Precio en mitad alta del rango 30d â momentum positivo con margen antes de resistencia'); }
+    else { srScore = -0.01; motivos.push('Precio en mitad baja del rango 30d â sobre soporte pero sin momentum fuerte'); }
   }
   scores.soporte_resist = srScore;
 
@@ -2625,7 +2625,7 @@ window._closeIAVarsPopup = function() {
 window.showIAVariablesPopup = function() {
   var existing = document.getElementById('ia-vars-overlay');
   if(existing) { existing.remove(); return; }
-  // Calcular estado promedio de cada variable sobre las señales actuales
+  // Calcular estado promedio de cada variable sobre las seÃ±ales actuales
   var signals = window._iaSignals || [];
   var varKeys = ['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];
   var varScoreAvg = {};
@@ -2635,25 +2635,25 @@ window.showIAVariablesPopup = function() {
     varScoreAvg[k] = cnt > 0 ? sum / cnt : 0;
   });
   var varDefs = [
-    {k:'tendencia',      n:'1. Tendencia 24h',         d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
-    {k:'rsi',            n:'2. RSI14 Real',             d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
-    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
-    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
-    {k:'correlacion',    n:'5. Correlación BTC/SPY',    d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
-    {k:'oro_petroleo',   n:'6. Oro / Petr&#xF3;leo',         d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
+    {k:'tendencia',      n:'1. Tendencia 24h',         d:'VariaciÃ³n % del precio en las Ãºltimas 24hs. Mide el momentum inmediato.',p:'Alta'},
+    {k:'rsi',            n:'2. RSI14 Real',             d:'Ãndice de Fuerza Relativa de 14 perÃ­odos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
+    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los Ãºltimos 5 dÃ­as. Confirma si el movimiento tiene convicciÃ³n.',p:'Alta'},
+    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (highâlow / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
+    {k:'correlacion',    n:'5. CorrelaciÃ³n BTC/SPY',    d:'Para cripto: correlaciÃ³n con BTC. Para acciones: con S&P500. Detecta arrastre sistÃ©mico.',p:'Media'},
+    {k:'oro_petroleo',   n:'6. Oro / Petr&#xF3;leo',         d:'Precios de activos refugio. Oro alto = aversiÃ³n al riesgo. Impacta segÃºn tipo de activo.',p:'Media'},
     {k:'macro',          n:'7. Macro FED',              d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
-    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
-    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
-    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
+    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados prÃ³ximos. HistÃ³ricamente elevan la volatilidad del activo.',p:'Media'},
+    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los Ãºltimos 30 dÃ­as de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
+    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al mÃ¡ximo y mÃ­nimo de los Ãºltimos 30 dÃ­as. Detecta zonas de oferta y demanda tÃ©cnica.',p:'Alta'}
   ];
   var posCount = varDefs.filter(function(v){ return varScoreAvg[v.k] > 0.01; }).length;
   var negCount = varDefs.filter(function(v){ return varScoreAvg[v.k] < -0.01; }).length;
   var summaryHtml = signals.length > 0
     ? '<div style="display:flex;align-items:center;gap:8px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:8px 12px;margin-bottom:12px">' +
         '<span style="font-size:11px;color:#8B949E">Mercado ahora:</span>' +
-        '<span style="font-size:13px;font-weight:800;color:#3FB950">→ ' + posCount + ' al alza</span>' +
-        '<span style="color:#555;font-size:11px">·</span>' +
-        '<span style="font-size:13px;font-weight:800;color:#FF4444">↓ ' + negCount + ' a la baja</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#3FB950">â ' + posCount + ' al alza</span>' +
+        '<span style="color:#555;font-size:11px">Â·</span>' +
+        '<span style="font-size:13px;font-weight:800;color:#FF4444">â ' + negCount + ' a la baja</span>' +
       '</div>'
     : '';
   var varsHtml = varDefs.map(function(v) {
@@ -2663,7 +2663,7 @@ window.showIAVariablesPopup = function() {
     var color = isPos ? '#3FB950' : isNeg ? '#FF4444' : '#8B949E';
     var bg = isPos ? '#3FB95012' : isNeg ? '#FF444412' : 'transparent';
     var border = isPos ? '#3FB95030' : isNeg ? '#FF444430' : '#21262D';
-    var arrow = isPos ? '→ ' : isNeg ? '↓ ' : '— ';
+    var arrow = isPos ? 'â ' : isNeg ? 'â ' : 'â ';
     return '<div style="border:1px solid ' + border + ';border-radius:8px;padding:9px 11px;margin-bottom:7px;background:' + bg + '">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
         '<span style="font-size:11px;font-weight:700;color:' + color + '">' + arrow + v.n + '</span>' +
@@ -2678,15 +2678,15 @@ window.showIAVariablesPopup = function() {
   overlay.innerHTML = '<div style="background:#161B22;border:1px solid #30363D;border-radius:16px;padding:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
       '<div>' +
-        '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA ⚡ — 10 VARIABLES</div>' +
-        '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de señales v7 — tiempo real</div>' +
+        '<div style="font-size:14px;font-weight:800;color:#D4A017">AUREX IA â¡ â 10 VARIABLES</div>' +
+        '<div style="font-size:10px;color:#8B949E;margin-top:2px">Motor de seÃ±ales v7 â tiempo real</div>' +
       '</div>' +
-      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">✕</button>' +
+      '<button onclick="_closeIAVarsPopup()" style="background:#21262D;border:1px solid #30363D;border-radius:8px;padding:4px 10px;color:#8B949E;font-size:12px;cursor:pointer">â</button>' +
     '</div>' +
     summaryHtml +
-    '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
+    '<div style="font-size:10px;color:#8B949E;line-height:1.5;margin-bottom:12px">Cada seÃ±al es el resultado de puntuar 10 variables independientes. El score total determina la direcciÃ³n y la probabilidad. Rango de probabilidad: 55%â88%.</div>' +
     varsHtml +
-    '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
+    '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%â88%. Nunca &lt;52% (sin seÃ±al) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
   document.body.appendChild(overlay);
@@ -2732,7 +2732,7 @@ function _renderIALista(signals, keepLoadingBar) {
     var dirColor = s.direccion==='alcista'?'#3FB950':s.direccion==='bajista'?'#FF4444':'#D4A017';
     var dirBg = s.direccion==='alcista'?'#3FB95020':s.direccion==='bajista'?'#FF444420':'#D4A01720';
     var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
-    // Para ALTA CONV-IA, obtener la sub-dirección del escenario_principal
+    // Para ALTA CONV-IA, obtener la sub-direcciÃ³n del escenario_principal
     var altaConfDirLabel = '';
     var altaConfDirColor = '';
     if (s.direccion === 'alta_conf') {
@@ -2816,7 +2816,7 @@ function _buildIADetail(s) {
   html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+_uLabel+'</div><div style="font-size:12px;font-weight:700;color:'+_uColor+'">'+_uSign+s.upside.toFixed(1)+'%</div></div>';
   html += '</div>';
 
-  // VARIABLES DEL MODELO — lista con colores verde/rojo
+  // VARIABLES DEL MODELO â lista con colores verde/rojo
   if(s.scores) {
     var sc = s.scores;
     var varDefs = [
@@ -2824,10 +2824,10 @@ function _buildIADetail(s) {
       {k:'rsi',            label:'RSI14',                 fmt:function(v){ var rsi=s.rsi||50; return 'RSI '+rsi; }},
       {k:'volumen',        label:'Volumen',               fmt:function(v){ return (s.volRel||1).toFixed(1)+'x prom.'; }},
       {k:'volatilidad',    label:'Volatilidad',           fmt:function(v){ return v>0.01?'baja':'v>-0.01'?'normal':'alta'; }},
-      {k:'correlacion',    label:'Correlación BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
+      {k:'correlacion',    label:'CorrelaciÃ³n BTC/SPY',   fmt:function(v){ return v>0.01?'positiva':v<-0.01?'negativa':'neutral'; }},
       {k:'oro_petroleo',   label:'Oro / Petr&#xF3;leo',        fmt:function(v){ return v>0.01?'favorable':v<-0.01?'adverso':'neutral'; }},
       {k:'macro',          label:'Macro FED',             fmt:function(v){ return v<-0.01?'evento activo':'sin eventos'; }},
-      {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'próximos':'sin reporte'; }},
+      {k:'earnings',       label:'Earnings',              fmt:function(v){ return v>0.01?'prÃ³ximos':'sin reporte'; }},
       {k:'macd',           label:'MACD (12/26)',          fmt:function(v){ return v>0.01?'alcista':v<-0.01?'bajista':'neutral'; }},
       {k:'soporte_resist', label:'Soporte / Resist. 30d', fmt:function(v){ return v>0.01?'cerca soporte':v<-0.01?'cerca resist.':'zona media'; }}
     ];
@@ -2837,19 +2837,19 @@ function _buildIADetail(s) {
     html += '<div style="margin-bottom:10px">';
     html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px">';
     html += '<span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span>';
-    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#FF4444;font-weight:700">↓ '+negVars.length+' bajistas</span></span>';
+    html += '<span style="font-size:10px"><span style="color:#3FB950;font-weight:700">â '+posVars.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">Â·</span><span style="color:#FF4444;font-weight:700">â '+negVars.length+' bajistas</span></span>';
     html += '</div>';
     // Positivas primero
     posVars.forEach(function(d) {
       html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#3FB95010;border-left:2px solid #3FB950;border-radius:0 6px 6px 0;margin-bottom:3px">';
-      html += '<span style="font-size:10px;color:#3FB950;font-weight:600">→ '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#3FB950;font-weight:600">â '+d.label+'</span>';
       html += '<span style="font-size:10px;color:#3FB950">'+d.fmt(sc[d.k])+'</span>';
       html += '</div>';
     });
     // Negativas
     negVars.forEach(function(d) {
       html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#FF444410;border-left:2px solid #FF4444;border-radius:0 6px 6px 0;margin-bottom:3px">';
-      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">↓ '+d.label+'</span>';
+      html += '<span style="font-size:10px;color:#FF4444;font-weight:600">â '+d.label+'</span>';
       html += '<span style="font-size:10px;color:#FF4444">'+d.fmt(sc[d.k])+'</span>';
       html += '</div>';
     });
@@ -2857,14 +2857,14 @@ function _buildIADetail(s) {
     if(neuVars.length > 0) {
       html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">';
       neuVars.forEach(function(d) {
-        html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">— '+d.label+'</span>';
+        html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">â '+d.label+'</span>';
       });
       html += '</div>';
     }
     html += '</div>';
   }
 
-  // TIMEFRAME CONTEXT — default 24h, contexto 7d/30d
+  // TIMEFRAME CONTEXT â default 24h, contexto 7d/30d
   html += '<div style="margin-bottom:10px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
   html += '<span style="font-size:10px;color:#8B949E;font-weight:600">CONTEXTO TENDENCIA</span>';
@@ -2876,7 +2876,7 @@ function _buildIADetail(s) {
     else if(tf==='7d') cambioTF = s.precio7d>0?((s.precio-s.precio7d)/s.precio7d*100):null;
     else cambioTF = s.precio30d>0?((s.precio-s.precio30d)/s.precio30d*100):null;
     var col = cambioTF===null?'#555':cambioTF>=0?'#3FB950':'#FF4444';
-    var label = cambioTF===null?'—':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
+    var label = cambioTF===null?'â':(cambioTF>=0?'+':'')+cambioTF.toFixed(1)+'%';
     html += '<div style="background:#21262D;border:1px solid '+(isDefault?'#D4A01760':'#30363D')+';border-radius:6px;padding:3px 7px;text-align:center">';
     html += '<div style="font-size:8px;color:'+(isDefault?'#D4A017':'#555')+'">'+tf+'</div>';
     html += '<div style="font-size:10px;font-weight:700;color:'+col+'">'+label+'</div>';
@@ -2890,11 +2890,11 @@ function _buildIADetail(s) {
   if(s.direccion!=='bajista') html += '<div style="flex:1;background:#FF444415;border:1px solid #FF444440;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#FF4444">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#FF4444">'+s.prob_bajista+'%</div></div>';
   if(s.direccion!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+s.prob_alta_conf+'%</div></div>';
   html += '</div>';
-  // BOTÓN COMPARTIR
+  // BOTÃN COMPARTIR
   html += '<div style="margin-top:12px;padding-top:10px;border-top:1px solid #21262D">';
   html += '<button onclick="event.stopPropagation();_compartirSenal(\'' + s.simbolo + '\');return false;" ';
   html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
-  html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
+  html += '<span style="font-size:15px">&#128257;</span> Compartir seÃ±al</button>';
   html += '</div>';
   html += '</div>';
   return html;
@@ -2908,21 +2908,21 @@ window._compartirSenal = function(info) {
   var sigs = window._iaSignals || [];
   for(var i=0;i<sigs.length;i++) { if(sigs[i].simbolo===symBuscar) { sig=sigs[i]; break; } }
   if(!sig) return;
-  var dirEmoji = sig.direccion==='alcista'?'📈':sig.direccion==='bajista'?'📉':'⚡';
+  var dirEmoji = sig.direccion==='alcista'?'ð':sig.direccion==='bajista'?'ð':'â¡';
   var dirLabel = sig.direccion==='alcista'?'ALCISTA':sig.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
   var precioFmt = sig.precio>=1000?'$'+Math.round(sig.precio).toLocaleString('en'):sig.precio>=1?'$'+sig.precio.toFixed(2):'$'+sig.precio.toFixed(4);
   var cambio = sig.precio24h>0?((sig.precio-sig.precio24h)/sig.precio24h*100):0;
-  var texto = '🤖 AUREX IA — SEÑAL '+dirEmoji+'\n';
+  var texto = 'ð¤ AUREX IA â SEÃAL '+dirEmoji+'\n';
   texto += sig.simbolo+' ('+sig.nombre+')\n';
-  texto += 'ââââââââââââââââ\n';
-  texto += dirEmoji+' '+dirLabel+' — PROB. '+sig.confianza+'%\n';
-  texto += '💰 Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
-  texto += '🎯 Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
-  texto += 'ââââââââââââââââ\n';
-  texto += '📊 ANÁLISIS (10 variables):\n';
+  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
+  texto += dirEmoji+' '+dirLabel+' â PROB. '+sig.confianza+'%\n';
+  texto += 'ð° Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
+  texto += 'ð¯ Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
+  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
+  texto += 'ð ANÃLISIS (10 variables):\n';
   (sig.motivos||[]).slice(0,3).forEach(function(m,i){ texto += (i+1)+'. '+m+'\n'; });
-  texto += 'ââââââââââââââââ\n';
-  texto += 'Señal generada por AUREX IA⚡\n';
+  texto += 'Ã¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂÃ¢ÂÂ\n';
+  texto += 'SeÃ±al generada por AUREX IAâ¡\n';
   texto += 'aurex-app.github.io';
   var _showShareOverlay = function() {
     var wa = 'https://wa.me/?text='+encodeURIComponent(texto);
@@ -2934,26 +2934,26 @@ window._compartirSenal = function(info) {
     overlay.id = 'ia-share-overlay';
     overlay.style.cssText='position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:flex-end;justify-content:center';
     overlay.innerHTML='<div style="background:#161B22;border-radius:16px 16px 0 0;padding:20px;width:100%;max-width:420px">' +
-      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir señal '+sig.simbolo+'</div>' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;margin-bottom:16px;text-align:center">Compartir seÃ±al '+sig.simbolo+'</div>' +
       '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:16px">' +
-        '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">💬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
-        '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">âï¸</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
-        '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">📧</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
+        '<a href="'+wa+'" target="_blank" style="flex:1;background:#25D36620;border:1px solid #25D36660;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">ð¬</div><div style="font-size:10px;color:#25D366;margin-top:4px">WhatsApp</div></a>' +
+        '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">Ã¢ÂÂÃ¯Â¸Â</div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
+        '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">ð§</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
       '</div>' +
-      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:point✕>Cancelar</button>' +
+      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointâ>Cancelar</button>' +
     '</div>';
     overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
   };
   if(navigator.share) {
-    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
+    navigator.share({ title: 'AUREX IA â '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
   } else {
     _showShareOverlay();
   }
 };
 
 
-// === AUREX PULSEâ¢ — FEAR & GREED 14X (12 variables Commit A) ===
+// === AUREX PULSEÃ¢ÂÂ¢ â FEAR & GREED 14X (12 variables Commit A) ===
 window._pulseCache = {};
 window._pulseTs   = {};
 window._pulseActiveFilter = 'GLOBAL';
@@ -3004,7 +3004,7 @@ function _fetchMacroGeo(raw) {
       .then(function(r){ return r.ok ? r.json() : Promise.reject('GDELT fail'); })
       .then(function(data) {
         var tone = data && data.articles && data.articles[0] ? (parseFloat(data.articles[0].avgtone)||0) : 0;
-        // tone -10 to +5 → score 0 to 100
+        // tone -10 to +5 â score 0 to 100
         geoScore = Math.min(100, Math.max(0, 50 + tone * 5));
         done2 = true; tryFinish();
       })
@@ -3073,7 +3073,7 @@ function _goldToScore(pct) { return Math.min(100, Math.max(0, 50 - pct*25)); }
 function _oilToScore(pct) { return Math.min(100, Math.max(0, 50 - Math.abs(pct)*15)); }
 
 function _calcPulseScore(raw, cat) {
-  if(!raw) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:{} };
+  if(!raw) return { value:50, label:'Neutral', color:'#D4A017', emoji:'ð', vars:{} };
   var scores = {}, weighted = 0, totalW = 0;
   function add(key, score, weight) {
     scores[key] = Math.round(score);
@@ -3130,14 +3130,14 @@ function _calcPulseScore(raw, cat) {
     if(raw.macro) add('Macro_FED', raw.macro.score, 12);
     if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
   }
-  if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'😐', vars:scores };
+  if(totalW===0) return { value:50, label:'Neutral', color:'#D4A017', emoji:'ð', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
-  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='😱'; }
-  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='😰'; }
-  else if(v<=60) { label='Neutral';         color='#D4A017'; emoji='😐'; }
-  else if(v<=80) { label='Codicia';         color='#3FB950'; emoji='😏'; }
-  else           { label='Codicia Extrema'; color='#00E676'; emoji='🤑'; }
+  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='ð±'; }
+  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='ð°'; }
+  else if(v<=60) { label='Neutral';         color='#D4A017'; emoji='ð'; }
+  else if(v<=80) { label='Codicia';         color='#3FB950'; emoji='ð'; }
+  else           { label='Codicia Extrema'; color='#00E676'; emoji='ð¤'; }
   return { value:v, label:label, color:color, emoji:emoji, vars:scores };
 }
 
@@ -3195,7 +3195,7 @@ function _renderFearGreed(containerId) {
   var cat = window._pulseActiveFilter || 'GLOBAL';
   var cached = window._pulseCache[cat];
   if(!cached) {
-    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Calculando AUREX PULSEâ¢...</div>';
+    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:#555;">Calculando AUREX PULSEÃ¢ÂÂ¢...</div>';
     _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
     return;
   }
@@ -3230,7 +3230,7 @@ function _renderFearGreed(containerId) {
       setTimeout(function(){ _renderFearGreed(containerId); }, 100);
     }).catch(function(){});
   }
-  // Fetch Crypto F&G Alternative.me - cache 60 min (se actualiza 1x día)
+  // Fetch Crypto F&G Alternative.me - cache 60 min (se actualiza 1x dÃ­a)
   if(cat === 'CRIPTO' && (Date.now()-(window._altFnGTs||0)) > 3600000) {
     window._altFnGTs = Date.now();
     fetch('https://api.alternative.me/fng/?limit=1')
@@ -3244,11 +3244,11 @@ function _renderFearGreed(containerId) {
       }).catch(function(){});
   }
   var edu;
-  if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
-  else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
-  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pánico. Momento ideal para analizar fundamentals.';
+  if(d.value<=20)      edu='PÃ¡nico extremo. HistÃ³ricamente zonas de oportunidad para inversores de largo plazo.';
+  else if(d.value<=40) edu='Temor generalizado. Los inversores estÃ¡n vendiendo. Posibles oportunidades si el contexto es sÃ³lido.';
+  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pÃ¡nico. Momento ideal para analizar fundamentals.';
   else if(d.value<=80) edu='Optimismo en el mercado. Precios pueden estar elevados. Considerar toma de ganancias.';
-  else                 edu='Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
+  else                 edu='Euforia extrema. Alta probabilidad de correcciÃ³n prÃ³xima. MÃ¡xima precauciÃ³n.';
   var raw = window._pulseRaw || {};
   var bits = [];
   if(raw.vix)              bits.push('VIX: <b style="color:#E6EDF3">'+_fmt(raw.vix.price,'precio')+'</b>');
@@ -3257,7 +3257,7 @@ function _renderFearGreed(containerId) {
   if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'#3FB950':'#FF4444')+'">'+_fmt(raw.gcf.pct,'pct')+'</b>');
   var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:#8B949E;margin-top:3px;">'+bits.join('')+'</div>';
   var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
-  var catLabels = {GLOBAL:'🌐 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🛢️ COMOD',FUTUROS:'⚡ FUTUROS'};
+  var catLabels = {GLOBAL:'ð GLOBAL',CRIPTO:'ðª CRIPTO',ACCIONES:'ð ACCIONES',COMOD:'ð¢ï¸ COMOD',FUTUROS:'â¡ FUTUROS'};
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
@@ -3418,7 +3418,7 @@ function _renderFuturesBanner(containerId) {
   if(now - window._futuresTs > 60000) {
     _fetchFuturesData().then(function(){ _renderFuturesBanner(containerId); });
   }
-  // Active slots from localStorage — default 6
+  // Active slots from localStorage â default 6
   var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
   var activeSlots;
   try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
@@ -3443,7 +3443,7 @@ function _renderFuturesBanner(containerId) {
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  // Edit button — visible, labeled
+  // Edit button â visible, labeled
   var editBtn = '<div onclick="window._openBannerEdit(\'' + elId + '\')" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2px 7px;flex-shrink:0;cursor:pointer;border-left:1px solid #30363D;">' +
     '<div style="font-size:8px;color:#58A6FF;font-weight:700;white-space:nowrap;">&#x270F; EDITAR</div>' +
   '</div>';
@@ -3479,7 +3479,7 @@ window._openBannerEdit = function(elId) {
         '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">&#x270F; Editar Banner</span>' +
         '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
       '</div>' +
-      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">Elegí qué ver en el banner. Los cambios se guardan automáticamente.</div>' +
+      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">ElegÃ­ quÃ© ver en el banner. Los cambios se guardan automÃ¡ticamente.</div>' +
       rows +
       '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;">Guardar cambios</button>' +
     '</div>';
@@ -3518,7 +3518,7 @@ function _renderMktNewsBanner(containerId) {
     '<div style="background:' + (ev.bg||'#1A0D00') + ';border-bottom:1px solid ' + (ev.border||'#D4A017') + ';padding:5px 12px;display:flex;align-items:center;gap:8px;overflow:hidden;">' +
       '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'#D4A017') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
       '<div style="overflow:hidden;flex:1;">' +
-        '<div id="mkt-news-tick✕ style="display:flex;animation:tkScroll 14s linear infinite;">' +
+        '<div id="mkt-news-tickâ style="display:flex;animation:tkScroll 14s linear infinite;">' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
         '</div>' +
@@ -3644,8 +3644,8 @@ document.addEventListener('DOMContentLoaded', function(){
 
 
 // ============================================================
-// AUREX — Port Dropdowns: moneda y periodo (implementado via JS)
-// NO modifica index.html — todo via DOM manipulation
+// AUREX â Port Dropdowns: moneda y periodo (implementado via JS)
+// NO modifica index.html â todo via DOM manipulation
 // ============================================================
 
 window._initPortDropdowns = function() {
@@ -3685,7 +3685,7 @@ window._initPortDropdowns = function() {
     var badge = document.createElement('div');
     badge.id = 'port-period-badge';
     badge.style.cssText = 'font-size:10px;color:#F59E0B;border:1px solid #444;padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:#2a2a3e;user-select:none;';
-    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">▾</span>';
+    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">â¾</span>';
     badge._tLast=0;['touchstart','click'].forEach(function(evn){badge.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-badge._tLast<600)return;if(evn==='touchstart'){badge._tLast=now;e.preventDefault();}e.stopPropagation();window._togglePortPeriodDD();},{passive:false});});
 
     var dd = document.createElement('div');
@@ -3694,10 +3694,10 @@ window._initPortDropdowns = function() {
 
     var opts = [
       {key:'24h',label:'24 horas'},
-      {key:'7d',label:'7 días'},
+      {key:'7d',label:'7 dÃ­as'},
       {key:'1m',label:'1 mes'},
       {key:'3m',label:'3 meses'},
-      {key:'1y',label:'1 año'},
+      {key:'1y',label:'1 aÃ±o'},
       {key:'buy',label:'Desde compra',border:true}
     ];
     opts.forEach(function(o, i) {
@@ -3706,7 +3706,7 @@ window._initPortDropdowns = function() {
       item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);' +
         (i===0 ? 'color:#F59E0B;font-weight:700;background:#2a2a3e;' : 'color:#ccc;') +
         (o.border ? 'border-top:1px solid #333;' : '');
-      item.textContent = o.label + (i===0 ? ' ✓' : '');
+      item.textContent = o.label + (i===0 ? ' â' : '');
       (function(k){item._tLast=0;['touchstart','click'].forEach(function(evn){item.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-item._tLast<600)return;if(evn==='touchstart'){item._tLast=now;e.preventDefault();}e.stopPropagation();window._selectPortPeriod(k);},{passive:false});});})(o.key);
       dd.appendChild(item);
     });
@@ -3720,7 +3720,7 @@ window._initPortDropdowns = function() {
   var currBadge = document.getElementById('port-curr-badge');
   if(currBadge && !document.getElementById('port-curr-dropdown')) {
     currBadge.style.cssText = 'font-size:11px;color:#000;background:#D4A017;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
-    currBadge.innerHTML = '$ ▾';
+    currBadge.innerHTML = '$ â¾';
     currBadge._tLast=0;['touchstart','click'].forEach(function(evn){currBadge.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-currBadge._tLast<600)return;if(evn==='touchstart'){currBadge._tLast=now;e.preventDefault();}e.stopPropagation();window._togglePortCurrDD();},{passive:false});});
 
     var parent = currBadge.parentNode;
@@ -3737,7 +3737,7 @@ window._initPortDropdowns = function() {
       item.dataset.curr = c;
       item.style.cssText = 'padding:8px 12px;font-size:11px;cursor:pointer;' +
         (i===0 ? 'color:#FFD700;font-weight:700;background:#2a2a3e;' : 'color:#ccc;');
-      item.textContent = c + (i===0 ? ' ✓' : '');
+      item.textContent = c + (i===0 ? ' â' : '');
       (function(cur){item._tLast=0;['touchstart','click'].forEach(function(evn){item.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-item._tLast<600)return;if(evn==='touchstart'){item._tLast=now;e.preventDefault();}e.stopPropagation();window._selectPortCurr(cur);},{passive:false});});})(c);
       ddCurr.appendChild(item);
     });
@@ -3775,7 +3775,7 @@ window._togglePortCurrDD = function() {
 window._selectPortCurr = function(cur) {
   window._portCurrency = cur;
   var badge = document.getElementById('port-curr-badge');
-  if(badge) { var dispCur = (cur === 'USD') ? '$' : cur; badge.textContent = dispCur + ' ▾'; badge.style.color='#000'; badge.style.background='#D4A017'; badge.style.borderColor='#D4A017'; }
+  if(badge) { var dispCur = (cur === 'USD') ? '$' : cur; badge.textContent = dispCur + ' â¾'; badge.style.color='#000'; badge.style.background='#D4A017'; badge.style.borderColor='#D4A017'; }
   var dd = document.getElementById('port-curr-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
@@ -3783,7 +3783,7 @@ window._selectPortCurr = function(cur) {
       it.style.color = c===cur ? '#FFD700' : '#ccc';
       it.style.fontWeight = c===cur ? '700' : '400';
       it.style.background = c===cur ? '#2a2a3e' : '';
-      it.textContent = c + (c===cur ? ' ✓' : '');
+      it.textContent = c + (c===cur ? ' â' : '');
     });
     dd.style.display = 'none';
   }
@@ -3792,9 +3792,9 @@ window._selectPortCurr = function(cur) {
 
 window._selectPortPeriod = function(key) {
   var labels = {'24h':'24h','7d':'7d','1m':'1m','3m':'3m','1y':'1a','buy':'Compra'};
-  var full = {'24h':'24 horas','7d':'7 días','1m':'1 mes','3m':'3 meses','1y':'1 año','buy':'Desde compra'};
+  var full = {'24h':'24 horas','7d':'7 dÃ­as','1m':'1 mes','3m':'3 meses','1y':'1 aÃ±o','buy':'Desde compra'};
   var badge = document.getElementById('port-period-badge');
-  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">▾</span>';
+  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">â¾</span>';
   var dd = document.getElementById('port-period-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
@@ -3802,7 +3802,7 @@ window._selectPortPeriod = function(key) {
       it.style.color = k===key ? '#F59E0B' : '#ccc';
       it.style.fontWeight = k===key ? '700' : '400';
       it.style.background = k===key ? '#2a2a3e' : '';
-      it.textContent = (full[k]||k) + (k===key ? ' ✓' : '');
+      it.textContent = (full[k]||k) + (k===key ? ' â' : '');
     });
     dd.style.display = 'none';
   }
