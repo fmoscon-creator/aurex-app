@@ -1563,16 +1563,144 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
 </div>
 <div class="pac-bloque" id="pac-b7">
-  <div class="pac-titulo" onclick="pacToggle('pac-b7')">
+  <div class="pac-titulo" onclick="pacToggle('pac-b7');pacInitNotif()">
     <span>&#128276; Notificaciones</span><span class="pac-chevron">&#9660;</span>
   </div>
-  <div class="pac-cuerpo"></div>
+  <div class="pac-cuerpo">
+    <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #21262D">
+        <div>
+          <div style="font-size:14px;color:#fff;font-weight:500">&#128226; Notificaciones push</div>
+          <div style="font-size:11px;color:#555;margin-top:2px">Activ&#225; todas las notificaciones</div>
+        </div>
+        <div onclick="pacNotif(this,'notif_push')" data-on="1"
+          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
+          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
+          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+        </div>
+      </div>
+      <div style="padding:11px 0;border-bottom:1px solid #21262D">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:14px;color:#fff;font-weight:500">&#128197; Resumen diario</div>
+            <div style="font-size:11px;color:#555;margin-top:2px">Recib&#237; un resumen de tu portafolio</div>
+          </div>
+          <div onclick="pacNotif(this,'notif_resumen')" data-on="1"
+            style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
+            display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
+            <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          </div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
+          <div style="font-size:11px;color:#888">Hora del resumen:</div>
+          <input id="notif-hora" type="time" value="08:00"
+            onchange="pacSaveHora()"
+            style="background:#0d0d1a;border:1px solid #333;border-radius:6px;
+            color:#c9a84c;font-size:13px;padding:4px 8px;outline:none;cursor:pointer" />
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid #21262D">
+        <div>
+          <div style="font-size:14px;color:#fff;font-weight:500">&#128139; Newsletter semanal</div>
+          <div style="font-size:11px;color:#555;margin-top:2px">An&#225;lisis y novedades cada semana</div>
+        </div>
+        <div onclick="pacNotif(this,'notif_newsletter')" data-on="1"
+          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
+          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
+          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+        <div>
+          <div style="font-size:14px;color:#fff;font-weight:500">&#128640; Novedades AUREX</div>
+          <div style="font-size:11px;color:#555;margin-top:2px">Updates y nuevas funciones de la app</div>
+        </div>
+        <div onclick="pacNotif(this,'notif_novedades')" data-on="1"
+          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
+          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
+          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pac-bloque" id="pac-b8">
   <div class="pac-titulo" onclick="pacToggle('pac-b8')">
     <span>&#128172; Soporte</span><span class="pac-chevron">&#9660;</span>
   </div>
-  <div class="pac-cuerpo"></div>
+  <div class="pac-cuerpo">
+    <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
+      <div onclick="pacAbrirFaq()"
+        style="display:flex;align-items:center;justify-content:space-between;
+        padding:12px 0;border-bottom:1px solid #21262D;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">&#10067;</span>
+          <div>
+            <div style="font-size:14px;color:#fff;font-weight:500">Centro de ayuda</div>
+            <div style="font-size:11px;color:#555;margin-top:2px">Preguntas frecuentes y gu&#237;as</div>
+          </div>
+        </div>
+        <span style="color:#555;font-size:16px">&#8250;</span>
+      </div>
+      <div onclick="pacCalificar()"
+        style="display:flex;align-items:center;justify-content:space-between;
+        padding:12px 0;border-bottom:1px solid #21262D;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">&#11088;</span>
+          <div>
+            <div style="font-size:14px;color:#fff;font-weight:500">Calific&#225; AUREX</div>
+            <div style="font-size:11px;color:#555;margin-top:2px">Tu opini&#243;n nos ayuda a mejorar</div>
+          </div>
+        </div>
+        <span style="color:#555;font-size:16px">&#8250;</span>
+      </div>
+      <div onclick="pacContacto()"
+        style="display:flex;align-items:center;justify-content:space-between;
+        padding:12px 0;border-bottom:1px solid #21262D;cursor:pointer">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:20px">&#128140;</span>
+          <div>
+            <div style="font-size:14px;color:#fff;font-weight:500">Contactar soporte</div>
+            <div style="font-size:11px;color:#555;margin-top:2px">soporte@aurexapp.com</div>
+          </div>
+        </div>
+        <span style="color:#555;font-size:16px">&#8250;</span>
+      </div>
+      <div style="padding:12px 0;border-bottom:1px solid #21262D">
+        <div style="font-size:11px;color:#888;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">S&#237;guenos</div>
+        <div style="display:flex;gap:12px">
+          <div onclick="pacRed('ig')" style="display:flex;flex-direction:column;align-items:center;
+            gap:4px;cursor:pointer;padding:8px 12px;background:#161B22;
+            border-radius:10px;border:1px solid #21262D;flex:1">
+            <span style="font-size:22px">&#128247;</span>
+            <span style="font-size:10px;color:#888">Instagram</span>
+          </div>
+          <div onclick="pacRed('tw')" style="display:flex;flex-direction:column;align-items:center;
+            gap:4px;cursor:pointer;padding:8px 12px;background:#161B22;
+            border-radius:10px;border:1px solid #21262D;flex:1">
+            <span style="font-size:22px">&#128488;</span>
+            <span style="font-size:10px;color:#888">X / Twitter</span>
+          </div>
+          <div onclick="pacRed('yt')" style="display:flex;flex-direction:column;align-items:center;
+            gap:4px;cursor:pointer;padding:8px 12px;background:#161B22;
+            border-radius:10px;border:1px solid #21262D;flex:1">
+            <span style="font-size:22px">&#127910;</span>
+            <span style="font-size:10px;color:#888">YouTube</span>
+          </div>
+        </div>
+      </div>
+      <div style="padding:14px 0 4px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <span style="font-size:12px;color:#555">Versi&#243;n de la app</span>
+          <span style="font-size:12px;color:#8B949E;font-weight:600">AUREX v1.0.0 &#127775;</span>
+        </div>
+        <div style="display:flex;gap:16px">
+          <span onclick="pacLegal('terminos')" style="font-size:11px;color:#555;cursor:pointer;text-decoration:underline">T&#233;rminos de uso</span>
+          <span onclick="pacLegal('privacidad')" style="font-size:11px;color:#555;cursor:pointer;text-decoration:underline">Pol&#237;tica de privacidad</span>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="pac-bloque" id="pac-b9">
   <div class="pac-titulo" onclick="pacToggle('pac-b9')">
@@ -2172,6 +2300,58 @@ function pacInitCelB6(){
 }
 window.pacUpdateCelB6=pacUpdateCelB6;
 window.pacInitCelB6=pacInitCelB6;
+function pacNotif(el,key){
+  var on=el.dataset.on!=='1';
+  el.dataset.on=on?'1':'0';
+  el.style.background=on?'#c9a84c':'#333';
+  el.style.justifyContent=on?'flex-end':'flex-start';
+  localStorage.setItem(key,on?'1':'0');
+}
+function pacSaveHora(){
+  var h=document.getElementById('notif-hora');
+  if(h) localStorage.setItem('notif_hora',h.value);
+}
+function pacInitNotif(){
+  var keys=['notif_push','notif_resumen','notif_newsletter','notif_novedades'];
+  keys.forEach(function(key){
+    var el=document.querySelector('[onclick*="'+key+'"]');
+    if(!el) return;
+    var saved=localStorage.getItem(key);
+    var on=saved===null?true:saved==='1';
+    el.dataset.on=on?'1':'0';
+    el.style.background=on?'#c9a84c':'#333';
+    el.style.justifyContent=on?'flex-end':'flex-start';
+  });
+  var h=document.getElementById('notif-hora');
+  if(h){ var saved=localStorage.getItem('notif_hora'); if(saved) h.value=saved; }
+}
+function pacAbrirFaq(){
+  var m=document.getElementById('auth-msg');
+  if(m){m.textContent='Secci&#243;n FAQ pr&#243;ximamente';setTimeout(function(){m.textContent='';},2500);}
+}
+function pacCalificar(){
+  var m=document.getElementById('auth-msg');
+  if(m){m.textContent='&#11088; &#161;Gracias por calificar AUREX!';setTimeout(function(){m.textContent='';},2500);}
+}
+function pacContacto(){
+  window.location.href='mailto:soporte@aurexapp.com';
+}
+function pacRed(r){
+  var urls={ig:'https://instagram.com/aurexapp',tw:'https://x.com/aurexapp',yt:'https://youtube.com/@aurexapp'};
+  if(urls[r]) window.open(urls[r],'_blank');
+}
+function pacLegal(t){
+  var m=document.getElementById('auth-msg');
+  if(m){m.textContent=t==='terminos'?'T&#233;rminos pr&#243;ximamente':'Pol&#237;tica pr&#243;ximamente';setTimeout(function(){m.textContent='';},2500);}
+}
+window.pacNotif=pacNotif;
+window.pacSaveHora=pacSaveHora;
+window.pacInitNotif=pacInitNotif;
+window.pacAbrirFaq=pacAbrirFaq;
+window.pacCalificar=pacCalificar;
+window.pacContacto=pacContacto;
+window.pacRed=pacRed;
+window.pacLegal=pacLegal;
 </script>
 </div>
 <script>
