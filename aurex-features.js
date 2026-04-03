@@ -244,8 +244,7 @@ function renderTab(tab, pais){
   _activeTab=tab; _activePais=pais||'usa';
   var cnt=document.getElementById('cnt');
   if(!cnt) return;
-  if(typeof _renderMarketBanner==='function') _renderMarketBanner('mkt-market-banner');
-  if(typeof _renderFuturesBanner==='function') _renderFuturesBanner('mkt-futures-banner');
+  if(typeof _renderComboBanner==='function') _renderComboBanner('mkt-combo-banner');
   if(typeof _renderMktNewsBanner==='function') _renderMktNewsBanner('mkt-news-banner');
   var pulseMap={cripto:'CRIPTO',stable:'CRIPTO',acciones:'ACCIONES',etfs:'ACCIONES',futuros:'FUTUROS',metales:'COMOD',bonos:'COMOD'};
   if(typeof _renderFearGreed==='function'){window._pulseActiveFilter=pulseMap[tab]||'GLOBAL';_renderFearGreed('mkt-fear-greed');}
@@ -3287,7 +3286,6 @@ function _renderFearGreed(containerId) {
           '<div style="font-size:9px;color:#8B949E;margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
         '</div>' +
       '</div>' +
-      '<div style="font-size:10px;color:#8B949E;margin-top:5px;line-height:1.4;">* Índice AUREX propio — 14 variables de 6 fuentes. Difiere de Binance (solo cripto, 5 vars) y CNN (solo acciones, 7 vars).</div>' +
     '</div>';
   // Attach event listeners after render (avoids inline onclick single-quote issue)
   var filterEl = document.getElementById('pulse-filters-'+elId);
@@ -3851,3 +3849,67 @@ window._calcPortPeriod = function(period) {
 };
 
 window.portTotalPeriod = window._calcPortPeriod;
+
+
+function _renderComboBanner(containerId){
+  var elId = containerId || 'mkt-combo-banner';
+  var el = document.getElementById(elId);
+  if(!el) return;
+
+  // Temp divs for existing renderers
+  var tmpMarket = document.createElement('div');
+  tmpMarket.id = 'mkt-market-banner';
+  tmpMarket.style.display = 'none';
+  document.body.appendChild(tmpMarket);
+
+  var tmpFutures = document.createElement('div');
+  tmpFutures.id = 'mkt-futures-banner';
+  tmpFutures.style.display = 'none';
+  document.body.appendChild(tmpFutures);
+
+  if(typeof _renderMarketBanner==='function') _renderMarketBanner('mkt-market-banner');
+  if(typeof _renderFuturesBanner==='function') _renderFuturesBanner('mkt-futures-banner');
+
+  var slideA = tmpMarket.innerHTML;
+  var slideB = tmpFutures.innerHTML;
+
+  document.body.removeChild(tmpMarket);
+  document.body.removeChild(tmpFutures);
+
+  var html = '<div style="position:relative;overflow:hidden;">'
+    + '<div id="combo-slide-a" style="transition:opacity 0.4s;opacity:1;">' + slideA + '</div>'
+    + '<div id="combo-slide-b" style="transition:opacity 0.4s;opacity:0;position:absolute;top:0;left:0;right:0;">' + slideB + '</div>'
+    + '<div style="display:flex;justify-content:center;gap:5px;padding:3px 0;">'
+    + '<div id="combo-dot-a" style="width:6px;height:6px;border-radius:50%;background:#D4A017;"></div>'
+    + '<div id="combo-dot-b" style="width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer;" onclick="window._comboBannerFlip&&window._comboBannerFlip()"></div>'
+    + '</div></div>';
+
+  el.innerHTML = html;
+
+  // Min height to avoid layout jump
+  var aEl = document.getElementById('combo-slide-a');
+  if(aEl) el.style.minHeight = aEl.scrollHeight + 'px';
+
+  // Auto-rotate
+  var _comboActive = 0;
+  function _comboFlip(){
+    _comboActive = 1 - _comboActive;
+    var sa = document.getElementById('combo-slide-a');
+    var sb = document.getElementById('combo-slide-b');
+    var da = document.getElementById('combo-dot-a');
+    var db = document.getElementById('combo-dot-b');
+    if(!sa||!sb) return;
+    if(_comboActive===0){
+      sa.style.opacity='1'; sa.style.position='relative';
+      sb.style.opacity='0'; sb.style.position='absolute';
+      if(da){da.style.background='#D4A017';} if(db){db.style.background='#444';}
+    } else {
+      sb.style.opacity='1'; sb.style.position='relative';
+      sa.style.opacity='0'; sa.style.position='absolute';
+      if(db){db.style.background='#D4A017';} if(da){da.style.background='#444';}
+    }
+  }
+  window._comboBannerFlip = _comboFlip;
+  if(window._comboBannerTimer) clearInterval(window._comboBannerTimer);
+  window._comboBannerTimer = setInterval(_comboFlip, 4000);
+}
