@@ -1,368 +1,310 @@
-# AUREX — Documentación Técnica y Funcional v4.0
-*Actualizado: 30/03/2026 — Para consultas de usuarios e inversores*
+# AUREX - DOCUMENTACION TECNICA: TAB PORTFOLIO
+Generado: 3 de Abril de 2026 | HEAD: 3fe0e7d34d9ad2b7b6aef903c69cb7f8b05c1998
 
 ---
 
-## 1. QUÉ ES AUREX
+## 1. DESCRIPCION GENERAL
 
-AUREX es una aplicación financiera avanzada desarrollada en HTML/CSS/JavaScript Vanilla, desplegada en GitHub Pages con backend de datos en Supabase. Combina seguimiento de portafolio en tiempo real, mercados globales, análisis IA y un índice propietario multivariable de sentimiento de mercado.
-
-**Competidores de referencia:** Yahoo Finance, Investing.com, Bloomberg Mobile  
-**Diferenciador clave:** Integración algorítmica de geopolítica cuantitativa (GDELT) + macro FED (FRED API) + cripto + acciones en UN SOLO índice propietario.
-
----
-
-## 2. ARQUITECTURA
-
-- **Frontend:** HTML5 + CSS3 + JavaScript Vanilla (sin frameworks)
-- **Hosting:** GitHub Pages (fmoscon-creator.github.io/aurex-app)
-- **Base de datos:** Supabase (PostgreSQL)
-- **Fuentes de datos en tiempo real:**
-  - Binance API (cripto: precios 24h, klines para RSI)
-  - Yahoo Finance via corsproxy.io (acciones, ETFs, futuros, materias primas)
-  - FRED API / Federal Reserve (tasas FED, CPI, PBI, PPI)
-  - GDELT Project (eventos geopolíticos globales en tiempo real)
-  - VIX / Yahoo Finance (volatilidad implícita S&P 500)
+El tab Portfolio es la pantalla central de gestion de cartera personal del usuario.
+Permite ver el valor total de sus activos, el rendimiento por periodo, agregar y
+eliminar activos, reordenarlos, acceder a detalles individuales y convertir monedas.
+Los datos se persisten en Supabase vinculados al usuario autenticado.
 
 ---
 
-## 3. TABS Y SECCIONES
+## 2. ESTRUCTURA VISUAL (de arriba a abajo)
 
-### 3.1 PORTAFOLIO
-- Valor total del portafolio en USD
-- Variación desde precio de compra (ganancia/pérdida)
-- Mejor activo del período
-- Indicador de señales de Mercados del Mundo (banderas con estado abierto/cerrado)
-- **AUREX PULSE™** — índice de sentimiento multivariable
-- **Banner Futuros & Macro** — 11 instrumentos en tiempo real
-- **Termómetro de Riesgo** — señal de alta convicción IA
-- Lista de activos del portafolio con precios y variaciones
+### 2.1 BANNER DE MERCADOS (port-market-banner)
+Barra horizontal scrolleable que muestra el estado de los mercados globales.
+- Cada mercado muestra: bandera, nombre, estado ABIERTO/CERRADO, tiempo hasta apertura/cierre
+- Mercados: EEUU, ARG, BRASIL, LONDRES, ESPANA, ALEMANIA, FRANCIA, JAPON, CHINA, HONGKONG, ASIA
+- Boton lapiz (editar) abre selector para activar/desactivar mercados
+- Horarios en UTC vs reloj local del dispositivo
+- Guardado en localStorage: aurex_markets_pref (array JSON de IDs)
+- Funcion: _renderMarketBanner(containerId)
+- Funcion edicion: editMarketBanner() -> usa port-modal generico
+- Funcion toggle: toggleMktPref(nombreMercado)
 
-### 3.2 MERCADOS
-- **Banner de EVENTOS** — ticker de noticias de alto impacto de Señales IA
-- Indicadores de mercados del mundo
-- **Banner Futuros & Macro** — idéntico al de Portafolio
-- **AUREX PULSE™** — filtrado automáticamente por categoría activa
-- Tabs de categorías: Cripto, Acciones, Stable & DeFi, Futuros, Metales, Bonos
-- Selector de timeframe: 24h, 7d, 1m, 3m, 1a
-- Indicador de mercado cerrado: **"Ult. cierre"** en dorado cuando el mercado está fuera de horario
-- Botón "Editar orden" con flechas ▲▼ para reordenar activos
+### 2.2 HEADER DE VALOR TOTAL
+Seccion con fondo oscuro que muestra el resumen del portfolio.
 
-### 3.3 WATCHLIST
-- Lista de seguimiento personalizada
+#### Badge de moneda (port-curr-badge)
+- Cicla USD -> USDT -> BTC al hacer click
+- Funcion: _cyclePortCurrency()
+- Variable: window._portCurrency
+- Actualiza: _updatePortTotalDisplay()
 
-### 3.4 SEÑALES IA
-- Motor algorítmico de señales (BAJISTA / ALCISTA / CONF. IA)
-- RSI14 real desde klines de Binance y Yahoo Finance
-- Banner de noticias del día
+#### Importe grande (port-total)
+- Valor total de la cartera en la moneda seleccionada
+- USD: 'USD 12.345,67' | USDT: 'T 12.345,67' | BTC: 'BTC 0,18523' (5 dec)
+- Si BTC no tiene precio: muestra 'BTC ---'
 
-### 3.5 ALERTAS
-- Alertas de precio configurables
+#### Fila de periodo y PnL
+- Botones: 24h | 1m | 3m | 1y | Desde compra
+- Boton activo: fondo #F59E0B, texto negro, font-weight 700
+- Recalcula: diferencia USD (port-pnl-usd) y porcentaje (port-pnl-pct)
+- Fuente: window._IA_PRECIOS para precios historicos
+- Funcion: portTotalPeriod(btn, period)
+- period valido: '24h' | '1m' | '3m' | '1y' | 'max' (= Desde compra)
 
-### 3.6 PERFIL
-- Gestión de cuenta usuario
+#### Badge 24h con dropdown
+- Muestra % cambio del total en 24h
+- Click abre dropdown con periodos: 24h / 7d / 1m / 3m / 1y / Desde compra
+- Proteccion anti-doble-disparo iOS:
+  - window._ptTS: timestamp badge principal (umbral 350ms)
+  - window._ppTS: timestamp items dropdown (umbral 350ms)
+- Inicializado por: _initPortDropdowns() (llamada 50ms post-render)
+- Funciones toggle: _togglePortPeriodDD(), _togglePortCurrDD()
+- Funciones seleccion: _selectPortPeriod(key), _selectPortCurr(cur)
 
----
+#### Fila 3: mejor activo + botones
+- port-best-badge: activo con mayor % PnL (ej: 'BTC +12,3%')
+- Boton '+ Agregar activos': openAddActivo()
+- Boton icono conversor: openPortConversor()
 
-## 4. AUREX PULSE™ — ÍNDICE DE SENTIMIENTO
+### 2.3 TERMOMETRO DE RIESGO (port-thermo)
+Barra horizontal de colores que visualiza distribucion del capital segun senales IA.
 
-### 4.1 Nombre comercial
-- **En la app:** AUREX PULSE™
-- **En pitch/popup:** AUREX FEAR & GREED 14X™
-- **Tagline:** "El índice de sentimiento más completo del mercado"
+Segmentos:
+- Verde (#3FB950): ALCISTA - capital con senal positiva
+- Rojo (#F85149): BAJISTA - capital con senal negativa
+- Dorado (#D4A017): ALTA CONV-IA - senal rara de alta conviccion
+- Gris (#333): SIN SENAL - activos sin senal activa
 
-### 4.2 Las 5 zonas del gauge
-| Rango | Color | Significado |
-|-------|-------|-------------|
-| 0–20 | Rojo intenso | Miedo Extremo |
-| 21–40 | Naranja | Miedo |
-| 41–60 | Amarillo | Neutral |
-| 61–80 | Verde claro | Codicia |
-| 81–100 | Verde intenso | Codicia Extrema |
+Debajo de la barra:
+- Frase contextual segun escenario (ej: 'Tu cartera esta en zona alcista')
+- Boton ? -> popup explicativo
 
-**El gauge es semicircular**, va de rojo (izquierda) a verde (derecha), con aguja indicando el valor actual.
+Funcion: _renderThermoRisk(items)
+Fuentes: window._iaSignals + window._pcPrices
 
-### 4.3 Variables activas (12 de 14 en producción)
+Popups del Termometro:
+- showThermoHelp(): crea div overlay explicativo en DOM
+- _closeThermoHelp(): lo elimina del DOM
+- showThermoInfo(): usa port-modal generico con la misma info
+Contenido popup: explica cada color (ALCISTA, ALTA CONV-IA, BAJISTA, SIN SENAL)
 
-| Variable | Fuente | Peso | Descripción | Interpretación |
-|----------|--------|------|-------------|----------------|
-| **BTC momentum** | Binance | 12% | Variación % de precio BTC en las últimas 24h | Positivo = codicia cripto activa |
-| **ETH momentum** | Binance | 8% | Variación % de precio ETH en las últimas 24h | Confirma tendencia cripto |
-| **VIX volatilidad** | Yahoo Finance | 14% | Índice de volatilidad implícita S&P 500 | VIX > 30 = miedo extremo; VIX < 15 = codicia |
-| **S&P500 momentum** | Yahoo Finance | 8% | Variación % S&P 500 últimas 24h | Pulso del mercado acciones USA |
-| **ES=F S&P Futuro** | Yahoo Finance | 8% | Futuro del S&P 500 (ES=F) | Expectativa mercado antes de apertura |
-| **NQ=F Nasdaq Fut** | Yahoo Finance | 6% | Futuro del Nasdaq (NQ=F) | Expectativa tecnología |
-| **YM=F Dow Futuro** | Yahoo Finance | 4% | Futuro del Dow Jones (YM=F) | Expectativa industria/blue chips |
-| **RTY=F Russell Fut** | Yahoo Finance | 3% | Futuro del Russell 2000 | Expectativa small caps |
-| **Oro GC=F** | Yahoo Finance | 8% | Precio del Oro (GC=F) | Activo refugio: sube = miedo; baja = codicia |
-| **Plata SI=F** | Yahoo Finance | 4% | Precio de la Plata (SI=F) | Confirma tendencia metales preciosos |
-| **Petróleo CL=F** | Yahoo Finance | 5% | Precio del petróleo WTI (CL=F) | Sube = actividad económica/inflación |
-| **Cobre HG=F** | Yahoo Finance | 4% | Precio del cobre (HG=F) | "Doctor Copper": indicador de crecimiento global |
-| **Macro FED** | FRED API | 12% | Tasa FED + CPI + PBI + PPI | Presión macro: tasas altas = miedo; datos fuertes = codicia |
-| **Geopolítica** | GDELT Project | 4% | Eventos bélicos y catástrofes en tiempo real | Conflictos activos = miedo extremo |
+### 2.4 LISTA DE ACTIVOS (port-cnt)
+Cada activo = div (port-row-{id}) con esta estructura:
 
-*Total pesos: 100% | Variables en producción: 12/14 activas*
+Columna izquierda:
+- Flecha arriba (triangulo): movePortfolioItem(id, -1)
+- Flecha abajo: movePortfolioItem(id, 1)
+- Orden guardado en localStorage: aurex_port_order
 
-### 4.4 Filtros por categoría
-El PULSE puede mostrarse segmentado por tipo de activo:
-- **GLOBAL** — todas las variables combinadas (valor global del mercado)
-- **CRIPTO** — set de variables propio, metodología estructural (ver 4.5)
-- **ACCIONES** — ponderado hacia S&P500, futuros, VIX
-- **COMODITIES** — ponderado hacia Oro, Plata, Petróleo, Cobre
-- **FUTUROS** — ponderado hacia ES=F, NQ=F, YM=F, RTY=F
+Logo:
+- Con logo: imagen circular 28px (rowAct.logo)
+- Sin logo: circulo de color con primera letra
 
-**En Mercados:** el filtro se activa automáticamente según la tab seleccionada (Cripto → CRIPTO, Acciones → ACCIONES, etc.)
+Columna central (clickeable):
+- Simbolo en bold 14px
+- Badge tipo (Cripto / Accion / ETF)
+- '2 u. @ $1.200,00'
+- onclick: openPortItemDetail(itemId)
 
-### 4.5 Variables PULSE™ — CRIPTO (ponderación exclusiva)
+Dots IA (centro-derecha):
+- _buildDotsHTML(_getActivoScores(simbolo))
+- Puntos verdes (> 0.01) / rojos (< -0.01)
+- Hasta 10 puntos (una variable IA por punto)
 
-> El índice CRIPTO usa un set de variables **diferente al GLOBAL**, diseñado para acercarse a la metodología estructural de referencia del mercado (Alternative.me Fear & Greed). Se basa en **posición histórica de BTC, RSI14 y momentum multiperiodo** — no en variación diaria de precio (que es muy ruidosa).
+Columna derecha:
+- Valor en USD (cantidad * precio actual)
+- Icono papelera: deletePortfolioItem(id)
 
-| # | Variable | Fuente | Peso | Descripción |
-|---|----------|--------|------|-------------|
-| 1 | **BTC Posición 90d** | Binance klines | **35%** | Dónde está BTC dentro de su rango de 90 días. 0 = en mínimo de 90d (miedo extremo), 100 = en máximo de 90d (euforia). Mejor proxy estructural de sentimiento. |
-| 2 | **BTC RSI14** | Binance klines | **25%** | RSI de 14 períodos de BTC. Escala: <30 = pánico (score 5), 30–40 = miedo (18), 40–50 = cautela (35), 50–60 = neutral (55), 60–70 = optimismo (72), >70 = euforia (90). |
-| 3 | **BTC Momentum 30d** | Binance klines | **15%** | Variación % de BTC en los últimos 30 días. Escala ±30% → score 0–100. Captura tendencia media sin ruido del día. |
-| 4 | **VIX** | Yahoo Finance | **20%** | Índice de volatilidad implícita del S&P500. Proxy de miedo sistémico global que arrastra directamente al cripto. |
-| 5 | **SP500 Futuros** | Yahoo Finance | **5%** | Cambio % de ES=F. Peso mínimo, correlación secundaria con cripto. |
+Fila inferior:
+- % cambio coloreado segun periodo activo
+- Si mercado cerrado: etiqueta 'Ult. cierre' en dorado
+- Botones periodo: 24h | 7d | 1m | 1y
+  - IDs: pp-{periodo}-{id}
+  - Fondo dorado en periodo activo
+  - Funcion: portPeriod(id, simbolo, tipo, period)
+  - Cripto: Binance klines; Acciones: Yahoo via corsproxy.io
 
-**Total: 100% | Fuentes: Binance API + Yahoo Finance**
-
-**Nota para inversores:** *AUREX PULSE™ CRIPTO y Alternative.me Fear & Greed usan metodologías distintas. AUREX incorpora VIX y macro sistémica que Alternative.me no incluye. Una diferencia de 15–25 puntos entre ambos índices es esperable y no representa un error — refleja que AUREX tiene una visión más amplia del riesgo cripto.*
-
-### 4.5 Diferencia con el índice de Binance y CNN
-| | AUREX PULSE™ | Binance Fear & Greed | CNN Fear & Greed |
-|--|--|--|--|
-| Variables | 14 de 6 fuentes | 5 variables cripto | 7 variables acciones |
-| Cobertura | Global (cripto + acciones + macro + geo) | Solo cripto | Solo acciones USA |
-| Geopolítica | ✅ GDELT en tiempo real | ❌ | ❌ |
-| Macro FED | ✅ FRED API | ❌ | Parcial |
-| Futuros | ✅ 4 contratos | ❌ | ❌ |
-| Commodities | ✅ Oro, Plata, Petróleo, Cobre | ❌ | ❌ |
-
-**Por eso** el índice AUREX puede diferir del de Binance (ej: AUREX=47 Neutral vs Binance=25 Miedo) — son metodologías distintas con universos distintos.
-
-### 4.6 Ponderación del cálculo MACRO FED (FRED API)
-Se toman 4 indicadores macro con fallback automático:
-- **Tasa FED** — tasa de fondos federales (mensual): alta tasa = más miedo
-- **CPI** — inflación anual: > 3% = presión = miedo; < 2% = confianza = codicia
-- **PBI** — crecimiento real: > 2% = codicia; < 0% = miedo extremo
-- **PPI** — inflación productora: anticipa CPI futuro
-
-Conversión: cada indicador se normaliza a 0-100, luego se promedia con la ponderación del 12% global.
-
-### 4.7 Cálculo de Geopolítica (GDELT Project)
-GDELT registra eventos globales en tiempo real (guerras, catástrofes, conflictos). El algoritmo:
-1. Consulta los últimos 7 días de eventos con intensidad media y alta
-2. Penaliza el índice según frecuencia de eventos negativos
-3. Sin eventos = 50 (neutral); conflictos activos = < 20 (miedo extremo)
-4. Incluye fallback automático si GDELT no responde
+### 2.5 ESTADO VACIO
+- Funcion: _renderPortfolioEmpty()
+- Muestra mensaje + boton agregar primer activo
 
 ---
 
-## 5. BANNER FUTUROS & MACRO
+## 3. MODALES
 
-Presente en **Portafolio** y **Mercados**. Muestra en tiempo real (Yahoo Finance):
+### Modal generico (port-modal / port-modal-body)
+Reutilizado para: info termometro, edicion banner mercados, errores, otros.
 
-| Chip | Instrumento | Ticker |
-|------|-------------|--------|
-| S&P500 | S&P 500 Spot | ^GSPC |
-| ES=F | S&P 500 Futuro | ES=F |
-| Nasdaq | Nasdaq Composite | ^IXIC |
-| NQ=F | Nasdaq Futuro | NQ=F |
-| Dow | Dow Jones | ^DJI |
-| YM=F | Dow Futuro | YM=F |
-| Russell | Russell 2000 | ^RUT |
-| Oro | Gold Futuro | GC=F |
-| Plata | Silver Futuro | SI=F |
-| Petróleo | WTI Crude | CL=F |
-| Brent | Brent Crude | BNO |
+### Modal agregar activo
+Flujo: openAddActivo() -> _openAddActivoModal()
+1. Campo busqueda -> filterPortSearch() -> _buscarActivos(q, cb)
+2. Lista resultados -> _renderSearchResult(a, idx, 'selectPortActivo')
+3. Seleccion -> selectPortActivo(sym, nombre)
+4. Campos: Simbolo, Nombre, Cantidad, Precio compra, Tipo
+5. Guardar -> savePortActivo() -> addPortfolioItem() -> POST Supabase
+6. Cierre -> closePortModal()
 
----
+Busqueda: _buscarActivos(query, callback)
+- Busca en _IA_ACTIVOS + DATA.cripto + DATA.acciones + DATA.etfs
+- Devuelve hasta 10 resultados
 
-## 6. SEÑALES IA — MOTOR ALGORÍTMICO
-
-### 6.1 Tipos de señal
-- **BAJISTA** — precio cayendo, volumen vendedor, correlación negativa. IA: "alta probabilidad de que siga bajando"
-- **ALCISTA** — precio subiendo, volumen comprador, correlación positiva. IA: "alta probabilidad de que siga subiendo"
-- **CONF. IA (Confluencia IA)** — señal más valiosa y rara. El activo está en indecisión técnica extrema, punto de ruptura en cualquier dirección. Máx. 1-2 por día.
-
-### 6.2 Cómo leer las probabilidades
-- **BAJISTA 75%** = 75% de probabilidad de que el precio siga bajando en las próximas 24-48hs
-- **ALCISTA 68%** = 68% de probabilidad de subida en próximas 24-48hs
-- **ALTA CONV-IA 85% ALCISTA** = señal más fuerte del día, 85% de convicción
-- **Rango realista:** 55% a 88%. Nunca < 52% (sin señal) ni > 90% (certeza imposible)
-
-### 6.3 Variables del algoritmo IA (en implementación)
-1. **RSI14 real** — calculado desde 16 velas diarias (Binance klines para cripto, Yahoo range=30d para acciones)
-2. **Tendencia multiperiodo** — comparación 1d/7d/30d
-3. **Volumen real** — ratio volumen actual vs promedio 14 días
-4. **Momentum precio** — variación % 24h normalizada
-5. **Correlación BTC** — para cripto: correlación con BTC últimos 7 días
-6. **Señal MACD** — dirección de la divergencia
-7. **Soporte/Resistencia** — distancia % al nivel técnico más cercano
-8. **Macro contexto** — alineación con índice AUREX PULSE
+### Modal detalle de activo (port-item-detail-overlay)
+Apertura: openPortItemDetail(itemId)
+Contenido:
+- Precio actual + % cambio
+- Precio de compra
+- PnL total en USD y %
+- Max/Min 52 semanas
+- Estado del mercado
+- Sparkline SVG (_buildSparklineSVG)
+- Filtros periodo: 24h | 7d | 1m | 3m | 1y | Max
+  -> portDetPeriod(simbolo, tipo, period)
+- Simulador: portSimUpdate(itemId, simbolo, pctStr)
+  -> muestra valor si el precio sube/baja ese %
+Cierre: closePortItemDetail()
 
 ---
 
-## 7. RSI14 REAL — IMPLEMENTACIÓN TÉCNICA
+## 4. CONVERSOR DE MONEDAS (port-conv-modal)
 
-### 7.1 Fuentes de datos
-- **Cripto:** Binance klines API (/api/v3/klines?symbol=BTCUSDT&interval=1d&limit=16)
-- **Acciones/ETFs:** Yahoo Finance chart API (interval=1d&range=30d)
+Apertura: openPortConversor() | Cierre: closePortConvModal()
 
-### 7.2 Cálculo RSI14
-```
-RSI = 100 - (100 / (1 + RS))
-RS = Promedio de ganancias (14 días) / Promedio de pérdidas (14 días)
-```
-- Se obtienen los últimos 16 cierres diarios
-- Se calculan 15 variaciones día a día
-- Se separan ganancias y pérdidas
-- Se promedian con suavizado Wilder (EMA exponencial)
+Monedas disponibles:
+- Cripto: BTC, ETH, SOL, USDT (precios via Binance REST en vivo)
+- Fiat: USD, ARS (~1195 blue), ARS_OF (~1060 oficial), EUR (~0.92), BRL (~5.70)
 
-### 7.3 Cache en tiempo de sesión
-Los valores RSI se cachean en `window._rsiCache[symbol]` para no refetchar en cada render. En producción hay hasta **74 activos** en cache simultáneamente.
-
-### 7.4 Interpretación del RSI
-| Valor | Zona | Señal |
-|-------|------|-------|
-| < 30 | Sobreventa extrema | Posible reversión alcista |
-| 30-45 | Territorio bajista | Confirmación bajista |
-| 45-55 | Neutral | Sin señal clara |
-| 55-70 | Territorio alcista | Confirmación alcista |
-| > 70 | Sobrecompra | Posible reversión bajista |
+Logica:
+- Todo pasa por USD como pivote
+- Cripto->USD: monto * precio | USD->Cripto: monto / precio
+- Fiat->USD: monto / tipo_cambio | USD->Fiat: monto * tipo_cambio
+- Swap: swapPortConv() intercambia FROM y TO
+- Calculo: updatePortConv()
+- Carga precios: pcLoadPrices() (Binance + fallback offline)
+- Muestra tasa: '1 FROM = X TO'
 
 ---
 
-## 8. BANNER DE NOTICIAS (EVENTOS) EN MERCADOS
+## 5. CARGA Y PERSISTENCIA
 
-Ticker horizontal animado que muestra eventos de alto y medio impacto registrados por el motor de Señales IA (`window._IA_EVENTOS`). Idéntico al banner que corre en la tab Señales IA. Muestra el tipo de evento y descripción. Tiene botón X para cerrar. Se actualiza en tiempo real con cada refresh de Señales IA.
+### Supabase
+- URL: https://dklljnfhlzmfsfmxrpie.supabase.co
+- Tabla: portfolio (id, user_id, simbolo, nombre, cantidad, precio_compra, tipo, created_at)
+- Carga: loadPortfolioSupa() -> _fetchPortfolio(token, userId)
+- Sin auth: _renderPortfolioEmpty()
 
----
+### Precios en tiempo real
+- _refreshPortPrices(items): cripto via Binance, acciones via Yahoo+corsproxy
+- Renderiza con cache primero, actualiza con precios frescos
 
-## 9. TIMEFRAMES EN MERCADOS
-
-### 9.1 Opciones disponibles
-| Botón | Rango Yahoo | Descripción |
-|-------|-------------|-------------|
-| **24h** | range=2d, interval=1d | Variación respecto al cierre anterior |
-| **7d** | range=7d, interval=1d | Variación últimos 7 días |
-| **1m** | range=1mo, interval=1d | Variación último mes |
-| **3m** | range=3mo, interval=1wk | Variación últimos 3 meses |
-| **1a** | range=1y, interval=1wk | Variación último año |
-
-### 9.2 Indicador de mercado cerrado
-Cuando el mercado está **fuera de horario** (marketState = CLOSED / PRE / POST), aparece la etiqueta **"Ult. cierre"** en color dorado (D4A017) en negrita debajo del precio, indicando que el valor mostrado es el último precio de cierre registrado.
+### localStorage
+- aurex_port_order: orden personalizado (array IDs)
+- aurex_markets_pref: mercados del banner (array nombres)
 
 ---
 
-## 10. EDITAR ORDEN EN MERCADOS
+## 6. FUNCIONES GLOBALES (window.*)
 
-Al hacer click en **"Editar orden"**, se activa el modo de reordenamiento:
-- Aparece banner superior: "Arrastrar para reordenar — Tocar para ocultar"
-- Cada activo muestra botones **▲** (subir) y **▼** (bajar)
-- Los cambios de orden son inmediatos y visuales dentro de la sesión
-- Al hacer click en **"Listo"**, se desactiva el modo edición y los botones desaparecen
-
----
-
-## 11. INDICADORES DE MERCADO DEL MUNDO
-
-Banner superior en ambas tabs mostrando el estado de 6 bolsas globales:
-- 🇺🇸 EEUU (NYSE/NASDAQ)
-- 🇦🇷 ARG (BYMA)
-- 🇪🇸 ESPAÑA (BME)
-- 🇯🇵 JAPÓN (TSE)
-- 🇬🇧 UK (LSE)
-- 🇩🇪 ALEMANIA (XETRA)
-
-**Estados:** 🟢 ABIERTO (verde) / 🔴 CERRADO (rojo) con cuenta regresiva hasta apertura/cierre.
-
----
-
-## 12. HISTORIAL DE COMMITS (SESIONES TÉCNICAS)
-
-| SHA | Descripción |
-|-----|-------------|
-| ec3818f3 | Fear&Greed gauge + Futures/Indices/Bonds banner Portfolio & Mercados |
-| babb609b | AUREX PULSE 14X — 12 variables, filtros por categoría, asterisco |
-| c85df014 | AUREX PULSE Commit B — FRED API + GDELT integrados con fallback |
-| f2d82a99 | Compact Portfolio, news banner Mercados, RSI14 real (74 activos) |
-| b3e1e541 | Mercados: Ult.cierre label, timeframes 3m/1a, stf(), toggleEdit() flechas |
-
----
-
-## 13. ROADMAP
-
-### Semana del 30/03 — 05/04/2026
-- ✅ RSI14 real implementado
-- ✅ Timeframes 3m y 1a en Mercados
-- ✅ Indicador "Ult. cierre" mercado cerrado
-- ✅ Editar orden con flechas ▲▼
-- 🔄 **Señales IA completas** (algoritmo 8 variables: RSI + tendencia + volumen)
-- ⬜ Watchlist persistente
-- ⬜ Revisión conjunta Semana 1
-
-### Semana 2 — 07/04/2026+
-- ⬜ Conversor de activos
-- ⬜ Alertas de precio (push notifications)
-- ⬜ Portafolio social / comparación con benchmark
+| Funcion | Descripcion |
+|---|---|
+| loadPortfolioSupa() | Carga portfolio desde Supabase |
+| openAddActivo() | Abre modal agregar activo |
+| savePortActivo() | Guarda activo en Supabase |
+| closePortModal() | Cierra modal generico |
+| openPortItemDetail(id) | Abre detalle del activo |
+| closePortItemDetail() | Cierra detalle |
+| portPeriod(id,sym,tipo,p) | Cambia periodo de activo individual |
+| portTotalPeriod(btn,p) | Cambia periodo del total |
+| portDetPeriod(sym,tipo,p) | Periodo en vista detalle |
+| portSimUpdate(id,sym,pct) | Simulador de escenario |
+| movePortfolioItem(id,dir) | Reordena activo arriba/abajo |
+| deletePortfolioItem(id) | Elimina activo de Supabase |
+| addPortfolioItem(s,n,q,pc,t)| Agrega activo nuevo |
+| openPortConversor() | Abre conversor de monedas |
+| closePortConvModal() | Cierra conversor |
+| updatePortConv() | Recalcula conversion |
+| swapPortConv() | Intercambia FROM y TO |
+| _cyclePortCurrency() | Cicla moneda total USD/USDT/BTC |
+| _updatePortTotalDisplay() | Refresca importe grande |
+| editMarketBanner() | Abre selector mercados banner |
+| toggleMktPref(m) | Activa/desactiva mercado en banner |
+| showThermoInfo() | Popup explicativo termometro |
+| showThermoHelp() | Popup alt termometro |
+| _closeThermoHelp() | Cierra popup termometro |
+| _initPortDropdowns() | Inicializa touch en dropdown 24h |
+| _togglePortPeriodDD() | Abre/cierra dropdown periodos |
+| _togglePortCurrDD() | Abre/cierra dropdown monedas |
+| _selectPortPeriod(key) | Selecciona periodo |
+| _selectPortCurr(cur) | Selecciona moneda |
+| _calcPortPeriod(period) | Calcula PnL periodo |
+| filterPortSearch() | Filtra busqueda agregar activo |
+| _portPickIdx(idx) | Selecciona item busqueda |
+| selectPortActivo(sym,n) | Llena form con activo elegido |
 
 ---
 
-*AUREX — Inteligencia financiera al alcance de todos*  
-*Documentación mantenida en GitHub: AUREX-PORTFOLIO-DOC.md*
+## 7. VARIABLES GLOBALES
 
-
----
-
-## ⛔ REGLAS CRÍTICAS DE TRABAJO — APRENDIDAS EN PRODUCCIÓN
-
-### ERROR 31/03/2026 — HTML roto por div no cerrado
-
-**Qué pasó:**
-Al implementar el dropdown de moneda (USD ▾) en index.html, se agregó un `<div style="position:relative;">` como wrapper pero NO se agregó el `</div>` de cierre correspondiente. Esto cascadeó y rompió toda la estructura del DOM — todas las tabs se veían negras y vacías en iPhone aunque en desktop se veía bien.
-
-**Causa raíz:**
-Se reemplazó un string de HTML en memoria (JavaScript) usando `.replace()` sin verificar que la estructura de divs abiertos/cerrados quedara balanceada. El browser desktop es más tolerante con HTML mal formado que Safari iOS, por eso no se detectó en el preview del chat.
-
-**Regla aprendida:**
-> ⛔ NUNCA modificar HTML del index.html en memoria con .replace() sin contar manualmente los `<div>` abiertos y cerrados del bloque nuevo. Antes de subir cualquier cambio de HTML, verificar que la cantidad de `<div>` y `</div>` del bloque nuevo sea igual.
-
----
-
-### REGLAS OBLIGATORIAS ANTES DE CADA COMMIT
-
-1. **NUNCA subir cambios de HTML sin verificar balance de divs:**
-   ```javascript
-   // Contar divs en el bloque nuevo antes de subir
-   const opens = (newBlock.match(/<div/g)||[]).length;
-   const closes = (newBlock.match(/<\/div>/g)||[]).length;
-   console.log('divs abiertos:', opens, 'cerrados:', closes); // deben ser iguales
-   ```
-
-2. **SIEMPRE hacer preview visual antes de commitear cualquier cambio de layout** — no solo el área modificada sino hacer scroll completo para ver que el resto de la app no se rompió.
-
-3. **NUNCA reemplazar funciones JS en memoria si no se confirmó que el string viejo se encontró exactamente** (oldBlock found: true antes de proceder).
-
-4. **SIEMPRE verificar en consola que las funciones nuevas están definidas** después de recargar:
-   ```javascript
-   typeof window._toggleCurrDropdown // debe ser "function", no "undefined"
-   ```
-
-5. **ENCODING:** SIEMPRE usar TextEncoder → Uint8Array → btoa en chunks de 8192. NUNCA btoa(unescape(encodeURIComponent())).
-
-6. **ANTES de hacer cualquier commit** de index.html o aurex-features.js, leer el archivo actual de GitHub con su SHA y trabajar sobre esa base — no sobre versiones en memoria de sesiones anteriores.
-
-7. **Cuando algo se rompe en producción:** NO hacer múltiples reverts encadenados. Identificar el SHA del último commit bueno, obtener el contenido de ese SHA específico, y subirlo en UN solo commit limpio.
+| Variable | Tipo | Descripcion |
+|---|---|---|
+| window._portItems | Array | Items del portfolio renderizados |
+| window._portTotalUSD | Number | Valor total en USD |
+| window._portCurrency | String | Moneda activa: USD / USDT / BTC |
+| window._pcPrices | Object | Precios actuales {SYM: precio} |
+| window._pcChange24 | Object | Cambio 24h {SYM: pct} |
+| window._pc52Low | Object | Minimo 52 semanas {SYM: precio} |
+| window._pc52High | Object | Maximo 52 semanas {SYM: precio} |
+| window._pcMarketState | Object | Estado mercado {SYM: REGULAR/CLOSED} |
+| window._pcMarketTime | Object | Timestamp ultimo precio {SYM: ms} |
+| window._pcPrevClose | Object | Precio cierre anterior {SYM: precio} |
+| window._iaSignals | Array | Senales IA activas [{simbolo, direccion, scores}] |
+| window._IA_ACTIVOS | Array | Todos los activos del modelo IA |
+| window._IA_PRECIOS | Object | Precios historicos {SYM: {precio, precio24h, ...}} |
+| window._ptTS | Number | Timestamp anti-doble-disparo badge 24h |
+| window._ppTS | Number | Timestamp anti-doble-disparo items dropdown |
 
 ---
 
-### ÚLTIMO ESTADO BUENO CONOCIDO (31/03/2026 mañana)
+## 8. AUREX PULSE (en Portfolio)
 
-| Archivo | Commit SHA | Descripción |
-|---------|------------|-------------|
-| index.html | 57cbeb37 | Punto 10+11: badge USD + botones periodo |
-| aurex-features.js | fc01542f | Punto 10+11: funciones portTotalPeriod + _cyclePortCurrency |
-| Versión cargada | v=1774940765002 | Cache buster activo |
+_renderFearGreed(containerId) se llama al actualizar totales del portfolio.
+Muestra gauge semicircular SVG con score 0-100 en 'mkt-fear-greed'.
+Fuentes: VIX, S&P500, BTC, Oro, Petroleo via Yahoo/Binance.
+Score: _calcPulseScore(raw, categoria) | Categorias: CRIPTO/ACCIONES/FUTUROS/COMOD/GLOBAL.
+Colores: >60 verde | 40-60 dorado | <40 rojo.
 
+---
+
+## 9. DOTS IA Y SPARKLINE
+
+_buildDotsHTML(scores): genera puntos verdes/rojos por variable IA.
+Variables: tendencia, rsi, volumen, volatilidad, correlacion, oro_petroleo,
+macro, earnings, macd, soporte_resist.
+_getActivoScores(sym): busca en _iaSignals, fallback sintetico via _iaSeed(sym).
+_buildSparklineSVG(closes, isUp): SVG 64x28px con area + linea de precio.
+
+---
+
+## 10. HISTORIAL DE COMMITS - SESION 3/4/2026
+
+| SHA completo | Descripcion | Fecha UTC |
+|---|---|---|
+| 3fe0e7d34d9ad2b7b6aef903c69cb7f8b05c1998 | Fix: ··· UTF-8 -> ASCII en _appendMktRow | 2026-04-03T07:36:05Z |
+| e1103a4578513fe2450a52597e91d5188d25fff5 | Fix: botones tf Mercados - quita + duplicado | 2026-04-03T07:31:55Z |
+| ecffeec9e8dbb663d952de9c331f669081ef4d05 | Mercados: filtros tf dentro de activos + oculta tfrow | 2026-04-03T07:29:01Z |
+| 2856c82023eed7b866f005c7c125fb9c69f99140 | Mercados: tabs mas chicos a la derecha | 2026-04-03T07:22:39Z |
+| 40e8d4b9664cbc1450e1de34bc04539579c7314c | Fix iOS: anti-double-fire dropdown portfolio + Ver Variables | 2026-04-03T07:10:23Z |
+| 55de4f84a61ab0fcfb51f759b594a7c4aa5b160c | Fix iOS: ontouchstart dropdown + Ver Variables | 2026-04-03T07:06:35Z |
+| d814fb1b6df6aac6de3bfcb49cf30f1c9f995521 | Fix iOS: touch-action dropdown portfolio | 2026-04-03T06:55:05Z |
+| 151ae4945061ee9b1078b0ab211e26e3d7f269ba | Mercados: tabs + paises compacto + fix Espana/Japon | 2026-04-03T06:11:35Z |
+| 7a739131f06f7b814aa05221f29d8ca054bd5bff | Mercados: elimina espacio banner eventos | 2026-04-03T05:51:41Z |
+| da092ddcd714cef288fbe356354324d1b9f31a18 | Fix combo banner: display switch | 2026-04-03T05:44:10Z |
+| 622cd381b142a0ee9a2751ca56c99faf2fbba125 | Fix combo banner: background slide + dot onclick | 2026-04-03T05:39:54Z |
+| 786d4e48d87c5bec910fe5347246d96d5edd7b34 | Mercados: banner combo + buscador arriba + pulse | 2026-04-03T05:34:59Z |
+| 39dd8013b1b113f714dbeb14715b924429d25d3a | Fix popup ?: _closeThermoHelp global + iPhone | 2026-04-03T05:01:05Z |
+| 0119c928c471bb1af52d861b3f0fa59705249825 | Fix popup ?: overlay+boton Entendido iPhone | 2026-04-03T04:57:50Z |
+| 2663239c270f2285102b854f6f025d830b5075ba | Termometro: frases contexto + boton ? popup | 2026-04-03T04:52:28Z |
+| f66572984871feea72ad31013b1e01bd5f80adf5 | Termometro: mensaje con accion concreta | 2026-04-03T04:41:53Z |
+| e89aaf07d1fb7c6cbee16d0f3ad196ab0e6f5e7f | Fix _calcPortPeriod: precios historicos | 2026-04-03T04:30:41Z |
+| d9b55f30499a1d25f9f1797f9190b0bbe0376134 | Fix 24h dropdown + Agregar grande | 2026-04-03T04:24:58Z |
+| cc13d06b70e16db2be4613b6c3d8f14c535d8d74 | Header portfolio: badge 24h dorado | 2026-04-03T04:18:44Z |
+| 628aadbde85553874a45532023946e1640c840e3 | Rediseno header portfolio: periodos visibles | 2026-04-03T04:11:31Z |
+
+---
+
+Generado por Claude Sonnet 4.6 - 3/04/2026
