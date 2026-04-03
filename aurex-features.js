@@ -3876,30 +3876,27 @@ function _renderComboBanner(containerId){
   document.body.removeChild(tmpMarket);
   document.body.removeChild(tmpFutures);
 
+  var bg = 'background:#111;';
   var html = '<div style="position:relative;overflow:hidden;">'
-    + '<div id="combo-slide-a" style="transition:opacity 0.4s;opacity:1;">' + slideA + '</div>'
-    + '<div id="combo-slide-b" style="transition:opacity 0.4s;opacity:0;position:absolute;top:0;left:0;right:0;">' + slideB + '</div>'
-    + '<div style="display:flex;justify-content:center;gap:5px;padding:3px 0;">'
-    + '<div id="combo-dot-a" style="width:6px;height:6px;border-radius:50%;background:#D4A017;"></div>'
-    + '<div id="combo-dot-b" style="width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer;" onclick="window._comboBannerFlip&&window._comboBannerFlip()"></div>'
+    + '<div id="combo-slide-a" style="' + bg + 'transition:opacity 0.4s;opacity:1;">' + slideA + '</div>'
+    + '<div id="combo-slide-b" style="' + bg + 'transition:opacity 0.4s;opacity:0;position:absolute;top:0;left:0;right:0;">' + slideB + '</div>'
+    + '<div style="display:flex;justify-content:center;gap:5px;padding:3px 0 4px;">'
+    + '<div id="combo-dot-a" style="width:6px;height:6px;border-radius:50%;background:#D4A017;cursor:pointer;" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
+    + '<div id="combo-dot-b" style="width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer;" onclick="if(window._comboActive!==1&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
     + '</div></div>';
 
   el.innerHTML = html;
 
-  // Min height to avoid layout jump
-  var aEl = document.getElementById('combo-slide-a');
-  if(aEl) el.style.minHeight = aEl.scrollHeight + 'px';
-
   // Auto-rotate
-  var _comboActive = 0;
+  window._comboActive = 0;
   function _comboFlip(){
-    _comboActive = 1 - _comboActive;
+    window._comboActive = 1 - window._comboActive;
     var sa = document.getElementById('combo-slide-a');
     var sb = document.getElementById('combo-slide-b');
     var da = document.getElementById('combo-dot-a');
     var db = document.getElementById('combo-dot-b');
     if(!sa||!sb) return;
-    if(_comboActive===0){
+    if(window._comboActive===0){
       sa.style.opacity='1'; sa.style.position='relative';
       sb.style.opacity='0'; sb.style.position='absolute';
       if(da){da.style.background='#D4A017';} if(db){db.style.background='#444';}
