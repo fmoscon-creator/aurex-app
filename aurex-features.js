@@ -1208,18 +1208,18 @@ function _renderMarketBanner(containerId){
     var mins, lbl;
     if(open){
       mins = mkt.close - utcMin;
-      lbl = 'Cierra en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
+      lbl = Math.floor(mins/60)+'h'+(mins%60)+'m';
     } else {
-      if(isWknd){ var dm=(8-utcDay)%7||7; mins=dm*24*60-utcMin+mkt.open; }
-      else if(utcMin < mkt.open){ mins=mkt.open-utcMin; }
+      if(utcMin < mkt.open){ mins = mkt.open - utcMin; }
       else { mins=(24*60-utcMin)+mkt.open; }
-      lbl = 'Abre en '+Math.floor(mins/60)+'h '+(mins%60)+'m';
+      lbl = Math.floor(mins/60)+'h'+(mins%60)+'m';
     }
-    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:68px;padding:0 4px;">' +
-      '<div style="font-size:10px;font-weight:700;color:#E6EDF3;white-space:nowrap;">'+mkt.flag+' '+mkt.id+'</div>' +
-      '<div style="font-size:10px;color:'+color+';font-weight:700;margin-top:1px;">'+(open?'ABIERTO':'CERRADO')+'</div>' +
-      '<div style="font-size:9px;color:#aaa;margin-top:1px;white-space:nowrap;">'+lbl+'</div>' +
-    '</div>';
+    var statusTxt = open ? 'ABIERTO' : 'CERRADO';
+    return '<div style="display:inline-flex;flex-direction:column;align-items:center;padding:5px 8px;min-width:62px;">'
+      + '<span style="font-size:10px;font-weight:700;color:#E6EDF3;">' + mkt.flag + ' ' + mkt.id + '</span>'
+      + '<span style="font-size:10px;font-weight:700;color:'+color+';line-height:1.4;">' + statusTxt + '</span>'
+      + '<span style="font-size:9px;color:#8B949E;">' + lbl + '</span>'
+      + '</div>';
   }
   var items = ALL_MKTS.map(mktItem).filter(Boolean).join('');
   var editBtn = '<div onclick="editMarketBanner()" style="font-size:10px;color:#555;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #21262D;margin-left:auto;flex-shrink:0;">&#9998;</div>';
@@ -3875,29 +3875,37 @@ function _renderComboBanner(containerId){
   document.body.removeChild(tmpMarket);
   document.body.removeChild(tmpFutures);
 
-  var html = '<div id="combo-slide-a">' + slideA + '</div>'
-    + '<div id="combo-slide-b" style="display:none;">' + slideB + '</div>'
-    + '<div style="display:flex;justify-content:center;gap:5px;padding:3px 0 4px;">'
-    + '<div id="combo-dot-a" style="width:6px;height:6px;border-radius:50%;background:#D4A017;cursor:pointer;" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
-    + '<div id="combo-dot-b" style="width:6px;height:6px;border-radius:50%;background:#444;cursor:pointer;" onclick="if(window._comboActive!==1&&window._comboBannerFlip)window._comboBannerFlip()"></div>'
-    + '</div>';
+  var sOn  = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
+  var sOff = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+
+  var html = '<div style="display:flex;gap:6px;padding:5px 12px 4px;">'
+    + '<div id="combo-tab-a" style="' + sOn  + '" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()">Mercados</div>'
+    + '<div id="combo-tab-b" style="' + sOff + '" onclick="if(window._comboActive!==1&&window._comboBannerFlip)window._comboBannerFlip()">Futuros</div>'
+    + '</div>'
+    + '<div id="combo-slide-a">' + slideA + '</div>'
+    + '<div id="combo-slide-b" style="display:none;">' + slideB + '</div>';
 
   el.innerHTML = html;
 
   window._comboActive = 0;
+  window._comboSOn  = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#D4A017;color:#111;';
+  window._comboSOff = 'display:inline-block;padding:4px 14px;border-radius:12px;font-size:11px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+
   function _comboFlip(){
     window._comboActive = 1 - window._comboActive;
     var sa = document.getElementById('combo-slide-a');
     var sb = document.getElementById('combo-slide-b');
-    var da = document.getElementById('combo-dot-a');
-    var db = document.getElementById('combo-dot-b');
+    var ta = document.getElementById('combo-tab-a');
+    var tb = document.getElementById('combo-tab-b');
     if(!sa||!sb) return;
     if(window._comboActive===0){
       sa.style.display=''; sb.style.display='none';
-      if(da){da.style.background='#D4A017';} if(db){db.style.background='#444';}
+      if(ta) ta.setAttribute('style',window._comboSOn);
+      if(tb) tb.setAttribute('style',window._comboSOff);
     } else {
       sa.style.display='none'; sb.style.display='';
-      if(db){db.style.background='#D4A017';} if(da){da.style.background='#444';}
+      if(tb) tb.setAttribute('style',window._comboSOn);
+      if(ta) ta.setAttribute('style',window._comboSOff);
     }
   }
   window._comboBannerFlip = _comboFlip;
