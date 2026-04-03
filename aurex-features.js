@@ -3528,7 +3528,15 @@ window._saveBannerEdit = function() {
   if(typeof _renderFuturesBanner === 'function') {
     _renderFuturesBanner('port-futures-banner');
     _renderFuturesBanner('mkt-futures-banner');
+    var _tmpSave = document.createElement('div');
+    _tmpSave.id = 'tmp-fut-save'; _tmpSave.style.display = 'none';
+    document.body.appendChild(_tmpSave);
+    _renderFuturesBanner('tmp-fut-save');
+    var _sbSave = document.getElementById('combo-slide-b');
+    if(_sbSave) _sbSave.innerHTML = _tmpSave.innerHTML;
+    document.body.removeChild(_tmpSave);
   }
+  if(typeof _fetchFuturesData === 'function') _fetchFuturesData();
 };
 
 // === MERCADOS: BANNER DE NOTICIAS DEL DIA ===
