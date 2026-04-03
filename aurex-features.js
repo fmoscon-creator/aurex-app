@@ -1268,7 +1268,7 @@ window.showThermoInfo = function(){
     '<div style="font-size:12px;color:#8B949E;line-height:1.6;margin-bottom:12px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
     '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">' +
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#3FB950;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#3FB950;">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> — La señal m�s valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#D4A017;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#D4A017;">ALTA CONV-IA</b> — La señal m�s valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#FF4444;flex-shrink:0;"></div><div style="font-size:12px;color:#E6EDF3;"><b style="color:#FF4444;">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:#8B949E;"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
     '</div>' +
@@ -3787,9 +3787,24 @@ window._calcPortPeriod = function(period) {
     var qty = parseFloat(item.cantidad)||0;
     var pNow = parseFloat(p.precio)||0;
     totalNow += qty*pNow;
-    if(period==='buy') totalBefore += qty*(parseFloat(item.precio_compra)||pNow);
-    else if(period==='24h') totalBefore += qty*(parseFloat(p.precio24h)||pNow);
-    else totalBefore += qty*(parseFloat(p.precio24h)||pNow);
+    var pBefore;
+    if(period==='buy') {
+      pBefore = parseFloat(item.precio_compra)||pNow;
+    } else if(period==='24h') {
+      pBefore = parseFloat(p.precio24h)||pNow;
+    } else if(period==='7d') {
+      pBefore = parseFloat(p.precio7d)||parseFloat(p.precio24h)||pNow;
+    } else if(period==='1m') {
+      pBefore = parseFloat(p.precio30d)||(p.closes30d&&p.closes30d.length?parseFloat(p.closes30d[0]):0)||parseFloat(p.precio24h)||pNow;
+    } else if(period==='3m') {
+      var c=p.closes30d; var p3=c&&c.length>=30?parseFloat(c[0]):0;
+      pBefore = p3||parseFloat(p.precio30d)||parseFloat(p.precio24h)||pNow;
+    } else if(period==='1y') {
+      pBefore = parseFloat(p.low52w)||parseFloat(p.precio30d)||parseFloat(p.precio24h)||pNow;
+    } else {
+      pBefore = parseFloat(p.precio24h)||pNow;
+    }
+    totalBefore += qty*pBefore;
   });
   var diff = totalNow-totalBefore;
   var pct = totalBefore>0 ? (diff/totalBefore*100) : 0;
