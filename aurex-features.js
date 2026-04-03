@@ -1282,13 +1282,19 @@ window.showThermoInfo = function(){
 window.showThermoHelp = function(){
   var existing = document.getElementById('thermo-help-popup');
   if(existing){ existing.remove(); return; }
-  var popup = document.createElement('div');
-  popup.id = 'thermo-help-popup';
-  popup.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px 18px;z-index:9999;max-width:320px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.7);';
-  popup.innerHTML =
+  // Overlay oscuro que cierra al tocar
+  var overlay = document.createElement('div');
+  overlay.id = 'thermo-help-popup';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:9998;display:flex;align-items:center;justify-content:center;';
+  overlay.onclick = function(){ overlay.remove(); };
+  // Caja del popup
+  var box = document.createElement('div');
+  box.style.cssText = 'background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px 18px;max-width:300px;width:88%;box-shadow:0 8px 32px rgba(0,0,0,.8);position:relative;';
+  box.onclick = function(e){ e.stopPropagation(); };
+  box.innerHTML =
     '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">' +
       '<div style="font-size:13px;font-weight:700;color:#E6EDF3;">🌡️ Cómo leer el Termómetro</div>' +
-      '<div onclick="document.getElementById(\"thermo-help-popup\").remove()" style="font-size:18px;color:#8B949E;cursor:pointer;padding:0 4px;">&#215;</div>' +
+      '<div onclick="document.getElementById(\"thermo-help-popup\").remove()" style="font-size:22px;color:#8B949E;cursor:pointer;line-height:1;padding:0 2px;-webkit-tap-highlight-color:rgba(0,0,0,0);">&#215;</div>' +
     '</div>' +
     '<div style="display:flex;flex-direction:column;gap:10px;font-size:11px;line-height:1.5;">' +
       '<div><span style="color:#3FB950;font-weight:700;">🟢 Verde — Alcista</span><br><span style="color:#8B949E;">Señal confirmada de suba. Buen momento para mantener o aumentar posición.</span></div>' +
@@ -1296,10 +1302,10 @@ window.showThermoHelp = function(){
       '<div><span style="color:#D4A017;font-weight:700;">⚡ Dorado — Sin dirección</span><br><span style="color:#8B949E;">Movimiento fuerte inminente sin confirmar. Esperá la señal — no operar todavía.</span></div>' +
       '<div><span style="color:#8B949E;font-weight:700;">⚫ Gris — Sin señal</span><br><span style="color:#8B949E;">La IA no tiene datos suficientes hoy. Sin acción recomendada.</span></div>' +
     '</div>' +
-    '<div style="margin-top:14px;font-size:10px;color:#8B949E;border-top:1px solid #30363D;padding-top:10px;">El porcentaje indica cuánto de tu capital en USD está en cada zona. Se actualiza con los precios actuales.</div>';
-  document.body.appendChild(popup);
-  popup.addEventListener('click', function(e){ e.stopPropagation(); });
-  setTimeout(function(){ document.addEventListener('click', function h(){ popup.remove(); document.removeEventListener('click',h); }); }, 100);
+    '<div style="margin-top:14px;font-size:10px;color:#8B949E;border-top:1px solid #30363D;padding-top:10px;">El % indica cuánto de tu capital está en cada zona. Se actualiza con precios actuales.</div>' +
+    '<div onclick="document.getElementById(\"thermo-help-popup\").remove()" style="margin-top:14px;background:#D4A017;color:#000;border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Entendido</div>';
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
 };
 // ââ ABRIR / CERRAR modal Agregar activo ââ
 var _ACTIVOS_MODAL = [
