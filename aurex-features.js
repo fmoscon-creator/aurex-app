@@ -1224,7 +1224,7 @@ function _renderMarketBanner(containerId){
       + '</div>';
   }
   var items = ALL_MKTS.map(mktItem).filter(Boolean).join('');
-  var editBtn = '<div onclick="editMarketBanner()" style="font-size:10px;color:#555;cursor:pointer;padding:2px 6px;border-radius:4px;border:1px solid #21262D;margin-left:auto;flex-shrink:0;">&#9998;</div>';
+  var editBtn = '<div onclick="editMarketBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;margin-left:auto;flex-shrink:0;">&#9998;</div>';
   el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">'+items+editBtn+'</div>';
 }
 
