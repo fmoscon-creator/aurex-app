@@ -3418,7 +3418,16 @@ async function _fetchFuturesData() {
         results[sym] = { price: price, pct: pct, open: open, state: meta.marketState || 'CLOSED' };
         window._futuresCache = results;
         window._futuresTs = Date.now();
-        if(typeof _renderFuturesBanner === 'function') _renderFuturesBanner();
+        if(typeof _renderFuturesBanner === 'function'){
+          _renderFuturesBanner();
+          var _tmpFut = document.createElement('div');
+          _tmpFut.id = 'tmp-fut-prog'; _tmpFut.style.display = 'none';
+          document.body.appendChild(_tmpFut);
+          _renderFuturesBanner('tmp-fut-prog');
+          var _sb = document.getElementById('combo-slide-b');
+          if(_sb) _sb.innerHTML = _tmpFut.innerHTML;
+          document.body.removeChild(_tmpFut);
+        }
       }
     } catch(e) {}
     await new Promise(function(r){ setTimeout(r, 400); });
