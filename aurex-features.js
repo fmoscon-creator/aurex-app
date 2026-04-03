@@ -291,6 +291,7 @@ function _appendMktRow(cnt, item, tab) {
       '<span id="lbl-'+item.s+'" style="font-size:9px;color:#D4A017;font-weight:700;display:none;"></span>'+
       '<span id="c-'+item.s+'" style="font-size:11px;color:#8B949E;">···</span>'+
       dotsHtml+
+    +'<div style="display:flex;gap:2px;margin-top:2px;">'+['24h','7d','1m','3m','1a'].map(function(p){return '<span class="mkt-tf-btn" data-tf="'+p+'" ontouchstart="stf(null,\''+p+'\')" onclick="stf(null,\''+p+'\')" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'#D4A017':'#21262D')+';color:'+(p==='24h'?'#111':'#8B949E')+';cursor:pointer;touch-action:manipulation;">'+p+'</span>';}).join('')+'</div>'+
     '</div>';
   cnt.appendChild(row);
 }
@@ -458,6 +459,7 @@ window.stf=function(el,tf){
   window._activeTf=tf;
   document.querySelectorAll('.tfs .tf').forEach(function(t){t.classList.remove('on');});
   if(el) el.classList.add('on');
+  document.querySelectorAll('.mkt-tf-btn').forEach(function(b){b.style.background=b.dataset.tf===tf?'#D4A017':'#21262D';b.style.color=b.dataset.tf===tf?'#111':'#8B949E';});
   var tfEl=document.getElementById('tf-time');
   if(tfEl){
     var labels={'24h':'Act. ahora','7d':'Últimos 7d','1m':'Último mes','3m':'Últimos 3m','1a':'Último año'};
