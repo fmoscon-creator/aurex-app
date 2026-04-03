@@ -3403,9 +3403,10 @@ async function _fetchFuturesData() {
   var results = {};
   var promises = rawSyms.map(async function(sym) {
     try {
-      var url = 'https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
-      var res = await fetch(url);
-      var data = await res.json();
+      var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
+      var res = await fetch(url, {signal: AbortSignal.timeout(8000)});
+      var wrapper = await res.json();
+      var data = JSON.parse(wrapper.contents);
       if(data.chart && data.chart.result && data.chart.result[0]) {
         var meta = data.chart.result[0].meta;
         var price = meta.regularMarketPrice || 0;
