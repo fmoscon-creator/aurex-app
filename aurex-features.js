@@ -1153,22 +1153,25 @@ function _renderThermoRisk(items){
   var hcSyms  = buckets.HC.syms.join(', ');
   var msg = '';
   if(pBaj >= 50){
-    msg = '🔴 Revisá urgente — <span style="color:#F85149;"><b>'+bajSyms+'</b></span> en baja confirmada.';
+    msg = '🔴 Revisá urgente — <span style="color:#F85149;"><b>'+bajSyms+'</b></span> en baja confirmada.<br><span style="color:#8B949E;font-size:9px;">La IA confirmó caída. Evaluá reducir posición antes de que baje más.</span>';
   } else if(pBaj >= 20){
-    msg = '⚠️ Vigilar: <span style="color:#F85149;"><b>'+bajSyms+'</b></span> con señal bajista.';
+    msg = '⚠️ Vigilar: <span style="color:#F85149;"><b>'+bajSyms+'</b></span> con señal bajista.<br><span style="color:#8B949E;font-size:9px;">Señal débil de baja. Monitorea de cerca antes de decidir.</span>';
   } else if(pAlc >= 50){
-    msg = '🟢 Buen momento — <span style="color:#3FB950;"><b>'+alcSyms+'</b></span> con momentum positivo.';
+    msg = '🟢 Buen momento — <span style="color:#3FB950;"><b>'+alcSyms+'</b></span> con momentum positivo.<br><span style="color:#8B949E;font-size:9px;">La IA confirmó suba. Buen momento para mantener o aumentar posición.</span>';
   } else if(pHC >= 40){
-    msg = '⚡ Esperá señal antes de operar: <span style="color:#D4A017;"><b>'+hcSyms+'</b></span>.';
+    msg = '⚡ Esperá señal antes de operar: <span style="color:#D4A017;"><b>'+hcSyms+'</b></span>.<br><span style="color:#8B949E;font-size:9px;">La IA está monitoreando. Confirma dirección cuando el mercado define. Volvé mañana.</span>';
   } else if(pSin >= 70){
-    msg = '⚫ Sin datos suficientes hoy — no operar hasta nueva señal.';
+    msg = '⚫ Sin datos suficientes hoy — no operar hasta nueva señal.<br><span style="color:#8B949E;font-size:9px;">La IA necesita más datos. Sin acción recomendada por ahora.</span>';
   } else {
     var dom = segs[0];
-    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> — cartera con señales mixtas.';
+    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> — cartera con señales mixtas.<br><span style="color:#8B949E;font-size:9px;">Revisá cada activo individualmente antes de operar.</span>';
   }
   el.innerHTML =
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">' +
-      '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+      '<div style="display:flex;align-items:center;gap:5px;">' +
+        '<div style="font-size:10px;color:#E6EDF3;font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+        '<div onclick="showThermoHelp()" style="font-size:9px;color:#8B949E;font-weight:700;cursor:pointer;border:1px solid #444;border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</div>' +
+      '</div>' +
       '<div style="font-size:8px;color:#8B949E;letter-spacing:.5px;font-weight:500;">CAPITAL POR SEÑAL IA</div>' +
       '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
@@ -1274,6 +1277,29 @@ window.showThermoInfo = function(){
     '</div>' +
     '<div onclick="closePortModal()" style="background:#3FB950;color:#0D1117;border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
   modal.style.display = 'flex';
+};
+
+window.showThermoHelp = function(){
+  var existing = document.getElementById('thermo-help-popup');
+  if(existing){ existing.remove(); return; }
+  var popup = document.createElement('div');
+  popup.id = 'thermo-help-popup';
+  popup.style.cssText = 'position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px 18px;z-index:9999;max-width:320px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.7);';
+  popup.innerHTML =
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">' +
+      '<div style="font-size:13px;font-weight:700;color:#E6EDF3;">🌡️ Cómo leer el Termómetro</div>' +
+      '<div onclick="document.getElementById(\"thermo-help-popup\").remove()" style="font-size:18px;color:#8B949E;cursor:pointer;padding:0 4px;">&#215;</div>' +
+    '</div>' +
+    '<div style="display:flex;flex-direction:column;gap:10px;font-size:11px;line-height:1.5;">' +
+      '<div><span style="color:#3FB950;font-weight:700;">🟢 Verde — Alcista</span><br><span style="color:#8B949E;">Señal confirmada de suba. Buen momento para mantener o aumentar posición.</span></div>' +
+      '<div><span style="color:#F85149;font-weight:700;">🔴 Rojo — Bajista</span><br><span style="color:#8B949E;">Señal confirmada de caída. Evaluá reducir antes de que baje más.</span></div>' +
+      '<div><span style="color:#D4A017;font-weight:700;">⚡ Dorado — Sin dirección</span><br><span style="color:#8B949E;">Movimiento fuerte inminente sin confirmar. Esperá la señal — no operar todavía.</span></div>' +
+      '<div><span style="color:#8B949E;font-weight:700;">⚫ Gris — Sin señal</span><br><span style="color:#8B949E;">La IA no tiene datos suficientes hoy. Sin acción recomendada.</span></div>' +
+    '</div>' +
+    '<div style="margin-top:14px;font-size:10px;color:#8B949E;border-top:1px solid #30363D;padding-top:10px;">El porcentaje indica cuánto de tu capital en USD está en cada zona. Se actualiza con los precios actuales.</div>';
+  document.body.appendChild(popup);
+  popup.addEventListener('click', function(e){ e.stopPropagation(); });
+  setTimeout(function(){ document.addEventListener('click', function h(){ popup.remove(); document.removeEventListener('click',h); }); }, 100);
 };
 // ââ ABRIR / CERRAR modal Agregar activo ââ
 var _ACTIVOS_MODAL = [
