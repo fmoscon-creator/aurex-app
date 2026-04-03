@@ -599,16 +599,16 @@ document.addEventListener('DOMContentLoaded', function() {
         <span id="port-pnl-usd" style="font-size:11px;font-weight:700;color:#8B949E;"></span>
         <span id="port-pnl-pct" style="font-size:12px;font-weight:800;color:#8B949E;"></span>
         <div style="position:relative;">
-          <div onclick="event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);">
+          <div ontouchstart="event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" onclick="event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:#D4A017;color:#000;border:0.5px solid #D4A017;padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">
             <span id="port-period-badge">24h</span> &#9660;
           </div>
           <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 16px rgba(0,0,0,.6);z-index:9999;">
-            <div data-key="24h" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;color:#F59E0B;font-weight:700;background:#2a2a3e;">24 horas &#10003;</div>
-            <div data-key="7d"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">7 d&#237;as</div>
-            <div data-key="1m"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">1 mes</div>
-            <div data-key="3m"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">3 meses</div>
-            <div data-key="1y"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;">1 a&#241;o</div>
-            <div data-key="buy" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" style="padding:9px 14px;font-size:12px;cursor:pointer;color:#ccc;border-top:1px solid #333;">Desde compra</div>
+            <div data-key="24h" ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#F59E0B;font-weight:700;background:#2a2a3e;">24 horas &#10003;</div>
+            <div data-key="7d"  ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">7 d&#237;as</div>
+            <div data-key="1m"  ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">1 mes</div>
+            <div data-key="3m"  ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">3 meses</div>
+            <div data-key="1y"  ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">1 a&#241;o</div>
+            <div data-key="buy" ontouchstart="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" onclick="event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;border-top:1px solid #333;">Desde compra</div>
           </div>
         </div>
       </div>
@@ -1082,7 +1082,7 @@ window._mktOpenDetail = function(idx){
   </div>
   <!-- Ver Variables button -->
   <div style="display:flex;justify-content:flex-end;margin-top:8px">
-    <button onclick="showIAVariablesPopup()" style="background:#21262D;border:1px solid #D4A01740;border-radius:8px;padding:5px 10px;color:#D4A017;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">&#128269; Ver Variables del Modelo</button>
+    <button ontouchstart="showIAVariablesPopup()" onclick="showIAVariablesPopup()" style="background:#21262D;border:1px solid #D4A01740;border-radius:8px;padding:5px 10px;color:#D4A017;font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">&#128269; Ver Variables del Modelo</button>
   </div>
 </div>
 
