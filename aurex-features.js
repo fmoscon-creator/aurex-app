@@ -1153,15 +1153,15 @@ function _renderThermoRisk(items){
   var hcSyms  = buckets.HC.syms.join(', ');
   var msg = '';
   if(pBaj >= 50){
-    msg = '🔴 <b>'+pBaj.toFixed(0)+'% de tu cartera está en BAJA</b> — revisá: <span style="color:#F85149;">'+bajSyms+'</span>';
+    msg = '🔴 Revisá urgente — <span style="color:#F85149;"><b>'+bajSyms+'</b></span> en baja confirmada.';
   } else if(pBaj >= 20){
-    msg = '⚠️ El <b>'+pBaj.toFixed(0)+'% bajista</b> — activos a vigilar: <span style="color:#F85149;">'+bajSyms+'</span>';
+    msg = '⚠️ Vigilar: <span style="color:#F85149;"><b>'+bajSyms+'</b></span> con señal bajista.';
   } else if(pAlc >= 50){
-    msg = '🟢 <b>'+pAlc.toFixed(0)+'% de tu cartera en ALZA</b> — momentum positivo en: <span style="color:#3FB950;">'+alcSyms+'</span>';
+    msg = '🟢 Buen momento — <span style="color:#3FB950;"><b>'+alcSyms+'</b></span> con momentum positivo.';
   } else if(pHC >= 40){
-    msg = '⚡ <b>'+pHC.toFixed(0)+'% sin dirección confirmada</b> — la IA espera definición en: <span style="color:#D4A017;">'+hcSyms+'</span>';
+    msg = '⚡ Esperá señal antes de operar: <span style="color:#D4A017;"><b>'+hcSyms+'</b></span>.';
   } else if(pSin >= 70){
-    msg = '⚫ La mayoría de tus activos aún <b>sin señal de la IA</b> hoy.';
+    msg = '⚫ Sin datos suficientes hoy — no operar hasta nueva señal.';
   } else {
     var dom = segs[0];
     msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> — cartera con señales mixtas.';
@@ -1173,8 +1173,8 @@ function _renderThermoRisk(items){
       '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
     '<div style="height:8px;border-radius:6px;overflow:hidden;display:flex;gap:1px;background:#21262D;margin-bottom:6px;">'+bar+'</div>' +
-    '<div style="margin-bottom:5px;">'+leg+'</div>' +
-    '<div style="font-size:11px;color:#C9D1D9;line-height:1.4;">'+msg+'</div>';
+    '<div style="margin-bottom:4px;">'+leg+'</div>' +
+    '<div style="font-size:10px;color:#8B949E;line-height:1.4;">'+msg+'</div>';
 }
 
 function _renderMarketBanner(containerId){
