@@ -1650,13 +1650,21 @@ window.openPortItemDetail = function(itemId){
     '' +
     '<div style="border-top:1px solid #21262D;margin-top:12px;padding-top:12px;">' +
     '<div style="font-size:10px;color:#8B949E;margin-bottom:8px;text-align:center;">Compartir</div>' +
-    '<div style="display:flex;justify-content:space-between;align-items:center;padding:0 8px;">' +
-    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:22px;">&#x1F4E7;</div>Mail</a>' +
-    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:22px;">&#x1F4AC;</div>WhatsApp</a>' +
-    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="width:26px;height:26px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l9-5-3 9-2-3-4 2z" fill="#fff"/></svg></div>Telegram</a>' +
-    '</div>' +
-    '</div>' +
-    '</div></div>';
+    (function(){
+  var _txt2 = item.simbolo + ' - ' + item.nombre + '\n' +
+    'Precio: $' + precio.toFixed(2) + '\n' +
+    'P&L: ' + pnlSign + pnlPct.toFixed(2) + '%\n' +
+    'aurex.live';
+  var _waUrl = 'https://wa.me/?text=' + encodeURIComponent(_txt2);
+  var _tgUrl = 'https://t.me/share/url?url=https://aurex.live&text=' + encodeURIComponent(_txt2);
+  var _mlUrl = 'mailto:?subject=AUREX+-+' + encodeURIComponent(item.simbolo) + '&body=' + encodeURIComponent(_txt2);
+  return '<div style="display:flex;justify-content:space-between;align-items:center;padding:0 12px;">'
+    + '<a href="' + _mlUrl + '" onclick="event.stopPropagation()" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:10px;font-weight:600;"><div style="font-size:26px;">&#x1F4E7;</div>Mail</a>'
+    + '<a href="' + _waUrl + '" target="_blank" onclick="event.stopPropagation()" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:10px;font-weight:600;"><div style="font-size:26px;">&#x1F4AC;</div>WhatsApp</a>'
+    + '<a href="' + _tgUrl + '" target="_blank" onclick="event.stopPropagation()" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:10px;font-weight:600;"><div style="width:28px;height:28px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;"><svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l9-5-3 9-2-3-4 2z" fill="#fff"/></svg></div>Telegram</a>'
+    + '</div>';
+})()
+    + '</div></div>';
   window._portSimBase = {precio: precio, cantidad: item.cantidad, precioCompra: item.precio_compra};
   modal.style.display = 'flex';
   portDetPeriod(item.simbolo, item.tipo, '24h');
