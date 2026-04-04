@@ -2954,7 +2954,7 @@ window._compartirSenal = function(info) {
         '<a href="'+tg+'" target="_blank" style="flex:1;background:#229ED920;border:1px solid #229ED960;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="width:28px;height:28px;border-radius:50%;background:#229ED9;display:inline-flex;align-items:center;justify-content:center;margin-bottom:2px"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l9-5-3 9-2-3-4 2z" fill="#fff"/></svg></div><div style="font-size:10px;color:#229ED9;margin-top:4px">Telegram</div></a>' +
         '<a href="'+ml+'" style="flex:1;background:#D4A01720;border:1px solid #D4A01760;border-radius:10px;padding:12px 8px;text-align:center;text-decoration:none"><div style="font-size:22px">📧</div><div style="font-size:10px;color:#D4A017;margin-top:4px">Mail</div></a>' +
       '</div>' +
-      '<button onclick="var o=document.getElementById('ia-share-overlay');if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointer">Cancelar</button>' +
+      '<button onclick="var o=document.getElementById(&apos;ia-share-overlay&apos;);if(o)o.remove();" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;color:#8B949E;font-size:12px;cursor:pointer">Cancelar</button>' +
     '</div>';
     overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
