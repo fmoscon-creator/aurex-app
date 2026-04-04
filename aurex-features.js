@@ -338,7 +338,7 @@ function fetchYahoo(tab,pais,tf){
   var interval=(tf==='3m'||tf==='1a')?'1wk':'1d';
   var _paisMap={br:'brasil',eu:'europa',es:'europa',jp:'japon',cn:'china'};var _paisKey=_paisMap[pais]||pais;var _bgKey=tab==='acciones'?'acciones_'+(_paisKey||'usa'):tab;var _bgExtra=(window._BG_EXTRA&&window._BG_EXTRA[_bgKey]||[]).map(function(s){return{s:s,n:s};});var arr=(tab==='acciones'?(DATA.acciones[_paisKey]||DATA.acciones.usa):(DATA[tab]||[])).concat(_bgExtra);
   Promise.all(arr.map(function(item){
-    return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+(pais==='arg'?({PAMP:'PAM',TECO2:'TEO',CRES:'CRESY',IRSA:'IRS',TXAR:'TX',BYMA:'BYMA.BA',HARG:'HARG.BA',DGCU2:'DGCU2.BA',TRAN:'TRAN.BA',COME:'COME.BA',AUSO:'AUSO.BA',INVJ:'INVJ.BA',MOLI:'MOLI.BA',SAMI:'SAMI.BA',RICH:'RICH.BA',METR:'METR.BA',BOLT:'BOLT.BA'}[item.s]||item.s):(pais==='eu'||pais==='es')?({INGA:'ING'}[item.s]||item.s):item.s)+'?interval='+interval+'&range='+range))
+    return (function(){var _ySym=(pais==='arg'?({PAMP:'PAM',TECO2:'TEO',CRES:'CRESY',IRSA:'IRS',TXAR:'TX',BYMA:'BYMA.BA',HARG:'HARG.BA',DGCU2:'DGCU2.BA',TRAN:'TRAN.BA',COME:'COME.BA',AUSO:'AUSO.BA',INVJ:'INVJ.BA',MOLI:'MOLI.BA',SAMI:'SAMI.BA',RICH:'RICH.BA',METR:'METR.BA',BOLT:'BOLT.BA'}[item.s]||item.s):(pais==='eu'||pais==='es')?({INGA:'ING'}[item.s]||item.s):item.s);return fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+_ySym+'&interval='+interval+'&range='+range);})()
       .then(function(r){return r.json();})
       .then(function(d){
         var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;
@@ -769,7 +769,7 @@ function _refreshPortPrices(items){
       }).catch(done);
   });
   yahooSyms.forEach(function(sym){
-    fetch('https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=1d')
+    fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=1d')
       .then(function(r){ return r.json(); })
       .then(function(d){
         try{
@@ -1048,9 +1048,7 @@ window.portPeriod = function(id, simbolo, tipo, period){
         pctEl.textContent = _fmt(pct,'pct');
       }).catch(function(){ pctEl.textContent = '--'; });
   } else {
-    var now = Math.floor(Date.now()/1000);
-    var from = now - days*86400;
-    var yurl = 'https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(simbolo)+'?period1='+from+'&period2='+now+'&interval=1d';
+    var yurl = 'https://aurex-app-production.up.railway.app/api/yahoo?symbol='+simbolo+'&interval=1d&range='+days+'d';
     fetch(yurl)
       .then(function(r){ return r.json(); })
       .then(function(d){
@@ -1395,7 +1393,7 @@ window._buscarActivos = function(q, cb) {
   if(ql.length < 2) { cb(localMatches); return; }
   var done = false;
   var timer = setTimeout(function(){ if(!done){ done=true; cb(localMatches); } }, 3500);
-  var yahooUrl = 'https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v1/finance/search?q=' + encodeURIComponent(q) + '&lang=en-US&newsCount=0&quotesCount=10');
+  var yahooUrl = 'https://aurex-app-production.up.railway.app/api/yahoo/search?q='+encodeURIComponent(q);
   fetch(yahooUrl, {signal: AbortSignal.timeout(4000)})
     .then(function(r){ return r.json(); })
     .then(function(data) {
@@ -1697,9 +1695,7 @@ window.portDetPeriod = function(simbolo, tipo, period){
       if(valEl){ valEl.style.color = pct>=0?'#3FB950':'#FF4444'; valEl.textContent = _fmt(pct,'pct')+' ('+period+')'; }
     }).catch(function(){ if(valEl) valEl.textContent = '--'; });
   } else {
-    var now = Math.floor(Date.now()/1000);
-    var from = now - days*86400;
-    var yurl = 'https://corsproxy.io/?https://query1.finance.yahoo.com/v8/finance/chart/'+simbolo+'?interval=1d&period1='+from+'&period2='+now;
+    var yurl = 'https://aurex-app-production.up.railway.app/api/yahoo?symbol='+simbolo+'&interval=1d&range='+days+'d';
     fetch(yurl).then(function(r){ return r.json(); }).then(function(d){
       try{
         var closes = d.chart.result[0].indicators.quote[0].close;
@@ -2265,7 +2261,7 @@ function _fetchRSIBatch(activos) {
     } else {
       // Yahoo Finance, range=30d for enough closes
       var sym = activo.ySymbol || activo.s;
-      return fetch('https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=30d'))
+      return fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=30d')
         .then(function(r){ return r.json(); })
         .then(function(data) {
           if(!data.chart || !data.chart.result || !data.chart.result[0]) return;
@@ -2532,7 +2528,7 @@ function generarSenalesIA() {
     var ySyms = [];
     yActivos.forEach(function(a){ if(ySyms.indexOf(a.ySymbol)<0) ySyms.push(a.ySymbol); });
     return Promise.all(ySyms.map(function(sym){
-      return fetch('https://corsproxy.io/?'+encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=5d'))
+      return fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=5d')
         .then(function(r){ return r.json(); })
         .then(function(d){
           try {
@@ -3066,7 +3062,7 @@ async function _fetchPulseRaw() {
   var yahooKeys = ['vix','sp500','esf','nqf','ymf','rtyf','gcf','sif','clf','hgf'];
   var yPromises = yahooSyms.map(async function(sym, idx) {
     try {
-      var url = 'https://corsproxy.io/?' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
+      var url = 'https://aurex-app-production.up.railway.app/api/yahoo?symbol=' + sym + '&interval=1d&range=2d';
       var res = await fetch(url);
       var data = await res.json();
       if(data.chart && data.chart.result && data.chart.result[0]) {
