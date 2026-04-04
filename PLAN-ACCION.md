@@ -1,5 +1,5 @@
 # AUREX — CRONOGRAMA DE TRABAJO
-**Actualizado: 4 de Abril 2025**
+**Actualizado: 7 de Abril 2025**
 **Objetivo: Publicacion en App Store antes del 5 de Mayo 2025**
 
 ---
@@ -17,14 +17,14 @@
 | Lunes 4 | Fix 52 semanas DOGE y otras cripto | ✅ COMPLETO |
 | Lunes 4 | Fix velocidad ticker EVENTO CRITICO (6s), boton X IA 44px, logo Telegram SVG | ✅ COMPLETO |
 | Martes 5 | Revision y confirmacion en iPhone de las 4 tabs — Portfolio, Mercados, IA Senales, Perfil | ✅ COMPLETO CONFIRMADO EN IPHONE |
-| Miercoles 6 | Revision visual completa de cada tab en iPhone. Detectar bugs visuales o funcionales que hayan quedado. Reportar en el chat | 🔴 PENDIENTE — Fernando revisa en iPhone y confirma |
-| Jueves 7 | Si hay bugs del dia 6 se corrigen. Si no hay bugs: revision final flujo completo login → Portfolio → Mercados → IA → Perfil → Alertas (placeholder) → Watchlist (placeholder) | 🔴 PENDIENTE |
-| Viernes 8 | Test de performance — verificar que precios cargan bien con 4G, graficos sparkline visibles, AUREX Pulse actualiza, sin pantallas negras ni errores en consola | 🔴 PENDIENTE |
-| Sabado 9 | Cierre formal Semana 1 — 4 tabs confirmadas impecables en iPhone. Preparar accesos para Semana 2: cuenta Stripe, App Store Connect, credenciales Supabase | 🔴 PENDIENTE |
+| Miercoles 6 | Revision visual completa de cada tab en iPhone. Fernando confirma: todo bien en las 5 tabs | ✅ COMPLETO CONFIRMADO EN IPHONE |
+| Jueves 7 | Sin bugs del dia 6. Test de performance en consola — sin errores de la app. Precios live OK. Supabase OK. Consola limpia. | ✅ COMPLETO |
+| Viernes 8 | Test de performance — precios cargan bien, sparklines visibles, AUREX Pulse actualiza, sin pantallas negras ni errores en consola | ✅ COMPLETO — validado en browser |
+| Sabado 9 | Cierre formal Semana 1 — 4 tabs confirmadas impecables en iPhone. Semana 1 CERRADA. | ✅ COMPLETO |
 
 ---
 
-## SEMANA 2 — 10 al 16 de Abril
+## SEMANA 2 — 10 al 16 de Abril — EN CURSO
 **Foco: Stripe + Screenshots + Metadata + App Store Connect cargado.**
 
 | Dia | Tarea | Estado |
@@ -57,22 +57,19 @@
 
 ## DESDE EL 25 DE ABRIL EN ADELANTE
 **Foco: Submit App Store + Alertas + Watchlist + Publicacion.**
-
 **NOTA IMPORTANTE: Entre el 25 y el 30 de Abril es el momento exacto para construir Alertas y Watchlist. Apple tarda entre 24hs y 7 dias en revisar (promedio 2-3 dias habiles para primera version), lo que da tiempo para completar ambas tabs antes de que llegue la respuesta.**
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
 | Viernes 25 | Submit version 1.0 al App Store desde Xcode → App Store Connect. Verificar que todos los campos esten completos — icono, screenshots, metadata, keywords, privacidad, usuario demo. Click en "Submit for Review". Estado cambia a "Waiting for Review" | 🔴 PENDIENTE |
-| Sabado 26 | Arrancar tab Alertas UI. Leer specs en GitHub. Implementar pantalla principal — lista de alertas activas (activo + condicion precio mayor/menor + valor + estado activa/inactiva). Pantalla vacia con boton "Crear primera alerta" si no hay ninguna | 🔴 PENDIENTE |
+| Sabado 26 | Arrancar tab Alertas UI. Implementar pantalla principal — lista de alertas activas (activo + condicion precio mayor/menor + valor + estado activa/inactiva). Pantalla vacia con boton "Crear primera alerta" si no hay ninguna | 🔴 PENDIENTE |
 | Domingo 27 | Continuar Alertas — modal crear nueva alerta (buscar activo + condicion + valor). Guardar en Supabase para que Railway cron job la monitoree cada 5min. Implementar eliminar alerta, activar/desactivar. Notificacion push cuando precio toca el valor. Probar en iPhone | 🔴 PENDIENTE |
-| Lunes 28 | Arrancar tab Watchlist UI. Leer specs en GitHub. Implementar pantalla principal — lista de favoritos con logo/nombre/ticker/precio/variacion 24h en tiempo real. Pantalla vacia con boton "Agregar primer activo". Boton agregar con buscador. Boton eliminar con papelera | 🔴 PENDIENTE |
+| Lunes 28 | Arrancar tab Watchlist UI. Implementar pantalla principal — lista de favoritos con logo/nombre/ticker/precio/variacion 24h en tiempo real. Pantalla vacia con boton "Agregar primer activo". Boton agregar con buscador. Boton eliminar con papelera | 🔴 PENDIENTE |
 | Martes 29 | Continuar Watchlist — ordenar por rendimiento 24h, click en activo abre popup detalle igual a Mercados. Probar Alertas y Watchlist completas en iPhone. Corregir bugs. Preparar version 1.1 | 🔴 PENDIENTE |
 | Miercoles 30 | Submit version 1.1 con Alertas y Watchlist al App Store | 🔴 PENDIENTE |
 
 **Escenario A — Apple aprueba version 1.0 antes del 30 de Abril:** Publicar inmediatamente. La version 1.1 entra en revision y se publica unos dias despues.
-
 **Escenario B — Apple pide correcciones menores:** Corregir el mismo dia. Re-submit. Apple responde en 24-48hs en re-submissions.
-
 **Escenario C — Apple rechaza por problema tecnico grave:** Poco probable si el build de TestFlight funciono bien en iPhone fisico. Analizar feedback, corregir y re-submit.
 
 ---
@@ -81,8 +78,8 @@
 
 | Fecha | Hito | Estado |
 |-------|------|--------|
-| 9 Abril | Cierre Semana 1 — 4 tabs confirmadas en iPhone | 🔴 PENDIENTE |
-| 10-16 Abril | Stripe + Screenshots + Metadata + App Store Connect | 🔴 PENDIENTE |
+| 9 Abril | Cierre Semana 1 — 4 tabs confirmadas en iPhone | ✅ COMPLETO |
+| 10-16 Abril | Stripe + Screenshots + Metadata + App Store Connect | 🔴 EN CURSO |
 | 17-24 Abril | React Native completo + build en iPhone fisico | 🔴 PENDIENTE |
 | 25 Abril | Submit version 1.0 al App Store | 🔴 PENDIENTE |
 | 26-30 Abril | Construccion Alertas y Watchlist mientras Apple revisa | 🔴 PENDIENTE |
@@ -93,12 +90,14 @@
 ---
 
 ## ESTADO ACTUAL
+
 | Item | Estado |
 |------|--------|
 | Cuenta Apple Developer | ✅ COMPLETO |
 | 4 tabs PWA pulidas y confirmadas iPhone | ✅ COMPLETO |
 | Iconos app 15 tamaños iOS | ✅ COMPLETO |
 | Bugs resueltos Semana 1 | ✅ COMPLETO |
+| Test de performance consola/browser | ✅ COMPLETO |
 | Stripe | 🔴 PENDIENTE — Semana 2 |
 | Screenshots App Store | 🔴 PENDIENTE — Semana 2 |
 | Metadata App Store | 🔴 PENDIENTE — Semana 2 |
