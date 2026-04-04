@@ -9,33 +9,28 @@
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Lunes 4 | Fix barra busqueda Mercados con precio/24h/7d/objetivo IA/senal IA | ✅ COMPLETO |
-| Lunes 4 | Fix doble signo dolar Stable & DeFi (USDC, DAI) | ✅ COMPLETO |
-| Lunes 4 | Fix foto de perfil con camara y localStorage | ✅ COMPLETO |
-| Lunes 4 | Iconos app 15 tamaños iOS generados y subidos a GitHub en assets/icons/ | ✅ COMPLETO |
-| Lunes 4 | Fix compartir Portfolio Mail/WhatsApp/Telegram distribuidos | ✅ COMPLETO |
-| Lunes 4 | Fix 52 semanas DOGE y otras cripto | ✅ COMPLETO |
-| Lunes 4 | Fix velocidad ticker EVENTO CRITICO (6s), boton X IA 44px, logo Telegram SVG | ✅ COMPLETO |
-| Martes 5 | Revision y confirmacion en iPhone de las 4 tabs — Portfolio, Mercados, IA Senales, Perfil | ✅ COMPLETO CONFIRMADO EN IPHONE |
-| Miercoles 6 | Revision visual completa de cada tab en iPhone. Fernando confirma: todo bien en las 5 tabs | ✅ COMPLETO CONFIRMADO EN IPHONE |
+| Lunes 4 | Fix barra busqueda Mercados con precio/24h/7d/objetivo IA/senal IA. Fix doble $ Stable & DeFi. Fix foto de perfil con camara y localStorage. Iconos app 15 tamaños iOS generados y subidos a GitHub. Fix compartir Portfolio Mail/WhatsApp/Telegram. Fix 52 semanas DOGE y cripto. Fix velocidad ticker, boton X IA 44px, logo Telegram SVG. | ✅ COMPLETO |
+| Martes 5 | Revision y confirmacion en iPhone de las 4 tabs — Portfolio, Mercados, IA Senales, Perfil. | ✅ COMPLETO CONFIRMADO EN IPHONE |
+| Miercoles 6 | Revision visual completa de cada tab en iPhone. Fernando confirma: todo bien en las 5 tabs. | ✅ COMPLETO CONFIRMADO EN IPHONE |
 | Jueves 7 | Sin bugs del dia 6. Test de performance en consola — sin errores de la app. Precios live OK. Supabase OK. Consola limpia. | ✅ COMPLETO |
-| Viernes 8 | Test de performance — precios cargan bien, sparklines visibles, AUREX Pulse actualiza, sin pantallas negras ni errores en consola | ✅ COMPLETO — validado en browser |
+| Viernes 8 | Test de performance — precios cargan bien, sparklines visibles, AUREX Pulse actualiza, sin pantallas negras ni errores en consola. | ✅ COMPLETO |
 | Sabado 9 | Cierre formal Semana 1 — 4 tabs confirmadas impecables en iPhone. Semana 1 CERRADA. | ✅ COMPLETO |
 
 ---
 
 ## SEMANA 2 — 10 al 16 de Abril — EN CURSO
-**Foco: Stripe + Screenshots + Metadata + App Store Connect cargado.**
+**Foco: Lemon Squeezy + Screenshots + Metadata + App Store Connect cargado.**
+**NOTA: Se reemplazo Stripe por Lemon Squeezy — acepta registro desde Argentina sin LLC.**
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Jueves 10 | Crear cuenta en stripe.com. Activar modo live (requiere datos bancarios). Crear productos FREE (gratis) y PREMIUM ($9.99/mes y $79/año). Obtener publishable key y secret key. Definir beneficios de cada plan: FREE = 5 activos + 3 senales IA/dia + AUREX Pulse basico. PREMIUM = activos ilimitados + 300 senales IA/dia + alertas de precio + Watchlist + AUREX Pulse completo | 🔴 PENDIENTE |
-| Viernes 11 | Agregar publishable key de Stripe al index.html. Construir pantalla de planes en tab Perfil — tabla visual FREE vs PREMIUM con precios y beneficios. Implementar boton "Suscribirse PREMIUM" que redirige a Stripe Checkout hosted. Configurar success_url y cancel_url. Verificar en browser que el checkout abre correctamente | 🔴 PENDIENTE |
-| Sabado 12 | Implementar Webhook Stripe → Supabase en el backend Railway. El webhook recibe el evento de pago confirmado, verifica la firma de seguridad, y actualiza el campo plan del usuario en Supabase de FREE a PREMIUM. Agregar webhook secret key al backend. Probar con Stripe CLI en modo test | 🔴 PENDIENTE |
-| Domingo 13 | Probar flujo completo de pago en iPhone en Safari iOS — abrir app → Perfil → Ver planes → Suscribirse PREMIUM → pagar en Stripe Checkout → volver a la app → verificar que el plan cambio a PREMIUM. Corregir bugs visuales o funcionales en mobile | 🔴 PENDIENTE |
-| Lunes 14 | Tomar screenshots para App Store en resolucion iPhone 6.7" (1290x2796px). 5 capturas obligatorias: (1) pantalla bienvenida/login con logo AUREX, (2) tab Portfolio con activos reales y P&L, (3) tab Mercados con precios live y AUREX Pulse, (4) tab IA Senales con lista y detalle expandido, (5) tab Perfil con tabla FREE vs PREMIUM. Datos reales visibles, no pantallas vacias | 🔴 PENDIENTE |
-| Martes 15 | Redactar metadata completa App Store. Nombre: AUREX. Subtitulo (max 30 chars): Senales IA para inversores. Descripcion en espanol (max 4000 chars): que es, funcionalidades, modelo FREE/PREMIUM, llamada a la accion. Descripcion en ingles. Keywords (max 100 chars): finanzas,inversiones,senales,cripto,acciones,bolsa,trading,IA,portfolio,mercados. Categoria primaria: Finanzas. Categoria secundaria: Productividad. Valoracion: 4+. URL privacidad. URL soporte. Notas para revisor Apple | 🔴 PENDIENTE |
-| Miercoles 16 | Cargar todo en App Store Connect — icono 1024x1024, screenshots 6.7", metadata en espanol e ingles, keywords, precio FREE con in-app PREMIUM, URL privacidad y soporte, usuario demo para revisores Apple (email + password cuenta Supabase con datos reales). Verificar que no falte ningun campo requerido. Cierre formal Semana 2 | 🔴 PENDIENTE |
+| Jueves 10 | Crear cuenta en Lemon Squeezy. Activar modo live. Crear productos AUREX Pro ($9.99/mes) y AUREX Elite ($19.99/mes). Conectar cuenta bancaria Santander Argentina para recibir pagos. Obtener URLs de checkout y API key. | ✅ COMPLETO |
+| Viernes 11 | Conectar botones "Quiero el PRO" y "Quiero el ELITE" en la PWA con las URLs de checkout reales de Lemon Squeezy. Verificar en iPhone que abre el formulario de pago con tarjeta. | ✅ COMPLETO CONFIRMADO EN IPHONE |
+| Sabado 12 | Implementar Webhook Lemon Squeezy → Supabase en el backend Railway. El webhook recibe el evento de pago confirmado y actualiza el campo plan del usuario en Supabase de FREE a PRO o ELITE. Probar que funciona. | 🔴 PENDIENTE |
+| Domingo 13 | Probar flujo completo de pago en iPhone — abrir app → Perfil → Ver planes → Quiero el PRO → pagar → volver → verificar que el plan cambio a PRO. Corregir bugs mobile. | 🔴 PENDIENTE |
+| Lunes 14 | Tomar screenshots para App Store en resolucion iPhone 6.7" (1290x2796px). 5 capturas: (1) login/bienvenida, (2) Portfolio con activos reales, (3) Mercados con precios live y AUREX Pulse, (4) IA Senales con lista y detalle, (5) Perfil con tabla FREE vs PRO vs ELITE. | 🔴 PENDIENTE |
+| Martes 15 | Redactar metadata completa App Store. Nombre: AUREX. Subtitulo: Senales IA para inversores. Descripcion espanol e ingles (4000 chars). Keywords (100 chars). Categoria: Finanzas/Productividad. Valoracion 4+. URL privacidad y soporte. Notas para revisor Apple. | 🔴 PENDIENTE |
+| Miercoles 16 | Cargar todo en App Store Connect — icono 1024x1024, screenshots, metadata, keywords, precio FREE con in-app PRO/ELITE, URL privacidad y soporte, usuario demo para revisores Apple. Verificar campos requeridos. Cierre formal Semana 2. | 🔴 PENDIENTE |
 
 ---
 
@@ -44,48 +39,33 @@
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Jueves 17 | Cuenta Apple Developer ✅ COMPLETO ya adquirida. Abrir Apple Developer Portal. Generar Distribution Certificate (requiere CSR desde Keychain Access en Mac). Crear App ID com.aurex.app con Push Notifications e In-App Purchase activados. Crear Provisioning Profile de distribucion App Store. Descargar e instalar en la Mac | 🔴 PENDIENTE |
-| Viernes 18 | Instalar Xcode 15+ desde Mac App Store (~8GB, 1-2 horas). Instalar Node.js LTS, React Native CLI, CocoaPods. Crear proyecto base: npx react-native init AurexApp. Correr cd ios && pod install y npx react-native run-ios. Verificar que compila y abre en simulador sin errores | 🔴 PENDIENTE |
-| Sabado 19 | Configurar React Navigation con 5 tabs inferiores (Portfolio, Mercados, IA, Alertas, Perfil) con iconos. Configurar Supabase en React Native con AsyncStorage para sesion persistente. Implementar pantalla login completa con email/password, registro, y logica de sesion persistente | 🔴 PENDIENTE |
-| Domingo 20 | Migrar tab Portfolio — lista de activos con precios en tiempo real (Binance/Yahoo), termometro de riesgo, header valor total + variacion 24h, boton Agregar Activos, conversor de moneda, popup detalle con simulador de escenarios y compartir por WhatsApp/Telegram/Mail | 🔴 PENDIENTE |
-| Lunes 21 | Migrar tab Mercados — categorias Cripto/Acciones/Stable&DeFi/Futuros/Commodities/Divisas con precios live, barra busqueda con popup detalle (precio/24h/7d/objetivo IA/senal IA), AUREX Pulse con medidor miedo/codicia, banner eventos criticos, mercados globales con estado abierto/cerrado | 🔴 PENDIENTE |
-| Martes 22 | Migrar tab IA Senales — 300 senales por probabilidad, filtros (Todo/Alcista/Bajista/Conf.IA/Cripto/Acciones), panel detalle con objetivo/stop loss/downside/5 puntos analisis/simulador escenarios/compartir. Migrar tab Perfil — auth Supabase, foto perfil con react-native-image-picker, plan FREE/PREMIUM, boton Stripe, secciones Mi Cuenta/Preferencias/Seguridad | 🔴 PENDIENTE |
-| Miercoles 23 | Build completo en simulador iPhone 6.7". Verificar todas las tabs, flujo login, precios en tiempo real, AUREX Pulse, detalle senales IA, conversor portfolio, foto perfil. Corregir todos los bugs visuales y funcionales — el objetivo es que se vea identico a la PWA en app nativa | 🔴 PENDIENTE |
-| Jueves 24 | Configurar TestFlight en App Store Connect. Archive del build en Xcode (Product → Archive) y subir. Distribuir por TestFlight al iPhone fisico de Fernando. Prueba final completa en dispositivo real — login, Portfolio, Mercados, IA, Perfil, pago Stripe. Corregir lo que haga falta. Cierre formal Semana 3 | 🔴 PENDIENTE |
+| Jueves 17 | Cuenta Apple Developer ✅ COMPLETO ya adquirida. Generar Distribution Certificate desde Keychain Access. Crear App ID com.aurex.app con Push Notifications e In-App Purchase. Crear Provisioning Profile de distribucion App Store. Descargar e instalar en la Mac. | 🔴 PENDIENTE |
+| Viernes 18 | Instalar Xcode 15+ (~8GB, 1-2hs). Instalar Node.js LTS, React Native CLI, CocoaPods. Crear proyecto: npx react-native init AurexApp. Correr pod install y run-ios. Verificar que compila en simulador sin errores. | 🔴 PENDIENTE |
+| Sabado 19 | Configurar React Navigation con 5 tabs (Portfolio, Mercados, IA, Alertas, Perfil). Configurar Supabase con AsyncStorage para sesion persistente. Implementar login email/password, registro, sesion persistente. | 🔴 PENDIENTE |
+| Domingo 20 | Migrar tab Portfolio — lista activos con precios tiempo real, termometro riesgo, header valor total+24h, Agregar Activos, conversor, popup detalle con simulador escenarios y compartir. | 🔴 PENDIENTE |
+| Lunes 21 | Migrar tab Mercados — categorias con precios live, barra busqueda con popup detalle, AUREX Pulse, banner eventos criticos, mercados globales abierto/cerrado. | 🔴 PENDIENTE |
+| Martes 22 | Migrar tab IA Senales — 300 senales, filtros, panel detalle completo, compartir. Migrar tab Perfil — auth Supabase, foto perfil, plan FREE/PRO/ELITE, Lemon Squeezy, Mi Cuenta/Preferencias/Seguridad. | 🔴 PENDIENTE |
+| Miercoles 23 | Build completo en simulador iPhone 6.7". Verificar todas las tabs, login, precios real time, AUREX Pulse, senales IA, conversor, foto perfil. Corregir bugs hasta que se vea identico a la PWA. | 🔴 PENDIENTE |
+| Jueves 24 | Configurar TestFlight. Archive en Xcode → subir a App Store Connect. Distribuir por TestFlight al iPhone de Fernando. Prueba final completa en dispositivo real. Corregir lo que haga falta. Cierre Semana 3. | 🔴 PENDIENTE |
 
 ---
 
 ## DESDE EL 25 DE ABRIL EN ADELANTE
 **Foco: Submit App Store + Alertas + Watchlist + Publicacion.**
-**NOTA IMPORTANTE: Entre el 25 y el 30 de Abril es el momento exacto para construir Alertas y Watchlist. Apple tarda entre 24hs y 7 dias en revisar (promedio 2-3 dias habiles para primera version), lo que da tiempo para completar ambas tabs antes de que llegue la respuesta.**
+**NOTA: Alertas y Watchlist se construyen MIENTRAS Apple revisa (26-30 Abril). Apple tarda 2-3 dias habiles promedio.**
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Viernes 25 | Submit version 1.0 al App Store desde Xcode → App Store Connect. Verificar que todos los campos esten completos — icono, screenshots, metadata, keywords, privacidad, usuario demo. Click en "Submit for Review". Estado cambia a "Waiting for Review" | 🔴 PENDIENTE |
-| Sabado 26 | Arrancar tab Alertas UI. Implementar pantalla principal — lista de alertas activas (activo + condicion precio mayor/menor + valor + estado activa/inactiva). Pantalla vacia con boton "Crear primera alerta" si no hay ninguna | 🔴 PENDIENTE |
-| Domingo 27 | Continuar Alertas — modal crear nueva alerta (buscar activo + condicion + valor). Guardar en Supabase para que Railway cron job la monitoree cada 5min. Implementar eliminar alerta, activar/desactivar. Notificacion push cuando precio toca el valor. Probar en iPhone | 🔴 PENDIENTE |
-| Lunes 28 | Arrancar tab Watchlist UI. Implementar pantalla principal — lista de favoritos con logo/nombre/ticker/precio/variacion 24h en tiempo real. Pantalla vacia con boton "Agregar primer activo". Boton agregar con buscador. Boton eliminar con papelera | 🔴 PENDIENTE |
-| Martes 29 | Continuar Watchlist — ordenar por rendimiento 24h, click en activo abre popup detalle igual a Mercados. Probar Alertas y Watchlist completas en iPhone. Corregir bugs. Preparar version 1.1 | 🔴 PENDIENTE |
-| Miercoles 30 | Submit version 1.1 con Alertas y Watchlist al App Store | 🔴 PENDIENTE |
+| Viernes 25 | Submit version 1.0 al App Store. Verificar todos los campos completos. Click "Submit for Review". Estado cambia a "Waiting for Review". | 🔴 PENDIENTE |
+| Sabado 26 | Arrancar tab Alertas UI. Pantalla principal lista alertas activas (activo+condicion+valor+estado). Pantalla vacia con boton "Crear primera alerta". | 🔴 PENDIENTE |
+| Domingo 27 | Continuar Alertas — modal crear nueva alerta, guardar en Supabase, Railway cron job monitorea cada 5min, eliminar/activar/desactivar alerta, notificacion push. Probar en iPhone. | 🔴 PENDIENTE |
+| Lunes 28 | Arrancar tab Watchlist UI. Lista favoritos con logo/nombre/ticker/precio/24h en tiempo real. Pantalla vacia con boton agregar. Buscador. Eliminar con papelera. | 🔴 PENDIENTE |
+| Martes 29 | Continuar Watchlist — ordenar por rendimiento 24h, click abre popup detalle igual a Mercados. Probar Alertas y Watchlist completas en iPhone. Preparar version 1.1. | 🔴 PENDIENTE |
+| Miercoles 30 | Submit version 1.1 con Alertas y Watchlist al App Store. | 🔴 PENDIENTE |
 
-**Escenario A — Apple aprueba version 1.0 antes del 30 de Abril:** Publicar inmediatamente. La version 1.1 entra en revision y se publica unos dias despues.
-**Escenario B — Apple pide correcciones menores:** Corregir el mismo dia. Re-submit. Apple responde en 24-48hs en re-submissions.
-**Escenario C — Apple rechaza por problema tecnico grave:** Poco probable si el build de TestFlight funciono bien en iPhone fisico. Analizar feedback, corregir y re-submit.
-
----
-
-## RESUMEN CALENDARIO
-
-| Fecha | Hito | Estado |
-|-------|------|--------|
-| 9 Abril | Cierre Semana 1 — 4 tabs confirmadas en iPhone | ✅ COMPLETO |
-| 10-16 Abril | Stripe + Screenshots + Metadata + App Store Connect | 🔴 EN CURSO |
-| 17-24 Abril | React Native completo + build en iPhone fisico | 🔴 PENDIENTE |
-| 25 Abril | Submit version 1.0 al App Store | 🔴 PENDIENTE |
-| 26-30 Abril | Construccion Alertas y Watchlist mientras Apple revisa | 🔴 PENDIENTE |
-| 28-30 Abril | Respuesta de Apple sobre version 1.0 | 🔴 PENDIENTE |
-| 30 Abril | Submit version 1.1 con Alertas y Watchlist | 🔴 PENDIENTE |
-| Mayo 1-5 | Publicacion en el App Store | 🔴 PENDIENTE |
+**Escenario A** — Apple aprueba v1.0 antes del 30 Abril: Publicar inmediatamente. v1.1 entra en revision.
+**Escenario B** — Apple pide correcciones menores: Corregir el mismo dia. Re-submit. Responde en 24-48hs.
+**Escenario C** — Apple rechaza por problema tecnico grave: Analizar feedback, corregir, re-submit.
 
 ---
 
@@ -98,10 +78,14 @@
 | Iconos app 15 tamaños iOS | ✅ COMPLETO |
 | Bugs resueltos Semana 1 | ✅ COMPLETO |
 | Test de performance consola/browser | ✅ COMPLETO |
-| Stripe | 🔴 PENDIENTE — Semana 2 |
-| Screenshots App Store | 🔴 PENDIENTE — Semana 2 |
-| Metadata App Store | 🔴 PENDIENTE — Semana 2 |
-| App Store Connect cargado | 🔴 PENDIENTE — Semana 2 |
+| Cuenta Lemon Squeezy activada (live mode) | ✅ COMPLETO |
+| Productos PRO y ELITE creados en Lemon Squeezy | ✅ COMPLETO |
+| Botones PRO y ELITE conectados con checkout real | ✅ COMPLETO — Confirmado iPhone |
+| Cuenta bancaria Santander configurada en Lemon Squeezy | ✅ COMPLETO |
+| Webhook Lemon Squeezy → Supabase | 🔴 PENDIENTE — Sabado 12 |
+| Screenshots App Store | 🔴 PENDIENTE — Lunes 14 |
+| Metadata App Store | 🔴 PENDIENTE — Martes 15 |
+| App Store Connect cargado | 🔴 PENDIENTE — Miercoles 16 |
 | React Native build | 🔴 PENDIENTE — Semana 3 |
 | Alertas UI | 🔴 PENDIENTE — 26-27 Abril |
 | Watchlist UI | 🔴 PENDIENTE — 28-29 Abril |
@@ -112,12 +96,14 @@
 
 ## STACK TECNICO
 - PWA: HTML + JS vanilla + Supabase Auth
+- Pagos PWA: Lemon Squeezy (PRO $9.99/mes, ELITE $19.99/mes)
+- Pagos App nativa iOS: Apple In-App Purchase (StoreKit) — obligatorio por Apple
 - Backend alertas: Railway (cron job cada 5min)
 - DB: Supabase (PostgreSQL)
-- Pagos: Stripe (por implementar Semana 2)
 - Supabase URL: https://dklljnfhlzmfsfmxrpie.supabase.co
 - Repo: https://github.com/fmoscon-creator/aurex-app
 - App live: https://aurex.live
+- Lemon Squeezy store: aurexapp.lemonsqueezy.com
 
 ---
 
