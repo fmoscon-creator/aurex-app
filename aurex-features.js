@@ -1652,7 +1652,7 @@ window.openPortItemDetail = function(itemId){
     '<div style="font-size:10px;color:#8B949E;margin-bottom:8px;text-align:center;">Compartir</div>' +
     '<div style="display:flex;justify-content:center;gap:10px;">' +
     '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">💬</div>WhatsApp</a>' +
-    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">✈️</div>Telegram</a>' +
+    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:18px;">&#9992;</div>Telegram</a>' +
     '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">📧</div>Mail</a>' +
     '</div>' +
     '</div>' +
@@ -2798,7 +2798,7 @@ function _renderIALista(signals, keepLoadingBar) {
         '</div>' +
         '<div style="margin-top:3px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
-      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D">'+_buildIADetail(s)+'</div>' +
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D;position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:8px;right:10px;width:22px;height:22px;border-radius:50%;background:#21262D;border:1px solid #30363D;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:#8B949E;z-index:2;">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
   if (keepLoadingBar && lb) listEl.appendChild(lb);
@@ -2928,14 +2928,14 @@ window._compartirSenal = function(info) {
   var cambio = sig.precio24h>0?((sig.precio-sig.precio24h)/sig.precio24h*100):0;
   var texto = '🤖 AUREX IA — SEÑAL '+dirEmoji+'\n';
   texto += sig.simbolo+' ('+sig.nombre+')\n';
-  texto += 'ââââââââââââââââ\n';
+  texto += '----------------\n';
   texto += dirEmoji+' '+dirLabel+' — PROB. '+sig.confianza+'%\n';
   texto += '💰 Precio: '+precioFmt+' ('+(cambio>=0?'+':'')+cambio.toFixed(2)+'%)\n';
   texto += '🎯 Objetivo: $'+sig.objetivo+' | Stop: $'+sig.stop+'\n';
-  texto += 'ââââââââââââââââ\n';
+  texto += '----------------\n';
   texto += '📊 ANÁLISIS (10 variables):\n';
   (sig.motivos||[]).slice(0,3).forEach(function(m,i){ texto += (i+1)+'. '+m+'\n'; });
-  texto += 'ââââââââââââââââ\n';
+  texto += '----------------\n';
   texto += 'Señal generada por AUREX IA⚡\n';
   texto += 'aurex-app.github.io';
   var _showShareOverlay = function() {
@@ -3548,7 +3548,7 @@ function _renderMktNewsBanner(containerId) {
     '<div style="background:' + (ev.bg||'#1A0D00') + ';border-bottom:1px solid ' + (ev.border||'#D4A017') + ';padding:5px 12px;display:flex;align-items:center;gap:8px;overflow:hidden;">' +
       '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'#D4A017') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
       '<div style="overflow:hidden;flex:1;">' +
-        '<div id="mkt-news-tick✕ style="display:flex;animation:tkScroll 14s linear infinite;">' +
+        '<div id="mkt-news-ticker" style="display:flex;animation:tkScroll 14s linear infinite;">' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
           '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
         '</div>' +
