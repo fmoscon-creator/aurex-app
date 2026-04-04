@@ -3473,7 +3473,7 @@ function _renderFuturesBanner(containerId) {
     '</div>';
   }).filter(Boolean).join('');
   var editBtn = '<div onclick="editFuturesBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;flex-shrink:0;margin-right:10px;">&#9998;</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;background:#0D1117;border-bottom:1px solid #21262D;">' + '<div style="flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 4px 8px 10px;">' + chips + '</div>' + editBtn + '</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;background:#0D1117;border-bottom:1px solid #21262D;">' + '<div style="flex:1;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 4px 8px 10px;">' + chips + '</div>' + editBtn + '</div>';
 }
 
 window.editFuturesBanner = function(){
