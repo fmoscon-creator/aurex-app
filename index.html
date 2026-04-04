@@ -1041,7 +1041,7 @@ window._mktOpenDetail = function(idx){
   var pct7Color = pct7 !== null ? (parseFloat(pct7) >= 0 ? '#3FB950' : '#F85149') : '#888';
   var objetivoStr = objetivo ? '$' + parseFloat(objetivo).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--';
   var dirColor = direccion === 'alcista' ? '#3FB950' : direccion === 'bajista' ? '#F85149' : '#888';
-  var dirLabel = direccion ? (direccion.charAt(0).toUpperCase() + direccion.slice(1)) : 'Sin se&#241;al';
+  var dirLabel = !direccion ? 'Sin se&#241;al' : (direccion === 'alta_conf' ? (sig && sig.escenario_principal ? sig.escenario_principal : 'Alta Conv-IA') : (direccion.charAt(0).toUpperCase() + direccion.slice(1)));
   var probStr = probAlc !== null ? probAlc + '%' : '';
   var overlay = document.createElement('div');
   overlay.id = 'mkt-search-detail-overlay';
