@@ -24,13 +24,13 @@
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Jueves 10 | Crear cuenta en Lemon Squeezy. Activar modo live. Crear productos AUREX Pro ($9.99/mes) y AUREX Elite ($19.99/mes). Conectar cuenta bancaria Santander Argentina para recibir pagos. Obtener URLs de checkout y API key. | ✅ COMPLETO |
-| Viernes 11 | Conectar botones "Quiero el PRO" y "Quiero el ELITE" en la PWA con las URLs de checkout reales de Lemon Squeezy. Verificar en iPhone que abre el formulario de pago con tarjeta. | ✅ COMPLETO CONFIRMADO EN IPHONE |
-| Sabado 12 | Implementar Webhook Lemon Squeezy → Supabase en el backend Railway. El webhook recibe el evento de pago confirmado y actualiza el campo plan del usuario en Supabase de FREE a PRO o ELITE. Probar que funciona. | 🔴 PENDIENTE |
-| Domingo 13 | Probar flujo completo de pago en iPhone — abrir app → Perfil → Ver planes → Quiero el PRO → pagar → volver → verificar que el plan cambio a PRO. Corregir bugs mobile. | 🔴 PENDIENTE |
+| Jueves 10 | Crear cuenta en Lemon Squeezy. Crear productos AUREX Pro ($9.99/mes) y AUREX Elite ($19.99/mes). Conectar cuenta bancaria Santander Argentina. | ✅ COMPLETO |
+| Viernes 11 | Conectar botones PRO y ELITE en la PWA con URLs de checkout de Lemon Squeezy. Webhook backend Railway configurado. Variable LEMONSQUEEZY_WEBHOOK_SECRET agregada en Railway. | ✅ COMPLETO |
+| Sabado 12 | ⚠️ PENDIENTE BLOQUEANTE — TEST DE PAGO REAL EN IPHONE ⚠️ El store de Lemon Squeezy esta EN REVISION por su equipo. Hasta que aprueben la cuenta NO se pueden procesar pagos reales con tarjeta. Cuando llegue el email de aprobacion: (1) copiar productos a Live Mode en LS, (2) obtener URLs nuevas, (3) actualizar URLs en la app, (4) probar pago real en iPhone, (5) verificar que el plan cambia a PRO en Perfil. | 🔴 PENDIENTE — ESPERANDO APROBACION LEMON SQUEEZY |
+| Domingo 13 | Probar flujo completo de pago en iPhone — verificar que el plan cambia a PRO/ELITE automaticamente via webhook. | 🔴 PENDIENTE — depende del Sabado 12 |
 | Lunes 14 | Tomar screenshots para App Store en resolucion iPhone 6.7" (1290x2796px). 5 capturas: (1) login/bienvenida, (2) Portfolio con activos reales, (3) Mercados con precios live y AUREX Pulse, (4) IA Senales con lista y detalle, (5) Perfil con tabla FREE vs PRO vs ELITE. | 🔴 PENDIENTE |
-| Martes 15 | Redactar metadata completa App Store. Nombre: AUREX. Subtitulo: Senales IA para inversores. Descripcion espanol e ingles (4000 chars). Keywords (100 chars). Categoria: Finanzas/Productividad. Valoracion 4+. URL privacidad y soporte. Notas para revisor Apple. | 🔴 PENDIENTE |
-| Miercoles 16 | Cargar todo en App Store Connect — icono 1024x1024, screenshots, metadata, keywords, precio FREE con in-app PRO/ELITE, URL privacidad y soporte, usuario demo para revisores Apple. Verificar campos requeridos. Cierre formal Semana 2. | 🔴 PENDIENTE |
+| Martes 15 | Redactar metadata completa App Store. Nombre: AUREX. Subtitulo: Senales IA para inversores. Descripcion espanol e ingles. Keywords. Categoria Finanzas/Productividad. Valoracion 4+. URL privacidad y soporte. | 🔴 PENDIENTE |
+| Miercoles 16 | Cargar todo en App Store Connect — icono 1024x1024, screenshots, metadata, keywords, precio FREE con in-app PRO/ELITE, URL privacidad y soporte, usuario demo para revisores Apple. Cierre formal Semana 2. | 🔴 PENDIENTE |
 
 ---
 
@@ -52,19 +52,19 @@
 
 ## DESDE EL 25 DE ABRIL EN ADELANTE
 **Foco: Submit App Store + Alertas + Watchlist + Publicacion.**
-**NOTA: Alertas y Watchlist se construyen MIENTRAS Apple revisa (26-30 Abril). Apple tarda 2-3 dias habiles promedio.**
+**NOTA: Alertas y Watchlist se construyen MIENTRAS Apple revisa (26-30 Abril).**
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
 | Viernes 25 | Submit version 1.0 al App Store. Verificar todos los campos completos. Click "Submit for Review". Estado cambia a "Waiting for Review". | 🔴 PENDIENTE |
-| Sabado 26 | Arrancar tab Alertas UI. Pantalla principal lista alertas activas (activo+condicion+valor+estado). Pantalla vacia con boton "Crear primera alerta". | 🔴 PENDIENTE |
-| Domingo 27 | Continuar Alertas — modal crear nueva alerta, guardar en Supabase, Railway cron job monitorea cada 5min, eliminar/activar/desactivar alerta, notificacion push. Probar en iPhone. | 🔴 PENDIENTE |
-| Lunes 28 | Arrancar tab Watchlist UI. Lista favoritos con logo/nombre/ticker/precio/24h en tiempo real. Pantalla vacia con boton agregar. Buscador. Eliminar con papelera. | 🔴 PENDIENTE |
-| Martes 29 | Continuar Watchlist — ordenar por rendimiento 24h, click abre popup detalle igual a Mercados. Probar Alertas y Watchlist completas en iPhone. Preparar version 1.1. | 🔴 PENDIENTE |
+| Sabado 26 | Arrancar tab Alertas UI. Pantalla principal lista alertas activas. Pantalla vacia con boton "Crear primera alerta". | 🔴 PENDIENTE |
+| Domingo 27 | Continuar Alertas — modal crear alerta, guardar en Supabase, Railway cron job monitorea cada 5min, notificacion push. Probar en iPhone. | 🔴 PENDIENTE |
+| Lunes 28 | Arrancar tab Watchlist UI. Lista favoritos con precios tiempo real. Buscador. Eliminar con papelera. | 🔴 PENDIENTE |
+| Martes 29 | Continuar Watchlist — ordenar por 24h, popup detalle. Probar ambas tabs en iPhone. Preparar version 1.1. | 🔴 PENDIENTE |
 | Miercoles 30 | Submit version 1.1 con Alertas y Watchlist al App Store. | 🔴 PENDIENTE |
 
 **Escenario A** — Apple aprueba v1.0 antes del 30 Abril: Publicar inmediatamente. v1.1 entra en revision.
-**Escenario B** — Apple pide correcciones menores: Corregir el mismo dia. Re-submit. Responde en 24-48hs.
+**Escenario B** — Apple pide correcciones menores: Corregir el mismo dia. Re-submit en 24-48hs.
 **Escenario C** — Apple rechaza por problema tecnico grave: Analizar feedback, corregir, re-submit.
 
 ---
@@ -78,11 +78,12 @@
 | Iconos app 15 tamaños iOS | ✅ COMPLETO |
 | Bugs resueltos Semana 1 | ✅ COMPLETO |
 | Test de performance consola/browser | ✅ COMPLETO |
-| Cuenta Lemon Squeezy activada (live mode) | ✅ COMPLETO |
-| Productos PRO y ELITE creados en Lemon Squeezy | ✅ COMPLETO |
-| Botones PRO y ELITE conectados con checkout real | ✅ COMPLETO — Confirmado iPhone |
-| Cuenta bancaria Santander configurada en Lemon Squeezy | ✅ COMPLETO |
-| Webhook Lemon Squeezy → Supabase | 🔴 PENDIENTE — Sabado 12 |
+| Cuenta Lemon Squeezy creada | ✅ COMPLETO |
+| Productos PRO y ELITE creados | ✅ COMPLETO |
+| Webhook Railway configurado | ✅ COMPLETO |
+| ⚠️ STORE LEMON SQUEEZY EN REVISION — NO ACEPTA PAGOS REALES AUN ⚠️ | 🔴 PENDIENTE — esperando aprobacion |
+| Test pago real iPhone + verificacion plan PRO/ELITE | 🔴 PENDIENTE — depende de aprobacion LS |
+| URLs live mode Lemon Squeezy en la app | 🔴 PENDIENTE — depende de aprobacion LS |
 | Screenshots App Store | 🔴 PENDIENTE — Lunes 14 |
 | Metadata App Store | 🔴 PENDIENTE — Martes 15 |
 | App Store Connect cargado | 🔴 PENDIENTE — Miercoles 16 |
@@ -98,7 +99,7 @@
 - PWA: HTML + JS vanilla + Supabase Auth
 - Pagos PWA: Lemon Squeezy (PRO $9.99/mes, ELITE $19.99/mes)
 - Pagos App nativa iOS: Apple In-App Purchase (StoreKit) — obligatorio por Apple
-- Backend alertas: Railway (cron job cada 5min)
+- Backend alertas + webhook: Railway
 - DB: Supabase (PostgreSQL)
 - Supabase URL: https://dklljnfhlzmfsfmxrpie.supabase.co
 - Repo: https://github.com/fmoscon-creator/aurex-app
