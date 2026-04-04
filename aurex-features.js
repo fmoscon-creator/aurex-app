@@ -738,7 +738,7 @@ function _fetchPortfolio(token, userId){
 function _refreshPortPrices(items){
   if(!items || items.length===0) return;
   var syms = items.map(function(i){ return i.simbolo; });
-  var CRIPTO = ['BTC','ETH','SOL','BNB','XRP','ADA','AVAX','DOT','LINK','MATIC','USDT','USDC'];
+  var CRIPTO = ['BTC','ETH','SOL','BNB','XRP','ADA','AVAX','DOT','LINK','MATIC','USDT','USDC','DOGE','SHIB','LTC','ATOM','UNI','NEAR','APT','ARB','OP','TRX','TON','SUI','PEPE','WIF','FIL','INJ','RUNE'];
   var cryptoSyms = syms.filter(function(s){ return CRIPTO.indexOf(s)>=0; });
   var yahooSyms = syms.filter(function(s){ return CRIPTO.indexOf(s)<0; });
   var pending = cryptoSyms.length + yahooSyms.length;
@@ -1650,10 +1650,10 @@ window.openPortItemDetail = function(itemId){
     '' +
     '<div style="border-top:1px solid #21262D;margin-top:12px;padding-top:12px;">' +
     '<div style="font-size:10px;color:#8B949E;margin-bottom:8px;text-align:center;">Compartir</div>' +
-    '<div style="display:flex;justify-content:center;gap:10px;">' +
-    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:18px;">💬</div>WhatsApp</a>' +
-    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="font-size:22px;line-height:1;"><svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="11" fill="#229ED9"/><path d="M5 11.5l10-5-3 10-3-3-4 2 1-4z" fill="#fff"/></svg></div>Telegram</a>' +
-    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:18px;">📧</div>Mail</a>' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;padding:0 8px;">' +
+    '<a onclick="event.stopPropagation();" href="mailto:?subject=AUREX&body=" + encodeURIComponent(" + item.n + " $" + precio.toFixed(2) + " | AUREX") style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#8B949E;font-size:9px;font-weight:600;"><div style="font-size:22px;">&#x1F4E7;</div>Mail</a>' +
+    '<a onclick="event.stopPropagation();" href="https://wa.me/?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | " + (pctStr||"") + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#25D366;font-size:9px;font-weight:600;"><div style="font-size:22px;">&#x1F4AC;</div>WhatsApp</a>' +
+    '<a onclick="event.stopPropagation();" href="https://t.me/share/url?text=" + encodeURIComponent(" + item.n + " en $" + precio.toFixed(2) + " | AUREX App") target="_blank" style="display:flex;flex-direction:column;align-items:center;gap:4px;text-decoration:none;color:#229ED9;font-size:9px;font-weight:600;"><div style="width:26px;height:26px;border-radius:50%;background:#229ED9;display:flex;align-items:center;justify-content:center;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M2 8.5l9-5-3 9-2-3-4 2z" fill="#fff"/></svg></div>Telegram</a>' +
     '</div>' +
     '</div>' +
     '</div></div>';
