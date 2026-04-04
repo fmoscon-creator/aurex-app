@@ -3473,7 +3473,7 @@ function _renderFuturesBanner(containerId) {
     '</div>';
   }).filter(Boolean).join('');
   // Edit button — visible, labeled
-  var editBtn =   var editBtn = '<div onclick="window._openBannerEdit(\'" + elId + "\')" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;flex-shrink:0;">&#9998;</div>';
+  var editBtn = '<div onclick="window._openBannerEdit(\'" + elId + "\')" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;flex-shrink:0;">&#9998;</div>';
   el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 4px':'5px 4px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
     chips + editBtn +
   '</div>';
