@@ -1034,7 +1034,7 @@ window._mktOpenDetail = function(idx){
   var probAlc = sig ? sig.prob_alcista : null;
   var upside = sig ? sig.upside : null;
   var fmt = window._fmt || function(v,d){return v ? v.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--';};
-  var precioStr = precio ? '$' + fmt(precio, precio < 1 ? 6 : 2) : '--';
+  var precioStr = precio ? fmt(precio, precio < 1 ? 6 : 2) : '--';
   var pct24Str = pct24 !== null ? (pct24 >= 0 ? '+' : '') + pct24 + '%' : '--';
   var pct24Color = pct24 !== null ? (parseFloat(pct24) >= 0 ? '#3FB950' : '#F85149') : '#888';
   var pct7Str = pct7 !== null ? (pct7 >= 0 ? '+' : '') + pct7 + '%' : '--';
