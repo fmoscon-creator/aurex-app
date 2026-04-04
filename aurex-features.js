@@ -3472,65 +3472,60 @@ function _renderFuturesBanner(containerId) {
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
-  // Edit button — visible, labeled
-  var editBtn = '<div onclick="window._openBannerEdit(\'" + elId + "\')" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;flex-shrink:0;">&#9998;</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;padding:'+(isPortfolio?'3px 4px':'5px 4px')+';background:#0A0E15;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' +
-    chips + editBtn +
-  '</div>';
+  var editBtn = '<div onclick="editFuturesBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;margin-left:auto;flex-shrink:0;">&#9998;</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:#0D1117;border-bottom:1px solid #21262D;overflow-x:auto;-webkit-overflow-scrolling:touch;">' + chips + editBtn + '</div>';
 }
 
-window._openBannerEdit = function(elId) {
-  var existing = document.getElementById('aurex-banner-edit-popup');
-  if(existing) { existing.remove(); return; }
+window.editFuturesBanner = function(){
+  var existing = document.getElementById('aurex-fut-edit-popup');
+  if(existing){ existing.remove(); return; }
   var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
   var activeSlots;
   try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
   catch(e) { activeSlots = defaultSlots; }
-  var rows = activeSlots.map(function(s, i) {
-    var opts = FUTURES_ITEMS.map(function(x){
-      return '<option value="'+x.rawS+'"'+(x.rawS===s?' selected':'')+'>'+x.n+' ('+x.rawS+')</option>';
-    }).join('');
-    return '<div style="margin-bottom:8px;">' +
-      '<div style="font-size:10px;color:#8B949E;margin-bottom:3px;">Slot '+(i+1)+'</div>' +
-      '<select data-slot="'+i+'" style="background:#21262D;color:#E6EDF3;border:1px solid #30363D;border-radius:6px;padding:5px 8px;font-size:13px;width:100%;">' +
-        opts +
-      '</select>' +
-    '</div>';
+  var allItems = FUTURES_ITEMS;
+  var rows = allItems.map(function(item){
+    var on = activeSlots.indexOf(item.rawS) >= 0;
+    var onBg = on ? '#3FB950' : '#333';
+    var knobL = on ? '18px' : '2px';
+    var lbl = item.n + ' (' + item.rawS + ')';
+    var togId = 'fut-tog-' + item.rawS.replace(/[^a-zA-Z0-9]/g,'_');
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #21262D;">' +
+      '<span style="color:#E6EDF3;font-size:13px;">' + lbl + '</span>' +
+      '<div onclick="toggleFutPref(\'' + item.rawS + '\')" id="' + togId + '" style="width:36px;height:20px;border-radius:10px;background:' + onBg + ';cursor:pointer;position:relative;">' +
+      '<div style="position:absolute;top:2px;left:' + knobL + ';width:16px;height:16px;border-radius:50%;background:#fff;"></div></div></div>';
   }).join('');
   var popup = document.createElement('div');
-  popup.id = 'aurex-banner-edit-popup';
+  popup.id = 'aurex-fut-edit-popup';
   popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
   popup.innerHTML =
     '<div style="background:#161B22;border:1px solid #30363D;border-radius:14px;padding:20px;width:88%;max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">&#x270F; Editar Banner</span>' +
-        '<button onclick="document.getElementById(&apos;aurex-banner-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
+        '<span style="font-size:15px;font-weight:700;color:#E6EDF3;">Futuros en banner</span>' +
+        '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="background:#21262D;border:1px solid #30363D;border-radius:6px;color:#8B949E;font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
       '</div>' +
-      '<div style="font-size:11px;color:#8B949E;margin-bottom:12px;">Elegí qué ver en el banner. Los cambios se guardan automáticamente.</div>' +
       rows +
-      '<button onclick="window._saveBannerEdit()" style="width:100%;background:#238636;border:none;border-radius:8px;padding:11px;color:#fff;font-size:14px;font-weight:700;cursor:pointer;margin-top:6px;">Guardar cambios</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#3FB950;border:none;border-radius:8px;padding:10px;color:#0D1117;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
 
-window._saveBannerEdit = function() {
-  var selects = document.querySelectorAll('#aurex-banner-edit-popup select');
-  var newSlots = [];
-  selects.forEach(function(s){ newSlots.push(s.value); });
-  localStorage.setItem('aurex_banner_slots', JSON.stringify(newSlots));
-  document.getElementById('aurex-banner-edit-popup').remove();
-  if(typeof _renderFuturesBanner === 'function') {
-    _renderFuturesBanner('port-futures-banner');
-    _renderFuturesBanner('mkt-futures-banner');
-    var _tmpSave = document.createElement('div');
-    _tmpSave.id = 'tmp-fut-save'; _tmpSave.style.display = 'none';
-    document.body.appendChild(_tmpSave);
-    _renderFuturesBanner('tmp-fut-save');
-    var _sbSave = document.getElementById('combo-slide-b');
-    if(_sbSave) _sbSave.innerHTML = _tmpSave.innerHTML;
-    document.body.removeChild(_tmpSave);
+window.toggleFutPref = function(rawS){
+  var defaultSlots = ['ES=F','NQ=F','YM=F','^VIX','BZ=F','GC=F'];
+  var activeSlots;
+  try { activeSlots = JSON.parse(localStorage.getItem('aurex_banner_slots') || 'null') || defaultSlots; }
+  catch(e) { activeSlots = defaultSlots; }
+  var idx = activeSlots.indexOf(rawS);
+  if(idx >= 0) { activeSlots.splice(idx, 1); } else { activeSlots.push(rawS); }
+  localStorage.setItem('aurex_banner_slots', JSON.stringify(activeSlots));
+  var togId = 'fut-tog-' + rawS.replace(/[^a-zA-Z0-9]/g,'_');
+  var togEl = document.getElementById(togId);
+  if(togEl){
+    var on = activeSlots.indexOf(rawS) >= 0;
+    togEl.style.background = on ? '#3FB950' : '#333';
+    var knob = togEl.querySelector('div');
+    if(knob) knob.style.left = on ? '18px' : '2px';
   }
-  if(typeof _fetchFuturesData === 'function') _fetchFuturesData();
 };
 
 // === MERCADOS: BANNER DE NOTICIAS DEL DIA ===
