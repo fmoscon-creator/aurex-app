@@ -18,7 +18,7 @@
 
 ---
 
-## SEMANA 2 — 10 al 16 de Abril — ✅ COMPLETA
+## SEMANA 2 — 10 al 16 de Abril — ⚠️ CASI COMPLETA (2 tareas bloqueadas por terceros)
 **Foco: Lemon Squeezy + Screenshots + Metadata + App Store Connect cargado.**
 **NOTA: Se reemplazo Stripe por Lemon Squeezy — acepta registro desde Argentina sin LLC.**
 
@@ -26,8 +26,8 @@
 |-----|-------|--------|
 | Jueves 10 | Crear cuenta en Lemon Squeezy. Crear productos AUREX Pro ($9.99/mes) y AUREX Elite ($19.99/mes). Conectar cuenta bancaria Santander Argentina. | ✅ COMPLETO |
 | Viernes 11 | Conectar botones PRO y ELITE en la PWA con URLs de checkout de Lemon Squeezy. Webhook backend Railway configurado. Variable LEMONSQUEEZY_WEBHOOK_SECRET agregada en Railway. | ✅ COMPLETO |
-| Sabado 12 | ⚠️ PENDIENTE BLOQUEANTE — TEST DE PAGO REAL EN IPHONE ⚠️ El store de Lemon Squeezy esta EN REVISION por su equipo. Hasta que aprueben la cuenta NO se pueden procesar pagos reales con tarjeta. Cuando llegue el email de aprobacion: (1) copiar productos a Live Mode en LS, (2) obtener URLs nuevas, (3) actualizar URLs en la app, (4) probar pago real en iPhone, (5) verificar que el plan cambia a PRO en Perfil. | 🔴 PENDIENTE — ESPERANDO APROBACION LEMON SQUEEZY |
-| Domingo 13 | Probar flujo completo de pago en iPhone — verificar que el plan cambia a PRO/ELITE automaticamente via webhook. | 🔴 PENDIENTE — depende del Sabado 12 |
+| Sabado 12 | Test de pago real en iPhone — Lemon Squeezy store en revision por su equipo. Cuando llegue email de aprobacion: copiar productos a Live Mode, obtener URLs nuevas, actualizar en app, probar pago real, verificar que plan cambia a PRO en Perfil. | 🔴 BLOQUEADO — ESPERANDO APROBACION LEMON SQUEEZY (tercero) |
+| Domingo 13 | Probar flujo completo de pago en iPhone — verificar que el plan cambia a PRO/ELITE automaticamente via webhook. | 🔴 BLOQUEADO — ESPERANDO APROBACION LEMON SQUEEZY (tercero) |
 | Lunes 14 | Screenshots tomadas sin barra Safari desde PWA agregada a pantalla de inicio. 6 capturas: Portfolio lista, Mercados+Pulse, IA Senales, Perfil/Planes, Login/Bienvenida, Portfolio detalle YPF/Simulador. Redimensionadas a 1284x2778px con birme.net. | ✅ COMPLETO |
 | Martes 15 | Metadata completa redactada y subida a GitHub (METADATA-APPSTORE.md). Cuenta demo@aurex.live verificada en Supabase con 6 activos demo. | ✅ COMPLETO |
 | Miercoles 16 | App Store Connect completo: Acuerdos firmados (gratuitas + pago). Entidad legal + banco Santander USD + W-8BEN + DSA Trader. App ID com.fernandomoscon.aurex creado. App AUREX creada. Metadata cargada (descripcion 313 activos, keywords, URLs). 6 screenshots 1284x2778px subidas. Informacion revisores Apple (demo@aurex.live). Publicacion manual configurada. GUARDADO. ⚠️ BUG PENDIENTE: 313 activos en DB pero solo 300 aparecen en tab IA — faltan 13. Investigar despues. | ✅ COMPLETO |
@@ -81,9 +81,8 @@
 | Cuenta Lemon Squeezy creada | ✅ COMPLETO |
 | Productos PRO y ELITE creados | ✅ COMPLETO |
 | Webhook Railway configurado | ✅ COMPLETO |
-| ⚠️ STORE LEMON SQUEEZY EN REVISION — NO ACEPTA PAGOS REALES AUN ⚠️ | 🔴 PENDIENTE — esperando aprobacion |
-| Test pago real iPhone + verificacion plan PRO/ELITE | 🔴 PENDIENTE — depende de aprobacion LS |
-| URLs live mode Lemon Squeezy en la app | 🔴 PENDIENTE — depende de aprobacion LS |
+| Test pago real iPhone + verificacion plan PRO/ELITE | 🔴 BLOQUEADO — esperando aprobacion Lemon Squeezy (tercero) |
+| URLs live mode Lemon Squeezy en la app | 🔴 BLOQUEADO — esperando aprobacion Lemon Squeezy (tercero) |
 | Screenshots 6 capturas 1284x2778px | ✅ COMPLETO |
 | Metadata App Store (METADATA-APPSTORE.md) | ✅ COMPLETO |
 | App Store Connect — metadata + screenshots + revisores cargado y GUARDADO | ✅ COMPLETO — 4 Abr 2026 |
