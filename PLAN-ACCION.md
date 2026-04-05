@@ -1,6 +1,6 @@
 # AUREX — CRONOGRAMA DE TRABAJO
-**Actualizado: 7 de Abril 2025**
-**Objetivo: Publicacion en App Store antes del 5 de Mayo 2025**
+**Actualizado: 4 de Abril 2026**
+**Objetivo: Publicacion en App Store antes del 5 de Mayo 2026**
 
 ---
 
@@ -18,7 +18,7 @@
 
 ---
 
-## SEMANA 2 — 10 al 16 de Abril — EN CURSO
+## SEMANA 2 — 10 al 16 de Abril — ✅ COMPLETA
 **Foco: Lemon Squeezy + Screenshots + Metadata + App Store Connect cargado.**
 **NOTA: Se reemplazo Stripe por Lemon Squeezy — acepta registro desde Argentina sin LLC.**
 
@@ -28,9 +28,9 @@
 | Viernes 11 | Conectar botones PRO y ELITE en la PWA con URLs de checkout de Lemon Squeezy. Webhook backend Railway configurado. Variable LEMONSQUEEZY_WEBHOOK_SECRET agregada en Railway. | ✅ COMPLETO |
 | Sabado 12 | ⚠️ PENDIENTE BLOQUEANTE — TEST DE PAGO REAL EN IPHONE ⚠️ El store de Lemon Squeezy esta EN REVISION por su equipo. Hasta que aprueben la cuenta NO se pueden procesar pagos reales con tarjeta. Cuando llegue el email de aprobacion: (1) copiar productos a Live Mode en LS, (2) obtener URLs nuevas, (3) actualizar URLs en la app, (4) probar pago real en iPhone, (5) verificar que el plan cambia a PRO en Perfil. | 🔴 PENDIENTE — ESPERANDO APROBACION LEMON SQUEEZY |
 | Domingo 13 | Probar flujo completo de pago en iPhone — verificar que el plan cambia a PRO/ELITE automaticamente via webhook. | 🔴 PENDIENTE — depende del Sabado 12 |
-| Lunes 14 | Tomar screenshots para App Store en resolucion iPhone 6.7" (1290x2796px). 5 capturas: (1) login/bienvenida, (2) Portfolio con activos reales, (3) Mercados con precios live y AUREX Pulse, (4) IA Senales con lista y detalle, (5) Perfil con tabla FREE vs PRO vs ELITE. | 🔴 PENDIENTE |
-| Martes 15 | Redactar metadata completa App Store. Nombre: AUREX. Subtitulo: Senales IA para inversores. Descripcion espanol e ingles. Keywords. Categoria Finanzas/Productividad. Valoracion 4+. URL privacidad y soporte. | 🔴 PENDIENTE |
-| Miercoles 16 | Cargar todo en App Store Connect — icono 1024x1024, screenshots, metadata, keywords, precio FREE con in-app PRO/ELITE, URL privacidad y soporte, usuario demo para revisores Apple. Cierre formal Semana 2. | 🔴 PENDIENTE |
+| Lunes 14 | Screenshots tomadas sin barra Safari desde PWA agregada a pantalla de inicio. 6 capturas: Portfolio lista, Mercados+Pulse, IA Senales, Perfil/Planes, Login/Bienvenida, Portfolio detalle YPF/Simulador. Redimensionadas a 1284x2778px con birme.net. | ✅ COMPLETO |
+| Martes 15 | Metadata completa redactada y subida a GitHub (METADATA-APPSTORE.md). Cuenta demo@aurex.live verificada en Supabase con 6 activos demo. | ✅ COMPLETO |
+| Miercoles 16 | App Store Connect completo: Acuerdos firmados (gratuitas + pago). Entidad legal + banco Santander USD + W-8BEN + DSA Trader. App ID com.fernandomoscon.aurex creado. App AUREX creada. Metadata cargada (descripcion 313 activos, keywords, URLs). 6 screenshots 1284x2778px subidas. Informacion revisores Apple (demo@aurex.live). Publicacion manual configurada. GUARDADO. ⚠️ BUG PENDIENTE: 313 activos en DB pero solo 300 aparecen en tab IA — faltan 13. Investigar despues. | ✅ COMPLETO |
 
 ---
 
@@ -39,12 +39,12 @@
 
 | Dia | Tarea | Estado |
 |-----|-------|--------|
-| Jueves 17 | Cuenta Apple Developer ✅ COMPLETO ya adquirida. Generar Distribution Certificate desde Keychain Access. Crear App ID com.aurex.app con Push Notifications e In-App Purchase. Crear Provisioning Profile de distribucion App Store. Descargar e instalar en la Mac. | 🔴 PENDIENTE |
+| Jueves 17 | Cuenta Apple Developer ✅ COMPLETO ya adquirida. Generar Distribution Certificate desde Keychain Access. Crear App ID com.fernandomoscon.aurex con Push Notifications e In-App Purchase. Crear Provisioning Profile de distribucion App Store. Descargar e instalar en la Mac. | 🔴 PENDIENTE |
 | Viernes 18 | Instalar Xcode 15+ (~8GB, 1-2hs). Instalar Node.js LTS, React Native CLI, CocoaPods. Crear proyecto: npx react-native init AurexApp. Correr pod install y run-ios. Verificar que compila en simulador sin errores. | 🔴 PENDIENTE |
 | Sabado 19 | Configurar React Navigation con 5 tabs (Portfolio, Mercados, IA, Alertas, Perfil). Configurar Supabase con AsyncStorage para sesion persistente. Implementar login email/password, registro, sesion persistente. | 🔴 PENDIENTE |
 | Domingo 20 | Migrar tab Portfolio — lista activos con precios tiempo real, termometro riesgo, header valor total+24h, Agregar Activos, conversor, popup detalle con simulador escenarios y compartir. | 🔴 PENDIENTE |
 | Lunes 21 | Migrar tab Mercados — categorias con precios live, barra busqueda con popup detalle, AUREX Pulse, banner eventos criticos, mercados globales abierto/cerrado. | 🔴 PENDIENTE |
-| Martes 22 | Migrar tab IA Senales — 300 senales, filtros, panel detalle completo, compartir. Migrar tab Perfil — auth Supabase, foto perfil, plan FREE/PRO/ELITE, Lemon Squeezy, Mi Cuenta/Preferencias/Seguridad. | 🔴 PENDIENTE |
+| Martes 22 | Migrar tab IA Senales — 313 senales, filtros, panel detalle completo, compartir. Migrar tab Perfil — auth Supabase, foto perfil, plan FREE/PRO/ELITE, Lemon Squeezy, Mi Cuenta/Preferencias/Seguridad. | 🔴 PENDIENTE |
 | Miercoles 23 | Build completo en simulador iPhone 6.7". Verificar todas las tabs, login, precios real time, AUREX Pulse, senales IA, conversor, foto perfil. Corregir bugs hasta que se vea identico a la PWA. | 🔴 PENDIENTE |
 | Jueves 24 | Configurar TestFlight. Archive en Xcode → subir a App Store Connect. Distribuir por TestFlight al iPhone de Fernando. Prueba final completa en dispositivo real. Corregir lo que haga falta. Cierre Semana 3. | 🔴 PENDIENTE |
 
@@ -84,9 +84,10 @@
 | ⚠️ STORE LEMON SQUEEZY EN REVISION — NO ACEPTA PAGOS REALES AUN ⚠️ | 🔴 PENDIENTE — esperando aprobacion |
 | Test pago real iPhone + verificacion plan PRO/ELITE | 🔴 PENDIENTE — depende de aprobacion LS |
 | URLs live mode Lemon Squeezy en la app | 🔴 PENDIENTE — depende de aprobacion LS |
-| Screenshots App Store | 🔴 PENDIENTE — Lunes 14 |
-| Metadata App Store | 🔴 PENDIENTE — Martes 15 |
-| App Store Connect cargado | 🔴 PENDIENTE — Miercoles 16 |
+| Screenshots 6 capturas 1284x2778px | ✅ COMPLETO |
+| Metadata App Store (METADATA-APPSTORE.md) | ✅ COMPLETO |
+| App Store Connect — metadata + screenshots + revisores cargado y GUARDADO | ✅ COMPLETO — 4 Abr 2026 |
+| ⚠️ BUG: 313 activos en DB, solo 300 en tab IA — faltan 13 | 🔴 PENDIENTE investigar |
 | React Native build | 🔴 PENDIENTE — Semana 3 |
 | Alertas UI | 🔴 PENDIENTE — 26-27 Abril |
 | Watchlist UI | 🔴 PENDIENTE — 28-29 Abril |
