@@ -154,6 +154,21 @@ cron.schedule('*/5 * * * *', async () => {
   }
 });
 
+// ─── CACHE DE SENALES IA ─────────────────────────────────────────────────────
+// La PWA escribe aqui las senales calculadas, la app nativa las lee
+let _iaSignalsCache = { signals: [], updatedAt: null };
+
+app.post('/api/ia-signals', (req, res) => {
+  try {
+    _iaSignalsCache = { signals: req.body || [], updatedAt: new Date().toISOString() };
+    res.json({ ok: true, count: _iaSignalsCache.signals.length });
+  } catch (e) { res.status(500).json({ error: e.message }); }
+});
+
+app.get('/api/ia-signals', (req, res) => {
+  res.json(_iaSignalsCache);
+});
+
 // ─── INICIAR SERVIDOR ────────────────────────────────────────────────────────
 app.listen(PORT, () => {
   console.log('[AUREX Backend] Corriendo en puerto', PORT);

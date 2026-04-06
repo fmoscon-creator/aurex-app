@@ -2615,6 +2615,11 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, false);
       if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
+      // Guardar senales en Railway para que la app nativa las lea
+      try {
+        var cacheData = allSignals.map(function(s){ return { simbolo:s.simbolo, direccion:s.direccion, scores:s.scores, confianza:s.confianza, estrellas:s.estrellas, prob_principal:s.prob_principal, upside:s.upside, objetivo:s.objetivo, stop:s.stop, score:s.score }; });
+        fetch('https://aurex-app-production.up.railway.app/api/ia-signals', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(cacheData) }).catch(function(){});
+      } catch(e){}
       return;
     }
     var batch = batches[batchIdx];
