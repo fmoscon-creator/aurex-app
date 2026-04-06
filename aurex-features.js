@@ -2489,13 +2489,19 @@ function generarSenalesIA() {
       console.log('[AUREX IA] Backend devolvio', (data.signals||[]).length, 'senales');
       if (data.signals && data.signals.length > 0) {
         // Usar senales del backend — IDENTICAS a las que ve la app nativa
+        // Normalizar direccion: backend usa MAYUSCULAS, PWA usa minusculas
         var sigs = data.signals.map(function(s){
           var activo = (window._IA_ACTIVOS||[]).find(function(a){ return a.s === s.simbolo; });
+          var dirUpper = (s.direccion||'').toUpperCase();
+          if (dirUpper === 'ALCISTA') s.direccion = 'alcista';
+          else if (dirUpper === 'BAJISTA') s.direccion = 'bajista';
+          else if (dirUpper === 'ALTA CONV-IA' || dirUpper === 'ALTA_CONF') s.direccion = 'alta_conf';
           s.nombre = s.nombre || (activo ? activo.n : s.simbolo);
           s.tipo = s.tipo || (activo ? activo.tipo : '');
           s.logo = activo ? activo.logo : '';
-          s.prob_principal = s.probPrincipal || s.confianza || s.prob_principal || 50;
-          s.prob_alcista = s.prob_alcista || (s.direccion==='ALCISTA' ? s.prob_principal : 100-s.prob_principal);
+          s.confianza = s.confianza || s.probPrincipal || s.prob_principal || 50;
+          s.prob_principal = s.confianza;
+          s.prob_alcista = s.prob_alcista || (s.direccion==='alcista' ? s.confianza : 100-s.confianza);
           s.prob_bajista = s.prob_bajista || (100 - (s.prob_alcista||50));
           s.estrellas = s.estrellas || 1;
           return s;
