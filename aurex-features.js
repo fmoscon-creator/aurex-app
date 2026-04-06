@@ -3228,6 +3228,20 @@ function _calcPulseScore(raw, cat) {
 }
 
 async function _fetchPulseForCategory(cat) {
+  // PRIMERO: intentar leer del backend centralizado (misma fuente que app nativa)
+  if (cat === 'GLOBAL' || !cat) {
+    try {
+      var backendRes = await fetch('https://aurex-app-production.up.railway.app/api/pulse', { cache: 'no-store' });
+      var backendData = await backendRes.json();
+      if (backendData && backendData.score != null) {
+        var result = { score: backendData.score, label: backendData.label || 'NEUTRAL' };
+        window._pulseCache[cat || 'GLOBAL'] = result;
+        window._pulseTs[cat || 'GLOBAL'] = Date.now();
+        return result;
+      }
+    } catch(e) {}
+  }
+  // Fallback: calcular localmente
   var raw = window._pulseRaw;
   if(!raw || (Date.now()-(window._pulseRawTs||0))>300000) {
     raw = await _fetchPulseRaw();
