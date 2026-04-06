@@ -2511,6 +2511,9 @@ function generarSenalesIA() {
         _renderIALista(sigs, false);
         _iniciarBanner();
         if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); }
+        // Re-renderizar termometro despues de 2s por si el portfolio cargo tarde
+        setTimeout(function(){ if(window._portItems) _renderThermoRisk(window._portItems); }, 2000);
+        setTimeout(function(){ if(window._portItems) _renderThermoRisk(window._portItems); }, 5000);
         var upd=document.getElementById('ia-updated');
         if(upd){
           var ts = data.updatedAt ? new Date(data.updatedAt) : new Date();
