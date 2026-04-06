@@ -1123,11 +1123,8 @@ function _renderThermoRisk(items){
     var dir = '';
     if(sig){
       dir = (sig.direccion||'').toLowerCase();
-    } else {
-      // Fallback: seed determinista si las senales IA no cargaron aun
-      var seed = _iaSeed(item.simbolo);
-      dir = seed < 0.1 ? 'alta_conf' : seed < 0.55 ? 'alcista' : 'bajista';
     }
+    // Sin fallback falso — si no hay senal del backend, queda como SIN SENAL
     if(dir==='alcista'){ buckets.ALCISTA.val+=val; buckets.ALCISTA.syms.push(item.simbolo); }
     else if(dir==='bajista'){ buckets.BAJISTA.val+=val; buckets.BAJISTA.syms.push(item.simbolo); }
     else { buckets.HC.val+=val; buckets.HC.syms.push(item.simbolo); }
