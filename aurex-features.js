@@ -2478,6 +2478,49 @@ function _calcIAScore(activo, datos) {
 }
 
 function generarSenalesIA() {
+  // PRIMERO: intentar leer del backend centralizado (fuente unica para PWA y app nativa)
+  fetch('https://aurex-app-production.up.railway.app/api/ia-signals')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (data.signals && data.signals.length > 10) {
+        // Usar senales del backend — IDENTICAS a las que ve la app nativa
+        var sigs = data.signals.map(function(s){
+          var activo = (window._IA_ACTIVOS||[]).find(function(a){ return a.s === s.simbolo; });
+          s.nombre = s.nombre || (activo ? activo.n : s.simbolo);
+          s.tipo = s.tipo || (activo ? activo.tipo : '');
+          s.logo = activo ? activo.logo : '';
+          s.prob_principal = s.probPrincipal || s.confianza || s.prob_principal || 50;
+          s.prob_alcista = s.prob_alcista || (s.direccion==='ALCISTA' ? s.prob_principal : 100-s.prob_principal);
+          s.prob_bajista = s.prob_bajista || (100 - (s.prob_alcista||50));
+          s.estrellas = s.estrellas || 1;
+          return s;
+        });
+        sigs.sort(function(a,b){ return (b.confianza||0) - (a.confianza||0); });
+        window._iaSignals = sigs;
+        window._IA_PRECIOS = window._IA_PRECIOS || {};
+        // Actualizar precios desde las senales del backend
+        sigs.forEach(function(s){ if(s.precio) window._IA_PRECIOS[s.simbolo] = { precio: s.precio, precio24h: s.precio24h }; });
+        _actualizarContadores(sigs);
+        _renderIALista(sigs, false);
+        _iniciarBanner();
+        if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); }
+        var upd=document.getElementById('ia-updated');
+        if(upd){
+          var ts = data.updatedAt ? new Date(data.updatedAt) : new Date();
+          upd.textContent='Act. '+ts.getHours()+':'+(ts.getMinutes()<10?'0':'')+ts.getMinutes();
+        }
+        return; // Listo, no calcular localmente
+      }
+      // Si el backend no tiene suficientes senales, calcular localmente como fallback
+      _generarSenalesIALocal();
+    })
+    .catch(function(){
+      // Si el backend falla, calcular localmente como fallback
+      _generarSenalesIALocal();
+    });
+}
+
+function _generarSenalesIALocal() {
   var allData = {};
   var phase1Syms = ['BTC','ETH','SOL','BNB','XRP','AAPL','NVDA','TSLA','MSFT','META','GOOGL','AMZN','SPY','QQQ','GLD','SLV','USO','BNO','TLT','AGG'];
   var phase1Activos = window._IA_ACTIVOS.filter(function(a){ return phase1Syms.indexOf(a.s) >= 0; });
