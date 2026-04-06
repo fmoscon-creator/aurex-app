@@ -2522,12 +2522,12 @@ function generarSenalesIA() {
         console.log('[AUREX IA] OK — mostrando', sigs.length, 'senales del backend');
         return;
       }
-      console.log('[AUREX IA] Backend vacio, usando fallback local');
-      _generarSenalesIALocal();
+      console.log('[AUREX IA] Backend vacio — reintentando en 3s...');
+      setTimeout(function(){ generarSenalesIA(); }, 3000);
     })
     .catch(function(err){
-      console.error('[AUREX IA] Error backend:', err);
-      _generarSenalesIALocal();
+      console.error('[AUREX IA] Error backend:', err, '— reintentando en 3s...');
+      setTimeout(function(){ generarSenalesIA(); }, 3000);
     });
 }
 
