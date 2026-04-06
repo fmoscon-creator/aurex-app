@@ -831,7 +831,7 @@ function _renderPortfolioItems(items){
     var ch24 = window._pcChange24 && window._pcChange24[item.simbolo] !== undefined ? window._pcChange24[item.simbolo] : (precio > 0 && item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0);
     var cc = ch24 >= 0 ? '#3FB950' : '#FF4444';
     var cs = ch24 >= 0 ? '+' : '';
-    var isCrypto = item.tipo === 'Cripto';
+    var isCrypto = (item.tipo||'').toLowerCase() === 'cripto';
     var mktState = !isCrypto && window._pcMarketState && window._pcMarketState[item.simbolo];
     // Time-based fallback: if no marketState yet, detect by regularMarketTime or weekend
     var _mktTime = !isCrypto && window._pcMarketTime && window._pcMarketTime[item.simbolo];
@@ -1121,8 +1121,9 @@ function _renderThermoRisk(items){
     var sig = null;
     for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===item.simbolo){ sig=sigs[i]; break; } }
     if(sig){
-      if(sig.direccion==='ALCISTA'){ buckets.ALCISTA.val+=val; buckets.ALCISTA.syms.push(item.simbolo); }
-      else if(sig.direccion==='BAJISTA'){ buckets.BAJISTA.val+=val; buckets.BAJISTA.syms.push(item.simbolo); }
+      var dir = (sig.direccion||'').toLowerCase();
+      if(dir==='alcista'){ buckets.ALCISTA.val+=val; buckets.ALCISTA.syms.push(item.simbolo); }
+      else if(dir==='bajista'){ buckets.BAJISTA.val+=val; buckets.BAJISTA.syms.push(item.simbolo); }
       else { buckets.HC.val+=val; buckets.HC.syms.push(item.simbolo); }
     } else { buckets.SIN.val+=val; buckets.SIN.syms.push(item.simbolo); }
   });
