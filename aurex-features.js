@@ -3228,20 +3228,28 @@ function _calcPulseScore(raw, cat) {
 }
 
 async function _fetchPulseForCategory(cat) {
-  // PRIMERO: intentar leer del backend centralizado (misma fuente que app nativa)
-  if (cat === 'GLOBAL' || !cat) {
-    try {
-      var backendRes = await fetch('https://aurex-app-production.up.railway.app/api/pulse', { cache: 'no-store' });
-      var backendData = await backendRes.json();
-      if (backendData && backendData.score != null) {
-        var result = { score: backendData.score, label: backendData.label || 'NEUTRAL' };
-        window._pulseCache[cat || 'GLOBAL'] = result;
-        window._pulseTs[cat || 'GLOBAL'] = Date.now();
-        return result;
+  // PRIMERO: leer del backend centralizado (fuente UNICA para PWA y nativa)
+  try {
+    var backendRes = await fetch('https://aurex-app-production.up.railway.app/api/pulse', { cache: 'no-store' });
+    var backendData = await backendRes.json();
+    if (backendData && backendData.scores) {
+      var catKey = cat || 'GLOBAL';
+      var catData = backendData.scores[catKey];
+      if (catData && catData.value != null) {
+        window._pulseCache[catKey] = catData;
+        window._pulseTs[catKey] = Date.now();
+        // Guardar raw del backend para variables modal
+        if (backendData.raw) {
+          window._pulseRaw = backendData.raw;
+          window._pulseRawTs = Date.now();
+          if (backendData.raw.btcSentiment != null) window._btcSentiment = backendData.raw.btcSentiment;
+          if (backendData.raw.altFnG != null) window._altFnG = backendData.raw.altFnG;
+        }
+        return catData;
       }
-    } catch(e) {}
-  }
-  // Fallback: calcular localmente
+    }
+  } catch(e) {}
+  // FALLBACK: calcular localmente (misma lógica)
   var raw = window._pulseRaw;
   if(!raw || (Date.now()-(window._pulseRawTs||0))>300000) {
     raw = await _fetchPulseRaw();
