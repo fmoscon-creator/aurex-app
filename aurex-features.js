@@ -2478,11 +2478,16 @@ function _calcIAScore(activo, datos) {
 }
 
 function generarSenalesIA() {
-  // PRIMERO: intentar leer del backend centralizado (fuente unica para PWA y app nativa)
-  fetch('https://aurex-app-production.up.railway.app/api/ia-signals')
-    .then(function(r){ return r.json(); })
+  // FUENTE UNICA: backend Railway — mismos datos que la app nativa iOS
+  console.log('[AUREX IA] Cargando senales del backend centralizado...');
+  fetch('https://aurex-app-production.up.railway.app/api/ia-signals', { cache: 'no-store' })
+    .then(function(r){
+      console.log('[AUREX IA] Backend respondio status:', r.status);
+      return r.json();
+    })
     .then(function(data){
-      if (data.signals && data.signals.length > 10) {
+      console.log('[AUREX IA] Backend devolvio', (data.signals||[]).length, 'senales');
+      if (data.signals && data.signals.length > 0) {
         // Usar senales del backend — IDENTICAS a las que ve la app nativa
         var sigs = data.signals.map(function(s){
           var activo = (window._IA_ACTIVOS||[]).find(function(a){ return a.s === s.simbolo; });
@@ -2498,7 +2503,6 @@ function generarSenalesIA() {
         sigs.sort(function(a,b){ return (b.confianza||0) - (a.confianza||0); });
         window._iaSignals = sigs;
         window._IA_PRECIOS = window._IA_PRECIOS || {};
-        // Actualizar precios desde las senales del backend
         sigs.forEach(function(s){ if(s.precio) window._IA_PRECIOS[s.simbolo] = { precio: s.precio, precio24h: s.precio24h }; });
         _actualizarContadores(sigs);
         _renderIALista(sigs, false);
@@ -2507,15 +2511,16 @@ function generarSenalesIA() {
         var upd=document.getElementById('ia-updated');
         if(upd){
           var ts = data.updatedAt ? new Date(data.updatedAt) : new Date();
-          upd.textContent='Act. '+ts.getHours()+':'+(ts.getMinutes()<10?'0':'')+ts.getMinutes();
+          upd.textContent='Act. '+ts.getHours()+':'+(ts.getMinutes()<10?'0':'')+ts.getMinutes()+' (backend)';
         }
-        return; // Listo, no calcular localmente
+        console.log('[AUREX IA] OK — mostrando', sigs.length, 'senales del backend');
+        return;
       }
-      // Si el backend no tiene suficientes senales, calcular localmente como fallback
+      console.log('[AUREX IA] Backend vacio, usando fallback local');
       _generarSenalesIALocal();
     })
-    .catch(function(){
-      // Si el backend falla, calcular localmente como fallback
+    .catch(function(err){
+      console.error('[AUREX IA] Error backend:', err);
       _generarSenalesIALocal();
     });
 }
