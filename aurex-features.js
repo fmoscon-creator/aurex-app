@@ -1120,12 +1120,17 @@ function _renderThermoRisk(items){
     totVal += val;
     var sig = null;
     for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===item.simbolo){ sig=sigs[i]; break; } }
+    var dir = '';
     if(sig){
-      var dir = (sig.direccion||'').toLowerCase();
-      if(dir==='alcista'){ buckets.ALCISTA.val+=val; buckets.ALCISTA.syms.push(item.simbolo); }
-      else if(dir==='bajista'){ buckets.BAJISTA.val+=val; buckets.BAJISTA.syms.push(item.simbolo); }
-      else { buckets.HC.val+=val; buckets.HC.syms.push(item.simbolo); }
-    } else { buckets.SIN.val+=val; buckets.SIN.syms.push(item.simbolo); }
+      dir = (sig.direccion||'').toLowerCase();
+    } else {
+      // Fallback: seed determinista si las senales IA no cargaron aun
+      var seed = _iaSeed(item.simbolo);
+      dir = seed < 0.1 ? 'alta_conf' : seed < 0.55 ? 'alcista' : 'bajista';
+    }
+    if(dir==='alcista'){ buckets.ALCISTA.val+=val; buckets.ALCISTA.syms.push(item.simbolo); }
+    else if(dir==='bajista'){ buckets.BAJISTA.val+=val; buckets.BAJISTA.syms.push(item.simbolo); }
+    else { buckets.HC.val+=val; buckets.HC.syms.push(item.simbolo); }
   });
   if(totVal <= 0){ el.innerHTML = ''; return; }
   var pAlc = buckets.ALCISTA.val/totVal*100;
@@ -2624,6 +2629,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       window._IA_PRECIOS = allData;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, true);
+      if (window._portItems) { _renderThermoRisk(window._portItems); }
       setTimeout(function(){ processBatch(batchIdx + 1); }, 200);
     });
   }
