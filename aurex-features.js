@@ -2478,27 +2478,6 @@ function _calcIAScore(activo, datos) {
 }
 
 function generarSenalesIA() {
-  var listEl = document.getElementById('ia-list');
-  if (listEl) listEl.innerHTML = '<div style="text-align:center;padding:32px 20px;color:#8B949E;font-size:13px"><div style="width:24px;height:24px;border:2px solid #D4A017;border-top-color:transparent;border-radius:50%;animation:spin 0.8s linear infinite;margin:0 auto 12px"></div>Analizando mercados en tiempo real...</div>';
-
-  // Intentar leer senales del backend centralizado primero
-  fetch('https://aurex-app-production.up.railway.app/api/ia-signals')
-    .then(function(r){ return r.json(); })
-    .then(function(data){
-      if (data.signals && data.signals.length > 50) {
-        window._iaSignals = data.signals;
-        _actualizarContadores(data.signals);
-        _renderIALista(data.signals, false);
-        if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
-        console.log('[IA] Senales del backend:', data.signals.length, '| Actualizado:', data.updatedAt);
-        return;
-      }
-      _generarSenalesIALocal();
-    })
-    .catch(function(){ _generarSenalesIALocal(); });
-}
-
-function _generarSenalesIALocal() {
   var allData = {};
   var phase1Syms = ['BTC','ETH','SOL','BNB','XRP','AAPL','NVDA','TSLA','MSFT','META','GOOGL','AMZN','SPY','QQQ','GLD','SLV','USO','BNO','TLT','AGG'];
   var phase1Activos = window._IA_ACTIVOS.filter(function(a){ return phase1Syms.indexOf(a.s) >= 0; });
