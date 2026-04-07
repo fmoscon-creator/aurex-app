@@ -1115,7 +1115,7 @@ function _renderThermoRisk(items){
     SIN:     {val:0, syms:[]}
   };
   items.forEach(function(item){
-    var precio = (prcs[item.simbolo] && prcs[item.simbolo].precio) ? prcs[item.simbolo].precio : item.precio_compra;
+    var precio = prcs[item.simbolo] || item.precio_compra;
     var val = parseFloat(item.cantidad) * parseFloat(precio);
     totVal += val;
     var sig = null;
