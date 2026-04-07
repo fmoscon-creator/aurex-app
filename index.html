@@ -277,8 +277,10 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 
 @keyframes tkScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 @keyframes spin{to{transform:rotate(360deg)}}</style>
-<!-- manifest y webapp-capable deshabilitados para romper cache iOS -->
-<meta name="apple-mobile-web-app-capable" content="no">
+<link rel="manifest" href="manifest.json">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Aurex">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <script>
 (function(){
   // 1. Reset onboarding si viene con ?resetOnboarding=1
