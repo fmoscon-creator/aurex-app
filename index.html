@@ -1284,7 +1284,7 @@ window._mktOpenDetail = function(idx){
     <span style="font-size:16px;font-weight:600;color:#D4A017;letter-spacing:1px">AUREX</span>
     <span style="font-size:13px;color:#8B949E">Watchlist</span>
   </div>
-  <span id="wl-btn-nueva" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;display:inline-block;-webkit-tap-highlight-color:rgba(212,160,23,0.3)">+ Nueva lista</span>
+  <div onclick="if(window.wlCreateListModal)window.wlCreateListModal();else alert('WL not loaded')" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Nueva lista</div>
 </div>
 <!-- Contenido dinámico -->
 <div id="watch-cnt" style="overflow-y:auto;flex:1;min-height:200px;padding:0">
