@@ -1248,29 +1248,40 @@ window._mktOpenDetail = function(idx){
 </div>
 
 <div class="screen" id="screen-watchlist" style="flex-direction:column;flex:1;min-height:0">
-<div style="padding:12px 14px 10px;border-bottom:1px solid #21262D;flex-shrink:0;background:linear-gradient(180deg,#001A2A 0%,#0D1117 100%)">
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:16px;font-weight:500;letter-spacing:1px;color:#D4A017">AUREX</span>
-      <span style="font-size:13px;color:#8B949E"> Watchlist</span>
-    </div>
-    <div onclick="openAddWatch()" style="padding:4px 10px;border-radius:9px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Seguir activo</div>
+<!-- Header -->
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #21262D;flex-shrink:0">
+  <div style="display:flex;align-items:center;gap:6px">
+    <span style="font-size:16px;font-weight:600;color:#D4A017;letter-spacing:1px">AUREX</span>
+    <span style="font-size:13px;color:#8B949E">Watchlist</span>
+  </div>
+  <div onclick="wlCreateListModal()" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer">+ Nueva lista</div>
+</div>
+<!-- Contenido dinámico -->
+<div class="cnt" id="watch-cnt" style="overflow-y:auto;flex:1"></div>
+<!-- Modal Crear Lista -->
+<div id="wl-create-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:center;justify-content:center">
+  <div style="background:#161B22;border-radius:16px;width:90%;max-width:340px;padding:20px;border:1px solid #30363D">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:600;color:#E6EDF3">Nueva lista</span><span onclick="wlCloseCreateModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span></div>
+    <div style="font-size:10px;color:#8B949E;font-weight:500;margin-bottom:4px">Nombre</div>
+    <input id="wl-new-name" type="text" placeholder="Ej: Criptos favoritas" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:10px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:12px" />
+    <div style="font-size:10px;color:#8B949E;font-weight:500;margin-bottom:6px">Color</div>
+    <div id="wl-colors" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap"></div>
+    <div id="wl-primary-toggle" onclick="wlTogglePrimary()" style="display:flex;align-items:center;gap:8px;padding:10px;background:#0D1117;border-radius:8px;margin-bottom:14px;cursor:pointer"><span id="wl-primary-star" style="font-size:16px">☆</span><span style="font-size:12px;color:#8B949E">Marcar como Lista Principal</span></div>
+    <div onclick="wlCreateList()" style="background:#D4A017;border-radius:8px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:600;cursor:pointer">Crear lista</div>
   </div>
 </div>
-<div class="cnt" id="watch-cnt"></div>
-<div id="watch-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
+<!-- Modal Agregar Activo -->
+<div id="wl-add-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
   <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:85vh;overflow-y:auto">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar a Watchlist</span>
-      <span onclick="closeWatchModal()" style="font-size:20px;color:#8B949E;cursor:pointer">X</span>
-    </div>
-    <div id="watch-modal-body"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar activo</span><span onclick="wlCloseAddModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span></div>
+    <input id="wl-add-search" type="text" placeholder="Buscar: BTC, AAPL, SPY..." autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:10px" oninput="wlSearchAssets()" />
+    <div id="wl-add-results" style="max-height:350px;overflow-y:auto"></div>
   </div>
 </div>
-<!-- Modal detalle activo watchlist (mismo formato que IA expandido) -->
-<div id="watch-detail-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center">
+<!-- Modal Detalle Activo -->
+<div id="wl-detail-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center">
   <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:90vh;overflow-y:auto">
-    <div id="watch-detail-body"></div>
+    <div id="wl-detail-body"></div>
   </div>
 </div>
 </div>
