@@ -3238,7 +3238,7 @@ async function _fetchPulseForCategory(cat) {
       var catKey = cat || 'GLOBAL';
       var catData = backendData.scores[catKey];
       if (catData && catData.value != null) {
-        window._pulseCache[catKey] = Object.assign({}, _calcPulseScore(window._pulseRaw||{}, catKey), catData);
+        window._pulseCache[catKey] = catData;
         window._pulseTs[catKey] = Date.now();
         // Guardar raw del backend para variables modal
         if (backendData.raw) {
