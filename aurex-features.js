@@ -1538,6 +1538,106 @@ window.addToWatch = function(sym, nombre, tipo){
   if(typeof renderWatchCnt === 'function') renderWatchCnt();
 };
 
+// ─── WATCHLIST — renderizado de lista con precios y señales IA ─────────
+function renderWatchCnt(){
+  var cnt = document.getElementById('watch-cnt');
+  if(!cnt) return;
+  var wl = JSON.parse(localStorage.getItem('aurex_watchlist')||'[]');
+  if(wl.length === 0){
+    cnt.innerHTML = '<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">👀</div><div style="font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:6px">Tu Watchlist esta vacia</div><div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">Agrega activos para seguir sus precios,<br>senales IA y variaciones en tiempo real</div><div onclick="openAddWatch()" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#58A6FF15;border:1px solid #58A6FF40;color:#58A6FF;font-size:12px;font-weight:600;cursor:pointer">+ Seguir primer activo</div></div>';
+    return;
+  }
+  var sigs = window._iaSignals || [];
+  var prcs = window._pcPrices || {};
+  var chg24 = window._pcChange24 || {};
+  // Fetch prices for watchlist items
+  var cryptoList = ['BTC','ETH','SOL','BNB','XRP','ADA','AVAX','DOT','LINK','MATIC','DOGE','SHIB','LTC','ATOM','UNI','NEAR','APT','ARB','OP','TRX','TON','SUI','PEPE','WIF','FIL','INJ','RUNE'];
+  var needCrypto = wl.filter(function(w){ return cryptoList.indexOf(w.s)>=0 && !prcs[w.s]; }).map(function(w){ return w.s; });
+  var needYahoo = wl.filter(function(w){ return cryptoList.indexOf(w.s)<0 && !prcs[w.s]; }).map(function(w){ return w.s; });
+
+  function renderList(){
+    cnt.innerHTML = '<div style="padding:8px 14px 4px;display:flex;justify-content:space-between;align-items:center"><span style="font-size:10px;color:#8B949E;font-weight:600">' + wl.length + ' ACTIVOS SEGUIDOS</span></div>' +
+      wl.map(function(w){
+        var sig = null;
+        for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===w.s){ sig=sigs[i]; break; } }
+        var precio = prcs[w.s] || (sig ? sig.precio : null);
+        var cambio = chg24[w.s] || (sig && sig.precio24h > 0 && sig.precio ? ((sig.precio - sig.precio24h)/sig.precio24h*100) : null);
+        var dir = sig ? sig.direccion : '';
+        var dirColor = dir==='alcista'?'#3FB950':dir==='bajista'?'#F85149':dir==='alta_conf'?'#D4A017':'#555';
+        var dirLabel = dir==='alcista'?'ALCISTA':dir==='bajista'?'BAJISTA':dir==='alta_conf'?'ALTA CONV':'—';
+        var dirBg = dir==='alcista'?'#3FB95020':dir==='bajista'?'#F8514920':dir==='alta_conf'?'#D4A01720':'transparent';
+        var prob = sig ? (sig.confianza||sig.prob_principal||'') : '';
+        var tipoColor = (w.tipo||'').toLowerCase()==='cripto'?'#A78BFA':(w.tipo||'').toLowerCase()==='accion'?'#58A6FF':'#F0883E';
+        var act = (window._IA_ACTIVOS||[]).find(function(a){ return a.s===w.s; });
+        var logoHtml = act && act.logo
+          ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" /><div style="display:none;width:32px;height:32px;border-radius:50%;background:'+(act.color||'#333')+';align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">'+w.s[0]+'</div>'
+          : '<div style="width:32px;height:32px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">'+w.s[0]+'</div>';
+        var precioFmt = precio ? _fmt(precio) : '...';
+        var cambioPct = cambio !== null ? _fmt(cambio, 'pct') : '...';
+        var cambioColor = cambio !== null ? (cambio >= 0 ? '#3FB950' : '#F85149') : '#555';
+        return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #21262D">' +
+          '<div style="flex-shrink:0">'+logoHtml+'</div>' +
+          '<div style="flex:1;min-width:0">' +
+            '<div style="display:flex;align-items:center;gap:5px">' +
+              '<span style="font-size:14px;font-weight:700;color:#E6EDF3">'+w.s+'</span>' +
+              '<span style="font-size:9px;padding:1px 5px;border-radius:4px;background:#21262D;color:'+tipoColor+'">'+( w.tipo||'Activo')+'</span>' +
+            '</div>' +
+            '<div style="font-size:10px;color:#8B949E;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+w.n+'</div>' +
+            '<div style="display:flex;align-items:center;gap:4px;margin-top:3px">' +
+              (dir ? '<span style="font-size:8px;font-weight:700;color:'+dirColor+';background:'+dirBg+';border:0.5px solid '+dirColor+'60;padding:1px 5px;border-radius:4px">'+dirLabel+'</span>' : '') +
+              (prob ? '<span style="font-size:9px;color:'+dirColor+';font-weight:600">'+prob+'%</span>' : '') +
+            '</div>' +
+          '</div>' +
+          '<div style="text-align:right;flex-shrink:0">' +
+            '<div style="font-size:13px;font-weight:700;color:#E6EDF3">'+precioFmt+'</div>' +
+            '<div style="font-size:11px;color:'+cambioColor+';font-weight:500;margin-top:2px">'+cambioPct+'</div>' +
+          '</div>' +
+          '<div onclick="removeFromWatch(\''+w.s+'\')" style="font-size:14px;color:#55555580;cursor:pointer;padding:4px;-webkit-tap-highlight-color:rgba(0,0,0,0)">✕</div>' +
+        '</div>';
+      }).join('');
+  }
+
+  // Fetch missing crypto prices
+  if(needCrypto.length > 0){
+    needCrypto.forEach(function(sym){
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+sym+'USDT')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          if(d.lastPrice){ prcs[sym] = parseFloat(d.lastPrice); chg24[sym] = parseFloat(d.priceChangePercent); }
+          renderList();
+        }).catch(function(){});
+    });
+  }
+  // Fetch missing Yahoo prices
+  if(needYahoo.length > 0){
+    needYahoo.forEach(function(sym){
+      fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=1d')
+        .then(function(r){ return r.json(); })
+        .then(function(d){
+          try{
+            var meta = d.chart.result[0].meta;
+            if(meta.regularMarketPrice){ prcs[sym] = meta.regularMarketPrice; }
+            var prev = meta.previousClose || meta.chartPreviousClose;
+            if(prev && meta.regularMarketPrice) chg24[sym] = ((meta.regularMarketPrice - prev)/prev*100);
+          }catch(e){}
+          renderList();
+        }).catch(function(){});
+    });
+  }
+
+  renderList();
+}
+
+window.removeFromWatch = function(sym){
+  var wl = JSON.parse(localStorage.getItem('aurex_watchlist')||'[]');
+  wl = wl.filter(function(w){ return w.s !== sym; });
+  localStorage.setItem('aurex_watchlist', JSON.stringify(wl));
+  renderWatchCnt();
+};
+
+// Render watchlist al cargar la app
+document.addEventListener('DOMContentLoaded', function(){ setTimeout(renderWatchCnt, 2000); });
+
 
 function showPortErr(msg){
   var errEl = document.getElementById('pa-err');
