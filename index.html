@@ -422,6 +422,49 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   // Tambien matar el calculo local por si acaso
   setTimeout(function(){ window._generarSenalesIALocal = function(){ console.log('[AUREX] Local calc KILLED'); }; }, 100);
 })();
+
+// === ALERTAS TAB FUNCTIONS ===
+function toggleAlertSection(key){
+  var body=document.getElementById(key+'-alert-body');
+  var arrow=document.getElementById(key+'-arrow');
+  if(!body)return;
+  var isOpen=body.style.display!=='none';
+  body.style.display=isOpen?'none':'block';
+  if(arrow)arrow.textContent=isOpen?'▼':'▲';
+}
+function toggleWABanner(){
+  var st=document.getElementById('wa-status');
+  var ti=document.getElementById('wa-title');
+  var su=document.getElementById('wa-sub');
+  var ch=document.getElementById('wa-check');
+  if(!st)return;
+  var isOn=st.textContent==='ON';
+  st.textContent=isOn?'OFF':'ON';
+  st.style.color=isOn?'#555':'#3FB950';
+  st.style.borderColor=isOn?'#21262D':'#3FB950';
+  ti.textContent=isOn?'Recibir alertas por WhatsApp':'WhatsApp conectado';
+  su.textContent=isOn?'Conecta tu WhatsApp para recibir senales IA, alertas de precio y eventos macro sin delays':'Vas a recibir senales IA y alertas de precio directo a tu celular';
+  if(ch)ch.textContent=isOn?'—':'✓';
+  if(ch)ch.style.color=isOn?'#555':'#3FB950';
+}
+function updateAlertCount(){
+  var sections=['ia','pulse','precio','eventos'];
+  var totals={ia:4,pulse:3,precio:3,eventos:5};
+  var totalActive=0;
+  sections.forEach(function(s){
+    var body=document.getElementById(s+'-alert-body');
+    if(!body)return;
+    var checks=body.querySelectorAll('input[type=checkbox]');
+    var active=0;
+    checks.forEach(function(c){if(c.checked)active++;});
+    totalActive+=active;
+    var cnt=document.getElementById(s+'-alert-count');
+    if(cnt){cnt.textContent=active+'/'+totals[s];cnt.style.color=active===totals[s]?'#3FB950':'#D4A017';}
+  });
+  var el=document.getElementById('alert-active');
+  if(el)el.textContent=totalActive;
+}
+function showAlertVars(tipo){alert(tipo==='ia'?'Motor IA v7: Tendencia 24h, RSI14, Volumen, Volatilidad, Correlacion BTC/SPY, Oro/Petroleo, Macro FED, Earnings, MACD 12/26, Soporte/Resistencia 30d':'AUREX Pulse 14 variables: BTC 12%, ETH 8%, VIX 14%, SP500 8%, ES=F 8%, NQ=F 6%, YM=F 4%, RTY=F 3%, Oro 8%, Plata 4%, Petroleo 5%, Cobre 4%, Macro FED 12%, Geopolitica 4%');}
 </script>
 
 <!-- SUPABASE AUTH -->
@@ -1226,11 +1269,164 @@ window._mktOpenDetail = function(idx){
 </div>
 </div>
 
-<div class="screen" id="screen-alertas">
-<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:60px 20px;text-align:center">
-  <div style="font-size:52px"></div>
-  <div style="font-size:20px;font-weight:500;color:#E6EDF3">Mis Alertas</div>
-  <div style="font-size:12px;color:#555;line-height:1.8">Alertas de precio en tiempo real<br>para tus activos favoritos<br><span style="color:#D4A017;font-size:11px">Proximamente</span></div>
+<div class="screen" id="screen-alertas" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
+<!-- Header -->
+<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid #21262D;flex-shrink:0">
+  <div>
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px">
+      <span style="font-size:16px;font-weight:600;color:#D4A017;letter-spacing:1px">AUREX</span>
+      <span style="font-size:13px;color:#8B949E">Alertas</span>
+    </div>
+    <div style="font-size:9px;color:#555">24 variables IA + Macro</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:4px"><div style="width:5px;height:5px;border-radius:50%;background:#3FB950"></div><span style="font-size:9px;color:#3FB950;font-weight:700">LIVE</span></div>
+</div>
+<div class="cnt" style="overflow-y:auto;flex:1;padding-bottom:20px">
+
+<!-- Banner WhatsApp -->
+<div id="wa-banner" onclick="toggleWABanner()" style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:#0D2818;border-radius:12px;padding:14px;border:1px solid #25D36640;cursor:pointer">
+  <span style="font-size:28px">💬</span>
+  <div style="flex:1">
+    <div style="font-size:13px;font-weight:700;color:#25D366" id="wa-title">Recibir alertas por WhatsApp</div>
+    <div style="font-size:10px;color:#8B949E;margin-top:3px;line-height:14px" id="wa-sub">Conecta tu WhatsApp para recibir senales IA, alertas de precio y eventos macro sin delays</div>
+  </div>
+  <div id="wa-status" style="border:1px solid #21262D;border-radius:12px;padding:3px 8px;font-size:9px;font-weight:700;color:#555">OFF</div>
+</div>
+
+<!-- Resumen -->
+<div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #D4A01730">
+  <div style="display:flex;align-items:center">
+    <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:800;color:#E6EDF3" id="alert-active">4</div><div style="font-size:7px;font-weight:700;color:#555;letter-spacing:.8px;margin-top:2px">ACTIVAS</div></div>
+    <div style="width:1px;height:28px;background:#21262D"></div>
+    <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:800;color:#D4A017">15</div><div style="font-size:7px;font-weight:700;color:#555;letter-spacing:.8px;margin-top:2px">DISPONIBLES</div></div>
+    <div style="width:1px;height:28px;background:#21262D"></div>
+    <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:800;color:#3FB950" id="alert-today">0</div><div style="font-size:7px;font-weight:700;color:#555;letter-spacing:.8px;margin-top:2px">HOY</div></div>
+    <div style="width:1px;height:28px;background:#21262D"></div>
+    <div style="flex:1;text-align:center"><div style="font-size:22px;font-weight:800;color:#555" id="wa-check">—</div><div style="font-size:7px;font-weight:700;color:#555;letter-spacing:.8px;margin-top:2px">WHATSAPP</div></div>
+  </div>
+</div>
+
+<!-- Botones Motor IA + Pulse -->
+<div style="display:flex;gap:8px;margin:10px 11px">
+  <div onclick="showAlertVars('ia')" style="flex:1;background:#161B22;border-radius:10px;padding:10px;text-align:center;border:0.5px solid #21262D;cursor:pointer">
+    <div style="font-size:20px;margin-bottom:4px">🤖</div><div style="font-size:11px;font-weight:600;color:#E6EDF3">Motor IA v7</div><div style="font-size:9px;color:#555;margin-top:1px">10 variables</div>
+  </div>
+  <div onclick="showAlertVars('pulse')" style="flex:1;background:#161B22;border-radius:10px;padding:10px;text-align:center;border:0.5px solid #21262D;cursor:pointer">
+    <div style="font-size:20px;margin-bottom:4px">💓</div><div style="font-size:11px;font-weight:600;color:#E6EDF3">AUREX Pulse</div><div style="font-size:9px;color:#555;margin-top:1px">14 variables</div>
+  </div>
+</div>
+
+<!-- Alertas IA -->
+<div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
+  <div onclick="toggleAlertSection('ia')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
+    <span style="font-size:22px">🤖</span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas IA</span><span style="font-size:7px;font-weight:800;color:#A78BFA;background:#A78BFA20;border:0.5px solid #A78BFA60;padding:1px 5px;border-radius:4px">3 MVP</span></div><div style="font-size:9px;color:#555;margin-top:2px">Motor IA v7 — 10 variables</div></div>
+    <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="ia-alert-count">3/4</span></div>
+    <span style="font-size:10px;color:#555" id="ia-arrow">▼</span>
+  </div>
+  <div id="ia-alert-body" style="display:none;border-top:0.5px solid #21262D">
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Cambio de senal</span><span style="font-size:7px;font-weight:800;color:#3FB950;background:#1A3A2A;padding:1px 5px;border-radius:3px">MVP</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Cuando un activo cambia de ALCISTA a BAJISTA o viceversa</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Alta Conviccion</span><span style="font-size:7px;font-weight:800;color:#3FB950;background:#1A3A2A;padding:1px 5px;border-radius:3px">MVP</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Cuando la IA detecta senal de maxima conviccion (85-88%)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Umbral probabilidad</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Alerta cuando la probabilidad supera el umbral configurado</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Senal en Portfolio</span><span style="font-size:7px;font-weight:800;color:#3FB950;background:#1A3A2A;padding:1px 5px;border-radius:3px">MVP</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Nueva senal IA en activos de tu cartera personal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+  </div>
+</div>
+
+<!-- Alertas PULSE -->
+<div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
+  <div onclick="toggleAlertSection('pulse')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
+    <span style="font-size:22px">💓</span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas PULSE</span><span style="font-size:7px;font-weight:800;color:#EC4899;background:#EC489920;border:0.5px solid #EC489960;padding:1px 5px;border-radius:4px">0 MVP</span></div><div style="font-size:9px;color:#555;margin-top:2px">AUREX Pulse — 14 variables macro</div></div>
+    <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="pulse-alert-count">0/3</span></div>
+    <span style="font-size:10px;color:#555" id="pulse-arrow">▼</span>
+  </div>
+  <div id="pulse-alert-body" style="display:none;border-top:0.5px solid #21262D">
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Cambio de zona</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Cuando Pulse cambia de zona (Miedo Extremo / Neutral / Codicia)</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Por categoria</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Alerta por categoria: Cripto, Acciones, Futuros, Commodities</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Termometro de Riesgo</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Cuando tu portfolio entra en zona de riesgo segun IA</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+  </div>
+</div>
+
+<!-- Alertas Precio -->
+<div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
+  <div onclick="toggleAlertSection('precio')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
+    <span style="font-size:22px">💰</span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas de Precio</span><span style="font-size:7px;font-weight:800;color:#D4A017;background:#D4A01720;border:0.5px solid #D4A01760;padding:1px 5px;border-radius:4px">1 MVP</span></div><div style="font-size:9px;color:#555;margin-top:2px">Monitoreo de precios en tiempo real</div></div>
+    <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="precio-alert-count">1/3</span></div>
+    <span style="font-size:10px;color:#555" id="precio-arrow">▼</span>
+  </div>
+  <div id="precio-alert-body" style="display:none;border-top:0.5px solid #21262D">
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Precio objetivo</span><span style="font-size:7px;font-weight:800;color:#3FB950;background:#1A3A2A;padding:1px 5px;border-radius:3px">MVP</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Cuando un activo alcanza el precio target que definiste</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Variacion brusca</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Sube o baja mas del % configurado en 24hs</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Nuevo maximo/minimo</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Nuevo maximo o minimo de 52 semanas</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+  </div>
+</div>
+
+<!-- Alertas Eventos -->
+<div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
+  <div onclick="toggleAlertSection('eventos')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
+    <span style="font-size:22px">📅</span>
+    <div style="flex:1"><div style="display:flex;align-items:center;gap:6px"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas de Eventos</span><span style="font-size:7px;font-weight:800;color:#3B82F6;background:#3B82F620;border:0.5px solid #3B82F660;padding:1px 5px;border-radius:4px">0 MVP</span></div><div style="font-size:9px;color:#555;margin-top:2px">Calendario economico y corporativo</div></div>
+    <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="eventos-alert-count">0/5</span></div>
+    <span style="font-size:10px;color:#555" id="eventos-arrow">▼</span>
+  </div>
+  <div id="eventos-alert-body" style="display:none;border-top:0.5px solid #21262D">
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">FED FOMC</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Decisiones de tasas de interes de la Reserva Federal</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">CPI / PBI</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Publicacion de datos de inflacion y crecimiento</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Apertura mercados</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Notificacion cuando abren los mercados globales</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Earnings portfolio</span><span style="font-size:7px;font-weight:800;color:#FF6B35;background:#2A1A0A;padding:1px 5px;border-radius:3px">V2</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Reportes de resultados trimestrales de activos en tu cartera</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><div style="display:flex;align-items:center;gap:5px"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Geopolitica GDELT</span><span style="font-size:7px;font-weight:800;color:#555;background:#55555520;padding:1px 5px;border-radius:3px">V3</span></div><div style="font-size:10px;color:#555;margin-top:2px;line-height:14px">Eventos geopoliticos de alto impacto detectados por GDELT</div></div><label class="toggle-sw"><input type="checkbox" onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+  </div>
+</div>
+
+<!-- Zonas PULSE -->
+<div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:12px;border:0.5px solid #21262D">
+  <div style="font-size:11px;font-weight:700;color:#E6EDF3;margin-bottom:8px">Zonas AUREX Pulse</div>
+  <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;gap:1px">
+    <div style="flex:1;background:#F85149;border-radius:2px"></div>
+    <div style="flex:1;background:#FF6B35;border-radius:2px"></div>
+    <div style="flex:1;background:#D4A017;border-radius:2px"></div>
+    <div style="flex:1;background:#22C55E;border-radius:2px"></div>
+    <div style="flex:1;background:#3FB950;border-radius:2px"></div>
+  </div>
+  <div style="display:flex;margin-top:6px">
+    <div style="flex:1;text-align:center"><div style="font-size:8px;font-weight:700;color:#F85149">0-20</div><div style="font-size:7px;color:#555;margin-top:1px">Miedo Extremo</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:8px;font-weight:700;color:#FF6B35">21-40</div><div style="font-size:7px;color:#555;margin-top:1px">Miedo</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:8px;font-weight:700;color:#D4A017">41-60</div><div style="font-size:7px;color:#555;margin-top:1px">Neutral</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:8px;font-weight:700;color:#22C55E">61-80</div><div style="font-size:7px;color:#555;margin-top:1px">Codicia</div></div>
+    <div style="flex:1;text-align:center"><div style="font-size:8px;font-weight:700;color:#3FB950">81-100</div><div style="font-size:7px;color:#555;margin-top:1px">Codicia Extrema</div></div>
+  </div>
+</div>
+
+<!-- Ventaja competitiva -->
+<div style="margin:10px 11px;background:#D4A01708;border-radius:12px;padding:14px;border:1px solid #D4A01730">
+  <div style="font-size:12px;font-weight:700;color:#D4A017;margin-bottom:8px">Solo AUREX tiene</div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">24 variables IA + Macro por activo</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">Senal IA por activo con probabilidad</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">AUREX Pulse propio (14 indicadores)</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">Geopolitica GDELT en tiempo real</span></div>
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">Alertas WhatsApp instantaneas</span></div>
+  <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;color:#3FB950">✓</span><span style="font-size:11px;color:#E6EDF3">Termometro de riesgo del portfolio</span></div>
+</div>
+
+<!-- Historial -->
+<div style="padding:8px 13px;margin-top:12px;background:#080C10;border-bottom:0.5px solid #21262D">
+  <div style="font-size:9px;font-weight:700;color:#555;letter-spacing:.8px">HISTORIAL — ULTIMAS 20</div>
+</div>
+<div style="text-align:center;padding:30px">
+  <div style="font-size:32px;margin-bottom:8px">🔔</div>
+  <div style="font-size:14px;font-weight:500;color:#8B949E">Sin alertas recientes</div>
+  <div style="font-size:11px;color:#555;margin-top:4px">Cuando se active una alerta, aparecera aqui con fecha, tipo y activo</div>
+</div>
+
+<!-- Prioridad desarrollo -->
+<div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:12px;border:0.5px solid #21262D">
+  <div style="font-size:11px;font-weight:700;color:#8B949E;margin-bottom:8px">Prioridad de desarrollo</div>
+  <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px"><div style="width:8px;height:8px;border-radius:4px;background:#3FB950;margin-top:3px"></div><span style="font-size:10px;font-weight:800;color:#E6EDF3;width:28px">MVP</span><span style="font-size:10px;color:#555;flex:1">Banner WhatsApp, cambio senal IA, precio objetivo, historial</span></div>
+  <div style="display:flex;align-items:flex-start;gap:6px;margin-bottom:6px"><div style="width:8px;height:8px;border-radius:4px;background:#FF6B35;margin-top:3px"></div><span style="font-size:10px;font-weight:800;color:#E6EDF3;width:28px">V2</span><span style="font-size:10px;color:#555;flex:1">Alta conviccion, PULSE zona, Termometro, variacion %, eventos macro, push iOS</span></div>
+  <div style="display:flex;align-items:flex-start;gap:6px"><div style="width:8px;height:8px;border-radius:4px;background:#555;margin-top:3px"></div><span style="font-size:10px;font-weight:800;color:#E6EDF3;width:28px">V3</span><span style="font-size:10px;color:#555;flex:1">Earnings portfolio, geopolitica GDELT, limites por plan</span></div>
+</div>
+
 </div>
 </div>
 
@@ -1264,6 +1460,13 @@ window._mktOpenDetail = function(idx){
 
 #auth-logged[style*="flex"] ~ .sec-lbl,
 #auth-logged[style*="flex"] ~ .plans-wrap{display:none!important}
+/* Toggle switches para Alertas */
+.toggle-sw{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
+.toggle-sw input{opacity:0;width:0;height:0}
+.toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:#21262D;border-radius:12px;transition:.3s}
+.toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:#8B949E;border-radius:50%;transition:.3s}
+.toggle-sw input:checked+.toggle-slider{background:#3FB950}
+.toggle-sw input:checked+.toggle-slider:before{transform:translateX(18px);background:#fff}
 </style>
 <canvas id="perfil-canvas"></canvas>
 <!-- ESTADO NO LOGUEADO -->
