@@ -2775,7 +2775,7 @@ function generarSenalesIA() {
           return s;
         });
         sigs.sort(function(a,b){ return (b.confianza||0) - (a.confianza||0); });
-        window._iaSignals = sigs;
+        window._iaSignals = sigs; window._iaSignalsFromBackend = true;
         window._IA_PRECIOS = window._IA_PRECIOS || {};
         sigs.forEach(function(s){ if(s.precio) window._IA_PRECIOS[s.simbolo] = { precio: s.precio, precio24h: s.precio24h }; });
         _actualizarContadores(sigs);
@@ -2899,7 +2899,7 @@ function _generarSenalesIALocal() {
     precioPetroleo = allData['_PETROLEO']||(allData['USO']||{}).precio||precioPetroleo;
     var signals1 = buildSignals(phase1Activos);
     signals1.sort(function(a,b){ return b.confianza - a.confianza; });
-    window._iaSignals = signals1;
+    if (!window._iaSignalsFromBackend) window._iaSignals = signals1;
     window._IA_PRECIOS = allData;
     _actualizarContadores(signals1);
     _renderIALista(signals1, true);
@@ -2938,7 +2938,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       var lb2 = document.getElementById('ia-loading-bar');
       if (lb2) lb2.remove();
       allSignals.sort(function(a,b){ return b.confianza - a.confianza; });
-      window._iaSignals = allSignals;
+      if (!window._iaSignalsFromBackend) window._iaSignals = allSignals;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, false);
       if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
@@ -2957,7 +2957,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       var cntEl = document.getElementById('ia-load-count');
       if (cntEl) cntEl.textContent = loaded;
       allSignals.sort(function(a,b){ return b.confianza - a.confianza; });
-      window._iaSignals = allSignals;
+      if (!window._iaSignalsFromBackend) window._iaSignals = allSignals;
       window._IA_PRECIOS = allData;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, true);
