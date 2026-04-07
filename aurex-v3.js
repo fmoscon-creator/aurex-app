@@ -2776,7 +2776,7 @@ window.showIAVariablesPopup = function() {
     varsHtml +
     '<div style="font-size:9px;color:#555;text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
-  overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
+  overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); }; overlay.firstElementChild && (overlay.firstElementChild.onclick = function(e){ e.stopPropagation(); });
   document.body.appendChild(overlay);
 };
 
