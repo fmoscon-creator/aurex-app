@@ -1526,7 +1526,7 @@ window.wlCreateListModal = function(){
   if(star) star.textContent = '☆';
   var nameEl = document.getElementById('wl-new-name');
   if(nameEl) nameEl.value = '';
-  m.style.display = 'flex';
+  m.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:center;justify-content:center';
 };
 window.wlCloseCreateModal = function(){ var m=document.getElementById('wl-create-modal'); if(m) m.style.display='none'; };
 window.wlPickColor = function(c){
@@ -1583,7 +1583,7 @@ window.wlSelectList = function(listId){
 window.wlOpenAddModal = function(){
   var m = document.getElementById('wl-add-modal');
   if(!m) return;
-  m.style.display = 'flex';
+  m.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center';
   var searchEl = document.getElementById('wl-add-search');
   if(searchEl){ searchEl.value = ''; }
   wlSearchAssets();
@@ -1782,7 +1782,7 @@ window.wlOpenDetail = function(sym){
   html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:#0D2818;border-radius:10px;border:1px solid #25D36630;margin-bottom:12px"><div><div style="font-size:12px;font-weight:600;color:#25D366">🔔 Alerta WhatsApp</div><div style="font-size:9px;color:#8B949E;margin-top:2px">Recibir cambios de senal para '+sym+'</div></div><label class="toggle-sw"><input type="checkbox"><span class="toggle-slider"></span></label></div>';
   html += '<div onclick="event.stopPropagation();if(typeof _compartirSenal===\'function\')_compartirSenal(\''+sym+'\')" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;text-align:center;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer">📤 Compartir senal</div>';
   body.innerHTML = html;
-  modal.style.display = 'flex';
+  modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center';
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
 
