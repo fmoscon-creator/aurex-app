@@ -382,18 +382,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-features.js?v=20260406p"></script>
-<script>
-// OVERRIDE: matar calculo local y forzar re-fetch del backend
-window._generarSenalesIALocal = function(){ console.log('[AUREX] Local calc DISABLED'); };
-// Limpiar señales viejas y re-fetchear del backend después de que todo cargue
-window.addEventListener('load', function(){
-  setTimeout(function(){
-    window._iaSignals = [];
-    generarSenalesIA();
-  }, 2000);
-});
-</script>
+<script src="aurex-v2.js"></script>
 
 <!-- SUPABASE AUTH -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
