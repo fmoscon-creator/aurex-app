@@ -291,6 +291,23 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 
   localStorage.setItem('aurex_onboarding_done','1'); var _done = true;
 
+  // Auto-login si no hay sesion
+  var _alParams = new URLSearchParams(window.location.search);
+  if(_alParams.get('autologin')){
+    setTimeout(function(){
+      var sb = window._supabase;
+      if(sb){
+        sb.auth.getSession().then(function(r){
+          if(!r.data || !r.data.session){
+            sb.auth.signInWithPassword({email:decodeURIComponent(_alParams.get('autologin')),password:_alParams.get('pwd')||''}).then(function(){
+              window.location.href = window.location.origin + window.location.pathname;
+            });
+          }
+        });
+      }
+    }, 2000);
+  }
+
   // 2. Mover phone al body
   function _movePhone(){
     var ph=document.querySelector('.phone');
