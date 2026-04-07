@@ -384,44 +384,8 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-v4.js"></script>
+<script src="aurex-v5.js"></script>
 <script>
-// FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
-(function(){
-  var _origThermo = null;
-  var _checkInterval = setInterval(function(){
-    if(typeof _renderThermoRisk === 'function' && !_origThermo){
-      _origThermo = _renderThermoRisk;
-      window._renderThermoRisk = function(items){
-        fetch('https://aurex-app-production.up.railway.app/api/ia-signals',{cache:'no-store'})
-          .then(function(r){return r.json();})
-          .then(function(data){
-            if(data.signals && data.signals.length>0){
-              window._iaSignals = data.signals.map(function(s){
-                var d=(s.direccion||'').toUpperCase();
-                if(d==='ALCISTA')s.direccion='alcista';
-                else if(d==='BAJISTA')s.direccion='bajista';
-                else s.direccion='alta_conf';
-                s.confianza=s.confianza||s.probPrincipal||50;
-                s.prob_principal=s.confianza;
-                s.estrellas=s.estrellas||1;
-                return s;
-              });
-              console.log('[AUREX] Termometro FORZADO desde backend:',window._iaSignals.length,'senales');
-            }
-            _origThermo(items);
-          }).catch(function(){ _origThermo(items); });
-      };
-      console.log('[AUREX] Termometro override INSTALADO');
-      clearInterval(_checkInterval);
-      // Forzar re-render inmediato
-      setTimeout(function(){ if(window._portItems) window._renderThermoRisk(window._portItems); },1000);
-    }
-  }, 500);
-  // Tambien matar el calculo local por si acaso
-  setTimeout(function(){ window._generarSenalesIALocal = function(){ console.log('[AUREX] Local calc KILLED'); }; }, 100);
-})();
-
 // === ALERTAS TAB FUNCTIONS ===
 function toggleAlertSection(key){
   var body=document.getElementById(key+'-alert-body');
