@@ -311,6 +311,14 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   // Auto-navigate a tab si viene ?tab=xxx
   if(_alParams.get('tab')){
     setTimeout(function(){ if(window.navTo) window.navTo(_alParams.get('tab')); }, 2500);
+    // Auto-action si viene ?action=xxx
+    if(_alParams.get('action')){
+      setTimeout(function(){
+        var act = _alParams.get('action');
+        if(act==='createList' && window.wlCreateListModal) window.wlCreateListModal();
+        else if(act==='addAsset' && window.wlOpenAddModal) window.wlOpenAddModal();
+      }, 3500);
+    }
   }
 
   // 2. Mover phone al body
