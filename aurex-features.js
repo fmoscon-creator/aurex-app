@@ -2793,12 +2793,16 @@ function generarSenalesIA() {
         console.log('[AUREX IA] OK — mostrando', sigs.length, 'senales del backend');
         return;
       }
-      console.log('[AUREX IA] Backend vacio — reintentando en 3s...');
-      setTimeout(function(){ generarSenalesIA(); }, 3000);
+      console.log('[AUREX IA] Backend vacio');
+      window._iaRetries = (window._iaRetries||0) + 1;
+      if(window._iaRetries < 3) setTimeout(function(){ generarSenalesIA(); }, 5000);
+      else console.log('[AUREX IA] Max reintentos alcanzado');
     })
     .catch(function(err){
-      console.error('[AUREX IA] Error backend:', err, '— reintentando en 3s...');
-      setTimeout(function(){ generarSenalesIA(); }, 3000);
+      console.error('[AUREX IA] Error backend:', err);
+      window._iaRetries = (window._iaRetries||0) + 1;
+      if(window._iaRetries < 3) setTimeout(function(){ generarSenalesIA(); }, 5000);
+      else console.log('[AUREX IA] Max reintentos alcanzado');
     });
 }
 
