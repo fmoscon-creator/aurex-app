@@ -3182,6 +3182,7 @@ window.navTo = function(screen) {
   var activeBtn = document.getElementById('btn-' + screen);
   if(activeBtn) activeBtn.classList.add('active');
   if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
+  if(screen==='watchlist'){ setTimeout(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); },50); }
   if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
 };
 

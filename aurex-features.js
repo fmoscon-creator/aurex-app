@@ -1643,7 +1643,7 @@ window.wlToggleAlert = function(sym, evt){
 };
 
 // ─── WATCHLIST — Vista principal con multiples listas (spec 2.1-2.5) ────
-function renderWatchCnt(){
+window.renderWatchCnt = function(){
   var cnt = document.getElementById('watch-cnt');
   if(!cnt) return;
   var lists = _wlGetLists();
