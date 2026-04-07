@@ -291,7 +291,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 
   localStorage.setItem('aurex_onboarding_done','1'); var _done = true;
 
-  // Auto-login si no hay sesion
+  // Auto-login si no hay sesion + auto-navigate a tab
   var _alParams = new URLSearchParams(window.location.search);
   if(_alParams.get('autologin')){
     setTimeout(function(){
@@ -300,12 +300,17 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
         sb.auth.getSession().then(function(r){
           if(!r.data || !r.data.session){
             sb.auth.signInWithPassword({email:decodeURIComponent(_alParams.get('autologin')),password:_alParams.get('pwd')||''}).then(function(){
-              window.location.href = window.location.origin + window.location.pathname;
+              var tab = _alParams.get('tab');
+              window.location.href = window.location.origin + window.location.pathname + (tab ? '?tab='+tab : '');
             });
           }
         });
       }
     }, 2000);
+  }
+  // Auto-navigate a tab si viene ?tab=xxx
+  if(_alParams.get('tab')){
+    setTimeout(function(){ if(window.navTo) window.navTo(_alParams.get('tab')); }, 2500);
   }
 
   // 2. Mover phone al body
@@ -1271,7 +1276,7 @@ window._mktOpenDetail = function(idx){
     <span style="font-size:16px;font-weight:600;color:#D4A017;letter-spacing:1px">AUREX</span>
     <span style="font-size:13px;color:#8B949E">Watchlist</span>
   </div>
-  <button onclick="wlCreateListModal()" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Nueva lista</button>
+  <a href="javascript:void(0)" ontouchstart="wlCreateListModal()" onclick="wlCreateListModal()" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block">+ Nueva lista</a>
 </div>
 <!-- Contenido dinámico -->
 <div class="cnt" id="watch-cnt" style="overflow-y:auto;flex:1"></div>

@@ -804,7 +804,7 @@ function _renderPortfolioEmpty(){
     '<div style="font-size:40px;margin-bottom:12px;">AUREX</div>' +
     '<div style="font-size:14px;font-weight:700;color:#C9D1D9;margin-bottom:6px;">Tu portfolio esta vacio</div>' +
     '<div style="font-size:12px;color:#8B949E;margin-bottom:20px;">Agrega tu primer activo para empezar a seguir tu cartera en tiempo real</div>' +
-    '<button onclick="openPortModal()" style="background:#D4A017;color:#0D1117;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;">+ Agregar primer activo</button>' +
+    '<button onclick="openPortModal()" style="background:#D4A017;color:#0D1117;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;">+ Agregar primer activo</a>' +
   '</div>';
 }
 
@@ -1650,7 +1650,7 @@ function renderWatchCnt(){
 
   // Sin listas: estado vacio
   if(lists.length === 0){
-    cnt.innerHTML = '<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">👀</div><div style="font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:6px">Tu Watchlist esta vacia</div><div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">Crea tu primera lista para seguir activos<br>con senales IA en tiempo real</div><button onclick="wlCreateListModal()" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:12px;font-weight:600;cursor:pointer">Crear primera lista</button></div>';
+    cnt.innerHTML = '<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">👀</div><div style="font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:6px">Tu Watchlist esta vacia</div><div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">Crea tu primera lista para seguir activos<br>con senales IA en tiempo real</div><a href="javascript:void(0)" ontouchstart="wlCreateListModal()" onclick="wlCreateListModal()" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:12px;font-weight:600;cursor:pointer">Crear primera lista</a></div>';
     return;
   }
 
@@ -1686,14 +1686,14 @@ function renderWatchCnt(){
     html += '<div style="width:8px;height:8px;border-radius:4px;background:'+currentList.color+'"></div>';
     html += '<span style="font-size:13px;font-weight:600;color:#E6EDF3;flex:1">'+currentList.name+'</span>';
     if(currentList.is_primary) html += '<span style="font-size:8px;font-weight:700;color:#D4A017;background:#D4A01720;padding:2px 6px;border-radius:4px">PRINCIPAL</span>';
-    html += '<button onclick="wlOpenAddModal()" style="padding:4px 8px;border-radius:6px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer">+ Agregar</div>';
+    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" onclick="wlOpenAddModal()" style="padding:4px 8px;border-radius:6px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer">+ Agregar</div>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
     html += '</div>';
   }
 
   // Lista de activos
   if(currentItems.length === 0){
-    html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:#8B949E">Lista vacia</div><button onclick="wlOpenAddModal()" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:600;cursor:pointer">Agregar primer activo</button></div>';
+    html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:#8B949E">Lista vacia</div><a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" onclick="wlOpenAddModal()" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:600;cursor:pointer">Agregar primer activo</a></div>';
   } else {
     currentItems.forEach(function(item){
       var sig = null;
