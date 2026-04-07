@@ -3238,7 +3238,7 @@ async function _fetchPulseForCategory(cat) {
       var catKey = cat || 'GLOBAL';
       var catData = backendData.scores[catKey];
       if (catData && catData.value != null) {
-        window._pulseCache[catKey] = catData;
+        var _pColor=catData.value<=20?"#C62828":catData.value<=40?"#FF6B6B":catData.value<=60?"#D4A017":catData.value<=80?"#3FB950":"#00E676"; var _pEmoji=catData.value<=20?"😱":catData.value<=40?"😰":catData.value<=60?"😐":catData.value<=80?"😊":"🤑"; window._pulseCache[catKey]=Object.assign({},catData,{color:_pColor,emoji:_pEmoji});
         window._pulseTs[catKey] = Date.now();
         // Guardar raw del backend para variables modal
         if (backendData.raw) {
