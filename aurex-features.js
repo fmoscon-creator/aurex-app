@@ -1575,7 +1575,7 @@ function renderWatchCnt(){
         var precioFmt = precio ? _fmt(precio) : '...';
         var cambioPct = cambio !== null ? _fmt(cambio, 'pct') : '...';
         var cambioColor = cambio !== null ? (cambio >= 0 ? '#3FB950' : '#F85149') : '#555';
-        return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #21262D">' +
+        return '<div onclick="openWatchDetail(\''+w.s+'\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">' +
           '<div style="flex-shrink:0">'+logoHtml+'</div>' +
           '<div style="flex:1;min-width:0">' +
             '<div style="display:flex;align-items:center;gap:5px">' +
@@ -1633,6 +1633,107 @@ window.removeFromWatch = function(sym){
   wl = wl.filter(function(w){ return w.s !== sym; });
   localStorage.setItem('aurex_watchlist', JSON.stringify(wl));
   renderWatchCnt();
+};
+
+// ─── DETALLE DE ACTIVO (modal) — mismo formato que IA expandido ────────
+window.openWatchDetail = function(sym){
+  var modal = document.getElementById('watch-detail-modal');
+  var body = document.getElementById('watch-detail-body');
+  if(!modal || !body) return;
+  var sigs = window._iaSignals || [];
+  var sig = null;
+  for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===sym){ sig=sigs[i]; break; } }
+  var act = (window._IA_ACTIVOS||[]).find(function(a){ return a.s===sym; });
+  var prcs = window._pcPrices || {};
+  var chg24 = window._pcChange24 || {};
+  var precio = prcs[sym] || (sig ? sig.precio : 0);
+  var cambio = chg24[sym] || (sig && sig.precio24h>0 ? ((sig.precio-sig.precio24h)/sig.precio24h*100) : 0);
+  var dir = sig ? sig.direccion : '';
+  var dirColor = dir==='alcista'?'#3FB950':dir==='bajista'?'#F85149':dir==='alta_conf'?'#D4A017':'#555';
+  var dirLabel = dir==='alcista'?'ALCISTA':dir==='bajista'?'BAJISTA':dir==='alta_conf'?'ALTA CONV-IA':'SIN SENAL';
+  var dirBg = dir==='alcista'?'#3FB95015':dir==='bajista'?'#F8514915':dir==='alta_conf'?'#D4A01715':'#55555510';
+  var prob = sig ? (sig.confianza||sig.prob_principal||'--') : '--';
+  var logoHtml = act && act.logo
+    ? '<img src="'+act.logo+'" style="width:40px;height:40px;border-radius:50%;object-fit:cover" onerror="this.style.display=\'none\'" />'
+    : '<div style="width:40px;height:40px;border-radius:50%;background:'+(act?act.color:'#333')+';display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff">'+sym[0]+'</div>';
+
+  var html = '';
+  // Header
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:12px">'+logoHtml+'<div><div style="font-size:18px;font-weight:700;color:#E6EDF3">'+sym+'</div><div style="font-size:11px;color:#8B949E">'+(act?act.n:sym)+' · '+(act?act.tipo:'')+'</div></div></div><div onclick="closeWatchDetail()" style="width:36px;height:36px;border-radius:50%;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:18px;color:#E6EDF3;cursor:pointer">✕</div></div>';
+
+  // Precio + variacion
+  html += '<div style="display:flex;gap:10px;margin-bottom:14px">';
+  html += '<div style="flex:1;background:#21262D;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:4px">Precio</div><div style="font-size:16px;font-weight:700;color:#E6EDF3">'+_fmt(precio)+'</div></div>';
+  html += '<div style="flex:1;background:#21262D;border-radius:10px;padding:10px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:4px">24h</div><div style="font-size:16px;font-weight:700;color:'+(cambio>=0?'#3FB950':'#F85149')+'">'+_fmt(cambio,'pct')+'</div></div>';
+  html += '</div>';
+
+  // Senal IA card (identico a _buildIADetail de la PWA)
+  html += '<div style="background:'+dirBg+';border:1px solid '+dirColor+'40;border-radius:10px;padding:10px 12px;margin-bottom:12px">';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;font-weight:700;color:'+dirColor+'">'+dirLabel+'</span><span style="background:'+dirColor+';color:#000;font-size:11px;font-weight:800;border-radius:6px;padding:2px 8px">PROB. '+prob+'%</span></div>';
+  // Motivos
+  if(sig && sig.motivos && sig.motivos.length>0){
+    html += '<div style="font-size:11px;font-weight:600;color:#8B949E;letter-spacing:0.5px;margin-bottom:6px">JUSTIFICACION DEL ANALISIS</div>';
+    (sig.motivos||[]).slice(0,5).forEach(function(m){
+      html += '<div style="display:flex;gap:6px;margin-bottom:5px"><span style="color:'+dirColor+';flex-shrink:0;font-weight:700">-></span><span style="font-size:11px;color:#C9D1D9;line-height:1.4">'+m+'</span></div>';
+    });
+  }
+  html += '</div>';
+
+  // Objetivo / Stop / Upside
+  if(sig){
+    var objColor = dir==='bajista'?'#F85149':'#3FB950';
+    var stopColor = dir==='bajista'?'#FF9500':'#F85149';
+    var upVal = sig.upside||0;
+    html += '<div style="display:flex;gap:8px;margin-bottom:12px">';
+    html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Objetivo</div><div style="font-size:12px;font-weight:700;color:'+objColor+'">'+_fmt(sig.objetivo)+'</div></div>';
+    html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">Stop</div><div style="font-size:12px;font-weight:700;color:'+stopColor+'">'+_fmt(sig.stop)+'</div></div>';
+    html += '<div style="flex:1;background:#21262D;border-radius:8px;padding:8px;text-align:center"><div style="font-size:9px;color:#8B949E;margin-bottom:2px">'+(upVal<0?'Downside':'Upside')+'</div><div style="font-size:12px;font-weight:700;color:'+(upVal<0?'#F85149':'#3FB950')+'">'+(upVal>=0?'+':'')+upVal.toFixed(1)+'%</div></div>';
+    html += '</div>';
+  }
+
+  // Variables del modelo (agrupadas como IA)
+  if(sig && sig.scores){
+    var sc = sig.scores;
+    var varDefs = [
+      {k:'tendencia',label:'Tendencia 24h'},{k:'rsi',label:'RSI14'},{k:'volumen',label:'Volumen'},
+      {k:'volatilidad',label:'Volatilidad'},{k:'correlacion',label:'Correlacion BTC/SPY'},
+      {k:'oro_petroleo',label:'Oro / Petroleo'},{k:'macro',label:'Macro FED'},
+      {k:'earnings',label:'Earnings'},{k:'macd',label:'MACD (12/26)'},{k:'soporte_resist',label:'Soporte/Resist. 30d'}
+    ];
+    var posV = varDefs.filter(function(d){return (sc[d.k]||0)>0.01;});
+    var negV = varDefs.filter(function(d){return (sc[d.k]||0)<-0.01;});
+    var neuV = varDefs.filter(function(d){return Math.abs(sc[d.k]||0)<=0.01;});
+    html += '<div style="margin-bottom:12px">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:7px"><span style="font-size:10px;color:#8B949E;font-weight:600;letter-spacing:.3px">VARIABLES DEL MODELO</span><span style="font-size:10px"><span style="color:#3FB950;font-weight:700">→ '+posV.length+' alcistas</span><span style="color:#8B949E;margin:0 5px">·</span><span style="color:#F85149;font-weight:700">↓ '+negV.length+' bajistas</span></span></div>';
+    posV.forEach(function(d){html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#3FB95010;border-left:2px solid #3FB950;border-radius:0 6px 6px 0;margin-bottom:3px"><span style="font-size:10px;color:#3FB950;font-weight:600">→ '+d.label+'</span></div>';});
+    negV.forEach(function(d){html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:4px 8px;background:#F8514910;border-left:2px solid #F85149;border-radius:0 6px 6px 0;margin-bottom:3px"><span style="font-size:10px;color:#F85149;font-weight:600">↓ '+d.label+'</span></div>';});
+    if(neuV.length>0){html += '<div style="display:flex;flex-wrap:wrap;gap:3px;margin-top:2px">';neuV.forEach(function(d){html += '<span style="font-size:9px;color:#555;background:#21262D;border-radius:4px;padding:2px 6px">— '+d.label+'</span>';});html += '</div>';}
+    html += '</div>';
+  }
+
+  // Otros escenarios
+  if(sig){
+    html += '<div style="font-size:10px;color:#8B949E;margin-bottom:6px;font-weight:600">OTROS ESCENARIOS</div>';
+    html += '<div style="display:flex;gap:6px;margin-bottom:12px">';
+    if(dir!=='alcista') html += '<div style="flex:1;background:#3FB95015;border:1px solid #3FB95040;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#3FB950">ALCISTA</div><div style="font-size:13px;font-weight:700;color:#3FB950">'+(sig.prob_alcista||'--')+'%</div></div>';
+    if(dir!=='bajista') html += '<div style="flex:1;background:#F8514915;border:1px solid #F8514940;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#F85149">BAJISTA</div><div style="font-size:13px;font-weight:700;color:#F85149">'+(sig.prob_bajista||'--')+'%</div></div>';
+    if(dir!=='alta_conf') html += '<div style="flex:1;background:#D4A01715;border:1px solid #D4A01740;border-radius:8px;padding:6px;text-align:center"><div style="font-size:9px;color:#D4A017">ALTA CONV-IA</div><div style="font-size:13px;font-weight:700;color:#D4A017">'+(sig.prob_alta_conf||'--')+'%</div></div>';
+    html += '</div>';
+  }
+
+  // Alerta WhatsApp toggle
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px;background:#0D2818;border-radius:10px;border:1px solid #25D36630;margin-bottom:12px"><div><div style="font-size:12px;font-weight:600;color:#25D366">🔔 Alerta WhatsApp</div><div style="font-size:9px;color:#8B949E;margin-top:2px">Recibir cambios de senal para '+sym+'</div></div><label class="toggle-sw"><input type="checkbox"><span class="toggle-slider"></span></label></div>';
+
+  // Compartir
+  html += '<div onclick="event.stopPropagation();_compartirSenal(\''+sym+'\')" style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:10px;text-align:center;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer">📤 Compartir senal</div>';
+
+  body.innerHTML = html;
+  modal.style.display = 'flex';
+};
+
+window.closeWatchDetail = function(){
+  var m = document.getElementById('watch-detail-modal');
+  if(m) m.style.display = 'none';
 };
 
 // Render watchlist al cargar la app
