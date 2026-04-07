@@ -1284,15 +1284,15 @@ window._mktOpenDetail = function(idx){
     <span style="font-size:16px;font-weight:600;color:#D4A017;letter-spacing:1px">AUREX</span>
     <span style="font-size:13px;color:#8B949E">Watchlist</span>
   </div>
-  <div onclick="if(window.wlCreateListModal)window.wlCreateListModal();else alert('WL not loaded')" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">+ Nueva lista</div>
+  <a href="javascript:void(0)" ontouchend="event.preventDefault();window.wlCreateListModal();" onclick="window.wlCreateListModal()" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;-webkit-tap-highlight-color:rgba(0,0,0,0)">+ Nueva lista</a>
 </div>
 <!-- Contenido dinámico -->
-<div id="watch-cnt" style="overflow-y:auto;flex:1;min-height:200px;padding:0">
+<div id="watch-cnt" style="overflow-y:auto;flex:1;min-height:200px;padding:0;-webkit-overflow-scrolling:touch;pointer-events:auto">
 <div style="text-align:center;padding:60px 20px">
   <div style="font-size:40px;margin-bottom:12px">👀</div>
   <div style="font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:6px">Tu Watchlist esta vacia</div>
   <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">Crea tu primera lista para seguir activos<br>con senales IA en tiempo real</div>
-  <span data-wl="createList" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(212,160,23,0.3)">Crear primera lista</span>
+  <a href="javascript:void(0)" ontouchend="event.preventDefault();window.wlCreateListModal();" onclick="window.wlCreateListModal()" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">Crear primera lista</a>
 </div>
 </div>
 <!-- Modal Crear Lista -->
