@@ -2305,6 +2305,7 @@ function _calcIAScore(activo, datos) {
   var scores = {};
   var tendencia = precio24h > 0 ? (precio - precio24h) / precio24h : 0;
   scores.tendencia = tendencia * 8;
+  if (activo.s === 'BTC') console.log('INPUTS BTC PWA:', JSON.stringify({ tendencia: tendencia, btcCambio: btcCambio, spyCambio: spyCambio, precioOro: precioOro, precioPetroleo: precioPetroleo, rsi: rsi }));
   if (Math.abs(tendencia) > 0.001) {
     if (tendencia > 0) motivos.push('Precio subio +' + (tendencia*100).toFixed(2) + '% en 24hs - momentum alcista activo con presion compradora sostenida');
     else motivos.push('Precio bajo ' + (tendencia*100).toFixed(2) + '% en 24hs - momentum bajista con presion vendedora dominante');
