@@ -4402,31 +4402,34 @@ window._selectPortPeriod = function(key) {
 
 window._calcPortPeriod = function(period) {
   var items = window._portItems;
-  var prices = window._IA_PRECIOS;
-  if(!items || !prices) return;
+  var prices = window._IA_PRECIOS || {};
+  var pcPrices = window._pcPrices || {};
+  var pcChange = window._pcChange24 || {};
+  if(!items) return;
   var totalNow = 0, totalBefore = 0;
   items.forEach(function(item) {
     var p = prices[item.simbolo];
-    if(!p) return;
     var qty = parseFloat(item.cantidad)||0;
-    var pNow = parseFloat(p.precio)||0;
+    var pNow = (p && p.precio) ? parseFloat(p.precio) : (pcPrices[item.simbolo] || parseFloat(item.precio_compra) || 0);
     totalNow += qty*pNow;
     var pBefore;
     if(period==='buy') {
       pBefore = parseFloat(item.precio_compra)||pNow;
     } else if(period==='24h') {
-      pBefore = parseFloat(p.precio24h)||pNow;
+      if(p && p.precio24h) { pBefore = parseFloat(p.precio24h); }
+      else if(pcChange[item.simbolo] !== undefined && pNow > 0) { pBefore = pNow / (1 + pcChange[item.simbolo]/100); }
+      else { pBefore = pNow; }
     } else if(period==='7d') {
-      pBefore = parseFloat(p.precio7d)||parseFloat(p.precio24h)||pNow;
+      pBefore = (p&&p.precio7d)?parseFloat(p.precio7d):(p&&p.precio24h)?parseFloat(p.precio24h):pNow;
     } else if(period==='1m') {
-      pBefore = parseFloat(p.precio30d)||(p.closes30d&&p.closes30d.length?parseFloat(p.closes30d[0]):0)||parseFloat(p.precio24h)||pNow;
+      pBefore = (p&&p.precio30d)?parseFloat(p.precio30d):(p&&p.closes30d&&p.closes30d.length)?parseFloat(p.closes30d[0]):(p&&p.precio24h)?parseFloat(p.precio24h):pNow;
     } else if(period==='3m') {
-      var c=p.closes30d; var p3=c&&c.length>=30?parseFloat(c[0]):0;
-      pBefore = p3||parseFloat(p.precio30d)||parseFloat(p.precio24h)||pNow;
+      var c=p?p.closes30d:null; var p3=c&&c.length>=30?parseFloat(c[0]):0;
+      pBefore = p3||(p&&p.precio30d?parseFloat(p.precio30d):0)||(p&&p.precio24h?parseFloat(p.precio24h):0)||pNow;
     } else if(period==='1y') {
-      pBefore = parseFloat(p.low52w)||parseFloat(p.precio30d)||parseFloat(p.precio24h)||pNow;
+      pBefore = (p&&p.low52w)?parseFloat(p.low52w):(p&&p.precio30d)?parseFloat(p.precio30d):(p&&p.precio24h)?parseFloat(p.precio24h):pNow;
     } else {
-      pBefore = parseFloat(p.precio24h)||pNow;
+      pBefore = (p&&p.precio24h)?parseFloat(p.precio24h):pNow;
     }
     totalBefore += qty*pBefore;
   });
