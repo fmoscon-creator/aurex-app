@@ -1962,6 +1962,7 @@ window.wlToggleCompare = function(sym){
 };
 
 window.wlShowCompare = function(){
+  alert('Comparando: ' + (window._wlCompareItems||[]).join(', '));
   var items = window._wlCompareItems;
   if(items.length < 2) return;
   var sigs = window._iaSignals || [];
