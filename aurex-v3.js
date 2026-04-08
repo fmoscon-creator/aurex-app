@@ -3442,6 +3442,24 @@ function toggleIARow(idx) {
   document.querySelectorAll('[id^="ia-detail-"]').forEach(function(d){ d.style.display='none'; });
   if (!isOpen) detail.style.display = 'block';
 }
+// Event delegation para X de detalle IA — fix iOS Safari
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('[id^="ia-detail-"] button');
+  if (btn && btn.textContent.trim() === '\u2715') {
+    var detail = btn.closest('[id^="ia-detail-"]');
+    if (detail) detail.style.display = 'none';
+    e.stopPropagation();
+  }
+}, true);
+document.addEventListener('touchend', function(e) {
+  var btn = e.target.closest('[id^="ia-detail-"] button');
+  if (btn && btn.textContent.trim() === '\u2715') {
+    var detail = btn.closest('[id^="ia-detail-"]');
+    if (detail) detail.style.display = 'none';
+    e.preventDefault();
+    e.stopPropagation();
+  }
+}, true);
 
 
 // === AUREX: Logo unificado en todas las tabs ===
