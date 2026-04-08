@@ -1871,16 +1871,13 @@ window.renderWatchCnt = function(){
     });
   }
 
-  // Botón flotante comparar — fuera del cnt, directo en body
-  var oldFloatBtn = document.getElementById('wl-compare-float');
-  if(oldFloatBtn) oldFloatBtn.remove();
+  // Botón comparar inline
   if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
-    var floatBtn = document.createElement('div');
-    floatBtn.id = 'wl-compare-float';
-    floatBtn.style.cssText = 'position:fixed;bottom:70px;left:20px;right:20px;z-index:150';
-    floatBtn.innerHTML = '<a href="javascript:void(0)" ontouchend="event.preventDefault();wlShowCompare();" onclick="wlShowCompare()" style="display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.4)">⚖️ Comparar '+window._wlCompareItems.length+' activos</a>';
-    document.body.appendChild(floatBtn);
+    html += '<div style="padding:10px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none">⚖️ Comparar '+window._wlCompareItems.length+' activos</a></div>';
+  } else if(window._wlCompareMode){
+    html += '<div style="padding:10px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
   }
+  var oldFb = document.getElementById('wl-compare-float'); if(oldFb) oldFb.remove();
 
   cnt.innerHTML = html;
 
