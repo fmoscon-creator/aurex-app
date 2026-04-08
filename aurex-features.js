@@ -1753,8 +1753,8 @@ window.renderWatchCnt = function(){
 
   var html = '';
 
-  // Cards de listas (scroll horizontal)
-  html += '<div style="display:flex;gap:8px;padding:10px 11px;overflow-x:auto;flex-shrink:0">';
+  // Cards de listas (scroll horizontal con fade)
+  html += '<div style="position:relative"><div style="display:flex;gap:8px;padding:10px 11px;overflow-x:auto;flex-shrink:0;padding-right:40px">';
   lists.forEach(function(list){
     var isSel = list.id === _wlSelectedList;
     var itemCount = _wlGetItems(list.id).length;
@@ -1764,6 +1764,8 @@ window.renderWatchCnt = function(){
     if(!list.is_primary) html += '<div onclick="event.stopPropagation();wlSetPrimary(\''+list.id+'\')" style="font-size:8px;color:#8B949E;margin-top:4px;cursor:pointer">☆ Principal</div>';
     html += '</div>';
   });
+  html += '</div>';
+  if(lists.length > 2) html += '<div style="position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to right,transparent,#0D1117);pointer-events:none"></div>';
   html += '</div>';
 
   // Header lista seleccionada
