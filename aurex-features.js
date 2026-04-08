@@ -1762,7 +1762,8 @@ window.renderWatchCnt = function(){
     html += '<div style="width:8px;height:8px;border-radius:4px;background:'+currentList.color+'"></div>';
     html += '<span style="font-size:13px;font-weight:600;color:#E6EDF3;flex:1">'+currentList.name+'</span>';
     if(currentList.is_primary) html += '<span style="font-size:8px;font-weight:700;color:#D4A017;background:#D4A01720;padding:2px 6px;border-radius:4px">PRINCIPAL</span>';
-    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:#58A6FF15;border:0.5px solid #58A6FF40;color:#58A6FF;font-size:10px;font-weight:600;cursor:pointer">+ Agregar</div>';
+    html += '<div onclick="wlShareList()" style="font-size:16px;cursor:pointer;padding:4px">📤</div>';
+    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:#D4A017;color:#000;font-size:11px;font-weight:700;cursor:pointer;border-radius:6px">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
     html += '</div>';
   }
@@ -1786,26 +1787,57 @@ window.renderWatchCnt = function(){
       var dirBg = dir==='alcista'?'#3FB95020':dir==='bajista'?'#F8514920':dir==='alta_conf'?'#D4A01720':'transparent';
       var prob = sig ? (sig.confianza||'') : '';
       var act = (window._IA_ACTIVOS||[]).find(function(a){ return a.s===item.s; });
+      var logoBg = dir==='alcista'?'#1A3A2A':dir==='bajista'?'#3A1A1A':'#333';
       var logoHtml = act && act.logo
-        ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'" /><div style="display:none;width:32px;height:32px;border-radius:50%;background:'+(act.color||'#333')+';align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">'+item.s[0]+'</div>'
-        : '<div style="width:32px;height:32px;border-radius:50%;background:#333;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">'+item.s[0]+'</div>';
+        ? '<div style="width:36px;height:36px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center"><img src="'+act.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover" onerror="this.outerHTML=\'<span style=color:#fff;font-size:11px;font-weight:700>'+item.s[0]+'</span>\'" /></div>'
+        : '<div style="width:36px;height:36px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff">'+item.s[0]+'</div>';
       var precioFmt = precio ? _fmt(precio) : '...';
       var cambioPct = cambio !== null ? _fmt(cambio, 'pct') : '...';
       var cambioColor = cambio !== null ? (cambio >= 0 ? '#3FB950' : '#F85149') : '#555';
-      var bellColor = item.alert_active ? '#3FB950' : '#55555550';
+      var tipoLow = (item.tipo||'').toLowerCase();
+      var isCrypto = tipoLow==='cripto'||tipoLow==='stable';
+      var now = new Date(); var utcH=now.getUTCHours(); var utcD=now.getUTCDay();
+      var mktOpen = utcD>0&&utcD<6&&utcH>=14&&utcH<21;
+      var mktClosed = !isCrypto && !mktOpen;
 
-      html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
-      html += '<div style="flex-shrink:0">'+logoHtml+'</div>';
+      // Dots IA (10 variables como Portfolio)
+      var dotsHtml = '';
+      if(sig && sig.scores){
+        var varKeys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];
+        dotsHtml = '<div style="display:flex;flex-wrap:wrap;gap:2px;min-width:40px;max-width:56px">';
+        varKeys.forEach(function(k){
+          var v=sig.scores[k]||0;
+          if(v>0.01) dotsHtml+='<div style="width:6px;height:6px;border-radius:3px;background:#3FB950"></div>';
+          else if(v<-0.01) dotsHtml+='<div style="width:6px;height:6px;border-radius:3px;background:#F85149"></div>';
+        });
+        dotsHtml += '</div>';
+      }
+
+      // Asset row (formato Portfolio)
+      html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="padding:0;border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+      html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
+      html += logoHtml;
       html += '<div style="flex:1;min-width:0">';
-      html += '<div style="display:flex;align-items:center;gap:5px"><span style="font-size:14px;font-weight:700;color:#E6EDF3">'+item.s+'</span><span style="font-size:9px;padding:1px 5px;border-radius:4px;background:#21262D;color:#8B949E">'+(item.tipo||'')+'</span></div>';
-      html += '<div style="font-size:10px;color:#8B949E;margin-top:1px">'+item.n+'</div>';
-      html += '<div style="display:flex;align-items:center;gap:4px;margin-top:3px">';
-      if(dirLabel) html += '<span style="font-size:8px;font-weight:700;color:'+dirColor+';background:'+dirBg+';border:0.5px solid '+dirColor+'60;padding:1px 5px;border-radius:4px">'+dirLabel+'</span>';
-      if(prob) html += '<span style="font-size:9px;color:'+dirColor+';font-weight:600">'+prob+'%</span>';
+      html += '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:700;color:#E6EDF3">'+item.s+'</span><span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E">'+(tipoLow||'')+'</span></div>';
+      html += '<div style="font-size:11px;color:#8B949E;margin-top:1px">'+item.n+'</div>';
+      html += '<div style="display:flex;align-items:center;gap:4px;margin-top:3px"><span style="font-size:10px;font-weight:700;color:'+dirColor+'">'+(dir==='alcista'?'📈':dir==='bajista'?'📉':dir==='alta_conf'?'⚡':'')+ ' '+dirLabel+' '+(prob?prob+'%':'')+'</span></div>';
+      html += '</div>';
+      html += dotsHtml;
+      html += '<div style="text-align:right;flex-shrink:0;margin-left:4px"><span style="font-size:14px;font-weight:700;color:#E6EDF3">'+precioFmt+'</span></div>';
+      html += '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-left:4px">';
+      html += '<div onclick="wlToggleAlert(\''+item.s+'\',event)" style="font-size:13px;opacity:'+(item.alert_active?'1':'0.3')+';cursor:pointer">🔔</div>';
+      html += '<div onclick="wlRemoveAsset(\''+item.s+'\',event)" style="font-size:12px;color:#555;cursor:pointer">🗑️</div>';
       html += '</div></div>';
-      html += '<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:#E6EDF3">'+precioFmt+'</div><div style="font-size:11px;color:'+cambioColor+';font-weight:500;margin-top:2px">'+cambioPct+'</div></div>';
-      html += '<div onclick="wlToggleAlert(\''+item.s+'\',event)" style="font-size:14px;opacity:'+(item.alert_active?'1':'0.3')+';cursor:pointer;padding:4px">🔔</div>';
-      html += '<div onclick="wlRemoveAsset(\''+item.s+'\',event)" style="font-size:14px;color:#55555580;cursor:pointer;padding:4px">✕</div>';
+      // Bottom row: cambio % + period buttons (como Portfolio)
+      html += '<div style="display:flex;align-items:center;padding:0 12px 8px 52px;gap:4px">';
+      if(isCrypto) html += '<span style="font-size:8px;color:#3FB950;font-weight:700;border:0.5px solid #3FB950;border-radius:3px;padding:0.5px 3px;margin-right:2px">24/7</span>';
+      if(mktClosed) html += '<span style="font-size:9px;color:#D4A017;font-weight:700;margin-right:4px">Ult. cierre</span>';
+      html += '<span style="font-size:11px;font-weight:600;color:'+cambioColor+'">'+cambioPct+'</span>';
+      html += '<div style="display:flex;gap:2px;margin-left:auto">';
+      ['24h','7d','1m','3m','1y'].forEach(function(p,idx){
+        html += '<span style="font-size:9px;padding:2px 4px;border-radius:3px;background:'+(idx===0?'#D4A017':'#21262D')+';color:'+(idx===0?'#0D1117':'#8B949E')+'">'+p+'</span>';
+      });
+      html += '</div></div>';
       html += '</div>';
     });
   }
@@ -1865,6 +1897,44 @@ window.wlOpenDetail = function(sym){
   modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center';
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
+
+// ─── COMPARTIR LISTA COMPLETA ───
+window.wlShareList = function(){
+  var lists = _wlGetLists();
+  var cl = lists.find(function(l){return l.id===_wlSelectedList;});
+  if(!cl) return;
+  var items = _wlGetItems(_wlSelectedList);
+  var sigs = window._iaSignals || [];
+  var prcs = window._pcPrices || {};
+  var msg = 'AUREX — Lista "'+cl.name+'"\n━━━━━━━━━━━━━━━━\n';
+  items.forEach(function(item){
+    var sym = item.s||item.ticker;
+    var sig=null; for(var i=0;i<sigs.length;i++){if(sigs[i].simbolo===sym){sig=sigs[i];break;}}
+    var dir=sig?sig.direccion:'';
+    var icon=dir==='alcista'?'📈':dir==='bajista'?'📉':dir==='alta_conf'?'⚡':'';
+    var dirL=dir==='alcista'?'ALCISTA':dir==='bajista'?'BAJISTA':dir==='alta_conf'?'ALTA CONV':'';
+    var prob=sig?(sig.confianza||''):'';
+    var p=prcs[sym]||(sig?sig.precio:0);
+    msg+=icon+' '+sym+' — '+dirL+(prob?' '+prob+'%':'')+' — $'+(p?_fmt(p):'---')+'\n';
+  });
+  msg+='━━━━━━━━━━━━━━━━\n'+items.length+' activos | AUREX IA\nhttps://aurex.live';
+  var enc=encodeURIComponent(msg);
+  // Mostrar opciones compartir
+  var overlay=document.createElement('div');
+  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:200;display:flex;align-items:flex-end;justify-content:center';
+  overlay.innerHTML='<div style="background:#1C1C1E;border-radius:16px 16px 0 0;padding:20px 20px 30px;width:100%;max-width:440px">'+
+    '<div style="font-size:15px;font-weight:700;color:#E6EDF3;text-align:center;margin-bottom:6px">Compartir lista "'+cl.name+'"</div>'+
+    '<div style="font-size:11px;color:#8B949E;text-align:center;margin-bottom:16px">'+items.length+' activos con senales IA</div>'+
+    '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:16px">'+
+    '<div onclick="window.open(\'https://wa.me/?text='+enc+'\')" style="width:90px;height:80px;background:#0D2818;border:1px solid #25D36640;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">💬</span><span style="font-size:11px;color:#25D366;font-weight:600">WhatsApp</span></div>'+
+    '<div onclick="window.open(\'https://t.me/share/url?url=https://aurex.live&text='+enc+'\')" style="width:90px;height:80px;background:#0D1A2E;border:1px solid #0088CC40;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">✈️</span><span style="font-size:11px;color:#0088CC;font-weight:600">Telegram</span></div>'+
+    '<div onclick="window.location.href=\'mailto:?subject=AUREX - Lista '+cl.name+'&body='+enc+'\'" style="width:90px;height:80px;background:#1A1200;border:1px solid #D4A01740;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📧</span><span style="font-size:11px;color:#D4A017;font-weight:600">Mail</span></div>'+
+    '</div>'+
+    '<div onclick="this.parentElement.parentElement.remove()" style="background:#2C2C2E;border-radius:10px;padding:14px;text-align:center;color:#8B949E;font-size:14px;cursor:pointer">Cancelar</div>'+
+  '</div>';
+  document.body.appendChild(overlay);
+  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+};
 
 // Render al cargar — sync from Supabase first
 document.addEventListener('DOMContentLoaded', function(){
