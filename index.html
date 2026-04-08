@@ -416,7 +416,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
 })();
 </script>
 <script src="aurex-v3.js?v=13"></script>
-<script src="aurex-features.js?v=2"></script>
+<script src="aurex-features.js?v=3"></script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
 (function(){
@@ -3210,7 +3210,7 @@ window.navTo = function(screen) {
   var activeBtn = document.getElementById('btn-' + screen);
   if(activeBtn) activeBtn.classList.add('active');
   if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
-  if(screen==='watchlist'){ setTimeout(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); },50); }
+  if(screen==='watchlist'){ setTimeout(function(){ if(window._wlSyncFromSupabase) _wlSyncFromSupabase(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); }); else if(window.renderWatchCnt) window.renderWatchCnt(); },50); }
   if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
 };
 

@@ -1504,11 +1504,87 @@ var _wlSelectedList = null;
 var _wlNewColor = WL_COLORS[0];
 var _wlNewPrimary = false;
 
-// Storage helpers
-function _wlGetLists(){ return JSON.parse(localStorage.getItem('aurex_wl_lists')||'[]'); }
-function _wlSaveLists(lists){ localStorage.setItem('aurex_wl_lists', JSON.stringify(lists)); }
-function _wlGetItems(listId){ return JSON.parse(localStorage.getItem('aurex_wl_items_'+listId)||'[]'); }
-function _wlSaveItems(listId, items){ localStorage.setItem('aurex_wl_items_'+listId, JSON.stringify(items)); }
+// Storage helpers — Supabase (synced with native app)
+// Cache local para no hacer fetch en cada render
+var _wlListsCache = null;
+var _wlItemsCache = {};
+
+function _wlGetLists(){ return _wlListsCache || []; }
+function _wlSaveLists(lists){ _wlListsCache = lists; }
+function _wlGetItems(listId){ return _wlItemsCache[listId] || []; }
+function _wlSaveItems(listId, items){ _wlItemsCache[listId] = items; }
+
+// Sync with Supabase
+function _wlSyncFromSupabase(cb){
+  var sb = window._supabase;
+  if(!sb || !window._currentUser) { if(cb) cb(); return; }
+  var uid = window._currentUser.id;
+  sb.from('watchlists').select('*').eq('user_id', uid).order('position').then(function(res){
+    _wlListsCache = res.data || [];
+    if(_wlListsCache.length === 0){ if(cb) cb(); return; }
+    var done = 0;
+    _wlListsCache.forEach(function(list){
+      sb.from('watchlist_items').select('*').eq('watchlist_id', list.id).order('position').then(function(r2){
+        _wlItemsCache[list.id] = r2.data || [];
+        done++;
+        if(done === _wlListsCache.length && cb) cb();
+      });
+    });
+  });
+}
+
+function _wlInsertList(list, cb){
+  var sb = window._supabase;
+  if(!sb || !window._currentUser) { if(cb) cb(); return; }
+  sb.from('watchlists').insert({
+    user_id: window._currentUser.id,
+    name: list.name, color: list.color, is_primary: list.is_primary, position: list.position
+  }).select().then(function(res){
+    if(res.data && res.data[0]) {
+      list.id = res.data[0].id;
+      _wlListsCache = (_wlListsCache||[]).concat(res.data);
+    }
+    if(cb) cb();
+  });
+}
+
+function _wlDeleteListDB(listId, cb){
+  var sb = window._supabase;
+  if(!sb) { if(cb) cb(); return; }
+  sb.from('watchlist_items').delete().eq('watchlist_id', listId).then(function(){
+    sb.from('watchlists').delete().eq('id', listId).then(function(){
+      _wlListsCache = (_wlListsCache||[]).filter(function(l){ return l.id !== listId; });
+      delete _wlItemsCache[listId];
+      if(cb) cb();
+    });
+  });
+}
+
+function _wlInsertItem(listId, item, cb){
+  var sb = window._supabase;
+  if(!sb) { if(cb) cb(); return; }
+  sb.from('watchlist_items').insert({
+    watchlist_id: listId, ticker: item.s, asset_type: item.tipo, position: (_wlItemsCache[listId]||[]).length
+  }).select().then(function(res){
+    if(res.data && res.data[0]) {
+      if(!_wlItemsCache[listId]) _wlItemsCache[listId] = [];
+      _wlItemsCache[listId].push(res.data[0]);
+    }
+    if(cb) cb();
+  });
+}
+
+function _wlDeleteItemDB(listId, ticker, cb){
+  var sb = window._supabase;
+  if(!sb) { if(cb) cb(); return; }
+  var items = _wlItemsCache[listId]||[];
+  var item = items.find(function(i){ return i.ticker === ticker; });
+  if(!item) { if(cb) cb(); return; }
+  sb.from('watchlist_items').delete().eq('id', item.id).then(function(){
+    _wlItemsCache[listId] = items.filter(function(i){ return i.ticker !== ticker; });
+    if(cb) cb();
+  });
+}
 
 // ─── CREAR LISTA ───
 window.wlCreateListModal = function(){
@@ -1546,31 +1622,31 @@ window.wlCreateList = function(){
   var name = nameEl ? nameEl.value.trim() : '';
   if(!name){ alert('Ingresa un nombre'); return; }
   var lists = _wlGetLists();
-  if(_wlNewPrimary){ lists.forEach(function(l){ l.is_primary = false; }); }
-  var newList = { id: 'wl_'+Date.now(), name: name, color: _wlNewColor, is_primary: _wlNewPrimary || lists.length === 0, position: lists.length, created_at: new Date().toISOString() };
-  lists.push(newList);
-  _wlSaveLists(lists);
-  _wlSelectedList = newList.id;
+  var newList = { name: name, color: _wlNewColor, is_primary: _wlNewPrimary || lists.length === 0, position: lists.length };
   wlCloseCreateModal();
-  renderWatchCnt();
+  _wlInsertList(newList, function(){
+    if(newList.id) _wlSelectedList = newList.id;
+    renderWatchCnt();
+  });
 };
 
 // ─── ELIMINAR LISTA ───
 window.wlDeleteList = function(listId){
   if(!confirm('Eliminar esta lista y todos sus activos?')) return;
-  var lists = _wlGetLists().filter(function(l){ return l.id !== listId; });
-  _wlSaveLists(lists);
-  localStorage.removeItem('aurex_wl_items_'+listId);
-  if(_wlSelectedList === listId) _wlSelectedList = lists.length > 0 ? lists[0].id : null;
-  renderWatchCnt();
+  if(_wlSelectedList === listId) _wlSelectedList = null;
+  _wlDeleteListDB(listId, function(){ renderWatchCnt(); });
 };
 
 // ─── MARCAR PRINCIPAL ───
 window.wlSetPrimary = function(listId){
-  var lists = _wlGetLists();
-  lists.forEach(function(l){ l.is_primary = (l.id === listId); });
-  _wlSaveLists(lists);
-  renderWatchCnt();
+  var sb = window._supabase;
+  if(!sb || !window._currentUser) return;
+  var uid = window._currentUser.id;
+  sb.from('watchlists').update({is_primary: false}).eq('user_id', uid).then(function(){
+    sb.from('watchlists').update({is_primary: true}).eq('id', listId).then(function(){
+      _wlSyncFromSupabase(function(){ renderWatchCnt(); });
+    });
+  });
 };
 
 // ─── SELECCIONAR LISTA ───
@@ -1616,20 +1692,16 @@ window.wlSearchAssets = function(){
 window.wlAddAsset = function(sym, nombre, tipo){
   if(!_wlSelectedList) return;
   var items = _wlGetItems(_wlSelectedList);
-  if(items.find(function(i){ return i.s===sym; })){ wlCloseAddModal(); return; }
-  items.push({ s:sym, n:nombre, tipo:tipo, alert_active:false, added: Date.now() });
-  _wlSaveItems(_wlSelectedList, items);
+  if(items.find(function(i){ return (i.s===sym || i.ticker===sym); })){ wlCloseAddModal(); return; }
   wlCloseAddModal();
-  renderWatchCnt();
+  _wlInsertItem(_wlSelectedList, {s:sym, n:nombre, tipo:tipo}, function(){ renderWatchCnt(); });
 };
 
 // ─── ELIMINAR ACTIVO ───
 window.wlRemoveAsset = function(sym, evt){
   if(evt) evt.stopPropagation();
   if(!_wlSelectedList) return;
-  var items = _wlGetItems(_wlSelectedList).filter(function(i){ return i.s !== sym; });
-  _wlSaveItems(_wlSelectedList, items);
-  renderWatchCnt();
+  _wlDeleteItemDB(_wlSelectedList, sym, function(){ renderWatchCnt(); });
 };
 
 // ─── TOGGLE ALERTA WHATSAPP ───
@@ -1637,8 +1709,12 @@ window.wlToggleAlert = function(sym, evt){
   if(evt) evt.stopPropagation();
   if(!_wlSelectedList) return;
   var items = _wlGetItems(_wlSelectedList);
-  items.forEach(function(i){ if(i.s===sym) i.alert_active = !i.alert_active; });
-  _wlSaveItems(_wlSelectedList, items);
+  var item = items.find(function(i){ return (i.s===sym || i.ticker===sym); });
+  if(!item) return;
+  var newVal = !item.alert_active;
+  item.alert_active = newVal;
+  var sb = window._supabase;
+  if(sb && item.id) sb.from('watchlist_items').update({alert_active: newVal}).eq('id', item.id);
   renderWatchCnt();
 };
 
@@ -1696,6 +1772,10 @@ window.renderWatchCnt = function(){
     html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:#8B949E">Lista vacia</div><a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:600;cursor:pointer">Agregar primer activo</span></div>';
   } else {
     currentItems.forEach(function(item){
+      // Compatibilidad Supabase (ticker) y localStorage (s)
+      if(!item.s && item.ticker) { item.s = item.ticker; }
+      if(!item.n) { var _a = (window._IA_ACTIVOS||[]).find(function(a){return a.s===item.s;}); item.n = _a ? _a.n : item.s; }
+      if(!item.tipo && item.asset_type) { item.tipo = item.asset_type; }
       var sig = null;
       for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===item.s){ sig=sigs[i]; break; } }
       var precio = prcs[item.s] || (sig ? sig.precio : null);
@@ -1786,8 +1866,12 @@ window.wlOpenDetail = function(sym){
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
 
-// Render al cargar
-document.addEventListener('DOMContentLoaded', function(){ setTimeout(window.renderWatchCnt, 2000); });
+// Render al cargar — sync from Supabase first
+document.addEventListener('DOMContentLoaded', function(){
+  setTimeout(function(){
+    _wlSyncFromSupabase(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); });
+  }, 2000);
+});
 
 // iOS Safari fix: event delegation global para TODOS los clicks de watchlist
 document.addEventListener('click', function(e){
