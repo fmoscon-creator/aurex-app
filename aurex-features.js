@@ -1076,8 +1076,6 @@ function _updateTotals(items){
     var pnl = item.precio_compra > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
     if(pnl > bestPct){ bestPct = pnl; bestSym = item.simbolo; }
   });
-  var pnlUsd = total - totalCosto;
-  var pnlPct = totalCosto > 0 ? (pnlUsd / totalCosto * 100) : 0;
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
   window._portTotalUSD = total;
@@ -1086,14 +1084,19 @@ function _updateTotals(items){
   if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
   if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—';
   if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
-  if(el('port-pnl-usd')){
-    el('port-pnl-usd').textContent = (pnlUsd>=0?'+':'-') + '$' + fmtNum(Math.abs(pnlUsd));
-    el('port-pnl-usd').style.color = pnlUsd >= 0 ? '#3FB950' : '#FF4444';
+  // P&L: usar _calcPortPeriod para respetar el periodo seleccionado (24h por default)
+  var badge = document.getElementById('port-period-badge');
+  var currentPeriod = '24h';
+  if(badge) {
+    var txt = badge.textContent.trim().toLowerCase();
+    if(txt.indexOf('compra')>=0) currentPeriod = 'buy';
+    else if(txt.indexOf('1a')>=0||txt.indexOf('1y')>=0) currentPeriod = '1y';
+    else if(txt.indexOf('3m')>=0) currentPeriod = '3m';
+    else if(txt.indexOf('1m')>=0) currentPeriod = '1m';
+    else if(txt.indexOf('7d')>=0) currentPeriod = '7d';
   }
-  if(el('port-pnl-pct')){
-    el('port-pnl-pct').textContent = _fmt(pnlPct,'pct');
-    el('port-pnl-pct').style.background = pnlPct >= 0 ? '#1A3A2A' : '#3A1A1A';
-    el('port-pnl-pct').style.color = pnlPct >= 0 ? '#3FB950' : '#FF4444';
+  if(typeof window._calcPortPeriod === 'function') {
+    window._calcPortPeriod(currentPeriod);
   }
   _renderThermoRisk(items);
   _renderMarketBanner();
