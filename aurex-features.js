@@ -1775,9 +1775,10 @@ window.renderWatchCnt = function(){
     if(currentList.is_primary) {
       html += '<span style="font-size:8px;font-weight:700;color:#D4A017;background:#D4A01720;padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
     } else {
-      html += '<span onclick="event.stopPropagation();wlSetPrimary(\''+currentList.id+'\')" style="font-size:10px;font-weight:600;color:#8B949E;background:#21262D;padding:4px 8px;border-radius:6px;cursor:pointer;border:1px solid #30363D">☆ Marcar principal</span>';
+      html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:#8B949E;background:#21262D;padding:4px 8px;border-radius:6px;cursor:pointer;border:1px solid #30363D;text-decoration:none">☆ Marcar principal</a>';
     }
-    html += '<div onclick="wlShareList()" style="font-size:16px;cursor:pointer;padding:4px">📤</div>';
+    html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
+    html += '<a href="javascript:void(0)" data-wl="compareMode" style="font-size:9px;font-weight:700;color:#D4A017;background:#D4A01720;padding:4px 8px;border-radius:6px;border:1px solid #D4A01740;text-decoration:none;cursor:pointer">⚖️ Comparar</a>';
     html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:#D4A017;color:#000;font-size:11px;font-weight:700;cursor:pointer;border-radius:6px">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
     html += '</div>';
@@ -1830,13 +1831,20 @@ window.renderWatchCnt = function(){
 
       // Asset row (formato Portfolio)
       var itemIdx = currentItems.indexOf(item);
-      html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="padding:0;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+      var isCompareMode = window._wlCompareMode;
+      var isSelected = window._wlCompareItems && window._wlCompareItems.indexOf(item.s) >= 0;
+      var rowClick = isCompareMode ? 'wlToggleCompare(\''+item.s+'\')' : 'wlOpenDetail(\''+item.s+'\')';
+      html += '<div onclick="'+rowClick+'" style="padding:0;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
       html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
-      // Flechas reordenar
-      html += '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px">';
-      html += '<div onclick="event.stopPropagation();wlMoveItem('+itemIdx+',-1)" style="font-size:11px;color:'+(itemIdx===0?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer">▲</div>';
-      html += '<div onclick="event.stopPropagation();wlMoveItem('+itemIdx+',1)" style="font-size:11px;color:'+(itemIdx===currentItems.length-1?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer">▼</div>';
-      html += '</div>';
+      if(isCompareMode) {
+        html += '<div style="width:22px;height:22px;border-radius:11px;border:2px solid '+(isSelected?'#D4A017':'#21262D')+';background:'+(isSelected?'#D4A017':'transparent')+';display:flex;align-items:center;justify-content:center;margin-right:4px;flex-shrink:0">'+(isSelected?'<span style="color:#000;font-size:12px;font-weight:800">✓</span>':'')+'</div>';
+      } else {
+        // Flechas reordenar
+        html += '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px">';
+        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',-1)" style="font-size:11px;color:'+(itemIdx===0?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▲</a>';
+        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',1)" style="font-size:11px;color:'+(itemIdx===currentItems.length-1?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▼</a>';
+        html += '</div>';
+      }
       html += logoHtml;
       html += '<div style="flex:1;min-width:0">';
       html += '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:700;color:#E6EDF3">'+item.s+'</span><span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E">'+(tipoLow||'')+'</span></div>';
@@ -1861,6 +1869,11 @@ window.renderWatchCnt = function(){
       html += '</div></div>';
       html += '</div>';
     });
+  }
+
+  // Botón flotante comparar
+  if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
+    html += '<div style="position:fixed;bottom:70px;left:20px;right:20px;z-index:50"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.4)">⚖️ Comparar '+window._wlCompareItems.length+' activos</a></div>';
   }
 
   cnt.innerHTML = html;
@@ -1918,6 +1931,134 @@ window.wlOpenDetail = function(sym){
   modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center';
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
+
+// ─── COMPARADOR ───
+window._wlCompareMode = false;
+window._wlCompareItems = [];
+
+window.wlStartCompare = function(){
+  window._wlCompareMode = !window._wlCompareMode;
+  window._wlCompareItems = [];
+  renderWatchCnt();
+};
+
+window.wlToggleCompare = function(sym){
+  var idx = window._wlCompareItems.indexOf(sym);
+  if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
+  else if(window._wlCompareItems.length < 3) { window._wlCompareItems.push(sym); }
+  else { alert('Maximo 3 activos'); return; }
+  renderWatchCnt();
+};
+
+window.wlShowCompare = function(){
+  var items = window._wlCompareItems;
+  if(items.length < 2) return;
+  var sigs = window._iaSignals || [];
+  var prcs = window._pcPrices || {};
+  var chg = window._pcChange24 || {};
+  var acts = window._IA_ACTIVOS || [];
+
+  var getSig = function(sym){ for(var i=0;i<sigs.length;i++){if(sigs[i].simbolo===sym)return sigs[i];} return null; };
+  var getDir = function(sym){ var s=getSig(sym); return s?(s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV'):'---'; };
+  var getProb = function(sym){ var s=getSig(sym); return s?(s.confianza||50):0; };
+  var getChange = function(sym){ return chg[sym]||0; };
+  var getPrice = function(sym){ return prcs[sym]||0; };
+  var dirColor = function(d){return d==='ALCISTA'?'#3FB950':d==='BAJISTA'?'#F85149':'#D4A017';};
+  var dirIcon = function(d){return d==='ALCISTA'?'📈':d==='BAJISTA'?'📉':'⚡';};
+
+  // Find best performer
+  var bestSym = items[0]; var bestChg = getChange(items[0]);
+  items.forEach(function(t){ var c=getChange(t); if(c>bestChg){bestChg=c;bestSym=t;} });
+
+  var html = '<div style="padding:14px;border-bottom:1px solid #21262D;display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:700;color:#D4A017">⚖️ Comparador AUREX</span><a href="javascript:void(0)" onclick="document.getElementById(\'wl-compare-overlay\').remove();window._wlCompareMode=false;window._wlCompareItems=[];renderWatchCnt();" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">✕</a></div>';
+
+  // Period buttons
+  html += '<div style="display:flex;justify-content:center;gap:6px;padding:10px;border-bottom:0.5px solid #21262D">';
+  html += '<span style="padding:4px 12px;border-radius:6px;background:#D4A017;color:#000;font-size:11px;font-weight:700">24h</span>';
+  ['7d','1m','3m','1y'].forEach(function(p){
+    html += '<span style="padding:4px 10px;border-radius:6px;background:#21262D;color:#555;font-size:11px;font-weight:700;opacity:0.5">'+p+'</span>';
+  });
+  html += '</div>';
+
+  html += '<div style="padding:12px;overflow-x:auto">';
+
+  // Header with logos
+  html += '<div style="display:flex;border-bottom:1px solid #21262D;padding-bottom:10px;margin-bottom:8px"><div style="width:100px"></div>';
+  items.forEach(function(t){
+    var act = acts.find(function(a){return a.s===t;});
+    var isBest = t===bestSym;
+    var logoUrl = act&&act.logo?act.logo:'';
+    var logoBg = getDir(t)==='ALCISTA'?'#1A3A2A':getDir(t)==='BAJISTA'?'#3A1A1A':'#333';
+    html += '<div style="width:120px;text-align:center">';
+    if(isBest) html += '<div style="border:2px solid #D4A017;border-radius:22px;padding:2px;display:inline-block">';
+    html += '<div style="width:36px;height:36px;border-radius:18px;background:'+logoBg+';display:inline-flex;align-items:center;justify-content:center">';
+    if(logoUrl) html += '<img src="'+logoUrl+'" style="width:28px;height:28px;border-radius:14px" onerror="this.outerHTML=\'<span style=color:#fff;font-size:12px;font-weight:700>'+t[0]+'</span>\'" />';
+    else html += '<span style="color:#fff;font-size:12px;font-weight:700">'+t.slice(0,2)+'</span>';
+    html += '</div>';
+    if(isBest) html += '</div>';
+    html += '<div style="font-size:14px;font-weight:800;color:#E6EDF3;margin-top:4px">'+t+'</div>';
+    html += '<div style="font-size:9px;color:#8B949E">'+(act?act.n:'')+'</div>';
+    if(isBest) html += '<div style="background:#D4A01730;border:1px solid #D4A017;border-radius:6px;padding:2px 6px;margin-top:4px;display:inline-block"><span style="font-size:7px;font-weight:800;color:#D4A017">⭐ MEJOR PERFORMANCE</span></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+
+  // Data rows
+  var rows = [
+    {label:'Señal IA', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+d+'</span>';}},
+    {label:'Probabilidad', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+getProb(t)+'%</span>';}},
+    {label:'Precio', fn:function(t){var p=getPrice(t);return '<span style="color:#E6EDF3;font-weight:700">'+(p?'$'+_fmt(p):'---')+'</span>';}},
+    {label:'Cambio 24h', fn:function(t){var c=getChange(t);return '<span style="color:'+(c>=0?'#3FB950':'#F85149')+';font-weight:700">'+_fmt(c,'pct')+'</span>';}},
+    {label:'Objetivo', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:#3FB950;font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?0.95:1.08)):'---')+'</span>';}},
+    {label:'Stop', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:#F85149;font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?1.03:0.96)):'---')+'</span>';}},
+  ];
+  rows.forEach(function(row){
+    html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:0.5px solid #21262D"><div style="width:100px;font-size:10px;font-weight:600;color:#8B949E">'+row.label+'</div>';
+    items.forEach(function(t){ html += '<div style="width:120px;text-align:center;font-size:13px">'+row.fn(t)+'</div>'; });
+    html += '</div>';
+  });
+
+  // Variables IA
+  html += '<div style="font-size:11px;font-weight:700;color:#8B949E;margin-top:14px;margin-bottom:8px">VARIABLES IA (10)</div>';
+  var varDefs = [{k:'tendencia',l:'Tendencia 24h'},{k:'rsi',l:'RSI14'},{k:'volumen',l:'Volumen'},{k:'volatilidad',l:'Volatilidad'},{k:'correlacion',l:'Correlacion BTC/SPY'},{k:'oro_petroleo',l:'Oro/Petroleo'},{k:'macro',l:'Macro FED'},{k:'earnings',l:'Earnings'},{k:'macd',l:'MACD (12/26)'},{k:'soporte_resist',l:'Soporte/Resist. 30d'}];
+  varDefs.forEach(function(v){
+    html += '<div style="display:flex;align-items:center;padding:4px 0;border-bottom:0.5px solid #21262D80"><div style="width:100px;font-size:9px;color:#8B949E">'+v.l+'</div>';
+    items.forEach(function(t){
+      var sig=getSig(t); var sc=sig&&sig.scores?sig.scores[v.k]||0:0;
+      var col=sc>0.01?'#3FB950':sc<-0.01?'#F85149':'#555';
+      var icon=sc>0.01?'→':sc<-0.01?'↓':'—';
+      html += '<div style="width:120px;text-align:center;font-size:12px;font-weight:700;color:'+col+'">'+icon+'</div>';
+    });
+    html += '</div>';
+  });
+
+  // Resumen
+  html += '<div style="display:flex;align-items:center;padding:10px 0;margin-top:4px"><div style="width:100px;font-size:10px;font-weight:700;color:#8B949E">Resumen</div>';
+  items.forEach(function(t){
+    var sig=getSig(t);var alc=0,baj=0;
+    if(sig&&sig.scores){varDefs.forEach(function(v){var s=sig.scores[v.k]||0;if(s>0.01)alc++;if(s<-0.01)baj++;});}
+    html += '<div style="width:120px;text-align:center;font-size:11px"><span style="color:#3FB950;font-weight:700">→'+alc+'</span> · <span style="color:#F85149;font-weight:700">↓'+baj+'</span></div>';
+  });
+  html += '</div>';
+
+  // Share button
+  html += '<a href="javascript:void(0)" onclick="var m=\'⚖️ AUREX Comparador\\n━━━━━━━━━━━━━━━━\\n\';';
+  items.forEach(function(t,i){
+    html += 'm+=\''+(t===bestSym?'⭐ ':'')+dirIcon(getDir(t))+' '+t+' — '+getDir(t)+' '+getProb(t)+'%\\n\';';
+  });
+  html += 'm+=\'━━━━━━━━━━━━━━━━\\nAUREX IA | aurex.live\';if(navigator.share){navigator.share({title:\'AUREX Comparador\',text:m});}else if(navigator.clipboard){navigator.clipboard.writeText(m);alert(\'Copiado\');}" style="display:block;background:#21262D;border-radius:10px;padding:12px;text-align:center;color:#E6EDF3;font-size:12px;font-weight:600;text-decoration:none;margin-top:16px">📤 Compartir comparacion</a>';
+
+  html += '</div>';
+
+  var overlay = document.createElement('div');
+  overlay.id = 'wl-compare-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:#000000EE;z-index:200;overflow-y:auto';
+  overlay.innerHTML = html;
+  document.body.appendChild(overlay);
+
+  window._wlCompareMode = false;
+  window._wlCompareItems = [];
+};
 
 // ─── REORDENAR ACTIVOS ───
 window.wlMoveItem = function(idx, direction){
@@ -2000,6 +2141,10 @@ document.addEventListener('click', function(e){
   else if(act==='selectList') window.wlSelectList(param);
   else if(act==='deleteList') window.wlDeleteList(param);
   else if(act==='setPrimary'){ e.stopPropagation(); window.wlSetPrimary(param); }
+  else if(act==='shareList'){ e.stopPropagation(); window.wlShareList(); }
+  else if(act==='compareMode'){ e.stopPropagation(); window.wlStartCompare(); }
+  else if(act==='compareSelect'){ e.stopPropagation(); window.wlToggleCompare(param); }
+  else if(act==='compareGo'){ e.stopPropagation(); window.wlShowCompare(); }
   else if(act==='openDetail') window.wlOpenDetail(param);
   else if(act==='removeAsset'){ e.stopPropagation(); window.wlRemoveAsset(param, e); }
   else if(act==='toggleAlert'){ e.stopPropagation(); window.wlToggleAlert(param, e); }
