@@ -1814,8 +1814,14 @@ window.renderWatchCnt = function(){
       }
 
       // Asset row (formato Portfolio)
+      var itemIdx = currentItems.indexOf(item);
       html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="padding:0;border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
       html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
+      // Flechas reordenar
+      html += '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px">';
+      html += '<div onclick="event.stopPropagation();wlMoveItem('+itemIdx+',-1)" style="font-size:11px;color:'+(itemIdx===0?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer">▲</div>';
+      html += '<div onclick="event.stopPropagation();wlMoveItem('+itemIdx+',1)" style="font-size:11px;color:'+(itemIdx===currentItems.length-1?'#333':'#8B949E')+';width:18px;text-align:center;cursor:pointer">▼</div>';
+      html += '</div>';
       html += logoHtml;
       html += '<div style="flex:1;min-width:0">';
       html += '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:700;color:#E6EDF3">'+item.s+'</span><span style="font-size:10px;padding:1px 6px;border-radius:5px;background:#21262D;color:#8B949E">'+(tipoLow||'')+'</span></div>';
@@ -1897,6 +1903,26 @@ window.wlOpenDetail = function(sym){
   modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center';
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
+
+// ─── REORDENAR ACTIVOS ───
+window.wlMoveItem = function(idx, direction){
+  if(!_wlSelectedList) return;
+  var arr = _wlGetItems(_wlSelectedList);
+  var newIdx = idx + direction;
+  if(newIdx < 0 || newIdx >= arr.length) return;
+  var temp = arr[idx];
+  arr[idx] = arr[newIdx];
+  arr[newIdx] = temp;
+  _wlSaveItems(_wlSelectedList, arr);
+  // Update positions in Supabase
+  var sb = window._supabase;
+  if(sb){
+    arr.forEach(function(item, i){
+      if(item.id) sb.from('watchlist_items').update({position: i}).eq('id', item.id);
+    });
+  }
+  renderWatchCnt();
+};
 
 // ─── COMPARTIR LISTA COMPLETA ───
 window.wlShareList = function(){
