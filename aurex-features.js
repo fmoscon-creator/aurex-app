@@ -1788,7 +1788,7 @@ window.renderWatchCnt = function(){
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
     if(_cc >= 2){
-      html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#3FB950;font-weight:600">✓ '+_cc+' seleccionados — selecciona 1 mas o el comparador se abre solo</span></div>';
+      html += '<div style="padding:8px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">⚖️ Comparar '+_cc+' activos</a></div>';
     } else {
       html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
     }
@@ -1958,11 +1958,6 @@ window.wlToggleCompare = function(sym){
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
   else if(window._wlCompareItems.length < 3) { window._wlCompareItems.push(sym); }
   else { alert('Maximo 3 activos'); return; }
-  // Si hay 2+, abrir comparador automáticamente
-  if(window._wlCompareItems.length >= 2){
-    window.wlShowCompare();
-    return;
-  }
   renderWatchCnt();
 };
 
