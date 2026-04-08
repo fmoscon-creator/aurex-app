@@ -1759,9 +1759,9 @@ window.renderWatchCnt = function(){
     var isSel = list.id === _wlSelectedList;
     var itemCount = _wlGetItems(list.id).length;
     html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:100px;background:#161B22;border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'#21262D')+';cursor:pointer;flex-shrink:0">';
-    html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:12px">⭐</span>':'')+'<span style="font-size:12px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700;color:'+list.color+';flex:1">'+list.name+'</span><span onclick="event.stopPropagation();wlSetPrimary(\''+list.id+'\')" style="font-size:16px;cursor:pointer">'+(list.is_primary?'⭐':'☆')+'</span></div>';
     html += '<div style="font-size:9px;color:#555;margin-top:3px">'+itemCount+' activos</div>';
-    if(!list.is_primary) html += '<div onclick="event.stopPropagation();wlSetPrimary(\''+list.id+'\')" style="font-size:8px;color:#8B949E;margin-top:4px;cursor:pointer">☆ Principal</div>';
+    if(list.is_primary) html += '<div style="font-size:8px;color:#D4A017;font-weight:700;margin-top:3px">PRINCIPAL</div>';
     html += '</div>';
   });
   html += '</div>';
@@ -1966,7 +1966,7 @@ window.wlShareList = function(){
     '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:16px">'+
     '<a href="https://wa.me/?text='+enc+'" target="_blank" style="width:90px;height:80px;background:#0D2818;border:1px solid #25D36640;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none"><span style="font-size:24px;margin-bottom:4px">💬</span><span style="font-size:11px;color:#25D366;font-weight:600">WhatsApp</span></a>'+
     '<a href="https://t.me/share/url?url=https://aurex.live&text='+enc+'" target="_blank" style="width:90px;height:80px;background:#0D1A2E;border:1px solid #0088CC40;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none"><span style="font-size:24px;margin-bottom:4px">✈️</span><span style="font-size:11px;color:#0088CC;font-weight:600">Telegram</span></a>'+
-    '<div onclick="event.stopPropagation();if(navigator.share){navigator.share({title:\'AUREX - Lista\',text:decodeURIComponent(\''+enc+'\')}).catch(function(){});}else{prompt(\'Copia y pega por mail:\',decodeURIComponent(\''+enc+'\'));}" style="width:90px;height:80px;background:#1A1200;border:1px solid #D4A01740;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📤</span><span style="font-size:11px;color:#D4A017;font-weight:600">Compartir</span></div>'+
+    '<div onclick="event.stopPropagation();var _msg=decodeURIComponent(\''+enc+'\');if(navigator.share){navigator.share({title:\'AUREX - Lista\',text:_msg}).then(function(){}).catch(function(){if(navigator.clipboard){navigator.clipboard.writeText(_msg);alert(\'Copiado al portapapeles\');}});}else if(navigator.clipboard){navigator.clipboard.writeText(_msg);alert(\'Copiado al portapapeles — pega en Mail o donde quieras\');}else{prompt(\'Copia este texto:\',_msg);}" style="width:90px;height:80px;background:#1A1200;border:1px solid #D4A01740;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📤</span><span style="font-size:11px;color:#D4A017;font-weight:600">Compartir</span></div>'+
     '</div>'+
     '<div onclick="this.parentElement.parentElement.remove()" style="background:#2C2C2E;border-radius:10px;padding:14px;text-align:center;color:#8B949E;font-size:14px;cursor:pointer">Cancelar</div>'+
   '</div>';
