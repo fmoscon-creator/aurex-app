@@ -1787,7 +1787,11 @@ window.renderWatchCnt = function(){
   // Botón comparar (arriba de los activos, siempre visible)
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
-    html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:#8B949E">'+(_cc < 2 ? 'Selecciona 2 o 3 activos' : '✓ '+_cc+' seleccionados')+'</span></div>';
+    if(_cc >= 2){
+      html += '<div style="padding:8px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">⚖️ Comparar '+_cc+' activos</a></div>';
+    } else {
+      html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:#8B949E">Selecciona 2 o 3 activos</span></div>';
+    }
   }
 
   // Lista de activos
@@ -1878,23 +1882,7 @@ window.renderWatchCnt = function(){
   }
 
   var oldFb = document.getElementById('wl-compare-float'); if(oldFb) oldFb.remove();
-  var oldBtn = document.getElementById('wl-cmp-btn'); if(oldBtn) oldBtn.remove();
-  var oldFb2 = document.getElementById('wl-compare-float'); if(oldFb2) oldFb2.remove();
-
   cnt.innerHTML = html;
-
-  // Mostrar/ocultar botón comparar fijo (elemento del HTML, no dinámico)
-  var cmpBar = document.getElementById('wl-compare-bar');
-  if(cmpBar){
-    var cc2 = window._wlCompareMode && window._wlCompareItems ? window._wlCompareItems.length : 0;
-    if(cc2 >= 2){
-      var cmpBtn = document.getElementById('wl-compare-btn');
-      if(cmpBtn) cmpBtn.textContent = '⚖️ Comparar ' + cc2 + ' activos';
-      cmpBar.style.display = 'block';
-    } else {
-      cmpBar.style.display = 'none';
-    }
-  }
 
   // Fetch prices for items without prices
   var cryptoList = ['BTC','ETH','SOL','BNB','XRP','ADA','AVAX','DOT','LINK','MATIC','DOGE','SHIB','LTC','ATOM','UNI','NEAR','APT','ARB','OP','TRX','TON','SUI','PEPE','WIF','FIL','INJ','RUNE'];
