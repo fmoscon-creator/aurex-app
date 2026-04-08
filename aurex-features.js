@@ -1788,7 +1788,21 @@ window.renderWatchCnt = function(){
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
     if(_cc >= 2){
-      html += '<div style="padding:8px 14px"><a href="javascript:wlShowCompare()" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none">⚖️ Comparar '+_cc+' activos</a></div>';
+      html += '';
+      // Botón fixed — se monta en body después del innerHTML
+      setTimeout(function(){
+        var old = document.getElementById('wl-cmp-btn'); if(old) old.remove();
+        var btn = document.createElement('div');
+        btn.id = 'wl-cmp-btn';
+        btn.style.cssText = 'position:fixed;bottom:80px;left:20px;right:20px;z-index:999';
+        var a = document.createElement('a');
+        a.textContent = '⚖️ Comparar '+_cc+' activos';
+        a.style.cssText = 'display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px rgba(212,160,23,0.4)';
+        a.addEventListener('touchend', function(e){ e.preventDefault(); wlShowCompare(); });
+        a.addEventListener('click', function(){ wlShowCompare(); });
+        btn.appendChild(a);
+        document.body.appendChild(btn);
+      }, 50);
     } else {
       html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
     }
@@ -1882,6 +1896,9 @@ window.renderWatchCnt = function(){
   }
 
   var oldFb = document.getElementById('wl-compare-float'); if(oldFb) oldFb.remove();
+  if(!window._wlCompareMode || !window._wlCompareItems || window._wlCompareItems.length < 2){
+    var oldBtn = document.getElementById('wl-cmp-btn'); if(oldBtn) oldBtn.remove();
+  }
 
   cnt.innerHTML = html;
 
@@ -1946,6 +1963,7 @@ window._wlCompareItems = [];
 window.wlStartCompare = function(){
   window._wlCompareMode = !window._wlCompareMode;
   window._wlCompareItems = [];
+  var old = document.getElementById('wl-cmp-btn'); if(old) old.remove();
   renderWatchCnt();
 };
 
