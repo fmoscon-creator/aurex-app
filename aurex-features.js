@@ -1765,7 +1765,7 @@ window.renderWatchCnt = function(){
     html += '</div>';
   });
   html += '</div>';
-  if(lists.length > 2) html += '<div style="position:absolute;right:4px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none"><span style="font-size:18px;color:#D4A017;font-weight:700">›</span></div>';
+  if(lists.length > 2) html += '<div style="position:absolute;right:14px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none"><div style="background:#D4A01730;border-radius:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:#D4A017;font-weight:800">›</span></div></div>';
   html += '</div>';
 
   // Header lista seleccionada
