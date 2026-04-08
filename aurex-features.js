@@ -1070,9 +1070,11 @@ function _updateTotals(items){
   var prcs = window._pcPrices || {};
   var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
   items.forEach(function(item){
-    var precio = prcs[item.simbolo] || item.precio_compra;
+    var precioReal = prcs[item.simbolo];
+    var precio = precioReal || item.precio_compra;
     total += item.cantidad * precio;
     totalCosto += item.cantidad * item.precio_compra;
+    if(!precioReal) window._portWaitingPrices = true;
     var pnl = item.precio_compra > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
     if(pnl > bestPct){ bestPct = pnl; bestSym = item.simbolo; }
   });
@@ -1084,7 +1086,7 @@ function _updateTotals(items){
   if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
   if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—';
   if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
-  // P&L: usar _calcPortPeriod para respetar el periodo seleccionado (24h por default)
+  // P&L: mostrar "..." hasta que haya precios reales, luego calcular según período
   var badge = document.getElementById('port-period-badge');
   var currentPeriod = '24h';
   if(badge) {
@@ -1095,8 +1097,13 @@ function _updateTotals(items){
     else if(txt.indexOf('1m')>=0) currentPeriod = '1m';
     else if(txt.indexOf('7d')>=0) currentPeriod = '7d';
   }
-  if(typeof window._calcPortPeriod === 'function') {
+  var hasPrices = window._IA_PRECIOS && Object.keys(window._IA_PRECIOS).length > 0;
+  if(hasPrices && typeof window._calcPortPeriod === 'function') {
     window._calcPortPeriod(currentPeriod);
+  } else {
+    // Sin precios aún: no mostrar P&L falso
+    if(el('port-pnl-usd')){ el('port-pnl-usd').textContent = '...'; el('port-pnl-usd').style.color = '#8B949E'; }
+    if(el('port-pnl-pct')){ el('port-pnl-pct').textContent = '...'; el('port-pnl-pct').style.color = '#8B949E'; el('port-pnl-pct').style.background = 'transparent'; }
   }
   _renderThermoRisk(items);
   _renderMarketBanner();
