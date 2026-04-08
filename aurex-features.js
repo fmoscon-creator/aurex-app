@@ -1788,7 +1788,7 @@ window.renderWatchCnt = function(){
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
     if(_cc >= 2){
-      html += '<div style="padding:8px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none">⚖️ Comparar '+_cc+' activos</a></div>';
+      html += '<div style="padding:8px 14px"><a href="javascript:wlShowCompare()" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none">⚖️ Comparar '+_cc+' activos</a></div>';
     } else {
       html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
     }
