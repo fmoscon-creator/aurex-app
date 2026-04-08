@@ -1953,33 +1953,7 @@ window.wlToggleCompare = function(sym){
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
   else if(window._wlCompareItems.length < 3) { window._wlCompareItems.push(sym); }
   else { alert('Maximo 3 activos'); return; }
-  // Update checkboxes without full re-render
-  var items = _wlGetItems(_wlSelectedList) || [];
-  items.forEach(function(item){
-    var s = item.s || item.ticker;
-    var row = document.querySelector('[data-wl-compare="'+s+'"]');
-    if(row){
-      var isSel = window._wlCompareItems.indexOf(s) >= 0;
-      row.style.borderColor = isSel ? '#D4A017' : '#21262D';
-      row.style.background = isSel ? '#D4A017' : 'transparent';
-      row.innerHTML = isSel ? '<span style="color:#000;font-size:12px;font-weight:800">✓</span>' : '';
-    }
-  });
-  // Update float button
-  var fb = document.getElementById('wl-compare-float');
-  var count = window._wlCompareItems.length;
-  if(count >= 2){
-    if(!fb){
-      fb = document.createElement('div');
-      fb.id = 'wl-compare-float';
-      fb.style.cssText = 'position:fixed;bottom:70px;left:20px;right:20px;z-index:150';
-      document.body.appendChild(fb);
-    }
-    fb.innerHTML = '<a href="javascript:void(0)" ontouchend="event.preventDefault();wlShowCompare()" onclick="wlShowCompare()" style="display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.4)">⚖️ Comparar '+count+' activos</a>';
-    fb.style.display = 'block';
-  } else if(fb) {
-    fb.style.display = 'none';
-  }
+  renderWatchCnt();
 };
 
 window.wlShowCompare = function(){
