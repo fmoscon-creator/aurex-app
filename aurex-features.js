@@ -1759,9 +1759,8 @@ window.renderWatchCnt = function(){
     var isSel = list.id === _wlSelectedList;
     var itemCount = _wlGetItems(list.id).length;
     html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:100px;background:#161B22;border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'#21262D')+';cursor:pointer;flex-shrink:0">';
-    html += '<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-size:12px;font-weight:700;color:'+list.color+';flex:1">'+list.name+'</span><span onclick="event.stopPropagation();wlSetPrimary(\''+list.id+'\')" style="font-size:16px;cursor:pointer">'+(list.is_primary?'⭐':'☆')+'</span></div>';
+    html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:11px">⭐</span>':'')+'<span style="font-size:12px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
     html += '<div style="font-size:9px;color:#555;margin-top:3px">'+itemCount+' activos</div>';
-    if(list.is_primary) html += '<div style="font-size:8px;color:#D4A017;font-weight:700;margin-top:3px">PRINCIPAL</div>';
     html += '</div>';
   });
   html += '</div>';
@@ -1773,7 +1772,11 @@ window.renderWatchCnt = function(){
     html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:0.5px solid #21262D">';
     html += '<div style="width:8px;height:8px;border-radius:4px;background:'+currentList.color+'"></div>';
     html += '<span style="font-size:13px;font-weight:600;color:#E6EDF3;flex:1">'+currentList.name+'</span>';
-    if(currentList.is_primary) html += '<span style="font-size:8px;font-weight:700;color:#D4A017;background:#D4A01720;padding:2px 6px;border-radius:4px">PRINCIPAL</span>';
+    if(currentList.is_primary) {
+      html += '<span style="font-size:8px;font-weight:700;color:#D4A017;background:#D4A01720;padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
+    } else {
+      html += '<span onclick="event.stopPropagation();wlSetPrimary(\''+currentList.id+'\')" style="font-size:10px;font-weight:600;color:#8B949E;background:#21262D;padding:4px 8px;border-radius:6px;cursor:pointer;border:1px solid #30363D">☆ Marcar principal</span>';
+    }
     html += '<div onclick="wlShareList()" style="font-size:16px;cursor:pointer;padding:4px">📤</div>';
     html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:#D4A017;color:#000;font-size:11px;font-weight:700;cursor:pointer;border-radius:6px">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
@@ -1956,22 +1959,23 @@ window.wlShareList = function(){
     msg+=icon+' '+sym+' — '+dirL+(prob?' '+prob+'%':'')+' — $'+(p?_fmt(p):'---')+'\n';
   });
   msg+='━━━━━━━━━━━━━━━━\n'+items.length+' activos | AUREX IA\nhttps://aurex.live';
-  var enc=encodeURIComponent(msg);
-  // Mostrar opciones compartir
-  var overlay=document.createElement('div');
-  overlay.style.cssText='position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:200;display:flex;align-items:flex-end;justify-content:center';
-  overlay.innerHTML='<div style="background:#1C1C1E;border-radius:16px 16px 0 0;padding:20px 20px 30px;width:100%;max-width:440px">'+
-    '<div style="font-size:15px;font-weight:700;color:#E6EDF3;text-align:center;margin-bottom:6px">Compartir lista "'+cl.name+'"</div>'+
-    '<div style="font-size:11px;color:#8B949E;text-align:center;margin-bottom:16px">'+items.length+' activos con senales IA</div>'+
-    '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:16px">'+
-    '<a href="https://wa.me/?text='+enc+'" target="_blank" style="width:90px;height:80px;background:#0D2818;border:1px solid #25D36640;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none"><span style="font-size:24px;margin-bottom:4px">💬</span><span style="font-size:11px;color:#25D366;font-weight:600">WhatsApp</span></a>'+
-    '<a href="https://t.me/share/url?url=https://aurex.live&text='+enc+'" target="_blank" style="width:90px;height:80px;background:#0D1A2E;border:1px solid #0088CC40;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;text-decoration:none"><span style="font-size:24px;margin-bottom:4px">✈️</span><span style="font-size:11px;color:#0088CC;font-weight:600">Telegram</span></a>'+
-    '<div onclick="event.stopPropagation();var _msg=decodeURIComponent(\''+enc+'\');if(navigator.share){navigator.share({title:\'AUREX - Lista\',text:_msg}).then(function(){}).catch(function(){if(navigator.clipboard){navigator.clipboard.writeText(_msg);alert(\'Copiado al portapapeles\');}});}else if(navigator.clipboard){navigator.clipboard.writeText(_msg);alert(\'Copiado al portapapeles — pega en Mail o donde quieras\');}else{prompt(\'Copia este texto:\',_msg);}" style="width:90px;height:80px;background:#1A1200;border:1px solid #D4A01740;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📤</span><span style="font-size:11px;color:#D4A017;font-weight:600">Compartir</span></div>'+
-    '</div>'+
-    '<div onclick="this.parentElement.parentElement.remove()" style="background:#2C2C2E;border-radius:10px;padding:14px;text-align:center;color:#8B949E;font-size:14px;cursor:pointer">Cancelar</div>'+
-  '</div>';
-  document.body.appendChild(overlay);
-  overlay.onclick=function(e){if(e.target===overlay)overlay.remove();};
+
+  // Usar navigator.share (funciona en iOS Safari)
+  if(navigator.share){
+    navigator.share({title:'AUREX - Lista '+cl.name, text:msg}).catch(function(){});
+  } else if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(msg).then(function(){ alert('Copiado al portapapeles'); });
+  } else {
+    // Fallback: textarea + copy
+    var ta = document.createElement('textarea');
+    ta.value = msg;
+    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('Copiado al portapapeles');
+  }
 };
 
 // Render al cargar — sync from Supabase first
