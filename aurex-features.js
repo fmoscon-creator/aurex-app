@@ -1815,7 +1815,7 @@ window.renderWatchCnt = function(){
 
       // Asset row (formato Portfolio)
       var itemIdx = currentItems.indexOf(item);
-      html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="padding:0;border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+      html += '<div onclick="wlOpenDetail(\''+item.s+'\')" style="padding:0;border-bottom:0.5px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
       html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
       // Flechas reordenar
       html += '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px">';
