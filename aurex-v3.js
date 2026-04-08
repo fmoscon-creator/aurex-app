@@ -2653,7 +2653,7 @@ function _renderIALista(signals, keepLoadingBar) {
         '</div>' +
         '<div style="margin-top:3px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
-      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D;position:relative;">' + '<a href="#" data-ia-close-idx="'+i+'" style="position:absolute;top:6px;right:8px;width:44px;height:44px;border-radius:50%;background:#21262D;border:2px solid #555;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#E6EDF3;z-index:10;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;text-decoration:none;">&#x2715;</a>' + _buildIADetail(s)+'</div>' +
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D;position:relative;">' + '<div style="text-align:center;padding:6px 0 2px;color:#555;font-size:10px;letter-spacing:0.5px;">&#9650; toca para cerrar</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
   if (keepLoadingBar && lb) listEl.appendChild(lb);
@@ -2765,7 +2765,7 @@ function _buildIADetail(s) {
   html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
   html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
   html += '</div>';
-  html += '<a href="#" data-ia-close-btn="1" style="display:block;margin-top:10px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:10px;text-align:center;color:#8B949E;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">✕ Cerrar</a>';
+  html += '<div style="text-align:center;padding:8px 0 2px;color:#555;font-size:10px;letter-spacing:0.5px;">&#9650; toca para cerrar</div>';
   html += '</div>';
   return html;
 }
@@ -3443,26 +3443,6 @@ function toggleIARow(idx) {
   document.querySelectorAll('[id^="ia-detail-"]').forEach(function(d){ d.style.display='none'; });
   if (!isOpen) detail.style.display = 'block';
 }
-// iOS Safari: <a href> SIEMPRE dispara click — event delegation para cerrar detalle IA
-document.addEventListener('click', function(e) {
-  // X button (data-ia-close-idx)
-  var xBtn = e.target.closest('[data-ia-close-idx]');
-  if (xBtn) {
-    e.preventDefault();
-    var idx = xBtn.getAttribute('data-ia-close-idx');
-    var d = document.getElementById('ia-detail-' + idx);
-    if (d) d.style.display = 'none';
-    return;
-  }
-  // Cerrar button (data-ia-close-btn)
-  var closeBtn = e.target.closest('[data-ia-close-btn]');
-  if (closeBtn) {
-    e.preventDefault();
-    var detail = closeBtn.closest('[id^="ia-detail-"]');
-    if (detail) detail.style.display = 'none';
-    return;
-  }
-});
 
 
 // === AUREX: Logo unificado en todas las tabs ===
