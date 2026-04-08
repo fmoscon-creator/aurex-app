@@ -2627,8 +2627,8 @@ function _renderIALista(signals, keepLoadingBar) {
       '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
       '<span style="display:none;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;display:none;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
       '<span style="display:flex;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
-    return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:1px solid #21262D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
-      '<div style="padding:10px 14px 8px">' +
+    return '<div class="ia-row" id="ia-row-'+i+'" style="border-bottom:1px solid #21262D;">' +
+      '<div onclick="toggleIARow('+i+')" style="padding:10px 14px 8px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
         '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
           '<div style="display:flex;align-items:center;gap:7px">' +
             '<div style="width:34px;height:34px;border-radius:50%;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
@@ -2653,7 +2653,7 @@ function _renderIALista(signals, keepLoadingBar) {
         '</div>' +
         '<div style="margin-top:3px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
-      '<div id="ia-detail-'+i+'" onclick="event.stopPropagation();" ontouchstart="event.stopPropagation();" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D;position:relative;">' + '<a href="javascript:void(0)" ontouchstart="_iaClose('+i+');event.preventDefault();" onclick="_iaClose('+i+');event.preventDefault();" style="position:absolute;top:6px;right:8px;width:44px;height:44px;border-radius:50%;background:#21262D;border:2px solid #555;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#E6EDF3;z-index:10;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;text-decoration:none;">&#x2715;</a>' + _buildIADetail(s)+'</div>' +
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:#0D1117;border-top:1px solid #21262D;position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:44px;height:44px;border-radius:50%;background:#21262D;border:2px solid #555;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:#E6EDF3;z-index:10;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;" role="button" tabindex="0">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
   if (keepLoadingBar && lb) listEl.appendChild(lb);
@@ -2765,7 +2765,7 @@ function _buildIADetail(s) {
   html += 'style="width:100%;background:#21262D;border:1px solid #30363D;border-radius:8px;padding:8px 12px;color:#E6EDF3;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
   html += '<span style="font-size:15px">&#128257;</span> Compartir señal</button>';
   html += '</div>';
-  html += '<a href="javascript:void(0)" ontouchstart="_iaCloseFromBtn(this);event.preventDefault();" onclick="_iaCloseFromBtn(this);event.preventDefault();" style="display:block;margin-top:10px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:10px;text-align:center;color:#8B949E;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">✕ Cerrar</a>';
+  html += '<div onclick="this.closest(\'[id^=ia-detail-]\').style.display=\'none\';" style="margin-top:10px;background:#161B22;border:1px solid #30363D;border-radius:8px;padding:10px;text-align:center;color:#8B949E;font-size:12px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;" role="button" tabindex="0">✕ Cerrar</div>';
   html += '</div>';
   return html;
 }
@@ -3436,35 +3436,15 @@ function _renderMktNewsBanner(containerId) {
 }
 
 
-var _iaCloseBlock = 0;
 function toggleIARow(idx) {
-  if (Date.now() - _iaCloseBlock < 400) return;
   var detail = document.getElementById('ia-detail-'+idx);
   if (!detail) return;
   var isOpen = detail.style.display !== 'none';
+  // Cerrar todos los detalles abiertos
   document.querySelectorAll('[id^="ia-detail-"]').forEach(function(d){ d.style.display='none'; });
+  // Si estaba abierto, solo cerrar (toggle). Si estaba cerrado, abrir.
   if (!isOpen) detail.style.display = 'block';
 }
-function _iaClose(idx) {
-  _iaCloseBlock = Date.now();
-  var d = document.getElementById('ia-detail-'+idx);
-  if (d) d.style.display = 'none';
-}
-function _iaCloseFromBtn(el) {
-  _iaCloseBlock = Date.now();
-  var d = el.closest('[id^="ia-detail-"]');
-  if (d) d.style.display = 'none';
-}
-// Event delegation para X y Cerrar de detalle IA — fix iOS Safari
-document.addEventListener('click', function(e) {
-  var el = e.target.closest('[id^="ia-detail-"] a');
-  if (el && (el.textContent.trim() === '\u2715' || el.textContent.trim() === '\u2715 Cerrar' || el.dataset.iaClose)) {
-    var detail = el.closest('[id^="ia-detail-"]');
-    if (detail) detail.style.display = 'none';
-    e.stopPropagation();
-    e.preventDefault();
-  }
-}, true);
 
 
 // === AUREX: Logo unificado en todas las tabs ===
