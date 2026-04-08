@@ -2071,9 +2071,6 @@ window.wlShowCompare = function(){
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000EE;z-index:200;overflow-y:auto';
   overlay.innerHTML = html;
   document.body.appendChild(overlay);
-
-  window._wlCompareMode = false;
-  window._wlCompareItems = [];
 };
 
 // ─── REORDENAR ACTIVOS ───
