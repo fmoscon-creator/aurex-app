@@ -1784,6 +1784,16 @@ window.renderWatchCnt = function(){
     html += '</div>';
   }
 
+  // Botón comparar (arriba de los activos, siempre visible)
+  if(window._wlCompareMode){
+    var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
+    if(_cc >= 2){
+      html += '<div style="padding:8px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none">⚖️ Comparar '+_cc+' activos</a></div>';
+    } else {
+      html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
+    }
+  }
+
   // Lista de activos
   if(currentItems.length === 0){
     html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:#8B949E">Lista vacia</div><a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:600;cursor:pointer">Agregar primer activo</span></div>';
@@ -1871,12 +1881,6 @@ window.renderWatchCnt = function(){
     });
   }
 
-  // Botón comparar inline
-  if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
-    html += '<div style="padding:10px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none">⚖️ Comparar '+window._wlCompareItems.length+' activos</a></div>';
-  } else if(window._wlCompareMode){
-    html += '<div style="padding:10px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
-  }
   var oldFb = document.getElementById('wl-compare-float'); if(oldFb) oldFb.remove();
 
   cnt.innerHTML = html;
