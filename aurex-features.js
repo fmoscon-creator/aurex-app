@@ -1788,21 +1788,7 @@ window.renderWatchCnt = function(){
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
     if(_cc >= 2){
-      html += '';
-      // Botón fixed — se monta en body después del innerHTML
-      setTimeout(function(){
-        var old = document.getElementById('wl-cmp-btn'); if(old) old.remove();
-        var btn = document.createElement('div');
-        btn.id = 'wl-cmp-btn';
-        btn.style.cssText = 'position:fixed;bottom:80px;left:20px;right:20px;z-index:999';
-        var a = document.createElement('a');
-        a.textContent = '⚖️ Comparar '+_cc+' activos';
-        a.style.cssText = 'display:block;background:#D4A017;border-radius:12px;padding:14px;text-align:center;color:#000;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 16px rgba(212,160,23,0.4)';
-        a.addEventListener('touchend', function(e){ e.preventDefault(); wlShowCompare(); });
-        a.addEventListener('click', function(){ wlShowCompare(); });
-        btn.appendChild(a);
-        document.body.appendChild(btn);
-      }, 50);
+      html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#3FB950;font-weight:600">✓ '+_cc+' seleccionados — selecciona 1 mas o el comparador se abre solo</span></div>';
     } else {
       html += '<div style="padding:8px 14px;text-align:center"><span style="font-size:11px;color:#8B949E">Selecciona 2 o 3 activos para comparar</span></div>';
     }
@@ -1972,6 +1958,11 @@ window.wlToggleCompare = function(sym){
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
   else if(window._wlCompareItems.length < 3) { window._wlCompareItems.push(sym); }
   else { alert('Maximo 3 activos'); return; }
+  // Si hay 2+, abrir comparador automáticamente
+  if(window._wlCompareItems.length >= 2){
+    window.wlShowCompare();
+    return;
+  }
   renderWatchCnt();
 };
 
