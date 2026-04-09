@@ -1948,8 +1948,6 @@ window._wlCompareMode = false;
 window._wlCompareItems = [];
 
 window.wlStartCompare = function(){
-  var n = window._wlCompareItems ? window._wlCompareItems.length : 0;
-  alert('startCompare: mode=' + window._wlCompareMode + ' items=' + n);
   // Si ya estamos en modo comparar y hay 2+ seleccionados → abrir popup
   if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
     window.wlShowCompare();
@@ -2077,11 +2075,14 @@ window.wlShowCompare = function(){
 
   html += '</div>';
 
+  var old2 = document.getElementById('wl-compare-overlay'); if(old2) old2.remove();
   var overlay = document.createElement('div');
   overlay.id = 'wl-compare-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:#000000EE;z-index:200;overflow-y:auto';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#000000EE;z-index:9999;overflow-y:auto';
   overlay.innerHTML = html;
   document.body.appendChild(overlay);
+  window._wlCompareMode = false;
+  window._wlCompareItems = [];
   } catch(err) { alert('Error comparador: ' + err.message); }
 };
 
