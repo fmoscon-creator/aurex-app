@@ -646,15 +646,56 @@ function calculateAlerts(){
 }
 
 function renderTriggeredAlerts(){
-  var list = document.getElementById('alert-triggered-list');
-  if(!list) return;
   var all = window._alertTriggered||[];
   var typeF = window._alertTypeFilter||'todas';
   var subF = window._alertSubFilter;
+
+  // Render filtros principales con conteo
+  var filtersEl = document.getElementById('alert-type-filters');
+  if(filtersEl){
+    var mainFilters = [{key:'todas',label:'Todas'},{key:'ia',label:'🤖 IA'},{key:'precio',label:'💰 Precio'},{key:'pulse',label:'💓 Pulse'}];
+    filtersEl.innerHTML = mainFilters.map(function(f){
+      var count = f.key==='todas' ? all.length : all.filter(function(a){return a.tipo===f.key;}).length;
+      var isSel = typeF===f.key;
+      return '<span onclick="setAlertTypeFilter(\''+f.key+'\')" style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;background:'+(isSel?'#D4A017':'#21262D')+';color:'+(isSel?'#000':'#8B949E')+';font-size:9px;font-weight:700;cursor:pointer">'+f.label+'<span style="background:'+(isSel?'#00000030':'#8B949E30')+';border-radius:8px;padding:1px 4px;font-size:7px;font-weight:800">'+count+'</span></span>';
+    }).join('');
+  }
+
+  // Render sub-filtros si hay tipo seleccionado
+  var subEl = document.getElementById('alert-sub-filters');
+  if(!subEl){
+    subEl = document.createElement('div');
+    subEl.id = 'alert-sub-filters';
+    subEl.style.cssText = 'display:flex;gap:5px;overflow-x:auto;padding:6px 13px 0';
+    var parent = filtersEl ? filtersEl.parentElement : null;
+    if(parent) parent.appendChild(subEl);
+  }
+  if(typeF !== 'todas'){
+    var typeAlerts = all.filter(function(a){return a.tipo===typeF;});
+    var subDefs = typeF==='ia' ? [
+      {key:null,label:'Todas IA',clr:'#A78BFA'},{key:'alta_conv',label:'⚡ Alta Conv',clr:'#A78BFA'},{key:'cambio',label:'📉 Cambio',clr:'#A78BFA'},{key:'umbral',label:'🎯 Umbral',clr:'#A78BFA'},{key:'portfolio',label:'💼 Portfolio',clr:'#A78BFA'}
+    ] : typeF==='precio' ? [
+      {key:null,label:'Todos Precio',clr:'#D4A017'},{key:'variacion',label:'📈 Variacion',clr:'#D4A017'},{key:'rsi',label:'🔺 RSI',clr:'#D4A017'}
+    ] : [
+      {key:null,label:'Todos Pulse',clr:'#EC4899'},{key:'zona',label:'🔴 Zona',clr:'#EC4899'},{key:'cat',label:'📊 Categoria',clr:'#EC4899'}
+    ];
+    subEl.innerHTML = subDefs.map(function(f){
+      var count = f.key ? typeAlerts.filter(function(a){return a.sub===f.key;}).length : typeAlerts.length;
+      var isSel = subF===f.key;
+      return '<span onclick="setAlertSubFilter('+(f.key?'\''+f.key+'\'':'null')+')" style="display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:5px;background:'+(isSel?f.clr:'#21262D')+';color:'+(isSel?'#000':'#8B949E')+';font-size:8px;font-weight:700;cursor:pointer;white-space:nowrap">'+f.label+'<span style="background:'+(isSel?'#00000030':'#8B949E30')+';border-radius:8px;padding:1px 3px;font-size:7px;font-weight:800">'+count+'</span></span>';
+    }).join('');
+    subEl.style.display = 'flex';
+  } else {
+    subEl.style.display = 'none';
+  }
+
+  // Render alertas
   var shown = typeF==='todas' ? all : all.filter(function(a){return a.tipo===typeF;});
   if(subF) shown = shown.filter(function(a){return a.sub===subF;});
   var countEl = document.getElementById('alert-triggered-count');
   if(countEl){countEl.textContent=shown.length;countEl.style.display=shown.length>0?'inline':'none';}
+  var list = document.getElementById('alert-triggered-list');
+  if(!list) return;
   if(shown.length===0){
     list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">✅</div><div style="font-size:13px;font-weight:500;color:#8B949E">Sin alertas en este filtro</div><div style="font-size:10px;color:#8B949E;margin-top:4px">Proba cambiando filtros o umbrales</div></div>';
     return;
@@ -672,15 +713,51 @@ window.setAlertScope = function(s){
   calculateAlerts();
 };
 
-// Override setAlertTypeFilter
+// setAlertTypeFilter
 window.setAlertTypeFilter = function(tipo){
   window._alertTypeFilter = tipo;
   window._alertSubFilter = null;
-  // Update buttons
-  var btns = document.querySelectorAll('#alert-type-filters > span');
-  btns.forEach(function(b){var t=b.textContent.toLowerCase();var isSel=(tipo==='todas'&&t.indexOf('todas')>=0)||(tipo==='ia'&&t.indexOf('ia')>=0)||(tipo==='precio'&&t.indexOf('precio')>=0)||(tipo==='pulse'&&t.indexOf('pulse')>=0);b.style.background=isSel?'#D4A017':'#21262D';b.style.color=isSel?'#000':'#8B949E';});
   renderTriggeredAlerts();
 };
+
+// setAlertSubFilter
+window.setAlertSubFilter = function(sub){
+  window._alertSubFilter = sub;
+  renderTriggeredAlerts();
+};
+
+// Modal info custom (no alert() feo)
+function showAlertInfoModal(tipo){
+  var existing = document.getElementById('alert-info-modal'); if(existing) existing.remove();
+  var title, subtitle, items = [];
+  var sections = [{icon:'🤖',title:'Alertas IA',count:4},{icon:'💓',title:'Alertas PULSE',count:3},{icon:'💰',title:'Alertas de Precio',count:3},{icon:'📅',title:'Alertas de Eventos',count:5}];
+  if(tipo==='alertas'){
+    var checks = document.querySelectorAll('.alert-section input[type=checkbox]:checked');
+    title = checks.length + ' Alertas activas';
+    var scope = window._alertScope||'todos';
+    subtitle = 'Monitoreando ' + (scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos (304)');
+    var toggleLabels = ['Cambio de senal','Alta Conviccion','Umbral probabilidad','Senal en Portfolio','Cambio de zona','Por categoria','Termometro de Riesgo','Precio objetivo','Variacion brusca','Nuevo maximo/minimo','FED FOMC','CPI / PBI','Apertura mercados','Earnings portfolio','Geopolitica GDELT'];
+    var allChecks = document.querySelectorAll('.alert-section input[type=checkbox]');
+    allChecks.forEach(function(c,i){if(c.checked && toggleLabels[i]) items.push({icon:'✅',label:toggleLabels[i]});});
+  } else {
+    var scope = window._alertScope||'todos';
+    var count = scope==='portfolio'?(window._alertPortSyms||[]).length:scope==='watchlist'?(window._alertWLSyms||[]).length:304;
+    title = count + ' Activos monitoreados';
+    subtitle = scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos los activos';
+    sections.forEach(function(s){items.push({icon:s.icon,label:s.title+': '+s.count+' tipos'});});
+  }
+  var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div><div style="font-size:16px;font-weight:700;color:#D4A017">'+title+'</div>'+(subtitle?'<div style="font-size:10px;color:#8B949E;margin-top:2px">'+subtitle+'</div>':'')+'</div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-info-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">✕</a></div>';
+  items.forEach(function(item){
+    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid #21262D"><span style="font-size:16px">'+item.icon+'</span><span style="font-size:13px;color:#E6EDF3">'+item.label+'</span></div>';
+  });
+  html += '</div>';
+  var overlay = document.createElement('div');
+  overlay.id = 'alert-info-modal';
+  overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
+  overlay.innerHTML = '<div style="background:#161B22;border-radius:16px;width:100%;max-width:380px;max-height:70vh;overflow-y:auto;border:1px solid #30363D">'+html+'</div>';
+  overlay.onclick = function(e){if(e.target===overlay)overlay.remove();};
+  document.body.appendChild(overlay);
+}
 
 // Toggle change recalcula
 document.addEventListener('change',function(e){if(e.target.closest('.alert-section'))setTimeout(calculateAlerts,50);});
@@ -1785,9 +1862,9 @@ window._mktOpenDetail = function(idx){
 <!-- Resumen — numeros grandes, clickeables -->
 <div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #D4A01730">
   <div style="display:flex;align-items:center">
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="var c=document.querySelectorAll('.alert-section input[type=checkbox]:checked').length;alert(c+' alertas activas')"><div style="font-size:28px;font-weight:900;color:#3FB950" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ALERTAS ON</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('alertas')"><div style="font-size:28px;font-weight:900;color:#3FB950" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ALERTAS ON</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="alert('Monitoreando '+(window._alertScope==='portfolio'?'Mi Portfolio':(window._alertScope==='watchlist'?'Mi Watchlist':'Todos (304 activos)')))"><div style="font-size:28px;font-weight:900;color:#D4A017" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ACTIVOS</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:#D4A017" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ACTIVOS</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
     <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:#555" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">WHATSAPP</div></div>
   </div>
