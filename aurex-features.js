@@ -1948,6 +1948,8 @@ window._wlCompareMode = false;
 window._wlCompareItems = [];
 
 window.wlStartCompare = function(){
+  var n = window._wlCompareItems ? window._wlCompareItems.length : 0;
+  alert('startCompare: mode=' + window._wlCompareMode + ' items=' + n);
   // Si ya estamos en modo comparar y hay 2+ seleccionados → abrir popup
   if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
     window.wlShowCompare();
