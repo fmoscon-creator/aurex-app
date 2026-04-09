@@ -1952,8 +1952,8 @@ window.wlStartCompare = function(){
 window.wlToggleCompare = function(sym){
   var idx = window._wlCompareItems.indexOf(sym);
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
-  else if(window._wlCompareItems.length < 3) { window._wlCompareItems.push(sym); }
-  else { alert('Maximo 3 activos'); return; }
+  else if(window._wlCompareItems.length < 5) { window._wlCompareItems.push(sym); }
+  else { alert('Maximo 5 activos'); return; }
   renderWatchCnt();
 };
 
