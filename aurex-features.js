@@ -1069,17 +1069,25 @@ window.portPeriod = function(id, simbolo, tipo, period){
 function _updateTotals(items){
   var prcs = window._pcPrices || {};
   var total = 0, totalCosto = 0, bestPct = -Infinity, bestSym = '—';
+  var hasPrices = false;
   items.forEach(function(item){
     var precioReal = prcs[item.simbolo];
-    var precio = precioReal || item.precio_compra;
+    if(precioReal) hasPrices = true;
+    var precio = precioReal || 0;
     total += item.cantidad * precio;
     totalCosto += item.cantidad * item.precio_compra;
-    if(!precioReal) window._portWaitingPrices = true;
-    var pnl = item.precio_compra > 0 ? ((precio - item.precio_compra) / item.precio_compra * 100) : 0;
+    var pnl = precioReal && item.precio_compra > 0 ? ((precioReal - item.precio_compra) / item.precio_compra * 100) : 0;
     if(pnl > bestPct){ bestPct = pnl; bestSym = item.simbolo; }
   });
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
+  // Si no hay precios reales, mostrar "Cargando..." — NO mostrar valor falso
+  if(!hasPrices){
+    if(el('port-total')) el('port-total').textContent = 'Cargando...';
+    if(el('port-pnl-usd')){ el('port-pnl-usd').textContent = ''; }
+    if(el('port-pnl-pct')){ el('port-pnl-pct').textContent = ''; el('port-pnl-pct').style.background = 'transparent'; }
+    return;
+  }
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
