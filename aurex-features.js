@@ -1975,6 +1975,7 @@ window.wlToggleCompare = function(sym){
 };
 
 window.wlShowCompare = function(){
+  try {
   var items = window._wlCompareItems;
   if(!items || items.length < 2) return;
   var sigs = window._iaSignals || [];
@@ -2079,6 +2080,7 @@ window.wlShowCompare = function(){
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000EE;z-index:200;overflow-y:auto';
   overlay.innerHTML = html;
   document.body.appendChild(overlay);
+  } catch(err) { alert('Error comparador: ' + err.message); }
 };
 
 // ─── REORDENAR ACTIVOS ───
