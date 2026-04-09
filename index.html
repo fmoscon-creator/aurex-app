@@ -485,19 +485,12 @@ function toggleAlertSection(key){
   if(arrow)arrow.textContent=isOpen?'▼':'▲';
 }
 function toggleWABanner(){
-  var st=document.getElementById('wa-status');
-  var ti=document.getElementById('wa-title');
-  var su=document.getElementById('wa-sub');
-  var ch=document.getElementById('wa-check');
-  if(!st)return;
-  var isOn=st.textContent==='ON';
-  st.textContent=isOn?'OFF':'ON';
-  st.style.color=isOn?'#555':'#3FB950';
-  st.style.borderColor=isOn?'#21262D':'#3FB950';
-  ti.textContent=isOn?'Recibir alertas por WhatsApp':'WhatsApp conectado';
-  su.textContent=isOn?'Conecta tu WhatsApp para recibir senales IA, alertas de precio y eventos macro sin delays':'Vas a recibir senales IA y alertas de precio directo a tu celular';
-  if(ch)ch.textContent=isOn?'—':'✓';
-  if(ch)ch.style.color=isOn?'#555':'#3FB950';
+  var toggle = document.getElementById('wa-toggle');
+  var ti = document.getElementById('wa-title');
+  var ch = document.getElementById('wa-check');
+  var isOn = toggle ? toggle.checked : false;
+  if(ti) ti.textContent = isOn ? 'WhatsApp conectado' : 'Alertas por WhatsApp';
+  if(ch){ ch.textContent = isOn ? '✓' : '—'; ch.style.color = isOn ? '#3FB950' : '#555'; }
 }
 function updateAlertCount(){
   var sections=['ia','pulse','precio','eventos'];
@@ -562,6 +555,9 @@ function showAlertVars(tipo){
   overlay.onclick = function(e){ if(e.target === overlay) overlay.remove(); };
   document.body.appendChild(overlay);
 }
+
+// Alertas — cargar aguja Pulse y conteo al entrar
+setTimeout(function(){ setPulseZoneFilter('GLOBAL'); updateAlertCount(); }, 3000);
 
 // Alertas — filtro scope
 window._alertScope = 'todos';
@@ -1665,14 +1661,14 @@ window._mktOpenDetail = function(idx){
   <label class="toggle-sw"><input type="checkbox" id="wa-toggle" onchange="toggleWABanner()"><span class="toggle-slider"></span></label>
 </div>
 
-<!-- Resumen — numeros grandes -->
+<!-- Resumen — numeros grandes, clickeables -->
 <div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #D4A01730">
   <div style="display:flex;align-items:center">
-    <div style="flex:1;text-align:center"><div style="font-size:28px;font-weight:900;color:#3FB950" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ALERTAS ON</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="var c=document.querySelectorAll('.alert-section input[type=checkbox]:checked').length;alert(c+' alertas activas')"><div style="font-size:28px;font-weight:900;color:#3FB950" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ALERTAS ON</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
-    <div style="flex:1;text-align:center"><div style="font-size:28px;font-weight:900;color:#D4A017" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ACTIVOS</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="alert('Monitoreando '+(window._alertScope==='portfolio'?'Mi Portfolio':(window._alertScope==='watchlist'?'Mi Watchlist':'Todos (304 activos)')))"><div style="font-size:28px;font-weight:900;color:#D4A017" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ACTIVOS</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
-    <div style="flex:1;text-align:center"><div style="font-size:28px;font-weight:900;color:#555" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">WHATSAPP</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:#555" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">WHATSAPP</div></div>
   </div>
 </div>
 
