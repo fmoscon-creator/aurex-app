@@ -289,7 +289,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
     history.replaceState(null,'',u.toString());
   }
 
-  localStorage.setItem('aurex_onboarding_done','1'); var _done = true;
+  var _done = localStorage.getItem('aurex_onboarding_done') === '1';
 
   // Auto-login si no hay sesion + auto-navigate a tab
   var _alParams = new URLSearchParams(window.location.search);
