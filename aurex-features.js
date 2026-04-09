@@ -1982,6 +1982,31 @@ window.wlToggleCompare = function(sym){
   renderWatchCnt();
 };
 
+window.wlCompareSetPeriod = function(p){
+  window._wlComparePeriod = p;
+  // Actualizar botones activos
+  ['24h','7d','1m','3m','1y'].forEach(function(k){
+    var btn = document.getElementById('wl-cmp-per-'+k);
+    if(btn){
+      btn.style.background = k===p ? '#D4A017' : '#21262D';
+      btn.style.color = k===p ? '#000' : '#8B949E';
+    }
+  });
+  // Actualizar label y valores de cambio
+  var labelEl = document.getElementById('wl-cmp-chg-label');
+  if(labelEl) labelEl.textContent = 'Cambio '+p;
+  var items = window._wlCompareItems || [];
+  var chg = window._pcChange24 || {};
+  items.forEach(function(t, i){
+    var el = document.getElementById('wl-cmp-chg-'+i);
+    if(el){
+      var c = chg[t] || 0;
+      el.textContent = _fmt(c, 'pct');
+      el.style.color = c >= 0 ? '#3FB950' : '#F85149';
+    }
+  });
+};
+
 window.wlShowCompare = function(){
   try {
   var items = window._wlCompareItems;
@@ -2005,12 +2030,12 @@ window.wlShowCompare = function(){
 
   var html = '<div style="padding:14px;border-bottom:1px solid #21262D;display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:700;color:#D4A017">⚖️ Comparador AUREX</span><a href="javascript:void(0)" onclick="document.getElementById(\'wl-compare-overlay\').remove();window._wlCompareMode=false;window._wlCompareItems=[];renderWatchCnt();" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">✕</a></div>';
 
-  // Period buttons
+  // Period buttons — actualizan el contenido in-place sin cerrar el overlay
   var _curPer = window._wlComparePeriod || '24h';
   html += '<div style="display:flex;justify-content:center;gap:6px;padding:10px;border-bottom:0.5px solid #21262D">';
   ['24h','7d','1m','3m','1y'].forEach(function(p){
     var isActive = p === _curPer;
-    html += '<a href="javascript:void(0)" onclick="window._wlComparePeriod=\''+p+'\';document.getElementById(\'wl-compare-overlay\').remove();window.wlShowCompare();" style="padding:4px 12px;border-radius:6px;background:'+(isActive?'#D4A017':'#21262D')+';color:'+(isActive?'#000':'#8B949E')+';font-size:11px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">'+p+'</a>';
+    html += '<a href="javascript:void(0)" id="wl-cmp-per-'+p+'" onclick="wlCompareSetPeriod(\''+p+'\')" style="padding:4px 12px;border-radius:6px;background:'+(isActive?'#D4A017':'#21262D')+';color:'+(isActive?'#000':'#8B949E')+';font-size:11px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">'+p+'</a>';
   });
   html += '</div>';
 
@@ -2042,13 +2067,14 @@ window.wlShowCompare = function(){
     {label:'Señal IA', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+d+'</span>';}},
     {label:'Probabilidad', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+getProb(t)+'%</span>';}},
     {label:'Precio', fn:function(t){var p=getPrice(t);return '<span style="color:#E6EDF3;font-weight:700">'+(p?'$'+_fmt(p):'---')+'</span>';}},
-    {label:'Cambio '+_curPer, fn:function(t){var c=getChange(t);return '<span style="color:'+(c>=0?'#3FB950':'#F85149')+';font-weight:700">'+_fmt(c,'pct')+'</span>';}},
+    {label:'Cambio '+_curPer, labelId:'wl-cmp-chg-label', fn:function(t,i){var c=getChange(t);return '<span id="wl-cmp-chg-'+i+'" style="color:'+(c>=0?'#3FB950':'#F85149')+';font-weight:700">'+_fmt(c,'pct')+'</span>';}},
     {label:'Objetivo', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:#3FB950;font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?0.95:1.08)):'---')+'</span>';}},
     {label:'Stop', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:#F85149;font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?1.03:0.96)):'---')+'</span>';}},
   ];
   rows.forEach(function(row){
-    html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:0.5px solid #21262D"><div style="width:100px;font-size:10px;font-weight:600;color:#8B949E">'+row.label+'</div>';
-    items.forEach(function(t){ html += '<div style="width:120px;text-align:center;font-size:13px">'+row.fn(t)+'</div>'; });
+    var labelHtml = row.labelId ? '<div id="'+row.labelId+'" style="width:100px;font-size:10px;font-weight:600;color:#8B949E">'+row.label+'</div>' : '<div style="width:100px;font-size:10px;font-weight:600;color:#8B949E">'+row.label+'</div>';
+    html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:0.5px solid #21262D">'+labelHtml;
+    items.forEach(function(t,i){ html += '<div style="width:120px;text-align:center;font-size:13px">'+row.fn(t,i)+'</div>'; });
     html += '</div>';
   });
 
