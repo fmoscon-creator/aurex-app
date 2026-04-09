@@ -1105,13 +1105,8 @@ function _updateTotals(items){
     else if(txt.indexOf('1m')>=0) currentPeriod = '1m';
     else if(txt.indexOf('7d')>=0) currentPeriod = '7d';
   }
-  var hasPrices = window._IA_PRECIOS && Object.keys(window._IA_PRECIOS).length > 0;
-  if(hasPrices && typeof window._calcPortPeriod === 'function') {
+  if(typeof window._calcPortPeriod === 'function') {
     window._calcPortPeriod(currentPeriod);
-  } else {
-    // Sin precios aún: no mostrar P&L falso
-    if(el('port-pnl-usd')){ el('port-pnl-usd').textContent = '...'; el('port-pnl-usd').style.color = '#8B949E'; }
-    if(el('port-pnl-pct')){ el('port-pnl-pct').textContent = '...'; el('port-pnl-pct').style.color = '#8B949E'; el('port-pnl-pct').style.background = 'transparent'; }
   }
   _renderThermoRisk(items);
   _renderMarketBanner();
