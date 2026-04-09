@@ -1778,7 +1778,16 @@ window.renderWatchCnt = function(){
       html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:#8B949E;background:#21262D;padding:4px 8px;border-radius:6px;cursor:pointer;border:1px solid #30363D;text-decoration:none">☆ Marcar principal</a>';
     }
     html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
-    html += '<a href="javascript:void(0)" data-wl="compareMode" style="font-size:9px;font-weight:700;color:#D4A017;background:#D4A01720;padding:4px 8px;border-radius:6px;border:1px solid #D4A01740;text-decoration:none;cursor:pointer">⚖️ Comparar</a>';
+    var _cmpLabel = '⚖️ Comparar';
+    var _cmpStyle = 'font-size:9px;font-weight:700;color:#D4A017;background:#D4A01720;padding:4px 8px;border-radius:6px;border:1px solid #D4A01740;text-decoration:none;cursor:pointer';
+    if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
+      _cmpLabel = '⚖️ Comparar ' + window._wlCompareItems.length;
+      _cmpStyle = 'font-size:9px;font-weight:700;color:#000;background:#D4A017;padding:4px 8px;border-radius:6px;text-decoration:none;cursor:pointer';
+    } else if(window._wlCompareMode){
+      _cmpLabel = '✕ Cancelar';
+      _cmpStyle = 'font-size:9px;font-weight:700;color:#F85149;background:#F8514920;padding:4px 8px;border-radius:6px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
+    }
+    html += '<a href="javascript:void(0)" data-wl="compareMode" style="'+_cmpStyle+'">'+_cmpLabel+'</a>';
     html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:#D4A017;color:#000;font-size:11px;font-weight:700;cursor:pointer;border-radius:6px">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
     html += '</div>';
@@ -1787,11 +1796,7 @@ window.renderWatchCnt = function(){
   // Botón comparar (arriba de los activos, siempre visible)
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
-    if(_cc >= 2){
-      html += '<div style="padding:8px 14px"><a href="javascript:void(0)" data-wl="compareGo" style="display:block;background:#D4A017;border-radius:10px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">⚖️ Comparar '+_cc+' activos</a></div>';
-    } else {
-      html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:#8B949E">Selecciona 2 o 3 activos</span></div>';
-    }
+    html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:#8B949E">'+(_cc >= 2 ? '✓ '+_cc+' seleccionados — toca ⚖️ Comparar arriba' : 'Selecciona 2 a 5 activos')+'</span></div>';
   }
 
   // Lista de activos
@@ -1943,9 +1948,21 @@ window._wlCompareMode = false;
 window._wlCompareItems = [];
 
 window.wlStartCompare = function(){
-  window._wlCompareMode = !window._wlCompareMode;
+  // Si ya estamos en modo comparar y hay 2+ seleccionados → abrir popup
+  if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
+    window.wlShowCompare();
+    return;
+  }
+  // Si estamos en modo comparar sin suficientes → salir del modo
+  if(window._wlCompareMode){
+    window._wlCompareMode = false;
+    window._wlCompareItems = [];
+    renderWatchCnt();
+    return;
+  }
+  // Entrar en modo comparar
+  window._wlCompareMode = true;
   window._wlCompareItems = [];
-  var old = document.getElementById('wl-cmp-btn'); if(old) old.remove();
   renderWatchCnt();
 };
 
