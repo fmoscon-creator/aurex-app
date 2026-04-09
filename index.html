@@ -556,8 +556,137 @@ function showAlertVars(tipo){
   document.body.appendChild(overlay);
 }
 
-// Alertas — cargar aguja Pulse y conteo al entrar
-setTimeout(function(){ setPulseZoneFilter('GLOBAL'); updateAlertCount(); }, 3000);
+// ═══ MOTOR DE ALERTAS REAL ═══
+window._alertTriggered = [];
+window._alertSubFilter = null;
+
+function loadAlertEngine(){
+  var BACKEND = 'https://aurex-app-production.up.railway.app';
+  var USER_ID = '174187a7-d640-459b-9426-9c28146f4e23';
+  // Cargar señales + portfolio + watchlist + pulse
+  Promise.all([
+    fetch(BACKEND+'/api/ia-signals').then(function(r){return r.json();}),
+    fetch(BACKEND+'/api/portfolio/'+USER_ID).then(function(r){return r.json();}),
+    fetch(BACKEND+'/api/watchlists/'+USER_ID+'/items').then(function(r){return r.json();}),
+    fetch(BACKEND+'/api/pulse').then(function(r){return r.json();})
+  ]).then(function(results){
+    window._alertSignals = results[0].signals || [];
+    window._alertPortSyms = (results[1]||[]).map(function(d){return d.simbolo;});
+    var wlItems = results[2]||{};
+    var wlSyms = [];
+    Object.values(wlItems).forEach(function(arr){arr.forEach(function(i){if(wlSyms.indexOf(i.ticker)<0)wlSyms.push(i.ticker);});});
+    window._alertWLSyms = wlSyms;
+    window._alertPulse = results[3]&&results[3].scores ? results[3].scores : {};
+    calculateAlerts();
+    setPulseZoneFilter('GLOBAL');
+  }).catch(function(){});
+}
+
+function calculateAlerts(){
+  var sigs = window._alertSignals || [];
+  var scope = window._alertScope || 'todos';
+  var scopeSyms = scope==='portfolio' ? (window._alertPortSyms||[]) : scope==='watchlist' ? (window._alertWLSyms||[]) : sigs.map(function(s){return s.simbolo;});
+  var filtered = sigs.filter(function(s){return scopeSyms.indexOf(s.simbolo)>=0;});
+  var checks = document.querySelectorAll('.alert-section input[type=checkbox]');
+  var toggleIds = ['ia_cambio','ia_alta','ia_umbral','ia_portfolio','pulse_zona','pulse_cat','pulse_thermo','precio_objetivo','precio_variacion','precio_maxmin','ev_fomc','ev_cpi','ev_apertura','ev_earnings','ev_gdelt'];
+  var toggles = {};
+  checks.forEach(function(c,i){if(toggleIds[i])toggles[toggleIds[i]]=c.checked;});
+  var pctThreshold = 5;
+  var probThreshold = 75;
+  var alerts = [];
+
+  filtered.forEach(function(sig){
+    var prob = sig.confianza||sig.probPrincipal||0;
+    var precio = sig.precio||0;
+    var precio24h = sig.precio24h||0;
+    var change = (precio>0.001&&precio24h>0.001)?((precio-precio24h)/precio24h*100):0;
+    if(Math.abs(change)>50) return;
+    var dir = (sig.direccion||'').toUpperCase();
+    var sym = sig.simbolo;
+    var fP = precio>=1000?'$'+Math.round(precio).toLocaleString('es-AR'):precio>=1?'$'+precio.toFixed(2):precio>=0.01?'$'+precio.toFixed(4):'$'+precio.toFixed(6);
+
+    if(toggles.ia_alta && dir.indexOf('ALTA CONV')>=0 && prob>=85)
+      alerts.push({tipo:'ia',sub:'alta_conv',sym:sym,icon:'⚡',titulo:sym+' — ALTA CONV '+prob+'%',desc:fP+' · '+(change>=0?'+':'')+change.toFixed(1)+'%',color:'#D4A017'});
+    if(toggles.ia_cambio && dir==='BAJISTA' && prob>=80)
+      alerts.push({tipo:'ia',sub:'cambio',sym:sym,icon:'📉',titulo:sym+' — BAJISTA '+prob+'%',desc:fP+' · Senal bajista fuerte',color:'#F85149'});
+    if(toggles.ia_umbral && prob>=probThreshold && !(dir.indexOf('ALTA CONV')>=0&&prob>=85))
+      alerts.push({tipo:'ia',sub:'umbral',sym:sym,icon:'🎯',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · Supera umbral '+probThreshold+'%',color:'#A78BFA'});
+    if(toggles.precio_variacion && Math.abs(change)>=pctThreshold)
+      alerts.push({tipo:'precio',sub:'variacion',sym:sym,icon:change>=0?'📈':'📉',titulo:sym+' '+(change>=0?'+':'')+change.toFixed(1)+'%',desc:fP+' en 24hs',color:change>=0?'#3FB950':'#F85149'});
+    if(toggles.precio_maxmin && sig.rsi){
+      if(sig.rsi>=70) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔺',titulo:sym+' — RSI '+sig.rsi,desc:'Sobrecompra · '+fP,color:'#F85149'});
+      else if(sig.rsi<=30) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔻',titulo:sym+' — RSI '+sig.rsi,desc:'Sobreventa · '+fP,color:'#3FB950'});
+    }
+    if(toggles.ia_portfolio && scope==='portfolio' && prob>=70)
+      alerts.push({tipo:'ia',sub:'portfolio',sym:sym,icon:'💼',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · En tu portfolio',color:'#A78BFA'});
+  });
+
+  var pulse = window._alertPulse||{};
+  if(toggles.pulse_zona){
+    var gs = pulse.GLOBAL?(pulse.GLOBAL.value||0):0;
+    if(gs>0&&gs<=20) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'🔴',titulo:'MIEDO EXTREMO',desc:'Score: '+gs,color:'#EC4899'});
+    else if(gs>=80) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'🟢',titulo:'CODICIA EXTREMA',desc:'Score: '+gs,color:'#EC4899'});
+  }
+  if(toggles.pulse_cat){
+    ['CRIPTO','ACCIONES','COMOD','FUTUROS'].forEach(function(cat){
+      var raw=pulse[cat];var sc=raw?(typeof raw==='number'?raw:(raw.value||0)):0;
+      if(sc>0&&(sc<=25||sc>=75)) alerts.push({tipo:'pulse',sub:'cat',sym:cat,icon:sc<=25?'🔴':'🟢',titulo:cat+' — '+(sc<=25?'MIEDO':'CODICIA'),desc:'Score: '+Math.round(sc),color:'#EC4899'});
+    });
+  }
+
+  // Dedup
+  var seen={};
+  window._alertTriggered = alerts.filter(function(a){var k=a.sym+'_'+a.tipo+'_'+a.icon;if(seen[k])return false;seen[k]=1;return true;});
+  renderTriggeredAlerts();
+  // Update count
+  var el = document.getElementById('alert-active');
+  if(el) el.textContent = checks.length ? Array.from(checks).filter(function(c){return c.checked;}).length : 0;
+  var sc = document.getElementById('alert-scope-count');
+  if(sc) sc.textContent = scopeSyms.length;
+}
+
+function renderTriggeredAlerts(){
+  var list = document.getElementById('alert-triggered-list');
+  if(!list) return;
+  var all = window._alertTriggered||[];
+  var typeF = window._alertTypeFilter||'todas';
+  var subF = window._alertSubFilter;
+  var shown = typeF==='todas' ? all : all.filter(function(a){return a.tipo===typeF;});
+  if(subF) shown = shown.filter(function(a){return a.sub===subF;});
+  var countEl = document.getElementById('alert-triggered-count');
+  if(countEl){countEl.textContent=shown.length;countEl.style.display=shown.length>0?'inline':'none';}
+  if(shown.length===0){
+    list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">✅</div><div style="font-size:13px;font-weight:500;color:#8B949E">Sin alertas en este filtro</div><div style="font-size:10px;color:#8B949E;margin-top:4px">Proba cambiando filtros o umbrales</div></div>';
+    return;
+  }
+  list.innerHTML = shown.map(function(a){
+    return '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:0.5px solid #13171D"><span style="font-size:16px">'+a.icon+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#E6EDF3">'+a.titulo+'</div><div style="font-size:10px;color:#8B949E;margin-top:1px">'+a.desc+'</div></div><div style="width:8px;height:8px;border-radius:4px;background:'+a.color+'"></div></div>';
+  }).join('');
+}
+
+// Override setAlertScope para recalcular
+var _origSetScope = window.setAlertScope;
+window.setAlertScope = function(s){
+  window._alertScope = s;
+  if(_origSetScope) _origSetScope(s);
+  calculateAlerts();
+};
+
+// Override setAlertTypeFilter
+window.setAlertTypeFilter = function(tipo){
+  window._alertTypeFilter = tipo;
+  window._alertSubFilter = null;
+  // Update buttons
+  var btns = document.querySelectorAll('#alert-type-filters > span');
+  btns.forEach(function(b){var t=b.textContent.toLowerCase();var isSel=(tipo==='todas'&&t.indexOf('todas')>=0)||(tipo==='ia'&&t.indexOf('ia')>=0)||(tipo==='precio'&&t.indexOf('precio')>=0)||(tipo==='pulse'&&t.indexOf('pulse')>=0);b.style.background=isSel?'#D4A017':'#21262D';b.style.color=isSel?'#000':'#8B949E';});
+  renderTriggeredAlerts();
+};
+
+// Toggle change recalcula
+document.addEventListener('change',function(e){if(e.target.closest('.alert-section'))setTimeout(calculateAlerts,50);});
+
+// Cargar al entrar
+setTimeout(loadAlertEngine, 2000);
 
 // Alertas — filtro scope
 window._alertScope = 'todos';
