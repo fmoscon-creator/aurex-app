@@ -1982,6 +1982,8 @@ window.wlToggleCompare = function(sym){
   renderWatchCnt();
 };
 
+window._wlCompareHist = {}; // { ticker: { '24h': change, '7d': change, ... } }
+
 window.wlCompareSetPeriod = function(p){
   window._wlComparePeriod = p;
   // Actualizar botones activos
@@ -1996,14 +1998,73 @@ window.wlCompareSetPeriod = function(p){
   var labelEl = document.getElementById('wl-cmp-chg-label');
   if(labelEl) labelEl.textContent = 'Cambio '+p;
   var items = window._wlCompareItems || [];
-  var chg = window._pcChange24 || {};
+  var hist = window._wlCompareHist || {};
   items.forEach(function(t, i){
     var el = document.getElementById('wl-cmp-chg-'+i);
     if(el){
-      var c = chg[t] || 0;
+      var c = (hist[t] && hist[t][p] !== undefined) ? hist[t][p] : 0;
       el.textContent = _fmt(c, 'pct');
       el.style.color = c >= 0 ? '#3FB950' : '#F85149';
     }
+  });
+  // Actualizar mejor performance
+  var bestSym = null, bestChg = -Infinity;
+  items.forEach(function(t){
+    var c = (hist[t] && hist[t][p] !== undefined) ? hist[t][p] : 0;
+    if(c > bestChg){ bestChg = c; bestSym = t; }
+  });
+  items.forEach(function(t){
+    var badge = document.getElementById('wl-cmp-best-'+t);
+    if(badge) badge.style.display = (t === bestSym) ? 'inline-block' : 'none';
+    var frame = document.getElementById('wl-cmp-frame-'+t);
+    if(frame){
+      frame.style.borderColor = (t === bestSym) ? '#D4A017' : 'transparent';
+      frame.style.borderWidth = (t === bestSym) ? '2px' : '0px';
+    }
+  });
+};
+
+// Cargar datos históricos para comparador
+window.wlLoadCompareHist = function(){
+  var items = window._wlCompareItems || [];
+  var chg24 = window._pcChange24 || {};
+  var acts = window._IA_ACTIVOS || [];
+  var rangeMap = {'7d':'5d','1m':'1mo','3m':'3mo','1y':'1y'};
+
+  items.forEach(function(t){
+    if(!window._wlCompareHist[t]) window._wlCompareHist[t] = {};
+    window._wlCompareHist[t]['24h'] = chg24[t] || 0;
+
+    var act = acts.find(function(a){return a.s===t;});
+    var isCrypto = act && (act.tipo==='cripto'||act.t==='Cripto');
+
+    Object.keys(rangeMap).forEach(function(per){
+      var range = rangeMap[per];
+      if(isCrypto){
+        var limit = per==='7d'?7:per==='1m'?30:per==='3m'?90:365;
+        fetch('https://api.binance.com/api/v3/klines?symbol='+t+'USDT&interval=1d&limit='+limit)
+          .then(function(r){return r.json();})
+          .then(function(data){
+            if(Array.isArray(data)&&data.length>1){
+              var first=parseFloat(data[0][1]);var last=parseFloat(data[data.length-1][4]);
+              window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;
+            }
+          }).catch(function(){});
+      } else {
+        fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+t+'&interval=1d&range='+range)
+          .then(function(r){return r.json();})
+          .then(function(data){
+            if(data&&data.chart&&data.chart.result&&data.chart.result[0]){
+              var closes=data.chart.result[0].indicators&&data.chart.result[0].indicators.quote&&data.chart.result[0].indicators.quote[0]?data.chart.result[0].indicators.quote[0].close:[];
+              var valid=closes.filter(function(c){return c!=null;});
+              if(valid.length>1){
+                var first=valid[0];var last=valid[valid.length-1];
+                window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;
+              }
+            }
+          }).catch(function(){});
+      }
+    });
   });
 };
 
@@ -2116,8 +2177,8 @@ window.wlShowCompare = function(){
   overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#000000EE;z-index:9999;overflow-y:auto';
   overlay.innerHTML = html;
   document.body.appendChild(overlay);
-  window._wlCompareMode = false;
-  window._wlCompareItems = [];
+  // Cargar datos históricos en background
+  window.wlLoadCompareHist();
   } catch(err) { alert('Error comparador: ' + err.message); }
 };
 
