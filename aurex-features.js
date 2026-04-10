@@ -2245,6 +2245,9 @@ document.addEventListener('DOMContentLoaded', function(){
 
 // iOS Safari fix: event delegation global para TODOS los clicks de watchlist
 document.addEventListener('click', function(e){
+  // Checkbox comparar activo
+  var cmpEl = e.target.closest('[data-wl-compare]');
+  if(cmpEl){ e.stopPropagation(); window.wlToggleCompare(cmpEl.getAttribute('data-wl-compare')); return; }
   // Boton "+ Nueva lista" en header
   var btn = e.target.closest('#wl-btn-nueva');
   if(btn){ e.preventDefault(); window.wlCreateListModal(); return; }
