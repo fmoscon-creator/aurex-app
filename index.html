@@ -436,7 +436,7 @@ html,body{height:100%;width:100%;background:#0D1117;font-family:-apple-system,Bl
   }
 })();
 </script>
-<script src="aurex-v3.js?v=13"></script>
+<script src="aurex-v3.js?v=14"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -482,7 +482,7 @@ function toggleAlertSection(key){
   if(!body)return;
   var isOpen=body.style.display!=='none';
   body.style.display=isOpen?'none':'block';
-  if(arrow)arrow.textContent=isOpen?'▼':'▲';
+  if(arrow)arrow.textContent=isOpen?'â¼':'â²';
 }
 function toggleWABanner(){
   var toggle = document.getElementById('wa-toggle');
@@ -490,7 +490,7 @@ function toggleWABanner(){
   var ch = document.getElementById('wa-check');
   var isOn = toggle ? toggle.checked : false;
   if(ti) ti.textContent = isOn ? 'WhatsApp conectado' : 'Alertas por WhatsApp';
-  if(ch){ ch.textContent = isOn ? '✓' : '—'; ch.style.color = isOn ? '#3FB950' : '#555'; }
+  if(ch){ ch.textContent = isOn ? 'â' : 'â'; ch.style.color = isOn ? '#3FB950' : '#555'; }
 }
 function updateAlertCount(){
   var sections=['ia','pulse','precio','eventos'];
@@ -512,7 +512,7 @@ function updateAlertCount(){
 function showAlertVars(tipo){
   var existing = document.getElementById('alert-vars-modal'); if(existing) existing.remove();
   var isIA = tipo === 'ia';
-  var title = isIA ? '🤖 Motor IA' : '💓 AUREX Pulse';
+  var title = isIA ? 'ð¤ Motor IA' : 'ð AUREX Pulse';
   var sub = isIA ? '10 variables de analisis por activo' : '14 variables macro del mercado global';
   var color = isIA ? '#A78BFA' : '#EC4899';
   var vars = isIA ? [
@@ -542,7 +542,7 @@ function showAlertVars(tipo){
     {n:'Macro FED',d:'FRED',p:'12%',c:'#3FB950'},
     {n:'Geopolitica',d:'GDELT',p:'4%',c:'#F85149'},
   ];
-  var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">'+(isIA?'🤖':'💓')+'</div><div><div style="font-size:15px;font-weight:700;color:'+color+'">'+title+'</div><div style="font-size:10px;color:#8B949E">'+sub+'</div></div></div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-vars-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">✕</a></div>';
+  var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">'+(isIA?'ð¤':'ð')+'</div><div><div style="font-size:15px;font-weight:700;color:'+color+'">'+title+'</div><div style="font-size:10px;color:#8B949E">'+sub+'</div></div></div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-vars-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">â</a></div>';
   if(isIA) html += '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px"><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:#3FB950;border-radius:2px"></div><span style="font-size:9px;color:#3FB950;font-weight:600">Peso Alto</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:#D4A017;border-radius:2px"></div><span style="font-size:9px;color:#D4A017;font-weight:600">Peso Medio</span></div></div>';
   vars.forEach(function(v,i){
     html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid #21262D;border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:#D4A017;width:20px;text-align:center">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:#E6EDF3">'+v.n+'</div><div style="font-size:9px;color:#8B949E;margin-top:1px">'+v.d+'</div></div><div style="background:'+v.c+'20;padding:3px 8px;border-radius:6px"><span style="font-size:10px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
@@ -556,14 +556,14 @@ function showAlertVars(tipo){
   document.body.appendChild(overlay);
 }
 
-// ═══ MOTOR DE ALERTAS REAL ═══
+// âââ MOTOR DE ALERTAS REAL âââ
 window._alertTriggered = [];
 window._alertSubFilter = null;
 
 function loadAlertEngine(){
   var BACKEND = 'https://aurex-app-production.up.railway.app';
   var USER_ID = '174187a7-d640-459b-9426-9c28146f4e23';
-  // Cargar señales + portfolio + watchlist + pulse
+  // Cargar seÃ±ales + portfolio + watchlist + pulse
   Promise.all([
     fetch(BACKEND+'/api/ia-signals').then(function(r){return r.json();}),
     fetch(BACKEND+'/api/portfolio/'+USER_ID).then(function(r){return r.json();}),
@@ -606,31 +606,31 @@ function calculateAlerts(){
     var fP = precio>=1000?'$'+Math.round(precio).toLocaleString('es-AR'):precio>=1?'$'+precio.toFixed(2):precio>=0.01?'$'+precio.toFixed(4):'$'+precio.toFixed(6);
 
     if(toggles.ia_alta && dir.indexOf('ALTA CONV')>=0 && prob>=85)
-      alerts.push({tipo:'ia',sub:'alta_conv',sym:sym,icon:'⚡',titulo:sym+' — ALTA CONV '+prob+'%',desc:fP+' · '+(change>=0?'+':'')+change.toFixed(1)+'%',color:'#D4A017'});
+      alerts.push({tipo:'ia',sub:'alta_conv',sym:sym,icon:'â¡',titulo:sym+' â ALTA CONV '+prob+'%',desc:fP+' Â· '+(change>=0?'+':'')+change.toFixed(1)+'%',color:'#D4A017'});
     if(toggles.ia_cambio && dir==='BAJISTA' && prob>=80)
-      alerts.push({tipo:'ia',sub:'cambio',sym:sym,icon:'📉',titulo:sym+' — BAJISTA '+prob+'%',desc:fP+' · Senal bajista fuerte',color:'#F85149'});
+      alerts.push({tipo:'ia',sub:'cambio',sym:sym,icon:'ð',titulo:sym+' â BAJISTA '+prob+'%',desc:fP+' Â· Senal bajista fuerte',color:'#F85149'});
     if(toggles.ia_umbral && prob>=probThreshold && !(dir.indexOf('ALTA CONV')>=0&&prob>=85))
-      alerts.push({tipo:'ia',sub:'umbral',sym:sym,icon:'🎯',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · Supera umbral '+probThreshold+'%',color:'#A78BFA'});
+      alerts.push({tipo:'ia',sub:'umbral',sym:sym,icon:'ð¯',titulo:sym+' â '+dir+' '+prob+'%',desc:fP+' Â· Supera umbral '+probThreshold+'%',color:'#A78BFA'});
     if(toggles.precio_variacion && Math.abs(change)>=pctThreshold)
-      alerts.push({tipo:'precio',sub:'variacion',sym:sym,icon:change>=0?'📈':'📉',titulo:sym+' '+(change>=0?'+':'')+change.toFixed(1)+'%',desc:fP+' en 24hs',color:change>=0?'#3FB950':'#F85149'});
+      alerts.push({tipo:'precio',sub:'variacion',sym:sym,icon:change>=0?'ð':'ð',titulo:sym+' '+(change>=0?'+':'')+change.toFixed(1)+'%',desc:fP+' en 24hs',color:change>=0?'#3FB950':'#F85149'});
     if(toggles.precio_maxmin && sig.rsi){
-      if(sig.rsi>=70) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔺',titulo:sym+' — RSI '+sig.rsi,desc:'Sobrecompra · '+fP,color:'#F85149'});
-      else if(sig.rsi<=30) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔻',titulo:sym+' — RSI '+sig.rsi,desc:'Sobreventa · '+fP,color:'#3FB950'});
+      if(sig.rsi>=70) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'ðº',titulo:sym+' â RSI '+sig.rsi,desc:'Sobrecompra Â· '+fP,color:'#F85149'});
+      else if(sig.rsi<=30) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'ð»',titulo:sym+' â RSI '+sig.rsi,desc:'Sobreventa Â· '+fP,color:'#3FB950'});
     }
     if(toggles.ia_portfolio && scope==='portfolio' && prob>=70)
-      alerts.push({tipo:'ia',sub:'portfolio',sym:sym,icon:'💼',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · En tu portfolio',color:'#A78BFA'});
+      alerts.push({tipo:'ia',sub:'portfolio',sym:sym,icon:'ð¼',titulo:sym+' â '+dir+' '+prob+'%',desc:fP+' Â· En tu portfolio',color:'#A78BFA'});
   });
 
   var pulse = window._alertPulse||{};
   if(toggles.pulse_zona){
     var gs = pulse.GLOBAL?(pulse.GLOBAL.value||0):0;
-    if(gs>0&&gs<=20) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'🔴',titulo:'MIEDO EXTREMO',desc:'Score: '+gs,color:'#EC4899'});
-    else if(gs>=80) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'🟢',titulo:'CODICIA EXTREMA',desc:'Score: '+gs,color:'#EC4899'});
+    if(gs>0&&gs<=20) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'ð´',titulo:'MIEDO EXTREMO',desc:'Score: '+gs,color:'#EC4899'});
+    else if(gs>=80) alerts.push({tipo:'pulse',sub:'zona',sym:'PULSE',icon:'ð¢',titulo:'CODICIA EXTREMA',desc:'Score: '+gs,color:'#EC4899'});
   }
   if(toggles.pulse_cat){
     ['CRIPTO','ACCIONES','COMOD','FUTUROS'].forEach(function(cat){
       var raw=pulse[cat];var sc=raw?(typeof raw==='number'?raw:(raw.value||0)):0;
-      if(sc>0&&(sc<=25||sc>=75)) alerts.push({tipo:'pulse',sub:'cat',sym:cat,icon:sc<=25?'🔴':'🟢',titulo:cat+' — '+(sc<=25?'MIEDO':'CODICIA'),desc:'Score: '+Math.round(sc),color:'#EC4899'});
+      if(sc>0&&(sc<=25||sc>=75)) alerts.push({tipo:'pulse',sub:'cat',sym:cat,icon:sc<=25?'ð´':'ð¢',titulo:cat+' â '+(sc<=25?'MIEDO':'CODICIA'),desc:'Score: '+Math.round(sc),color:'#EC4899'});
     });
   }
 
@@ -653,7 +653,7 @@ function renderTriggeredAlerts(){
   // Render filtros principales con conteo
   var filtersEl = document.getElementById('alert-type-filters');
   if(filtersEl){
-    var mainFilters = [{key:'todas',label:'Todas'},{key:'ia',label:'🤖 IA'},{key:'precio',label:'💰 Precio'},{key:'pulse',label:'💓 Pulse'}];
+    var mainFilters = [{key:'todas',label:'Todas'},{key:'ia',label:'ð¤ IA'},{key:'precio',label:'ð° Precio'},{key:'pulse',label:'ð Pulse'}];
     filtersEl.innerHTML = mainFilters.map(function(f){
       var count = f.key==='todas' ? all.length : all.filter(function(a){return a.tipo===f.key;}).length;
       var isSel = typeF===f.key;
@@ -673,11 +673,11 @@ function renderTriggeredAlerts(){
   if(typeF !== 'todas'){
     var typeAlerts = all.filter(function(a){return a.tipo===typeF;});
     var subDefs = typeF==='ia' ? [
-      {key:null,label:'Todas IA',clr:'#A78BFA'},{key:'alta_conv',label:'⚡ Alta Conv',clr:'#A78BFA'},{key:'cambio',label:'📉 Cambio',clr:'#A78BFA'},{key:'umbral',label:'🎯 Umbral',clr:'#A78BFA'},{key:'portfolio',label:'💼 Portfolio',clr:'#A78BFA'}
+      {key:null,label:'Todas IA',clr:'#A78BFA'},{key:'alta_conv',label:'â¡ Alta Conv',clr:'#A78BFA'},{key:'cambio',label:'ð Cambio',clr:'#A78BFA'},{key:'umbral',label:'ð¯ Umbral',clr:'#A78BFA'},{key:'portfolio',label:'ð¼ Portfolio',clr:'#A78BFA'}
     ] : typeF==='precio' ? [
-      {key:null,label:'Todos Precio',clr:'#D4A017'},{key:'variacion',label:'📈 Variacion',clr:'#D4A017'},{key:'rsi',label:'🔺 RSI',clr:'#D4A017'}
+      {key:null,label:'Todos Precio',clr:'#D4A017'},{key:'variacion',label:'ð Variacion',clr:'#D4A017'},{key:'rsi',label:'ðº RSI',clr:'#D4A017'}
     ] : [
-      {key:null,label:'Todos Pulse',clr:'#EC4899'},{key:'zona',label:'🔴 Zona',clr:'#EC4899'},{key:'cat',label:'📊 Categoria',clr:'#EC4899'}
+      {key:null,label:'Todos Pulse',clr:'#EC4899'},{key:'zona',label:'ð´ Zona',clr:'#EC4899'},{key:'cat',label:'ð Categoria',clr:'#EC4899'}
     ];
     subEl.innerHTML = subDefs.map(function(f){
       var count = f.key ? typeAlerts.filter(function(a){return a.sub===f.key;}).length : typeAlerts.length;
@@ -697,7 +697,7 @@ function renderTriggeredAlerts(){
   var list = document.getElementById('alert-triggered-list');
   if(!list) return;
   if(shown.length===0){
-    list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">✅</div><div style="font-size:13px;font-weight:500;color:#8B949E">Sin alertas en este filtro</div><div style="font-size:10px;color:#8B949E;margin-top:4px">Proba cambiando filtros o umbrales</div></div>';
+    list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">â</div><div style="font-size:13px;font-weight:500;color:#8B949E">Sin alertas en este filtro</div><div style="font-size:10px;color:#8B949E;margin-top:4px">Proba cambiando filtros o umbrales</div></div>';
     return;
   }
   list.innerHTML = shown.map(function(a){
@@ -730,7 +730,7 @@ window.setAlertSubFilter = function(sub){
 function showAlertInfoModal(tipo){
   var existing = document.getElementById('alert-info-modal'); if(existing) existing.remove();
   var title, subtitle, items = [];
-  var sections = [{icon:'🤖',title:'Alertas IA',count:4},{icon:'💓',title:'Alertas PULSE',count:3},{icon:'💰',title:'Alertas de Precio',count:3},{icon:'📅',title:'Alertas de Eventos',count:5}];
+  var sections = [{icon:'ð¤',title:'Alertas IA',count:4},{icon:'ð',title:'Alertas PULSE',count:3},{icon:'ð°',title:'Alertas de Precio',count:3},{icon:'ð',title:'Alertas de Eventos',count:5}];
   if(tipo==='alertas'){
     var checks = document.querySelectorAll('.alert-section input[type=checkbox]:checked');
     title = checks.length + ' Alertas activas';
@@ -738,7 +738,7 @@ function showAlertInfoModal(tipo){
     subtitle = 'Monitoreando ' + (scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos (304)');
     var toggleLabels = ['Cambio de senal','Alta Conviccion','Umbral probabilidad','Senal en Portfolio','Cambio de zona','Por categoria','Termometro de Riesgo','Precio objetivo','Variacion brusca','Nuevo maximo/minimo','FED FOMC','CPI / PBI','Apertura mercados','Earnings portfolio','Geopolitica GDELT'];
     var allChecks = document.querySelectorAll('.alert-section input[type=checkbox]');
-    allChecks.forEach(function(c,i){if(c.checked && toggleLabels[i]) items.push({icon:'✅',label:toggleLabels[i]});});
+    allChecks.forEach(function(c,i){if(c.checked && toggleLabels[i]) items.push({icon:'â',label:toggleLabels[i]});});
   } else {
     var scope = window._alertScope||'todos';
     var count = scope==='portfolio'?(window._alertPortSyms||[]).length:scope==='watchlist'?(window._alertWLSyms||[]).length:304;
@@ -746,7 +746,7 @@ function showAlertInfoModal(tipo){
     subtitle = scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos los activos';
     sections.forEach(function(s){items.push({icon:s.icon,label:s.title+': '+s.count+' tipos'});});
   }
-  var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div><div style="font-size:16px;font-weight:700;color:#D4A017">'+title+'</div>'+(subtitle?'<div style="font-size:10px;color:#8B949E;margin-top:2px">'+subtitle+'</div>':'')+'</div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-info-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">✕</a></div>';
+  var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div><div style="font-size:16px;font-weight:700;color:#D4A017">'+title+'</div>'+(subtitle?'<div style="font-size:10px;color:#8B949E;margin-top:2px">'+subtitle+'</div>':'')+'</div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-info-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:#21262D;display:flex;align-items:center;justify-content:center;font-size:16px;color:#E6EDF3;text-decoration:none">â</a></div>';
   items.forEach(function(item){
     html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:0.5px solid #21262D"><span style="font-size:16px">'+item.icon+'</span><span style="font-size:13px;color:#E6EDF3">'+item.label+'</span></div>';
   });
@@ -765,7 +765,7 @@ document.addEventListener('change',function(e){if(e.target.closest('.alert-secti
 // Cargar al entrar
 setTimeout(loadAlertEngine, 2000);
 
-// Alertas — filtro scope
+// Alertas â filtro scope
 window._alertScope = 'todos';
 function setAlertScope(scope){
   window._alertScope = scope;
@@ -778,7 +778,7 @@ function setAlertScope(scope){
   });
 }
 
-// Alertas — filtro tipo alertas activas
+// Alertas â filtro tipo alertas activas
 window._alertTypeFilter = 'todas';
 function setAlertTypeFilter(tipo){
   window._alertTypeFilter = tipo;
@@ -790,7 +790,7 @@ function setAlertTypeFilter(tipo){
   });
 }
 
-// Alertas — filtro zonas pulse
+// Alertas â filtro zonas pulse
 window._pulseZoneFilter = 'GLOBAL';
 function setPulseZoneFilter(filter){
   window._pulseZoneFilter = filter;
@@ -811,7 +811,7 @@ function setPulseZoneFilter(filter){
     needle.style.display = 'flex';
     needle.style.left = score + '%';
     needle.style.marginLeft = '-8px';
-    needle.innerHTML = '<span style="font-size:8px;color:'+color+';font-weight:900">▼</span><div style="width:2px;height:18px;background:'+color+';border-radius:1px"></div><div style="background:'+color+';border-radius:8px;padding:2px 6px;margin-top:2px"><span style="font-size:10px;font-weight:800;color:#000">'+Math.round(score)+'</span></div>';
+    needle.innerHTML = '<span style="font-size:8px;color:'+color+';font-weight:900">â¼</span><div style="width:2px;height:18px;background:'+color+';border-radius:1px"></div><div style="background:'+color+';border-radius:8px;padding:2px 6px;margin-top:2px"><span style="font-size:10px;font-weight:800;color:#000">'+Math.round(score)+'</span></div>';
   }).catch(function(){});
 }
 </script>
@@ -974,11 +974,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="obs2" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99998;background:#0D1117;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
   <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
   <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;flex:1;width:100%;padding:20px 14px 12px;box-sizing:border-box;overflow-y:auto;">
-    <div style="width:100%;display:flex;align-items:center;margin-bottom:10px;"><a href="javascript:void(0)" onclick="document.getElementById('obs2').style.display='none';document.getElementById('obs1').style.display='flex';" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">← Volver</a></div>
+    <div style="width:100%;display:flex;align-items:center;margin-bottom:10px;"><a href="javascript:void(0)" onclick="document.getElementById('obs2').style.display='none';document.getElementById('obs1').style.display='flex';" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">â Volver</a></div>
     <div style="font-size:14px;font-weight:800;color:#D4A017;letter-spacing:3px;text-align:center;margin-bottom:3px;">DESCUBRI AUREX</div>
     <div style="font-size:11px;color:#8B949E;text-align:center;margin-bottom:14px;">Asi se ve por dentro</div>
 
-    <!-- Collage de imágenes reales -->
+    <!-- Collage de imÃ¡genes reales -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-bottom:10px;">
       <!-- Pulse -->
       <div style="border-radius:10px;overflow:hidden;border:1px solid #D4A01740;position:relative;">
@@ -988,7 +988,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div style="font-size:7px;color:#8B949E;">Sentimiento del mercado</div>
         </div>
       </div>
-      <!-- Señales IA -->
+      <!-- SeÃ±ales IA -->
       <div style="border-radius:10px;overflow:hidden;border:1px solid #4A9EFF40;position:relative;">
         <img src="img/onboarding/ia.jpg" style="width:100%;display:block;border-radius:10px;" />
         <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#000000CC);padding:6px 8px;">
@@ -1031,7 +1031,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="obs3" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:100002;background:#0D1117;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
   <canvas id="obs3Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
   <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:20px 18px 12px;box-sizing:border-box;overflow-y:auto;">
-    <div style="width:100%;display:flex;align-items:center;margin-bottom:6px;"><a href="javascript:void(0)" onclick="document.getElementById('obs3').style.display='none';showObs2();" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">← Volver</a></div>
+    <div style="width:100%;display:flex;align-items:center;margin-bottom:6px;"><a href="javascript:void(0)" onclick="document.getElementById('obs3').style.display='none';showObs2();" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">â Volver</a></div>
     <div style="margin-bottom:6px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="80" height="80"><defs><linearGradient id="gAo3" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCo3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo3)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo3)" stroke-width="1.5"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo3)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo3)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo3)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo3)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg></div>
     <div style="font-size:18px;font-weight:900;color:#D4A017;letter-spacing:3px;text-align:center;margin-bottom:4px;">POR QUE AUREX</div>
     <div style="font-size:12px;color:#8B949E;text-align:center;margin-bottom:14px;">Lo que ninguna otra app tiene</div>
@@ -1055,18 +1055,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- Alertas 24/365 -->
     <div style="width:100%;background:rgba(63,185,80,0.06);border:1px solid #3FB95025;border-radius:12px;padding:14px;margin-bottom:10px;text-align:center;">
-      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;"><span style="font-size:18px;">🔔</span><span style="font-size:13px;font-weight:700;color:#3FB950;">Alertas 24hs / 365 dias</span></div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;"><span style="font-size:18px;">ð</span><span style="font-size:13px;font-weight:700;color:#3FB950;">Alertas 24hs / 365 dias</span></div>
       <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;">
-        <span style="font-size:9px;color:#25D366;background:#25D36615;border:1px solid #25D36630;padding:3px 8px;border-radius:8px;font-weight:600;">💬 WhatsApp</span>
-        <span style="font-size:9px;color:#0088CC;background:#0088CC15;border:1px solid #0088CC30;padding:3px 8px;border-radius:8px;font-weight:600;">✈️ Telegram</span>
-        <span style="font-size:9px;color:#D4A017;background:#D4A01715;border:1px solid #D4A01730;padding:3px 8px;border-radius:8px;font-weight:600;">📧 Email</span>
-        <span style="font-size:9px;color:#4A9EFF;background:#4A9EFF15;border:1px solid #4A9EFF30;padding:3px 8px;border-radius:8px;font-weight:600;">🔔 Push</span>
+        <span style="font-size:9px;color:#25D366;background:#25D36615;border:1px solid #25D36630;padding:3px 8px;border-radius:8px;font-weight:600;">ð¬ WhatsApp</span>
+        <span style="font-size:9px;color:#0088CC;background:#0088CC15;border:1px solid #0088CC30;padding:3px 8px;border-radius:8px;font-weight:600;">âï¸ Telegram</span>
+        <span style="font-size:9px;color:#D4A017;background:#D4A01715;border:1px solid #D4A01730;padding:3px 8px;border-radius:8px;font-weight:600;">ð§ Email</span>
+        <span style="font-size:9px;color:#4A9EFF;background:#4A9EFF15;border:1px solid #4A9EFF30;padding:3px 8px;border-radius:8px;font-weight:600;">ð Push</span>
       </div>
     </div>
 
-    <!-- Señales IA -->
+    <!-- SeÃ±ales IA -->
     <div style="width:100%;background:rgba(74,158,255,0.06);border:1px solid #4A9EFF25;border-radius:12px;padding:14px;margin-bottom:10px;text-align:center;">
-      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;"><span style="font-size:18px;">🤖</span><span style="font-size:13px;font-weight:700;color:#4A9EFF;">Senales IA con probabilidad</span></div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:8px;"><span style="font-size:18px;">ð¤</span><span style="font-size:13px;font-weight:700;color:#4A9EFF;">Senales IA con probabilidad</span></div>
       <div style="display:flex;gap:8px;justify-content:center;">
         <div style="flex:1;background:#3FB95015;border:1px solid #3FB95030;border-radius:10px;padding:10px;text-align:center;">
           <div style="font-size:8px;color:#3FB950;font-weight:700;">ALCISTA</div>
@@ -1086,14 +1086,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Eventos criticos + Banners (compactos en 2 columnas) -->
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-bottom:8px;">
       <div style="background:rgba(248,81,73,0.06);border:1px solid #F8514925;border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:14px;margin-bottom:3px;">⚡</div>
+        <div style="font-size:14px;margin-bottom:3px;">â¡</div>
         <div style="font-size:10px;font-weight:700;color:#F85149;margin-bottom:4px;">Eventos criticos</div>
         <div style="font-size:8px;color:#8B949E;line-height:1.5;">FED FOMC<br>IPC / PBI<br>Apertura NYSE<br>Datos empleo</div>
       </div>
       <div style="background:rgba(139,92,246,0.06);border:1px solid #8B5CF625;border-radius:10px;padding:10px;text-align:center;">
-        <div style="font-size:14px;margin-bottom:3px;">🌍</div>
+        <div style="font-size:14px;margin-bottom:3px;">ð</div>
         <div style="font-size:10px;font-weight:700;color:#8B5CF6;margin-bottom:4px;">Banners custom</div>
-        <div style="font-size:8px;color:#8B949E;line-height:1.5;">Mercados globales<br>Indices futuros<br>Commodities<br>Oro · Petroleo · Cobre</div>
+        <div style="font-size:8px;color:#8B949E;line-height:1.5;">Mercados globales<br>Indices futuros<br>Commodities<br>Oro Â· Petroleo Â· Cobre</div>
       </div>
     </div>
 
@@ -1108,13 +1108,13 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="obs4" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:100003;background:#0D1117;flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
   <canvas id="obs4Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
   <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;width:100%;padding:20px 18px 12px;box-sizing:border-box;overflow-y:auto;">
-    <div style="width:100%;display:flex;align-items:center;margin-bottom:6px;"><a href="javascript:void(0)" onclick="document.getElementById('obs4').style.display='none';showObs3();" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">← Volver</a></div>
+    <div style="width:100%;display:flex;align-items:center;margin-bottom:6px;"><a href="javascript:void(0)" onclick="document.getElementById('obs4').style.display='none';showObs3();" style="font-size:12px;color:#8B949E;text-decoration:none;padding:4px 8px;">â Volver</a></div>
 
     <!-- Logo grande + AUREX INVEST AI -->
     <div style="margin-bottom:8px;"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="80" height="80"><defs><linearGradient id="gAo4" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCo4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCo4)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCo4)" stroke-width="1.5"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAo4)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAo4)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAo4)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAo4)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg></div>
     <div style="font-size:22px;font-weight:900;color:#D4A017;letter-spacing:6px;text-align:center;margin-bottom:2px;">AUREX</div>
     <div style="font-size:11px;font-weight:600;color:#D4A017;letter-spacing:4px;text-align:center;margin-bottom:4px;opacity:0.8;">INVEST AI</div>
-    <div style="font-size:14px;font-weight:800;color:#E6EDF3;text-align:center;margin-bottom:2px;">Elegí tu plan</div>
+    <div style="font-size:14px;font-weight:800;color:#E6EDF3;text-align:center;margin-bottom:2px;">ElegÃ­ tu plan</div>
     <div style="font-size:10px;color:#8B949E;text-align:center;margin-bottom:14px;">Empeza gratis, escala cuando quieras</div>
 
     <!-- FREE -->
@@ -1144,7 +1144,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="font-size:9px;color:#A78BFA;background:#A78BFA15;padding:4px 8px;border-radius:8px;font-weight:600;">Comparador</span>
         <span style="font-size:9px;color:#A78BFA;background:#A78BFA15;padding:4px 8px;border-radius:8px;font-weight:600;">Banners eventos</span>
       </div>
-      <div style="font-size:10px;color:#8B949E;">Anual: <span style="color:#A78BFA;font-weight:700;">$89.99/año</span> (ahorra 25%)</div>
+      <div style="font-size:10px;color:#8B949E;">Anual: <span style="color:#A78BFA;font-weight:700;">$89.99/aÃ±o</span> (ahorra 25%)</div>
     </div>
 
     <!-- ELITE -->
@@ -1161,7 +1161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         <span style="font-size:9px;color:#D4A017;background:#D4A01715;padding:4px 8px;border-radius:8px;font-weight:600;">Soporte prioritario</span>
         <span style="font-size:9px;color:#D4A017;background:#D4A01715;padding:4px 8px;border-radius:8px;font-weight:600;">API acceso datos</span>
       </div>
-      <div style="font-size:10px;color:#8B949E;">Anual: <span style="color:#D4A017;font-weight:700;">$179.99/año</span> (ahorra 25%)</div>
+      <div style="font-size:10px;color:#8B949E;">Anual: <span style="color:#D4A017;font-weight:700;">$179.99/aÃ±o</span> (ahorra 25%)</div>
     </div>
 
   </div>
@@ -1799,7 +1799,7 @@ window._mktOpenDetail = function(idx){
 
 <div class="cnt" id="ia-list" style="overflow-y:auto;flex:1"></div>
 <div style="margin:8px 12px 12px;background:#080C10;border-radius:10px;padding:10px;border:0.5px solid #21262D">
-  <p style="font-size:9px;color:#8B949E;line-height:14px;text-align:center;margin:0">⚖️ Aviso Legal — La informacion, analisis, senales de IA, precios objetivo y cualquier contenido de AUREX tiene caracter exclusivamente informativo y educativo. No constituye consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
+  <p style="font-size:9px;color:#8B949E;line-height:14px;text-align:center;margin:0">âï¸ Aviso Legal â La informacion, analisis, senales de IA, precios objetivo y cualquier contenido de AUREX tiene caracter exclusivamente informativo y educativo. No constituye consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
 </div>
 
 </div>
@@ -1813,10 +1813,10 @@ window._mktOpenDetail = function(idx){
   </div>
   <a href="javascript:void(0)" ontouchend="event.preventDefault();window.wlCreateListModal();" onclick="window.wlCreateListModal()" style="padding:5px 10px;border-radius:8px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:11px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block;-webkit-tap-highlight-color:rgba(0,0,0,0)">+ Nueva lista</a>
 </div>
-<!-- Contenido dinámico -->
+<!-- Contenido dinÃ¡mico -->
 <div id="watch-cnt" style="overflow-y:auto;flex:1;min-height:200px;padding:0;-webkit-overflow-scrolling:touch;pointer-events:auto">
 <div style="text-align:center;padding:60px 20px">
-  <div style="font-size:40px;margin-bottom:12px">👀</div>
+  <div style="font-size:40px;margin-bottom:12px">ð</div>
   <div style="font-size:16px;font-weight:500;color:#E6EDF3;margin-bottom:6px">Tu Watchlist esta vacia</div>
   <div style="font-size:12px;color:#555;line-height:1.6;margin-bottom:16px">Crea tu primera lista para seguir activos<br>con senales IA en tiempo real</div>
   <a href="javascript:void(0)" ontouchend="event.preventDefault();window.wlCreateListModal();" onclick="window.wlCreateListModal()" style="display:inline-block;padding:10px 20px;border-radius:10px;background:#D4A01720;border:1px solid #D4A017;color:#D4A017;font-size:12px;font-weight:600;cursor:pointer;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">Crear primera lista</a>
@@ -1825,19 +1825,19 @@ window._mktOpenDetail = function(idx){
 <!-- Modal Crear Lista -->
 <div id="wl-create-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:center;justify-content:center">
   <div style="background:#161B22;border-radius:16px;width:90%;max-width:340px;padding:20px;border:1px solid #30363D">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:600;color:#E6EDF3">Nueva lista</span><span onclick="wlCloseCreateModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:600;color:#E6EDF3">Nueva lista</span><span onclick="wlCloseCreateModal()" style="font-size:20px;color:#8B949E;cursor:pointer">â</span></div>
     <div style="font-size:10px;color:#8B949E;font-weight:500;margin-bottom:4px">Nombre</div>
     <input id="wl-new-name" type="text" placeholder="Ej: Criptos favoritas" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:10px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:12px" />
     <div style="font-size:10px;color:#8B949E;font-weight:500;margin-bottom:6px">Color</div>
     <div id="wl-colors" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap"></div>
-    <div id="wl-primary-toggle" onclick="wlTogglePrimary()" style="display:flex;align-items:center;gap:8px;padding:10px;background:#0D1117;border-radius:8px;margin-bottom:14px;cursor:pointer"><span id="wl-primary-star" style="font-size:16px">☆</span><span style="font-size:12px;color:#8B949E">Marcar como Lista Principal</span></div>
+    <div id="wl-primary-toggle" onclick="wlTogglePrimary()" style="display:flex;align-items:center;gap:8px;padding:10px;background:#0D1117;border-radius:8px;margin-bottom:14px;cursor:pointer"><span id="wl-primary-star" style="font-size:16px">â</span><span style="font-size:12px;color:#8B949E">Marcar como Lista Principal</span></div>
     <div onclick="wlCreateList()" style="background:#D4A017;border-radius:8px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:600;cursor:pointer">Crear lista</div>
   </div>
 </div>
 <!-- Modal Agregar Activo -->
 <div id="wl-add-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
   <div style="background:#161B22;border-radius:20px 20px 0 0;width:100%;padding:20px 16px 36px;border-top:1px solid #30363D;max-height:85vh;overflow-y:auto">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar activo</span><span onclick="wlCloseAddModal()" style="font-size:20px;color:#8B949E;cursor:pointer">✕</span></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><span style="font-size:15px;font-weight:500;color:#E6EDF3">Agregar activo</span><span onclick="wlCloseAddModal()" style="font-size:20px;color:#8B949E;cursor:pointer">â</span></div>
     <input id="wl-add-search" type="text" placeholder="Buscar: BTC, AAPL, SPY..." autocomplete="off" style="width:100%;box-sizing:border-box;background:#0D1117;border:1px solid #30363D;border-radius:9px;padding:10px 12px;color:#E6EDF3;font-size:14px;outline:none;margin-bottom:10px" oninput="wlSearchAssets()" />
     <div id="wl-add-results" style="max-height:350px;overflow-y:auto"></div>
   </div>
@@ -1853,23 +1853,23 @@ window._mktOpenDetail = function(idx){
 <div class="screen" id="screen-alertas" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
 <div class="cnt" id="alertas-cnt" style="overflow-y:auto;flex:1;padding-bottom:20px">
 
-<!-- Banner WhatsApp — compacto con toggle -->
+<!-- Banner WhatsApp â compacto con toggle -->
 <div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:#0D2818;border-radius:10px;padding:10px;border:1px solid #25D36640">
-  <span style="font-size:20px">💬</span>
+  <span style="font-size:20px">ð¬</span>
   <div style="flex:1">
     <div style="font-size:12px;font-weight:700;color:#25D366" id="wa-title">Alertas por WhatsApp</div>
   </div>
   <label class="toggle-sw"><input type="checkbox" id="wa-toggle" onchange="toggleWABanner()"><span class="toggle-slider"></span></label>
 </div>
 
-<!-- Resumen — numeros grandes, clickeables -->
+<!-- Resumen â numeros grandes, clickeables -->
 <div style="margin:10px 11px;background:#161B22;border-radius:12px;padding:14px;border:0.5px solid #D4A01730">
   <div style="display:flex;align-items:center">
     <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('alertas')"><div style="font-size:28px;font-weight:900;color:#3FB950" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ALERTAS ON</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
     <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:#D4A017" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">ACTIVOS</div></div>
     <div style="width:1px;height:28px;background:#21262D"></div>
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:#555" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">WHATSAPP</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:#555" id="wa-check">â</div><div style="font-size:9px;font-weight:700;color:#8B949E;margin-top:2px">WHATSAPP</div></div>
   </div>
 </div>
 
@@ -1877,29 +1877,29 @@ window._mktOpenDetail = function(idx){
 <div style="margin:10px 11px;background:rgba(212,160,23,0.05);border-radius:12px;padding:12px;border:1.5px solid #D4A01730">
   <div style="font-size:10px;color:#D4A017;font-weight:700;margin-bottom:8px;text-align:center;letter-spacing:1px">ALERTAS SOBRE</div>
   <div style="display:flex;gap:8px" id="alert-scope-btns">
-    <div onclick="setAlertScope('portfolio')" style="flex:1;background:#0D1117;border:1.5px solid #21262D;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:700;color:#8B949E">Mi Portfolio</div></div>
-    <div onclick="setAlertScope('watchlist')" style="flex:1;background:#0D1117;border:1.5px solid #21262D;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:700;color:#8B949E">Mi Watchlist</div></div>
-    <div onclick="setAlertScope('todos')" style="flex:1;background:#D4A01720;border:1.5px solid #D4A017;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:700;color:#D4A017">Todos (304)</div></div>
+    <div onclick="setAlertScope('portfolio')" style="flex:1;background:#0D1117;border:1.5px solid #21262D;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">ð¼</div><div style="font-size:11px;font-weight:700;color:#8B949E">Mi Portfolio</div></div>
+    <div onclick="setAlertScope('watchlist')" style="flex:1;background:#0D1117;border:1.5px solid #21262D;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">ð</div><div style="font-size:11px;font-weight:700;color:#8B949E">Mi Watchlist</div></div>
+    <div onclick="setAlertScope('todos')" style="flex:1;background:#D4A01720;border:1.5px solid #D4A017;border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">ð</div><div style="font-size:11px;font-weight:700;color:#D4A017">Todos (304)</div></div>
   </div>
 </div>
 
-<!-- Motor IA + AUREX Pulse — compactos con color -->
+<!-- Motor IA + AUREX Pulse â compactos con color -->
 <div style="display:flex;gap:8px;margin:8px 11px">
   <a href="javascript:void(0)" onclick="showAlertVars('ia')" style="flex:1;display:flex;align-items:center;gap:8px;background:#A78BFA10;border-radius:10px;padding:10px;border:1px solid #A78BFA40;text-decoration:none;cursor:pointer">
-    <span style="font-size:20px">🤖</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#A78BFA">Motor IA</div><div style="font-size:10px;color:#8B949E">10 variables</div></div><span style="font-size:12px;color:#A78BFA;font-weight:700">→</span>
+    <span style="font-size:20px">ð¤</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#A78BFA">Motor IA</div><div style="font-size:10px;color:#8B949E">10 variables</div></div><span style="font-size:12px;color:#A78BFA;font-weight:700">â</span>
   </a>
   <a href="javascript:void(0)" onclick="showAlertVars('pulse')" style="flex:1;display:flex;align-items:center;gap:8px;background:#EC489910;border-radius:10px;padding:10px;border:1px solid #EC489940;text-decoration:none;cursor:pointer">
-    <span style="font-size:20px">💓</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#EC4899">AUREX Pulse</div><div style="font-size:10px;color:#8B949E">14 variables</div></div><span style="font-size:12px;color:#EC4899;font-weight:700">→</span>
+    <span style="font-size:20px">ð</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#EC4899">AUREX Pulse</div><div style="font-size:10px;color:#8B949E">14 variables</div></div><span style="font-size:12px;color:#EC4899;font-weight:700">â</span>
   </a>
 </div>
 
-<!-- 4 Secciones de alertas — sin MVP/V2/V3, textos visibles -->
+<!-- 4 Secciones de alertas â sin MVP/V2/V3, textos visibles -->
 <div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
   <div onclick="toggleAlertSection('ia')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
-    <span style="font-size:22px">🤖</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas IA</span><div style="font-size:9px;color:#8B949E;margin-top:2px">Motor IA — 10 variables</div></div>
+    <span style="font-size:22px">ð¤</span>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas IA</span><div style="font-size:9px;color:#8B949E;margin-top:2px">Motor IA â 10 variables</div></div>
     <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="ia-alert-count">4/4</span></div>
-    <span style="font-size:10px;color:#8B949E" id="ia-arrow">▼</span>
+    <span style="font-size:10px;color:#8B949E" id="ia-arrow">â¼</span>
   </div>
   <div id="ia-alert-body" style="display:none;border-top:0.5px solid #21262D">
     <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Cambio de senal</span><div style="font-size:10px;color:#8B949E;margin-top:2px;line-height:14px">Cuando un activo cambia de ALCISTA a BAJISTA o viceversa</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
@@ -1911,10 +1911,10 @@ window._mktOpenDetail = function(idx){
 
 <div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
   <div onclick="toggleAlertSection('pulse')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
-    <span style="font-size:22px">💓</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas PULSE</span><div style="font-size:9px;color:#8B949E;margin-top:2px">AUREX Pulse — 14 variables macro</div></div>
+    <span style="font-size:22px">ð</span>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas PULSE</span><div style="font-size:9px;color:#8B949E;margin-top:2px">AUREX Pulse â 14 variables macro</div></div>
     <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="pulse-alert-count">3/3</span></div>
-    <span style="font-size:10px;color:#8B949E" id="pulse-arrow">▼</span>
+    <span style="font-size:10px;color:#8B949E" id="pulse-arrow">â¼</span>
   </div>
   <div id="pulse-alert-body" style="display:none;border-top:0.5px solid #21262D">
     <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Cambio de zona</span><div style="font-size:10px;color:#8B949E;margin-top:2px;line-height:14px">Cuando Pulse cambia de zona (Miedo Extremo / Neutral / Codicia)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
@@ -1925,10 +1925,10 @@ window._mktOpenDetail = function(idx){
 
 <div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
   <div onclick="toggleAlertSection('precio')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
-    <span style="font-size:22px">💰</span>
+    <span style="font-size:22px">ð°</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas de Precio</span><div style="font-size:9px;color:#8B949E;margin-top:2px">Monitoreo de precios en tiempo real</div></div>
     <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="precio-alert-count">3/3</span></div>
-    <span style="font-size:10px;color:#8B949E" id="precio-arrow">▼</span>
+    <span style="font-size:10px;color:#8B949E" id="precio-arrow">â¼</span>
   </div>
   <div id="precio-alert-body" style="display:none;border-top:0.5px solid #21262D">
     <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:#E6EDF3">Precio objetivo</span><div style="font-size:10px;color:#8B949E;margin-top:2px;line-height:14px">Cuando un activo alcanza el precio target que definiste</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
@@ -1939,10 +1939,10 @@ window._mktOpenDetail = function(idx){
 
 <div class="alert-section" style="margin:8px 11px;background:#161B22;border-radius:12px;border:0.5px solid #21262D;overflow:hidden">
   <div onclick="toggleAlertSection('eventos')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
-    <span style="font-size:22px">📅</span>
+    <span style="font-size:22px">ð</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:#E6EDF3">Alertas de Eventos</span><div style="font-size:9px;color:#8B949E;margin-top:2px">Calendario economico y corporativo</div></div>
     <div style="border:1px solid #21262D;border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:#D4A017" id="eventos-alert-count">5/5</span></div>
-    <span style="font-size:10px;color:#8B949E" id="eventos-arrow">▼</span>
+    <span style="font-size:10px;color:#8B949E" id="eventos-arrow">â¼</span>
   </div>
   <div id="eventos-alert-body" style="display:none;border-top:0.5px solid #21262D">
     <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid #21262D"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:#E6EDF3">FED FOMC</span><div style="font-size:10px;color:#8B949E;margin-top:2px;line-height:14px">Decisiones de tasas de interes de la Reserva Federal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
@@ -1990,21 +1990,21 @@ window._mktOpenDetail = function(idx){
   </div>
   <div style="display:flex;gap:6px;overflow-x:auto" id="alert-type-filters">
     <span onclick="setAlertTypeFilter('todas')" style="padding:5px 10px;border-radius:6px;background:#D4A017;color:#000;font-size:9px;font-weight:700;cursor:pointer">Todas</span>
-    <span onclick="setAlertTypeFilter('ia')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">🤖 IA</span>
-    <span onclick="setAlertTypeFilter('precio')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">💰 Precio</span>
-    <span onclick="setAlertTypeFilter('pulse')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">💓 Pulse</span>
+    <span onclick="setAlertTypeFilter('ia')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">ð¤ IA</span>
+    <span onclick="setAlertTypeFilter('precio')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">ð° Precio</span>
+    <span onclick="setAlertTypeFilter('pulse')" style="padding:5px 10px;border-radius:6px;background:#21262D;color:#8B949E;font-size:9px;font-weight:700;cursor:pointer">ð Pulse</span>
   </div>
 </div>
 <div id="alert-triggered-list">
   <div style="text-align:center;padding:24px">
-    <div style="font-size:28px;margin-bottom:6px">✅</div>
+    <div style="font-size:28px;margin-bottom:6px">â</div>
     <div style="font-size:13px;font-weight:500;color:#8B949E">Sin alertas activas</div>
     <div style="font-size:10px;color:#8B949E;margin-top:4px">Las alertas aparecen aca cuando se activan</div>
   </div>
 </div>
 
 <div style="margin:8px 12px 12px;background:#080C10;border-radius:10px;padding:10px;border:0.5px solid #21262D">
-  <p style="font-size:9px;color:#8B949E;line-height:14px;text-align:center;margin:0">⚖️ Aviso Legal — Las alertas y senales de AUREX tienen caracter exclusivamente informativo y educativo. No constituyen consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
+  <p style="font-size:9px;color:#8B949E;line-height:14px;text-align:center;margin:0">âï¸ Aviso Legal â Las alertas y senales de AUREX tienen caracter exclusivamente informativo y educativo. No constituyen consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
 </div>
 </div>
 </div>
@@ -2090,7 +2090,7 @@ window._mktOpenDetail = function(idx){
 <div style="display:flex;gap:6px;align-items:stretch;position:relative;">
   <button type="button" id="reg-pais-btn" onclick="togglePaisPicker()" style="background:rgba(22,27,34,0.92);border:1px solid #30363D;border-radius:10px;color:#fff;padding:0 10px;outline:none;flex-shrink:0;cursor:pointer;min-width:90px;height:48px;display:flex;align-items:center;justify-content:center;gap:6px;"><span id="reg-pais-flag"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"></span><span id="reg-pais-code" style="font-size:13px;font-weight:600;letter-spacing:-0.3px;">+54</span><span style="font-size:9px;opacity:0.5;margin-left:2px;">&#9660;</span></button>
   <input id="reg-celular-num" class="auth-input" type="tel" placeholder="9 11 1234-5678" autocomplete="tel" style="flex:1;margin:0;" oninput="syncPhoneField()"/>
-  <input id="reg-celular" type="hidden" value="+54"/><div id="reg-pais-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:99999;background:#1a1f28;border:1px solid #30363D;border-radius:12px;width:195px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.6);"><div onclick="selectPais('ar','+54')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"><span style="font-size:14px;">Argentina</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+54</span></div><div onclick="selectPais('us','+1')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/us.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="us"><span style="font-size:14px;">USA</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+1</span></div><div onclick="selectPais('br','+55')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/br.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="br"><span style="font-size:14px;">Brasil</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+55</span></div><div onclick="selectPais('uy','+598')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/uy.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="uy"><span style="font-size:14px;">Uruguay</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+598</span></div><div onclick="selectPais('cl','+56')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/cl.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="cl"><span style="font-size:14px;">Chile</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+56</span></div><div onclick="selectPais('mx','+52')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/mx.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="mx"><span style="font-size:14px;">Mxico</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+52</span></div><div onclick="selectPais('co','+57')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/co.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="co"><span style="font-size:14px;">Colombia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+57</span></div><div onclick="selectPais('pe','+51')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/pe.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="pe"><span style="font-size:14px;">Per</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+51</span></div><div onclick="selectPais('ve','+58')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ve.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ve"><span style="font-size:14px;">Venezuela</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+58</span></div><div onclick="selectPais('es','+34')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/es.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="es"><span style="font-size:14px;">España</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+34</span></div><div onclick="selectPais('gb','+44')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="gb"><span style="font-size:14px;">UK</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+44</span></div><div onclick="selectPais('de','+49')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/de.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="de"><span style="font-size:14px;">Alemania</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+49</span></div><div onclick="selectPais('fr','+33')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/fr.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="fr"><span style="font-size:14px;">Francia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+33</span></div><div onclick="selectPais('it','+39')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;"><img src="https://flagcdn.com/24x18/it.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="it"><span style="font-size:14px;">Italia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+39</span></div></div>
+  <input id="reg-celular" type="hidden" value="+54"/><div id="reg-pais-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:99999;background:#1a1f28;border:1px solid #30363D;border-radius:12px;width:195px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.6);"><div onclick="selectPais('ar','+54')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"><span style="font-size:14px;">Argentina</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+54</span></div><div onclick="selectPais('us','+1')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/us.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="us"><span style="font-size:14px;">USA</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+1</span></div><div onclick="selectPais('br','+55')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/br.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="br"><span style="font-size:14px;">Brasil</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+55</span></div><div onclick="selectPais('uy','+598')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/uy.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="uy"><span style="font-size:14px;">Uruguay</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+598</span></div><div onclick="selectPais('cl','+56')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/cl.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="cl"><span style="font-size:14px;">Chile</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+56</span></div><div onclick="selectPais('mx','+52')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/mx.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="mx"><span style="font-size:14px;">Mxico</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+52</span></div><div onclick="selectPais('co','+57')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/co.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="co"><span style="font-size:14px;">Colombia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+57</span></div><div onclick="selectPais('pe','+51')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/pe.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="pe"><span style="font-size:14px;">Per</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+51</span></div><div onclick="selectPais('ve','+58')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ve.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ve"><span style="font-size:14px;">Venezuela</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+58</span></div><div onclick="selectPais('es','+34')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/es.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="es"><span style="font-size:14px;">EspaÃ±a</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+34</span></div><div onclick="selectPais('gb','+44')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="gb"><span style="font-size:14px;">UK</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+44</span></div><div onclick="selectPais('de','+49')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/de.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="de"><span style="font-size:14px;">Alemania</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+49</span></div><div onclick="selectPais('fr','+33')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/fr.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="fr"><span style="font-size:14px;">Francia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+33</span></div><div onclick="selectPais('it','+39')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;"><img src="https://flagcdn.com/24x18/it.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="it"><span style="font-size:14px;">Italia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+39</span></div></div>
 </div>
 <div class="auth-input-hint">* Para recibir alertas autom&aacute;ticas de se&ntilde;ales IA</div>
 <button class="auth-btn" onclick="authDoRegister()">CREAR CUENTA</button>
@@ -2904,13 +2904,13 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:100%;background:linear-gradient(135deg,#7C3AED,#A78BFA);
           border:none;border-radius:10px;color:#fff;
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
-          &#128640; PRO Mensual — $9,99/mes
+          &#128640; PRO Mensual â $9,99/mes
         </button>
         <button id="btn-pro-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3FG40467BU710103WNHMGJSA')"
           style="width:100%;background:transparent;
           border:1.5px solid #A78BFA;border-radius:10px;color:#A78BFA;
           font-size:14px;font-weight:700;padding:12px;cursor:pointer;margin-top:8px">
-          &#11088; PRO Anual — $89,99/a&#241;o <span style="font-size:11px;opacity:.8">(ahorr&#225;s 25%)</span>
+          &#11088; PRO Anual â $89,99/a&#241;o <span style="font-size:11px;opacity:.8">(ahorr&#225;s 25%)</span>
         </button>
       </div>
       <div id="plan-panel-ELITE" style="display:none">
@@ -2986,13 +2986,13 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:100%;background:linear-gradient(135deg,#8B6208,#c9a84c);
           border:none;border-radius:10px;color:#000;
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
-          &#128081; ELITE Mensual — $19,99/mes
+          &#128081; ELITE Mensual â $19,99/mes
         </button>
         <button id="btn-elite-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1WB81912S68516031NHMGRPY')"
           style="width:100%;background:transparent;
           border:1.5px solid #c9a84c;border-radius:10px;color:#c9a84c;
           font-size:14px;font-weight:700;padding:12px;cursor:pointer;margin-top:8px">
-          &#11088; ELITE Anual — $179,99/a&#241;o <span style="font-size:11px;opacity:.8">(ahorr&#225;s 25%)</span>
+          &#11088; ELITE Anual â $179,99/a&#241;o <span style="font-size:11px;opacity:.8">(ahorr&#225;s 25%)</span>
         </button>
       </div>
     </div>
@@ -3421,7 +3421,7 @@ window.authDoLogin=function(){
   var c=getSB(); if(!c){showAuthMsg('Servicio no disponible');return;}
   var email=document.getElementById('auth-email').value.trim();
   var pass=document.getElementById('auth-pass').value;
-  if(!email||!pass){showAuthMsg('Completá todos los campos');return;}
+  if(!email||!pass){showAuthMsg('CompletÃ¡ todos los campos');return;}
   showAuthMsg('Ingresando...');
   c.auth.signInWithPassword({email:email,password:pass}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('');}});
 };
@@ -3430,8 +3430,8 @@ window.authDoRegister=function(){
   var email=document.getElementById('reg-email').value.trim();
   var pass=document.getElementById('reg-pass').value;
   var cel=document.getElementById('reg-celular').value.trim();
-  if(!email||!pass){showAuthMsg('Completá email y contraseña');return;}
-  if(pass.length<6){showAuthMsg('La contraseña debe tener al menos 6 caracteres');return;}
+  if(!email||!pass){showAuthMsg('CompletÃ¡ email y contraseÃ±a');return;}
+  if(pass.length<6){showAuthMsg('La contraseÃ±a debe tener al menos 6 caracteres');return;}
   showAuthMsg('Creando cuenta...');
   c.auth.signUp({email:email,password:pass,options:{data:{celular:cel||''}}}).then(function(r){if(r.error){showAuthMsg(r.error.message);}else{showAuthMsg('\u00a1Cuenta creada!');setTimeout(function(){document.getElementById('auth-msg').textContent='';},3000);}});
 };
@@ -3439,13 +3439,13 @@ window.authSaveCelular=function(){
   var c=getSB();
   var msgEl=document.getElementById('auth-msg');
   if(!c){
-    if(msgEl){msgEl.textContent='Error: sesión no iniciada';msgEl.style.color='#e74c3c';}
+    if(msgEl){msgEl.textContent='Error: sesiÃ³n no iniciada';msgEl.style.color='#e74c3c';}
     return;
   }
   var celInput=document.getElementById('celular-input');
   var cel=celInput?celInput.value.trim():'';
   if(!cel){
-    if(msgEl){msgEl.textContent='Ingresá un número de celular';msgEl.style.color='#e74c3c';}
+    if(msgEl){msgEl.textContent='IngresÃ¡ un nÃºmero de celular';msgEl.style.color='#e74c3c';}
     return;
   }
   if(msgEl){msgEl.textContent='Guardando...';msgEl.style.color='#f39c12';}
@@ -3477,7 +3477,7 @@ window.updateUserUI=function(user){
   var emailEl=document.getElementById('auth-email-txt');
   var avatarEl=document.getElementById('auth-avatar-initial');
   var celEl=document.getElementById('auth-celular-txt');
-  // Si el usuario es anónimo, tratarlo como no logueado
+  // Si el usuario es anÃ³nimo, tratarlo como no logueado
   var isAnon=user&&(user.is_anonymous===true||(user.identities&&user.identities.length===0&&!user.email));
   if(user&&!isAnon){
     document.getElementById('auth-guest').style.display='none';
