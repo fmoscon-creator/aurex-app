@@ -4121,7 +4121,7 @@ function _renderFearGreed(containerId) {
       '<div style="display:flex;align-items:center;gap:8px;">' +
         gauge +
         '<div style="flex:1;min-width:0;">' +
-          '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          '<div style="font-size:15px;font-weight:700;color:'+(d.color||'#D4A017')+';">'+( d.emoji||'')+' '+d.value+' &#x2014; '+d.label+'</div>' +
           (cat==='CRIPTO' && (btcSentIdx !== null || altFngIdx !== null) ?
             '<div style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap;">' +
               '<span style="font-size:9px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:12px;">'+d.value+'</b></span>' +
