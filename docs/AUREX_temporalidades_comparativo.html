@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>AUREX — Cuadro Comparativo Temporalidades</title>
+<style>
+body { font-family: -apple-system, sans-serif; background: #0D1117; color: #E6EDF3; padding: 20px; max-width: 900px; margin: 0 auto; }
+h1 { color: #D4A017; font-size: 22px; border-bottom: 2px solid #D4A017; padding-bottom: 10px; }
+h2 { color: #D4A017; font-size: 16px; margin-top: 30px; }
+h3 { color: #8B949E; font-size: 14px; margin-top: 24px; }
+table { width: 100%; border-collapse: collapse; margin: 10px 0 20px; }
+th { background: #161B22; color: #D4A017; padding: 10px; text-align: left; font-size: 12px; border: 1px solid #21262D; }
+td { padding: 8px 10px; font-size: 12px; border: 1px solid #21262D; }
+.ok { background: #1A3A2A; color: #3FB950; font-weight: 700; }
+.fail { background: #3A1A1A; color: #F85149; font-weight: 700; }
+.unknown { background: #2A2A0A; color: #D4A017; font-weight: 700; }
+.detail { color: #8B949E; font-size: 11px; }
+.section { background: #161B22; border: 1px solid #21262D; border-radius: 10px; padding: 16px; margin: 16px 0; }
+.action { background: #0D2818; border: 1px solid #3FB95040; border-radius: 8px; padding: 14px; margin: 8px 0; }
+.action-title { color: #3FB950; font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.action-desc { color: #E6EDF3; font-size: 12px; }
+.key-diff { background: #3A1A1A; border: 1px solid #F8514940; border-radius: 8px; padding: 14px; margin: 16px 0; }
+p { font-size: 13px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<h1>AUREX — Cuadro Comparativo Temporalidades</h1>
+<p>Estado real al 10 de abril 2026 — Build 9 + fixes</p>
+
+<h2>1. ESTADO POR UBICACION</h2>
+
+<table>
+<tr>
+<th>Ubicacion</th>
+<th>24h</th>
+<th>7d</th>
+<th>1m</th>
+<th>3m</th>
+<th>1y</th>
+<th>Fuente datos</th>
+</tr>
+<tr>
+<td>Portfolio — Header (Valor Total)</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="detail">calcTotals() con histPrices — funciona OK</td>
+</tr>
+<tr>
+<td>Portfolio — Por activo</td>
+<td class="ok">FUNCIONA</td>
+<td class="fail">NO FUNCIONA</td>
+<td class="fail">NO FUNCIONA</td>
+<td class="fail">NO FUNCIONA</td>
+<td class="fail">NO FUNCIONA</td>
+<td class="detail">Mismo problema que header — usa misma fuente</td>
+</tr>
+<tr>
+<td>Watchlist — Por activo</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="detail">Promise.all paralelo — carga rapido y completo</td>
+</tr>
+<tr>
+<td>Watchlist — Comparador</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="detail">Estructura invertida (ticker primero) — funciona OK</td>
+</tr>
+<tr>
+<td>PWA (aurex.live)</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="ok">FUNCIONA</td>
+<td class="detail">Mismas APIs, carga secuencial con await</td>
+</tr>
+</table>
+
+<h2>2. COMO OBTIENE LA DATA CADA UNO</h2>
+
+<table>
+<tr>
+<th>Ubicacion</th>
+<th>Periodo</th>
+<th>Fuente crypto</th>
+<th>Fuente acciones</th>
+<th>Que dato toma</th>
+<th>Metodo carga</th>
+</tr>
+<tr>
+<td>Portfolio</td>
+<td>24h</td>
+<td>Binance ticker/24hr</td>
+<td>Yahoo meta.previousClose</td>
+<td>change24h directo</td>
+<td>Paralelo (funciona)</td>
+</tr>
+<tr>
+<td>Portfolio</td>
+<td>7d/1m/3m/1y</td>
+<td>Binance klines limit=7/30/90/365</td>
+<td>Yahoo range=5d/1mo/3mo/1y</td>
+<td>data[0][1] / closes[0]</td>
+<td class="fail">Secuencial for/await (FALLA)</td>
+</tr>
+<tr>
+<td>Watchlist</td>
+<td>24h</td>
+<td>Binance ticker/24hr</td>
+<td>Yahoo meta</td>
+<td>change directo</td>
+<td>Paralelo (funciona)</td>
+</tr>
+<tr>
+<td>Watchlist</td>
+<td>7d/1m/3m/1y</td>
+<td>Binance klines</td>
+<td>Yahoo via Railway</td>
+<td>data[0][1] / closes[0]</td>
+<td class="ok">Promise.all paralelo (FUNCIONA)</td>
+</tr>
+<tr>
+<td>PWA</td>
+<td>todos</td>
+<td>Binance klines</td>
+<td>Yahoo via Railway</td>
+<td>data[0][1] / closes[0]</td>
+<td class="ok">Secuencial con await (FUNCIONA en browser)</td>
+</tr>
+</table>
+
+<h2>3. DIFERENCIA CLAVE — POR QUE UNO FUNCIONA Y OTRO NO</h2>
+
+<div class="key-diff">
+<p><strong style="color:#F85149">Portfolio</strong> carga historicos con <code>for...of await</code> secuencial: un fetch, espera, otro fetch, espera. Si hay 10 activos x 4 periodos = 40 fetches uno atras de otro. Si alguno falla o tarda, frena toda la cadena. Ademas <code>setHistPrices</code> dentro del loop puede causar re-renders que reinician el useEffect.</p>
+<p><strong style="color:#3FB950">Watchlist</strong> carga con <code>Promise.all</code>: lanza todos los fetches a la vez, espera que terminen todos, y guarda el resultado una sola vez. Mas rapido, mas robusto.</p>
+<p><strong style="color:#3FB950">PWA</strong> usa secuencial pero funciona porque el browser maneja mejor las conexiones de red que el simulador iOS.</p>
+</div>
+
+<h2>4. SUGERENCIA DE ACCION</h2>
+
+<div class="action">
+<div class="action-title">PASO 1 — Crear funcion compartida</div>
+<div class="action-desc">Crear <code>src/lib/historicalPrices.js</code> con UNA funcion <code>loadHistoricalPrices(tickers)</code> que use Promise.all (como Watchlist que funciona). Recibe lista de tickers, clasifica crypto vs acciones, hace fetches paralelos, devuelve <code>{ '7d': { 'BTC': precio }, '1m': {...} }</code></div>
+</div>
+
+<div class="action">
+<div class="action-title">PASO 2 — Usar en todos lados</div>
+<div class="action-desc">Portfolio, Watchlist, Comparador — todos llaman la misma funcion. Se elimina codigo duplicado. Si funciona en uno, funciona en todos.</div>
+</div>
+
+<div class="action">
+<div class="action-title">PASO 3 — Cache compartido</div>
+<div class="action-desc">Si BTC 7d ya se pidio, no repetir al cambiar de tab. Guardar en modulo global con timestamp. Cache expira cada 5 minutos.</div>
+</div>
+
+<div class="action">
+<div class="action-title">PASO 4 — Unificar estructura de datos</div>
+<div class="action-desc">Todo usa <code>{ periodo: { ticker: precio } }</code> — nunca invertido. Todo usa <code>prices[ticker].change</code> para 24h — eliminar <code>change24h</code> como campo separado.</div>
+</div>
+
+<div class="action">
+<div class="action-title">PASO 5 — Monitoreo de fallas</div>
+<div class="action-desc">Si un fetch falla, loguear error con ticker + periodo + motivo. Si mas del 50% fallan, mostrar banner "Datos temporales no disponibles". Alimenta el sistema de alertas automaticas.</div>
+</div>
+
+<p style="margin-top:30px; color:#8B949E; font-size:11px;">Documento generado: 10/04/2026 — Para Fernando Moscon y equipo</p>
+
+</body>
+</html>
