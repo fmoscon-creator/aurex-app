@@ -44,8 +44,8 @@ visual-qa/
 | Modo Claro Fase 2b-quarter (6 fixes) | ✅ | `nativa/*.png` | — | `pwa/actual/*.png` | `a497dbd` |
 | Fase 4 F1 — Balanza Chip (currency selector) | ❌ revertido | `nativa/portfolio.png` | — | — | `10feebc` → revert `3642466` |
 | Fase 4 F1-bis — Balanza Chip (modal Aviso Legal) | ✅ | `nativa/*.png` | — | `pwa/fase4-f1-bis-balanza/*.png` | `05a4fc0` |
-| Fase 4 F2 — Indicador "Hoy" | ⏳ pendiente | TBD | TBD | — | — |
-| Fase 4 F3 — Sort menus | ⏳ pendiente | TBD | TBD | — | — |
+| Fase 4 F2 — Indicador "Hoy" + emoji 🎉 | ✅ | `nativa/portfolio.png` | — | TBD | `fef42ca` |
+| Fase 4 F3 — Sort menus (4 tabs) | ✅ | `nativa/*.png` | — | TBD | `646fbce` |
 | Fase 4 F4 — Long press en activos | ⏳ pendiente | TBD | TBD | — | — |
 | Fase 4 F5 — Favoritos | ⏳ pendiente | TBD | TBD | — | — |
 | Fase 4 F6 — Cross-tab | ⏳ pendiente | TBD | TBD | — | — |
