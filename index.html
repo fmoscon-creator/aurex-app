@@ -587,7 +587,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=18"></script>
+<script src="aurex-v3.js?v=19"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -3951,6 +3951,20 @@ document.addEventListener("DOMContentLoaded", function(){
   }
 });
 </script>
+
+<!-- Modal Aviso Legal (Fase 4 F1-bis) -->
+<div id="modal-aviso-legal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center;">
+  <div style="background:var(--card);border-radius:16px 16px 0 0;padding:20px 16px 32px;max-height:70vh;overflow-y:auto;width:100%;max-width:480px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+      <span style="font-weight:700;font-size:15px;color:var(--text)">⚖️ Aviso Legal</span>
+      <span onclick="document.getElementById('modal-aviso-legal').style.display='none'" style="font-size:20px;cursor:pointer;color:var(--text);padding:4px 8px;">✕</span>
+    </div>
+    <p style="font-size:13px;color:var(--textSec);line-height:1.6;margin:0;">
+      La información, análisis, señales de IA, precios objetivo y cualquier contenido de AUREX tiene carácter exclusivamente informativo y educativo. No constituye consejo, recomendación ni asesoramiento de inversión. Toda decisión de inversión es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.
+    </p>
+  </div>
+</div>
+
 </body>
 </html>
 <!-- deploy 1775525028 -->

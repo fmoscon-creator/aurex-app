@@ -4482,7 +4482,87 @@ function _initHeaderLogos() {
     hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
   }
+
+  // --- Chip ⚖️ Aviso Legal en headers (Fase 4 F1-bis) ---
+
+  // MERCADOS: insertBefore .live, dentro de .hdr
+  var mktHdr = document.querySelector('#screen-mercados .hdr');
+  if (mktHdr) {
+    var mktLive = mktHdr.querySelector('.live');
+    window._addLegalChip(mktHdr, mktLive, false);
+  }
+
+  // IA: insertBefore LIVE, dentro de la primera fila del header contadores
+  var iaScreenEl = document.getElementById('screen-ia');
+  if (iaScreenEl && iaScreenEl.children[2] && iaScreenEl.children[2].children[0]) {
+    var iaHdrRow = iaScreenEl.children[2].children[0];
+    var iaLive = Array.from(iaHdrRow.children).find(function(c){
+      return c.textContent.trim() === 'LIVE';
+    });
+    window._addLegalChip(iaHdrRow, iaLive, false);
+  }
+
+  // WATCHLIST: wrapper con chip + "+ Nueva lista" pegados a la derecha
+  var wlHdr = document.querySelector('#screen-watchlist > div:first-child');
+  var nuevoEl = wlHdr ? wlHdr.querySelector('a') : null;
+  if (wlHdr && nuevoEl && !wlHdr.querySelector('.legal-chip')) {
+    var wrapper = document.createElement('div');
+    wrapper.style.cssText = 'display:flex;align-items:center;gap:8px;';
+    var wlChip = document.createElement('div');
+    wlChip.className = 'legal-chip';
+    wlChip.onclick = window._openAvisoLegal;
+    wlChip.style.cssText = 'display:inline-flex;align-items:center;gap:3px;cursor:pointer;' +
+      'background:transparent;border:1px solid var(--gold);border-radius:6px;' +
+      'padding:3px 8px;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0;' +
+      'user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+    wlChip.innerHTML = '⚖️ <span style="font-size:10px">▼</span>';
+    wlHdr.insertBefore(wrapper, nuevoEl);
+    wrapper.appendChild(wlChip);
+    wrapper.appendChild(nuevoEl);
+  }
+
+  // ALERTAS: appendChild con margin-left:auto (sin LIVE)
+  var alHdr = document.querySelector('#screen-alertas .aurex-hdr-added');
+  window._addLegalChip(alHdr, null, true);
+
+  // PORTFOLIO: appendChild con margin-left:auto (padre sin space-between)
+  var portScreens = document.querySelectorAll('.screen');
+  if (portScreens[0] && portScreens[0].children[0] && portScreens[0].children[0].children[0]) {
+    var portHlRow = portScreens[0].children[0].children[0];
+    window._addLegalChip(portHlRow, null, true);
+  }
 }
+
+// --- Aviso Legal (Fase 4 F1-bis) ---
+window._openAvisoLegal = function() {
+  var m = document.getElementById('modal-aviso-legal');
+  if (!m) return;
+  m.style.display = 'flex';
+  if (!m._listenerAdded) {
+    m.addEventListener('click', function(e) {
+      if (e.target === m) m.style.display = 'none';
+    });
+    m._listenerAdded = true;
+  }
+};
+
+window._addLegalChip = function(headerEl, insertBeforeEl, useMarginAuto) {
+  if (!headerEl || headerEl.querySelector('.legal-chip')) return;
+  var chip = document.createElement('div');
+  chip.className = 'legal-chip';
+  chip.onclick = window._openAvisoLegal;
+  chip.style.cssText = 'display:inline-flex;align-items:center;gap:3px;cursor:pointer;' +
+    'background:transparent;border:1px solid var(--gold);border-radius:6px;' +
+    'padding:3px 8px;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0;' +
+    'user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);' +
+    (useMarginAuto ? 'margin-left:auto;' : '');
+  chip.innerHTML = '⚖️ <span style="font-size:10px">▼</span>';
+  if (insertBeforeEl) {
+    headerEl.insertBefore(chip, insertBeforeEl);
+  } else {
+    headerEl.appendChild(chip);
+  }
+};
 
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
