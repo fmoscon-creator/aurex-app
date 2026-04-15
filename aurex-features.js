@@ -4914,7 +4914,11 @@ window._initHoyIndicator = function() {
   }
 
   // 2. Reemplazar bloque "Mejor 24h" con indicador Hoy (solo primera vez)
-  var cntChip = cntBadge ? cntBadge.parentElement : null;
+  // Subir 2 niveles si hay wrapper, 1 si no — para llegar al chip Activos
+  var directParent = cntBadge ? cntBadge.parentElement : null;
+  var cntChip = directParent && directParent.classList.contains('badge-emoji-row')
+    ? directParent.parentElement
+    : directParent;
   var filaBottom = cntChip ? cntChip.parentElement : null;
   if (!filaBottom || filaBottom.children.length < 4) return;
 
