@@ -9,8 +9,30 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Aurex">
-<meta name="theme-color" content="var(--bg)">
+<meta name="theme-color" content="#EEF1F7" id="aurex-theme-color-meta">
 <title>Aurex</title>
+<script>
+// AUREX Theme early-apply — se ejecuta ANTES del render para evitar flash de tema incorrecto.
+// Lee localStorage aurex_theme y setea data-theme en <html>.
+(function(){
+  try{
+    var pref = localStorage.getItem('aurex_theme');
+    if(pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'light';
+    var mode;
+    if(pref === 'system'){
+      mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    } else {
+      mode = pref;
+    }
+    document.documentElement.setAttribute('data-theme', mode);
+    // Actualizar meta theme-color (para chrome del browser en mobile)
+    var meta = document.getElementById('aurex-theme-color-meta');
+    if(meta) meta.setAttribute('content', mode === 'light' ? '#EEF1F7' : '#0D1117');
+  } catch(e){
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+})();
+</script>
 <style>
 /* === RESET NICO === */
 *{box-sizing:border-box;margin:0;padding:0}
@@ -555,7 +577,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
   }
 })();
 </script>
-<script src="aurex-v3.js?v=14"></script>
+<script src="aurex-v3.js?v=15"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -2367,20 +2389,25 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
-      <div style="display:flex;align-items:center;justify-content:space-between;
-        padding:12px 0;border-bottom:1px solid var(--border)">
+      <div style="display:flex;flex-direction:column;padding:12px 0;border-bottom:1px solid var(--border);gap:10px">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
-            &#127769; Modo oscuro
+          <div style="font-size:14px;color:var(--text);font-weight:500">
+            &#127763; Tema
           </div>
-          <div style="font-size:11px;color:#555;margin-top:2px">
-            Activo por defecto en AUREX
+          <div style="font-size:11px;color:var(--textSec);margin-top:2px">
+            Eleg&#237; c&#243;mo se ve la app
           </div>
         </div>
-        <div style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
-          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
-          opacity:.6;cursor:default">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+        <div id="theme-selector" style="display:flex;gap:6px">
+          <div data-theme-mode="system" onclick="aurexSetTheme('system')" style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--border);color:var(--text);font-size:12px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s">
+            &#129302; Auto
+          </div>
+          <div data-theme-mode="light" onclick="aurexSetTheme('light')" style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--border);color:var(--text);font-size:12px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s">
+            &#9728;&#65039; Claro
+          </div>
+          <div data-theme-mode="dark" onclick="aurexSetTheme('dark')" style="flex:1;padding:8px 10px;border-radius:8px;border:1px solid var(--border);background:var(--border);color:var(--text);font-size:12px;font-weight:500;text-align:center;cursor:pointer;transition:all .15s">
+            &#127769; Oscuro
+          </div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;

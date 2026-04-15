@@ -3822,3 +3822,81 @@ function _renderComboBanner(containerId){
   if(window._comboBannerTimer) clearInterval(window._comboBannerTimer);
   window._comboBannerTimer = setInterval(_comboFlip, 4000);
 }
+// ============================================================
+// === AUREX THEME SYSTEM (Fase 2c — 15/abril/2026) ===========
+// Mirror de src/lib/ThemeContext.js de app nativa iOS
+// Modos: 'light' | 'dark' | 'system'
+// Default: 'light' (decisión Fernando 13/abril)
+// ============================================================
+(function(){
+  var STORAGE_KEY = 'aurex_theme';
+  var DEFAULT_PREF = 'light';
+
+  function getPreference(){
+    var p = localStorage.getItem(STORAGE_KEY);
+    return (p === 'light' || p === 'dark' || p === 'system') ? p : DEFAULT_PREF;
+  }
+
+  function resolveMode(pref){
+    if(pref === 'system'){
+      return (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
+    }
+    return pref;
+  }
+
+  function applyThemeToDOM(mode){
+    document.documentElement.setAttribute('data-theme', mode);
+    var meta = document.getElementById('aurex-theme-color-meta');
+    if(meta) meta.setAttribute('content', mode === 'light' ? '#EEF1F7' : '#0D1117');
+  }
+
+  function updateSelectorUI(pref){
+    var sel = document.getElementById('theme-selector');
+    if(!sel) return;
+    var chips = sel.querySelectorAll('[data-theme-mode]');
+    chips.forEach(function(chip){
+      var mode = chip.getAttribute('data-theme-mode');
+      if(mode === pref){
+        chip.style.background = 'var(--gold)';
+        chip.style.borderColor = 'var(--gold)';
+        chip.style.color = 'var(--chipTextActive)';
+        chip.style.fontWeight = '700';
+      } else {
+        chip.style.background = 'var(--border)';
+        chip.style.borderColor = 'var(--border)';
+        chip.style.color = 'var(--text)';
+        chip.style.fontWeight = '500';
+      }
+    });
+  }
+
+  window.aurexSetTheme = function(pref){
+    if(pref !== 'light' && pref !== 'dark' && pref !== 'system') return;
+    try{ localStorage.setItem(STORAGE_KEY, pref); } catch(e){}
+    applyThemeToDOM(resolveMode(pref));
+    updateSelectorUI(pref);
+  };
+
+  window.aurexInitTheme = function(){
+    var pref = getPreference();
+    applyThemeToDOM(resolveMode(pref));
+    updateSelectorUI(pref);
+  };
+
+  // Escuchar cambios del sistema si el usuario está en modo 'system'
+  if(window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    var reapplyIfSystem = function(){
+      if(getPreference() === 'system') applyThemeToDOM(resolveMode('system'));
+    };
+    if(mq.addEventListener) mq.addEventListener('change', reapplyIfSystem);
+    else if(mq.addListener) mq.addListener(reapplyIfSystem); // compat Safari viejo
+  }
+
+  // Auto-init al cargar
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', window.aurexInitTheme);
+  } else {
+    window.aurexInitTheme();
+  }
+})();
