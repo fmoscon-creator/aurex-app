@@ -903,7 +903,7 @@ function _renderPortfolioItems(items){
 
 
 // === Portfolio currency switch: USD / USDT / BTC ===
-window._portCurrency = localStorage.getItem('aurex_currency') || 'USD';
+window._portCurrency = 'USD'; // default
 
 window._updatePortTotalDisplay = function() {
   var el = document.getElementById('port-total');
@@ -3682,15 +3682,6 @@ window._togglePortCurrDD = function() {
 
 window._selectPortCurr = function(cur) {
   window._portCurrency = cur;
-  localStorage.setItem('aurex_currency', cur);
-  // Sincronizar todos los balanza chips de headers
-  document.querySelectorAll('.balanza-cur').forEach(function(s){ s.textContent = cur; });
-  document.querySelectorAll('.balanza-chip-dd').forEach(function(dd){
-    dd.querySelectorAll('div').forEach(function(it){
-      var label = it.textContent.replace('✓ ','');
-      it.textContent = (label === cur ? '✓ ' : '') + label;
-    });
-  });
   var badge = document.getElementById('port-curr-badge');
   if(badge) { var dispCur = (cur === 'USD') ? '$' : cur; badge.textContent = dispCur + ' ▾'; badge.style.color='#000'; badge.style.background='var(--gold)'; badge.style.borderColor='var(--gold)'; }
   var dd = document.getElementById('port-curr-dropdown');
