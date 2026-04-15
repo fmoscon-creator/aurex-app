@@ -994,6 +994,8 @@ window.portTotalPeriod = function(btn, period) {
 
   if(pnlUSD) pnlUSD.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
   if(pnlPct) pnlPct.style.color = diffUSD >= 0 ? '#3fb950' : '#f85149';
+  // F2: sincronizar indicador Hoy con el % del PnL del período seleccionado
+  if (typeof window._refreshHoyPct === 'function') window._refreshHoyPct();
   var pColor = diffUSD >= 0 ? '#22c55e' : '#ef4444';
   var pctTxt = _fmt(diffPct,'pct');
   var amtTxt = (diffUSD >= 0 ? '+' : '-') + '$' + Math.abs(diffUSD).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
@@ -1094,6 +1096,8 @@ function _updateTotals(items){
   if(el('port-cnt-badge')) el('port-cnt-badge').textContent = items.length;
   if(el('port-best')) el('port-best').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—';
   if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
+  // F2: reinsertar emoji + asegurar indicador Hoy tras refresh de badge
+  if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
   // P&L: mostrar "..." hasta que haya precios reales, luego calcular según período
   var badge = document.getElementById('port-period-badge');
   var currentPeriod = '24h';
@@ -4567,6 +4571,7 @@ window._addLegalChip = function(headerEl, insertBeforeEl, useMarginAuto) {
 document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     _initHeaderLogos();
+    if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
     generarSenalesIA();
     setInterval(generarSenalesIA, 5*60*1000);
     _fetchPulseForCategory('GLOBAL').then(function(){
@@ -4857,3 +4862,69 @@ function _renderComboBanner(containerId){
   if(window._comboBannerTimer) clearInterval(window._comboBannerTimer);
   window._comboBannerTimer = setInterval(_comboFlip, 4000);
 }
+
+// --- Fase 4 F2: Indicador "Hoy" animado ---
+
+(function _addHoyKeyframes() {
+  if (document.getElementById('hoy-keyframes')) return;
+  var st = document.createElement('style');
+  st.id = 'hoy-keyframes';
+  st.textContent =
+    '@keyframes hoy-bounce {' +
+    '  0%, 100% { transform: translateY(0) rotate(0deg); }' +
+    '  25%       { transform: translateY(-3px) rotate(-10deg); }' +
+    '  75%       { transform: translateY(-1px) rotate(10deg); }' +
+    '}';
+  document.head.appendChild(st);
+})();
+
+window._initHoyIndicator = function() {
+  // 1. Emoji animado dentro del badge de Activos
+  var cntBadge = document.getElementById('port-cnt-badge');
+  if (cntBadge && !document.getElementById('port-cnt-emoji')) {
+    var emoji = document.createElement('span');
+    emoji.id = 'port-cnt-emoji';
+    emoji.textContent = '🎉';
+    emoji.style.cssText = 'font-size:13px;margin-left:2px;display:inline-block;animation:hoy-bounce 1.4s ease-in-out infinite;';
+    cntBadge.appendChild(emoji);
+  }
+
+  // 2. Reemplazar bloque "Mejor 24h" con indicador Hoy (solo primera vez)
+  var cntChip = cntBadge ? cntBadge.parentElement : null;
+  var filaBottom = cntChip ? cntChip.parentElement : null;
+  if (!filaBottom || filaBottom.children.length < 4) return;
+
+  var mejorDiv = filaBottom.children[1];
+  if (!mejorDiv || document.getElementById('port-hoy-indicator')) return;
+
+  var pctEl = document.getElementById('port-pnl-pct');
+  var pct = pctEl ? pctEl.textContent.trim() : '';
+  var isPos = !pct.startsWith('-');
+
+  var hoyDiv = document.createElement('div');
+  hoyDiv.id = 'port-hoy-indicator';
+  hoyDiv.style.cssText = 'flex:1;min-width:0;padding:0 4px;display:flex;align-items:center;gap:3px;';
+
+  var hoyPct = document.createElement('span');
+  hoyPct.id = 'port-hoy-pct';
+  hoyPct.textContent = pct;
+  hoyPct.style.cssText = 'font-size:12px;font-weight:800;color:' + (isPos ? 'var(--green)' : 'var(--red)') + ';';
+
+  var hoyLabel = document.createElement('span');
+  hoyLabel.textContent = ' Hoy';
+  hoyLabel.style.cssText = 'font-size:10px;font-weight:600;color:var(--textSec);white-space:nowrap;';
+
+  hoyDiv.appendChild(hoyPct);
+  hoyDiv.appendChild(hoyLabel);
+  filaBottom.replaceChild(hoyDiv, mejorDiv);
+};
+
+window._refreshHoyPct = function() {
+  var hoyPct = document.getElementById('port-hoy-pct');
+  var pctEl = document.getElementById('port-pnl-pct');
+  if (!hoyPct || !pctEl) return;
+  var pct = pctEl.textContent.trim();
+  var isPos = !pct.startsWith('-');
+  hoyPct.textContent = pct;
+  hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
+};
