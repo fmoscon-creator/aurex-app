@@ -4572,6 +4572,7 @@ document.addEventListener('DOMContentLoaded', function(){
   setTimeout(function(){
     _initHeaderLogos();
     if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
+    if (typeof window._initSortMenus === 'function') window._initSortMenus();
     generarSenalesIA();
     setInterval(generarSenalesIA, 5*60*1000);
     _fetchPulseForCategory('GLOBAL').then(function(){
@@ -4956,4 +4957,270 @@ window._refreshHoyPct = function() {
   var isPos = !pct.startsWith('-');
   hoyPct.textContent = pct;
   hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
+};
+
+// --- Fase 4 F3: Sort menus ---
+
+(function _addSortStyles() {
+  if (document.getElementById('sort-menu-styles')) return;
+  var st = document.createElement('style');
+  st.id = 'sort-menu-styles';
+  st.textContent =
+    '.sort-wrap{position:relative;display:inline-block;}' +
+    '.sort-btn{background:var(--bg);border:1px solid var(--border2);border-radius:6px;' +
+    'padding:4px 10px;font-size:11px;font-weight:600;color:var(--text);cursor:pointer;' +
+    'display:inline-flex;align-items:center;gap:4px;white-space:nowrap;' +
+    'user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.sort-btn .sort-arrow{color:var(--gold);font-size:10px;}' +
+    '.sort-dd{position:absolute;top:100%;right:0;margin-top:4px;z-index:200;' +
+    'background:var(--card);border:1px solid var(--border2);border-radius:8px;' +
+    'min-width:140px;padding:4px 0;box-shadow:0 4px 12px rgba(0,0,0,0.15);}' +
+    '.sort-dd-item{padding:8px 12px;font-size:12px;color:var(--text);cursor:pointer;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.sort-dd-item.active{color:var(--gold);font-weight:700;}';
+  document.head.appendChild(st);
+})();
+
+window._sortCfgs = {
+  portfolio: { key:'aurex_sort_portfolio', def:'valor', opts:[
+    {k:'valor',l:'Valor'},{k:'nombre',l:'Nombre'},{k:'variacion',l:'Variación'},{k:'categoria',l:'Categoría'}
+  ]},
+  mercados: { key:'aurex_sort_mercados', def:'default', opts:[
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'precio',l:'Precio'},{k:'variacion',l:'Variación'},{k:'mcap',l:'Market Cap'}
+  ]},
+  watchlist: { key:'aurex_sort_watchlist', def:'default', opts:[
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'precio',l:'Precio'},{k:'variacion',l:'Variación'},{k:'senalia',l:'Señal IA'}
+  ]},
+  ia: { key:'aurex_sort_ia', def:'default', opts:[
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'variacion',l:'Variación'},{k:'altaconv',l:'Alta Conv.'}
+  ]}
+};
+window._currSort = {};
+
+function _getSort(tab) {
+  if (window._currSort[tab]) return window._currSort[tab];
+  var c = window._sortCfgs[tab];
+  window._currSort[tab] = localStorage.getItem(c.key) || c.def;
+  return window._currSort[tab];
+}
+function _setSort(tab, k) {
+  window._currSort[tab] = k;
+  localStorage.setItem(window._sortCfgs[tab].key, k);
+}
+function _closeSortDDs() {
+  document.querySelectorAll('.sort-dd').forEach(function(d){ d.remove(); });
+}
+document.addEventListener('click', _closeSortDDs);
+
+function _buildSortBtn(tab, onApply) {
+  var cfg = window._sortCfgs[tab];
+  var cur = _getSort(tab);
+  var curOpt = cfg.opts.find(function(o){return o.k===cur;}) || cfg.opts[0];
+  var wrap = document.createElement('div');
+  wrap.className = 'sort-wrap';
+  wrap.id = tab+'-sort-wrap';
+  var btn = document.createElement('div');
+  btn.className = 'sort-btn';
+  btn.id = tab+'-sort-btn';
+  btn.innerHTML = 'Ordenar: '+curOpt.l+' <span class="sort-arrow">↓</span>';
+  btn.onclick = function(e) {
+    e.stopPropagation();
+    var existing = wrap.querySelector('.sort-dd');
+    _closeSortDDs();
+    if (existing) return;
+    var dd = document.createElement('div');
+    dd.className = 'sort-dd';
+    cfg.opts.forEach(function(o){
+      var it = document.createElement('div');
+      it.className = 'sort-dd-item'+(o.k===_getSort(tab)?' active':'');
+      it.textContent = o.l;
+      it.onclick = function(ev){
+        ev.stopPropagation();
+        _setSort(tab, o.k);
+        btn.innerHTML = 'Ordenar: '+o.l+' <span class="sort-arrow">↓</span>';
+        _closeSortDDs();
+        if (onApply) onApply(o.k);
+      };
+      dd.appendChild(it);
+    });
+    wrap.appendChild(dd);
+  };
+  wrap.appendChild(btn);
+  return wrap;
+}
+
+// Sort genérico DOM-based: extrae texto del item, sortea, re-appendea
+function _sortDOMItems(container, itemsSelector, extractFn, descending) {
+  if (!container) return;
+  var items = Array.from(container.querySelectorAll(itemsSelector));
+  if (items.length < 2) return;
+  items.sort(function(a,b){
+    var va = extractFn(a), vb = extractFn(b);
+    if (typeof va === 'string') return descending ? vb.localeCompare(va) : va.localeCompare(vb);
+    return descending ? (vb-va) : (va-vb);
+  });
+  items.forEach(function(it){ container.appendChild(it); });
+}
+
+// === Aplicar sort por tab (DOM-based simple, usa data del DOM rendered) ===
+
+window._applyPortfolioSort = function(key) {
+  var cnt = document.getElementById('port-cnt');
+  if (!cnt) return;
+  if (key === 'valor') {
+    // Buscar el span con valor en cada row
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var t = el.textContent.match(/\$([\d.,]+)/);
+      return t ? parseFloat(t[1].replace(/\./g,'').replace(',','.')) : 0;
+    }, true);
+  } else if (key === 'nombre') {
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var sym = el.querySelector('[id^="port-sym-"]');
+      return sym ? sym.textContent.trim() : el.id;
+    }, false);
+  } else if (key === 'variacion') {
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var pctEl = el.querySelector('[id^="pct-"]');
+      if (!pctEl) return 0;
+      var t = pctEl.textContent.replace(/[^\d.,\-]/g,'').replace(',','.');
+      return parseFloat(t)||0;
+    }, true);
+  }
+  // 'categoria' requiere data del array — TBD
+};
+
+window._applyMercadosSort = function(key) {
+  var cnt = document.getElementById('cnt');
+  if (!cnt || key === 'default') return;
+  var sel = '.mkt-row, [id^="mkt-row-"], [data-mkt-row]';
+  if (key === 'nombre') {
+    _sortDOMItems(cnt, sel, function(el){
+      var s = el.querySelector('[id^="mkt-sym-"], .mkt-sym');
+      return s ? s.textContent.trim() : el.textContent.trim().substr(0,5);
+    }, false);
+  } else if (key === 'precio' || key === 'variacion' || key === 'mcap') {
+    // extraer del texto: precios y % visibles
+    _sortDOMItems(cnt, sel, function(el){
+      var match = key === 'variacion'
+        ? el.textContent.match(/([+\-]?[\d.,]+)\s*%/)
+        : el.textContent.match(/\$([\d.,]+)/);
+      return match ? parseFloat(match[1].replace(/\./g,'').replace(',','.')) : 0;
+    }, true);
+  }
+};
+
+window._applyWatchlistSort = function(key) {
+  var wc = document.getElementById('watch-cnt');
+  if (!wc || key === 'default') return;
+  // Sort solo los items de activos (preservar children[0..2])
+  var allChildren = Array.from(wc.children);
+  var activos = allChildren.slice(3); // primeros 3 son selector + barra acciones + sort-bar
+  if (activos.length < 2) return;
+  activos.sort(function(a,b){
+    var ta = a.textContent, tb = b.textContent;
+    if (key === 'nombre') {
+      var sa = (ta.match(/^\s*([A-Z=]+)/) || [,''])[1];
+      var sb = (tb.match(/^\s*([A-Z=]+)/) || [,''])[1];
+      return sa.localeCompare(sb);
+    }
+    var ma, mb;
+    if (key === 'precio') { ma = ta.match(/\$([\d.,]+)/); mb = tb.match(/\$([\d.,]+)/); }
+    else if (key === 'variacion') { ma = ta.match(/([+\-]?[\d.,]+)\s*%/); mb = tb.match(/([+\-]?[\d.,]+)\s*%/); }
+    else if (key === 'senalia') { ma = ta.match(/(\d+)\s*%/); mb = tb.match(/(\d+)\s*%/); }
+    var va = ma ? parseFloat(ma[1].replace(/\./g,'').replace(',','.')) : 0;
+    var vb = mb ? parseFloat(mb[1].replace(/\./g,'').replace(',','.')) : 0;
+    return vb - va;
+  });
+  activos.forEach(function(it){ wc.appendChild(it); });
+};
+
+window._applyIASort = function(key) {
+  var cnt = document.getElementById('ia-list');
+  if (!cnt || key === 'default') return;
+  var items = Array.from(cnt.children);
+  if (items.length < 2) return;
+  items.sort(function(a,b){
+    var ta = a.textContent, tb = b.textContent;
+    if (key === 'nombre') {
+      var sa = (ta.match(/([A-Z=]{2,})/) || [,''])[1];
+      var sb = (tb.match(/([A-Z=]{2,})/) || [,''])[1];
+      return sa.localeCompare(sb);
+    }
+    if (key === 'variacion') {
+      var ma = ta.match(/([+\-]?[\d.,]+)\s*%/);
+      var mb = tb.match(/([+\-]?[\d.,]+)\s*%/);
+      return (mb?parseFloat(mb[1].replace(',','.')):0) - (ma?parseFloat(ma[1].replace(',','.')):0);
+    }
+    if (key === 'altaconv') {
+      var ha = /ALTA CONV/.test(ta) ? 1 : 0;
+      var hb = /ALTA CONV/.test(tb) ? 1 : 0;
+      return hb - ha;
+    }
+    return 0;
+  });
+  items.forEach(function(it){ cnt.appendChild(it); });
+};
+
+// === Inyección por tab ===
+
+window._initSortMenus = function() {
+  // PORTFOLIO
+  if (!document.getElementById('portfolio-sort-wrap')) {
+    var portCnt = document.getElementById('port-cnt');
+    if (portCnt && portCnt.parentElement) {
+      var pw = document.createElement('div');
+      pw.style.cssText = 'display:flex;justify-content:flex-end;padding:6px 14px 2px;';
+      pw.appendChild(_buildSortBtn('portfolio', function(k){ window._applyPortfolioSort(k); }));
+      portCnt.parentElement.insertBefore(pw, portCnt);
+      window._applyPortfolioSort(_getSort('portfolio'));
+    }
+  }
+
+  // MERCADOS — entre .tabs y #cnt
+  if (!document.getElementById('mercados-sort-wrap')) {
+    var tabs = document.querySelector('#screen-mercados .tabs');
+    var mktCnt = document.getElementById('cnt');
+    if (tabs && mktCnt && tabs.parentElement) {
+      var mw = document.createElement('div');
+      mw.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
+      mw.appendChild(_buildSortBtn('mercados', function(k){ window._applyMercadosSort(k); }));
+      tabs.parentElement.insertBefore(mw, mktCnt);
+      window._applyMercadosSort(_getSort('mercados'));
+    }
+  }
+
+  // IA — modificar fila Ver Variables
+  var iaScreen = document.getElementById('screen-ia');
+  if (iaScreen && iaScreen.children[2] && iaScreen.children[2].children[2]) {
+    var iaRow = iaScreen.children[2].children[2];
+    if (!iaRow.querySelector('#ia-sort-wrap')) {
+      iaRow.style.justifyContent = 'space-between';
+      iaRow.insertBefore(_buildSortBtn('ia', function(k){ window._applyIASort(k); }), iaRow.firstChild);
+      window._applyIASort(_getSort('ia'));
+    }
+  }
+
+  // WATCHLIST — MutationObserver
+  var wc = document.getElementById('watch-cnt');
+  if (wc && !wc._sortObserverAdded) {
+    var inject = function() {
+      if (!wc || wc.children.length < 2) return;
+      if (document.getElementById('watchlist-sort-wrap')) return;
+      var ww = document.createElement('div');
+      ww.id = 'wl-sort-bar';
+      ww.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
+      ww.appendChild(_buildSortBtn('watchlist', function(k){ window._applyWatchlistSort(k); }));
+      var anchor = wc.children[2] || null;
+      if (anchor) wc.insertBefore(ww, anchor);
+      else wc.appendChild(ww);
+      window._applyWatchlistSort(_getSort('watchlist'));
+    };
+    var obs = new MutationObserver(function() {
+      // re-inyectar si se borró
+      if (!document.getElementById('watchlist-sort-wrap')) inject();
+    });
+    obs.observe(wc, { childList: true });
+    wc._sortObserverAdded = true;
+    inject(); // intento inicial
+  }
 };
