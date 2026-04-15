@@ -3242,10 +3242,10 @@ function generarSenalesIA() {
         _actualizarContadores(sigs);
         _renderIALista(sigs, false);
         _iniciarBanner();
-        if (window._portItems) { _renderPortfolioItems(window._portItems); __renderThermoRisk(window._portItems); }
+        if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); }
         // Re-renderizar termometro despues de 2s por si el portfolio cargo tarde
-        setTimeout(function(){ if(window._portItems) __renderThermoRisk(window._portItems); }, 2000);
-        setTimeout(function(){ if(window._portItems) __renderThermoRisk(window._portItems); }, 5000);
+        setTimeout(function(){ if(window._portItems) _renderThermoRisk(window._portItems); }, 2000);
+        setTimeout(function(){ if(window._portItems) _renderThermoRisk(window._portItems); }, 5000);
         var upd=document.getElementById('ia-updated');
         if(upd){
           var ts = data.updatedAt ? new Date(data.updatedAt) : new Date();
@@ -3402,7 +3402,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       if (!window._iaSignalsFromBackend) window._iaSignals = allSignals;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, false);
-      if (window._portItems) { _renderPortfolioItems(window._portItems); __renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
+      if (window._portItems) { _renderPortfolioItems(window._portItems); _renderThermoRisk(window._portItems); setTimeout(function(){ if(window._initPortDropdowns) window._initPortDropdowns(); }, 100); }
       // Guardar senales en Railway para que la app nativa las lea
       try {
         var cacheData = allSignals.map(function(s){ return { simbolo:s.simbolo, direccion:s.direccion, scores:s.scores, confianza:s.confianza, estrellas:s.estrellas, prob_principal:s.prob_principal, upside:s.upside, objetivo:s.objetivo, stop:s.stop, score:s.score }; });
@@ -3422,7 +3422,7 @@ function _cargarFase2(phase2Activos, signals1, buildSignals, fetchBinanceBatch, 
       window._IA_PRECIOS = allData;
       _actualizarContadores(allSignals);
       _renderIALista(allSignals, true);
-      if (window._portItems) { __renderThermoRisk(window._portItems); }
+      if (window._portItems) { _renderThermoRisk(window._portItems); }
       setTimeout(function(){ processBatch(batchIdx + 1); }, 200);
     });
   }
@@ -4121,7 +4121,7 @@ function _renderFearGreed(containerId) {
       '<div style="display:flex;align-items:center;gap:8px;">' +
         gauge +
         '<div style="flex:1;min-width:0;">' +
-          '<div style="font-size:15px;font-weight:700;color:'+d.color+';">'+d.emoji+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          '<div style="font-size:15px;font-weight:700;color:'+(d.color||'#D4A017')+';">'+( d.emoji||'')+' '+d.value+' &#x2014; '+d.label+'</div>' +
           (cat==='CRIPTO' && (btcSentIdx !== null || altFngIdx !== null) ?
             '<div style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap;">' +
               '<span style="font-size:9px;color:#D4A017;font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:12px;">'+d.value+'</b></span>' +
