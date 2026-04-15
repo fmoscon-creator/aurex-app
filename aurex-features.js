@@ -4881,49 +4881,50 @@ function _renderComboBanner(containerId){
 })();
 
 window._initHoyIndicator = function() {
-  // 1. Emoji al lado del "13" usando wrapper flex (estilo nativa)
   var cntBadge = document.getElementById('port-cnt-badge');
-  if (cntBadge) {
-    // Resetear style inline si quedó de intentos previos
-    if (cntBadge.style.display) {
-      cntBadge.style.display = '';
-      cntBadge.style.alignItems = '';
-      cntBadge.style.justifyContent = '';
-      cntBadge.style.gap = '';
-    }
-    var parentOfBadge = cntBadge.parentElement;
-    var row;
-    if (parentOfBadge && parentOfBadge.classList.contains('badge-emoji-row')) {
-      row = parentOfBadge;
-    } else if (parentOfBadge) {
-      // Wrappear el badge en un flex container interno
-      row = document.createElement('div');
-      row.className = 'badge-emoji-row';
-      row.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:4px;';
-      parentOfBadge.replaceChild(row, cntBadge);
-      row.appendChild(cntBadge);
-    }
-    // Insertar emoji al lado del badge
-    if (row && !document.getElementById('port-cnt-emoji')) {
-      var emoji = document.createElement('span');
-      emoji.id = 'port-cnt-emoji';
-      emoji.textContent = '🎉';
-      emoji.style.cssText = 'font-size:11px;display:inline-block;line-height:1;';
-      row.appendChild(emoji);
-    }
+  if (!cntBadge) return;
+
+  // CLEANUP: deshacer intentos previos (wrapper interno + emoji dentro del badge)
+  var oldEmojiInBadge = document.getElementById('port-cnt-emoji');
+  if (oldEmojiInBadge) oldEmojiInBadge.remove();
+  var directParent = cntBadge.parentElement;
+  if (directParent && directParent.classList.contains('badge-emoji-row')) {
+    var chipReal = directParent.parentElement;
+    chipReal.replaceChild(cntBadge, directParent);
+  }
+  if (cntBadge.style.display) {
+    cntBadge.style.display = '';
+    cntBadge.style.alignItems = '';
+    cntBadge.style.justifyContent = '';
+    cntBadge.style.gap = '';
   }
 
-  // 2. Reemplazar bloque "Mejor 24h" con indicador Hoy (solo primera vez)
-  // Subir 2 niveles si hay wrapper, 1 si no — para llegar al chip Activos
-  var directParent = cntBadge ? cntBadge.parentElement : null;
-  var cntChip = directParent && directParent.classList.contains('badge-emoji-row')
-    ? directParent.parentElement
-    : directParent;
+  // Identificar fila bottom y chip Activos
+  var cntChip = cntBadge.parentElement;
   var filaBottom = cntChip ? cntChip.parentElement : null;
-  if (!filaBottom || filaBottom.children.length < 4) return;
+  if (!filaBottom) return;
 
-  var mejorDiv = filaBottom.children[1];
-  if (!mejorDiv || document.getElementById('port-hoy-indicator')) return;
+  // Insertar emoji 🎉 AFUERA del chip Activos. margin-left:auto empuja
+  // el emoji + indicador Hoy hacia la derecha (acercándolos al botón Agregar)
+  if (!document.getElementById('port-fila-emoji')) {
+    var emoji = document.createElement('span');
+    emoji.id = 'port-fila-emoji';
+    emoji.textContent = '🎉';
+    emoji.style.cssText = 'font-size:18px;display:inline-flex;align-items:center;line-height:1;flex-shrink:0;margin-left:auto;';
+    filaBottom.insertBefore(emoji, cntChip.nextSibling);
+  }
+
+  // Reemplazar bloque "Mejor 24h" con indicador Hoy
+  if (document.getElementById('port-hoy-indicator')) return;
+  var mejorDiv = null;
+  for (var i = 0; i < filaBottom.children.length; i++) {
+    var child = filaBottom.children[i];
+    if (child.querySelector && child.querySelector('#port-best-badge')) {
+      mejorDiv = child;
+      break;
+    }
+  }
+  if (!mejorDiv) return;
 
   var pctEl = document.getElementById('port-pnl-pct');
   var pct = pctEl ? pctEl.textContent.trim() : '';
@@ -4931,7 +4932,7 @@ window._initHoyIndicator = function() {
 
   var hoyDiv = document.createElement('div');
   hoyDiv.id = 'port-hoy-indicator';
-  hoyDiv.style.cssText = 'flex:1;min-width:0;padding:0 4px;display:flex;align-items:center;gap:3px;';
+  hoyDiv.style.cssText = 'flex:0 0 auto;padding:0 4px;display:flex;align-items:center;gap:3px;';
 
   var hoyPct = document.createElement('span');
   hoyPct.id = 'port-hoy-pct';
