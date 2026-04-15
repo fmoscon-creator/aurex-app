@@ -329,7 +329,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .arrow{font-size:14px;color:var(--textDim)}
 .tog{width:42px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation}
 .tog.on{background:var(--green)}
-.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 3px #00000060}
+.tog::after{content:'';position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--card);transition:transform .2s;box-shadow:0 1px 3px #00000060}
 .tog.on::after{transform:translateX(18px)}
 .plans-wrap{padding:8px 12px}
 .plan-card{border-radius:12px;padding:14px;border:1px solid var(--border);background:var(--card);margin-bottom:8px;cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation}
@@ -350,7 +350,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .plan-btn{width:100%;padding:10px;border-radius:9px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:opacity .15s}
 .plan-btn:hover{opacity:.85}
 .btn-curr{background:var(--border);color:var(--textDim)}
-.btn-pro{background:#A78BFA;color:#fff}
+.btn-pro{background:#A78BFA;color:var(--text)}
 .btn-elite{background:linear-gradient(135deg,var(--gold),#F5C842);color:#1A0D00}
 .lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:8px 12px}
 .lang-item{background:var(--card);border-radius:9px;padding:10px 12px;border:0.5px solid var(--border);cursor:pointer;display:flex;align-items:center;gap:8px;transition:all .15s}
@@ -387,8 +387,8 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .dis-sub{font-size:10px;color:var(--textDim);margin-top:2px}
 .dis-section{margin-bottom:10px}
 .dis-section-title{font-size:10px;font-weight:600;color:var(--textSec);margin-bottom:4px;display:flex;align-items:center;gap:5px}
-.dis-section-body{font-size:10px;color:#444;line-height:1.7}
-.dis-footer{margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);font-size:9px;color:#333;text-align:center;line-height:1.6}
+.dis-section-body{font-size:10px;color:var(--border2);line-height:1.7}
+.dis-footer{margin-top:10px;padding-top:10px;border-top:0.5px solid var(--border);font-size:9px;color:var(--border);text-align:center;line-height:1.6}
 .dis-link{color:var(--gold40);text-decoration:underline}
 .data-item{padding:10px 16px;border-bottom:0.5px solid #13171D;display:flex;align-items:center;gap:10px}
 .data-ico{font-size:18px;width:28px}
@@ -399,7 +399,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .logout-btn{margin:12px 12px 4px;padding:13px;border-radius:10px;background:#1A0808;border:0.5px solid #F8514940;text-align:center;color:var(--red);font-size:13px;font-weight:500;cursor:pointer;transition:filter .15s}
 .logout-btn:hover{filter:brightness(1.2)}
 .delete-btn{margin:0 12px 8px;padding:10px;border-radius:10px;background:transparent;border:0.5px solid var(--border);text-align:center;color:var(--textDim);font-size:11px;cursor:pointer}
-.ver{text-align:center;padding:10px 16px 16px;font-size:10px;color:#333;line-height:1.8}
+.ver{text-align:center;padding:10px 16px 16px;font-size:10px;color:var(--border);line-height:1.8}
 .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center}
 .modal-overlay.show{display:flex}
 .modal{background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:100%;padding:20px 16px 32px;border-top:1px solid var(--border2);max-height:80vh;overflow-y:auto}
@@ -577,7 +577,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
   }
 })();
 </script>
-<script src="aurex-v3.js?v=16"></script>
+<script src="aurex-v3.js?v=17"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -952,7 +952,7 @@ function setPulseZoneFilter(filter){
     needle.style.display = 'flex';
     needle.style.left = score + '%';
     needle.style.marginLeft = '-8px';
-    needle.innerHTML = '<span style="font-size:8px;color:'+color+';font-weight:900">▼</span><div style="width:2px;height:18px;background:'+color+';border-radius:1px"></div><div style="background:'+color+';border-radius:8px;padding:2px 6px;margin-top:2px"><span style="font-size:10px;font-weight:800;color:#000">'+Math.round(score)+'</span></div>';
+    needle.innerHTML = '<span style="font-size:8px;color:'+color+';font-weight:900">▼</span><div style="width:2px;height:18px;background:'+color+';border-radius:1px"></div><div style="background:'+color+';border-radius:8px;padding:2px 6px;margin-top:2px"><span style="font-size:10px;font-weight:800;color:var(--chipTextActive)">'+Math.round(score)+'</span></div>';
   }).catch(function(){});
 }
 </script>
@@ -1109,7 +1109,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <span style="font-size:11px;font-weight:600;color:var(--red);background:#F8514915;border:1px solid #F8514930;padding:5px 12px;border-radius:20px;">Metales</span>
     </div>
   </div>
-  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:20px;"><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:20px;"><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 44px;box-sizing:border-box;"><button onclick="showObs2()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Comenzar</button></div>
 </div>
 <div id="obs2" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99998;background:var(--bg);flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
@@ -1162,7 +1162,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="font-size:13px;color:var(--text);text-align:center;font-weight:600;margin-bottom:4px;">Analisis profesional al alcance de todos</div>
     <div style="font-size:10px;color:var(--textSec);text-align:center;">Gratis para empezar. PRO y ELITE para mas.</div>
   </div>
-  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
     <button onclick="showObs3()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Siguiente</button>
   </div>
@@ -1239,7 +1239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
   </div>
-  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
     <button onclick="showObs4()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Ver Planes</button>
   </div>
@@ -1290,7 +1290,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     <!-- ELITE -->
     <div style="width:100%;background:rgba(212,160,23,0.08);border:2px solid var(--gold40);border-radius:12px;padding:16px;margin-bottom:10px;text-align:center;position:relative;">
-      <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--gold);color:#000;font-size:9px;font-weight:800;padding:3px 12px;border-radius:6px;">RECOMENDADO</div>
+      <div style="position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--chipTextActive);font-size:9px;font-weight:800;padding:3px 12px;border-radius:6px;">RECOMENDADO</div>
       <div style="font-size:20px;font-weight:900;color:var(--gold);margin-bottom:2px;margin-top:4px;">ELITE</div>
       <div style="margin-bottom:8px;"><span style="font-size:22px;font-weight:900;color:var(--gold);">$19.99</span><span style="font-size:11px;color:var(--textSec);">/mes</span></div>
       <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-bottom:8px;">
@@ -1306,7 +1306,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
 
   </div>
-  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:8px;height:3px;background:#333;border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div></div>
+  <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
     <button onclick="startApp()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Empezar gratis</button>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
@@ -1371,35 +1371,35 @@ document.addEventListener('DOMContentLoaded', function() {
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
       <div style="display:flex;align-items:center;gap:5px;">
         <span style="font-size:9px;color:var(--textSec);font-weight:500;letter-spacing:.5px;">VALOR TOTAL</span>
-        <div onclick="_cyclePortCurrency()" style="background:var(--gold);color:#000;border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;"><span id="port-curr-badge" style="color:#000;font-weight:700;">$</span> &#9660;</div>
+        <div onclick="_cyclePortCurrency()" style="background:var(--gold);color:var(--chipTextActive);border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;"><span id="port-curr-badge" style="color:var(--chipTextActive);font-weight:700;">$</span> &#9660;</div>
       </div>
       <div id="port-pnl-row" style="display:flex;align-items:center;gap:4px;position:relative;">
         <span id="port-pnl-usd" style="font-size:11px;font-weight:700;color:var(--textSec);"></span>
         <span id="port-pnl-pct" style="font-size:12px;font-weight:800;color:var(--textSec);"></span>
         <div style="position:relative;">
-          <div ontouchstart="window._ptTS=Date.now();event.stopPropagation();event.preventDefault();window._togglePortPeriodDD&&window._togglePortPeriodDD();" onclick="if(Date.now()-(window._ptTS||0)<600)return;event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:var(--gold);color:#000;border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">
+          <div ontouchstart="window._ptTS=Date.now();event.stopPropagation();event.preventDefault();window._togglePortPeriodDD&&window._togglePortPeriodDD();" onclick="if(Date.now()-(window._ptTS||0)<600)return;event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:var(--gold);color:var(--chipTextActive);border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">
             <span id="port-period-badge">24h</span> &#9660;
           </div>
-          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 16px rgba(0,0,0,.6);z-index:9999;">
-            <div data-key="24h" ontouchstart="window._ppTS='24h'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('24h');" onclick="if(window._ppTS&&window._ppTS.indexOf('24h')===0&&Date.now()-parseInt(window._ppTS.slice(3))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#F59E0B;font-weight:700;background:#2a2a3e;">24 horas &#10003;</div>
-            <div data-key="7d"  ontouchstart="window._ppTS='7d'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('7d');"  onclick="if(window._ppTS&&window._ppTS.indexOf('7d')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">7 d&#237;as</div>
-            <div data-key="1m"  ontouchstart="window._ppTS='1m'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('1m');"  onclick="if(window._ppTS&&window._ppTS.indexOf('1m')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">1 mes</div>
-            <div data-key="3m"  ontouchstart="window._ppTS='3m'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('3m');"  onclick="if(window._ppTS&&window._ppTS.indexOf('3m')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">3 meses</div>
-            <div data-key="1y"  ontouchstart="window._ppTS='1y'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('1y');"  onclick="if(window._ppTS&&window._ppTS.indexOf('1y')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;">1 a&#241;o</div>
-            <div data-key="buy" ontouchstart="window._ppTS='buy'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('buy');" onclick="if(window._ppTS&&window._ppTS.indexOf('buy')===0&&Date.now()-parseInt(window._ppTS.slice(3))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#ccc;border-top:1px solid #333;">Desde compra</div>
+          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e2e;border:1px solid var(--border2);border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 16px rgba(0,0,0,.6);z-index:9999;">
+            <div data-key="24h" ontouchstart="window._ppTS='24h'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('24h');" onclick="if(window._ppTS&&window._ppTS.indexOf('24h')===0&&Date.now()-parseInt(window._ppTS.slice(3))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#F59E0B;font-weight:700;background:var(--card);">24 horas &#10003;</div>
+            <div data-key="7d"  ontouchstart="window._ppTS='7d'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('7d');"  onclick="if(window._ppTS&&window._ppTS.indexOf('7d')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:var(--textDim);">7 d&#237;as</div>
+            <div data-key="1m"  ontouchstart="window._ppTS='1m'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('1m');"  onclick="if(window._ppTS&&window._ppTS.indexOf('1m')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:var(--textDim);">1 mes</div>
+            <div data-key="3m"  ontouchstart="window._ppTS='3m'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('3m');"  onclick="if(window._ppTS&&window._ppTS.indexOf('3m')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('3m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:var(--textDim);">3 meses</div>
+            <div data-key="1y"  ontouchstart="window._ppTS='1y'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('1y');"  onclick="if(window._ppTS&&window._ppTS.indexOf('1y')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1y');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:var(--textDim);">1 a&#241;o</div>
+            <div data-key="buy" ontouchstart="window._ppTS='buy'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('buy');" onclick="if(window._ppTS&&window._ppTS.indexOf('buy')===0&&Date.now()-parseInt(window._ppTS.slice(3))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('buy');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:var(--textDim);border-top:1px solid var(--border);">Desde compra</div>
           </div>
         </div>
       </div>
     </div>
 
     <!-- FILA 2: importe grande -->
-    <div id="port-total" style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px;margin-bottom:8px;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
+    <div id="port-total" style="font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:8px;cursor:pointer;" onclick="_cyclePortCurrency()">$0</div>
 
     <!-- FILA 3: activos + mejor24h + agregar + conv -->
     <div style="display:flex;align-items:center;gap:5px;">
       <div style="background:var(--bg);border:1px solid var(--border2);border-radius:6px;padding:3px 9px;text-align:center;flex:0 0 auto;">
         <div style="font-size:7px;color:var(--textSec);font-weight:500;">Activos</div>
-        <div id="port-cnt-badge" style="font-size:13px;font-weight:800;color:#fff;">0</div>
+        <div id="port-cnt-badge" style="font-size:13px;font-weight:800;color:var(--text);">0</div>
       </div>
       <div style="flex:1;min-width:0;padding:0 4px;">
         <div style="font-size:7px;color:var(--textSec);white-space:nowrap;">&#x1F3C6; Mejor 24h</div>
@@ -1445,56 +1445,56 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- MODAL CONVERSOR PORTFOLIO -->
 <div id="port-conv-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);" onclick="if(event.target===this)closePortConvModal()">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#0d1117;border-radius:16px;padding:20px 16px 32px;max-height:88vh;overflow-y:auto;width:calc(100% - 32px);max-width:420px;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg);border-radius:16px;padding:20px 16px 32px;max-height:88vh;overflow-y:auto;width:calc(100% - 32px);max-width:420px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;"></span><span style="color:#fff;font-size:18px;font-weight:700;">Conversor</span></div>
-      <div onclick="closePortConvModal()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">&#10006;</div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;"></span><span style="color:var(--text);font-size:18px;font-weight:700;">Conversor</span></div>
+      <div onclick="closePortConvModal()" style="width:32px;height:32px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">&#10006;</div>
     </div>
     <div style="margin-bottom:16px;">
-      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
-      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:14px 16px;color:#fff;font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
+      <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
+      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:var(--card);border:1px solid var(--card);border-radius:12px;padding:14px 16px;color:var(--text);font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
     </div>
     <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;align-items:end;margin-bottom:20px;">
       <div>
-        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
-        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
-          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;"/>
+        <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
+        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:var(--card);border:1px solid var(--card);border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;background:var(--card);flex-shrink:0;"/>
           <div style="overflow:hidden;flex:1;">
-            <div id="pc-from-ticker" style="color:#fff;font-size:14px;font-weight:700;">BTC</div>
-            <div id="pc-from-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
+            <div id="pc-from-ticker" style="color:var(--text);font-size:14px;font-weight:700;">BTC</div>
+            <div id="pc-from-name" style="color:var(--textDim);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
           </div>
-          <span style="color:#888;font-size:11px;flex-shrink:0;"></span>
+          <span style="color:var(--textDim);font-size:11px;flex-shrink:0;"></span>
         </div>
       </div>
-      <div onclick="swapPortConv()" style="height:56px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#000;font-weight:bold;"></div>
+      <div onclick="swapPortConv()" style="height:56px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--chipTextActive);font-weight:bold;"></div>
       <div>
-        <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
-        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+        <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
+        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:var(--card);border:1px solid var(--card);border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
           <img id="pc-to-logo" src="https://flagcdn.com/w40/us.png" style="width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;"/>
           <div style="overflow:hidden;flex:1;">
-            <div id="pc-to-ticker" style="color:#fff;font-size:14px;font-weight:700;">USD</div>
-            <div id="pc-to-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dlar USA</div>
+            <div id="pc-to-ticker" style="color:var(--text);font-size:14px;font-weight:700;">USD</div>
+            <div id="pc-to-name" style="color:var(--textDim);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dlar USA</div>
           </div>
-          <span style="color:#888;font-size:11px;flex-shrink:0;"></span>
+          <span style="color:var(--textDim);font-size:11px;flex-shrink:0;"></span>
         </div>
       </div>
     </div>
-    <div style="background:#1a1a2e;border-radius:16px;padding:24px;text-align:center;border:1px solid #2a2a3e;">
-      <div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
+    <div style="background:var(--card);border-radius:16px;padding:24px;text-align:center;border:1px solid var(--card);">
+      <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
       <div id="pc-result" style="color:var(--gold);font-size:30px;font-weight:800;margin-bottom:8px;line-height:1.2;"></div>
       <div id="pc-rate" style="color:#666;font-size:12px;">Ingres un monto para convertir</div>
     </div>
   </div>
 </div>
 <div id="asset-picker-modal" style="display:none;position:fixed;inset:0;z-index:1001;background:rgba(0,0,0,0.85);" onclick="if(event.target===this)closeAssetPicker()">
-  <div style="position:absolute;bottom:0;left:0;right:0;background:#0d1117;border-radius:20px 20px 0 0;padding:20px 16px 40px;height:80vh;display:flex;flex-direction:column;">
+  <div style="position:absolute;bottom:0;left:0;right:0;background:var(--bg);border-radius:20px 20px 0 0;padding:20px 16px 40px;height:80vh;display:flex;flex-direction:column;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <span style="color:#fff;font-size:16px;font-weight:700;" id="picker-title">Seleccionar activo</span>
-      <div onclick="closeAssetPicker()" style="width:32px;height:32px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">&#10006;</div>
+      <span style="color:var(--text);font-size:16px;font-weight:700;" id="picker-title">Seleccionar activo</span>
+      <div onclick="closeAssetPicker()" style="width:32px;height:32px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">&#10006;</div>
     </div>
     <div style="position:relative;margin-bottom:12px;">
-      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:#888;font-size:15px;"></span>
-      <input id="asset-search" type="text" placeholder="Buscar por nombre o ticker..." oninput="filterAssets(this.value)" autocomplete="off" style="width:100%;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:12px;padding:12px 14px 12px 42px;color:#fff;font-size:15px;box-sizing:border-box;outline:none;"/>
+      <span style="position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--textDim);font-size:15px;"></span>
+      <input id="asset-search" type="text" placeholder="Buscar por nombre o ticker..." oninput="filterAssets(this.value)" autocomplete="off" style="width:100%;background:var(--card);border:1px solid var(--card);border-radius:12px;padding:12px 14px 12px 42px;color:var(--text);font-size:15px;box-sizing:border-box;outline:none;"/>
     </div>
     <div id="asset-list" style="flex:1;overflow-y:auto;padding-right:2px;"></div>
   </div>
@@ -1578,13 +1578,13 @@ function renderAssetList(assets){
       lastType=a.type;
     }
     var isFlag=a.logo&&a.logo.indexOf('flagcdn')>-1;
-    var ls=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    var ls=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:var(--card);flex-shrink:0;';
     html+='<div onclick="selectAsset(this.dataset.t)" data-t="'+a.ticker+'" style="display:flex;align-items:center;gap:12px;padding:12px 8px;border-radius:10px;cursor:pointer;">'
       +'<img src="'+a.logo+'" style="'+ls+'" onerror="convLogoFallback(this)"/>'
-      +'<div style="flex:1;"><div style="color:#fff;font-size:14px;font-weight:700;">'+a.ticker+'</div><div style="color:#888;font-size:11px;">'+a.name+'</div></div>'
+      +'<div style="flex:1;"><div style="color:var(--text);font-size:14px;font-weight:700;">'+a.ticker+'</div><div style="color:var(--textDim);font-size:11px;">'+a.name+'</div></div>'
       +'</div>';
   });
-  document.getElementById('asset-list').innerHTML=html||'<div style="color:#888;text-align:center;padding:30px;">Sin resultados</div>';
+  document.getElementById('asset-list').innerHTML=html||'<div style="color:var(--textDim);text-align:center;padding:30px;">Sin resultados</div>';
 }
 function convLogoFallback(img){
   img.onerror=null;
@@ -1603,7 +1603,7 @@ function refreshPickerDisplay(){
     var logoEl=document.getElementById(prefix+'-logo');
     if(!logoEl)return;
     logoEl.src=asset.logo;
-    logoEl.style.cssText=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:#2a2a3e;flex-shrink:0;';
+    logoEl.style.cssText=isFlag?'width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;':'width:28px;height:28px;border-radius:50%;object-fit:contain;background:var(--card);flex-shrink:0;';
     document.getElementById(prefix+'-ticker').textContent=asset.ticker;
     document.getElementById(prefix+'-name').textContent=asset.name;
   };
@@ -1782,7 +1782,7 @@ function filterMktSearch(){
       if(!results.length){ res.innerHTML='<div style="font-size:11px;color:var(--textDim);padding:6px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
       window._mktSearchActs = results;
       res.innerHTML = results.map(function(a,i){
-        var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
+        var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--text);flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
         var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
@@ -1814,11 +1814,11 @@ window._mktOpenDetail = function(idx){
   var fmt = window._fmt || function(v,d){return v ? v.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--';};
   var precioStr = precio ? fmt(precio, precio < 1 ? 6 : 2) : '--';
   var pct24Str = pct24 !== null ? (pct24 >= 0 ? '+' : '') + pct24 + '%' : '--';
-  var pct24Color = pct24 !== null ? (parseFloat(pct24) >= 0 ? 'var(--green)' : 'var(--red)') : '#888';
+  var pct24Color = pct24 !== null ? (parseFloat(pct24) >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--textDim)';
   var pct7Str = pct7 !== null ? (pct7 >= 0 ? '+' : '') + pct7 + '%' : '--';
-  var pct7Color = pct7 !== null ? (parseFloat(pct7) >= 0 ? 'var(--green)' : 'var(--red)') : '#888';
+  var pct7Color = pct7 !== null ? (parseFloat(pct7) >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--textDim)';
   var objetivoStr = objetivo ? '$' + parseFloat(objetivo).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--';
-  var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : '#888';
+  var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : 'var(--textDim)';
   var dirLabel = !direccion ? 'Sin se&#241;al' : (direccion === 'alta_conf' ? (sig && sig.escenario_principal ? sig.escenario_principal : 'Alta Conv-IA') : (direccion.charAt(0).toUpperCase() + direccion.slice(1)));
   var probStr = probAlc !== null ? probAlc + '%' : '';
   var overlay = document.createElement('div');
@@ -1826,33 +1826,33 @@ window._mktOpenDetail = function(idx){
   overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
   overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
   var logoHtml = a.logo ? '<img src="' + a.logo + '" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'">' : '';
-  overlay.innerHTML = '<div style="background:#1C1C1E;border:1px solid #333;border-radius:16px;padding:20px;width:88%;max-width:360px;font-family:sans-serif;">'
+  overlay.innerHTML = '<div style="background:#1C1C1E;border:1px solid var(--border);border-radius:16px;padding:20px;width:88%;max-width:360px;font-family:sans-serif;">'
     + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">'
     + logoHtml
-    + '<div><div style="font-size:18px;font-weight:700;color:#FFF;">' + a.s + '</div>'
-    + '<div style="font-size:12px;color:#888;">' + a.n + ' &middot; ' + a.tipo + '</div></div>'
-    + '<div style="margin-left:auto;cursor:pointer;font-size:22px;color:#888;line-height:1;" onclick="document.getElementById(\'mkt-search-detail-overlay\').remove()">&#x2715;</div>'
+    + '<div><div style="font-size:18px;font-weight:700;color:var(--text);">' + a.s + '</div>'
+    + '<div style="font-size:12px;color:var(--textDim);">' + a.n + ' &middot; ' + a.tipo + '</div></div>'
+    + '<div style="margin-left:auto;cursor:pointer;font-size:22px;color:var(--textDim);line-height:1;" onclick="document.getElementById(\'mkt-search-detail-overlay\').remove()">&#x2715;</div>'
     + '</div>'
     + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">'
     + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:#888;margin-bottom:4px;">Precio</div>'
-    + '<div style="font-size:14px;font-weight:700;color:#FFF;">' + precioStr + '</div></div>'
+    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Precio</div>'
+    + '<div style="font-size:14px;font-weight:700;color:var(--text);">' + precioStr + '</div></div>'
     + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:#888;margin-bottom:4px;">24h</div>'
+    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">24h</div>'
     + '<div style="font-size:14px;font-weight:700;color:' + pct24Color + ';">' + pct24Str + '</div></div>'
     + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:#888;margin-bottom:4px;">7d</div>'
+    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">7d</div>'
     + '<div style="font-size:14px;font-weight:700;color:' + pct7Color + ';">' + pct7Str + '</div></div>'
     + '</div>'
     + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">'
     + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:#888;margin-bottom:4px;">Objetivo IA</div>'
+    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Objetivo IA</div>'
     + '<div style="font-size:14px;font-weight:700;color:var(--gold);">' + objetivoStr + '</div></div>'
     + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:#888;margin-bottom:4px;">Se&#241;al IA</div>'
+    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Se&#241;al IA</div>'
     + '<div style="font-size:13px;font-weight:700;color:' + dirColor + ';"> ' + dirLabel + (probStr ? ' ' + probStr : '') + '</div></div>'
     + '</div>'
-    + '<button onclick="document.getElementById(\'mkt-search-detail-overlay\').remove();" style="width:100%;padding:12px;background:var(--gold);border:none;border-radius:10px;color:#000;font-size:14px;font-weight:700;cursor:pointer;">Ver en Mercados</button>'
+    + '<button onclick="document.getElementById(\'mkt-search-detail-overlay\').remove();" style="width:100%;padding:12px;background:var(--gold);border:none;border-radius:10px;color:var(--chipTextActive);font-size:14px;font-weight:700;cursor:pointer;">Ver en Mercados</button>'
     + '</div>';
   document.body.appendChild(overlay);
 };
@@ -1872,8 +1872,8 @@ window._mktOpenDetail = function(idx){
   </div>
   <div style="overflow:hidden;padding:2px 14px 7px;border-bottom:1px solid var(--border)">
     <div id="ia-banner-ticker" style="display:flex">
-      <span id="ia-banner-text1" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
-      <span id="ia-banner-text2" style="white-space:nowrap;color:#FFFFFF;font-size:12px;padding-right:80px"></span>
+      <span id="ia-banner-text1" style="white-space:nowrap;color:var(--text);font-size:12px;padding-right:80px"></span>
+      <span id="ia-banner-text2" style="white-space:nowrap;color:var(--text);font-size:12px;padding-right:80px"></span>
     </div>
   </div>
 </div>
@@ -1919,7 +1919,7 @@ window._mktOpenDetail = function(idx){
 <!-- PILLS FILTRO -->
 <div style="padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
   <div id="ia-filtros" style="display:flex;gap:6px;white-space:nowrap">
-    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:var(--gold);color:#000;border:1px solid var(--gold);-webkit-tap-highlight-color:rgba(0,0,0,0)">Todo</div>
+    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:var(--gold);color:var(--chipTextActive);border:1px solid var(--gold);-webkit-tap-highlight-color:rgba(0,0,0,0)">Todo</div>
     <div class="ia-pill" onclick="setIAFiltro('alcista',this)" data-filtro="alcista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--green);border:1px solid #3FB95060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Alcista</div>
     <div class="ia-pill" onclick="setIAFiltro('bajista',this)" data-filtro="bajista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--red);border:1px solid #FF444460;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bajista</div>
     <div class="ia-pill" onclick="setIAFiltro('alta_conf',this)" data-filtro="alta_conf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--gold);border:1px solid var(--gold40);-webkit-tap-highlight-color:rgba(0,0,0,0)">Conf. IA</div>
@@ -1972,7 +1972,7 @@ window._mktOpenDetail = function(idx){
     <div style="font-size:10px;color:var(--textSec);font-weight:500;margin-bottom:6px">Color</div>
     <div id="wl-colors" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap"></div>
     <div id="wl-primary-toggle" onclick="wlTogglePrimary()" style="display:flex;align-items:center;gap:8px;padding:10px;background:var(--bg);border-radius:8px;margin-bottom:14px;cursor:pointer"><span id="wl-primary-star" style="font-size:16px">☆</span><span style="font-size:12px;color:var(--textSec)">Marcar como Lista Principal</span></div>
-    <div onclick="wlCreateList()" style="background:var(--gold);border-radius:8px;padding:12px;text-align:center;color:#000;font-size:13px;font-weight:600;cursor:pointer">Crear lista</div>
+    <div onclick="wlCreateList()" style="background:var(--gold);border-radius:8px;padding:12px;text-align:center;color:var(--chipTextActive);font-size:13px;font-weight:600;cursor:pointer">Crear lista</div>
   </div>
 </div>
 <!-- Modal Agregar Activo -->
@@ -2098,7 +2098,7 @@ window._mktOpenDetail = function(idx){
 <div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:14px;border:0.5px solid var(--border)">
   <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px">Zonas AUREX Pulse</div>
   <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto" id="pulse-zone-filters">
-    <span onclick="setPulseZoneFilter('GLOBAL')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:#000;font-size:9px;font-weight:700;cursor:pointer">GLOBAL</span>
+    <span onclick="setPulseZoneFilter('GLOBAL')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:var(--chipTextActive);font-size:9px;font-weight:700;cursor:pointer">GLOBAL</span>
     <span onclick="setPulseZoneFilter('CRIPTO')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">CRIPTO</span>
     <span onclick="setPulseZoneFilter('ACCIONES')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">ACCIONES</span>
     <span onclick="setPulseZoneFilter('COMOD')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">COMOD</span>
@@ -2127,10 +2127,10 @@ window._mktOpenDetail = function(idx){
 <div style="padding:13px;margin-top:10px;border-bottom:0.5px solid var(--border)">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
     <span style="font-size:11px;font-weight:700;color:var(--textSec);letter-spacing:0.5px">ALERTAS ACTIVAS AHORA</span>
-    <span id="alert-triggered-count" style="display:none;background:var(--red);border-radius:10px;padding:2px 6px;font-size:10px;font-weight:800;color:#fff">0</span>
+    <span id="alert-triggered-count" style="display:none;background:var(--red);border-radius:10px;padding:2px 6px;font-size:10px;font-weight:800;color:var(--text)">0</span>
   </div>
   <div style="display:flex;gap:6px;overflow-x:auto" id="alert-type-filters">
-    <span onclick="setAlertTypeFilter('todas')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:#000;font-size:9px;font-weight:700;cursor:pointer">Todas</span>
+    <span onclick="setAlertTypeFilter('todas')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:var(--chipTextActive);font-size:9px;font-weight:700;cursor:pointer">Todas</span>
     <span onclick="setAlertTypeFilter('ia')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">🤖 IA</span>
     <span onclick="setAlertTypeFilter('precio')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">💰 Precio</span>
     <span onclick="setAlertTypeFilter('pulse')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">💓 Pulse</span>
@@ -2156,25 +2156,25 @@ window._mktOpenDetail = function(idx){
 #perfil-canvas{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .auth-wrap{display:flex;flex-direction:column;align-items:center;padding:32px 20px 100px;min-height:100%;position:relative;z-index:1;box-sizing:border-box;}
 .auth-logo{margin-bottom:16px}
-.auth-title{font-size:20px;font-weight:800;color:#fff;letter-spacing:2px;margin-bottom:4px;text-align:center}
+.auth-title{font-size:20px;font-weight:800;color:var(--text);letter-spacing:2px;margin-bottom:4px;text-align:center}
 .auth-sub{font-size:11px;color:var(--gold);letter-spacing:3px;text-align:center;margin-bottom:28px}
 .auth-tabs{display:flex;gap:0;background:var(--card);border-radius:10px;padding:3px;margin-bottom:20px;width:100%}
 .auth-tab{flex:1;padding:9px;text-align:center;font-size:13px;font-weight:600;color:var(--textSec);border-radius:8px;cursor:pointer;transition:all .2s}
-.auth-tab.on{background:var(--gold);color:#000}
+.auth-tab.on{background:var(--gold);color:var(--chipTextActive)}
 .auth-form{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
-.auth-input{width:100%;padding:13px 14px;background:rgba(22,27,34,0.92);border:1px solid var(--border2);border-radius:10px;color:#fff;font-size:14px;box-sizing:border-box;outline:none}
+.auth-input{width:100%;padding:13px 14px;background:rgba(22,27,34,0.92);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:14px;box-sizing:border-box;outline:none}
 .auth-input:focus{border-color:var(--gold)}
 .auth-input-hint{font-size:10px;color:var(--gold);margin-top:-8px;margin-left:4px;margin-bottom:2px}
-.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),#8B6208);border:none;border-radius:10px;color:#000;font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px}
+.auth-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),#8B6208);border:none;border-radius:10px;color:var(--chipTextActive);font-size:15px;font-weight:800;cursor:pointer;letter-spacing:1px}
 .auth-msg{font-size:13px;color:var(--gold);min-height:20px;text-align:center}
 .auth-logged{display:flex;flex-direction:column;align-items:center;width:100%;gap:10px}
-.auth-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6208);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#000;margin-bottom:4px}
-.auth-username{font-size:18px;font-weight:800;color:#fff;letter-spacing:1px}
+.auth-avatar{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,var(--gold),#8B6208);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:var(--chipTextActive);margin-bottom:4px}
+.auth-username{font-size:18px;font-weight:800;color:var(--text);letter-spacing:1px}
 .auth-email-txt{font-size:12px;color:var(--textSec)}
 .auth-badge{background:var(--card);border:1px solid var(--gold);border-radius:20px;padding:4px 14px;font-size:11px;color:var(--gold);font-weight:700;margin:4px 0 8px}
 .auth-celular-row{width:100%;background:rgba(22,27,34,0.92);border:1px solid var(--border2);border-radius:10px;padding:13px 14px;box-sizing:border-box;display:flex;flex-direction:column;gap:4px}
 .auth-celular-label{font-size:11px;color:var(--textSec)}
-.auth-celular-value{font-size:14px;color:#fff}
+.auth-celular-value{font-size:14px;color:var(--text)}
 .auth-celular-hint{font-size:10px;color:var(--gold)}
 .auth-logout{width:100%;padding:12px;background:transparent;border:1px solid var(--red);border-radius:10px;color:var(--red);font-size:14px;font-weight:600;cursor:pointer;margin-top:8px}
 
@@ -2186,7 +2186,7 @@ window._mktOpenDetail = function(idx){
 .toggle-slider{position:absolute;cursor:pointer;top:0;left:0;right:0;bottom:0;background:var(--border);border-radius:12px;transition:.3s}
 .toggle-slider:before{position:absolute;content:"";height:18px;width:18px;left:3px;bottom:3px;background:var(--textSec);border-radius:50%;transition:.3s}
 .toggle-sw input:checked+.toggle-slider{background:var(--green)}
-.toggle-sw input:checked+.toggle-slider:before{transform:translateX(18px);background:#fff}
+.toggle-sw input:checked+.toggle-slider:before{transform:translateX(18px);background:var(--card)}
 </style>
 <canvas id="perfil-canvas"></canvas>
 <!-- ESTADO NO LOGUEADO -->
@@ -2229,9 +2229,9 @@ window._mktOpenDetail = function(idx){
 <input id="reg-email" class="auth-input" type="email" placeholder="Email" autocomplete="email"/>
 <input id="reg-pass" class="auth-input" type="password" placeholder="Contrase&ntilde;a (m&iacute;n 6 car.)" autocomplete="new-password"/>
 <div style="display:flex;gap:6px;align-items:stretch;position:relative;">
-  <button type="button" id="reg-pais-btn" onclick="togglePaisPicker()" style="background:rgba(22,27,34,0.92);border:1px solid var(--border2);border-radius:10px;color:#fff;padding:0 10px;outline:none;flex-shrink:0;cursor:pointer;min-width:90px;height:48px;display:flex;align-items:center;justify-content:center;gap:6px;"><span id="reg-pais-flag"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"></span><span id="reg-pais-code" style="font-size:13px;font-weight:600;letter-spacing:-0.3px;">+54</span><span style="font-size:9px;opacity:0.5;margin-left:2px;">&#9660;</span></button>
+  <button type="button" id="reg-pais-btn" onclick="togglePaisPicker()" style="background:rgba(22,27,34,0.92);border:1px solid var(--border2);border-radius:10px;color:var(--text);padding:0 10px;outline:none;flex-shrink:0;cursor:pointer;min-width:90px;height:48px;display:flex;align-items:center;justify-content:center;gap:6px;"><span id="reg-pais-flag"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"></span><span id="reg-pais-code" style="font-size:13px;font-weight:600;letter-spacing:-0.3px;">+54</span><span style="font-size:9px;opacity:0.5;margin-left:2px;">&#9660;</span></button>
   <input id="reg-celular-num" class="auth-input" type="tel" placeholder="9 11 1234-5678" autocomplete="tel" style="flex:1;margin:0;" oninput="syncPhoneField()"/>
-  <input id="reg-celular" type="hidden" value="+54"/><div id="reg-pais-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:99999;background:#1a1f28;border:1px solid var(--border2);border-radius:12px;width:195px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.6);"><div onclick="selectPais('ar','+54')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"><span style="font-size:14px;">Argentina</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+54</span></div><div onclick="selectPais('us','+1')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/us.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="us"><span style="font-size:14px;">USA</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+1</span></div><div onclick="selectPais('br','+55')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/br.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="br"><span style="font-size:14px;">Brasil</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+55</span></div><div onclick="selectPais('uy','+598')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/uy.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="uy"><span style="font-size:14px;">Uruguay</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+598</span></div><div onclick="selectPais('cl','+56')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/cl.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="cl"><span style="font-size:14px;">Chile</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+56</span></div><div onclick="selectPais('mx','+52')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/mx.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="mx"><span style="font-size:14px;">Mxico</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+52</span></div><div onclick="selectPais('co','+57')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/co.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="co"><span style="font-size:14px;">Colombia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+57</span></div><div onclick="selectPais('pe','+51')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/pe.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="pe"><span style="font-size:14px;">Per</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+51</span></div><div onclick="selectPais('ve','+58')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ve.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ve"><span style="font-size:14px;">Venezuela</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+58</span></div><div onclick="selectPais('es','+34')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/es.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="es"><span style="font-size:14px;">España</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+34</span></div><div onclick="selectPais('gb','+44')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="gb"><span style="font-size:14px;">UK</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+44</span></div><div onclick="selectPais('de','+49')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/de.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="de"><span style="font-size:14px;">Alemania</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+49</span></div><div onclick="selectPais('fr','+33')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/fr.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="fr"><span style="font-size:14px;">Francia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+33</span></div><div onclick="selectPais('it','+39')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:#fff;"><img src="https://flagcdn.com/24x18/it.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="it"><span style="font-size:14px;">Italia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+39</span></div></div>
+  <input id="reg-celular" type="hidden" value="+54"/><div id="reg-pais-dropdown" style="display:none;position:absolute;top:calc(100% + 4px);left:0;z-index:99999;background:#1a1f28;border:1px solid var(--border2);border-radius:12px;width:195px;max-height:260px;overflow-y:auto;box-shadow:0 8px 24px rgba(0,0,0,0.6);"><div onclick="selectPais('ar','+54')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ar.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ar"><span style="font-size:14px;">Argentina</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+54</span></div><div onclick="selectPais('us','+1')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/us.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="us"><span style="font-size:14px;">USA</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+1</span></div><div onclick="selectPais('br','+55')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/br.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="br"><span style="font-size:14px;">Brasil</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+55</span></div><div onclick="selectPais('uy','+598')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/uy.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="uy"><span style="font-size:14px;">Uruguay</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+598</span></div><div onclick="selectPais('cl','+56')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/cl.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="cl"><span style="font-size:14px;">Chile</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+56</span></div><div onclick="selectPais('mx','+52')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/mx.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="mx"><span style="font-size:14px;">Mxico</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+52</span></div><div onclick="selectPais('co','+57')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/co.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="co"><span style="font-size:14px;">Colombia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+57</span></div><div onclick="selectPais('pe','+51')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/pe.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="pe"><span style="font-size:14px;">Per</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+51</span></div><div onclick="selectPais('ve','+58')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/ve.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="ve"><span style="font-size:14px;">Venezuela</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+58</span></div><div onclick="selectPais('es','+34')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/es.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="es"><span style="font-size:14px;">España</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+34</span></div><div onclick="selectPais('gb','+44')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/gb.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="gb"><span style="font-size:14px;">UK</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+44</span></div><div onclick="selectPais('de','+49')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/de.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="de"><span style="font-size:14px;">Alemania</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+49</span></div><div onclick="selectPais('fr','+33')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);border-bottom:1px solid rgba(48,54,61,0.4);"><img src="https://flagcdn.com/24x18/fr.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="fr"><span style="font-size:14px;">Francia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+33</span></div><div onclick="selectPais('it','+39')" style="padding:10px 12px;cursor:pointer;display:flex;align-items:center;gap:10px;color:var(--text);"><img src="https://flagcdn.com/24x18/it.png" width="24" height="18" style="border-radius:2px;vertical-align:middle;display:inline-block;" alt="it"><span style="font-size:14px;">Italia</span><span style="margin-left:auto;opacity:0.6;font-size:12px;">+39</span></div></div>
 </div>
 <div class="auth-input-hint">* Para recibir alertas autom&aacute;ticas de se&ntilde;ales IA</div>
 <button class="auth-btn" onclick="authDoRegister()">CREAR CUENTA</button>
@@ -2243,13 +2243,13 @@ window._mktOpenDetail = function(idx){
 <div id="perfil-acordeon" style="padding:12px 14px 100px;overflow-y:auto">
 <style>
 .pac-bloque{background:var(--card);border-radius:10px;margin-bottom:8px;overflow:hidden}
-.pac-titulo{padding:14px 16px;font-size:14px;font-weight:600;color:#fff;cursor:pointer;
+.pac-titulo{padding:14px 16px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;
 display:flex;align-items:center;justify-content:space-between}
 .pac-titulo:active{background:#1f2937}
 .pac-cuerpo{padding:0 16px 14px;display:none}
 .pac-bloque.abierto .pac-cuerpo{display:block}
 .pac-bloque.abierto .pac-chevron{transform:rotate(180deg)}
-.pac-chevron{transition:transform .2s;font-size:10px;color:#888}
+.pac-chevron{transition:transform .2s;font-size:10px;color:var(--textDim)}
 </style>
 <div class="pac-bloque abierto" id="pac-b1">
   <div class="pac-titulo" onclick="pacToggle('pac-b1')">
@@ -2259,7 +2259,7 @@ display:flex;align-items:center;justify-content:space-between}
     <div style="display:flex;flex-direction:column;align-items:center;padding:8px 0 12px">
       <div style="position:relative;margin-bottom:12px">
         <div id="auth-avatar-initial"
-          style="width:72px;height:72px;border-radius:50%;background:#c9a84c;color:#000;
+          style="width:72px;height:72px;border-radius:50%;background:#c9a84c;color:var(--chipTextActive);
           font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;"
           onclick="document.getElementById('auth-avatar-input').click()">
         </div>
@@ -2285,7 +2285,7 @@ display:flex;align-items:center;justify-content:space-between}
         })(event)"/>
       </div>
       <div id="auth-username-txt"
-        style="font-size:18px;font-weight:700;color:#fff;margin-bottom:4px"></div>
+        style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:4px"></div>
       <div id="auth-email-txt"
         style="font-size:13px;color:var(--textSec);margin-bottom:6px"></div>
       <div id="auth-celular-txt"
@@ -2299,7 +2299,7 @@ display:flex;align-items:center;justify-content:space-between}
     <span>&#11088; Plan actual</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
-    <div style="background:#0d0d1a;border-radius:8px;padding:12px 14px;margin-bottom:12px">
+    <div style="background:var(--card);border-radius:8px;padding:12px 14px;margin-bottom:12px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
         <span style="font-size:15px;font-weight:700;color:var(--textSec)">FREE</span>
         <span style="font-size:12px;color:var(--textSec)">Plan gratuito</span>
@@ -2324,15 +2324,15 @@ display:flex;align-items:center;justify-content:space-between}
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:10px;padding-top:4px">
       <div>
-        <div style="font-size:11px;color:#888;margin-bottom:5px;text-transform:uppercase;
+        <div style="font-size:11px;color:var(--textDim);margin-bottom:5px;text-transform:uppercase;
           letter-spacing:.5px">Nombre</div>
         <div style="display:flex;gap:8px;align-items:center">
           <input id="input-nombre"
-            style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;
-            padding:10px 12px;color:#fff;font-size:14px;outline:none"
+            style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;
+            padding:10px 12px;color:var(--text);font-size:14px;outline:none"
             type="text" placeholder="Tu nombre" />
           <button onclick="pacSaveNombre()"
-            style="background:#c9a84c;border:none;border-radius:8px;color:#000;
+            style="background:#c9a84c;border:none;border-radius:8px;color:var(--chipTextActive);
             font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;
             white-space:nowrap">
             Guardar
@@ -2340,10 +2340,10 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:#888;margin-bottom:5px;text-transform:uppercase;
+        <div style="font-size:11px;color:var(--textDim);margin-bottom:5px;text-transform:uppercase;
           letter-spacing:.5px">Email</div>
         <div id="cuenta-email-txt"
-          style="background:#0d0d1a;border:1px solid #222;border-radius:8px;
+          style="background:var(--card);border:1px solid #222;border-radius:8px;
           padding:10px 12px;color:#666;font-size:14px">
         </div>
         <div style="font-size:11px;color:var(--textDim);margin-top:4px">
@@ -2351,30 +2351,30 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
       </div>
       <div>
-        <div style="font-size:11px;color:#888;margin-bottom:5px;text-transform:uppercase;
+        <div style="font-size:11px;color:var(--textDim);margin-bottom:5px;text-transform:uppercase;
           letter-spacing:.5px">Tel&#233;fono</div>
-        <div style="display:flex;gap:8px;align-items:center"><input id="celular-input" type="hidden" /><select id="cel-prefix-sel" onchange="pacUpdateCelPrefix()" style="background:#0d0d1a;border:1px solid #333;border-radius:8px;color:#fff;font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-input" style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelPrefix()" /><button onclick="authSaveCelular()" style="background:#c9a84c;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div>
+        <div style="display:flex;gap:8px;align-items:center"><input id="celular-input" type="hidden" /><select id="cel-prefix-sel" onchange="pacUpdateCelPrefix()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-input" style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelPrefix()" /><button onclick="authSaveCelular()" style="background:#c9a84c;border:none;border-radius:8px;color:var(--chipTextActive);font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div>
         <div style="font-size:11px;color:var(--textDim);margin-top:4px">
           * Necesario para alertas autom&#225;ticas
         </div>
       </div>
       <div style="border-top:1px solid var(--border);padding-top:10px;margin-top:2px">
-        <div style="font-size:11px;color:#888;margin-bottom:8px;text-transform:uppercase;
+        <div style="font-size:11px;color:var(--textDim);margin-bottom:8px;text-transform:uppercase;
           letter-spacing:.5px">Contrase&#241;a</div>
         <div id="pwd-form" style="display:flex;flex-direction:column;gap:8px">
           <input id="input-pwd1"
-            style="background:#0d0d1a;border:1px solid #333;border-radius:8px;
-            padding:10px 12px;color:#fff;font-size:14px;outline:none;width:100%;
+            style="background:var(--card);border:1px solid var(--border);border-radius:8px;
+            padding:10px 12px;color:var(--text);font-size:14px;outline:none;width:100%;
             box-sizing:border-box"
             type="password" placeholder="Nueva contrase&#241;a" />
           <input id="input-pwd2"
-            style="background:#0d0d1a;border:1px solid #333;border-radius:8px;
-            padding:10px 12px;color:#fff;font-size:14px;outline:none;width:100%;
+            style="background:var(--card);border:1px solid var(--border);border-radius:8px;
+            padding:10px 12px;color:var(--text);font-size:14px;outline:none;width:100%;
             box-sizing:border-box"
             type="password" placeholder="Repetir contrase&#241;a" />
           <button onclick="pacSavePwd()"
-            style="background:var(--border);border:1px solid #444;border-radius:8px;
-            color:#fff;font-size:13px;font-weight:600;padding:10px;cursor:pointer">
+            style="background:var(--border);border:1px solid var(--border2);border-radius:8px;
+            color:var(--text);font-size:13px;font-weight:600;padding:10px;cursor:pointer">
             Cambiar contrase&#241;a
           </button>
           <div id="pwd-msg" style="font-size:12px;text-align:center;min-height:16px"></div>
@@ -2413,7 +2413,7 @@ display:flex;align-items:center;justify-content:space-between}
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:12px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#127760; Idioma
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px" id="lang-sublabel">
@@ -2422,7 +2422,7 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
         <select id="select-idioma"
           onchange="pacSaveLang(this)"
-          style="background:var(--card);color:#fff;border:1px solid #333;border-radius:6px;
+          style="background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:6px;
           padding:5px 8px;font-size:13px;cursor:pointer;outline:none;
           -webkit-appearance:auto">
           <option value="en">&#127468;&#127463; English</option>
@@ -2438,7 +2438,7 @@ display:flex;align-items:center;justify-content:space-between}
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:12px 0">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#128308; Indicador AUREX Pulse
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
@@ -2448,7 +2448,7 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer" onclick="pacTogglePulse(this)" data-on="1">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
     </div>
@@ -2464,7 +2464,7 @@ display:flex;align-items:center;justify-content:space-between}
         padding:13px 0;border-bottom:1px solid var(--border)">
         <div>
           <div style="display:flex;align-items:center;gap:7px">
-            <span style="font-size:14px;color:#fff;font-weight:500">
+            <span style="font-size:14px;color:var(--text);font-weight:500">
               &#128241; Autenticaci&#243;n en 2 pasos
             </span>
             <span style="background:#1f2937;color:var(--textSec);font-size:9px;
@@ -2474,17 +2474,17 @@ display:flex;align-items:center;justify-content:space-between}
             Protecci&#243;n extra al iniciar sesi&#243;n
           </div>
         </div>
-        <div style="width:44px;height:26px;background:#333;border-radius:13px;
+        <div style="width:44px;height:26px;background:var(--border);border-radius:13px;
           display:flex;align-items:center;justify-content:flex-start;padding:0 3px;
           opacity:.5;cursor:default">
-          <div style="width:20px;height:20px;background:#888;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--textDim);border-radius:50%"></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:13px 0;border-bottom:1px solid var(--border)">
         <div>
           <div style="display:flex;align-items:center;gap:7px">
-            <span style="font-size:14px;color:#fff;font-weight:500">
+            <span style="font-size:14px;color:var(--text);font-weight:500">
               &#128065; Acceso biom&#233;trico
             </span>
             <span style="background:#1f2937;color:var(--textSec);font-size:9px;
@@ -2494,20 +2494,20 @@ display:flex;align-items:center;justify-content:space-between}
             Face ID / Touch ID
           </div>
         </div>
-        <div style="width:44px;height:26px;background:#333;border-radius:13px;
+        <div style="width:44px;height:26px;background:var(--border);border-radius:13px;
           display:flex;align-items:center;justify-content:flex-start;padding:0 3px;
           opacity:.5;cursor:default">
-          <div style="width:20px;height:20px;background:#888;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--textDim);border-radius:50%"></div>
         </div>
       </div>
       <div style="padding:13px 0;border-bottom:1px solid var(--border)">
-        <div style="font-size:14px;color:#fff;font-weight:500;margin-bottom:8px">
+        <div style="font-size:14px;color:var(--text);font-weight:500;margin-bottom:8px">
           &#128104;&#8205;&#128187; Sesi&#243;n activa
         </div>
-        <div style="background:#0d0d1a;border-radius:8px;padding:10px 12px">
+        <div style="background:var(--card);border-radius:8px;padding:10px 12px">
           <div style="display:flex;align-items:center;justify-content:space-between">
             <div>
-              <div style="font-size:13px;color:#ccc" id="seg-dispositivo">
+              <div style="font-size:13px;color:var(--textDim)" id="seg-dispositivo">
                 Este dispositivo
               </div>
               <div style="font-size:11px;color:var(--textDim);margin-top:2px" id="seg-session-info">
@@ -2519,7 +2519,7 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
       </div>
       <div style="padding:13px 0">
-        <div style="font-size:14px;color:#fff;font-weight:500;margin-bottom:8px">
+        <div style="font-size:14px;color:var(--text);font-weight:500;margin-bottom:8px">
           &#128336; &#218;ltimos accesos
         </div>
         <div style="display:flex;flex-direction:column;gap:6px"
@@ -2540,14 +2540,14 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
-      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px"><div style="background:linear-gradient(135deg,#1a1200,#0d0d1a);border:1px solid #c9a84c44;border-radius:10px;padding:10px 12px;margin-bottom:10px"><div style="font-size:12px;color:#c9a84c;font-weight:700;letter-spacing:.5px;margin-bottom:2px">&#9889; TU N&#218;MERO, TUS ALERTAS AL INSTANTE</div><div style="font-size:11px;color:var(--textSec);line-height:1.4">AUREX te avisa directo a tu cel&#233;fono cuando el mercado se mueve. Sin delays.</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px"><div><div style="font-size:13px;color:#fff;font-weight:600">&#128242; Recibir alertas en este n&#250;mero</div><div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; para recibir notificaciones push</div></div><div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:#c9a84c;border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div></div><div style="font-size:11px;color:#888;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">N&#250;mero de cel&#250;lar</div><div style="display:flex;gap:8px;align-items:center"><input id="celular-input-b6" type="hidden" /><select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:#0d0d1a;border:1px solid #333;border-radius:8px;color:#fff;font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-b6" style="flex:1;background:#0d0d1a;border:1px solid #333;border-radius:8px;padding:10px 12px;color:#fff;font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" /><button onclick="authSaveCelularB6()" style="background:#c9a84c;border:none;border-radius:8px;color:#000;font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div><div id="cel-txt-b6" style="font-size:11px;color:#c9a84c;margin-top:6px;min-height:14px"></div></div>
+      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px"><div style="background:linear-gradient(135deg,#1a1200,var(--card));border:1px solid #c9a84c44;border-radius:10px;padding:10px 12px;margin-bottom:10px"><div style="font-size:12px;color:#c9a84c;font-weight:700;letter-spacing:.5px;margin-bottom:2px">&#9889; TU N&#218;MERO, TUS ALERTAS AL INSTANTE</div><div style="font-size:11px;color:var(--textSec);line-height:1.4">AUREX te avisa directo a tu cel&#233;fono cuando el mercado se mueve. Sin delays.</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px"><div><div style="font-size:13px;color:var(--text);font-weight:600">&#128242; Recibir alertas en este n&#250;mero</div><div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; para recibir notificaciones push</div></div><div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:#c9a84c;border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div></div></div><div style="font-size:11px;color:var(--textDim);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">N&#250;mero de cel&#250;lar</div><div style="display:flex;gap:8px;align-items:center"><input id="celular-input-b6" type="hidden" /><select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-b6" style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" /><button onclick="authSaveCelularB6()" style="background:#c9a84c;border:none;border-radius:8px;color:var(--chipTextActive);font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div><div id="cel-txt-b6" style="font-size:11px;color:#c9a84c;margin-top:6px;min-height:14px"></div></div>
       <div style="font-size:12px;color:var(--textSec);margin:8px 0 10px">
         Recib&#237; notificaciones push cuando ocurra:
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#127919; Precio objetivo
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
@@ -2559,13 +2559,13 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#129302; Se&#241;al IA
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
@@ -2577,13 +2577,13 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#128200; Variaci&#243;n brusca
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
@@ -2595,13 +2595,13 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;
         padding:11px 0">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">
+          <div style="font-size:14px;color:var(--text);font-weight:500">
             &#128308; AUREX Pulse extremo
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
@@ -2613,10 +2613,10 @@ display:flex;align-items:center;justify-content:space-between}
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
-      <div style="background:#0d0d1a;border-radius:8px;padding:10px 12px;
+      <div style="background:var(--card);border-radius:8px;padding:10px 12px;
         margin-top:6px">
         <div style="font-size:11px;color:var(--textDim);text-align:center">
           &#128274; Las alertas push requieren plan PRO o ELITE
@@ -2633,55 +2633,55 @@ display:flex;align-items:center;justify-content:space-between}
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">&#128226; Notificaciones push</div>
+          <div style="font-size:14px;color:var(--text);font-weight:500">&#128226; Notificaciones push</div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; todas las notificaciones</div>
         </div>
         <div onclick="pacNotif(this,'notif_push')" data-on="1"
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
       <div style="padding:11px 0;border-bottom:1px solid var(--border)">
         <div style="display:flex;align-items:center;justify-content:space-between">
           <div>
-            <div style="font-size:14px;color:#fff;font-weight:500">&#128197; Resumen diario</div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">&#128197; Resumen diario</div>
             <div style="font-size:11px;color:var(--textDim);margin-top:2px">Recib&#237; un resumen de tu portafolio</div>
           </div>
           <div onclick="pacNotif(this,'notif_resumen')" data-on="1"
             style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
             display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-            <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+            <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
           </div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-          <div style="font-size:11px;color:#888">Hora del resumen:</div>
+          <div style="font-size:11px;color:var(--textDim)">Hora del resumen:</div>
           <input id="notif-hora" type="time" value="08:00"
             onchange="pacSaveHora()"
-            style="background:#0d0d1a;border:1px solid #333;border-radius:6px;
+            style="background:var(--card);border:1px solid var(--border);border-radius:6px;
             color:#c9a84c;font-size:13px;padding:4px 8px;outline:none;cursor:pointer" />
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">&#128139; Newsletter semanal</div>
+          <div style="font-size:14px;color:var(--text);font-weight:500">&#128139; Newsletter semanal</div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">An&#225;lisis y novedades cada semana</div>
         </div>
         <div onclick="pacNotif(this,'notif_newsletter')" data-on="1"
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
         <div>
-          <div style="font-size:14px;color:#fff;font-weight:500">&#128640; Novedades AUREX</div>
+          <div style="font-size:14px;color:var(--text);font-weight:500">&#128640; Novedades AUREX</div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">Updates y nuevas funciones de la app</div>
         </div>
         <div onclick="pacNotif(this,'notif_novedades')" data-on="1"
           style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
         </div>
       </div>
     </div>
@@ -2699,7 +2699,7 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:20px">&#10067;</span>
           <div>
-            <div style="font-size:14px;color:#fff;font-weight:500">Centro de ayuda</div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">Centro de ayuda</div>
             <div style="font-size:11px;color:var(--textDim);margin-top:2px">Preguntas frecuentes y gu&#237;as</div>
           </div>
         </div>
@@ -2711,7 +2711,7 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:20px">&#11088;</span>
           <div>
-            <div style="font-size:14px;color:#fff;font-weight:500">Calific&#225; AUREX</div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">Calific&#225; AUREX</div>
             <div style="font-size:11px;color:var(--textDim);margin-top:2px">Tu opini&#243;n nos ayuda a mejorar</div>
           </div>
         </div>
@@ -2723,32 +2723,32 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:20px">&#128140;</span>
           <div>
-            <div style="font-size:14px;color:#fff;font-weight:500">Contactar soporte</div>
+            <div style="font-size:14px;color:var(--text);font-weight:500">Contactar soporte</div>
             <div style="font-size:11px;color:var(--textDim);margin-top:2px">soporte@aurexapp.com</div>
           </div>
         </div>
         <span style="color:var(--textDim);font-size:16px">&#8250;</span>
       </div>
       <div style="padding:12px 0;border-bottom:1px solid var(--border)">
-        <div style="font-size:11px;color:#888;margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">S&#237;guenos</div>
+        <div style="font-size:11px;color:var(--textDim);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">S&#237;guenos</div>
         <div style="display:flex;gap:12px">
           <div onclick="pacRed('ig')" style="display:flex;flex-direction:column;align-items:center;
             gap:4px;cursor:pointer;padding:8px 12px;background:var(--card);
             border-radius:10px;border:1px solid var(--border);flex:1">
             <span style="font-size:22px">&#128247;</span>
-            <span style="font-size:10px;color:#888">Instagram</span>
+            <span style="font-size:10px;color:var(--textDim)">Instagram</span>
           </div>
           <div onclick="pacRed('tw')" style="display:flex;flex-direction:column;align-items:center;
             gap:4px;cursor:pointer;padding:8px 12px;background:var(--card);
             border-radius:10px;border:1px solid var(--border);flex:1">
             <span style="font-size:22px">&#128488;</span>
-            <span style="font-size:10px;color:#888">X / Twitter</span>
+            <span style="font-size:10px;color:var(--textDim)">X / Twitter</span>
           </div>
           <div onclick="pacRed('yt')" style="display:flex;flex-direction:column;align-items:center;
             gap:4px;cursor:pointer;padding:8px 12px;background:var(--card);
             border-radius:10px;border:1px solid var(--border);flex:1">
             <span style="font-size:22px">&#127910;</span>
-            <span style="font-size:10px;color:#888">YouTube</span>
+            <span style="font-size:10px;color:var(--textDim)">YouTube</span>
           </div>
         </div>
       </div>
@@ -2777,7 +2777,7 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
         <button onclick="pacCerrarSesion()"
           style="width:100%;background:var(--card);border:1px solid var(--textSec);
-          border-radius:10px;color:#fff;font-size:15px;font-weight:700;
+          border-radius:10px;color:var(--text);font-size:15px;font-weight:700;
           padding:13px;cursor:pointer;letter-spacing:.3px">
           &#128682; Cerrar sesi&#243;n
         </button>
@@ -2802,8 +2802,8 @@ display:flex;align-items:center;justify-content:space-between}
           </div>
           <input id="elim-email-input" type="email"
             placeholder="tu@email.com"
-            style="width:100%;box-sizing:border-box;background:#0d0d1a;
-            border:1px solid #e74c3c;border-radius:8px;color:#fff;
+            style="width:100%;box-sizing:border-box;background:var(--card);
+            border:1px solid #e74c3c;border-radius:8px;color:var(--text);
             font-size:14px;padding:10px 12px;outline:none;margin-bottom:10px"
             oninput="pacCheckElimEmail()" />
           <div style="display:flex;gap:8px">
@@ -2870,7 +2870,7 @@ display:flex;align-items:center;justify-content:space-between}
     </div>
     <div style="padding:16px 14px 0">
       <div style="text-align:center;margin-bottom:16px">
-        <div style="font-size:18px;font-weight:800;color:#fff;margin-bottom:4px">
+        <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px">
           Elegir tu plan
         </div>
         <div style="font-size:12px;color:var(--textSec)">
@@ -2880,7 +2880,7 @@ display:flex;align-items:center;justify-content:space-between}
       <div style="display:flex;gap:6px;margin-bottom:20px" id="plan-tabs">
         <div onclick="planTab('FREE')"
           style="flex:1;text-align:center;padding:8px 4px;border-radius:8px;cursor:pointer;
-          background:var(--textSec);color:#000;font-size:12px;font-weight:700" id="ptab-FREE">
+          background:var(--textSec);color:var(--chipTextActive);font-size:12px;font-weight:700" id="ptab-FREE">
           FREE
         </div>
         <div onclick="planTab('PRO')"
@@ -2902,7 +2902,7 @@ display:flex;align-items:center;justify-content:space-between}
           <div style="display:flex;align-items:center;justify-content:space-between;
             margin-bottom:6px">
             <span style="font-size:22px;font-weight:800;color:var(--textSec)">FREE</span>
-            <span style="font-size:20px;font-weight:800;color:#fff">$0</span>
+            <span style="font-size:20px;font-weight:800;color:var(--text)">$0</span>
           </div>
           <div style="font-size:12px;color:var(--textSec);margin-bottom:16px">
             Para empezar a invertir mejor
@@ -2910,25 +2910,25 @@ display:flex;align-items:center;justify-content:space-between}
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:var(--textSec);font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 5 activos en portfolio
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:var(--textSec);font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 3 se&#241;ales IA por d&#237;a
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:var(--textSec);font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Mercados en tiempo real
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:var(--textSec);font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 AUREX Pulse
                 <span style="font-size:11px;color:var(--textSec)"> (indicador, sin detalles)</span>
               </span>
@@ -2970,7 +2970,7 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="position:relative;background:var(--card);border:2px solid #A78BFA;
           border-radius:14px;padding:18px 16px;margin-bottom:16px">
           <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);
-            background:#A78BFA;color:#000;font-size:10px;font-weight:800;
+            background:#A78BFA;color:var(--chipTextActive);font-size:10px;font-weight:800;
             padding:3px 12px;border-radius:20px;white-space:nowrap">
             M&#193;S POPULAR
           </div>
@@ -2978,7 +2978,7 @@ display:flex;align-items:center;justify-content:space-between}
             margin-bottom:4px">
             <span style="font-size:22px;font-weight:800;color:#A78BFA">PRO</span>
             <div style="text-align:right">
-              <div style="font-size:20px;font-weight:800;color:#fff">$9,99
+              <div style="font-size:20px;font-weight:800;color:var(--text)">$9,99
                 <span style="font-size:12px;color:var(--textSec)">/mes</span>
               </div>
               <div style="font-size:11px;color:#A78BFA">$7,79/mes si pag&#225;s anual</div>
@@ -2990,43 +2990,43 @@ display:flex;align-items:center;justify-content:space-between}
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Activos ilimitados en portfolio
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Se&#241;ales IA ilimitadas + historial 30 d&#237;as
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Alertas push al celular (precio, se&#241;al IA, variaci&#243;n)
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 AUREX Pulse con variables y explicaci&#243;n b&#225;sica
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Sin publicidad
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Exportar portfolio (Excel/PDF)
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#A78BFA;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Soporte prioritario por email
               </span>
             </div>
@@ -3040,7 +3040,7 @@ display:flex;align-items:center;justify-content:space-between}
               <span style="color:var(--textDim);font-size:14px;margin-top:1px">&#10007;</span>
               <span style="font-size:13px;color:var(--textDim)">
                 Alertas SMS / WhatsApp
-                <span style="background:#333;color:#aaa;font-size:9px;padding:1px 5px;
+                <span style="background:var(--border);color:#aaa;font-size:9px;padding:1px 5px;
                   border-radius:4px;margin-left:4px">SOON</span>
               </span>
             </div>
@@ -3048,7 +3048,7 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
         <button id="btn-pro-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-64Y46051CU7251058NHMGG4Y')"
           style="width:100%;background:linear-gradient(135deg,#7C3AED,#A78BFA);
-          border:none;border-radius:10px;color:#fff;
+          border:none;border-radius:10px;color:var(--text);
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
           &#128640; PRO Mensual — $9,99/mes
         </button>
@@ -3066,7 +3066,7 @@ display:flex;align-items:center;justify-content:space-between}
             margin-bottom:4px">
             <span style="font-size:22px;font-weight:800;color:var(--gold)">ELITE</span>
             <div style="text-align:right">
-              <div style="font-size:20px;font-weight:800;color:#fff">$19,99
+              <div style="font-size:20px;font-weight:800;color:var(--text)">$19,99
                 <span style="font-size:12px;color:var(--textSec)">/mes</span>
               </div>
               <div style="font-size:11px;color:#c9a84c">$15,99/mes si pag&#225;s anual</div>
@@ -3078,51 +3078,51 @@ display:flex;align-items:center;justify-content:space-between}
           <div style="display:flex;flex-direction:column;gap:10px">
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Todo lo incluido en PRO
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 AUREX Pulse completo: variables, explicaci&#243;n profunda e historial
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Se&#241;ales IA con nivel de confianza y raz&#243;n detallada
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 An&#225;lisis t&#233;cnico avanzado (RSI, MACD)
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Alertas SMS / WhatsApp / Telegram
-                <span style="background:#333;color:#aaa;font-size:9px;padding:1px 5px;
+                <span style="background:var(--border);color:#aaa;font-size:9px;padding:1px 5px;
                   border-radius:4px;margin-left:4px">SOON</span>
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Acceso anticipado a funciones beta
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 Soporte por chat en vivo
               </span>
             </div>
             <div style="display:flex;align-items:flex-start;gap:10px">
               <span style="color:#c9a84c;font-size:14px;margin-top:1px">&#10003;</span>
-              <span style="font-size:13px;color:#ccc">
+              <span style="font-size:13px;color:var(--textDim)">
                 API personal para integraciones
               </span>
             </div>
@@ -3130,7 +3130,7 @@ display:flex;align-items:center;justify-content:space-between}
         </div>
         <button id="btn-elite-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-9T718444CV910321WNHMGOWY')"
           style="width:100%;background:linear-gradient(135deg,#8B6208,#c9a84c);
-          border:none;border-radius:10px;color:#000;
+          border:none;border-radius:10px;color:var(--chipTextActive);
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
           &#128081; ELITE Mensual — $19,99/mes
         </button>
@@ -3248,7 +3248,7 @@ function pacSavePwd(){
 function pacTogglePulse(el){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'#333';
+  el.style.background=on?'#c9a84c':'var(--border)';
   el.style.justifyContent=on?'flex-end':'flex-start';
   localStorage.setItem('aurex_pulse_visible', on?'1':'0');
 }
@@ -3277,7 +3277,7 @@ function pacInitLang(){
 function pacAlerta(el, key){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'#333';
+  el.style.background=on?'#c9a84c':'var(--border)';
   el.style.justifyContent=on?'flex-end':'flex-start';
   localStorage.setItem(key, on?'1':'0');
 }
@@ -3289,7 +3289,7 @@ function pacInitAlertas(){
     var saved=localStorage.getItem(m[1]);
     var on=saved===null?true:saved==='1';
     el.dataset.on=on?'1':'0';
-    el.style.background=on?'#c9a84c':'#333';
+    el.style.background=on?'#c9a84c':'var(--border)';
     el.style.justifyContent=on?'flex-end':'flex-start';
   });
   var u=window._currentUser;
@@ -3361,9 +3361,9 @@ function pacInitSeg(){
       '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--textSec)">'+
       '<span>'+fmt(d)+'</span><span style="color:var(--textDim)">'+dev+'</span></div>'+
       '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--textDim)">'+
-      '<span>'+fmt(d2)+'</span><span style="color:#444">'+dev+'</span></div>'+
-      '<div style="display:flex;justify-content:space-between;font-size:12px;color:#444">'+
-      '<span>'+fmt(d3)+'</span><span style="color:#333">'+dev+'</span></div>';
+      '<span>'+fmt(d2)+'</span><span style="color:var(--border2)">'+dev+'</span></div>'+
+      '<div style="display:flex;justify-content:space-between;font-size:12px;color:var(--border2)">'+
+      '<span>'+fmt(d3)+'</span><span style="color:var(--border)">'+dev+'</span></div>';
   }
 }
 function pacUpdateCelPrefix(){
@@ -3436,7 +3436,7 @@ window.pacInitCelB6=pacInitCelB6;
 function pacNotif(el,key){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'#333';
+  el.style.background=on?'#c9a84c':'var(--border)';
   el.style.justifyContent=on?'flex-end':'flex-start';
   localStorage.setItem(key,on?'1':'0');
 }
@@ -3452,7 +3452,7 @@ function pacInitNotif(){
     var saved=localStorage.getItem(key);
     var on=saved===null?true:saved==='1';
     el.dataset.on=on?'1':'0';
-    el.style.background=on?'#c9a84c':'#333';
+    el.style.background=on?'#c9a84c':'var(--border)';
     el.style.justifyContent=on?'flex-end':'flex-start';
   });
   var h=document.getElementById('notif-hora');
@@ -3767,14 +3767,14 @@ setTimeout(function(){
 
   <!-- PRO: grande y destacado -->
   <div class="plan-card pro-c" style="border:1.5px solid #A78BFA80;background:linear-gradient(135deg,#A78BFA10,#7C3AED08);position:relative;margin-bottom:10px">
-    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#A78BFA;color:#fff;font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap"> MS POPULAR</div>
+    <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#A78BFA;color:var(--text);font-size:10px;font-weight:700;padding:3px 14px;border-radius:20px;letter-spacing:1px;white-space:nowrap"> MS POPULAR</div>
     <div class="plan-top" style="margin-top:8px">
       <div>
         <div class="plan-name" style="font-size:18px;color:#A78BFA">PRO</div>
         <div style="font-size:11px;color:var(--textSec)">Para el inversor activo</div>
       </div>
       <div class="plan-pricing">
-        <div class="plan-price" style="font-size:22px;color:#fff">$9.99</div>
+        <div class="plan-price" style="font-size:22px;color:var(--text)">$9.99</div>
         <div class="plan-period">/mes</div>
       </div>
     </div>

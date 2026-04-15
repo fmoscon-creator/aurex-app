@@ -845,7 +845,7 @@ function _renderPortfolioItems(items){
     );
     var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
     var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
-    if(mktClosed && prevClosePct !== null){ cc = '#888'; cs = prevClosePct >= 0 ? '+' : ''; }
+    if(mktClosed && prevClosePct !== null){ cc = 'var(--textDim)'; cs = prevClosePct >= 0 ? '+' : ''; }
     var nowUtc = new Date();
     var nowMin = nowUtc.getUTCHours()*60+nowUtc.getUTCMinutes();
     var nyseOpenMin = 13*60+30;
@@ -862,8 +862,8 @@ function _renderPortfolioItems(items){
         minsToOpen = (24*60 - nowMin) + nyseOpenMin;
       }
     }
-            var upColor = idx === 0 ? '#333' : 'var(--textSec)';
-    var dnColor = idx === items.length-1 ? '#333' : 'var(--textSec)';
+            var upColor = idx === 0 ? 'var(--border)' : 'var(--textSec)';
+    var dnColor = idx === items.length-1 ? 'var(--border)' : 'var(--textSec)';
     var upCursor = idx === 0 ? 'default' : 'pointer';
     var dnCursor = idx === items.length-1 ? 'default' : 'pointer';
     return '<div id="port-row-'+item.id+'" style="padding:10px 12px 8px;border-bottom:0.5px solid var(--border);">' +
@@ -872,7 +872,7 @@ function _renderPortfolioItems(items){
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', 1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+dnColor+';cursor:'+dnCursor+';">&#9660;</div>' +
       '</div>' +
-      (rowAct && rowAct.logo ? '<img src="'+rowAct.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;flex-shrink:0;" onerror="this.style.display=\'none\'" />' : '<div style="width:28px;height:28px;border-radius:50%;background:'+(rowAct&&rowAct.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>') +
+      (rowAct && rowAct.logo ? '<img src="'+rowAct.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;flex-shrink:0;" onerror="this.style.display=\'none\'" />' : '<div style="width:28px;height:28px;border-radius:50%;background:'+(rowAct&&rowAct.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text);margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>') +
       '<div style="flex:1;min-width:0;cursor:pointer;overflow:hidden;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
         '<div style="display:flex;align-items:center;gap:6px;">' +
           '<span style="font-weight:700;color:var(--text);font-size:14px;">'+item.simbolo+'</span>' +
@@ -1172,7 +1172,7 @@ function _renderThermoRisk(items){
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">' +
       '<div style="display:flex;align-items:center;gap:5px;">' +
         '<div style="font-size:10px;color:var(--text);font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
-        '<div onclick="showThermoHelp()" style="font-size:9px;color:var(--textSec);font-weight:700;cursor:pointer;border:1px solid #444;border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</div>' +
+        '<div onclick="showThermoHelp()" style="font-size:9px;color:var(--textSec);font-weight:700;cursor:pointer;border:1px solid var(--border2);border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</div>' +
       '</div>' +
       '<div style="font-size:8px;color:var(--textSec);letter-spacing:.5px;font-weight:500;">CAPITAL POR SEÑAL IA</div>' +
       '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
@@ -1236,12 +1236,12 @@ window.editMarketBanner = function(){
   var opts = ['EEUU','ARG','BRASIL','LONDRES','ESPANA','ALEMANIA','FRANCIA','JAPON','CHINA','HONGKONG','ASIA'];
   var rows = opts.map(function(m){
     var on = prefs.includes(m);
-    var onBg = on ? 'var(--green)' : '#333';
+    var onBg = on ? 'var(--green)' : 'var(--border)';
     var knobL = on ? '18px' : '2px';
     return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">' +
       '<span style="color:var(--text);font-size:13px;">'+m+'</span>' +
       '<div onclick="toggleMktPref(\'' + m + '\')" id="mkt-tog-'+m+'" style="width:36px;height:20px;border-radius:10px;background:'+onBg+';cursor:pointer;position:relative;">' +
-      '<div style="position:absolute;top:2px;left:'+knobL+';width:16px;height:16px;border-radius:50%;background:#fff;"></div></div></div>';
+      '<div style="position:absolute;top:2px;left:'+knobL+';width:16px;height:16px;border-radius:50%;background:var(--card);"></div></div></div>';
   }).join('');
   var popup = document.createElement('div');
   popup.id = 'aurex-mkt-edit-popup';
@@ -1265,7 +1265,7 @@ window.toggleMktPref = function(m){
   var tog = document.getElementById('mkt-tog-'+m);
   if(tog){
     var on = prefs.includes(m);
-    tog.style.background = on ? 'var(--green)' : '#333';
+    tog.style.background = on ? 'var(--green)' : 'var(--border)';
     var knob = tog.querySelector('div');
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
@@ -1293,7 +1293,7 @@ window.showThermoInfo = function(){
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--green);">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--gold);">ALTA CONV-IA</b> — La señal m�s valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
     '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--red);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--red);">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:#333;flex-shrink:0;"></div><div style="font-size:12px;color:var(--textSec);"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
+    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--border);flex-shrink:0;"></div><div style="font-size:12px;color:var(--textSec);"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
     '</div>' +
     '<div onclick="closePortModal()" style="background:var(--green);color:var(--bg);border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
   modal.style.display = 'flex';
@@ -1324,7 +1324,7 @@ window.showThermoHelp = function(){
       '<div><span style="color:var(--textSec);font-weight:700;">⚫ Gris — Sin señal</span><br><span style="color:var(--textSec);">La IA no tiene datos suficientes hoy. Sin acción recomendada.</span></div>' +
     '</div>' +
     '<div style="margin-top:14px;font-size:10px;color:var(--textSec);border-top:1px solid var(--border2);padding-top:10px;">El % indica cuánto de tu capital está en cada zona. Se actualiza con precios actuales.</div>' +
-    '<div onclick="window._closeThermoHelp()" style="margin-top:12px;background:var(--gold);color:#000;border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Entendido</div>';
+    '<div onclick="window._closeThermoHelp()" style="margin-top:12px;background:var(--gold);color:var(--chipTextActive);border-radius:8px;padding:10px;text-align:center;font-size:12px;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">Entendido</div>';
   overlay.appendChild(box);
   document.body.appendChild(overlay);
 };
@@ -1350,7 +1350,7 @@ window.openAddActivo = function(){
           '<div style="font-size:28px;margin-bottom:8px;">🔐</div>' +
           '<div style="font-size:14px;font-weight:700;color:var(--gold);margin-bottom:6px;">Necesitás una cuenta</div>' +
           '<div style="font-size:12px;color:var(--textSec);margin-bottom:16px;">Para guardar activos reales, creá tu cuenta gratis.</div>' +
-          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,var(--gold),#B8860B);color:#000;font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
+          '<div onclick="navTo(\x27perfil\x27);authSwitchTab(\x27register\x27)" style="background:linear-gradient(135deg,var(--gold),#B8860B);color:var(--chipTextActive);font-weight:800;font-size:14px;padding:12px 24px;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis →</div>' +
           '<div onclick="navTo(\x27perfil\x27)" style="margin-top:10px;font-size:12px;color:#58A6FF;cursor:pointer;">Ya tengo cuenta</div>' +
         '</div>' + old;
         setTimeout(function(){ cnt.innerHTML = old; }, 5000);
@@ -1420,7 +1420,7 @@ window._buscarActivos = function(q, cb) {
 window._renderSearchResult = function(a, idx, onclickFnName) {
   var logoHtml = a.logo
     ? '<img src="' + a.logo + '" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />'
-    : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'#333') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
+    : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'var(--border)') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text);flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
   var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
   var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':a.tipo==='bono'?'Bono':a.tipo==='metal'?'Metal':a.tipo==='materia_prima'?'Commodity':(a.tipo||'Activo');
   var yahooTag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 4px;">YAHOO</span>' : '';
@@ -1562,7 +1562,7 @@ window.openPortItemDetail = function(itemId){
   var acts = window._IA_ACTIVOS || [];
   var act = null;
   for(var i=0;i<acts.length;i++){ if(acts[i].s===item.simbolo){ act=acts[i]; break; } }
-  var logoHtml = (act && act.logo) ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin-right:10px;" onerror="this.style.display=\'none\'"/>' : '<div style="width:32px;height:32px;border-radius:50%;background:'+(act&&act.color||'#333')+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;margin-right:10px;">'+(item.simbolo[0]||'?')+'</div>';
+  var logoHtml = (act && act.logo) ? '<img src="'+act.logo+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;margin-right:10px;" onerror="this.style.display=\'none\'"/>' : '<div style="width:32px;height:32px;border-radius:50%;background:'+(act&&act.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--text);margin-right:10px;">'+(item.simbolo[0]||'?')+'</div>';
   var fechaStr = item.created_at ? new Date(item.created_at).toLocaleDateString('es-AR',{day:'2-digit',month:'2-digit',year:'2-digit'}) : '--';
   var fmtP = function(n,d){ var loc=(navigator.language||'en-US'); return n ? n.toLocaleString(loc,{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--'; };
   // 52-week range
@@ -2005,7 +2005,7 @@ function abrirEventosPanel() {
         '<span style="font-size:10px;font-weight:700;color:'+ev.color+';letter-spacing:1px">'+ev.label+'</span>' +
         '<span style="background:'+ev.color+'30;border:1px solid '+ev.color+';border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;color:'+ev.color+'">'+ev.tiempo+'</span>' +
       '</div>' +
-      '<div style="font-size:13px;color:#FFFFFF;font-weight:600;margin-bottom:6px">'+ev.text.split('-')[0].trim()+'</div>' +
+      '<div style="font-size:13px;color:var(--text);font-weight:600;margin-bottom:6px">'+ev.text.split('-')[0].trim()+'</div>' +
       '<div style="font-size:11px;color:var(--textSec);line-height:1.5">'+ev.text+'</div>' +
       '<div style="margin-top:8px;display:flex;gap:6px">' +
         '<span style="background:'+impColor+'20;border:1px solid '+impColor+'60;border-radius:4px;padding:2px 8px;font-size:10px;color:'+impColor+';font-weight:700">IMPACTO '+ev.impacto+'</span>' +
@@ -2667,7 +2667,7 @@ function _buildIADetail(s) {
   html += '<div style="background:'+dirColor+'15;border:1px solid '+dirColor+'40;border-radius:10px;padding:10px 12px;margin-bottom:10px">';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">';
   html += '<span style="font-size:13px;font-weight:700;color:'+dirColor+'">'+signo+' '+dirLabel+'</span>';
-  html += '<span style="background:'+dirColor+';color:#000;font-size:11px;font-weight:800;border-radius:6px;padding:2px 8px">PRINCIPAL '+s.prob_principal+'%</span>';
+  html += '<span style="background:'+dirColor+';color:var(--chipTextActive);font-size:11px;font-weight:800;border-radius:6px;padding:2px 8px">PRINCIPAL '+s.prob_principal+'%</span>';
   html += '</div>';
   html += '<div style="font-size:11px;font-weight:600;color:var(--textSec);letter-spacing:0.5px;margin-bottom:6px">JUSTIFICACION DEL ANALISIS</div>';
   (s.motivos||[]).slice(0,5).forEach(function(m) {
@@ -3237,11 +3237,11 @@ window.showFearGreedInfo = function() {
       '</div>' +
       '<div style="font-size:10px;font-weight:700;color:var(--text);margin-bottom:6px;">Variables activas (12 de 14):</div>' +
       '<table style="width:100%;font-size:9px;border-collapse:collapse;">' +
-        '<tr style="color:#444;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
+        '<tr style="color:var(--border2);font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>AHORA</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#444;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos con fallback autom&#xE1;tico. 14 variables = cobertura completa de m&#xFA;ltiples mercados.</div>' +
-      '<div style="font-size:8px;color:#444;margin-top:4px;line-height:1.4;">* Este &#xED;ndice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra m&#xFA;ltiples mercados.</div>' +
+      '<div style="font-size:8px;color:var(--border2);margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos con fallback autom&#xE1;tico. 14 variables = cobertura completa de m&#xFA;ltiples mercados.</div>' +
+      '<div style="font-size:8px;color:var(--border2);margin-top:4px;line-height:1.4;">* Este &#xED;ndice es propio de AUREX. Difiere del de Binance (solo cripto, 5 variables) y CNN (solo acciones, 7 variables). AUREX PULSE integra m&#xFA;ltiples mercados.</div>' +
       '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:10px;background:var(--gold);border-radius:8px;color:var(--bg);font-weight:700;cursor:pointer;font-size:13px;">Entendido</div>' +
     '</div>';
   document.body.appendChild(ov);
@@ -3364,14 +3364,14 @@ window.editFuturesBanner = function(){
   var allItems = FUTURES_ITEMS;
   var rows = allItems.map(function(item){
     var on = activeSlots.indexOf(item.rawS) >= 0;
-    var onBg = on ? 'var(--green)' : '#333';
+    var onBg = on ? 'var(--green)' : 'var(--border)';
     var knobL = on ? '18px' : '2px';
     var lbl = item.n + ' (' + item.rawS + ')';
     var togId = 'fut-tog-' + item.rawS.replace(/[^a-zA-Z0-9]/g,'_');
     return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">' +
       '<span style="color:var(--text);font-size:13px;">' + lbl + '</span>' +
       '<div onclick="toggleFutPref(\'' + item.rawS + '\')" id="' + togId + '" style="width:36px;height:20px;border-radius:10px;background:' + onBg + ';cursor:pointer;position:relative;">' +
-      '<div style="position:absolute;top:2px;left:' + knobL + ';width:16px;height:16px;border-radius:50%;background:#fff;"></div></div></div>';
+      '<div style="position:absolute;top:2px;left:' + knobL + ';width:16px;height:16px;border-radius:50%;background:var(--card);"></div></div></div>';
   }).join('');
   var popup = document.createElement('div');
   popup.id = 'aurex-fut-edit-popup';
@@ -3400,7 +3400,7 @@ window.toggleFutPref = function(rawS){
   var togEl = document.getElementById(togId);
   if(togEl){
     var on = activeSlots.indexOf(rawS) >= 0;
-    togEl.style.background = on ? 'var(--green)' : '#333';
+    togEl.style.background = on ? 'var(--green)' : 'var(--border)';
     var knob = togEl.querySelector('div');
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
@@ -3427,8 +3427,8 @@ function _renderMktNewsBanner(containerId) {
       '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'var(--gold)') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
       '<div style="overflow:hidden;flex:1;">' +
         '<div id="mkt-news-ticker" style="display:flex;animation:tkScroll 6s linear infinite;">' +
-          '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
-          '<span style="white-space:nowrap;color:#FFFFFF;font-size:10px;padding-right:60px;">' + ticker + '</span>' +
+          '<span style="white-space:nowrap;color:var(--text);font-size:10px;padding-right:60px;">' + ticker + '</span>' +
+          '<span style="white-space:nowrap;color:var(--text);font-size:10px;padding-right:60px;">' + ticker + '</span>' +
         '</div>' +
       '</div>' +
       '<span onclick="this.parentElement.parentElement.style.display=&apos;none&apos;" style="color:var(--textSec);font-size:12px;cursor:pointer;flex-shrink:0;padding:0 4px;">&#x2715;</span>' +
@@ -3518,7 +3518,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = _makeSVG('_al') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Alertas</span>';
+    hdrDiv.innerHTML = _makeSVG('_al') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Alertas</span>';
     alertasScreen.insertBefore(hdrDiv, alertasScreen.firstChild);
   }
 
@@ -3527,7 +3527,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:#ccc;font-size:15px;"> Perfil</span>';
+    hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
   }
 }
@@ -3592,13 +3592,13 @@ window._initPortDropdowns = function() {
 
     var badge = document.createElement('div');
     badge.id = 'port-period-badge';
-    badge.style.cssText = 'font-size:10px;color:#F59E0B;border:1px solid #444;padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:#2a2a3e;user-select:none;';
-    badge.innerHTML = '24h <span style="font-size:8px;color:#888;">▾</span>';
+    badge.style.cssText = 'font-size:10px;color:#F59E0B;border:1px solid var(--border2);padding:2px 8px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:3px;font-weight:600;background:var(--card);user-select:none;';
+    badge.innerHTML = '24h <span style="font-size:8px;color:var(--textDim);">▾</span>';
     badge._tLast=0;['touchstart','click'].forEach(function(evn){badge.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-badge._tLast<600)return;if(evn==='touchstart'){badge._tLast=now;e.preventDefault();}e.stopPropagation();window._togglePortPeriodDD();},{passive:false});});
 
     var dd = document.createElement('div');
     dd.id = 'port-period-dropdown';
-    dd.style.cssText = 'display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:10px;overflow:hidden;min-width:120px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
+    dd.style.cssText = 'display:none;position:absolute;right:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid var(--border2);border-radius:10px;overflow:hidden;min-width:120px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
 
     var opts = [
       {key:'24h',label:'24 horas'},
@@ -3612,8 +3612,8 @@ window._initPortDropdowns = function() {
       var item = document.createElement('div');
       item.dataset.key = o.key;
       item.style.cssText = 'padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:rgba(0,0,0,0);' +
-        (i===0 ? 'color:#F59E0B;font-weight:700;background:#2a2a3e;' : 'color:#ccc;') +
-        (o.border ? 'border-top:1px solid #333;' : '');
+        (i===0 ? 'color:#F59E0B;font-weight:700;background:var(--card);' : 'color:var(--textDim);') +
+        (o.border ? 'border-top:1px solid var(--border);' : '');
       item.textContent = o.label + (i===0 ? ' ✓' : '');
       (function(k){item._tLast=0;['touchstart','click'].forEach(function(evn){item.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-item._tLast<600)return;if(evn==='touchstart'){item._tLast=now;e.preventDefault();}e.stopPropagation();window._selectPortPeriod(k);},{passive:false});});})(o.key);
       dd.appendChild(item);
@@ -3627,7 +3627,7 @@ window._initPortDropdowns = function() {
   // --- 4. Convertir badge USD en desplegable ---
   var currBadge = document.getElementById('port-curr-badge');
   if(currBadge && !document.getElementById('port-curr-dropdown')) {
-    currBadge.style.cssText = 'font-size:11px;color:#000;background:var(--gold);border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
+    currBadge.style.cssText = 'font-size:11px;color:var(--chipTextActive);background:var(--gold);border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;cursor:pointer;font-weight:700;user-select:none;';
     currBadge.innerHTML = '$ ▾';
     currBadge._tLast=0;['touchstart','click'].forEach(function(evn){currBadge.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-currBadge._tLast<600)return;if(evn==='touchstart'){currBadge._tLast=now;e.preventDefault();}e.stopPropagation();window._togglePortCurrDD();},{passive:false});});
 
@@ -3639,12 +3639,12 @@ window._initPortDropdowns = function() {
 
     var ddCurr = document.createElement('div');
     ddCurr.id = 'port-curr-dropdown';
-    ddCurr.style.cssText = 'display:none;position:absolute;left:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid #444;border-radius:8px;overflow:hidden;min-width:80px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
+    ddCurr.style.cssText = 'display:none;position:absolute;left:0;top:calc(100% + 4px);background:#1e1e30;border:1px solid var(--border2);border-radius:8px;overflow:hidden;min-width:80px;box-shadow:0 4px 16px rgba(0,0,0,0.6);z-index:9999;';
     ['USD','BTC','USDT'].forEach(function(c, i) {
       var item = document.createElement('div');
       item.dataset.curr = c;
       item.style.cssText = 'padding:8px 12px;font-size:11px;cursor:pointer;' +
-        (i===0 ? 'color:#FFD700;font-weight:700;background:#2a2a3e;' : 'color:#ccc;');
+        (i===0 ? 'color:#FFD700;font-weight:700;background:var(--card);' : 'color:var(--textDim);');
       item.textContent = c + (i===0 ? ' ✓' : '');
       (function(cur){item._tLast=0;['touchstart','click'].forEach(function(evn){item.addEventListener(evn,function(e){var now=Date.now();if(evn==='click'&&now-item._tLast<600)return;if(evn==='touchstart'){item._tLast=now;e.preventDefault();}e.stopPropagation();window._selectPortCurr(cur);},{passive:false});});})(c);
       ddCurr.appendChild(item);
@@ -3688,9 +3688,9 @@ window._selectPortCurr = function(cur) {
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
       var c = it.dataset.curr;
-      it.style.color = c===cur ? '#FFD700' : '#ccc';
+      it.style.color = c===cur ? '#FFD700' : 'var(--textDim)';
       it.style.fontWeight = c===cur ? '700' : '400';
-      it.style.background = c===cur ? '#2a2a3e' : '';
+      it.style.background = c===cur ? 'var(--card)' : '';
       it.textContent = c + (c===cur ? ' ✓' : '');
     });
     dd.style.display = 'none';
@@ -3702,14 +3702,14 @@ window._selectPortPeriod = function(key) {
   var labels = {'24h':'24h','7d':'7d','1m':'1m','3m':'3m','1y':'1a','buy':'Compra'};
   var full = {'24h':'24 horas','7d':'7 días','1m':'1 mes','3m':'3 meses','1y':'1 año','buy':'Desde compra'};
   var badge = document.getElementById('port-period-badge');
-  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:#888;">▾</span>';
+  if(badge) badge.innerHTML = (labels[key]||key) + ' <span style="font-size:8px;color:var(--textDim);">▾</span>';
   var dd = document.getElementById('port-period-dropdown');
   if(dd) {
     dd.querySelectorAll('div').forEach(function(it) {
       var k = it.dataset.key;
-      it.style.color = k===key ? '#F59E0B' : '#ccc';
+      it.style.color = k===key ? '#F59E0B' : 'var(--textDim)';
       it.style.fontWeight = k===key ? '700' : '400';
-      it.style.background = k===key ? '#2a2a3e' : '';
+      it.style.background = k===key ? 'var(--card)' : '';
       it.textContent = (full[k]||k) + (k===key ? ' ✓' : '');
     });
     dd.style.display = 'none';
@@ -3786,7 +3786,7 @@ function _renderComboBanner(containerId){
   document.body.removeChild(tmpFutures);
 
   var sOn  = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:var(--gold);color:#111;';
-  var sOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+  var sOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:var(--textDim);';
 
   var html = '<div style="display:flex;gap:5px;padding:2px 10px 2px;justify-content:flex-end;">'
     + '<div id="combo-tab-a" style="' + sOn  + '" onclick="if(window._comboActive!==0&&window._comboBannerFlip)window._comboBannerFlip()">Mercados</div>'
@@ -3799,7 +3799,7 @@ function _renderComboBanner(containerId){
 
   window._comboActive = 0;
   window._comboSOn  = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:var(--gold);color:#111;';
-  window._comboSOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:#888;';
+  window._comboSOff = 'display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;cursor:pointer;background:#2a2a2a;color:var(--textDim);';
 
   function _comboFlip(){
     window._comboActive = 1 - window._comboActive;
