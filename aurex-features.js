@@ -4573,6 +4573,7 @@ document.addEventListener('DOMContentLoaded', function(){
     _initHeaderLogos();
     if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
     if (typeof window._initSortMenus === 'function') window._initSortMenus();
+    if (typeof window._initLongPressActions === 'function') window._initLongPressActions();
     generarSenalesIA();
     setInterval(generarSenalesIA, 5*60*1000);
     _fetchPulseForCategory('GLOBAL').then(function(){
@@ -5161,7 +5162,164 @@ window._applyIASort = function(key) {
   items.forEach(function(it){ cnt.appendChild(it); });
 };
 
-// === Inyección por tab ===
+// --- Fase 4 F4: Long press action sheet ---
+
+(function _addLPStyles() {
+  if (document.getElementById('lp-styles')) return;
+  var st = document.createElement('style');
+  st.id = 'lp-styles';
+  st.textContent =
+    '@keyframes lp-slideup { from { transform: translateY(100%); } to { transform: translateY(0); } }' +
+    '.lp-option{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;' +
+    'font-size:15px;color:var(--text);border-bottom:1px solid var(--border);' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.lp-option:last-child{border-bottom:none;}' +
+    '.lp-option:active{background:var(--border);}';
+  document.head.appendChild(st);
+})();
+
+function _attachLongPress(el, onLongPress) {
+  if (el._lpAttached) return;
+  el._lpAttached = true;
+  var timer = null;
+  var moved = false;
+  el.addEventListener('touchstart', function(e) {
+    moved = false;
+    timer = setTimeout(function() {
+      if (!moved) {
+        try { if (window.navigator && navigator.vibrate) navigator.vibrate(15); } catch(_){}
+        onLongPress(e, el);
+      }
+    }, 500);
+  }, { passive: true });
+  el.addEventListener('touchmove', function() { moved = true; clearTimeout(timer); }, { passive: true });
+  el.addEventListener('touchend', function() { clearTimeout(timer); }, { passive: true });
+  el.addEventListener('touchcancel', function() { clearTimeout(timer); }, { passive: true });
+}
+
+window._closeLPSheet = function() {
+  var ov = document.getElementById('longpress-overlay');
+  if (ov) ov.remove();
+};
+
+function _lpOption(icon, label, color, onClick) {
+  var div = document.createElement('div');
+  div.className = 'lp-option';
+  if (color) div.style.color = color;
+  div.innerHTML = '<span style="font-size:20px">' + icon + '</span><span>' + label + '</span>';
+  div.addEventListener('click', function() {
+    window._closeLPSheet();
+    setTimeout(onClick, 50);
+  });
+  return div;
+}
+
+window._showLPSheet = function(ticker, name, options) {
+  window._closeLPSheet();
+  var overlay = document.createElement('div');
+  overlay.id = 'longpress-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);' +
+    'display:flex;align-items:flex-end;';
+  var sheet = document.createElement('div');
+  sheet.id = 'longpress-sheet';
+  sheet.style.cssText = 'width:100%;background:var(--card);border-radius:16px 16px 0 0;' +
+    'padding:16px 0 32px;animation:lp-slideup 0.22s ease-out;';
+  var title = document.createElement('div');
+  title.style.cssText = 'text-align:center;font-size:13px;font-weight:700;color:var(--text);' +
+    'padding:0 16px 12px;border-bottom:1px solid var(--border);margin-bottom:4px;';
+  title.textContent = ticker + (name ? ' — ' + name : '');
+  sheet.appendChild(title);
+  options.forEach(function(opt) {
+    sheet.appendChild(_lpOption(opt.icon, opt.label, opt.color, opt.action));
+  });
+  overlay.appendChild(sheet);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) window._closeLPSheet();
+  });
+  document.body.appendChild(overlay);
+};
+
+// Attach por tab — idempotente
+function _attachAllPortfolioLP() {
+  document.querySelectorAll('[id^="port-row-"]').forEach(function(el) {
+    if (el._lpAttached) return;
+    var uuid = el.id.replace('port-row-', '');
+    var symEl = el.querySelector('span[style*="font-weight:700"]');
+    var ticker = symEl ? symEl.textContent.trim() : uuid;
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, null, [
+        { icon:'📊', label:'Ver detalle', action: function(){ if (window.openPortItemDetail) window.openPortItemDetail(uuid); } },
+        { icon:'🗑',  label:'Eliminar activo', color:'var(--red)', action: function(){
+          if (confirm('Eliminar ' + ticker + '?')) { if (window.deletePortfolioItem) window.deletePortfolioItem(uuid); }
+        }}
+      ]);
+    });
+  });
+}
+function _attachAllMercadosLP() {
+  document.querySelectorAll('#cnt .item-row').forEach(function(el) {
+    if (el._lpAttached) return;
+    var ticker = el.id.replace('row-', '');
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, null, [
+        { icon:'⭐', label:'Agregar a Watchlist', action: function(){ if (window.wlOpenAddModal) window.wlOpenAddModal(); } },
+        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
+      ]);
+    });
+  });
+}
+function _attachAllWatchlistLP() {
+  document.querySelectorAll('#watch-cnt > div[onclick^="wlOpenDetail"]').forEach(function(el) {
+    if (el._lpAttached) return;
+    var m = (el.getAttribute('onclick') || '').match(/wlOpenDetail\('([^']+)'\)/);
+    var ticker = m ? m[1] : null;
+    if (!ticker) return;
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, null, [
+        { icon:'📊', label:'Ver detalle', action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
+        { icon:'🗑',  label:'Quitar de lista', color:'var(--red)', action: function(){
+          if (confirm('Quitar ' + ticker + ' de la lista?')) { if (window.wlRemoveAsset) window.wlRemoveAsset(ticker); }
+        }},
+        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
+      ]);
+    });
+  });
+}
+function _attachAllIALP() {
+  document.querySelectorAll('#ia-list .ia-row').forEach(function(el) {
+    if (el._lpAttached) return;
+    var idx = parseInt((el.id || '').replace('ia-row-', ''), 10);
+    var symEl = el.querySelector('span[style*="font-weight:700"]');
+    var ticker = symEl ? symEl.textContent.trim() : ('ia-' + idx);
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, null, [
+        { icon:'📊', label:'Ver señal IA', action: function(){ if (window.toggleIARow) window.toggleIARow(idx); } },
+        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
+      ]);
+    });
+  });
+}
+
+window._initLongPressActions = function() {
+  // Attach inicial
+  _attachAllPortfolioLP();
+  _attachAllMercadosLP();
+  _attachAllWatchlistLP();
+  _attachAllIALP();
+  // Observers para re-attach tras re-render
+  function obs(containerId, fn) {
+    var c = document.getElementById(containerId);
+    if (!c || c._lpObsAdded) return;
+    c._lpObsAdded = true;
+    new MutationObserver(function(){ fn(); }).observe(c, { childList: true, subtree: false });
+  }
+  obs('port-cnt', _attachAllPortfolioLP);
+  obs('cnt', _attachAllMercadosLP);
+  obs('watch-cnt', _attachAllWatchlistLP);
+  obs('ia-list', _attachAllIALP);
+};
+
+// === Inyección por tab (sort menus) ===
 
 window._initSortMenus = function() {
   // PORTFOLIO
