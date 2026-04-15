@@ -903,7 +903,8 @@ function _renderPortfolioItems(items){
 
 
 // === Portfolio currency switch: USD / USDT / BTC ===
-window._portCurrency = 'USD'; // default
+// NOTA: la declaración de _portCurrency se removió para evitar sobrescribir
+// el valor cargado desde localStorage en aurex-v3.js línea 906.
 
 window._updatePortTotalDisplay = function() {
   var el = document.getElementById('port-total');
@@ -4397,6 +4398,57 @@ function toggleIARow(idx) {
 }
 
 
+// === AUREX: Balanza Chip reutilizable para selector moneda en headers ===
+window._renderBalanzaChip = function(containerId) {
+  var container = typeof containerId === 'string'
+    ? document.getElementById(containerId)
+    : containerId;
+  if (!container || container.querySelector('.balanza-chip')) return;
+
+  var chip = document.createElement('div');
+  chip.className = 'balanza-chip';
+  chip.style.cssText = 'display:inline-flex;align-items:center;gap:4px;cursor:pointer;' +
+    'background:var(--card);border:1px solid var(--border);border-radius:20px;' +
+    'padding:3px 10px;font-size:13px;font-weight:600;color:var(--text);' +
+    'user-select:none;position:relative;';
+  chip.innerHTML = '⚖️ <span class="balanza-cur">' + (window._portCurrency||'USD') + '</span> ▾';
+
+  var dd = document.createElement('div');
+  dd.className = 'balanza-chip-dd';
+  dd.style.cssText = 'display:none;position:absolute;top:110%;right:0;' +
+    'background:var(--card);border:1px solid var(--border);border-radius:10px;' +
+    'min-width:80px;z-index:999;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.15);';
+
+  ['USD','BTC','USDT'].forEach(function(c) {
+    var item = document.createElement('div');
+    item.style.cssText = 'padding:8px 14px;font-size:13px;cursor:pointer;color:var(--text);';
+    item.textContent = (c === (window._portCurrency||'USD') ? '✓ ' : '') + c;
+    item.onclick = function(e) {
+      e.stopPropagation();
+      window._selectPortCurr(c);
+      document.querySelectorAll('.balanza-chip-dd').forEach(function(d){ d.style.display='none'; });
+    };
+    dd.appendChild(item);
+  });
+
+  chip.appendChild(dd);
+  chip.addEventListener('click', function(e) {
+    e.stopPropagation();
+    var isOpen = dd.style.display === 'block';
+    document.querySelectorAll('.balanza-chip-dd').forEach(function(d){ d.style.display='none'; });
+    dd.style.display = isOpen ? 'none' : 'block';
+  });
+
+  container.appendChild(chip);
+};
+
+// Cerrar dropdown al hacer click fuera
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.balanza-chip')) {
+    document.querySelectorAll('.balanza-chip-dd').forEach(function(d){ d.style.display='none'; });
+  }
+});
+
 // === AUREX: Logo unificado en todas las tabs ===
 function _initHeaderLogos() {
   var hlEl = document.querySelector('.hl');
@@ -4481,6 +4533,24 @@ function _initHeaderLogos() {
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
     hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
+  }
+
+  // === Balanza Chip en headers (Mercados, IA, Watchlist, Alertas) ===
+  var mktHdr = document.querySelector('#screen-mercados .hdr');
+  if (mktHdr && !mktHdr.querySelector('.balanza-chip')) {
+    window._renderBalanzaChip(mktHdr);
+  }
+  var iaHdrDiv = document.querySelector('#screen-ia > div:nth-child(3)');
+  if (iaHdrDiv && !iaHdrDiv.querySelector('.balanza-chip')) {
+    window._renderBalanzaChip(iaHdrDiv);
+  }
+  var wlHdrDiv = document.querySelector('#screen-watchlist > div:first-child');
+  if (wlHdrDiv && !wlHdrDiv.querySelector('.balanza-chip')) {
+    window._renderBalanzaChip(wlHdrDiv);
+  }
+  var alHdrDiv = document.querySelector('#screen-alertas .aurex-hdr-added');
+  if (alHdrDiv && !alHdrDiv.querySelector('.balanza-chip')) {
+    window._renderBalanzaChip(alHdrDiv);
   }
 }
 
