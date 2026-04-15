@@ -4883,12 +4883,21 @@ function _renderComboBanner(containerId){
 window._initHoyIndicator = function() {
   // 1. Emoji animado dentro del badge de Activos
   var cntBadge = document.getElementById('port-cnt-badge');
-  if (cntBadge && !document.getElementById('port-cnt-emoji')) {
-    var emoji = document.createElement('span');
-    emoji.id = 'port-cnt-emoji';
-    emoji.textContent = '🎉';
-    emoji.style.cssText = 'font-size:13px;margin-left:2px;display:inline-block;animation:hoy-bounce 1.4s ease-in-out infinite;';
-    cntBadge.appendChild(emoji);
+  if (cntBadge) {
+    // Forzar inline-flex para que "13" y emoji vayan lado a lado sin superponerse
+    if (cntBadge.style.display !== 'inline-flex') {
+      cntBadge.style.display = 'inline-flex';
+      cntBadge.style.alignItems = 'center';
+      cntBadge.style.justifyContent = 'center';
+      cntBadge.style.gap = '3px';
+    }
+    if (!document.getElementById('port-cnt-emoji')) {
+      var emoji = document.createElement('span');
+      emoji.id = 'port-cnt-emoji';
+      emoji.textContent = '🎉';
+      emoji.style.cssText = 'font-size:13px;display:inline-block;animation:hoy-bounce 1.4s ease-in-out infinite;';
+      cntBadge.appendChild(emoji);
+    }
   }
 
   // 2. Reemplazar bloque "Mejor 24h" con indicador Hoy (solo primera vez)
