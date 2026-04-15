@@ -1950,9 +1950,9 @@ window._IA_ACTIVOS = [
 
 // EVENTOS MACRO SEMANALES
 window._IA_EVENTOS = [
-  {label:'EVENTO CRITICO - FED', text:'Reunion FOMC - Decision de tasas de interes - Alto impacto en todos los mercados - Se espera pausa en subas - Mercados atentos a declaraciones de Powell', tiempo:'5h 54m', impacto:'ALTO', hora:'14:00 EST', color:'var(--gold)', bg:'#1A1200', border:'var(--gold40)'},
+  {label:'EVENTO CRITICO - FED', text:'Reunion FOMC - Decision de tasas de interes - Alto impacto en todos los mercados - Se espera pausa en subas - Mercados atentos a declaraciones de Powell', tiempo:'5h 54m', impacto:'ALTO', hora:'14:00 EST', color:'var(--gold)', bg:'var(--card)', border:'var(--gold40)'},
   {label:'DATO MACRO - IPC EEUU', text:'Indice de Precios al Consumidor - Publicacion 8:30 EST - Estimado 3.2% interanual - Impacto alto en bonos y acciones growth - Dato clave para politica monetaria', tiempo:'3h 00m', impacto:'MEDIO', hora:'08:30 EST', color:'var(--green)', bg:'#0A1A00', border:'#3FB95060'},
-  {label:'EARNINGS - NVIDIA', text:'Resultados trimestrales NVDA Q1 2026 - EPS estimado 5.58 - Ingresos estimados 24.6B - Pre-mercado manana - Alta volatilidad esperada sector tech', tiempo:'12h 00m', impacto:'ALTO', hora:'Pre-market', color:'var(--red)', bg:'#1A0000', border:'#FF444460'}
+  {label:'EARNINGS - NVIDIA', text:'Resultados trimestrales NVDA Q1 2026 - EPS estimado 5.58 - Ingresos estimados 24.6B - Pre-mercado manana - Alta volatilidad esperada sector tech', tiempo:'12h 00m', impacto:'ALTO', hora:'Pre-market', color:'var(--red)', bg:'var(--card)', border:'#FF444460'}
 ];
 
 function _iniciarBanner() {

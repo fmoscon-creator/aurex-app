@@ -51,6 +51,7 @@
   --bg: #0D1117;
   --card: #161B22;
   --navBg: #0D1117;
+  --headerGradTop: #1A0D00;
   /* Textos */
   --text: #E6EDF3;
   --textSec: #8B949E;
@@ -92,6 +93,7 @@
   --bg: #EEF1F7;
   --card: #FFFFFF;
   --navBg: #0D1017;
+  --headerGradTop: #EEF1F7;
   --text: #0D1017;
   --textSec: #556070;
   --textDim: #8090A0;
@@ -126,6 +128,7 @@
   --bg: #0D1117;
   --card: #161B22;
   --navBg: #0D1117;
+  --headerGradTop: #1A0D00;
   --text: #E6EDF3;
   --textSec: #8B949E;
   --textDim: #555;
@@ -156,6 +159,13 @@
 }
 
 html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,BlinkMacSystemFont,sans-serif;overflow:hidden}
+
+/* Slider inputs (ej: Simulador de Escenarios) - adaptarse al tema */
+input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; background: transparent; cursor: pointer; }
+input[type=range]::-webkit-slider-runnable-track { background: var(--border); border-radius: 4px; height: 4px; }
+input[type=range]::-moz-range-track { background: var(--border); border-radius: 4px; height: 4px; }
+input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); margin-top: -6px; cursor: pointer; }
+input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: none; cursor: pointer; }
 
 /* === PHONE  NICA DEFINICIN CORRECTA === */
 
@@ -227,7 +237,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .cnt::-webkit-scrollbar-thumb{background:var(--border)}
 
 /* SECTION HDR */
-.shdr{padding:6px 13px;background:#080C10;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2}
+.shdr{padding:6px 13px;background:var(--card);border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:2}
 .shn{font-size:9px;font-weight:600;color:var(--textDim);text-transform:uppercase;letter-spacing:.8px}
 .sbg{font-size:9px;padding:2px 6px;border-radius:7px;font-weight:600}
 
@@ -307,7 +317,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .bni.on span{color:var(--gold)}
 
 /* PERFIL */
-.avatar-sec{padding:24px 16px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,#1A0D00 0%,var(--bg) 100%)}
+.avatar-sec{padding:24px 16px 18px;display:flex;flex-direction:column;align-items:center;gap:10px;border-bottom:1px solid var(--border);background:linear-gradient(180deg,var(--headerGradTop) 0%,var(--bg) 100%)}
 .avatar{width:76px;height:76px;border-radius:50%;background:var(--goldBg);border:2.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:600;color:var(--gold);position:relative;cursor:pointer}
 .avatar-edit{position:absolute;bottom:2px;right:2px;width:22px;height:22px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:10px;color:#1A0D00}
 .user-name{font-size:19px;font-weight:500;color:var(--text)}
@@ -380,7 +390,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
 .notif-item{padding:10px 16px;border-bottom:0.5px solid #13171D}
 .notif-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
 .notif-sub{font-size:10px;color:var(--textDim)}
-.disclaimer{margin:8px 12px;border-radius:12px;background:#080C10;border:0.5px solid var(--border);padding:16px}
+.disclaimer{margin:8px 12px;border-radius:12px;background:var(--card);border:0.5px solid var(--border);padding:16px}
 .dis-header{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:10px;border-bottom:0.5px solid var(--border)}
 .dis-icon{width:32px;height:32px;border-radius:8px;background:var(--goldBg);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .dis-title{font-size:12px;font-weight:600;color:var(--gold)}
@@ -577,7 +587,7 @@ html,body{height:100%;width:100%;background:var(--bg);font-family:-apple-system,
   }
 })();
 </script>
-<script src="aurex-v3.js?v=17"></script>
+<script src="aurex-v3.js?v=18"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1337,7 +1347,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="screen" id="screen-portfolio" class="screen" style="flex-direction:column;flex:1;min-height:0">
 
 <!-- HEADER PORTFOLIO -->
-<div style="padding:10px 14px 10px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(180deg,#1A0D00 0%,var(--bg) 100%)">
+<div style="padding:10px 14px 10px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(180deg,var(--headerGradTop) 0%,var(--bg) 100%)">
 
   <!-- Titulo AUREX Portfolio -->
   <div style="display:flex;align-items:center;margin-bottom:8px">
@@ -1939,7 +1949,7 @@ window._mktOpenDetail = function(idx){
 </div>
 
 <div class="cnt" id="ia-list" style="overflow-y:auto;flex:1"></div>
-<div style="margin:8px 12px 12px;background:#080C10;border-radius:10px;padding:10px;border:0.5px solid var(--border)">
+<div style="margin:8px 12px 12px;background:var(--card);border-radius:10px;padding:10px;border:0.5px solid var(--border)">
   <p style="font-size:9px;color:var(--textSec);line-height:14px;text-align:center;margin:0">⚖️ Aviso Legal — La informacion, analisis, senales de IA, precios objetivo y cualquier contenido de AUREX tiene caracter exclusivamente informativo y educativo. No constituye consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
 </div>
 
@@ -1995,7 +2005,7 @@ window._mktOpenDetail = function(idx){
 <div class="cnt" id="alertas-cnt" style="overflow-y:auto;flex:1;padding-bottom:20px">
 
 <!-- Banner WhatsApp — compacto con toggle -->
-<div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:#0D2818;border-radius:10px;padding:10px;border:1px solid #25D36640">
+<div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:var(--card);border-radius:10px;padding:10px;border:1px solid #25D36640">
   <span style="font-size:20px">💬</span>
   <div style="flex:1">
     <div style="font-size:12px;font-weight:700;color:#25D366" id="wa-title">Alertas por WhatsApp</div>
@@ -2144,7 +2154,7 @@ window._mktOpenDetail = function(idx){
   </div>
 </div>
 
-<div style="margin:8px 12px 12px;background:#080C10;border-radius:10px;padding:10px;border:0.5px solid var(--border)">
+<div style="margin:8px 12px 12px;background:var(--card);border-radius:10px;padding:10px;border:0.5px solid var(--border)">
   <p style="font-size:9px;color:var(--textSec);line-height:14px;text-align:center;margin:0">⚖️ Aviso Legal — Las alertas y senales de AUREX tienen caracter exclusivamente informativo y educativo. No constituyen consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
 </div>
 </div>
@@ -2540,7 +2550,7 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
-      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px"><div style="background:linear-gradient(135deg,#1a1200,var(--card));border:1px solid #c9a84c44;border-radius:10px;padding:10px 12px;margin-bottom:10px"><div style="font-size:12px;color:#c9a84c;font-weight:700;letter-spacing:.5px;margin-bottom:2px">&#9889; TU N&#218;MERO, TUS ALERTAS AL INSTANTE</div><div style="font-size:11px;color:var(--textSec);line-height:1.4">AUREX te avisa directo a tu cel&#233;fono cuando el mercado se mueve. Sin delays.</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px"><div><div style="font-size:13px;color:var(--text);font-weight:600">&#128242; Recibir alertas en este n&#250;mero</div><div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; para recibir notificaciones push</div></div><div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:#c9a84c;border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div></div></div><div style="font-size:11px;color:var(--textDim);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">N&#250;mero de cel&#250;lar</div><div style="display:flex;gap:8px;align-items:center"><input id="celular-input-b6" type="hidden" /><select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-b6" style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" /><button onclick="authSaveCelularB6()" style="background:#c9a84c;border:none;border-radius:8px;color:var(--chipTextActive);font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div><div id="cel-txt-b6" style="font-size:11px;color:#c9a84c;margin-top:6px;min-height:14px"></div></div>
+      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px"><div style="background:linear-gradient(135deg,var(--card),var(--card));border:1px solid #c9a84c44;border-radius:10px;padding:10px 12px;margin-bottom:10px"><div style="font-size:12px;color:#c9a84c;font-weight:700;letter-spacing:.5px;margin-bottom:2px">&#9889; TU N&#218;MERO, TUS ALERTAS AL INSTANTE</div><div style="font-size:11px;color:var(--textSec);line-height:1.4">AUREX te avisa directo a tu cel&#233;fono cuando el mercado se mueve. Sin delays.</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:10px"><div><div style="font-size:13px;color:var(--text);font-weight:600">&#128242; Recibir alertas en este n&#250;mero</div><div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; para recibir notificaciones push</div></div><div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:#c9a84c;border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div></div></div><div style="font-size:11px;color:var(--textDim);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">N&#250;mero de cel&#250;lar</div><div style="display:flex;gap:8px;align-items:center"><input id="celular-input-b6" type="hidden" /><select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:var(--card);border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:14px;padding:9px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>&#127462;&#127479; +54</option><option value="+1">&#127482;&#127480; +1</option><option value="+52">&#127474;&#127485; +52</option><option value="+55">&#127463;&#127479; +55</option><option value="+57">&#127464;&#127476; +57</option><option value="+56">&#127464;&#127473; +56</option><option value="+51">&#127477;&#127466; +51</option><option value="+58">&#127483;&#127466; +58</option><option value="+598">&#127482;&#127486; +598</option><option value="+595">&#127477;&#127486; +595</option><option value="+34">&#127466;&#127480; +34</option><option value="+44">&#127468;&#127463; +44</option><option value="+33">&#127467;&#127479; +33</option><option value="+39">&#127470;&#127481; +39</option><option value="+49">&#127465;&#127466; +49</option><option value="+966">&#127480;&#127462; +966</option><option value="+971">&#127462;&#127466; +971</option><option value="+20">&#127466;&#127468; +20</option><option value="+86">&#127464;&#127475; +86</option><option value="+91">&#127470;&#127475; +91</option><option value="+81">&#127471;&#127477; +81</option><option value="+886">&#127481;&#127484; +886</option></select><input id="cel-num-b6" style="flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" /><button onclick="authSaveCelularB6()" style="background:#c9a84c;border:none;border-radius:8px;color:var(--chipTextActive);font-size:13px;font-weight:700;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div><div id="cel-txt-b6" style="font-size:11px;color:#c9a84c;margin-top:6px;min-height:14px"></div></div>
       <div style="font-size:12px;color:var(--textSec);margin:8px 0 10px">
         Recib&#237; notificaciones push cuando ocurra:
       </div>
@@ -2830,7 +2840,7 @@ display:flex;align-items:center;justify-content:space-between}
 <div id="modal-planes" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;
   background:rgba(0,0,0,0.85);z-index:9999;overflow-y:auto;-webkit-overflow-scrolling:touch">
   <div style="min-height:100%;padding:0 0 40px">
-    <div style="background:linear-gradient(180deg,#1A0D00 0%,var(--bg) 80px);
+    <div style="background:linear-gradient(180deg,var(--headerGradTop) 0%,var(--bg) 80px);
       padding:14px 16px 10px;display:flex;align-items:center;justify-content:space-between;
       border-bottom:1px solid var(--border);position:sticky;top:0;z-index:2;
       background:var(--bg)">
