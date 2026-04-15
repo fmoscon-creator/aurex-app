@@ -4881,22 +4881,35 @@ function _renderComboBanner(containerId){
 })();
 
 window._initHoyIndicator = function() {
-  // 1. Emoji superíndice dentro del badge de Activos (estilo nativa)
+  // 1. Emoji al lado del "13" usando wrapper flex (estilo nativa)
   var cntBadge = document.getElementById('port-cnt-badge');
   if (cntBadge) {
-    // Revertir inline-flex si quedó del intento anterior — vertical-align:super requiere inline normal
-    if (cntBadge.style.display === 'inline-flex') {
+    // Resetear style inline si quedó de intentos previos
+    if (cntBadge.style.display) {
       cntBadge.style.display = '';
       cntBadge.style.alignItems = '';
       cntBadge.style.justifyContent = '';
       cntBadge.style.gap = '';
     }
-    if (!document.getElementById('port-cnt-emoji')) {
+    var parentOfBadge = cntBadge.parentElement;
+    var row;
+    if (parentOfBadge && parentOfBadge.classList.contains('badge-emoji-row')) {
+      row = parentOfBadge;
+    } else if (parentOfBadge) {
+      // Wrappear el badge en un flex container interno
+      row = document.createElement('div');
+      row.className = 'badge-emoji-row';
+      row.style.cssText = 'display:flex;align-items:center;justify-content:center;gap:4px;';
+      parentOfBadge.replaceChild(row, cntBadge);
+      row.appendChild(cntBadge);
+    }
+    // Insertar emoji al lado del badge
+    if (row && !document.getElementById('port-cnt-emoji')) {
       var emoji = document.createElement('span');
       emoji.id = 'port-cnt-emoji';
       emoji.textContent = '🎉';
-      emoji.style.cssText = 'font-size:8px;vertical-align:super;display:inline;';
-      cntBadge.appendChild(emoji);
+      emoji.style.cssText = 'font-size:11px;display:inline-block;line-height:1;';
+      row.appendChild(emoji);
     }
   }
 
