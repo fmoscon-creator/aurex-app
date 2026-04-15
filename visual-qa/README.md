@@ -43,7 +43,7 @@ visual-qa/
 | Modo Claro Fase 2b-tris (22 bugs) | ✅ | `nativa/*.png` | — | `pwa/actual/*.png` | `6cbc35e` |
 | Modo Claro Fase 2b-quarter (6 fixes) | ✅ | `nativa/*.png` | — | `pwa/actual/*.png` | `a497dbd` |
 | Fase 4 F1 — Balanza Chip (currency selector) | ❌ revertido | `nativa/portfolio.png` | — | — | `10feebc` → revert `3642466` |
-| Fase 4 F1-bis — Balanza Chip (modal Aviso Legal) | ⏳ pendiente | `nativa/portfolio.png` | `pwa/actual/portfolio.png` | — | — |
+| Fase 4 F1-bis — Balanza Chip (modal Aviso Legal) | ✅ | `nativa/*.png` | — | `pwa/fase4-f1-bis-balanza/*.png` | `05a4fc0` |
 | Fase 4 F2 — Indicador "Hoy" | ⏳ pendiente | TBD | TBD | — | — |
 | Fase 4 F3 — Sort menus | ⏳ pendiente | TBD | TBD | — | — |
 | Fase 4 F4 — Long press en activos | ⏳ pendiente | TBD | TBD | — | — |
