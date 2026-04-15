@@ -4881,21 +4881,21 @@ function _renderComboBanner(containerId){
 })();
 
 window._initHoyIndicator = function() {
-  // 1. Emoji animado dentro del badge de Activos
+  // 1. Emoji superíndice dentro del badge de Activos (estilo nativa)
   var cntBadge = document.getElementById('port-cnt-badge');
   if (cntBadge) {
-    // Forzar inline-flex para que "13" y emoji vayan lado a lado sin superponerse
-    if (cntBadge.style.display !== 'inline-flex') {
-      cntBadge.style.display = 'inline-flex';
-      cntBadge.style.alignItems = 'center';
-      cntBadge.style.justifyContent = 'center';
-      cntBadge.style.gap = '3px';
+    // Revertir inline-flex si quedó del intento anterior — vertical-align:super requiere inline normal
+    if (cntBadge.style.display === 'inline-flex') {
+      cntBadge.style.display = '';
+      cntBadge.style.alignItems = '';
+      cntBadge.style.justifyContent = '';
+      cntBadge.style.gap = '';
     }
     if (!document.getElementById('port-cnt-emoji')) {
       var emoji = document.createElement('span');
       emoji.id = 'port-cnt-emoji';
       emoji.textContent = '🎉';
-      emoji.style.cssText = 'font-size:13px;display:inline-block;animation:hoy-bounce 1.4s ease-in-out infinite;';
+      emoji.style.cssText = 'font-size:8px;vertical-align:super;display:inline;';
       cntBadge.appendChild(emoji);
     }
   }
