@@ -5206,7 +5206,12 @@ window._applyIASort = function(key) {
     '.lp-cancel{margin-top:8px;background:transparent;border:1px solid var(--border2);' +
     'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
     'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.lp-cancel:active{background:var(--border);}';
+    '.lp-cancel:active{background:var(--border);}' +
+    /* Evitar selección de texto y menú nativo iOS al hacer long press */
+    '[id^="port-row-"], #cnt .item-row, #watch-cnt > div, ' +
+    '#longpress-modal, #longpress-modal *, .lp-option, .lp-cancel {' +
+    '-webkit-user-select:none;-moz-user-select:none;user-select:none;' +
+    '-webkit-touch-callout:none;}';
   document.head.appendChild(st);
 })();
 
