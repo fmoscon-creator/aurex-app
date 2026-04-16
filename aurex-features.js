@@ -5614,16 +5614,16 @@ window._initLongPressActions = function() {
 
 // === Inyección por tab (sort menus) ===
 
-window._initSortMenus = function() {
+window._initSortMenus = function() { try {
   // PORTFOLIO
   if (!document.getElementById('portfolio-sort-wrap')) {
     var portCnt = document.getElementById('port-cnt');
     if (portCnt && portCnt.parentElement) {
       var pw = document.createElement('div');
       pw.style.cssText = 'display:flex;justify-content:flex-end;padding:6px 14px 2px;';
-      pw.appendChild(_buildSortBtn('portfolio', function(k){ window._applyPortfolioSort(k); }));
+      pw.appendChild(_buildSortBtn('portfolio', function(k){ try { window._applyPortfolioSort(k); } catch(e){ console.error('sort port', e); } }));
       portCnt.parentElement.insertBefore(pw, portCnt);
-      window._applyPortfolioSort(_getSort('portfolio'));
+      // No aplicar sort al init — solo cuando usuario selecciona opción
     }
   }
 
@@ -5634,9 +5634,8 @@ window._initSortMenus = function() {
     if (tabs && mktCnt && tabs.parentElement) {
       var mw = document.createElement('div');
       mw.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
-      mw.appendChild(_buildSortBtn('mercados', function(k){ window._applyMercadosSort(k); }));
+      mw.appendChild(_buildSortBtn('mercados', function(k){ try { window._applyMercadosSort(k); } catch(e){ console.error('sort mkt', e); } }));
       tabs.parentElement.insertBefore(mw, mktCnt);
-      window._applyMercadosSort(_getSort('mercados'));
     }
   }
 
@@ -5646,8 +5645,7 @@ window._initSortMenus = function() {
     var iaRow = iaScreen.children[2].children[2];
     if (!iaRow.querySelector('#ia-sort-wrap')) {
       iaRow.style.justifyContent = 'space-between';
-      iaRow.insertBefore(_buildSortBtn('ia', function(k){ window._applyIASort(k); }), iaRow.firstChild);
-      window._applyIASort(_getSort('ia'));
+      iaRow.insertBefore(_buildSortBtn('ia', function(k){ try { window._applyIASort(k); } catch(e){ console.error('sort ia', e); } }), iaRow.firstChild);
     }
   }
 
@@ -5660,11 +5658,10 @@ window._initSortMenus = function() {
       var ww = document.createElement('div');
       ww.id = 'wl-sort-bar';
       ww.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
-      ww.appendChild(_buildSortBtn('watchlist', function(k){ window._applyWatchlistSort(k); }));
+      ww.appendChild(_buildSortBtn('watchlist', function(k){ try { window._applyWatchlistSort(k); } catch(e){ console.error('sort wl', e); } }));
       var anchor = wc.children[2] || null;
       if (anchor) wc.insertBefore(ww, anchor);
       else wc.appendChild(ww);
-      window._applyWatchlistSort(_getSort('watchlist'));
     };
     var obs = new MutationObserver(function() {
       // re-inyectar si se borró
@@ -5674,4 +5671,4 @@ window._initSortMenus = function() {
     wc._sortObserverAdded = true;
     inject(); // intento inicial
   }
-};
+} catch(e) { console.error('_initSortMenus error:', e); } };
