@@ -868,12 +868,7 @@ function _renderPortfolioItems(items){
     items = ordered.concat(rem);
   }
   window._portItems = items;
-  try {
-    localStorage.setItem('aurex_port_items_cache', JSON.stringify(items));
-    // Cachear precios y cambios 24h para que el refresh muestre datos correctos
-    if(window._pcPrices) localStorage.setItem('aurex_pc_prices_cache', JSON.stringify(window._pcPrices));
-    if(window._pcChange24) localStorage.setItem('aurex_pc_change24_cache', JSON.stringify(window._pcChange24));
-  } catch(e){}
+  try { localStorage.setItem('aurex_port_items_cache', JSON.stringify(items)); } catch(e){}
   var prcs = window._pcPrices || {};
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
@@ -1135,13 +1130,8 @@ function _updateTotals(items){
   });
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   var el = function(id){ return document.getElementById(id); };
-  // Si no hay precios reales, mostrar "Cargando..." — NO mostrar valor falso
-  if(!hasPrices){
-    if(el('port-total')) el('port-total').textContent = 'Cargando...';
-    if(el('port-pnl-usd')){ el('port-pnl-usd').textContent = ''; }
-    if(el('port-pnl-pct')){ el('port-pnl-pct').textContent = ''; el('port-pnl-pct').style.background = 'transparent'; }
-    return;
-  }
+  // Si no hay precios reales, no sobreescribir — dejar cache del header visible
+  if(!hasPrices) return;
   window._portTotalUSD = total;
   _updatePortTotalDisplay();
   if(el('port-count')) el('port-count').textContent = items.length;
@@ -1150,6 +1140,11 @@ function _updateTotals(items){
   if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
   // F2: reinsertar emoji + asegurar indicador Hoy tras refresh de badge
   if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
+  // Cachear precios cuando realmente existen (no antes)
+  try {
+    if(window._pcPrices && Object.keys(window._pcPrices).length > 0) localStorage.setItem('aurex_pc_prices_cache', JSON.stringify(window._pcPrices));
+    if(window._pcChange24 && Object.keys(window._pcChange24).length > 0) localStorage.setItem('aurex_pc_change24_cache', JSON.stringify(window._pcChange24));
+  } catch(e){}
   // Cachear estado del header para restore inmediato en refresh
   try {
     localStorage.setItem('aurex_port_header_cache', JSON.stringify({
