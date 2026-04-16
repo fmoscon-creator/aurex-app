@@ -1377,7 +1377,7 @@ window.openAddActivo = function(){
     _openAddActivoModal();
   });
 };
-function _openAddActivoModal(){
+function _openAddActivoModal(prefillTicker){
   var modal = document.getElementById('port-modal');
   var body = document.getElementById('port-modal-body');
   var title = document.getElementById('port-modal-title');
@@ -1402,6 +1402,25 @@ function _openAddActivoModal(){
   setTimeout(function(){ var el = document.getElementById('pa-search'); if(el) el.focus(); }, 100);
   window._portSearchActs = [];
   window.filterPortSearch();
+  // Prefill ticker (cuando se abre desde long press de Mercados)
+  if (prefillTicker) {
+    setTimeout(function(){
+      var srch = document.getElementById('pa-search');
+      if (srch) {
+        srch.value = prefillTicker;
+        if (typeof window.filterPortSearch === 'function') {
+          window.filterPortSearch();
+          // Auto-seleccionar primer resultado tras 600ms (espera el fetch)
+          setTimeout(function(){
+            var first = (window._portSearchActs || [])[0];
+            if (first && first.s === prefillTicker.toUpperCase()) {
+              window.selectPortActivo(first.s, first.n);
+            }
+          }, 700);
+        }
+      }
+    }, 200);
+  }
 }
 
 window._buscarActivos = function(q, cb) {
@@ -1506,8 +1525,8 @@ window.savePortActivo = function(){
   window.addPortfolioItem(sym, nombre, qty, price, tipo);
   window.closePortModal();
 };;
-window.openPortModal = _openAddActivoModal;
-window.openAddActivo = _openAddActivoModal;
+window.openPortModal = function(prefillTicker){ _openAddActivoModal(prefillTicker); };
+window.openAddActivo = function(prefillTicker){ _openAddActivoModal(prefillTicker); };
 window.closePortModal = function(){ var m = document.getElementById('port-modal'); if(m) m.style.display='none'; var errEl=document.getElementById('pa-err'); if(errEl){errEl.style.display='none';errEl.textContent='';} var res=document.getElementById('pa-results'); if(res) res.style.display='flex'; };
 Modal = function(){ var modal=document.getElementById('port-modal'); if(modal) modal.style.display='none'; };
 
@@ -5162,19 +5181,32 @@ window._applyIASort = function(key) {
   items.forEach(function(it){ cnt.appendChild(it); });
 };
 
-// --- Fase 4 F4: Long press action sheet ---
+// --- Fase 4 F4: Long press action sheet (formato modal central — réplica nativa) ---
 
 (function _addLPStyles() {
   if (document.getElementById('lp-styles')) return;
   var st = document.createElement('style');
   st.id = 'lp-styles';
   st.textContent =
-    '@keyframes lp-slideup { from { transform: translateY(100%); } to { transform: translateY(0); } }' +
-    '.lp-option{display:flex;align-items:center;gap:14px;padding:14px 20px;cursor:pointer;' +
-    'font-size:15px;color:var(--text);border-bottom:1px solid var(--border);' +
-    '-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.lp-option:last-child{border-bottom:none;}' +
-    '.lp-option:active{background:var(--border);}';
+    '@keyframes lp-fadein { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }' +
+    '#longpress-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);' +
+    'display:flex;align-items:center;justify-content:center;padding:20px;}' +
+    '#longpress-modal{background:var(--card);border-radius:18px;width:100%;max-width:320px;' +
+    'padding:18px 14px;animation:lp-fadein 0.18s ease-out;display:flex;flex-direction:column;gap:8px;}' +
+    '.lp-header{text-align:center;padding:4px 0 12px;}' +
+    '.lp-header .lp-ticker{font-size:18px;font-weight:700;color:var(--text);display:block;}' +
+    '.lp-header .lp-name{font-size:12px;color:var(--textSec);display:block;margin-top:2px;}' +
+    '.lp-option{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer;' +
+    'font-size:14px;font-weight:600;color:var(--text);border-radius:11px;background:var(--border);' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
+    '.lp-option .lp-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center;}' +
+    '.lp-option:active{opacity:0.7;}' +
+    '.lp-option.lp-primary{background:transparent;border:1.5px solid var(--gold);color:var(--gold);}' +
+    '.lp-option.lp-destructive{background:var(--redBg);color:var(--red);border:1px solid var(--red);}' +
+    '.lp-cancel{margin-top:8px;background:transparent;border:1px solid var(--border2);' +
+    'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
+    'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.lp-cancel:active{background:var(--border);}';
   document.head.appendChild(st);
 })();
 
@@ -5202,11 +5234,10 @@ window._closeLPSheet = function() {
   if (ov) ov.remove();
 };
 
-function _lpOption(icon, label, color, onClick) {
+function _lpOption(icon, label, variant, onClick) {
   var div = document.createElement('div');
-  div.className = 'lp-option';
-  if (color) div.style.color = color;
-  div.innerHTML = '<span style="font-size:20px">' + icon + '</span><span>' + label + '</span>';
+  div.className = 'lp-option' + (variant === 'primary' ? ' lp-primary' : variant === 'destructive' ? ' lp-destructive' : '');
+  div.innerHTML = '<span class="lp-icon">' + icon + '</span><span>' + label + '</span>';
   div.addEventListener('click', function() {
     window._closeLPSheet();
     setTimeout(onClick, 50);
@@ -5214,99 +5245,216 @@ function _lpOption(icon, label, color, onClick) {
   return div;
 }
 
+// options: [{ icon, label, variant?: 'primary'|'destructive', action }]
 window._showLPSheet = function(ticker, name, options) {
   window._closeLPSheet();
   var overlay = document.createElement('div');
   overlay.id = 'longpress-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);' +
-    'display:flex;align-items:flex-end;';
-  var sheet = document.createElement('div');
-  sheet.id = 'longpress-sheet';
-  sheet.style.cssText = 'width:100%;background:var(--card);border-radius:16px 16px 0 0;' +
-    'padding:16px 0 32px;animation:lp-slideup 0.22s ease-out;';
-  var title = document.createElement('div');
-  title.style.cssText = 'text-align:center;font-size:13px;font-weight:700;color:var(--text);' +
-    'padding:0 16px 12px;border-bottom:1px solid var(--border);margin-bottom:4px;';
-  title.textContent = ticker + (name ? ' — ' + name : '');
-  sheet.appendChild(title);
+  var modal = document.createElement('div');
+  modal.id = 'longpress-modal';
+  var header = document.createElement('div');
+  header.className = 'lp-header';
+  header.innerHTML = '<span class="lp-ticker">' + ticker + '</span>' +
+    (name ? '<span class="lp-name">' + name + '</span>' : '');
+  modal.appendChild(header);
   options.forEach(function(opt) {
-    sheet.appendChild(_lpOption(opt.icon, opt.label, opt.color, opt.action));
+    modal.appendChild(_lpOption(opt.icon, opt.label, opt.variant, opt.action));
   });
-  overlay.appendChild(sheet);
+  var cancel = document.createElement('div');
+  cancel.className = 'lp-cancel';
+  cancel.textContent = 'Cancelar';
+  cancel.addEventListener('click', window._closeLPSheet);
+  modal.appendChild(cancel);
+  overlay.appendChild(modal);
   overlay.addEventListener('click', function(e) {
     if (e.target === overlay) window._closeLPSheet();
   });
   document.body.appendChild(overlay);
 };
 
+// Helpers de acciones específicas
+
+function _lpGetActivoMeta(sym) {
+  var acts = window._IA_ACTIVOS || [];
+  for (var i=0; i<acts.length; i++) if (acts[i].s === sym) return acts[i];
+  return null;
+}
+
+window._lpAgregarFavorito = function(ticker) {
+  try {
+    var pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]');
+    if (pins.indexOf(ticker) >= 0) {
+      alert(ticker + ' ya está en favoritos');
+      return;
+    }
+    if (pins.length >= 4) {
+      alert('Máximo 4 favoritos. Quitá uno antes de agregar.');
+      return;
+    }
+    pins.push(ticker);
+    localStorage.setItem('aurex_pins', JSON.stringify(pins));
+    alert(ticker + ' agregado a favoritos');
+  } catch(e) { console.error('aurex_pins', e); }
+};
+
+window._lpCompartirPortfolio = function(ticker, item) {
+  var prcs = window._pcPrices || {};
+  var precio = prcs[ticker] || (item && item.precio_compra) || 0;
+  var pnlPct = (item && item.precio_compra > 0) ? ((precio - item.precio_compra)/item.precio_compra*100) : 0;
+  var emoji = pnlPct >= 0 ? '🚀' : '📉';
+  var pctStr = (pnlPct >= 0 ? '+' : '') + pnlPct.toFixed(2) + '%';
+  var precioStr = '$' + precio.toLocaleString('es-AR', { minimumFractionDigits:2, maximumFractionDigits:2 });
+  var texto = ticker + ' — ' + precioStr + ' | ' + pctStr + ' en mi portfolio ' + emoji + ' vía AUREX\n\n' +
+    'https://aurex.live';
+  if (navigator.share) {
+    navigator.share({ title: 'AUREX — ' + ticker, text: texto }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(texto);
+    alert('Copiado al portapapeles');
+  }
+};
+
+window._lpCompartirMercados = function(ticker) {
+  var prcs = window._pcPrices || {};
+  var precio = prcs[ticker];
+  var precioStr = precio ? ' — $' + precio.toLocaleString('es-AR', { minimumFractionDigits:2, maximumFractionDigits:2 }) : '';
+  var texto = ticker + precioStr + ' | seguimiento en AUREX\n\nhttps://aurex.live';
+  if (navigator.share) {
+    navigator.share({ title: 'AUREX — ' + ticker, text: texto }).catch(function(){});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(texto);
+    alert('Copiado al portapapeles');
+  }
+};
+
+// Editar posición — abre modal mínimo de edición de cantidad y precio
+window._lpEditarPortItem = function(itemId) {
+  var items = window._portItems || [];
+  var item = null;
+  for (var i=0; i<items.length; i++) if (items[i].id === itemId) { item = items[i]; break; }
+  if (!item) { alert('Item no encontrado'); return; }
+  // Modal inline para edit
+  var existing = document.getElementById('lp-edit-modal'); if (existing) existing.remove();
+  var ov = document.createElement('div');
+  ov.id = 'lp-edit-modal';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:2100;background:rgba(0,0,0,0.5);' +
+    'display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML =
+    '<div style="background:var(--card);border-radius:16px;padding:18px;width:100%;max-width:320px;">' +
+      '<div style="font-size:16px;font-weight:700;color:var(--text);text-align:center;margin-bottom:14px;">' +
+        'Editar ' + item.simbolo + '</div>' +
+      '<div style="display:flex;gap:8px;margin-bottom:12px;">' +
+        '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Cantidad</div>' +
+        '<input id="lp-edit-qty" type="number" step="any" min="0" value="' + item.cantidad + '" ' +
+        'style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);' +
+        'border-radius:8px;padding:9px 11px;color:var(--text);font-size:14px;outline:none;"/></div>' +
+        '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Precio compra</div>' +
+        '<input id="lp-edit-price" type="number" step="any" min="0" value="' + item.precio_compra + '" ' +
+        'style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);' +
+        'border-radius:8px;padding:9px 11px;color:var(--text);font-size:14px;outline:none;"/></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;">' +
+        '<div id="lp-edit-cancel" style="flex:1;text-align:center;padding:11px;border-radius:9px;' +
+        'background:var(--border);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">Cancelar</div>' +
+        '<div id="lp-edit-save" style="flex:1;text-align:center;padding:11px;border-radius:9px;' +
+        'background:var(--green);color:var(--bg);font-size:13px;font-weight:700;cursor:pointer;">Guardar</div>' +
+      '</div>' +
+    '</div>';
+  ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+  document.getElementById('lp-edit-cancel').addEventListener('click', function(){ ov.remove(); });
+  document.getElementById('lp-edit-save').addEventListener('click', function() {
+    var q = parseFloat(document.getElementById('lp-edit-qty').value);
+    var p = parseFloat(document.getElementById('lp-edit-price').value);
+    if (!q || q <= 0 || !p || p <= 0) { alert('Cantidad y precio deben ser mayores a 0'); return; }
+    item.cantidad = q;
+    item.precio_compra = p;
+    // Persistir si hay backend, sino localStorage
+    try { localStorage.setItem('aurex_port_items', JSON.stringify(items)); } catch(_){}
+    if (typeof window._renderPortfolioItems === 'function') window._renderPortfolioItems(items);
+    if (typeof window._updateTotals === 'function') window._updateTotals(items);
+    ov.remove();
+  });
+};
+
 // Attach por tab — idempotente
+
 function _attachAllPortfolioLP() {
   document.querySelectorAll('[id^="port-row-"]').forEach(function(el) {
     if (el._lpAttached) return;
     var uuid = el.id.replace('port-row-', '');
-    var symEl = el.querySelector('span[style*="font-weight:700"]');
-    var ticker = symEl ? symEl.textContent.trim() : uuid;
+    var items = window._portItems || [];
+    var item = null;
+    for (var i=0; i<items.length; i++) if (items[i].id === uuid) { item = items[i]; break; }
+    var ticker = item ? item.simbolo : uuid;
+    var meta = _lpGetActivoMeta(ticker);
+    var name = item ? (item.nombre || (meta ? meta.n : '')) : '';
     _attachLongPress(el, function() {
-      window._showLPSheet(ticker, null, [
-        { icon:'📊', label:'Ver detalle', action: function(){ if (window.openPortItemDetail) window.openPortItemDetail(uuid); } },
-        { icon:'🗑',  label:'Eliminar activo', color:'var(--red)', action: function(){
-          if (confirm('Eliminar ' + ticker + '?')) { if (window.deletePortfolioItem) window.deletePortfolioItem(uuid); }
-        }}
+      window._showLPSheet(ticker, name, [
+        { icon:'📊', label:'Análisis IA completo', variant:'primary',
+          action: function(){ if (window.openPortItemDetail) window.openPortItemDetail(uuid); } },
+        { icon:'✏️', label:'Editar',
+          action: function(){ window._lpEditarPortItem(uuid); } },
+        { icon:'📤', label:'Compartir',
+          action: function(){ window._lpCompartirPortfolio(ticker, item); } },
+        { icon:'🗑',  label:'Eliminar', variant:'destructive',
+          action: function(){
+            if (confirm('Eliminar ' + ticker + '?')) { if (window.deletePortfolioItem) window.deletePortfolioItem(uuid); }
+          } }
       ]);
     });
   });
 }
+
 function _attachAllMercadosLP() {
   document.querySelectorAll('#cnt .item-row').forEach(function(el) {
     if (el._lpAttached) return;
     var ticker = el.id.replace('row-', '');
+    var meta = _lpGetActivoMeta(ticker);
+    var name = meta ? meta.n : '';
     _attachLongPress(el, function() {
-      window._showLPSheet(ticker, null, [
-        { icon:'⭐', label:'Agregar a Watchlist', action: function(){ if (window.wlOpenAddModal) window.wlOpenAddModal(); } },
-        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
+      window._showLPSheet(ticker, name, [
+        { icon:'📊', label:'Análisis IA completo', variant:'primary',
+          action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
+        { icon:'⭐', label:'Agregar a Favoritos',
+          action: function(){ window._lpAgregarFavorito(ticker); } },
+        { icon:'💼', label:'Agregar a Portfolio',
+          action: function(){ if (window.openPortModal) window.openPortModal(ticker); } },
+        { icon:'📤', label:'Compartir',
+          action: function(){ window._lpCompartirMercados(ticker); } }
       ]);
     });
   });
 }
+
 function _attachAllWatchlistLP() {
   document.querySelectorAll('#watch-cnt > div[onclick^="wlOpenDetail"]').forEach(function(el) {
     if (el._lpAttached) return;
     var m = (el.getAttribute('onclick') || '').match(/wlOpenDetail\('([^']+)'\)/);
     var ticker = m ? m[1] : null;
     if (!ticker) return;
+    var meta = _lpGetActivoMeta(ticker);
+    var name = meta ? meta.n : '';
     _attachLongPress(el, function() {
-      window._showLPSheet(ticker, null, [
-        { icon:'📊', label:'Ver detalle', action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
-        { icon:'🗑',  label:'Quitar de lista', color:'var(--red)', action: function(){
-          if (confirm('Quitar ' + ticker + ' de la lista?')) { if (window.wlRemoveAsset) window.wlRemoveAsset(ticker); }
-        }},
-        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
-      ]);
-    });
-  });
-}
-function _attachAllIALP() {
-  document.querySelectorAll('#ia-list .ia-row').forEach(function(el) {
-    if (el._lpAttached) return;
-    var idx = parseInt((el.id || '').replace('ia-row-', ''), 10);
-    var symEl = el.querySelector('span[style*="font-weight:700"]');
-    var ticker = symEl ? symEl.textContent.trim() : ('ia-' + idx);
-    _attachLongPress(el, function() {
-      window._showLPSheet(ticker, null, [
-        { icon:'📊', label:'Ver señal IA', action: function(){ if (window.toggleIARow) window.toggleIARow(idx); } },
-        { icon:'📋', label:'Copiar ticker', action: function(){ if (navigator.clipboard) navigator.clipboard.writeText(ticker); } }
+      window._showLPSheet(ticker, name, [
+        { icon:'📊', label:'Análisis IA completo', variant:'primary',
+          action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
+        { icon:'🤝', label:'Compartir señal',
+          action: function(){ if (window._compartirSenal) window._compartirSenal(ticker); } },
+        { icon:'🗑',  label:'Quitar de esta lista', variant:'destructive',
+          action: function(){
+            if (confirm('Quitar ' + ticker + ' de la lista?')) { if (window.wlRemoveAsset) window.wlRemoveAsset(ticker); }
+          } }
       ]);
     });
   });
 }
 
 window._initLongPressActions = function() {
-  // Attach inicial
   _attachAllPortfolioLP();
   _attachAllMercadosLP();
   _attachAllWatchlistLP();
-  _attachAllIALP();
-  // Observers para re-attach tras re-render
+  // IA: NO long press (la nativa no lo tiene, solo click normal)
   function obs(containerId, fn) {
     var c = document.getElementById(containerId);
     if (!c || c._lpObsAdded) return;
@@ -5316,7 +5464,6 @@ window._initLongPressActions = function() {
   obs('port-cnt', _attachAllPortfolioLP);
   obs('cnt', _attachAllMercadosLP);
   obs('watch-cnt', _attachAllWatchlistLP);
-  obs('ia-list', _attachAllIALP);
 };
 
 // === Inyección por tab (sort menus) ===
