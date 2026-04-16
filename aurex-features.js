@@ -1884,11 +1884,26 @@ window.wlCreateList = function(){
   });
 };
 
-// ─── ELIMINAR LISTA ───
+// ─── ELIMINAR LISTA — Modal visual (idéntico a nativa) ───
 window.wlDeleteList = function(listId){
-  if(!confirm('Eliminar esta lista y todos sus activos?')) return;
-  if(_wlSelectedList === listId) _wlSelectedList = null;
-  _wlDeleteListDB(listId, function(){ renderWatchCnt(); });
+  var old = document.getElementById('wl-delete-overlay'); if(old) old.remove();
+  var overlay = document.createElement('div');
+  overlay.id = 'wl-delete-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
+  var card = document.createElement('div');
+  card.style.cssText = 'width:100%;max-width:300px;background:var(--card);border-radius:16px;padding:20px;box-shadow:0 10px 20px rgba(0,0,0,0.35)';
+  card.onclick = function(e){ e.stopPropagation(); };
+  var html = '';
+  html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Eliminar lista</div>';
+  html += '<div style="font-size:13px;color:var(--textSec);margin-bottom:20px">Se eliminaran todos los activos</div>';
+  html += '<div style="display:flex;gap:12px">';
+  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove()" style="flex:1;padding:12px;border-radius:10px;background:var(--border);text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:600;color:var(--text)">Cancelar</span></div>';
+  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove();if(window._wlSelectedList===\''+listId+'\')window._wlSelectedList=null;window._wlDeleteListDB(\''+listId+'\',function(){renderWatchCnt();})" style="flex:1;padding:12px;border-radius:10px;background:#F8514920;border:1px solid #F8514960;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:var(--red)">Eliminar</span></div>';
+  html += '</div>';
+  card.innerHTML = html;
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
 };
 
 // ─── MARCAR PRINCIPAL ───
@@ -2002,18 +2017,18 @@ window.renderWatchCnt = function(){
   lists.forEach(function(list){
     var isSel = list.id === _wlSelectedList;
     var itemCount = _wlGetItems(list.id).length;
-    html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:100px;background:var(--card);border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'var(--border)')+';cursor:pointer;flex-shrink:0">';
+    html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:130px;background:var(--card);border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'var(--border)')+';cursor:pointer;flex-shrink:0">';
     html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:11px">⭐</span>':'')+'<span style="font-size:12px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
     html += '<div style="font-size:9px;color:var(--textDim);margin-top:3px">'+itemCount+' activos</div>';
     html += '</div>';
   });
   html += '</div>';
-  if(lists.length > 2) html += '<div style="position:absolute;right:14px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none"><div style="background:var(--gold20);border-radius:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:var(--gold);font-weight:800">›</span></div></div>';
+  if(lists.length > 2) html += '<div style="position:absolute;right:14px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none"><div style="background:rgba(212,160,23,0.19);border-radius:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:var(--gold);font-weight:800">›</span></div></div>';
   html += '</div>';
 
   // Header lista seleccionada
   if(currentList){
-    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:0.5px solid var(--border)">';
+    html += '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 11px 8px;padding:10px 13px;border-radius:10px;border:1px solid var(--border2);background:var(--card)">';
     html += '<div style="width:8px;height:8px;border-radius:4px;background:'+currentList.color+'"></div>';
     html += '<span style="font-size:13px;font-weight:600;color:var(--text);flex:1">'+currentList.name+'</span>';
     if(currentList.is_primary) {
@@ -2023,17 +2038,17 @@ window.renderWatchCnt = function(){
     }
     html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
     var _cmpLabel = '⚖️ Comparar';
-    var _cmpStyle = 'font-size:9px;font-weight:700;color:var(--gold);background:var(--goldBg);padding:4px 8px;border-radius:6px;border:1px solid var(--gold40);text-decoration:none;cursor:pointer';
+    var _cmpStyle = 'font-size:12px;font-weight:700;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
       _cmpLabel = '⚖️ Comparar ' + window._wlCompareItems.length;
-      _cmpStyle = 'font-size:9px;font-weight:700;color:var(--chipTextActive);background:var(--gold);padding:4px 8px;border-radius:6px;text-decoration:none;cursor:pointer';
+      _cmpStyle = 'font-size:12px;font-weight:700;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     } else if(window._wlCompareMode){
       _cmpLabel = '✕ Cancelar';
-      _cmpStyle = 'font-size:9px;font-weight:700;color:var(--red);background:#F8514920;padding:4px 8px;border-radius:6px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
+      _cmpStyle = 'font-size:12px;font-weight:700;color:var(--red);background:#F8514920;padding:8px 14px;border-radius:8px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
     }
     html += '<a href="javascript:void(0)" data-wl="compareMode" style="'+_cmpStyle+'">'+_cmpLabel+'</a>';
-    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:4px 8px;border-radius:6px;background:var(--gold);color:var(--chipTextActive);font-size:11px;font-weight:700;cursor:pointer;border-radius:6px">+ Agregar</a>';
-    html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;color:#55555560;cursor:pointer;padding:4px">🗑</div>';
+    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none">+ Agregar</a>';
+    html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;cursor:pointer;padding:4px">🗑️</div>';
     html += '</div>';
   }
 
@@ -2062,7 +2077,7 @@ window.renderWatchCnt = function(){
       var dirBg = dir==='alcista'?'#3FB95020':dir==='bajista'?'#F8514920':dir==='alta_conf'?'var(--goldBg)':'transparent';
       var prob = sig ? (sig.confianza||'') : '';
       var act = (window._IA_ACTIVOS||[]).find(function(a){ return a.s===item.s; });
-      var logoBg = dir==='alcista'?'#1A3A2A':dir==='bajista'?'#3A1A1A':'var(--border)';
+      var logoBg = dir==='alcista'?'#1A3A2A':dir==='bajista'?'#3A1A1A':'#333';
       var logoHtml = act && act.logo
         ? '<div style="width:36px;height:36px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center"><img src="'+act.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover" onerror="this.outerHTML=\'<span style=color:var(--text);font-size:11px;font-weight:700>'+item.s[0]+'</span>\'" /></div>'
         : '<div style="width:36px;height:36px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:var(--text)">'+item.s[0]+'</div>';
@@ -2093,37 +2108,70 @@ window.renderWatchCnt = function(){
       var isCompareMode = window._wlCompareMode;
       var isSelected = window._wlCompareItems && window._wlCompareItems.indexOf(item.s) >= 0;
       var rowClick = isCompareMode ? 'wlToggleCompare(\''+item.s+'\')' : 'wlOpenDetail(\''+item.s+'\')';
-      html += '<div onclick="'+rowClick+'" style="padding:0;border-bottom:0.5px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+      var lpAttr = isCompareMode ? '' : ' ontouchstart="this._lpT=setTimeout(function(){this._lp=1;wlShowActionMenu(\''+item.s+'\')}.bind(this),400)" ontouchend="clearTimeout(this._lpT);if(this._lp){this._lp=0;event.preventDefault();}" ontouchmove="clearTimeout(this._lpT)"';
+      html += '<div onclick="if(this._lp){this._lp=0;return;}'+rowClick+'"'+lpAttr+' style="padding:0;border-bottom:0.5px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
       html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
       if(isCompareMode) {
         html += '<div data-wl-compare="'+item.s+'" style="width:22px;height:22px;border-radius:11px;border:2px solid '+(isSelected?'var(--gold)':'var(--border)')+';background:'+(isSelected?'var(--gold)':'transparent')+';display:flex;align-items:center;justify-content:center;margin-right:4px;flex-shrink:0">'+(isSelected?'<span style="color:var(--chipTextActive);font-size:12px;font-weight:800">✓</span>':'')+'</div>';
       } else {
         // Flechas reordenar
         html += '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px">';
-        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',-1)" style="font-size:11px;color:'+(itemIdx===0?'var(--border)':'var(--textSec)')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▲</a>';
-        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',1)" style="font-size:11px;color:'+(itemIdx===currentItems.length-1?'var(--border)':'var(--textSec)')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▼</a>';
+        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',-1)" style="font-size:11px;color:'+(itemIdx===0?'#333':'var(--textSec)')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▲</a>';
+        html += '<a href="javascript:void(0)" onclick="event.stopPropagation();wlMoveItem('+itemIdx+',1)" style="font-size:11px;color:'+(itemIdx===currentItems.length-1?'#333':'var(--textSec)')+';width:18px;text-align:center;cursor:pointer;text-decoration:none">▼</a>';
         html += '</div>';
       }
       html += logoHtml;
       html += '<div style="flex:1;min-width:0">';
       html += '<div style="display:flex;align-items:center;gap:6px"><span style="font-size:14px;font-weight:700;color:var(--text)">'+item.s+'</span><span style="font-size:10px;padding:1px 6px;border-radius:5px;background:var(--border);color:var(--textSec)">'+(tipoLow||'')+'</span></div>';
       html += '<div style="font-size:11px;color:var(--textSec);margin-top:1px">'+item.n+'</div>';
-      html += '<div style="display:flex;align-items:center;gap:4px;margin-top:3px"><span style="font-size:10px;font-weight:700;color:'+dirColor+'">'+(dir==='alcista'?'📈':dir==='bajista'?'📉':dir==='alta_conf'?'⚡':'')+ ' '+dirLabel+' '+(prob?prob+'%':'')+'</span></div>';
+      html += '<div style="display:flex;align-items:center;gap:4px;margin-top:3px"><span style="font-size:8px;font-weight:700;color:'+dirColor+'">'+(dir==='alcista'?'📈':dir==='bajista'?'📉':dir==='alta_conf'?'⚡':'')+ ' '+dirLabel+' '+(prob?prob+'%':'')+'</span></div>';
       html += '</div>';
       html += dotsHtml;
-      html += '<div style="text-align:right;flex-shrink:0;margin-left:4px"><span style="font-size:14px;font-weight:700;color:var(--text)">'+precioFmt+'</span></div>';
-      html += '<div style="display:flex;flex-direction:column;align-items:center;gap:4px;margin-left:4px">';
-      html += '<div onclick="wlToggleAlert(\''+item.s+'\',event)" style="font-size:13px;opacity:'+(item.alert_active?'1':'0.3')+';cursor:pointer">🔔</div>';
+      // Columna derecha: precio + dots arriba, Ult.cierre/24-7 + % abajo (como nativa)
+      var _rowPer = window._wlPeriods[item.s] || '24h';
+      var _rowChg = cambio;
+      var _rowChgCol = cambioColor;
+      if(_rowPer !== '24h'){
+        var _rhp = window._wlHistPrices[_rowPer] && window._wlHistPrices[_rowPer][item.s];
+        var _rcp = precio || 0;
+        if(_rhp && _rhp > 0 && _rcp > 0){
+          _rowChg = ((_rcp - _rhp) / _rhp) * 100;
+          _rowChgCol = _rowChg >= 0 ? 'var(--green)' : 'var(--red)';
+        } else { _rowChg = null; _rowChgCol = 'var(--textDim)'; }
+      }
+      var _rowPct = _rowChg !== null ? _fmt(_rowChg, 'pct') : '...';
+      html += '<div style="text-align:right;flex-shrink:0;margin-left:4px">';
+      html += '<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end"><span style="font-size:14px;font-weight:700;color:var(--text)">$'+precioFmt+'</span></div>';
+      html += '<div style="display:flex;align-items:center;gap:4px;justify-content:flex-end;margin-top:0">';
+      if(isCrypto) html += '<span style="font-size:8px;color:var(--green);font-weight:700;border:0.5px solid var(--green);border-radius:3px;padding:0.5px 3px">24/7</span>';
+      if(mktClosed && !isCrypto) html += '<span style="font-size:9px;color:var(--gold);font-weight:700">Ult. cierre</span>';
+      html += '<span style="font-size:11px;font-weight:600;color:'+_rowChgCol+'">'+_rowPct+'</span>';
+      html += '</div></div>';
+      // Botón eliminar
+      html += '<div style="display:flex;align-items:center;gap:4px;margin-left:4px">';
       html += '<div onclick="wlRemoveAsset(\''+item.s+'\',event)" style="font-size:12px;color:var(--textDim);cursor:pointer">🗑️</div>';
       html += '</div></div>';
-      // Bottom row: cambio % + period buttons (como Portfolio)
-      html += '<div style="display:flex;align-items:center;padding:0 12px 8px 52px;gap:4px">';
-      if(isCrypto) html += '<span style="font-size:8px;color:var(--green);font-weight:700;border:0.5px solid var(--green);border-radius:3px;padding:0.5px 3px;margin-right:2px">24/7</span>';
-      if(mktClosed) html += '<span style="font-size:9px;color:var(--gold);font-weight:700;margin-right:4px">Ult. cierre</span>';
-      html += '<span style="font-size:11px;font-weight:600;color:'+cambioColor+'">'+cambioPct+'</span>';
-      html += '<div style="display:flex;gap:2px;margin-left:auto">';
-      ['24h','7d','1m','3m','1y'].forEach(function(p,idx){
-        html += '<span style="font-size:9px;padding:2px 4px;border-radius:3px;background:'+(idx===0?'var(--gold)':'var(--border)')+';color:'+(idx===0?'var(--bg)':'var(--textSec)')+'">'+p+'</span>';
+      // Bottom row: period buttons + cambio % (como nativa)
+      var _curPer = window._wlPeriods[item.s] || '24h';
+      var _perChange = cambio;
+      var _perColor = cambioColor;
+      if(_curPer !== '24h'){
+        var _hp = window._wlHistPrices[_curPer] && window._wlHistPrices[_curPer][item.s];
+        var _curP = precio || 0;
+        if(_hp && _hp > 0 && _curP > 0){
+          _perChange = ((_curP - _hp) / _hp) * 100;
+          _perColor = _perChange >= 0 ? 'var(--green)' : 'var(--red)';
+        } else {
+          _perChange = null;
+          _perColor = 'var(--textDim)';
+        }
+      }
+      var _perPct = _perChange !== null ? _fmt(_perChange, 'pct') : '...';
+      html += '<div style="display:flex;align-items:center;justify-content:flex-end;padding:0 12px 3px 52px;gap:4px;border-bottom:0.5px solid var(--border2)">';
+      html += '<div style="display:flex;gap:2px">';
+      ['24h','7d','1m','3m','1y'].forEach(function(p){
+        var isAct = _curPer === p;
+        html += '<span onclick="event.stopPropagation();wlSetPeriod(\''+item.s+'\',\''+p+'\')" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(isAct?'var(--gold)':'var(--border)')+';color:'+(isAct?'var(--bg)':'var(--textSec)')+';cursor:pointer">'+p+'</span>';
       });
       html += '</div></div>';
       html += '</div>';
@@ -2187,7 +2235,81 @@ window.wlOpenDetail = function(sym){
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
 
+// ─── MODAL ACCIONES ACTIVO (long press — idéntico a nativa) ───
+window.wlShowActionMenu = function(ticker){
+  var act = (window._IA_ACTIVOS||[]).find(function(a){return a.s===ticker;});
+  var nombre = act ? act.n : ticker;
+  var old = document.getElementById('wl-action-overlay'); if(old) old.remove();
+  var overlay = document.createElement('div');
+  overlay.id = 'wl-action-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+  overlay.onclick = function(e){ if(e.target===overlay){ overlay.remove(); } };
+  var card = document.createElement('div');
+  card.style.cssText = 'width:100%;max-width:320px;background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--border2);box-shadow:0 10px 20px rgba(0,0,0,0.35)';
+  card.onclick = function(e){ e.stopPropagation(); };
+  var html = '';
+  // Header
+  html += '<div style="text-align:center;padding:6px 0 10px;border-bottom:0.5px solid var(--border);margin-bottom:8px">';
+  html += '<div style="font-size:14px;font-weight:800;color:var(--text)">'+ticker+'</div>';
+  if(nombre && nombre !== ticker) html += '<div style="font-size:10px;color:var(--textSec);margin-top:1px">'+nombre+'</div>';
+  html += '</div>';
+  // Análisis IA completo (destacado)
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlOpenDetail(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--gold15,rgba(212,160,23,0.15));border:1px solid var(--gold);margin-bottom:6px;cursor:pointer">';
+  html += '<span style="font-size:16px;margin-right:8px">📊</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--gold)">Análisis IA completo</span>';
+  html += '</div>';
+  // Compartir señal
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();if(typeof _compartirSenal===\'function\')_compartirSenal(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer">';
+  html += '<span style="font-size:15px;margin-right:8px">📤</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:600;color:var(--text)">Compartir señal</span>';
+  html += '</div>';
+  // Quitar de esta lista
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlRemoveAsset(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:#F8514912;border:1px solid #F8514960;margin-bottom:8px;cursor:pointer">';
+  html += '<span style="font-size:15px;margin-right:8px">🗑️</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--red)">Quitar de esta lista</span>';
+  html += '</div>';
+  // Cancelar
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove()" style="padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer">';
+  html += '<span style="font-size:12px;font-weight:600;color:var(--textSec)">Cancelar</span>';
+  html += '</div>';
+  card.innerHTML = html;
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+};
+
 // ─── COMPARADOR ───
+// Period per asset (like nativa wlPeriod state)
+window._wlPeriods = {};
+window._wlHistPrices = {}; // { '7d': { 'BTC': 70000, ... }, '1m': {...}, ... }
+
+window.wlSetPeriod = function(ticker, period){
+  window._wlPeriods[ticker] = period;
+  // Si no es 24h, necesitamos precio histórico
+  if(period !== '24h' && (!window._wlHistPrices[period] || !window._wlHistPrices[period][ticker])){
+    var acts = window._IA_ACTIVOS || [];
+    var act = acts.find(function(a){return a.s===ticker;});
+    var isCrypto = act && ((act.tipo||'').toLowerCase()==='cripto'||(act.t||'').toLowerCase()==='cripto');
+    var rangeMap = {'7d':'5d','1m':'1mo','3m':'3mo','1y':'1y'};
+    var range = rangeMap[period];
+    if(!window._wlHistPrices[period]) window._wlHistPrices[period] = {};
+    if(isCrypto){
+      var limit = period==='7d'?7:period==='1m'?30:period==='3m'?90:365;
+      fetch('https://api.binance.com/api/v3/klines?symbol='+ticker+'USDT&interval=1d&limit='+limit)
+        .then(function(r){return r.json();})
+        .then(function(data){
+          if(Array.isArray(data)&&data.length>0){ window._wlHistPrices[period][ticker]=parseFloat(data[0][1]); renderWatchCnt(); }
+        }).catch(function(){});
+    } else if(range) {
+      fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+ticker+'&interval=1d&range='+range)
+        .then(function(r){return r.json();})
+        .then(function(data){
+          try{var closes=data.chart.result[0].indicators.quote[0].close;var valid=closes.filter(function(c){return c!=null;});if(valid.length>0){window._wlHistPrices[period][ticker]=valid[0];renderWatchCnt();}}catch(e){}
+        }).catch(function(){});
+    }
+  }
+  renderWatchCnt();
+};
+
 window._wlCompareMode = false;
 window._wlCompareItems = [];
 
@@ -2438,11 +2560,11 @@ window.wlMoveItem = function(idx, direction){
   renderWatchCnt();
 };
 
-// ─── COMPARTIR LISTA COMPLETA ───
-window.wlShareList = function(){
+// ─── COMPARTIR LISTA — Modal visual (idéntico a nativa) ───
+window._wlBuildShareMsg = function(){
   var lists = _wlGetLists();
   var cl = lists.find(function(l){return l.id===_wlSelectedList;});
-  if(!cl) return;
+  if(!cl) return '';
   var items = _wlGetItems(_wlSelectedList);
   var sigs = window._iaSignals || [];
   var prcs = window._pcPrices || {};
@@ -2458,23 +2580,38 @@ window.wlShareList = function(){
     msg+=icon+' '+sym+' — '+dirL+(prob?' '+prob+'%':'')+' — $'+(p?_fmt(p):'---')+'\n';
   });
   msg+='━━━━━━━━━━━━━━━━\n'+items.length+' activos | AUREX IA\nhttps://aurex.live';
+  return msg;
+};
 
-  // Usar navigator.share (funciona en iOS Safari)
-  if(navigator.share){
-    navigator.share({title:'AUREX - Lista '+cl.name, text:msg}).catch(function(){});
-  } else if(navigator.clipboard && navigator.clipboard.writeText){
-    navigator.clipboard.writeText(msg).then(function(){ alert('Copiado al portapapeles'); });
-  } else {
-    // Fallback: textarea + copy
-    var ta = document.createElement('textarea');
-    ta.value = msg;
-    ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0';
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    alert('Copiado al portapapeles');
-  }
+window.wlShareList = function(){
+  var lists = _wlGetLists();
+  var cl = lists.find(function(l){return l.id===_wlSelectedList;});
+  if(!cl) return;
+  var items = _wlGetItems(_wlSelectedList);
+  var old = document.getElementById('wl-share-list-overlay'); if(old) old.remove();
+  var overlay = document.createElement('div');
+  overlay.id = 'wl-share-list-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:flex-end;justify-content:center';
+  overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
+  var card = document.createElement('div');
+  card.style.cssText = 'background:var(--card);border-top-left-radius:16px;border-top-right-radius:16px;padding:20px 20px 30px;width:100%;border:1px solid var(--border2)';
+  card.onclick = function(e){ e.stopPropagation(); };
+  var html = '';
+  html += '<div style="font-size:15px;font-weight:700;color:var(--text);text-align:center;margin-bottom:16px">Compartir lista "'+cl.name+'"</div>';
+  html += '<div style="font-size:11px;color:var(--textSec);text-align:center;margin-bottom:16px">'+items.length+' activos con senales IA</div>';
+  html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:16px">';
+  // WhatsApp
+  html += '<div onclick="var m=window._wlBuildShareMsg();var url=\'https://wa.me/?text=\'+encodeURIComponent(m);window.open(url,\'_blank\');document.getElementById(\'wl-share-list-overlay\').remove()" style="width:90px;height:80px;border:1px solid #25D36680;border-radius:12px;background:#25D36618;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">💬</span><span style="font-size:11px;color:#1BA851;font-weight:700">WhatsApp</span></div>';
+  // Telegram
+  html += '<div onclick="var m=window._wlBuildShareMsg();var url=\'https://t.me/share/url?url=aurex.live&text=\'+encodeURIComponent(m);window.open(url,\'_blank\');document.getElementById(\'wl-share-list-overlay\').remove()" style="width:90px;height:80px;border:1px solid #0088CC80;border-radius:12px;background:#0088CC18;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">✈️</span><span style="font-size:11px;color:#0070AA;font-weight:700">Telegram</span></div>';
+  // Mail
+  html += '<div onclick="var m=window._wlBuildShareMsg();var url=\'mailto:?subject=AUREX+-+Lista&body=\'+encodeURIComponent(m);window.open(url);document.getElementById(\'wl-share-list-overlay\').remove()" style="width:90px;height:80px;border:1px solid var(--gold);border-radius:12px;background:var(--goldBg,rgba(212,160,23,0.2));display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📧</span><span style="font-size:11px;color:var(--gold);font-weight:700">Mail</span></div>';
+  html += '</div>';
+  // Cancelar
+  html += '<div onclick="document.getElementById(\'wl-share-list-overlay\').remove()" style="background:var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer"><span style="font-size:14px;color:var(--text);font-weight:600">Cancelar</span></div>';
+  card.innerHTML = html;
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
 };
 
 // Render al cargar — sync from Supabase first
@@ -4750,11 +4887,11 @@ function _initHeaderLogos() {
     var wlChip = document.createElement('div');
     wlChip.className = 'legal-chip';
     wlChip.onclick = window._openAvisoLegal;
-    wlChip.style.cssText = 'display:inline-flex;align-items:center;gap:3px;cursor:pointer;' +
-      'background:transparent;border:1px solid var(--gold);border-radius:6px;' +
-      'padding:3px 8px;font-size:13px;color:var(--gold);font-weight:600;flex-shrink:0;' +
+    wlChip.style.cssText = 'display:inline-flex;align-items:center;gap:4px;cursor:pointer;' +
+      'background:var(--card);border:1px solid var(--gold);border-radius:8px;' +
+      'padding:3px 8px;font-size:14px;color:var(--gold);font-weight:600;flex-shrink:0;' +
       'user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);';
-    wlChip.innerHTML = '⚖️ <span style="font-size:10px">▼</span>';
+    wlChip.innerHTML = '⚖️<span style="font-size:9px;color:var(--gold);font-weight:800">▼</span>';
     wlHdr.insertBefore(wrapper, nuevoEl);
     wrapper.appendChild(wlChip);
     wrapper.appendChild(nuevoEl);
@@ -5247,8 +5384,8 @@ window._refreshHoyPct = function() {
     '#sort-modal{background:#fff;border-radius:20px;width:100%;max-width:340px;' +
     'max-height:80vh;overflow-y:auto;padding:16px;animation:lp-fadein 0.18s ease-out;' +
     'display:flex;flex-direction:column;gap:4px;-webkit-user-select:none;user-select:none;' +
-    '-webkit-touch-callout:none;border:3px solid var(--gold);' +
-    'box-shadow:0 10px 35px rgba(0,0,0,0.35);}' +
+    '-webkit-touch-callout:none;border:1px solid var(--gold);' +
+    'box-shadow:0 10px 20px rgba(0,0,0,0.35);}' +
     '.sort-header{display:flex;align-items:center;justify-content:center;gap:8px;' +
     'padding:8px 0 12px;border-bottom:1px solid rgba(247,208,96,0.25);margin-bottom:10px;}' +
     '.sort-header-icon{font-size:18px;color:var(--gold);}' +
