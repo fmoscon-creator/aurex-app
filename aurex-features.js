@@ -3938,33 +3938,33 @@ window.showIAVariablesPopup = function() {
     var avg = varScoreAvg[v.k];
     var isPos = avg > 0.01;
     var isNeg = avg < -0.01;
-    var color = isPos ? 'var(--green)' : isNeg ? 'var(--red)' : 'var(--textSec)';
-    var bg = isPos ? '#3FB95012' : isNeg ? '#FF444412' : 'transparent';
-    var border = isPos ? '#3FB95030' : isNeg ? '#FF444430' : 'var(--border)';
+    var color = isPos ? 'var(--green)' : isNeg ? 'var(--red)' : 'var(--text)';
+    var bg = isPos ? '#3FB95010' : isNeg ? '#F8514910' : 'var(--bg)';
+    var blColor = isPos ? 'var(--green)' : isNeg ? 'var(--red)' : 'var(--border)';
     var arrow = isPos ? '→ ' : isNeg ? '↓ ' : '— ';
-    return '<div style="border:1px solid ' + border + ';border-radius:8px;padding:9px 11px;margin-bottom:7px;background:' + bg + '">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
-        '<span style="font-size:11px;font-weight:700;color:' + color + '">' + arrow + v.n + '</span>' +
-        '<span style="font-size:9px;background:var(--border);color:var(--textSec);border-radius:4px;padding:1px 5px">Peso ' + v.p + '</span>' +
+    return '<div style="border-left:3px solid '+blColor+';border-radius:8px;padding:10px;margin-bottom:8px;background:'+bg+'">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
+        '<span style="font-size:13px;font-weight:700;color:'+color+'">'+arrow+v.n+'</span>' +
+        '<span style="font-size:10px;color:var(--textSec)">Peso '+v.p+'</span>' +
       '</div>' +
-      '<div style="font-size:10px;color:var(--textSec);line-height:1.4">' + v.d + '</div>' +
+      '<div style="font-size:10px;color:var(--textSec);line-height:14px">'+v.d+'</div>' +
     '</div>';
   }).join('');
   var overlay = document.createElement('div');
   overlay.id = 'ia-vars-overlay';
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
-  overlay.innerHTML = '<div style="background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:20px;width:100%;max-width:400px;max-height:85vh;overflow-y:auto">' +
-    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">' +
-      '<div>' +
-        '<div style="font-size:14px;font-weight:800;color:var(--gold)">AUREX IA ⚡ — 10 VARIABLES</div>' +
-        '<div style="font-size:10px;color:var(--textSec);margin-top:2px">Motor de señales v7 — tiempo real</div>' +
-      '</div>' +
-      '<button onclick="_closeIAVarsPopup()" style="background:var(--border);border:1px solid var(--border2);border-radius:8px;padding:4px 10px;color:var(--textSec);font-size:12px;cursor:pointer">✕</button>' +
+  var alcCount = signals.filter(function(s){return s.direccion==='alcista';}).length;
+  var bajCount = signals.filter(function(s){return s.direccion==='bajista';}).length;
+  var summaryMkt = '<div style="background:var(--bg);border-radius:8px;padding:10px;margin-bottom:10px;border:0.5px solid var(--border)"><span style="font-size:11px;color:var(--textSec)">Mercado ahora:  <span style="color:var(--green);font-weight:700">→ '+alcCount+' al alza</span>  ·  <span style="color:var(--red);font-weight:700">↓ '+bajCount+' a la baja</span></span></div>';
+  overlay.innerHTML = '<div style="background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:20px;width:92%;max-width:420px;max-height:85vh;overflow-y:auto">' +
+    '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
+      '<span style="font-size:16px;font-weight:700;color:var(--text)">AUREX IA ⚡ — 10 VARIABLES</span>' +
+      '<div onclick="window._closeIAVarsPopup()" style="width:32px;height:32px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--textSec);cursor:pointer">✕</div>' +
     '</div>' +
-    summaryHtml +
-    '<div style="font-size:10px;color:var(--textSec);line-height:1.5;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
+    '<div style="font-size:11px;color:var(--textSec);margin-bottom:10px">Motor de señales v7 — tiempo real</div>' +
+    summaryMkt +
+    '<div style="font-size:10px;color:var(--textSec);line-height:15px;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
     varsHtml +
-    '<div style="font-size:9px;color:var(--textDim);text-align:center;margin-top:8px">* Rango realista: 55%–88%. Nunca &lt;52% (sin señal) ni &gt;90% (certeza imposible en mercados)</div>' +
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
   document.body.appendChild(overlay);
@@ -5772,38 +5772,37 @@ window._applyWatchlistSort = function(key) {
   activos.forEach(function(it){ wc.appendChild(it); });
 };
 
+// Sort IA — opera sobre el array de datos y re-renderiza (como nativa sortedSignals)
+window._iaSortKey = 'default';
 window._applyIASort = function(key) {
-  var cnt = document.getElementById('ia-list');
-  if (!cnt) return;
-  if (key === 'default') {
-    if (typeof window.generarSenalesIA === 'function') {
-      try { window.generarSenalesIA(); } catch(_){}
-    }
-    return;
+  window._iaSortKey = key;
+  var sigs = window._iaSignals || [];
+  if(key === 'default'){
+    // Default = ordenar por confianza desc (como nativa línea 104)
+    sigs.sort(function(a,b){ return (b.confianza||0) - (a.confianza||0); });
+  } else {
+    var getStats = function(s){
+      return {
+        prob: s.confianza || s.probabilidad || 0,
+        chg24: s.precio24h > 0 && s.precio ? ((s.precio - s.precio24h) / s.precio24h * 100) : 0,
+        chg7d: s.precio7d > 0 && s.precio ? ((s.precio - s.precio7d) / s.precio7d * 100) : 0,
+        chg30d: s.precio30d > 0 && s.precio ? ((s.precio - s.precio30d) / s.precio30d * 100) : 0,
+        upside: s.upside || 0,
+        ticker: s.simbolo || ''
+      };
+    };
+    sigs.sort(function(a,b){
+      var A = getStats(a), B = getStats(b);
+      if(key==='pct_hoy') return B.chg24 - A.chg24;
+      if(key==='pct_7d') return B.chg7d - A.chg7d;
+      if(key==='pct_30d') return B.chg30d - A.chg30d;
+      if(key==='prob') return B.prob - A.prob;
+      if(key==='upside') return B.upside - A.upside;
+      if(key==='ticker') return A.ticker.localeCompare(B.ticker);
+      return 0;
+    });
   }
-  var items = Array.from(cnt.children);
-  if (items.length < 2) return;
-  var chg24 = window._pcChange24 || {};
-  var hist = window._wlCompareHist || {};
-  var getSym = function(el){
-    var m = (el.id||'').match(/ia-row-(\d+)/);
-    if (!m) return '';
-    var idx = parseInt(m[1], 10);
-    var sigs = window._iaSignals || [];
-    return sigs[idx] ? sigs[idx].simbolo : '';
-  };
-  items.sort(function(a, b) {
-    var sa = getSym(a), sb = getSym(b);
-    var sigA = _getSignalForSym(sa), sigB = _getSignalForSym(sb);
-    if (key === 'pct_hoy') return (chg24[sb]||0) - (chg24[sa]||0);
-    if (key === 'pct_7d') return ((hist[sb]&&hist[sb]['7d'])||0) - ((hist[sa]&&hist[sa]['7d'])||0);
-    if (key === 'pct_30d') return ((hist[sb]&&hist[sb]['1m'])||0) - ((hist[sa]&&hist[sa]['1m'])||0);
-    if (key === 'prob') return ((sigB&&(sigB.confianza||sigB.prob_principal))||0) - ((sigA&&(sigA.confianza||sigA.prob_principal))||0);
-    if (key === 'upside') return ((sigB&&sigB.upside)||0) - ((sigA&&sigA.upside)||0);
-    if (key === 'ticker') return sa.localeCompare(sb);
-    return 0;
-  });
-  items.forEach(function(it){ cnt.appendChild(it); });
+  _renderIALista(sigs, false);
 };
 
 // --- Fase 4 F4: Long press action sheet (formato modal central — réplica nativa) ---
