@@ -1257,24 +1257,24 @@ window.editMarketBanner = function(){
   var opts = ['EEUU','ARG','BRASIL','LONDRES','ESPANA','ALEMANIA','FRANCIA','JAPON','CHINA','HONGKONG','ASIA'];
   var rows = opts.map(function(m){
     var on = prefs.includes(m);
-    var onBg = on ? 'var(--green)' : 'var(--border)';
+    var onBg = on ? '#22c55e' : '#ccc';
     var knobL = on ? '18px' : '2px';
-    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">' +
-      '<span style="color:var(--text);font-size:13px;">'+m+'</span>' +
-      '<div onclick="toggleMktPref(\'' + m + '\')" id="mkt-tog-'+m+'" style="width:36px;height:20px;border-radius:10px;background:'+onBg+';cursor:pointer;position:relative;">' +
-      '<div style="position:absolute;top:2px;left:'+knobL+';width:16px;height:16px;border-radius:50%;background:var(--card);"></div></div></div>';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;">' +
+      '<span style="color:#222;font-size:13px;font-weight:500;">'+m+'</span>' +
+      '<div onclick="toggleMktPref(\'' + m + '\')" id="mkt-tog-'+m+'" style="width:40px;height:22px;border-radius:11px;background:'+onBg+';cursor:pointer;position:relative;flex-shrink:0;margin-left:10px;transition:background 0.2s;">' +
+      '<div style="position:absolute;top:2px;left:'+knobL+';width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:left 0.2s;"></div></div></div>';
   }).join('');
   var popup = document.createElement('div');
   popup.id = 'aurex-mkt-edit-popup';
-  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
   popup.innerHTML =
-    '<div style="background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:20px;width:88%;max-width:340px;max-height:85vh;overflow-y:auto;">' +
+    '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<span style="font-size:15px;font-weight:700;color:var(--text);">Mercados en banner</span>' +
-        '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="background:var(--border);border:1px solid var(--border2);border-radius:6px;color:var(--textSec);font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
+        '<span style="font-size:16px;font-weight:700;color:#111;">Mercados en banner</span>' +
+        '<span onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove();if(typeof _renderMarketBanner===&apos;function&apos;){var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-mkt-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderMarketBanner(&apos;tmp-mkt-listo&apos;);var _sa=document.getElementById(&apos;combo-slide-a&apos;);if(_sa)_sa.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:var(--green);border:none;border-radius:8px;padding:10px;color:var(--bg);font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove();if(typeof _renderMarketBanner===&apos;function&apos;){var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-mkt-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderMarketBanner(&apos;tmp-mkt-listo&apos;);var _sa=document.getElementById(&apos;combo-slide-a&apos;);if(_sa)_sa.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
@@ -1286,7 +1286,7 @@ window.toggleMktPref = function(m){
   var tog = document.getElementById('mkt-tog-'+m);
   if(tog){
     var on = prefs.includes(m);
-    tog.style.background = on ? 'var(--green)' : 'var(--border)';
+    tog.style.background = on ? '#22c55e' : '#ccc';
     var knob = tog.querySelector('div');
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
@@ -4325,10 +4325,10 @@ function _renderFuturesBanner(containerId) {
     var stCol = d.open ? 'var(--green)' : 'var(--textDim)';
     var catColor = catColors[item.cat] || 'var(--textSec)';
     var priceStr = item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio');
-    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:58px;padding:2px 5px;border-right:1px solid var(--border);flex-shrink:0;">' +
-      '<div style="font-size:'+(isPortfolio?'7':'8')+'px;color:'+catColor+';font-weight:700;letter-spacing:0.3px;">'+item.cat+'</div>' +
-      '<div style="font-size:9px;font-weight:700;color:var(--text);white-space:nowrap;display:flex;align-items:center;gap:2px;"><span style="font-size:7px;color:'+stCol+';">&#x25CF;</span>'+item.n+'</div>' +
-      '<div style="font-size:9px;color:var(--text);">'+priceStr+'</div>' +
+    var fullName = item.n + ' Fut';
+    return '<div style="display:flex;flex-direction:column;align-items:center;min-width:70px;padding:4px 8px;flex-shrink:0;">' +
+      '<div style="font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;">'+fullName+'</div>' +
+      '<div style="font-size:10px;color:var(--text);white-space:nowrap;">$'+priceStr+'</div>' +
       '<div style="font-size:9px;font-weight:700;color:'+pctColor+';">'+pctStr+'</div>' +
     '</div>';
   }).filter(Boolean).join('');
@@ -4346,26 +4346,26 @@ window.editFuturesBanner = function(){
   var allItems = FUTURES_ITEMS;
   var rows = allItems.map(function(item){
     var on = activeSlots.indexOf(item.rawS) >= 0;
-    var onBg = on ? 'var(--green)' : 'var(--border)';
+    var onBg = on ? '#22c55e' : '#ccc';
     var knobL = on ? '18px' : '2px';
-    var lbl = item.n + ' (' + item.rawS + ')';
+    var lbl = item.rawS + ' — ' + item.n + ' Fut';
     var togId = 'fut-tog-' + item.rawS.replace(/[^a-zA-Z0-9]/g,'_');
-    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);">' +
-      '<span style="color:var(--text);font-size:13px;">' + lbl + '</span>' +
-      '<div onclick="toggleFutPref(\'' + item.rawS + '\')" id="' + togId + '" style="width:36px;height:20px;border-radius:10px;background:' + onBg + ';cursor:pointer;position:relative;">' +
-      '<div style="position:absolute;top:2px;left:' + knobL + ';width:16px;height:16px;border-radius:50%;background:var(--card);"></div></div></div>';
+    return '<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid #eee;">' +
+      '<span style="color:#222;font-size:13px;font-weight:500;">' + lbl + '</span>' +
+      '<div onclick="toggleFutPref(\'' + item.rawS + '\')" id="' + togId + '" style="width:40px;height:22px;border-radius:11px;background:' + onBg + ';cursor:pointer;position:relative;flex-shrink:0;margin-left:10px;transition:background 0.2s;">' +
+      '<div style="position:absolute;top:2px;left:' + knobL + ';width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,0.2);transition:left 0.2s;"></div></div></div>';
   }).join('');
   var popup = document.createElement('div');
   popup.id = 'aurex-fut-edit-popup';
-  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.75);z-index:9999;display:flex;align-items:center;justify-content:center;';
+  popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
   popup.innerHTML =
-    '<div style="background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:20px;width:88%;max-width:340px;max-height:85vh;overflow-y:auto;">' +
+    '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<span style="font-size:15px;font-weight:700;color:var(--text);">Futuros en banner</span>' +
-        '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="background:var(--border);border:1px solid var(--border2);border-radius:6px;color:var(--textSec);font-size:16px;cursor:pointer;width:28px;height:28px;display:flex;align-items:center;justify-content:center;">&#x2715;</button>' +
+        '<span style="font-size:16px;font-weight:700;color:#111;">Futuros en banner</span>' +
+        '<span onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:var(--green);border:none;border-radius:8px;padding:10px;color:var(--bg);font-size:14px;font-weight:700;cursor:pointer;margin-top:14px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
@@ -4382,7 +4382,7 @@ window.toggleFutPref = function(rawS){
   var togEl = document.getElementById(togId);
   if(togEl){
     var on = activeSlots.indexOf(rawS) >= 0;
-    togEl.style.background = on ? 'var(--green)' : 'var(--border)';
+    togEl.style.background = on ? '#22c55e' : '#ccc';
     var knob = togEl.querySelector('div');
     if(knob) knob.style.left = on ? '18px' : '2px';
   }
@@ -4888,7 +4888,7 @@ function _renderComboBanner(containerId){
   }
   window._comboBannerFlip = _comboFlip;
   if(window._comboBannerTimer) clearInterval(window._comboBannerTimer);
-  window._comboBannerTimer = setInterval(_comboFlip, 4000);
+  // Sin auto-toggle — el usuario cambia con tabs Mercados/Futuros (como nativa)
 }
 
 // --- Fase 4 F2: Indicador "Hoy" animado ---
