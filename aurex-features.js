@@ -1389,16 +1389,16 @@ function _openAddActivoModal(prefillTicker){
   if(title) title.textContent = 'Agregar activo';
   body.innerHTML =
     '<div style="display:flex;flex-direction:column;gap:10px;">' +
-    '<div><input id="pa-search" type="text" placeholder="Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)" autocomplete="off" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);border-radius:9px;padding:10px 12px;color:var(--text);font-size:14px;outline:none;" oninput="filterPortSearch()" /></div>' +
-    '<div id="pa-results" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:4px;"></div>' +
-    '<div id="pa-selected" style="display:none;background:var(--card);border-radius:9px;padding:10px;border:1px solid var(--gold);">' +
-    '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:8px;"></div>' +
+    '<div><input id="pa-search" type="text" placeholder="Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)" autocomplete="off" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:10px;padding:10px 12px;color:#111;font-size:14px;outline:none;" oninput="filterPortSearch()" /></div>' +
+    '<div id="pa-results" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:0;"></div>' +
+    '<div id="pa-selected" style="display:none;background:#f8f8f8;border-radius:10px;padding:12px;border:1px solid #ddd;">' +
+    '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#111;margin-bottom:10px;"></div>' +
     '<div style="display:flex;gap:8px;">' +
-    '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);border-radius:7px;padding:8px 10px;color:var(--text);font-size:14px;outline:none;" /></div>' +
-    '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Precio compra (USD)</div><input id="pa-price" type="numb✕ min="0" step="any" placeholder="0.00" style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);border-radius:7px;padding:8px 10px;color:var(--text);font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#666;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="number" min="0" step="any" placeholder="Ej: 0.5" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
+    '<div style="flex:1;"><div style="font-size:10px;color:#666;margin-bottom:4px;">Precio de compra (USD)</div><input id="pa-price" type="number" min="0" step="any" placeholder="Ej: 65000" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
     '</div>' +
-    '<div id="pa-err" style="color:var(--red);font-size:11px;margin-top:4px;display:none;"></div>' +
-    '<div onclick="savePortActivo()" style="margin-top:10px;background:var(--green);color:var(--bg);border-radius:9px;padding:11px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Confirmar</div>' +
+    '<div id="pa-err" style="color:#dc2626;font-size:11px;margin-top:4px;display:none;"></div>' +
+    '<div onclick="savePortActivo()" style="margin-top:12px;background:var(--gold);color:#111;border-radius:10px;padding:12px;text-align:center;font-size:15px;font-weight:700;cursor:pointer;">Guardar</div>' +
     '</div>' +
     '<input id="pa-sym" type="hidden" value="" />' +
     '</div>';
@@ -1460,14 +1460,14 @@ window._buscarActivos = function(q, cb) {
 window._renderSearchResult = function(a, idx, onclickFnName) {
   var logoHtml = a.logo
     ? '<img src="' + a.logo + '" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />'
-    : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'var(--border)') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:var(--text);flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
+    : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'#ddd') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
   var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
   var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':a.tipo==='bono'?'Bono':a.tipo==='metal'?'Metal':a.tipo==='materia_prima'?'Commodity':(a.tipo||'Activo');
   var yahooTag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 4px;">YAHOO</span>' : '';
-  return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;background:var(--card);border:0.5px solid var(--border);-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
+  return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:10px 10px;cursor:pointer;background:#fff;border-bottom:1px solid #eee;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
     logoHtml +
-    '<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:var(--text);">' + a.s + yahooTag + '</div>' +
-    '<div style="font-size:10px;color:var(--textSec);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + a.n + ' <span style="color:' + tipoColor + '">&#9830; ' + tipoLabel + '</span></div></div>' +
+    '<div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:700;color:#111;">' + a.s + '</span><span style="font-size:13px;color:#666;">' + a.n + '</span>' + yahooTag + '</div>' +
+    '<span style="font-size:11px;color:' + tipoColor + ';flex-shrink:0;">' + tipoLabel + '</span>' +
     '</div>';
 };
 
@@ -1481,11 +1481,11 @@ window.filterPortSearch = function(){
     res.innerHTML = local.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');
     return;
   }
-  res.innerHTML = '<div style="font-size:11px;color:var(--textDim);padding:8px;text-align:center;">Buscando...</div>';
+  res.innerHTML = '<div style="font-size:11px;color:#999;padding:8px;text-align:center;">Buscando...</div>';
   window._buscarActivos(q, function(results){
     window._portSearchActs = results;
     if(!results.length){
-      res.innerHTML = '<div style="font-size:11px;color:var(--textDim);padding:8px;text-align:center;">Sin resultados para "' + q + '"</div>';
+      res.innerHTML = '<div style="font-size:11px;color:#999;padding:8px;text-align:center;">Sin resultados para "' + q + '"</div>';
       return;
     }
     res.innerHTML = results.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');

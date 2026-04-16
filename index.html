@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=72"></script>
+<script src="aurex-v3.js?v=73"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1447,11 +1447,11 @@ document.addEventListener('DOMContentLoaded', function() {
 <div class="cnt" id="port-cnt"></div>
 
 <!-- MODAL AGREGAR / EDITAR ACTIVO -->
-<div id="port-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:center;justify-content:center;padding:0 8px;box-sizing:border-box;" onclick="if(event.target===this)closePortModal()">
-  <div style="background:var(--card);border-radius:16px;width:100%;max-width:440px;padding:20px 16px 24px;border:1px solid var(--border2);max-height:88vh;overflow-y:auto">
+<div id="port-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:100;align-items:center;justify-content:center;padding:0 8px;box-sizing:border-box;" onclick="if(event.target===this)closePortModal()">
+  <div style="background:#fff;border:3px solid var(--gold);border-radius:16px;width:100%;max-width:380px;padding:20px 16px 24px;max-height:88vh;overflow-y:auto">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <span id="port-modal-title" style="font-size:15px;font-weight:500;color:var(--text)">Agregar activo</span>
-      <span onclick="closePortModal()" style="font-size:20px;color:var(--textSec);cursor:pointer"></span>
+      <span id="port-modal-title" style="font-size:16px;font-weight:700;color:#111">Agregar activo</span>
+      <span onclick="closePortModal()" style="font-size:20px;color:#999;cursor:pointer">✕</span>
     </div>
     <div id="port-modal-body"></div>
   </div>
