@@ -5080,7 +5080,7 @@ window._initHoyIndicator = function() {
     var emoji = document.createElement('span');
     emoji.id = 'port-fila-emoji';
     emoji.textContent = '🎉';
-    emoji.style.cssText = 'font-size:18px;display:inline-flex;align-items:center;line-height:1;flex-shrink:0;margin-left:auto;';
+    emoji.style.cssText = 'font-size:18px;display:none;align-items:center;line-height:1;flex-shrink:0;margin-left:auto;';
     filaBottom.insertBefore(emoji, cntChip.nextSibling);
   }
 
@@ -5102,7 +5102,7 @@ window._initHoyIndicator = function() {
 
   var hoyDiv = document.createElement('div');
   hoyDiv.id = 'port-hoy-indicator';
-  hoyDiv.style.cssText = 'flex:0 0 auto;padding:0 4px;display:flex;align-items:center;gap:3px;';
+  hoyDiv.style.cssText = 'flex:0 0 auto;padding:0 4px;display:none;align-items:center;gap:3px;';
 
   var hoyPct = document.createElement('span');
   hoyPct.id = 'port-hoy-pct';
@@ -5120,15 +5120,22 @@ window._initHoyIndicator = function() {
 
 window._refreshHoyPct = function() {
   var hoyPct = document.getElementById('port-hoy-pct');
+  var hoyDiv = document.getElementById('port-hoy-indicator');
   var pctEl = document.getElementById('port-pnl-pct');
   if (!hoyPct || !pctEl) return;
   var pct = pctEl.textContent.trim();
+  if (!pct || pct === '' || pct === '--') return; // Sin datos todavía
   var isPos = !pct.startsWith('-');
   hoyPct.textContent = pct;
   hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
+  // Mostrar indicador solo cuando hay datos reales (como nativa: calc24h retorna 0 si no hay precios)
+  if (hoyDiv) hoyDiv.style.display = 'flex';
   // Emoji dinámico: 🎉 si positivo, 😟 si negativo (nativa línea 653)
   var emojiEl = document.getElementById('port-fila-emoji');
-  if (emojiEl) emojiEl.textContent = isPos ? '🎉' : '😟';
+  if (emojiEl) {
+    emojiEl.textContent = isPos ? '🎉' : '😟';
+    emojiEl.style.display = 'inline-flex';
+  }
 };
 
 // --- Fase 4 F3: Sort menus (modal central — réplica nativa) ---
