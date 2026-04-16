@@ -4128,10 +4128,10 @@ function _renderFearGreed(containerId) {
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
-    var bg = active ? (d.color||'var(--gold)') : 'transparent';
-    var col = active ? '#fff' : '#ccc';
-    var fw = active ? '700' : '500';
-    var bdr = active ? 'none' : '1px solid rgba(255,255,255,0.2)';
+    var bg = active ? (d.color||'var(--green)') : '#e0e0e0';
+    var col = active ? '#fff' : '#222';
+    var fw = active ? '700' : '600';
+    var bdr = 'none';
     filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;border:'+bdr+';">'+catLabels[c]+'</div>';
   });
   var nvars = Object.keys(d.vars).length;
