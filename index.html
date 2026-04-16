@@ -587,7 +587,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=51"></script>
+<script src="aurex-v3.js?v=52"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1713,7 +1713,7 @@ function runConversion(){
   <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" autocomplete="off"
     style="width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;"
     oninput="filterMktSearch()" />
-  <div id="mkt-search-results" style="display:none;background:#fff;border:1px solid #ddd;border-radius:10px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;"></div>
+  <div id="mkt-search-results" style="display:none;background:#fff;border-radius:12px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,0.12);"></div>
 </div>
 <!-- SUMMARY -->
 <div class="sumrow" id="sumrow" style="display:none;padding:0;border:none;"></div>
@@ -1784,19 +1784,19 @@ function filterMktSearch(){
   if(q.length < 2){ res.style.display='none'; return; }
   res.style.display='flex';
   res.style.flexDirection='column';
-  res.style.gap='3px';
-  res.style.padding='6px';
-  res.innerHTML='<div style="font-size:11px;color:var(--textDim);padding:6px;text-align:center;">Buscando...</div>';
+  res.style.gap='0';
+  res.style.padding='0';
+  res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">Buscando...</div>';
   if(window._buscarActivos){
     window._buscarActivos(q, function(results){
-      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:var(--textDim);padding:6px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
+      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
       window._mktSearchActs = results;
       res.innerHTML = results.map(function(a,i){
         var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--text);flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
         var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
-        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;background:#f5f5f5;border:0.5px solid #e0e0e0;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:10px;color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;background:#fff;border-bottom:1px solid #eee;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
       }).join('');
     });
   }

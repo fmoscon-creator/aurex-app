@@ -5611,6 +5611,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   // Agregar a Portfolio
   var portBtn = document.createElement('div');
   portBtn.className = 'lp-option';
+  portBtn.style.cssText = 'background:#fff;border:1.5px solid #ddd;color:#333;';
   portBtn.innerHTML = '<span class="lp-icon">💼</span><span>Agregar a Portfolio</span>';
   portBtn.addEventListener('click', function() {
     window._closeLPSheet();
