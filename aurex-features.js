@@ -4124,14 +4124,14 @@ function _renderFearGreed(containerId) {
   if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'var(--green)':'var(--red)')+'">'+_fmt(raw.gcf.pct,'pct')+'</b>');
   var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:var(--textSec);margin-top:3px;">'+bits.join('')+'</div>';
   var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
-  var catLabels = {GLOBAL:'🌐 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🛢️ COMOD',FUTUROS:'⚡ FUTUROS'};
+  var catLabels = {GLOBAL:'🟩 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🟤 COMOD',FUTUROS:'⚡ FUTUROS'};
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
-    var bg = active ? (d.color||'var(--gold)') : '#111';
+    var bg = active ? (d.color||'var(--gold)') : 'transparent';
     var col = active ? '#fff' : '#ccc';
     var fw = active ? '700' : '500';
-    var bdr = active ? 'none' : '1px solid #333';
+    var bdr = active ? 'none' : '1px solid rgba(255,255,255,0.2)';
     filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;border:'+bdr+';">'+catLabels[c]+'</div>';
   });
   var nvars = Object.keys(d.vars).length;
