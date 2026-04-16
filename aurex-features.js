@@ -4128,10 +4128,10 @@ function _renderFearGreed(containerId) {
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
-    var bg = active ? (d.color||'var(--gold)') : '#1a1a2e';
-    var col = active ? '#fff' : 'var(--textSec)';
+    var bg = active ? (d.color||'var(--gold)') : '#111';
+    var col = active ? '#fff' : 'var(--text)';
     var fw = active ? '700' : '500';
-    var bdr = active ? 'none' : '1px solid var(--border2)';
+    var bdr = active ? 'none' : '1px solid #333';
     filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;border:'+bdr+';">'+catLabels[c]+'</div>';
   });
   var nvars = Object.keys(d.vars).length;
@@ -4139,7 +4139,7 @@ function _renderFearGreed(containerId) {
     '<div style="margin:8px 14px 6px;border-radius:14px;padding:'+(compact?'8px 10px':'12px 14px 10px')+';background:var(--card);border:1px solid var(--border);">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' +
         '<span style="font-size:'+(compact?'10':'11')+'px;font-weight:700;color:var(--gold);letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
-        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:var(--textSec);cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid var(--border2);white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
+        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid #58A6FF;white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
       '</div>' +
       '<div id="pulse-filters-'+elId+'" style="display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
       '<div style="display:flex;align-items:center;gap:10px;">' +
