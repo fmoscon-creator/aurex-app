@@ -1,4 +1,21 @@
-/* v=1774807550559 *//* _fmt(n, tipo) - formato visual de numeros segun idioma del usuario
+/* v=1774807550559 */
+// Cache inmediato: renderizar portfolio del cache al iniciar (sin esperar auth/fetch)
+(function _loadPortCacheImmediate(){
+  try {
+    var cached = JSON.parse(localStorage.getItem('aurex_port_items_cache') || 'null');
+    if (cached && cached.length > 0) {
+      window._portItemsCached = cached;
+      document.addEventListener('DOMContentLoaded', function(){
+        setTimeout(function(){
+          if (!window._portItems || window._portItems.length === 0) {
+            if (typeof _renderPortfolioItems === 'function') _renderPortfolioItems(cached);
+          }
+        }, 100);
+      });
+    }
+  } catch(e){}
+})();
+/* _fmt(n, tipo) - formato visual de numeros segun idioma del usuario
    tipos: 'precio' | 'pct' | 'usd' | 'qty'
    Solo usar en capa visual - NUNCA en calculos
 */
@@ -811,6 +828,8 @@ function _refreshPortPrices(items){
 function _renderPortfolioEmpty(){
   var cnt = document.getElementById('port-cnt');
   if(!cnt) return;
+  // No borrar si ya hay items renderizados del cache (evita flash vacío)
+  if(window._portItems && window._portItems.length > 0) return;
   cnt.innerHTML = '<div style="text-align:center;padding:40px 20px;">' +
     '<div style="font-size:40px;margin-bottom:12px;">AUREX</div>' +
     '<div style="font-size:14px;font-weight:700;color:var(--textSec);margin-bottom:6px;">Tu portfolio esta vacio</div>' +
