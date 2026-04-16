@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=70"></script>
+<script src="aurex-v3.js?v=71"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1394,7 +1394,7 @@ document.addEventListener('DOMContentLoaded', function() {
           <div ontouchstart="window._ptTS=Date.now();event.stopPropagation();event.preventDefault();window._togglePortPeriodDD&&window._togglePortPeriodDD();" onclick="if(Date.now()-(window._ptTS||0)<600)return;event.stopPropagation();window._togglePortPeriodDD&&window._togglePortPeriodDD();" style="background:var(--gold);color:var(--chipTextActive);border:0.5px solid var(--gold);padding:2px 7px;border-radius:4px;font-size:9px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:2px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation;">
             <span id="port-period-badge">24h</span> &#9660;
           </div>
-          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:3px solid var(--gold);border-radius:10px;overflow:hidden;min-width:130px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:9999;">
+          <div id="port-period-dropdown" style="display:none;position:absolute;right:0;top:calc(100% + 4px);background:#fff;border:3px solid var(--gold);border-radius:10px;overflow:hidden;width:160px;box-shadow:0 4px 12px rgba(0,0,0,0.15);z-index:9999;">
             <div data-key="24h" ontouchstart="window._ppTS='24h'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('24h');" onclick="if(window._ppTS&&window._ppTS.indexOf('24h')===0&&Date.now()-parseInt(window._ppTS.slice(3))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('24h');" style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#D4A017;font-weight:700;">24 horas &#10003;</div>
             <div data-key="7d"  ontouchstart="window._ppTS='7d'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('7d');"  onclick="if(window._ppTS&&window._ppTS.indexOf('7d')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('7d');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#222;">7 d&#237;as</div>
             <div data-key="1m"  ontouchstart="window._ppTS='1m'+Date.now();event.stopPropagation();event.preventDefault();window._selectPortPeriod&&window._selectPortPeriod('1m');"  onclick="if(window._ppTS&&window._ppTS.indexOf('1m')===0&&Date.now()-parseInt(window._ppTS.slice(2))<600)return;event.stopPropagation();window._selectPortPeriod&&window._selectPortPeriod('1m');"  style="padding:9px 14px;font-size:12px;cursor:pointer;touch-action:manipulation;color:#222;">1 mes</div>
