@@ -1395,7 +1395,7 @@ function _openAddActivoModal(prefillTicker){
     '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><input id="pa-sel-input" type="text" readonly style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;margin-bottom:6px;" /><div id="pa-sel-name" style="font-size:12px;font-weight:600;color:#111;background:#eee;display:inline-block;padding:3px 10px;border-radius:12px;"></div></div>' +
     '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:11px;color:#666;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="number" min="0" step="any" placeholder="Ej: 0.5" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
     '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:11px;color:#666;margin-bottom:4px;">Precio de compra (USD)</div><input id="pa-price" type="number" min="0" step="any" placeholder="Ej: 65000" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
-    '<div id="pa-preview" style="background:#FEF3C7;border-radius:10px;padding:12px;margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#111;margin-bottom:6px;">📊 VISTA PREVIA</div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;margin-bottom:3px;"><span>Precio actual de mercado:</span><span id="pa-preview-price" style="font-weight:700;">--</span></div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;"><span>Valor que sumará al portfolio:</span><span id="pa-preview-value" style="font-weight:700;">$0,00</span></div></div>' +
+    '<div id="pa-preview" style="background:#FEF3C7;border-radius:10px;padding:12px;margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#111;margin-bottom:6px;">📊 VISTA PREVIA</div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;margin-bottom:3px;"><span>Precio actual de mercado:</span><span id="pa-preview-price" style="font-weight:700;">--</span></div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;margin-bottom:3px;"><span>Valor que sumará al portfolio:</span><span id="pa-preview-value" style="font-weight:700;">$0,00</span></div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;"><span>P&amp;L inicial (vs precio compra):</span><span id="pa-preview-pnl" style="font-weight:700;">$0,00</span></div></div>' +
     '<div id="pa-err" style="color:#dc2626;font-size:11px;margin-top:4px;display:none;"></div>' +
     '<div onclick="savePortActivo()" style="margin-top:4px;background:var(--gold);color:#111;border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;cursor:pointer;">Guardar</div>' +
     '</div>' +
@@ -1520,11 +1520,20 @@ window.selectPortActivo = function(sym, nombre){
   // Actualizar vista previa al cambiar cantidad
   function _updatePreview(){
     var q = parseFloat((document.getElementById('pa-qty')||{}).value) || 0;
+    var p = parseFloat((document.getElementById('pa-price')||{}).value) || 0;
     var val = q * curPrice;
+    var pnl = q * (curPrice - p);
     if(previewValue) previewValue.textContent = '$' + val.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+    var pnlEl = document.getElementById('pa-preview-pnl');
+    if(pnlEl) {
+      pnlEl.textContent = (pnl >= 0 ? '+' : '-') + '$' + Math.abs(pnl).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+      pnlEl.style.color = pnl >= 0 ? '#16a34a' : '#dc2626';
+    }
   }
   var qtyEl = document.getElementById('pa-qty');
+  var priceEl = document.getElementById('pa-price');
   if(qtyEl) { qtyEl.oninput = _updatePreview; }
+  if(priceEl) { priceEl.oninput = _updatePreview; }
   _updatePreview();
 }
 
