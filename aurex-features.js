@@ -2433,7 +2433,14 @@ window.wlCompareSetPeriod = function(p){
   });
 };
 
-// Cargar datos históricos para comparador
+// Cargar datos históricos para comparador — re-renderiza al completar
+window._wlCmpRefreshTimer = null;
+function _wlCmpRefresh(){
+  clearTimeout(window._wlCmpRefreshTimer);
+  window._wlCmpRefreshTimer = setTimeout(function(){
+    if(document.getElementById('wl-compare-overlay')) wlShowCompare();
+  }, 300);
+}
 window.wlLoadCompareHist = function(){
   var items = window._wlCompareItems || [];
   var chg24 = window._pcChange24 || {};
@@ -2457,6 +2464,7 @@ window.wlLoadCompareHist = function(){
             if(Array.isArray(data)&&data.length>1){
               var first=parseFloat(data[0][1]);var last=parseFloat(data[data.length-1][4]);
               window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;
+              _wlCmpRefresh();
             }
           }).catch(function(){});
       } else {
@@ -2469,6 +2477,7 @@ window.wlLoadCompareHist = function(){
               if(valid.length>1){
                 var first=valid[0];var last=valid[valid.length-1];
                 window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;
+                _wlCmpRefresh();
               }
             }
           }).catch(function(){});
@@ -2485,27 +2494,31 @@ window.wlShowCompare = function(){
   var prcs = window._pcPrices || {};
   var chg = window._pcChange24 || {};
   var acts = window._IA_ACTIVOS || [];
+  var hist = window._wlCompareHist || {};
+  var _curPer = window._wlComparePeriod || '24h';
 
   var getSig = function(sym){ for(var i=0;i<sigs.length;i++){if(sigs[i].simbolo===sym)return sigs[i];} return null; };
   var getDir = function(sym){ var s=getSig(sym); return s?(s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV'):'---'; };
   var getProb = function(sym){ var s=getSig(sym); return s?(s.confianza||50):0; };
-  var getChange = function(sym){ return chg[sym]||0; };
+  var getChange = function(sym){
+    if(_curPer === '24h') return chg[sym]||0;
+    return (hist[sym] && hist[sym][_curPer] !== undefined) ? hist[sym][_curPer] : 0;
+  };
   var getPrice = function(sym){ return prcs[sym]||0; };
   var dirColor = function(d){return d==='ALCISTA'?'var(--green)':d==='BAJISTA'?'var(--red)':'var(--gold)';};
   var dirIcon = function(d){return d==='ALCISTA'?'📈':d==='BAJISTA'?'📉':'⚡';};
 
-  // Find best performer
+  // Find best performer por período seleccionado (como nativa)
   var bestSym = items[0]; var bestChg = getChange(items[0]);
   items.forEach(function(t){ var c=getChange(t); if(c>bestChg){bestChg=c;bestSym=t;} });
 
   var html = '<div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:700;color:var(--gold)">⚖️ Comparador AUREX</span><a href="javascript:void(0)" onclick="document.getElementById(\'wl-compare-overlay\').remove();window._wlCompareMode=false;window._wlCompareItems=[];renderWatchCnt();" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
 
-  // Period buttons — actualizan el contenido in-place sin cerrar el overlay
-  var _curPer = window._wlComparePeriod || '24h';
+  // Period buttons — al tocar re-renderizan TODO el comparador (como nativa setState)
   html += '<div style="display:flex;justify-content:center;gap:6px;padding:10px;border-bottom:0.5px solid var(--border)">';
   ['24h','7d','1m','3m','1y'].forEach(function(p){
     var isActive = p === _curPer;
-    html += '<a href="javascript:void(0)" id="wl-cmp-per-'+p+'" onclick="wlCompareSetPeriod(\''+p+'\')" style="padding:4px 12px;border-radius:6px;background:'+(isActive?'var(--gold)':'var(--border)')+';color:'+(isActive?'#000':'var(--textSec)')+';font-size:11px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">'+p+'</a>';
+    html += '<a href="javascript:void(0)" onclick="window._wlComparePeriod=\''+p+'\';wlShowCompare();" style="padding:6px 12px;border-radius:6px;background:'+(isActive?'var(--gold)':'var(--border)')+';color:'+(isActive?'#000':'var(--textSec)')+';font-size:11px;font-weight:700;text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0)">'+p+'</a>';
   });
   html += '</div>';
 
@@ -2517,7 +2530,7 @@ window.wlShowCompare = function(){
     var act = acts.find(function(a){return a.s===t;});
     var isBest = t===bestSym;
     var logoUrl = act&&act.logo?act.logo:'';
-    var logoBg = getDir(t)==='ALCISTA'?'#1A3A2A':getDir(t)==='BAJISTA'?'#3A1A1A':'var(--border)';
+    var logoBg = getDir(t)==='ALCISTA'?'#1A3A2A':getDir(t)==='BAJISTA'?'#3A1A1A':'#333';
     html += '<div style="width:120px;text-align:center">';
     if(isBest) html += '<div style="border:2px solid var(--gold);border-radius:22px;padding:2px;display:inline-block">';
     html += '<div style="width:36px;height:36px;border-radius:18px;background:'+logoBg+';display:inline-flex;align-items:center;justify-content:center">';
@@ -2527,7 +2540,7 @@ window.wlShowCompare = function(){
     if(isBest) html += '</div>';
     html += '<div style="font-size:14px;font-weight:800;color:var(--text);margin-top:4px">'+t+'</div>';
     html += '<div style="font-size:9px;color:var(--textSec)">'+(act?act.n:'')+'</div>';
-    if(isBest) html += '<div style="background:var(--gold20);border:1px solid var(--gold);border-radius:6px;padding:2px 6px;margin-top:4px;display:inline-block"><span style="font-size:7px;font-weight:800;color:var(--gold)">⭐ MEJOR PERFORMANCE</span></div>';
+    if(isBest) html += '<div style="background:rgba(212,160,23,0.19);border:1px solid var(--gold);border-radius:6px;padding:2px 6px;margin-top:4px;display:inline-block"><span style="font-size:7px;font-weight:800;color:var(--gold)">⭐ MEJOR PERFORMANCE</span></div>';
     html += '</div>';
   });
   html += '</div>';
@@ -2537,14 +2550,16 @@ window.wlShowCompare = function(){
     {label:'Señal IA', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+d+'</span>';}},
     {label:'Probabilidad', fn:function(t){var d=getDir(t);return '<span style="color:'+dirColor(d)+';font-weight:700">'+getProb(t)+'%</span>';}},
     {label:'Precio', fn:function(t){var p=getPrice(t);return '<span style="color:var(--text);font-weight:700">'+(p?'$'+_fmt(p):'---')+'</span>';}},
-    {label:'Cambio '+_curPer, labelId:'wl-cmp-chg-label', fn:function(t,i){var c=getChange(t);return '<span id="wl-cmp-chg-'+i+'" style="color:'+(c>=0?'var(--green)':'var(--red)')+';font-weight:700">'+_fmt(c,'pct')+'</span>';}},
+    {label:'Cambio '+_curPer, fn:function(t){var c=getChange(t);return '<span style="color:'+(c>=0?'var(--green)':'var(--red)')+';font-weight:700">'+_fmt(c,'pct')+'</span>';}},
     {label:'Objetivo', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:var(--green);font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?0.95:1.08)):'---')+'</span>';}},
     {label:'Stop', fn:function(t){var p=getPrice(t);var d=getDir(t);return '<span style="color:var(--red);font-weight:700">'+(p?'$'+_fmt(p*(d==='BAJISTA'?1.03:0.96)):'---')+'</span>';}},
   ];
   rows.forEach(function(row){
-    var labelHtml = row.labelId ? '<div id="'+row.labelId+'" style="width:100px;font-size:10px;font-weight:600;color:var(--textSec)">'+row.label+'</div>' : '<div style="width:100px;font-size:10px;font-weight:600;color:var(--textSec)">'+row.label+'</div>';
-    html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--border)">'+labelHtml;
-    items.forEach(function(t,i){ html += '<div style="width:120px;text-align:center;font-size:13px">'+row.fn(t,i)+'</div>'; });
+    html += '<div style="display:flex;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--border)"><div style="width:100px;font-size:10px;font-weight:600;color:var(--textSec)">'+row.label+'</div>';
+    items.forEach(function(t){
+      var isBest = t===bestSym;
+      html += '<div style="width:120px;text-align:center;font-size:13px;font-weight:'+(isBest?'800':'700')+'">'+row.fn(t)+'</div>';
+    });
     html += '</div>';
   });
 
@@ -2572,18 +2587,18 @@ window.wlShowCompare = function(){
   html += '</div>';
 
   // Share button
-  html += '<a href="javascript:void(0)" onclick="var m=\'⚖️ AUREX Comparador\\n━━━━━━━━━━━━━━━━\\n\';';
+  html += '<a href="javascript:void(0)" onclick="var m=\'⚖️ AUREX Comparador ('+_curPer+')\\n━━━━━━━━━━━━━━━━\\n\';';
   items.forEach(function(t,i){
     html += 'm+=\''+(t===bestSym?'⭐ ':'')+dirIcon(getDir(t))+' '+t+' — '+getDir(t)+' '+getProb(t)+'%\\n\';';
   });
-  html += 'm+=\'━━━━━━━━━━━━━━━━\\nAUREX IA | aurex.live\';if(navigator.share){navigator.share({title:\'AUREX Comparador\',text:m});}else if(navigator.clipboard){navigator.clipboard.writeText(m);alert(\'Copiado\');}" style="display:block;background:var(--border);border-radius:10px;padding:12px;text-align:center;color:var(--text);font-size:12px;font-weight:600;text-decoration:none;margin-top:16px">📤 Compartir comparacion</a>';
+  html += 'm+=\'━━━━━━━━━━━━━━━━\\n⭐ Mejor: '+bestSym+'\\nAUREX IA | aurex.live\';if(navigator.share){navigator.share({title:\'AUREX Comparador\',text:m});}else if(navigator.clipboard){navigator.clipboard.writeText(m);alert(\'Copiado\');}" style="display:block;background:var(--border);border-radius:10px;padding:12px;text-align:center;color:var(--text);font-size:12px;font-weight:600;text-decoration:none;margin-top:16px">📤 Compartir comparacion</a>';
 
   html += '</div>';
 
   var old2 = document.getElementById('wl-compare-overlay'); if(old2) old2.remove();
   var overlay = document.createElement('div');
   overlay.id = 'wl-compare-overlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#000000EE;z-index:9999;overflow-y:auto';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:9999;overflow-y:auto';
   overlay.innerHTML = html;
   document.body.appendChild(overlay);
   // Cargar datos históricos en background
