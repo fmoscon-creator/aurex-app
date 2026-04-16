@@ -3957,7 +3957,7 @@ window.showIAVariablesPopup = function() {
   var alcCount = signals.filter(function(s){return s.direccion==='alcista';}).length;
   var bajCount = signals.filter(function(s){return s.direccion==='bajista';}).length;
   var summaryMkt = '<div style="background:var(--bg);border-radius:8px;padding:10px;margin-bottom:10px;border:0.5px solid var(--border)"><span style="font-size:11px;color:var(--textSec)">Mercado ahora:  <span style="color:var(--green);font-weight:700">→ '+alcCount+' al alza</span>  ·  <span style="color:var(--red);font-weight:700">↓ '+bajCount+' a la baja</span></span></div>';
-  overlay.innerHTML = '<div style="background:var(--card);border:1px solid var(--border2);border-radius:16px;padding:20px;width:92%;max-width:420px;max-height:85vh;overflow-y:auto">' +
+  overlay.innerHTML = '<div style="background:var(--card);border:2px solid var(--gold);border-radius:20px;padding:20px;width:92%;max-width:420px;max-height:85vh;overflow-y:auto">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
       '<span style="font-size:16px;font-weight:700;color:var(--text)">AUREX IA ⚡ — 10 VARIABLES</span>' +
       '<div onclick="window._closeIAVarsPopup()" style="width:32px;height:32px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--textSec);cursor:pointer">✕</div>' +
@@ -4051,37 +4051,35 @@ function _renderIALista(signals, keepLoadingBar) {
       '<span style="display:flex;width:22px;height:22px;border-radius:6px;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
     // Dots IA (5x5 como nativa, posición derecha debajo del %)
     var dotsHtml = (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--green);margin:0 1px"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--red);margin:0 1px"></span>';});return dots?'<span style="display:inline-flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;margin-top:3px">'+dots+'</span>':'';})();
-    // Upside al objetivo (como nativa)
+    // Upside al objetivo (como nativa — compacto en misma línea)
     var upsideHtml = '';
     if(s.upside != null){
       var uSign = s.upside >= 0 ? '↑+' : '↓';
-      upsideHtml = ' <span style="color:var(--textDim)">·</span> <span style="color:'+dirColor+';font-weight:700">'+uSign+Math.abs(s.upside).toFixed(1)+'% al precio objetivo</span>';
+      upsideHtml = '<span style="color:var(--textDim)"> · </span><span style="color:'+dirColor+';font-weight:700">'+uSign+Math.abs(s.upside).toFixed(1)+'% al obj.</span>';
     }
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
-      '<div style="padding:12px 13px">' +
-        '<div style="display:flex;align-items:center;gap:9px">' +
-          // Logo (borderRadius 9 como nativa)
-          '<div style="width:34px;height:34px;border-radius:9px;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
-          // Centro
-          '<div style="flex:1;min-width:0">' +
-            '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">' +
-              '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
-              '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
-              (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
-            '</div>' +
-            '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
-            '<div style="display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
+      '<div style="display:flex;align-items:center;gap:9px;padding:12px 13px">' +
+        // Logo (borderRadius 9 como nativa)
+        '<div style="width:34px;height:34px;border-radius:9px;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
+        // Centro — 3 líneas compactas
+        '<div style="flex:1;min-width:0">' +
+          '<div style="display:flex;align-items:center;gap:5px">' +
+            '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
+            '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
+            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
           '</div>' +
-          // Derecha: precio + % + dots
-          '<div style="text-align:right;flex-shrink:0;min-width:80px">' +
-            '<div style="font-size:13px;font-weight:700;color:var(--text)">'+precioFmt+'</div>' +
-            '<div style="font-size:11px;font-weight:500;color:'+pctColor+'">'+pctStr+'</div>' +
-            dotsHtml +
-          '</div>' +
+          '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
+          '<div style="margin-top:3px"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
+        '</div>' +
+        // Derecha — precio, %, dots (como nativa sigRight)
+        '<div style="align-items:flex-end;text-align:right;flex-shrink:0">' +
+          '<div style="font-size:13px;font-weight:700;color:var(--text)">'+precioFmt+'</div>' +
+          '<div style="font-size:11px;font-weight:500;color:'+pctColor+';margin-top:2px">'+pctStr+'</div>' +
+          dotsHtml +
         '</div>' +
       '</div>' +
-      // Barra probabilidad (margin como nativa)
-      '<div style="margin:0 13px -4px;margin-bottom:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
+      // Barra probabilidad (como nativa: marginH 13, marginTop -4, marginBottom 4)
+      '<div style="margin:0 13px;margin-top:-4px;margin-bottom:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       // Detalle expandido
       '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:var(--card);border-bottom:1px solid var(--border);position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:32px;height:32px;border-radius:16px;background:var(--border);border:1.5px solid var(--textDim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--text);z-index:2;-webkit-tap-highlight-color:rgba(0,0,0,0)">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
