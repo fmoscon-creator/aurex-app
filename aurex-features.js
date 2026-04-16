@@ -6327,15 +6327,7 @@ window._initSortMenus = function() { try {
     }
   }
 
-  // IA — modificar fila Ver Variables
-  var iaScreen = document.getElementById('screen-ia');
-  if (iaScreen && iaScreen.children[2] && iaScreen.children[2].children[2]) {
-    var iaRow = iaScreen.children[2].children[2];
-    if (!iaRow.querySelector('#ia-sort-wrap')) {
-      iaRow.style.justifyContent = 'space-between';
-      iaRow.insertBefore(_buildSortBtn('ia', function(k){ try { window._applyIASort(k); } catch(e){ console.error('sort ia', e); } }), iaRow.firstChild);
-    }
-  }
+  // IA — sort inline ya está en HTML (ia-sort-inline), no inyectar segundo
 
   // WATCHLIST — MutationObserver
   var wc = document.getElementById('watch-cnt');
