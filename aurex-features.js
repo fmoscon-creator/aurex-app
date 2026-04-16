@@ -4258,13 +4258,11 @@ async function _fetchFuturesData() {
   var rawSyms = FUTURES_ITEMS.map(function(x){ return x.rawS; });
   if(!window._futuresCache) window._futuresCache = {};
   var results = window._futuresCache;
-  // Fetch en paralelo para que todos carguen rápido
+  // Fetch via backend Railway (mismo que acciones) — confiable y rápido
   await Promise.all(rawSyms.map(function(sym) {
-    var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
-    return fetch(url, {signal: AbortSignal.timeout(12000)})
+    return fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol=' + sym + '&interval=1d&range=2d')
       .then(function(res){ return res.json(); })
-      .then(function(wrapper){
-        var data = JSON.parse(wrapper.contents);
+      .then(function(data){
         if(data.chart && data.chart.result && data.chart.result[0]) {
           var meta = data.chart.result[0].meta;
           var price = meta.regularMarketPrice || 0;
@@ -4277,7 +4275,6 @@ async function _fetchFuturesData() {
   }));
   window._futuresCache = results;
   window._futuresTs = Date.now();
-  // Re-render banner y combo slide
   if(typeof _renderFuturesBanner === 'function'){
     _renderFuturesBanner();
     _renderFuturesBanner('port-futures-banner');
