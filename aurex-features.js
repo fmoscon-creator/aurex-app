@@ -5334,40 +5334,39 @@ window._applyIASort = function(key) {
   st.id = 'lp-styles';
   st.textContent =
     '@keyframes lp-fadein { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }' +
-    '#longpress-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.5);' +
+    '#longpress-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.7);' +
     'display:flex;align-items:center;justify-content:center;padding:20px;}' +
-    '#longpress-modal{background:var(--card);border-radius:18px;width:100%;max-width:320px;' +
+    '#longpress-modal{background:#fff;border-radius:18px;width:100%;max-width:320px;' +
     'padding:18px 14px;animation:lp-fadein 0.18s ease-out;display:flex;flex-direction:column;gap:8px;' +
-    'border:2px solid var(--gold);' +
-    'box-shadow:0 0 24px rgba(247,208,96,0.45),0 8px 28px rgba(0,0,0,0.35);}' +
+    'box-shadow:0 8px 32px rgba(0,0,0,0.25);}' +
     '.lp-header{text-align:center;padding:4px 0 12px;}' +
-    '.lp-header .lp-ticker{font-size:18px;font-weight:700;color:var(--text);display:block;}' +
-    '.lp-header .lp-name{font-size:12px;color:var(--textSec);display:block;margin-top:2px;}' +
+    '.lp-header .lp-ticker{font-size:18px;font-weight:700;color:#111;display:block;}' +
+    '.lp-header .lp-name{font-size:12px;color:#666;display:block;margin-top:2px;}' +
     '.lp-option{display:flex;align-items:center;gap:12px;padding:13px 14px;cursor:pointer;' +
-    'font-size:14px;font-weight:600;color:var(--text);border-radius:11px;background:var(--border);' +
+    'font-size:14px;font-weight:600;color:#333;border-radius:11px;background:#f0f0f0;' +
     '-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
     '.lp-option .lp-icon{font-size:18px;flex-shrink:0;width:22px;text-align:center;}' +
     '.lp-option:active{opacity:0.7;}' +
-    '.lp-option.lp-primary{background:transparent;border:1.5px solid var(--gold);color:var(--gold);}' +
-    '.lp-option.lp-destructive{background:var(--redBg);color:var(--red);border:1px solid var(--red);}' +
-    '.lp-cancel{margin-top:8px;background:transparent;border:1px solid var(--border2);' +
+    '.lp-option.lp-primary{background:transparent;border:1.5px solid #333;color:#333;}' +
+    '.lp-option.lp-destructive{background:#fef2f2;color:#dc2626;border:1px solid #dc2626;}' +
+    '.lp-cancel{margin-top:8px;background:transparent;' +
     'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
-    'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.lp-cancel:active{background:var(--border);}' +
+    'color:#666;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.lp-cancel:active{background:#f0f0f0;}' +
     /* Header enriquecido Mercados */
     '.lp-header-rich{display:flex;align-items:center;gap:10px;padding:6px 0 10px;position:relative;}' +
     '.lp-header-rich .lp-logo{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;}' +
     '.lp-header-rich .lp-info{flex:1;text-align:left;}' +
     '.lp-header-rich .lp-close{position:absolute;top:2px;right:0;font-size:20px;cursor:pointer;' +
-    'color:var(--textSec);line-height:1;padding:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    'color:#999;line-height:1;padding:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
     '.lp-chips{display:flex;gap:6px;margin-bottom:6px;}' +
-    '.lp-chip{flex:1;background:var(--bg);border-radius:8px;padding:6px 4px;text-align:center;}' +
-    '.lp-chip-label{font-size:9px;color:var(--textDim);margin-bottom:2px;}' +
-    '.lp-chip-val{font-size:11px;font-weight:700;color:var(--text);}' +
-    '.lp-signal{text-align:center;padding:4px 0 6px;font-size:12px;color:var(--textSec);}' +
+    '.lp-chip{flex:1;background:#f0f0f0;border-radius:8px;padding:6px 4px;text-align:center;}' +
+    '.lp-chip-label{font-size:9px;color:#888;margin-bottom:2px;}' +
+    '.lp-chip-val{font-size:11px;font-weight:700;color:#222;}' +
+    '.lp-signal{text-align:center;padding:4px 0 6px;font-size:12px;color:#666;}' +
     '.lp-signal strong{font-weight:700;}' +
     '.lp-fav-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 14px;cursor:pointer;' +
-    'font-size:14px;font-weight:700;border-radius:11px;background:var(--gold);color:#1a1a2e;' +
+    'font-size:14px;font-weight:700;border-radius:11px;background:var(--gold);color:#111;' +
     '-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
     '.lp-fav-btn:active{opacity:0.7;}' +
     /* Evitar selección de texto y menú nativo iOS al hacer long press */
