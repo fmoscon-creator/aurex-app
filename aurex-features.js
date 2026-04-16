@@ -4046,10 +4046,11 @@ function _renderIALista(signals, keepLoadingBar) {
     var pctColor = cambio24h>=0?'var(--green)':'var(--red)';
     var pctStr = _fmt(cambio24h,'pct');
     var abbr = s.abbr || s.simbolo.substring(0,3);
+    var actColor = s.color || 'var(--textDim)';
     var logoHtml = s.logo ?
-      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:6px" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
-      '<span style="display:none;width:22px;height:22px;border-radius:6px;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
-      '<span style="display:flex;width:22px;height:22px;border-radius:6px;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
+      '<img src="'+s.logo+'" style="width:22px;height:22px;object-fit:contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
+      '<span style="display:none;width:22px;height:22px;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>' :
+      '<span style="display:flex;width:22px;height:22px;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>';
     // Dots IA (5x5 como nativa, posición derecha debajo del %)
     var dotsHtml = (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--green);margin:0 1px"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--red);margin:0 1px"></span>';});return dots?'<span style="display:inline-flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;margin-top:3px">'+dots+'</span>':'';})();
     // Upside al objetivo (como nativa — compacto en misma línea)
@@ -4060,8 +4061,8 @@ function _renderIALista(signals, keepLoadingBar) {
     }
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="display:flex;align-items:center;gap:9px;padding:12px 13px">' +
-        // Logo (borderRadius 9 como nativa)
-        '<div style="width:34px;height:34px;border-radius:9px;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
+        // Logo (borderRadius 9, fondo actColor como nativa)
+        '<div style="width:34px;height:34px;border-radius:9px;background:'+actColor+'15;border:1.5px solid '+actColor+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
         // Centro — 3 líneas compactas
         '<div style="flex:1;min-width:0">' +
           '<div style="display:flex;align-items:center;gap:5px">' +
