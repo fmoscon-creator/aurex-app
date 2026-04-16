@@ -4399,15 +4399,13 @@ function _renderMktNewsBanner(containerId) {
   var ticker = high.map(function(e){ return e.label + ': ' + e.text; }).join('     |     ');
   el.style.display = 'block';
   el.innerHTML =
-    '<div style="background:' + (ev.bg||'#1A0D00') + ';border-bottom:1px solid ' + (ev.border||'var(--gold)') + ';padding:5px 12px;display:flex;align-items:center;gap:8px;overflow:hidden;">' +
-      '<span style="font-size:8px;font-weight:700;color:' + (ev.color||'var(--gold)') + ';letter-spacing:1px;flex-shrink:0;white-space:nowrap;">EVENTOS</span>' +
-      '<div style="overflow:hidden;flex:1;">' +
+    '<div style="background:#000;padding:6px 14px;overflow:hidden;">' +
+      '<div style="overflow:hidden;">' +
         '<div id="mkt-news-ticker" style="display:flex;animation:tkScroll 6s linear infinite;">' +
-          '<span style="white-space:nowrap;color:var(--text);font-size:10px;padding-right:60px;">' + ticker + '</span>' +
-          '<span style="white-space:nowrap;color:var(--text);font-size:10px;padding-right:60px;">' + ticker + '</span>' +
+          '<span style="white-space:nowrap;color:#fff;font-size:11px;padding-right:60px;">' + ticker + '</span>' +
+          '<span style="white-space:nowrap;color:#fff;font-size:11px;padding-right:60px;">' + ticker + '</span>' +
         '</div>' +
       '</div>' +
-      '<span onclick="this.parentElement.parentElement.style.display=&apos;none&apos;" style="color:var(--textSec);font-size:12px;cursor:pointer;flex-shrink:0;padding:0 4px;">&#x2715;</span>' +
     '</div>';
 }
 
@@ -5501,7 +5499,7 @@ function _isFavorito(ticker) {
   try { return (JSON.parse(localStorage.getItem('aurex_pins') || '[]')).indexOf(ticker) >= 0; } catch(e) { return false; }
 }
 
-// Mostrar/ocultar estrella en filas de Mercados (inline al lado del ticker)
+// Mostrar/ocultar estrella ANTES del logo en filas de Mercados (igual a nativa)
 function _refreshFavStars() {
   var pins;
   try { pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]'); } catch(e) { pins = []; }
@@ -5510,17 +5508,12 @@ function _refreshFavStars() {
     var existing = el.querySelector('.fav-star');
     if (pins.indexOf(ticker) >= 0) {
       if (!existing) {
-        var nameCol = el.children[1]; // div con ticker + nombre
-        if (nameCol) {
-          var tickerSpan = nameCol.querySelector('span');
-          if (tickerSpan) {
-            var star = document.createElement('span');
-            star.className = 'fav-star';
-            star.textContent = ' ⭐';
-            star.style.cssText = 'font-size:10px;';
-            tickerSpan.appendChild(star);
-          }
-        }
+        var star = document.createElement('span');
+        star.className = 'fav-star';
+        star.textContent = '⭐';
+        star.style.cssText = 'font-size:14px;flex-shrink:0;';
+        // Insertar ANTES del logo (primer hijo del row)
+        el.insertBefore(star, el.firstChild);
       }
     } else {
       if (existing) existing.remove();
