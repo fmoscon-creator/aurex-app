@@ -4257,11 +4257,7 @@ window._compartirSenal = function(info) {
     overlay.onclick=function(e){if(e.target===overlay){var o=document.getElementById('ia-share-overlay');if(o)o.remove();}};
     document.body.appendChild(overlay);
   };
-  if(navigator.share) {
-    navigator.share({ title: 'AUREX IA — '+sig.simbolo+' '+dirLabel, text: texto }).catch(function(){ _showShareOverlay(); });
-  } else {
-    _showShareOverlay();
-  }
+  _showShareOverlay();
 };
 
 
