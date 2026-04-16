@@ -2241,6 +2241,51 @@ window.wlOpenDetail = function(sym){
 };
 window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
 
+// ─── COMPARTIR SEÑAL — Modal con WhatsApp/Telegram/Mail (como nativa) ───
+window.wlShowShareSignal = function(ticker){
+  var sigs = window._iaSignals || [];
+  var sig = null;
+  for(var i=0;i<sigs.length;i++){ if(sigs[i].simbolo===ticker){ sig=sigs[i]; break; } }
+  var prcs = window._pcPrices || {};
+  var precio = prcs[ticker] || (sig ? sig.precio : 0);
+  var dir = sig ? sig.direccion : '';
+  var dirL = dir==='alcista'?'ALCISTA':dir==='bajista'?'BAJISTA':dir==='alta_conf'?'ALTA CONV-IA':'';
+  var prob = sig ? (sig.confianza||'') : '';
+  var msg = '📊 AUREX — Señal IA\n━━━━━━━━━━━━━━━━\n';
+  msg += (dir==='alcista'?'📈':dir==='bajista'?'📉':'⚡')+' '+ticker+' — '+dirL+(prob?' '+prob+'%':'')+'\n';
+  msg += '💰 Precio: $'+(precio?_fmt(precio):'---')+'\n';
+  if(sig && sig.motivos && sig.motivos.length>0){
+    msg += '\n📋 Justificación:\n';
+    sig.motivos.slice(0,3).forEach(function(m2){ msg += '→ '+m2+'\n'; });
+  }
+  msg += '━━━━━━━━━━━━━━━━\nAUREX IA | aurex.live';
+  window._wlShareSignalMsg = msg;
+
+  var old = document.getElementById('wl-share-signal-overlay'); if(old) old.remove();
+  var overlay = document.createElement('div');
+  overlay.id = 'wl-share-signal-overlay';
+  overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.8);z-index:9999;display:flex;align-items:flex-end;justify-content:center';
+  overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
+  var card = document.createElement('div');
+  card.style.cssText = 'background:var(--card);border-top-left-radius:16px;border-top-right-radius:16px;padding:20px 20px 30px;width:100%;border:1px solid var(--border2)';
+  card.onclick = function(e){ e.stopPropagation(); };
+  var html = '';
+  html += '<div style="font-size:15px;font-weight:700;color:var(--text);text-align:center;margin-bottom:16px">Compartir señal '+ticker+'</div>';
+  html += '<div style="display:flex;justify-content:center;gap:16px;margin-bottom:16px">';
+  // WhatsApp
+  html += '<div onclick="var m=window._wlShareSignalMsg;window.open(\'https://wa.me/?text=\'+encodeURIComponent(m),\'_blank\');document.getElementById(\'wl-share-signal-overlay\').remove()" style="width:90px;height:80px;border:1px solid #25D36680;border-radius:12px;background:#25D36618;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">💬</span><span style="font-size:11px;color:#1BA851;font-weight:700">WhatsApp</span></div>';
+  // Telegram
+  html += '<div onclick="var m=window._wlShareSignalMsg;window.open(\'https://t.me/share/url?url=aurex.live&text=\'+encodeURIComponent(m),\'_blank\');document.getElementById(\'wl-share-signal-overlay\').remove()" style="width:90px;height:80px;border:1px solid #0088CC80;border-radius:12px;background:#0088CC18;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">✈️</span><span style="font-size:11px;color:#0070AA;font-weight:700">Telegram</span></div>';
+  // Mail
+  html += '<div onclick="var m=window._wlShareSignalMsg;window.open(\'mailto:?subject=AUREX+-+Señal+'+ticker+'&body=\'+encodeURIComponent(m));document.getElementById(\'wl-share-signal-overlay\').remove()" style="width:90px;height:80px;border:1px solid var(--gold);border-radius:12px;background:var(--goldBg,rgba(212,160,23,0.2));display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer"><span style="font-size:24px;margin-bottom:4px">📧</span><span style="font-size:11px;color:var(--gold);font-weight:700">Mail</span></div>';
+  html += '</div>';
+  // Cancelar
+  html += '<div onclick="document.getElementById(\'wl-share-signal-overlay\').remove()" style="background:var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer"><span style="font-size:14px;color:var(--text);font-weight:600">Cancelar</span></div>';
+  card.innerHTML = html;
+  overlay.appendChild(card);
+  document.body.appendChild(overlay);
+};
+
 // ─── MODAL ACCIONES ACTIVO (long press — idéntico a nativa) ───
 window.wlShowActionMenu = function(ticker){
   var act = (window._IA_ACTIVOS||[]).find(function(a){return a.s===ticker;});
@@ -2264,8 +2309,8 @@ window.wlShowActionMenu = function(ticker){
   html += '<span style="font-size:16px;margin-right:8px">📊</span>';
   html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--gold)">Análisis IA completo</span>';
   html += '</div>';
-  // Compartir señal
-  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();if(typeof _compartirSenal===\'function\')_compartirSenal(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer">';
+  // Compartir señal — abre modal con WhatsApp/Telegram/Mail (como nativa)
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlShowShareSignal(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer">';
   html += '<span style="font-size:15px;margin-right:8px">📤</span>';
   html += '<span style="flex:1;font-size:13px;font-weight:600;color:var(--text)">Compartir señal</span>';
   html += '</div>';
