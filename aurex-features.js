@@ -10,7 +10,7 @@
     if (cachedChange24) window._pcChange24 = cachedChange24;
     if (cached && cached.length > 0) {
       window._portItemsCached = cached;
-      document.addEventListener('DOMContentLoaded', function(){
+      function _restoreFromCache(){
         // Restore header inmediato
         try {
           var hdr = JSON.parse(localStorage.getItem('aurex_port_header_cache') || 'null');
@@ -22,12 +22,16 @@
             if(el('port-cnt-badge') && hdr.cnt) el('port-cnt-badge').textContent = hdr.cnt;
           }
         } catch(e){}
-        setTimeout(function(){
-          if (!window._portItems || window._portItems.length === 0) {
-            if (typeof _renderPortfolioItems === 'function') _renderPortfolioItems(cached);
-          }
-        }, 100);
-      });
+        if (!window._portItems || window._portItems.length === 0) {
+          if (typeof _renderPortfolioItems === 'function') _renderPortfolioItems(cached);
+        }
+      }
+      // DOM puede ya estar listo (script cargado vía document.write)
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', _restoreFromCache);
+      } else {
+        _restoreFromCache();
+      }
     }
   } catch(e){}
 })();
