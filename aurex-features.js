@@ -276,9 +276,9 @@ function _appendMktRow(cnt, item, tab) {
   var dotsHtml = _buildDotsHTML(scores);
   var row=document.createElement('div');
   row.className='item-row'; row.id='row-'+item.s;
-  row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--border);cursor:pointer;gap:8px;';
+  row.style.cssText='display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border);cursor:pointer;gap:10px;';
   row.innerHTML=
-    '<img src="'+_getMktLogo(item,tab)+'" data-s="'+item.s+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;margin-right:6px;" onerror="var _s=this.dataset.s.replace(/[^A-Z0-9]/g,\x27\x27).substring(0,4);var _f=_s.length>3?\x279\x27:\x2711\x27;this.src=\x27data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22><circle cx=%2214%22 cy=%2214%22 r=%2214%22 fill=%22%23334%22/><text x=%2214%22 y=%2218%22 text-anchor=%22middle%22 font-size=%22\x27+_f+\x27%22 font-family=%22Arial,sans-serif%22 font-weight=%22bold%22 fill=%22%23ccc%22>\x27+_s+\x27</text></svg>\x27;this.onerror=null;">'+
+    '<img src="'+_getMktLogo(item,tab)+'" data-s="'+item.s+'" style="width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="var _s=this.dataset.s.replace(/[^A-Z0-9]/g,\x27\x27).substring(0,4);var _f=_s.length>3?\x279\x27:\x2711\x27;this.src=\x27data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2228%22 height=%2228%22><circle cx=%2214%22 cy=%2214%22 r=%2214%22 fill=%22%23334%22/><text x=%2214%22 y=%2218%22 text-anchor=%22middle%22 font-size=%22\x27+_f+\x27%22 font-family=%22Arial,sans-serif%22 font-weight=%22bold%22 fill=%22%23ccc%22>\x27+_s+\x27</text></svg>\x27;this.onerror=null;">'+
     '<div style="display:flex;flex-direction:column;min-width:70px;flex-shrink:0;">'+
       '<span style="color:var(--text);font-weight:600;font-size:14px;">'+item.s+'</span>'+
       '<span style="color:var(--textSec);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:90px;">'+item.n+'</span>'+
@@ -4128,28 +4128,29 @@ function _renderFearGreed(containerId) {
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
-    var bg = active ? d.color : 'var(--border)';
-    var col = active ? 'var(--bg)' : 'var(--textSec)';
-    var fw = active ? '700' : '400';
-    filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:8px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:4px;padding:2px 5px;cursor:pointer;white-space:nowrap;flex-shrink:0;">'+catLabels[c]+'</div>';
+    var bg = active ? 'var(--gold)' : 'transparent';
+    var col = active ? '#1a1a2e' : 'var(--textSec)';
+    var fw = active ? '700' : '500';
+    var bdr = active ? 'none' : '1px solid var(--border2)';
+    filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;border:'+bdr+';">'+catLabels[c]+'</div>';
   });
   var nvars = Object.keys(d.vars).length;
   el.innerHTML =
-    '<div style="padding:'+(elId.indexOf('port')>=0?'4px 10px 4px':'8px 14px 6px')+';border-bottom:1px solid var(--border);background:var(--bg);">' +
-      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">' +
-        '<span style="font-size:'+(compact?'9':'10')+'px;font-weight:700;color:var(--gold);letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
-        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:2px 7px;border-radius:4px;border:1px solid var(--border2);white-space:nowrap;">&#x2139; Ver variables</div>' +
+    '<div style="margin:8px 14px 6px;border-radius:14px;padding:'+(compact?'8px 10px':'12px 14px 10px')+';background:var(--card);border:1px solid var(--border);">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' +
+        '<span style="font-size:'+(compact?'10':'11')+'px;font-weight:700;color:var(--gold);letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
+        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:var(--gold);cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid var(--gold);white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
       '</div>' +
-      '<div id="pulse-filters-'+elId+'" style="display:flex;gap:4px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:6px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
-      '<div style="display:flex;align-items:center;gap:8px;">' +
+      '<div id="pulse-filters-'+elId+'" style="display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
+      '<div style="display:flex;align-items:center;gap:10px;">' +
         gauge +
         '<div style="flex:1;min-width:0;">' +
-          '<div style="font-size:15px;font-weight:700;color:'+(d.color||'var(--gold)')+';">'+( d.emoji||'')+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          '<div style="font-size:16px;font-weight:700;color:'+(d.color||'var(--gold)')+';">'+( d.emoji||'')+' '+d.value+' &#x2014; '+d.label+'</div>' +
+          '<div style="font-size:10px;color:var(--gold);font-weight:700;margin-top:2px;">&#x25B6; AUREX PULSE&#x2122; '+d.value+'</div>' +
           (cat==='CRIPTO' && (btcSentIdx !== null || altFngIdx !== null) ?
-            '<div style="display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap;">' +
-              '<span style="font-size:9px;color:var(--gold);font-weight:700;">&#x25B6; AUREX PULSE&#x2122; <b style="font-size:12px;">'+d.value+'</b></span>' +
-              (btcSentIdx !== null ? '<span style="font-size:9px;color:#00BFFF;font-weight:700;">&#x25B6; BTC Sent. <b style="font-size:12px;">'+btcSentIdx+'</b></span>' : '') +
-              (altFngIdx !== null ? '<span style="font-size:9px;color:#FF6B6B;font-weight:700;">&#x25B6; Crypto F&G <b style="font-size:12px;">'+altFngIdx+'</b></span>' : '') +
+            '<div style="display:flex;gap:6px;align-items:center;margin-top:2px;flex-wrap:wrap;">' +
+              (btcSentIdx !== null ? '<span style="font-size:9px;color:#00BFFF;font-weight:700;">&#x25B6; BTC Sent. <b style="font-size:11px;">'+btcSentIdx+'</b></span>' : '') +
+              (altFngIdx !== null ? '<span style="font-size:9px;color:#FF6B6B;font-weight:700;">&#x25B6; Crypto F&G <b style="font-size:11px;">'+altFngIdx+'</b></span>' : '') +
             '</div>' : '') +
           dataLine +
           '<div style="font-size:9px;color:var(--textSec);margin-top:'+(compact?'2':'4')+'px;line-height:1.3;display:'+(compact?'none':'block')+';">'+edu+'</div>' +
@@ -5500,7 +5501,7 @@ function _isFavorito(ticker) {
   try { return (JSON.parse(localStorage.getItem('aurex_pins') || '[]')).indexOf(ticker) >= 0; } catch(e) { return false; }
 }
 
-// Mostrar/ocultar estrella en filas de Mercados
+// Mostrar/ocultar estrella en filas de Mercados (inline al lado del ticker)
 function _refreshFavStars() {
   var pins;
   try { pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]'); } catch(e) { pins = []; }
@@ -5509,15 +5510,16 @@ function _refreshFavStars() {
     var existing = el.querySelector('.fav-star');
     if (pins.indexOf(ticker) >= 0) {
       if (!existing) {
-        var star = document.createElement('span');
-        star.className = 'fav-star';
-        star.textContent = '⭐';
-        star.style.cssText = 'font-size:12px;margin-left:2px;flex-shrink:0;';
-        // Insertar después del nombre del ticker (segundo hijo del row)
         var nameCol = el.children[1]; // div con ticker + nombre
         if (nameCol) {
           var tickerSpan = nameCol.querySelector('span');
-          if (tickerSpan) tickerSpan.parentNode.insertBefore(star, tickerSpan.nextSibling);
+          if (tickerSpan) {
+            var star = document.createElement('span');
+            star.className = 'fav-star';
+            star.textContent = ' ⭐';
+            star.style.cssText = 'font-size:10px;';
+            tickerSpan.appendChild(star);
+          }
         }
       }
     } else {
