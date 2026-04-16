@@ -4044,9 +4044,9 @@ function _renderIALista(signals, keepLoadingBar) {
     var pctStr = _fmt(cambio24h,'pct');
     var abbr = s.abbr || s.simbolo.substring(0,3);
     var logoHtml = s.logo ?
-      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
-      '<span style="display:none;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;display:none;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
-      '<span style="display:flex;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
+      '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:6px" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
+      '<span style="display:none;width:22px;height:22px;border-radius:6px;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
+      '<span style="display:flex;width:22px;height:22px;border-radius:6px;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
     // Dots IA (5x5 como nativa, posición derecha debajo del %)
     var dotsHtml = (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--green);margin:0 1px"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--red);margin:0 1px"></span>';});return dots?'<span style="display:inline-flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;margin-top:3px">'+dots+'</span>':'';})();
     // Upside al objetivo (como nativa)
@@ -4067,7 +4067,7 @@ function _renderIALista(signals, keepLoadingBar) {
               '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
               (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
             '</div>' +
-            '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+s.nombre+'</div>' +
+            '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
             '<div style="display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
           '</div>' +
           // Derecha: precio + % + dots
