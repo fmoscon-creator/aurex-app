@@ -3695,6 +3695,18 @@ function generarSenalesIA() {
           var ts = data.updatedAt ? new Date(data.updatedAt) : new Date();
           upd.textContent='Act. '+ts.getHours()+':'+(ts.getMinutes()<10?'0':'')+ts.getMinutes()+' (backend)';
         }
+        // LIVE refresh timer
+        window._iaLiveTs = Date.now();
+        if(!window._iaLiveInterval){
+          window._iaLiveInterval = setInterval(function(){
+            var el=document.getElementById('ia-live-time');
+            if(!el || !window._iaLiveTs) return;
+            var diff = Math.floor((Date.now()-window._iaLiveTs)/1000);
+            if(diff<5) el.textContent='· ahora';
+            else if(diff<60) el.textContent='· hace '+diff+'s';
+            else el.textContent='· hace '+Math.floor(diff/60)+' min';
+          }, 5000);
+        }
         console.log('[AUREX IA] OK — mostrando', sigs.length, 'senales del backend');
         return;
       }
@@ -3958,22 +3970,40 @@ window.showIAVariablesPopup = function() {
   document.body.appendChild(overlay);
 };
 
+// ─── Mi Portfolio toggle (como nativa onlyPortfolio) ───
+window._iaOnlyPortfolio = false;
+window._iaTogglePortfolio = function(){
+  window._iaOnlyPortfolio = !window._iaOnlyPortfolio;
+  var btn = document.getElementById('ia-btn-portfolio');
+  if(btn){
+    btn.style.background = window._iaOnlyPortfolio ? 'var(--gold)' : 'rgba(212,160,23,0.09)';
+    var sp = btn.querySelector('span');
+    if(sp) sp.style.color = window._iaOnlyPortfolio ? '#000' : 'var(--gold)';
+  }
+  _renderIALista(window._iaSignals || [], false);
+};
+
+// ─── Init sort inline button for IA ───
+window._iaInitSortInline = function(){
+  var el = document.getElementById('ia-sort-inline');
+  if(!el || el.dataset.init) return;
+  el.dataset.init = '1';
+  el.innerHTML = '<span style="font-size:10px;color:var(--textSec);font-weight:600">Ordenar:</span> <span class="sort-value" style="font-size:10px;color:var(--text);font-weight:700">Default</span> <span style="font-size:10px;color:var(--gold);font-weight:800">↓</span>';
+  el.onclick = function(){ _openSortModal('ia', function(k){ window._applyIASort(k); var sv=el.querySelector('.sort-value'); if(sv){ var cfg=window._sortCfgs.ia; var o=cfg.opts.find(function(x){return x.k===k;}); if(o) sv.textContent=o.l; } }); };
+};
+setTimeout(function(){ window._iaInitSortInline(); }, 1000);
+
 function setIAFiltro(filtro, el) {
   window._IA_FILTRO_ACTUAL = filtro;
+  var pillColors = {todo:'#556070',alcista:'#3FB950',bajista:'#F85149',alta_conf:'#D4A017',cripto:'#A78BFA',accion:'#58A6FF',etf:'#F0883E',metal:'#FFD700',materia_prima:'#C8A96E',bono:'#79C0FF'};
   document.querySelectorAll('.ia-pill').forEach(function(p) {
-    var isActive = p.getAttribute('data-filtro') === filtro;
-    p.style.background = isActive ? 'var(--gold)' : 'transparent';
-    p.style.color = isActive ? '#000' : (
-      p.getAttribute('data-filtro')==='alcista'?'var(--green)':
-      p.getAttribute('data-filtro')==='bajista'?'var(--red)':
-      p.getAttribute('data-filtro')==='alta_conf'?'var(--gold)':
-      p.getAttribute('data-filtro')==='cripto'?'#A78BFA':
-      p.getAttribute('data-filtro')==='accion'?'#58A6FF':
-      p.getAttribute('data-filtro')==='etf'?'#F0883E':
-      p.getAttribute('data-filtro')==='metal'?'#FFD700':
-      p.getAttribute('data-filtro')==='materia_prima'?'#C8A96E':
-      p.getAttribute('data-filtro')==='bono'?'#79C0FF':'var(--gold)');
-    p.style.borderColor = isActive ? 'var(--gold)' : '';
+    var f = p.getAttribute('data-filtro');
+    var isActive = f === filtro;
+    var c = pillColors[f] || '#556070';
+    p.style.background = isActive ? c : 'transparent';
+    p.style.color = isActive ? (f==='todo'?'#fff':'#000') : c;
+    p.style.borderColor = isActive ? c : c+'60';
+    p.style.fontWeight = '700';
   });
   _renderIALista(window._iaSignals || [], false);
 }
@@ -3982,7 +4012,10 @@ function _renderIALista(signals, keepLoadingBar) {
   var listEl = document.getElementById('ia-list');
   if (!listEl) return;
   var filtro = window._IA_FILTRO_ACTUAL || 'todo';
+  var portSyms = (window._portItems||[]).map(function(p){return p.simbolo;});
   var filtered = signals.filter(function(s) {
+    // Mi Portfolio filter
+    if(window._iaOnlyPortfolio && portSyms.indexOf(s.simbolo) < 0) return false;
     if(filtro==='todo') return true;
     if(filtro==='alcista') return s.direccion==='alcista';
     if(filtro==='bajista') return s.direccion==='bajista';
@@ -4024,33 +4057,41 @@ function _renderIALista(signals, keepLoadingBar) {
       '<img src="'+s.logo+'" alt="'+s.simbolo+'" style="width:22px;height:22px;object-fit:contain;border-radius:50%" onerror="this.style.display=\'none\';this.nextSibling.style.display=\'flex\'">'+
       '<span style="display:none;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;display:none;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>' :
       '<span style="display:flex;width:22px;height:22px;border-radius:50%;background:'+s.color+'30;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:'+s.color+'">'+abbr+'</span>';
-    return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:1px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
-      '<div style="padding:10px 14px 8px">' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:3px">' +
-          '<div style="display:flex;align-items:center;gap:7px">' +
-            '<div style="width:34px;height:34px;border-radius:50%;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
-            '<div>' +
-              '<div style="display:flex;align-items:center;gap:4px;flex-wrap:wrap">' +
-                '<span style="font-size:13px;font-weight:700;color:var(--text)">'+s.simbolo+'</span>' +
-                '<span style="font-size:9px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:1px solid '+dirColor+'60;border-radius:4px;padding:1px 5px;white-space:nowrap">'+dirLabel+'</span>' +
-                (altaConfDirLabel ? '<span style="font-size:9px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:1px solid '+altaConfDirColor+'60;border-radius:4px;padding:1px 5px;margin-left:3px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
-                '<span style="font-size:9px">'+estrellas+'</span>' +
-              '</div>' +
-              '<div style="font-size:10px;color:var(--textSec)">'+s.nombre+' <span style="color:'+tipoColor+'">&diams; '+tipoLabel+'</span></div>' +
+    // Dots IA (5x5 como nativa, posición derecha debajo del %)
+    var dotsHtml = (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--green);margin:0 1px"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--red);margin:0 1px"></span>';});return dots?'<span style="display:inline-flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;margin-top:3px">'+dots+'</span>':'';})();
+    // Upside al objetivo (como nativa)
+    var upsideHtml = '';
+    if(s.upside != null){
+      var uSign = s.upside >= 0 ? '↑+' : '↓';
+      upsideHtml = ' <span style="color:var(--textDim)">·</span> <span style="color:'+dirColor+';font-weight:700">'+uSign+Math.abs(s.upside).toFixed(1)+'% al precio objetivo</span>';
+    }
+    return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
+      '<div style="padding:12px 13px">' +
+        '<div style="display:flex;align-items:center;gap:9px">' +
+          // Logo (borderRadius 9 como nativa)
+          '<div style="width:34px;height:34px;border-radius:9px;background:'+s.color+'15;border:1.5px solid '+s.color+'40;display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden">'+logoHtml+'</div>' +
+          // Centro
+          '<div style="flex:1;min-width:0">' +
+            '<div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">' +
+              '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
+              '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
+              (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
             '</div>' +
+            '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+s.nombre+'</div>' +
+            '<div style="display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
           '</div>' +
-          '<div style="text-align:right">' +
+          // Derecha: precio + % + dots
+          '<div style="text-align:right;flex-shrink:0;min-width:80px">' +
             '<div style="font-size:13px;font-weight:700;color:var(--text)">'+precioFmt+'</div>' +
-            '<div style="font-size:11px;color:'+pctColor+'">'+pctStr+'</div>' +
+            '<div style="font-size:11px;font-weight:500;color:'+pctColor+'">'+pctStr+'</div>' +
+            dotsHtml +
           '</div>' +
         '</div>' +
-        '<div style="display:flex;align-items:center;justify-content:space-between;margin-top:3px">' +
-          '<span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>' +
-          (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin:0 1px;flex-shrink:0"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin:0 1px;flex-shrink:0"></span>';});return dots?'<span style="display:inline-flex;align-items:center;flex-wrap:wrap;gap:1px;margin-left:7px">'+dots+'</span>':'';})() +
-        '</div>' +
-        '<div style="margin-top:3px;height:3px;background:var(--border);border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       '</div>' +
-      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:var(--bg);border-top:1px solid var(--border);position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:44px;height:44px;border-radius:50%;background:var(--border);border:2px solid var(--textDim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;color:var(--text);z-index:2;-webkit-tap-highlight-color:rgba(0,0,0,0)">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
+      // Barra probabilidad (margin como nativa)
+      '<div style="margin:0 13px -4px;margin-bottom:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
+      // Detalle expandido
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:var(--card);border-bottom:1px solid var(--border);position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:32px;height:32px;border-radius:16px;background:var(--border);border:1.5px solid var(--textDim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--text);z-index:2;-webkit-tap-highlight-color:rgba(0,0,0,0)">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
   if (keepLoadingBar && lb) listEl.appendChild(lb);

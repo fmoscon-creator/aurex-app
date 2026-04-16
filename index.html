@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=106"></script>
+<script src="aurex-v3.js?v=107"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1851,29 +1851,40 @@ window._mktOpenDetail = function(idx){
 <!-- HEADER 3 CONTADORES -->
 <div style="padding:12px 14px 10px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg)">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX <span style="color:var(--textSec);font-weight:400;font-size:13px">Señales IA</span></span>
-    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#A78BFA;font-weight:700">
-      <div style="width:5px;height:5px;border-radius:50%;background:#A78BFA;animation:lp 1.5s infinite"></div>
+    <div style="display:flex;align-items:center;gap:6px">
+      <span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX</span>
+      <span style="color:var(--textSec);font-size:13px">Señales IA</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-weight:700">
+      <div style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite"></div>
       <span>LIVE</span>
+      <span id="ia-live-time" style="color:var(--textSec);font-weight:500">· ahora</span>
     </div>
   </div>
   <div style="display:flex;gap:8px">
-    <div id="ia-cnt-alcista" onclick="setIAFiltro('alcista')" style="flex:1;background:#3FB95020;border:1.5px solid #3FB95060;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      <div id="ia-num-alcista" style="font-size:26px;font-weight:800;color:var(--green);line-height:1">0</div>
-      <div style="font-size:9px;font-weight:700;color:var(--green);margin-top:3px">ALCISTAS</div>
+    <div id="ia-cnt-alcista" onclick="setIAFiltro('alcista')" style="flex:1;background:var(--card);border:1.5px solid var(--green);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-alcista" style="font-size:20px;font-weight:800;color:var(--green);line-height:1">0</div>
+      <div style="font-size:7px;font-weight:600;color:var(--green);margin-top:2px;letter-spacing:0.5px">ALCISTAS</div>
     </div>
-    <div id="ia-cnt-bajista" onclick="setIAFiltro('bajista')" style="flex:1;background:#FF444420;border:1.5px solid #FF444460;border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      <div id="ia-num-bajista" style="font-size:26px;font-weight:800;color:var(--red);line-height:1">0</div>
-      <div style="font-size:9px;font-weight:700;color:var(--red);margin-top:3px">BAJISTAS</div>
+    <div id="ia-cnt-bajista" onclick="setIAFiltro('bajista')" style="flex:1;background:var(--card);border:1.5px solid var(--red);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-bajista" style="font-size:20px;font-weight:800;color:var(--red);line-height:1">0</div>
+      <div style="font-size:7px;font-weight:600;color:var(--red);margin-top:2px;letter-spacing:0.5px">BAJISTAS</div>
     </div>
-    <div id="ia-cnt-altaconf" onclick="setIAFiltro('alta_conf')" style="flex:1;background:var(--goldBg);border:1.5px solid var(--gold40);border-radius:10px;padding:10px 6px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      <div id="ia-num-altaconf" style="font-size:26px;font-weight:800;color:var(--gold);line-height:1">0</div>
-      <div style="font-size:9px;font-weight:700;color:var(--gold);margin-top:3px">ALTA CONV-IA</div>
+    <div id="ia-cnt-altaconf" onclick="setIAFiltro('alta_conf')" style="flex:1;background:var(--card);border:1.5px solid var(--gold);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <div id="ia-num-altaconf" style="font-size:20px;font-weight:800;color:var(--gold);line-height:1">0</div>
+      <div style="font-size:7px;font-weight:600;color:var(--gold);margin-top:2px;letter-spacing:0.5px">ALTA CONV-IA</div>
     </div>
   </div>
-  <!-- Ver Variables button -->
-  <div style="display:flex;justify-content:flex-end;margin-top:8px">
-    <button ontouchstart="showIAVariablesPopup()" onclick="showIAVariablesPopup()" style="background:var(--border);border:1px solid var(--gold40);border-radius:8px;padding:5px 10px;color:var(--gold);font-size:10px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">&#128269; Ver Variables del Modelo</button>
+  <!-- Fila: Mi Portfolio + Ordenar + Variables (como nativa) -->
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:6px">
+    <div id="ia-btn-portfolio" onclick="window._iaTogglePortfolio()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--gold);background:rgba(212,160,23,0.09);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <span style="font-size:10px;color:var(--gold);font-weight:800">💼 Mi Portfolio</span>
+    </div>
+    <div id="ia-sort-inline" style="display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--card);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+    </div>
+    <div onclick="showIAVariablesPopup()" style="padding:6px 10px;border-radius:8px;border:1px solid #58A6FF80;background:#58A6FF18;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
+      <span style="font-size:10px;color:#2B7ED9;font-weight:700">🔍 Variables</span>
+    </div>
   </div>
 </div>
 
