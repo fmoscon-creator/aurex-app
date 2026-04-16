@@ -5499,25 +5499,25 @@ function _isFavorito(ticker) {
   try { return (JSON.parse(localStorage.getItem('aurex_pins') || '[]')).indexOf(ticker) >= 0; } catch(e) { return false; }
 }
 
-// Mostrar/ocultar estrella ANTES del logo en filas de Mercados (igual a nativa)
+// Mostrar/ocultar estrella entre logo y ticker (igual a nativa IMG_003)
+// En nativa: [logo] ⭐AAPL  — la estrella es inline con el ticker, sin gap extra
 function _refreshFavStars() {
   var pins;
   try { pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]'); } catch(e) { pins = []; }
   document.querySelectorAll('#cnt .item-row').forEach(function(el) {
     var ticker = el.id.replace('row-', '');
-    var existing = el.querySelector('.fav-star');
+    var nameCol = el.children[1]; // div flex-column con ticker + nombre
+    if (!nameCol) return;
+    var tickerSpan = nameCol.children[0]; // span con el texto del ticker
+    if (!tickerSpan) return;
+    var hasStar = tickerSpan.textContent.indexOf('⭐') >= 0;
+    // Limpiar estrella DOM vieja si existe
+    var oldStar = el.querySelector('.fav-star');
+    if (oldStar) oldStar.remove();
     if (pins.indexOf(ticker) >= 0) {
-      if (!existing) {
-        var star = document.createElement('span');
-        star.className = 'fav-star';
-        star.textContent = '⭐';
-        star.style.cssText = 'font-size:10px;flex-shrink:0;margin:0 2px 0 0;';
-        // Insertar ENTRE el logo (img, hijo 0) y el div ticker+nombre (hijo 1)
-        var nameCol = el.children[1];
-        if (nameCol) el.insertBefore(star, nameCol);
-      }
+      if (!hasStar) tickerSpan.textContent = '⭐' + tickerSpan.textContent;
     } else {
-      if (existing) existing.remove();
+      if (hasStar) tickerSpan.textContent = tickerSpan.textContent.replace('⭐', '');
     }
   });
 }
