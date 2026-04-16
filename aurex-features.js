@@ -3983,16 +3983,6 @@ window._iaTogglePortfolio = function(){
   _renderIALista(window._iaSignals || [], false);
 };
 
-// ─── Init sort inline button for IA ───
-window._iaInitSortInline = function(){
-  var el = document.getElementById('ia-sort-inline');
-  if(!el || el.dataset.init) return;
-  el.dataset.init = '1';
-  el.innerHTML = '<span style="font-size:10px;color:var(--textSec);font-weight:600">Ordenar:</span> <span class="sort-value" style="font-size:10px;color:var(--text);font-weight:700">Default</span> <span style="font-size:10px;color:var(--gold);font-weight:800">↓</span>';
-  el.onclick = function(){ _openSortModal('ia', function(k){ window._applyIASort(k); var sv=el.querySelector('.sort-value'); if(sv){ var cfg=window._sortCfgs.ia; var o=cfg.opts.find(function(x){return x.k===k;}); if(o) sv.textContent=o.l; } }); };
-};
-setTimeout(function(){ window._iaInitSortInline(); }, 1000);
-
 function setIAFiltro(filtro, el) {
   window._IA_FILTRO_ACTUAL = filtro;
   var pillColors = {todo:'#556070',alcista:'#3FB950',bajista:'#F85149',alta_conf:'#D4A017',cripto:'#A78BFA',accion:'#58A6FF',etf:'#F0883E',metal:'#FFD700',materia_prima:'#C8A96E',bono:'#79C0FF'};

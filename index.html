@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=108"></script>
+<script src="aurex-v3.js?v=109"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1876,15 +1876,10 @@ window._mktOpenDetail = function(idx){
     </div>
   </div>
   <!-- Fila: Mi Portfolio + Ordenar + Variables (como nativa) -->
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:6px">
-    <div id="ia-btn-portfolio" onclick="window._iaTogglePortfolio()" style="padding:6px 10px;border-radius:8px;border:1px solid var(--gold);background:rgba(212,160,23,0.09);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      <span style="font-size:10px;color:var(--gold);font-weight:800">💼 Mi Portfolio</span>
-    </div>
-    <div id="ia-sort-inline" style="display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--card);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-    </div>
-    <div onclick="showIAVariablesPopup()" style="padding:6px 10px;border-radius:8px;border:1px solid #58A6FF80;background:#58A6FF18;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">
-      <span style="font-size:10px;color:#2B7ED9;font-weight:700">🔍 Variables</span>
-    </div>
+  <div style="display:flex;align-items:center;margin-top:12px;gap:6px">
+    <div id="ia-btn-portfolio" onclick="window._iaTogglePortfolio()" style="display:flex;align-items:center;padding:6px 10px;border-radius:8px;border:1px solid var(--gold);background:rgba(212,160,23,0.09);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:rgba(0,0,0,0)"><span style="font-size:10px;color:var(--gold);font-weight:800">💼 Mi Portfolio</span></div>
+    <div id="ia-sort-inline" onclick="if(window._openSortModal)_openSortModal('ia',function(k){window._applyIASort(k);var sv=document.querySelector('#ia-sort-inline .sort-value');if(sv){var cfg=window._sortCfgs.ia;var o=cfg.opts.find(function(x){return x.k===k;});if(o)sv.textContent=o.l;}})" style="display:flex;align-items:center;gap:4px;padding:6px 10px;border-radius:8px;border:1px solid var(--border2);background:var(--card);cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:rgba(0,0,0,0)"><span style="font-size:10px;color:var(--textSec);font-weight:600">Ordenar:</span><span class="sort-value" style="font-size:10px;color:var(--text);font-weight:700">Default</span><span style="font-size:10px;color:var(--gold);font-weight:800">↓</span></div>
+    <div onclick="showIAVariablesPopup()" style="display:flex;align-items:center;padding:6px 10px;border-radius:8px;border:1px solid #58A6FF80;background:#58A6FF18;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:rgba(0,0,0,0)"><span style="font-size:10px;color:#2B7ED9;font-weight:700">🔍 Variables</span></div>
   </div>
 </div>
 
