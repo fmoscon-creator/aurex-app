@@ -3901,6 +3901,7 @@ window._closeIAVarsPopup = function() {
   if(el) el.remove();
 };
 window.showIAVariablesPopup = function() {
+  try {
   var existing = document.getElementById('ia-vars-overlay');
   if(existing) { existing.remove(); return; }
   // Calcular estado promedio de cada variable sobre las señales actuales
@@ -3968,6 +3969,7 @@ window.showIAVariablesPopup = function() {
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
   document.body.appendChild(overlay);
+  } catch(err) { alert('Error Variables: '+err.message); }
 };
 
 // ─── Mi Portfolio toggle (como nativa onlyPortfolio) ───
