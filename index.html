@@ -587,7 +587,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=52"></script>
+<script src="aurex-v3.js?v=53"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1784,8 +1784,8 @@ function filterMktSearch(){
   if(q.length < 2){ res.style.display='none'; return; }
   res.style.display='flex';
   res.style.flexDirection='column';
-  res.style.gap='0';
-  res.style.padding='0';
+  res.style.gap='4px';
+  res.style.padding='6px';
   res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">Buscando...</div>';
   if(window._buscarActivos){
     window._buscarActivos(q, function(results){
@@ -1796,7 +1796,7 @@ function filterMktSearch(){
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
         var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
-        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;background:#fff;border-bottom:1px solid #eee;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:#f5f5f5;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
       }).join('');
     });
   }
