@@ -588,7 +588,7 @@ fetch(BACKEND_URL+'/').then(function(r){return r.json();}).then(function(d){if(d
 // === CONVERSOR DE MONEDAS — Binance + fallback fiat =========
 // ============================================================
 
-window._pcPrices = {};
+if(!window._pcPrices) window._pcPrices = {};
 
 // Abrir modal
 window.openPortConversor = function(){
