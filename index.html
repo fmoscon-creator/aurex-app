@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=71"></script>
+<script src="aurex-v3.js?v=72"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1459,44 +1459,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- MODAL CONVERSOR PORTFOLIO -->
 <div id="port-conv-modal" style="display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);" onclick="if(event.target===this)closePortConvModal()">
-  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--bg);border-radius:16px;padding:20px 16px 32px;max-height:88vh;overflow-y:auto;width:calc(100% - 32px);max-width:420px;">
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px 16px 24px;max-height:88vh;overflow-y:auto;width:calc(100% - 40px);max-width:380px;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
-      <div style="display:flex;align-items:center;gap:8px;"><span style="font-size:20px;"></span><span style="color:var(--text);font-size:18px;font-weight:700;">Conversor</span></div>
-      <div onclick="closePortConvModal()" style="width:32px;height:32px;border-radius:50%;background:var(--card);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#aaa;">&#10006;</div>
+      <span style="color:#111;font-size:18px;font-weight:700;">Conversor</span>
+      <span onclick="closePortConvModal()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#10006;</span>
     </div>
     <div style="margin-bottom:16px;">
-      <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
-      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:var(--card);border:1px solid var(--card);border-radius:12px;padding:14px 16px;color:var(--text);font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
+      <div style="color:#666;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Monto</div>
+      <input id="pc-amount" type="number" value="1" oninput="runConversion()" style="width:100%;background:#fff;border:1px solid #ddd;border-radius:12px;padding:14px 16px;color:#111;font-size:22px;font-weight:700;box-sizing:border-box;outline:none;"/>
     </div>
     <div style="display:grid;grid-template-columns:1fr 44px 1fr;gap:8px;align-items:end;margin-bottom:20px;">
       <div>
-        <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
-        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:var(--card);border:1px solid var(--card);border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
-          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;background:var(--card);flex-shrink:0;"/>
+        <div style="color:#666;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">De</div>
+        <div id="pc-from-display" onclick="openAssetPicker('from')" style="background:#f8f8f8;border:1px solid #ddd;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+          <img id="pc-from-logo" src="https://assets.coingecko.com/coins/images/1/thumb/bitcoin.png" style="width:28px;height:28px;border-radius:50%;object-fit:contain;flex-shrink:0;"/>
           <div style="overflow:hidden;flex:1;">
-            <div id="pc-from-ticker" style="color:var(--text);font-size:14px;font-weight:700;">BTC</div>
-            <div id="pc-from-name" style="color:var(--textDim);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
+            <div id="pc-from-ticker" style="color:#111;font-size:14px;font-weight:700;">BTC</div>
+            <div id="pc-from-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Bitcoin</div>
           </div>
-          <span style="color:var(--textDim);font-size:11px;flex-shrink:0;"></span>
+          <span style="color:#888;font-size:11px;flex-shrink:0;"></span>
         </div>
       </div>
-      <div onclick="swapPortConv()" style="height:56px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:var(--chipTextActive);font-weight:bold;"></div>
+      <div onclick="swapPortConv()" style="height:56px;background:var(--gold);border-radius:12px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:18px;color:#111;font-weight:bold;">⇄</div>
       <div>
-        <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
-        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:var(--card);border:1px solid var(--card);border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
+        <div style="color:#666;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">A</div>
+        <div id="pc-to-display" onclick="openAssetPicker('to')" style="background:#f8f8f8;border:1px solid #ddd;border-radius:12px;padding:12px 10px;cursor:pointer;display:flex;align-items:center;gap:8px;min-height:56px;">
           <img id="pc-to-logo" src="https://flagcdn.com/w40/us.png" style="width:36px;height:24px;border-radius:3px;object-fit:cover;flex-shrink:0;"/>
           <div style="overflow:hidden;flex:1;">
-            <div id="pc-to-ticker" style="color:var(--text);font-size:14px;font-weight:700;">USD</div>
-            <div id="pc-to-name" style="color:var(--textDim);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dlar USA</div>
+            <div id="pc-to-ticker" style="color:#111;font-size:14px;font-weight:700;">USD</div>
+            <div id="pc-to-name" style="color:#888;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Dolar USA</div>
           </div>
           <span style="color:var(--textDim);font-size:11px;flex-shrink:0;"></span>
         </div>
       </div>
     </div>
-    <div style="background:var(--card);border-radius:16px;padding:24px;text-align:center;border:1px solid var(--card);">
-      <div style="color:var(--textDim);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
-      <div id="pc-result" style="color:var(--gold);font-size:30px;font-weight:800;margin-bottom:8px;line-height:1.2;"></div>
-      <div id="pc-rate" style="color:#666;font-size:12px;">Ingres un monto para convertir</div>
+    <div style="background:#FEF3C7;border-radius:16px;padding:20px;text-align:center;">
+      <div style="color:#666;font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Resultado</div>
+      <div id="pc-result" style="color:#16a34a;font-size:26px;font-weight:800;margin-bottom:8px;line-height:1.2;"></div>
+      <div id="pc-rate" style="color:#666;font-size:12px;">Ingresá un monto para convertir</div>
     </div>
   </div>
 </div>
