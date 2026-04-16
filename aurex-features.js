@@ -4203,7 +4203,7 @@ window.showFearGreedInfo = function() {
       if (valStr.indexOf('+') === 0) valColor = '#16a34a';
       else if (valStr.indexOf('-') === 0) valColor = '#dc2626';
     }
-    return '<tr><td style="padding:4px 4px;color:'+r[5]+';font-weight:600;font-size:11px;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:10px;padding:4px 4px;">'+r[2]+'</td><td style="color:#555;font-size:11px;padding:4px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:700;font-size:11px;padding:4px 4px;">'+valStr+'</td></tr>';
+    return '<tr style="border-bottom:1px solid #eee;"><td style="padding:6px 4px;color:'+r[5]+';font-weight:600;font-size:11px;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:10px;padding:6px 4px;">'+r[2]+'</td><td style="color:#555;font-size:11px;padding:6px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:700;font-size:11px;padding:6px 4px;">'+valStr+'</td></tr>';
   }).join('');
   ov.innerHTML =
     '<div style="background:#fff;border-radius:18px;padding:22px;width:calc(100% - 32px);max-width:420px;margin:auto;">' +
@@ -4216,7 +4216,7 @@ window.showFearGreedInfo = function() {
       '</div>' +
       '<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:8px;">Variables activas (12 de 14):</div>' +
       '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-        '<tr style="color:#999;font-size:9px;"><td style="padding:3px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>VALOR</td></tr>' +
+        '<tr style="color:#999;font-size:9px;border-bottom:1px solid #ddd;"><td style="padding:4px 4px;">VARIABLE</td><td style="padding:4px 4px;">FUENTE</td><td style="padding:4px 4px;">PESO</td><td style="padding:4px 4px;">VALOR</td></tr>' +
         tableRows +
       '</table>' +
       '<div style="font-size:8px;color:#999;margin-top:10px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos son fallback estimados. 14 variables a cobertura completa en m&#xFA;ltiples mercados.</div>' +
