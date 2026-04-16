@@ -10,6 +10,8 @@
     if (cachedPrices) window._pcPrices = cachedPrices;
     if (cachedChange24) window._pcChange24 = cachedChange24;
     if (cachedIAPrecios) window._IA_PRECIOS = cachedIAPrecios;
+    var cachedMktState = JSON.parse(localStorage.getItem('aurex_pc_mktstate_cache') || 'null');
+    if (cachedMktState) window._pcMarketState = cachedMktState;
     if (cached && cached.length > 0) {
       window._portItemsCached = cached;
       function _restoreFromCache(){
@@ -1164,6 +1166,7 @@ function _updateTotals(items){
     if(window._pcPrices && Object.keys(window._pcPrices).length > 0) localStorage.setItem('aurex_pc_prices_cache', JSON.stringify(window._pcPrices));
     if(window._pcChange24 && Object.keys(window._pcChange24).length > 0) localStorage.setItem('aurex_pc_change24_cache', JSON.stringify(window._pcChange24));
     if(window._IA_PRECIOS && Object.keys(window._IA_PRECIOS).length > 0) localStorage.setItem('aurex_ia_precios_cache', JSON.stringify(window._IA_PRECIOS));
+    if(window._pcMarketState && Object.keys(window._pcMarketState).length > 0) localStorage.setItem('aurex_pc_mktstate_cache', JSON.stringify(window._pcMarketState));
   } catch(e){}
   // Cachear estado del header para restore inmediato en refresh
   try {
