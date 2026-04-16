@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=59"></script>
+<script src="aurex-v3.js?v=60"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1848,7 +1848,7 @@ window._mktOpenDetail = function(idx){
 <!-- HEADER 3 CONTADORES -->
 <div style="padding:12px 14px 10px;border-bottom:1px solid var(--border);flex-shrink:0;background:var(--bg)">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-    <div style="display:flex;align-items:center;gap:8px"><svg class="aurex-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32"><defs><linearGradient id="gAia" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="var(--gold)"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCia" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCia)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCia)" stroke-width="1.5"/><circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCia)" stroke-width="1" opacity="0.8"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAia)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAia)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAia)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAia)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg><span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX</span><span style="font-size:13px;color:var(--textSec)">Señales IA</span></div>
+    <span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX <span style="color:var(--textSec);font-weight:400;font-size:13px">Señales IA</span></span>
     <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:#A78BFA;font-weight:700">
       <div style="width:5px;height:5px;border-radius:50%;background:#A78BFA;animation:lp 1.5s infinite"></div>
       <span>LIVE</span>
@@ -1907,7 +1907,6 @@ window._mktOpenDetail = function(idx){
 <!-- Header -->
 <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
   <div style="display:flex;align-items:center;gap:8px">
-    <svg class="aurex-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32"><defs><linearGradient id="gAwl" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="var(--gold)"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCwl" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCwl)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCwl)" stroke-width="1.5"/><circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCwl)" stroke-width="1" opacity="0.8"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAwl)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAwl)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAwl)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAwl)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg>
     <span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX</span>
     <span style="font-size:13px;color:var(--textSec)">Watchlist</span>
   </div>
@@ -1951,13 +1950,6 @@ window._mktOpenDetail = function(idx){
 </div>
 
 <div class="screen" id="screen-alertas" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
-<div style="display:flex;align-items:center;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--border);flex-shrink:0">
-  <div style="display:flex;align-items:center;gap:8px">
-    <svg class="aurex-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="32" height="32"><defs><linearGradient id="gAal" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="var(--gold)"/><stop offset="100%" stop-color="#8B6208"/></linearGradient><linearGradient id="gCal" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F0C030"/><stop offset="100%" stop-color="#9A7010"/></linearGradient></defs><circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCal)" stroke-width="3.5"/><circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCal)" stroke-width="1.5"/><circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCal)" stroke-width="1" opacity="0.8"/><line x1="150" y1="78" x2="108" y2="168" stroke="url(#gAal)" stroke-width="11" stroke-linecap="round"/><line x1="150" y1="78" x2="192" y2="168" stroke="url(#gAal)" stroke-width="11" stroke-linecap="round"/><line x1="104" y1="123" x2="196" y2="123" stroke="url(#gAal)" stroke-width="11" stroke-linecap="round"/><polyline points="115,186 150,164 185,186" fill="none" stroke="url(#gAal)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/><circle cx="150" cy="164" r="5" fill="#F7D060"/></svg>
-    <span style="font-size:16px;font-weight:500;color:var(--gold);letter-spacing:1px">AUREX</span>
-    <span style="font-size:13px;color:var(--textSec)">Alertas</span>
-  </div>
-</div>
 <div class="cnt" id="alertas-cnt" style="overflow-y:auto;flex:1;padding-bottom:20px">
 
 <!-- Banner WhatsApp — compacto con toggle -->

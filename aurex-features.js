@@ -4455,6 +4455,7 @@ function _initHeaderLogos() {
     var svgNode = document.createElement('div');
     svgNode.innerHTML = _makeSVG(suffix);
     var svgChild = svgNode.firstChild;
+    if (svgChild) svgChild.classList.add('aurex-logo');
     parent.insertBefore(svgChild, spanEl);
     spanEl.dataset.logoAdded = '1';
   }
@@ -4497,7 +4498,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = _makeSVG('_al') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Alertas</span>';
+    hdrDiv.innerHTML = '<span class="aurex-logo-wrap">' + _makeSVG('_al').replace('<svg ', '<svg class="aurex-logo" ') + '</span><span style="font-weight:500;color:var(--gold);font-size:16px;letter-spacing:1px;">AUREX</span><span style="color:var(--textSec);font-size:13px;"> Alertas</span>';
     alertasScreen.insertBefore(hdrDiv, alertasScreen.firstChild);
   }
 
@@ -4506,7 +4507,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = _makeSVG('_pf') + '<span style="font-weight:700;color:#F7D060;font-size:15px;letter-spacing:1px;">AUREX</span><span style="color:var(--textDim);font-size:15px;"> Perfil</span>';
+    hdrDiv.innerHTML = '<span class="aurex-logo-wrap">' + _makeSVG('_pf').replace('<svg ', '<svg class="aurex-logo" ') + '</span><span style="font-weight:500;color:var(--gold);font-size:16px;letter-spacing:1px;">AUREX</span><span style="color:var(--textSec);font-size:13px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
   }
 
