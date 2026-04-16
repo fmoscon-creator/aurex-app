@@ -4258,35 +4258,36 @@ async function _fetchFuturesData() {
   var rawSyms = FUTURES_ITEMS.map(function(x){ return x.rawS; });
   if(!window._futuresCache) window._futuresCache = {};
   var results = window._futuresCache;
-  for(var i=0; i<rawSyms.length; i++){
-    var sym = rawSyms[i];
-    try {
-      var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
-      var res = await fetch(url, {signal: AbortSignal.timeout(12000)});
-      var wrapper = await res.json();
-      var data = JSON.parse(wrapper.contents);
-      if(data.chart && data.chart.result && data.chart.result[0]) {
-        var meta = data.chart.result[0].meta;
-        var price = meta.regularMarketPrice || 0;
-        var prev = meta.previousClose || meta.chartPreviousClose || price;
-        var pct = prev > 0 ? ((price - prev) / prev * 100) : 0;
-        var open = (meta.marketState === 'REGULAR' || meta.marketState === 'PRE' || meta.marketState === 'POST');
-        results[sym] = { price: price, pct: pct, open: open, state: meta.marketState || 'CLOSED' };
-        window._futuresCache = results;
-        window._futuresTs = Date.now();
-        if(typeof _renderFuturesBanner === 'function'){
-          _renderFuturesBanner();
-          var _tmpFut = document.createElement('div');
-          _tmpFut.id = 'tmp-fut-prog'; _tmpFut.style.display = 'none';
-          document.body.appendChild(_tmpFut);
-          _renderFuturesBanner('tmp-fut-prog');
-          var _sb = document.getElementById('combo-slide-b');
-          if(_sb) _sb.innerHTML = _tmpFut.innerHTML;
-          document.body.removeChild(_tmpFut);
+  // Fetch en paralelo para que todos carguen rápido
+  await Promise.all(rawSyms.map(function(sym) {
+    var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/' + sym + '?interval=1d&range=2d');
+    return fetch(url, {signal: AbortSignal.timeout(12000)})
+      .then(function(res){ return res.json(); })
+      .then(function(wrapper){
+        var data = JSON.parse(wrapper.contents);
+        if(data.chart && data.chart.result && data.chart.result[0]) {
+          var meta = data.chart.result[0].meta;
+          var price = meta.regularMarketPrice || 0;
+          var prev = meta.previousClose || meta.chartPreviousClose || price;
+          var pct = prev > 0 ? ((price - prev) / prev * 100) : 0;
+          var open = (meta.marketState === 'REGULAR' || meta.marketState === 'PRE' || meta.marketState === 'POST');
+          results[sym] = { price: price, pct: pct, open: open, state: meta.marketState || 'CLOSED' };
         }
-      }
-    } catch(e) {}
-    await new Promise(function(r){ setTimeout(r, 400); });
+      }).catch(function(){});
+  }));
+  window._futuresCache = results;
+  window._futuresTs = Date.now();
+  // Re-render banner y combo slide
+  if(typeof _renderFuturesBanner === 'function'){
+    _renderFuturesBanner();
+    _renderFuturesBanner('port-futures-banner');
+    var _tmpFut = document.createElement('div');
+    _tmpFut.id = 'tmp-fut-prog'; _tmpFut.style.display = 'none';
+    document.body.appendChild(_tmpFut);
+    _renderFuturesBanner('tmp-fut-prog');
+    var _sb = document.getElementById('combo-slide-b');
+    if(_sb) _sb.innerHTML = _tmpFut.innerHTML;
+    document.body.removeChild(_tmpFut);
   }
   window._futuresCache = results;
   window._futuresTs = Date.now();
