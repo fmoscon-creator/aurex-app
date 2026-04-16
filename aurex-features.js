@@ -4560,7 +4560,7 @@ function _initHeaderLogos() {
       langChip.className = 'lang-chip';
       langChip.onclick = function(){ window._openIdiomaModal(); };
       var curLang = localStorage.getItem('aurex_lang') || 'es';
-      var flags = {es:'🇪🇸',en:'🇬🇧',pt:'🇧🇷',zh:'🇨🇳'};
+      var flags = {es:'🇦🇷',en:'🇺🇸',pt:'🇧🇷',zh:'🇨🇳'};
       langChip.innerHTML = '<span id="lang-flag">' + (flags[curLang]||'🇪🇸') + '</span> <span style="font-size:8px;">&#9660;</span>';
       langChip.style.cssText = 'display:flex;align-items:center;gap:2px;padding:3px 7px;border:1.5px solid var(--gold);border-radius:6px;cursor:pointer;font-size:14px;margin-left:auto;-webkit-tap-highlight-color:rgba(0,0,0,0);';
       portHlRow.appendChild(langChip);
@@ -5777,10 +5777,10 @@ window._openIdiomaModal = function() {
   if (existing) existing.remove();
   var currentLang = localStorage.getItem('aurex_lang') || 'es';
   var langs = [
-    { code: 'es', flag: '🇪🇸', name: 'Español', soon: false },
-    { code: 'en', flag: '🇬🇧', name: 'English', soon: false },
-    { code: 'pt', flag: '•', name: 'Português', soon: true },
-    { code: 'zh', flag: '•', name: '中文', soon: true }
+    { code: 'es', flag: '🇦🇷', name: 'Español', soon: false },
+    { code: 'en', flag: '🇺🇸', name: 'English', soon: false },
+    { code: 'pt', flag: '🇧🇷', name: 'Português', soon: true },
+    { code: 'zh', flag: '🇨🇳', name: '中文', soon: true }
   ];
   var rows = langs.map(function(l) {
     var selected = l.code === currentLang;
@@ -5810,7 +5810,7 @@ window._setIdioma = function(code) {
   var ov = document.getElementById('idioma-modal-overlay');
   if (ov) ov.remove();
   // Actualizar bandera en el botón del header
-  var flags = { es: '🇪🇸', en: '🇬🇧', pt: '🇧🇷', zh: '🇨🇳' };
+  var flags = { es: '🇦🇷', en: '🇺🇸', pt: '🇧🇷', zh: '🇨🇳' };
   var flagEl = document.getElementById('lang-flag');
   if (flagEl) flagEl.textContent = flags[code] || '🇪🇸';
 };
