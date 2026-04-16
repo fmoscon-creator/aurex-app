@@ -5451,6 +5451,7 @@ window._lpAgregarFavorito = function(ticker) {
     if (pins.indexOf(ticker) >= 0) return;
     pins.push(ticker);
     localStorage.setItem('aurex_pins', JSON.stringify(pins));
+    _refreshFavStars();
   } catch(e) { console.error('aurex_pins', e); }
 };
 
@@ -5491,11 +5492,38 @@ window._lpQuitarFavorito = function(ticker) {
     if (idx < 0) return;
     pins.splice(idx, 1);
     localStorage.setItem('aurex_pins', JSON.stringify(pins));
+    _refreshFavStars();
   } catch(e) { console.error('aurex_pins remove', e); }
 };
 
 function _isFavorito(ticker) {
   try { return (JSON.parse(localStorage.getItem('aurex_pins') || '[]')).indexOf(ticker) >= 0; } catch(e) { return false; }
+}
+
+// Mostrar/ocultar estrella en filas de Mercados
+function _refreshFavStars() {
+  var pins;
+  try { pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]'); } catch(e) { pins = []; }
+  document.querySelectorAll('#cnt .item-row').forEach(function(el) {
+    var ticker = el.id.replace('row-', '');
+    var existing = el.querySelector('.fav-star');
+    if (pins.indexOf(ticker) >= 0) {
+      if (!existing) {
+        var star = document.createElement('span');
+        star.className = 'fav-star';
+        star.textContent = '⭐';
+        star.style.cssText = 'font-size:12px;margin-left:2px;flex-shrink:0;';
+        // Insertar después del nombre del ticker (segundo hijo del row)
+        var nameCol = el.children[1]; // div con ticker + nombre
+        if (nameCol) {
+          var tickerSpan = nameCol.querySelector('span');
+          if (tickerSpan) tickerSpan.parentNode.insertBefore(star, tickerSpan.nextSibling);
+        }
+      }
+    } else {
+      if (existing) existing.remove();
+    }
+  });
 }
 
 // Modal enriquecido para Mercados (igual a nativa IMG_1758)
@@ -5722,6 +5750,7 @@ window._initLongPressActions = function() {
   _attachAllPortfolioLP();
   _attachAllMercadosLP();
   _attachAllWatchlistLP();
+  _refreshFavStars();
   // IA: NO long press (la nativa no lo tiene, solo click normal)
   function obs(containerId, fn) {
     var c = document.getElementById(containerId);
@@ -5730,7 +5759,7 @@ window._initLongPressActions = function() {
     new MutationObserver(function(){ fn(); }).observe(c, { childList: true, subtree: false });
   }
   obs('port-cnt', _attachAllPortfolioLP);
-  obs('cnt', _attachAllMercadosLP);
+  obs('cnt', function(){ _attachAllMercadosLP(); _refreshFavStars(); });
   obs('watch-cnt', _attachAllWatchlistLP);
 };
 
