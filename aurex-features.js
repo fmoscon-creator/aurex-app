@@ -5511,7 +5511,7 @@ function _refreshFavStars() {
         var star = document.createElement('span');
         star.className = 'fav-star';
         star.textContent = '⭐';
-        star.style.cssText = 'font-size:14px;flex-shrink:0;';
+        star.style.cssText = 'font-size:10px;flex-shrink:0;margin:0 2px 0 0;';
         // Insertar ENTRE el logo (img, hijo 0) y el div ticker+nombre (hijo 1)
         var nameCol = el.children[1];
         if (nameCol) el.insertBefore(star, nameCol);
