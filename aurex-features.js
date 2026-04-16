@@ -20,6 +20,10 @@
             if(el('port-pnl-usd') && hdr.pnlUsd){ el('port-pnl-usd').textContent = hdr.pnlUsd; el('port-pnl-usd').style.color = hdr.pnlUsdColor || ''; }
             if(el('port-pnl-pct') && hdr.pnlPct){ el('port-pnl-pct').textContent = hdr.pnlPct; el('port-pnl-pct').style.color = hdr.pnlPctColor || ''; }
             if(el('port-cnt-badge') && hdr.cnt) el('port-cnt-badge').textContent = hdr.cnt;
+            // Hoy y emoji se restauran después de que _initHoyIndicator los cree
+            if(hdr.hoyPct || hdr.emoji) {
+              window._cachedHoy = hdr;
+            }
           }
         } catch(e){}
         if (!window._portItems || window._portItems.length === 0) {
@@ -1005,7 +1009,7 @@ window.portTotalPeriod = function(btn, period) {
 
   var items = window._portItems;
   var prices = window._IA_PRECIOS;
-  if(!items || !prices) return;
+  if(!items || !prices || Object.keys(prices).length === 0) return;
 
   var totalNow = 0, totalBefore = 0;
   var allHavePrev = true;
@@ -1151,13 +1155,18 @@ function _updateTotals(items){
   } catch(e){}
   // Cachear estado del header para restore inmediato en refresh
   try {
+    var hoyEl = document.getElementById('port-hoy-pct');
+    var emojiEl = document.getElementById('port-fila-emoji');
     localStorage.setItem('aurex_port_header_cache', JSON.stringify({
       total: el('port-total') ? el('port-total').textContent : '',
       pnlUsd: el('port-pnl-usd') ? el('port-pnl-usd').textContent : '',
       pnlPct: el('port-pnl-pct') ? el('port-pnl-pct').textContent : '',
       pnlUsdColor: el('port-pnl-usd') ? el('port-pnl-usd').style.color : '',
       pnlPctColor: el('port-pnl-pct') ? el('port-pnl-pct').style.color : '',
-      cnt: items.length
+      cnt: items.length,
+      hoyPct: hoyEl ? hoyEl.textContent : '',
+      hoyColor: hoyEl ? hoyEl.style.color : '',
+      emoji: emojiEl ? emojiEl.textContent : ''
     }));
   } catch(e){}
   // P&L: mostrar "..." hasta que haya precios reales, luego calcular según período
@@ -5182,7 +5191,18 @@ window._refreshHoyPct = function() {
   var pctEl = document.getElementById('port-pnl-pct');
   if (!hoyPct || !pctEl) return;
   var pct = pctEl.textContent.trim();
-  if (!pct || pct === '' || pct === '--') return; // Sin datos todavía
+  if (!pct || pct === '' || pct === '--') {
+    // Usar cache si hay
+    if (window._cachedHoy) {
+      var ch = window._cachedHoy;
+      if(hoyPct && ch.hoyPct) { hoyPct.textContent = ch.hoyPct; hoyPct.style.color = ch.hoyColor || ''; }
+      if(hoyDiv) hoyDiv.style.display = 'flex';
+      var emojiEl = document.getElementById('port-fila-emoji');
+      if(emojiEl && ch.emoji) { emojiEl.textContent = ch.emoji; emojiEl.style.display = 'inline-flex'; }
+      window._cachedHoy = null;
+    }
+    return;
+  }
   var isPos = !pct.startsWith('-');
   hoyPct.textContent = pct;
   hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
