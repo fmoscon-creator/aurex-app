@@ -923,7 +923,7 @@ function _renderPortfolioItems(items){
     var dnColor = idx === items.length-1 ? 'var(--border)' : 'var(--textSec)';
     var upCursor = idx === 0 ? 'default' : 'pointer';
     var dnCursor = idx === items.length-1 ? 'default' : 'pointer';
-    return '<div id="port-row-'+item.id+'" style="padding:10px 12px 8px;border-bottom:0.5px solid var(--border);">' +
+    return '<div id="port-row-'+item.id+'" style="padding:10px 12px 8px;border-bottom:1px solid var(--border2);">' +
       '<div style="display:flex;align-items:center;gap:6px;">' +
       '<div style="display:flex;flex-direction:column;gap:1px;margin-right:2px;flex-shrink:0;">' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
