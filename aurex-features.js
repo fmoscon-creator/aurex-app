@@ -849,7 +849,7 @@ function _renderPortfolioItems(items){
     );
     var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
     var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
-    if(mktClosed && prevClosePct !== null){ cc = 'var(--textDim)'; cs = prevClosePct >= 0 ? '+' : ''; }
+    if(mktClosed && prevClosePct !== null){ cc = prevClosePct >= 0 ? 'var(--green)' : 'var(--red)'; cs = prevClosePct >= 0 ? '+' : ''; }
     var nowUtc = new Date();
     var nowMin = nowUtc.getUTCHours()*60+nowUtc.getUTCMinutes();
     var nyseOpenMin = 13*60+30;
