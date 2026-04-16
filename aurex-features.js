@@ -6,8 +6,10 @@
     // Restaurar precios cacheados ANTES de renderizar
     var cachedPrices = JSON.parse(localStorage.getItem('aurex_pc_prices_cache') || 'null');
     var cachedChange24 = JSON.parse(localStorage.getItem('aurex_pc_change24_cache') || 'null');
+    var cachedIAPrecios = JSON.parse(localStorage.getItem('aurex_ia_precios_cache') || 'null');
     if (cachedPrices) window._pcPrices = cachedPrices;
     if (cachedChange24) window._pcChange24 = cachedChange24;
+    if (cachedIAPrecios) window._IA_PRECIOS = cachedIAPrecios;
     if (cached && cached.length > 0) {
       window._portItemsCached = cached;
       function _restoreFromCache(){
@@ -1152,6 +1154,7 @@ function _updateTotals(items){
   try {
     if(window._pcPrices && Object.keys(window._pcPrices).length > 0) localStorage.setItem('aurex_pc_prices_cache', JSON.stringify(window._pcPrices));
     if(window._pcChange24 && Object.keys(window._pcChange24).length > 0) localStorage.setItem('aurex_pc_change24_cache', JSON.stringify(window._pcChange24));
+    if(window._IA_PRECIOS && Object.keys(window._IA_PRECIOS).length > 0) localStorage.setItem('aurex_ia_precios_cache', JSON.stringify(window._IA_PRECIOS));
   } catch(e){}
   // Cachear estado del header para restore inmediato en refresh
   try {
@@ -2789,7 +2792,7 @@ document.addEventListener("click",function(e){var dd=document.getElementById("re
 
 var _iaCategoria = 'alcista';
 var _iaSignals = [];
-var _IA_PRECIOS = {};
+var _IA_PRECIOS = window._IA_PRECIOS || {};
 var _IA_PRECIOS_PREV = {};
 var _MACRO_EVENTOS = [];
 
