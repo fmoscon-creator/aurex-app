@@ -580,6 +580,7 @@ function pcLoadPrices(){
         var sym = t.symbol.replace('USDT','');
         window._pcPrices[sym] = parseFloat(t.price);
       });
+      window._liveLastFetch = Date.now();
       window._pcPrices['USDT'] = 1;
       window._pcPrices['USD']  = 1;
       // Tipos de cambio fiat (actualizables)
@@ -753,6 +754,7 @@ function _refreshPortPrices(items){
       .then(function(d){
         if(!window._pcPrices) window._pcPrices = {};
         if(!window._pcChange24) window._pcChange24 = {};
+        window._liveLastFetch = Date.now();
         if(d.lastPrice){ window._pcPrices[sym] = parseFloat(d.lastPrice); }
         if(d.priceChangePercent !== undefined){ window._pcChange24[sym] = parseFloat(d.priceChangePercent); }
         // Fetch 52-week high/low via Binance klines (weekly, 52 bars)
@@ -5760,6 +5762,20 @@ window._initLongPressActions = function() {
   obs('cnt', function(){ _attachAllMercadosLP(); _refreshFavStars(); });
   obs('watch-cnt', _attachAllWatchlistLP);
 };
+
+// === LIVE refresh timer (punto 14) ===
+window._liveLastFetch = Date.now();
+(function _initLiveTimer() {
+  function updateLiveTime() {
+    var el = document.getElementById('liveTime');
+    if (!el) return;
+    var diff = Math.floor((Date.now() - (window._liveLastFetch || Date.now())) / 1000);
+    if (diff < 60) el.textContent = '· hace ' + diff + 's';
+    else el.textContent = '· hace ' + Math.floor(diff / 60) + ' min';
+  }
+  setInterval(updateLiveTime, 10000);
+  updateLiveTime();
+})();
 
 // === Inyección por tab (sort menus) ===
 
