@@ -708,6 +708,13 @@ function getSupaToken(){
 
 // ââ CARGAR portfolio del usuario desde Supabase ââ
 window.loadPortfolioSupa = function(){
+  // Mostrar datos anteriores de localStorage inmediatamente (como nativa mantiene state)
+  try {
+    var cached = JSON.parse(localStorage.getItem('aurex_port_items_cache') || 'null');
+    if (cached && cached.length > 0 && !window._portItems) {
+      _renderPortfolioItems(cached);
+    }
+  } catch(e){}
   try {
     if(window._supabase){
       window._supabase.auth.getSession().then(function(res){
@@ -826,6 +833,7 @@ function _renderPortfolioItems(items){
     items = ordered.concat(rem);
   }
   window._portItems = items;
+  try { localStorage.setItem('aurex_port_items_cache', JSON.stringify(items)); } catch(e){}
   var prcs = window._pcPrices || {};
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
