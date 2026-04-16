@@ -11,6 +11,17 @@
     if (cached && cached.length > 0) {
       window._portItemsCached = cached;
       document.addEventListener('DOMContentLoaded', function(){
+        // Restore header inmediato
+        try {
+          var hdr = JSON.parse(localStorage.getItem('aurex_port_header_cache') || 'null');
+          if (hdr) {
+            var el = function(id){ return document.getElementById(id); };
+            if(el('port-total') && hdr.total) el('port-total').textContent = hdr.total;
+            if(el('port-pnl-usd') && hdr.pnlUsd){ el('port-pnl-usd').textContent = hdr.pnlUsd; el('port-pnl-usd').style.color = hdr.pnlUsdColor || ''; }
+            if(el('port-pnl-pct') && hdr.pnlPct){ el('port-pnl-pct').textContent = hdr.pnlPct; el('port-pnl-pct').style.color = hdr.pnlPctColor || ''; }
+            if(el('port-cnt-badge') && hdr.cnt) el('port-cnt-badge').textContent = hdr.cnt;
+          }
+        } catch(e){}
         setTimeout(function(){
           if (!window._portItems || window._portItems.length === 0) {
             if (typeof _renderPortfolioItems === 'function') _renderPortfolioItems(cached);
@@ -1139,6 +1150,17 @@ function _updateTotals(items){
   if(el('port-best-badge')) { el('port-best-badge').textContent = items.length > 0 ? (bestSym + ' ' + _fmt(bestPct,'pct')) : '—'; el('port-best-badge').style.color = bestPct >= 0 ? '#22c55e' : '#ef4444'; }
   // F2: reinsertar emoji + asegurar indicador Hoy tras refresh de badge
   if (typeof window._initHoyIndicator === 'function') window._initHoyIndicator();
+  // Cachear estado del header para restore inmediato en refresh
+  try {
+    localStorage.setItem('aurex_port_header_cache', JSON.stringify({
+      total: el('port-total') ? el('port-total').textContent : '',
+      pnlUsd: el('port-pnl-usd') ? el('port-pnl-usd').textContent : '',
+      pnlPct: el('port-pnl-pct') ? el('port-pnl-pct').textContent : '',
+      pnlUsdColor: el('port-pnl-usd') ? el('port-pnl-usd').style.color : '',
+      pnlPctColor: el('port-pnl-pct') ? el('port-pnl-pct').style.color : '',
+      cnt: items.length
+    }));
+  } catch(e){}
   // P&L: mostrar "..." hasta que haya precios reales, luego calcular según período
   var badge = document.getElementById('port-period-badge');
   var currentPeriod = '24h';
