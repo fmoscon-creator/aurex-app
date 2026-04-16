@@ -891,17 +891,13 @@ function _renderPortfolioItems(items){
     var cc = ch24 >= 0 ? 'var(--green)' : 'var(--red)';
     var cs = ch24 >= 0 ? '+' : '';
     var isCrypto = (item.tipo||'').toLowerCase() === 'cripto' || (item.tipo||'').toLowerCase() === 'stable';
-    // Usar marketState del API Yahoo si existe (dato real del mercado)
-    var mktState = !isCrypto && window._pcMarketState && window._pcMarketState[item.simbolo];
+    // Idéntico a nativa PortfolioScreen.js líneas 776-781
     var _now = new Date();
     var _utcH = _now.getUTCHours();
     var _utcDay = _now.getUTCDay();
     var _isWeekend = (_utcDay === 0 || _utcDay === 6);
     var _nyseOpen = _utcH >= 14 && _utcH < 21;
-    var mktClosed = !isCrypto && (
-      mktState ? (mktState !== 'REGULAR') :
-      (_isWeekend || !_nyseOpen)
-    );
+    var mktClosed = !isCrypto && (_isWeekend || !_nyseOpen);
     var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
     var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
     if(mktClosed && prevClosePct !== null){ cc = prevClosePct >= 0 ? 'var(--green)' : 'var(--red)'; cs = prevClosePct >= 0 ? '+' : ''; }
