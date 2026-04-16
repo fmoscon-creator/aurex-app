@@ -1511,23 +1511,43 @@ window.selectPortActivo = function(sym, nombre){
   if(symInput) symInput.value = sym + '|' + nombre + '|' + (act ? act.tipo : 'accion');
   var res = document.getElementById('pa-results');
   if(res) res.style.display = 'none';
-  // Vista previa: cargar precio actual
+  // Vista previa: cargar precio actual (igual que nativa)
   var previewPrice = document.getElementById('pa-preview-price');
   var previewValue = document.getElementById('pa-preview-value');
   var prcs = window._pcPrices || {};
-  var curPrice = prcs[sym] || 0;
-  if(previewPrice) previewPrice.textContent = curPrice ? '$' + curPrice.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--';
-  // Actualizar vista previa al cambiar cantidad
+  window._paCurrentPrice = prcs[sym] || 0;
+  function _renderPrice() {
+    if(previewPrice) previewPrice.textContent = window._paCurrentPrice ? '$' + window._paCurrentPrice.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : 'Cargando...';
+  }
+  _renderPrice();
+  // Si no hay precio en cache, fetch del backend (igual que nativa)
+  if(!window._paCurrentPrice) {
+    fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol=' + sym + '&interval=1d&range=1d')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.chart && d.chart.result && d.chart.result[0]) {
+          window._paCurrentPrice = d.chart.result[0].meta.regularMarketPrice || 0;
+          _renderPrice();
+          _updatePreview();
+        }
+      }).catch(function(){});
+  }
   function _updatePreview(){
     var q = parseFloat((document.getElementById('pa-qty')||{}).value) || 0;
     var p = parseFloat((document.getElementById('pa-price')||{}).value) || 0;
-    var val = q * curPrice;
-    var pnl = q * (curPrice - p);
+    var mktPrice = window._paCurrentPrice || 0;
+    var val = q * mktPrice;
+    var pnl = (q > 0 && p > 0) ? q * (mktPrice - p) : 0;
     if(previewValue) previewValue.textContent = '$' + val.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
     var pnlEl = document.getElementById('pa-preview-pnl');
     if(pnlEl) {
-      pnlEl.textContent = (pnl >= 0 ? '+' : '-') + '$' + Math.abs(pnl).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
-      pnlEl.style.color = pnl >= 0 ? '#16a34a' : '#dc2626';
+      if(q > 0 && p > 0 && mktPrice > 0) {
+        pnlEl.textContent = (pnl >= 0 ? '+' : '') + '$' + Math.abs(pnl).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+        pnlEl.style.color = pnl >= 0 ? '#16a34a' : '#dc2626';
+      } else {
+        pnlEl.textContent = '$0,00';
+        pnlEl.style.color = '#333';
+      }
     }
   }
   var qtyEl = document.getElementById('pa-qty');
