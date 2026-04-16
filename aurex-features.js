@@ -4203,24 +4203,24 @@ window.showFearGreedInfo = function() {
       if (valStr.indexOf('+') === 0) valColor = '#16a34a';
       else if (valStr.indexOf('-') === 0) valColor = '#dc2626';
     }
-    return '<tr><td style="padding:3px 4px;color:'+r[5]+';font-weight:500;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:8px;padding:3px 4px;">'+r[2]+'</td><td style="color:#555;padding:3px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:600;padding:3px 4px;">'+valStr+'</td></tr>';
+    return '<tr><td style="padding:4px 4px;color:'+r[5]+';font-weight:600;font-size:11px;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:10px;padding:4px 4px;">'+r[2]+'</td><td style="color:#555;font-size:11px;padding:4px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:700;font-size:11px;padding:4px 4px;">'+valStr+'</td></tr>';
   }).join('');
   ov.innerHTML =
-    '<div style="background:#fff;border-radius:18px;padding:20px;max-width:390px;width:100%;margin:auto;">' +
-      '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
-      '<div style="font-size:10px;color:#666;margin-bottom:10px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
-      '<div style="font-size:10px;color:#555;line-height:1.7;margin-bottom:8px;">' +
+    '<div style="background:#fff;border-radius:18px;padding:22px;width:calc(100% - 32px);max-width:420px;margin:auto;">' +
+      '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
+      '<div style="font-size:11px;color:#666;margin-bottom:12px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
+      '<div style="font-size:11px;color:#555;line-height:1.7;margin-bottom:10px;">' +
         '<b style="color:#111;">Las 5 zonas:</b><br>' +
         '&#x1F534; 0-20 Miedo Extremo &nbsp; &#x1F7E0; 21-40 Miedo &nbsp; &#x1F7E1; 41-60 Neutral<br>' +
         '&#x1F7E2; 61-80 Codicia &nbsp; &#x1F49C; 81-100 Codicia Extrema' +
       '</div>' +
-      '<div style="font-size:10px;font-weight:700;color:#111;margin-bottom:6px;">Variables activas (12 de 14):</div>' +
-      '<table style="width:100%;font-size:9px;border-collapse:collapse;">' +
-        '<tr style="color:#999;font-size:8px;"><td style="padding:2px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>VALOR</td></tr>' +
+      '<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:8px;">Variables activas (12 de 14):</div>' +
+      '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
+        '<tr style="color:#999;font-size:9px;"><td style="padding:3px 4px;">VARIABLE</td><td>FUENTE</td><td>PESO</td><td>VALOR</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#999;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos son fallback estimados. 14 variables a cobertura completa en m&#xFA;ltiples mercados.</div>' +
-      '<div id="pulse-info-close" style="margin-top:16px;text-align:center;padding:16px;background:var(--gold);border-radius:14px;color:#111;font-weight:700;cursor:pointer;font-size:16px;">Entendido</div>' +
+      '<div style="font-size:8px;color:#999;margin-top:10px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos son fallback estimados. 14 variables a cobertura completa en m&#xFA;ltiples mercados.</div>' +
+      '<div id="pulse-info-close" style="margin-top:18px;text-align:center;padding:16px;background:var(--gold);border-radius:14px;color:#111;font-weight:700;cursor:pointer;font-size:16px;">Entendido</div>' +
     '</div>';
   document.body.appendChild(ov);
   document.getElementById('pulse-info-close').addEventListener('click', function(){ ov.remove(); });
