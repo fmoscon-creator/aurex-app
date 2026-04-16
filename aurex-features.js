@@ -4318,13 +4318,10 @@ function _renderFuturesBanner(containerId) {
     var item = FUTURES_ITEMS.find(function(x){ return x.rawS === rawS; });
     if(!item) return '';
     var d = cached[item.rawS];
-    if(!d || !d.price) return '';
-    var pct = d.pct || 0;
-    var pctStr = _fmt(pct,'pct');
+    var pct = d ? (d.pct || 0) : 0;
+    var pctStr = d && d.price ? _fmt(pct,'pct') : '—';
     var pctColor = pct >= 0 ? 'var(--green)' : 'var(--red)';
-    var stCol = d.open ? 'var(--green)' : 'var(--textDim)';
-    var catColor = catColors[item.cat] || 'var(--textSec)';
-    var priceStr = item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio');
+    var priceStr = d && d.price ? (item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio')) : '—';
     var fullName = item.n + ' Fut';
     return '<div style="display:flex;flex-direction:column;align-items:center;min-width:70px;padding:4px 8px;flex-shrink:0;">' +
       '<div style="font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;">'+fullName+'</div>' +
