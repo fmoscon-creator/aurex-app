@@ -5379,11 +5379,12 @@ window._refreshHoyPct = function() {
   st.textContent =
     /* Botón sort en cada tab */
     '.sort-wrap{position:relative;display:inline-block;}' +
-    '.sort-btn{background:var(--bg);border:1px solid var(--border2);border-radius:6px;' +
-    'padding:4px 10px;font-size:11px;font-weight:600;color:var(--text);cursor:pointer;' +
+    '.sort-btn{background:var(--card);border:1px solid var(--border2);border-radius:7px;' +
+    'padding:5px 10px;font-size:10px;font-weight:600;color:var(--textSec);cursor:pointer;' +
     'display:inline-flex;align-items:center;gap:4px;white-space:nowrap;' +
     'user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.sort-btn .sort-arrow{color:var(--gold);font-size:10px;}' +
+    '.sort-btn .sort-value{font-size:11px;font-weight:700;color:var(--text);}' +
+    '.sort-btn .sort-arrow{color:var(--gold);font-size:10px;font-weight:800;}' +
     /* Modal central */
     '#sort-overlay{position:fixed;inset:0;z-index:2050;background:rgba(0,0,0,0.55);' +
     'display:flex;align-items:center;justify-content:center;padding:24px;}' +
@@ -5499,7 +5500,7 @@ function _openSortModal(tab, onApply) {
       _closeSortModal();
       // Actualizar label del botón visible
       var btn = document.getElementById(tab + '-sort-btn');
-      if (btn) btn.innerHTML = 'Ordenar: ' + o.l + ' <span class="sort-arrow">↓</span>';
+      if (btn) btn.innerHTML = 'Ordenar: <span class="sort-value">' + o.l + '</span> <span class="sort-arrow">↓</span>';
       if (onApply) onApply(o.k);
     });
     modal.appendChild(it);
@@ -5525,7 +5526,7 @@ function _buildSortBtn(tab, onApply) {
   var btn = document.createElement('div');
   btn.className = 'sort-btn';
   btn.id = tab+'-sort-btn';
-  btn.innerHTML = 'Ordenar: '+curOpt.l+' <span class="sort-arrow">↓</span>';
+  btn.innerHTML = 'Ordenar: <span class="sort-value">'+curOpt.l+'</span> <span class="sort-arrow">↓</span>';
   btn.onclick = function(e) {
     e.stopPropagation();
     _openSortModal(tab, onApply);
