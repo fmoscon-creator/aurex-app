@@ -1308,15 +1308,32 @@ window.showThermoInfo = function(){
   var body = document.getElementById('port-modal-body');
   var modal = document.getElementById('port-modal');
   if(!body||!modal) return;
-  body.innerHTML = '<div style="color:var(--text);font-size:15px;font-weight:700;margin-bottom:12px;">🌡️ Termómetro de Riesgo</div>' +
-    '<div style="font-size:12px;color:var(--textSec);line-height:1.6;margin-bottom:12px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
-    '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:14px;">' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--green);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--green);">ALCISTA</b> — La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--gold);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--gold);">ALTA CONV-IA</b> — La señal m�s valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--red);flex-shrink:0;"></div><div style="font-size:12px;color:var(--text);"><b style="color:var(--red);">BAJISTA</b> — La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
-    '<div style="display:flex;align-items:center;gap:8px;"><div style="width:12px;height:12px;border-radius:50%;background:var(--border);flex-shrink:0;"></div><div style="font-size:12px;color:var(--textSec);"><b>SIN SEÑAL</b> — No hay señal activa hoy para ese activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
+  // Idéntico a nativa PortfolioScreen.js líneas 1143-1191
+  body.innerHTML = '<div style="color:#111;font-size:15px;font-weight:700;margin-bottom:12px;">🌡️ Termómetro de Riesgo</div>' +
+    '<div style="font-size:12px;color:#888;line-height:1.6;margin-bottom:14px;">Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:</div>' +
+    '<div style="display:flex;flex-direction:column;gap:12px;margin-bottom:14px;">' +
+    // ALCISTA — barra verde lateral 4px (nativa thermoHelpBar + thermoHelpItem)
+    '<div style="display:flex;gap:10px;align-items:flex-start;">' +
+      '<div style="width:4px;border-radius:2px;background:#16a34a;min-height:40px;flex-shrink:0;"></div>' +
+      '<div style="flex:1;"><div style="color:#16a34a;font-size:13px;font-weight:700;">ALCISTA</div><div style="color:#888;font-size:11px;line-height:1.5;margin-top:2px;">La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.</div></div>' +
     '</div>' +
-    '<div onclick="closePortModal()" style="background:var(--green);color:var(--bg);border-radius:9px;padding:10px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
+    // ALTA CONV-IA — barra dorada lateral
+    '<div style="display:flex;gap:10px;align-items:flex-start;">' +
+      '<div style="width:4px;border-radius:2px;background:var(--gold);min-height:40px;flex-shrink:0;"></div>' +
+      '<div style="flex:1;"><div style="color:var(--gold);font-size:13px;font-weight:700;">ALTA CONV-IA</div><div style="color:#888;font-size:11px;line-height:1.5;margin-top:2px;">La señal más valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.</div></div>' +
+    '</div>' +
+    // BAJISTA — barra roja lateral
+    '<div style="display:flex;gap:10px;align-items:flex-start;">' +
+      '<div style="width:4px;border-radius:2px;background:#dc2626;min-height:40px;flex-shrink:0;"></div>' +
+      '<div style="flex:1;"><div style="color:#dc2626;font-size:13px;font-weight:700;">BAJISTA</div><div style="color:#888;font-size:11px;line-height:1.5;margin-top:2px;">La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.</div></div>' +
+    '</div>' +
+    // SIN SEÑAL — barra gris lateral
+    '<div style="display:flex;gap:10px;align-items:flex-start;">' +
+      '<div style="width:4px;border-radius:2px;background:#999;min-height:40px;flex-shrink:0;"></div>' +
+      '<div style="flex:1;"><div style="color:#888;font-size:13px;font-weight:700;">SIN SEÑAL</div><div style="color:#888;font-size:11px;line-height:1.5;margin-top:2px;">No hay señal activa hoy para este activo. No es una alerta, simplemente el modelo no detectó nada destacable.</div></div>' +
+    '</div>' +
+    '</div>' +
+    '<div onclick="closePortModal()" style="background:var(--gold);color:#111;border-radius:10px;padding:12px;text-align:center;font-size:14px;font-weight:700;cursor:pointer;">Entendido</div>';
   modal.style.display = 'flex';
 };
 
