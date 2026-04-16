@@ -4318,10 +4318,11 @@ function _renderFuturesBanner(containerId) {
     var item = FUTURES_ITEMS.find(function(x){ return x.rawS === rawS; });
     if(!item) return '';
     var d = cached[item.rawS];
-    var pct = d ? (d.pct || 0) : 0;
-    var pctStr = d && d.price ? _fmt(pct,'pct') : '—';
+    if(!d || !d.price) return '';
+    var pct = d.pct || 0;
+    var pctStr = _fmt(pct,'pct');
     var pctColor = pct >= 0 ? 'var(--green)' : 'var(--red)';
-    var priceStr = d && d.price ? (item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio')) : '—';
+    var priceStr = item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio');
     var fullName = item.n + ' Fut';
     return '<div style="display:flex;flex-direction:column;align-items:center;min-width:70px;padding:4px 8px;flex-shrink:0;">' +
       '<div style="font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;">'+fullName+'</div>' +
@@ -4362,7 +4363,7 @@ window.editFuturesBanner = function(){
         '<span onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _fetchFuturesData===&apos;function&apos;)_fetchFuturesData().then(function(){if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}});" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
