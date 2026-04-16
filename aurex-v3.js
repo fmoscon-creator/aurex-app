@@ -221,6 +221,7 @@ var DATA={
     {s:'USDCNY=X',n:'USD/CNY'},{s:'USDARS=X',n:'USD/ARS'}
   ]
 };
+window._mktDataSections = DATA;
 var _activeTab='cripto', _activePais='usa';
 
 // === RENDER: dibuja los items en #cnt ===

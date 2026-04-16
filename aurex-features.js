@@ -47,6 +47,32 @@
    tipos: 'precio' | 'pct' | 'usd' | 'qty'
    Solo usar en capa visual - NUNCA en calculos
 */
+// Buscar activo en TODAS las secciones (IA_ACTIVOS + comm + metales + futuros + etfs)
+// Idéntico a nativa ALL_ASSETS — busca por símbolo en todas las categorías
+window._findAssetGlobal = function(sym) {
+  if(!sym) return null;
+  var acts = window._IA_ACTIVOS || [];
+  for(var i=0;i<acts.length;i++){ if(acts[i].s===sym) return acts[i]; }
+  // Buscar en datos extra (comm, metales, futuros, etfs, bonos)
+  var d = window._mktDataSections;
+  if(d){
+    var sections = ['comm','metales','futuros','bonos','etfs'];
+    for(var si=0;si<sections.length;si++){
+      var sec = d[sections[si]];
+      if(sec){ for(var j=0;j<sec.length;j++){ if(sec[j].s===sym) return sec[j]; } }
+    }
+    // acciones por país
+    if(d.acciones){
+      var paises = Object.keys(d.acciones);
+      for(var pi=0;pi<paises.length;pi++){
+        var arr = d.acciones[paises[pi]];
+        if(arr){ for(var k=0;k<arr.length;k++){ if(arr[k].s===sym) return arr[k]; } }
+      }
+    }
+  }
+  return null;
+};
+
 function _fmt(n, tipo) {
   if (n === null || n === undefined || isNaN(n)) return '--';
   var isLatam = true; // LATAM hardcoded - iPhone Argentina devuelve en-US
@@ -884,7 +910,8 @@ function _renderPortfolioItems(items){
   var prcs = window._pcPrices || {};
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
-    var rowActs = window._IA_ACTIVOS||[]; var rowAct=null; for(var ri2=0;ri2<rowActs.length;ri2++){if(rowActs[ri2].s===item.simbolo){rowAct=rowActs[ri2];break;}}
+    var rowAct = window._findAssetGlobal ? window._findAssetGlobal(item.simbolo) : null;
+    if(!rowAct){ var rowActs=window._IA_ACTIVOS||[]; for(var ri2=0;ri2<rowActs.length;ri2++){if(rowActs[ri2].s===item.simbolo){rowAct=rowActs[ri2];break;}} }
     var precio = prcs[item.simbolo] || item.precio_compra;
     var valor = item.cantidad * precio;
     var ch24 = window._pcChange24 && window._pcChange24[item.simbolo] !== undefined ? window._pcChange24[item.simbolo] : (precio > 0 && item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0);
@@ -4057,7 +4084,7 @@ function _renderIALista(signals, keepLoadingBar) {
     var upsideHtml = '';
     if(s.upside != null){
       var uSign = s.upside >= 0 ? '↑+' : '↓';
-      upsideHtml = '<span style="color:var(--textDim)"> · </span><span style="color:'+dirColor+';font-weight:800">'+uSign+Math.abs(s.upside).toFixed(1)+'% al precio objetivo</span>';
+      upsideHtml = '<span style="color:var(--textDim)"> · </span><span style="color:'+dirColor+';font-weight:700">'+uSign+Math.abs(s.upside).toFixed(1)+'%</span>';
     }
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="display:flex;align-items:center;gap:9px;padding:12px 13px">' +
@@ -4066,12 +4093,12 @@ function _renderIALista(signals, keepLoadingBar) {
         // Centro — 3 líneas compactas
         '<div style="flex:1;min-width:0">' +
           '<div style="display:flex;align-items:center;gap:5px">' +
-            '<span style="font-size:13px;font-weight:700;color:var(--text)">'+s.simbolo+'</span>' +
-            '<span style="font-size:8px;font-weight:800;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
-            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:800;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
+            '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
+            '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
+            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
           '</div>' +
           '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
-          '<div style="margin-top:3px"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:800">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
+          '<div style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
         '</div>' +
         // Derecha — precio, %, dots (como nativa sigRight)
         '<div style="align-items:flex-end;text-align:right;flex-shrink:0">' +
