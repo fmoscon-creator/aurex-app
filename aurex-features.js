@@ -4979,85 +4979,40 @@ window._refreshHoyPct = function() {
   hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
 };
 
-// --- Fase 4 F3: Sort menus (modal central — réplica nativa) ---
+// --- Fase 4 F3: Sort menus ---
 
 (function _addSortStyles() {
   if (document.getElementById('sort-menu-styles')) return;
   var st = document.createElement('style');
   st.id = 'sort-menu-styles';
   st.textContent =
-    /* Botón sort en cada tab */
     '.sort-wrap{position:relative;display:inline-block;}' +
     '.sort-btn{background:var(--bg);border:1px solid var(--border2);border-radius:6px;' +
     'padding:4px 10px;font-size:11px;font-weight:600;color:var(--text);cursor:pointer;' +
     'display:inline-flex;align-items:center;gap:4px;white-space:nowrap;' +
-    'user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    'user-select:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
     '.sort-btn .sort-arrow{color:var(--gold);font-size:10px;}' +
-    /* Modal central */
-    '#sort-overlay{position:fixed;inset:0;z-index:2050;background:rgba(0,0,0,0.5);' +
-    'display:flex;align-items:center;justify-content:center;padding:20px;}' +
-    '#sort-modal{background:var(--card);border-radius:18px;width:100%;max-width:340px;' +
-    'max-height:80vh;overflow-y:auto;padding:18px 14px;animation:lp-fadein 0.18s ease-out;' +
-    'display:flex;flex-direction:column;gap:6px;-webkit-user-select:none;user-select:none;' +
-    '-webkit-touch-callout:none;}' +
-    '.sort-header{display:flex;align-items:center;justify-content:center;gap:8px;' +
-    'padding:6px 0 14px;border-bottom:1px solid var(--border);margin-bottom:6px;}' +
-    '.sort-header-icon{width:28px;height:28px;border-radius:8px;background:#3B82F6;' +
-    'display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}' +
-    '.sort-header-title{font-size:16px;font-weight:700;color:var(--text);}' +
-    '.sort-item{display:flex;align-items:center;gap:12px;padding:11px 12px;cursor:pointer;' +
-    'border-radius:11px;background:transparent;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.sort-item.active{background:var(--goldBg);border:1px solid var(--gold);}' +
-    '.sort-item-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;' +
-    'justify-content:center;font-size:14px;flex-shrink:0;}' +
-    '.sort-item-text{flex:1;min-width:0;}' +
-    '.sort-item-label{font-size:14px;font-weight:600;color:var(--text);}' +
-    '.sort-item-desc{font-size:11px;color:var(--textSec);margin-top:1px;}' +
-    '.sort-item-check{color:var(--gold);font-size:16px;font-weight:700;}' +
-    '.sort-cancel{margin-top:10px;background:transparent;border:1px solid var(--border2);' +
-    'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
-    'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.sort-cancel:active{background:var(--border);}';
+    '.sort-dd{position:absolute;top:100%;right:0;margin-top:4px;z-index:200;' +
+    'background:var(--card);border:1px solid var(--border2);border-radius:8px;' +
+    'min-width:140px;padding:4px 0;box-shadow:0 4px 12px rgba(0,0,0,0.15);}' +
+    '.sort-dd-item{padding:8px 12px;font-size:12px;color:var(--text);cursor:pointer;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.sort-dd-item.active{color:var(--gold);font-weight:700;}';
   document.head.appendChild(st);
 })();
 
-// Definición de opciones por tab — cada una con icono, label, descripción y color de fondo
 window._sortCfgs = {
   portfolio: { key:'aurex_sort_portfolio', def:'valor', opts:[
-    {k:'valor',     l:'Valor',        d:'Valor de mercado actual',           ic:'📊', bg:'#22c55e20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pnl_usd',   l:'P&L $',        d:'Ganancia total absoluta desde compra', ic:'💰', bg:'#22c55e20'},
-    {k:'pnl_pct',   l:'P&L %',        d:'Ganancia total en % desde compra',  ic:'💰', bg:'#22c55e20'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'},
-    {k:'fecha',     l:'Fecha',        d:'Orden de carga original',           ic:'⏰', bg:'#9CA3AF20'}
+    {k:'valor',l:'Valor'},{k:'nombre',l:'Nombre'},{k:'variacion',l:'Variación'},{k:'categoria',l:'Categoría'}
   ]},
   mercados: { key:'aurex_sort_mercados', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden del catálogo original',       ic:'⏰', bg:'#9CA3AF20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'precio',    l:'Precio',       d:'Mayor precio arriba',               ic:'💲', bg:'#22c55e20'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'}
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'precio',l:'Precio'},{k:'variacion',l:'Variación'},{k:'mcap',l:'Market Cap'}
   ]},
   watchlist: { key:'aurex_sort_watchlist', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden del catálogo original',       ic:'⏰', bg:'#9CA3AF20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pct_7d',    l:'% 7d',         d:'Mayor cambio en 7 días',            ic:'📈', bg:'#ef444420'},
-    {k:'pct_30d',   l:'% 30d',        d:'Mayor cambio en 30 días',           ic:'📈', bg:'#ef444420'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'}
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'precio',l:'Precio'},{k:'variacion',l:'Variación'},{k:'senalia',l:'Señal IA'}
   ]},
   ia: { key:'aurex_sort_ia', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden por confianza IA',            ic:'🎯', bg:'#ef444420'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pct_7d',    l:'% 7d',         d:'Mayor cambio en 7 días',            ic:'📈', bg:'#ef444420'},
-    {k:'pct_30d',   l:'% 30d',        d:'Mayor cambio en 30 días',           ic:'📈', bg:'#ef444420'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'upside',    l:'Upside',       d:'Mayor % al objetivo',               ic:'🚀', bg:'#22c55e20'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'}
+    {k:'default',l:'Default'},{k:'nombre',l:'Nombre'},{k:'variacion',l:'Variación'},{k:'altaconv',l:'Alta Conv.'}
   ]}
 };
 window._currSort = {};
@@ -5072,56 +5027,10 @@ function _setSort(tab, k) {
   window._currSort[tab] = k;
   localStorage.setItem(window._sortCfgs[tab].key, k);
 }
-function _closeSortModal() {
-  var ov = document.getElementById('sort-overlay');
-  if (ov) ov.remove();
+function _closeSortDDs() {
+  document.querySelectorAll('.sort-dd').forEach(function(d){ d.remove(); });
 }
-
-function _openSortModal(tab, onApply) {
-  _closeSortModal();
-  var cfg = window._sortCfgs[tab];
-  var cur = _getSort(tab);
-  var ov = document.createElement('div');
-  ov.id = 'sort-overlay';
-  var modal = document.createElement('div');
-  modal.id = 'sort-modal';
-  // Header
-  var hdr = document.createElement('div');
-  hdr.className = 'sort-header';
-  hdr.innerHTML = '<div class="sort-header-icon">⇅</div>' +
-    '<span class="sort-header-title">Ordenar por</span>';
-  modal.appendChild(hdr);
-  // Items
-  cfg.opts.forEach(function(o) {
-    var it = document.createElement('div');
-    it.className = 'sort-item' + (o.k === cur ? ' active' : '');
-    it.innerHTML =
-      '<div class="sort-item-icon" style="background:' + o.bg + ';">' + o.ic + '</div>' +
-      '<div class="sort-item-text">' +
-        '<div class="sort-item-label">' + o.l + '</div>' +
-        '<div class="sort-item-desc">' + o.d + '</div>' +
-      '</div>' +
-      (o.k === cur ? '<div class="sort-item-check">✓</div>' : '');
-    it.addEventListener('click', function() {
-      _setSort(tab, o.k);
-      _closeSortModal();
-      // Actualizar label del botón visible
-      var btn = document.getElementById(tab + '-sort-btn');
-      if (btn) btn.innerHTML = 'Ordenar: ' + o.l + ' <span class="sort-arrow">↓</span>';
-      if (onApply) onApply(o.k);
-    });
-    modal.appendChild(it);
-  });
-  // Cancelar
-  var cancel = document.createElement('div');
-  cancel.className = 'sort-cancel';
-  cancel.textContent = 'Cancelar';
-  cancel.addEventListener('click', _closeSortModal);
-  modal.appendChild(cancel);
-  ov.appendChild(modal);
-  ov.addEventListener('click', function(e){ if (e.target === ov) _closeSortModal(); });
-  document.body.appendChild(ov);
-}
+document.addEventListener('click', _closeSortDDs);
 
 function _buildSortBtn(tab, onApply) {
   var cfg = window._sortCfgs[tab];
@@ -5136,7 +5045,25 @@ function _buildSortBtn(tab, onApply) {
   btn.innerHTML = 'Ordenar: '+curOpt.l+' <span class="sort-arrow">↓</span>';
   btn.onclick = function(e) {
     e.stopPropagation();
-    _openSortModal(tab, onApply);
+    var existing = wrap.querySelector('.sort-dd');
+    _closeSortDDs();
+    if (existing) return;
+    var dd = document.createElement('div');
+    dd.className = 'sort-dd';
+    cfg.opts.forEach(function(o){
+      var it = document.createElement('div');
+      it.className = 'sort-dd-item'+(o.k===_getSort(tab)?' active':'');
+      it.textContent = o.l;
+      it.onclick = function(ev){
+        ev.stopPropagation();
+        _setSort(tab, o.k);
+        btn.innerHTML = 'Ordenar: '+o.l+' <span class="sort-arrow">↓</span>';
+        _closeSortDDs();
+        if (onApply) onApply(o.k);
+      };
+      dd.appendChild(it);
+    });
+    wrap.appendChild(dd);
   };
   wrap.appendChild(btn);
   return wrap;
@@ -5155,168 +5082,100 @@ function _sortDOMItems(container, itemsSelector, extractFn, descending) {
   items.forEach(function(it){ container.appendChild(it); });
 }
 
-// === Aplicar sort por tab — datos reales desde objetos globales ===
-
-function _signalDirOrder(dir) {
-  // ALCISTA → ALTA CONV → BAJISTA → sin señal
-  if (dir === 'alcista') return 0;
-  if (dir === 'alta_conf' || dir === 'ALTA CONV-IA') return 1;
-  if (dir === 'bajista') return 2;
-  return 3;
-}
-
-function _getSignalForSym(sym) {
-  var sigs = window._iaSignals || [];
-  for (var i=0; i<sigs.length; i++) if (sigs[i].simbolo === sym) return sigs[i];
-  return null;
-}
+// === Aplicar sort por tab (DOM-based simple, usa data del DOM rendered) ===
 
 window._applyPortfolioSort = function(key) {
-  var items = window._portItems || [];
-  if (!items.length) return;
-  var prcs = window._pcPrices || {};
-  var chg24 = window._pcChange24 || {};
-  var sorted = items.slice();
-  sorted.sort(function(a, b) {
-    var pa = prcs[a.simbolo] || a.precio_compra || 0;
-    var pb = prcs[b.simbolo] || b.precio_compra || 0;
-    if (key === 'valor') return (pb * b.cantidad) - (pa * a.cantidad);
-    if (key === 'pct_hoy') return (chg24[b.simbolo]||0) - (chg24[a.simbolo]||0);
-    if (key === 'pnl_usd') return ((pb - b.precio_compra) * b.cantidad) - ((pa - a.precio_compra) * a.cantidad);
-    if (key === 'pnl_pct') {
-      var pnlA = a.precio_compra > 0 ? ((pa - a.precio_compra)/a.precio_compra*100) : 0;
-      var pnlB = b.precio_compra > 0 ? ((pb - b.precio_compra)/b.precio_compra*100) : 0;
-      return pnlB - pnlA;
-    }
-    if (key === 'senal_ia') {
-      var sA = _getSignalForSym(a.simbolo), sB = _getSignalForSym(b.simbolo);
-      return _signalDirOrder(sA && sA.direccion) - _signalDirOrder(sB && sB.direccion);
-    }
-    if (key === 'prob') {
-      var sA = _getSignalForSym(a.simbolo), sB = _getSignalForSym(b.simbolo);
-      var pA = sA ? (sA.confianza || sA.prob_principal || 0) : 0;
-      var pB = sB ? (sB.confianza || sB.prob_principal || 0) : 0;
-      return pB - pA;
-    }
-    if (key === 'ticker') return (a.simbolo||'').localeCompare(b.simbolo||'');
-    if (key === 'fecha') return new Date(a.created_at||0) - new Date(b.created_at||0);
-    return 0;
-  });
-  // Persistir orden y re-renderizar
-  try { localStorage.setItem('aurex_port_order', JSON.stringify(sorted.map(function(i){return i.id;}))); } catch(_){}
-  window._portItems = sorted;
-  if (typeof window._renderPortfolioItems === 'function') window._renderPortfolioItems(sorted);
+  var cnt = document.getElementById('port-cnt');
+  if (!cnt) return;
+  if (key === 'valor') {
+    // Buscar el span con valor en cada row
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var t = el.textContent.match(/\$([\d.,]+)/);
+      return t ? parseFloat(t[1].replace(/\./g,'').replace(',','.')) : 0;
+    }, true);
+  } else if (key === 'nombre') {
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var sym = el.querySelector('[id^="port-sym-"]');
+      return sym ? sym.textContent.trim() : el.id;
+    }, false);
+  } else if (key === 'variacion') {
+    _sortDOMItems(cnt, '[id^="port-row-"]', function(el){
+      var pctEl = el.querySelector('[id^="pct-"]');
+      if (!pctEl) return 0;
+      var t = pctEl.textContent.replace(/[^\d.,\-]/g,'').replace(',','.');
+      return parseFloat(t)||0;
+    }, true);
+  }
+  // 'categoria' requiere data del array — TBD
 };
-
-function _sortDOMRowsBySymbol(container, selector, getKey, descending) {
-  var items = Array.from(container.querySelectorAll(selector));
-  if (items.length < 2) return;
-  items.sort(function(a, b) {
-    var ka = getKey(a), kb = getKey(b);
-    if (typeof ka === 'string') return descending ? kb.localeCompare(ka) : ka.localeCompare(kb);
-    return descending ? (kb - ka) : (ka - kb);
-  });
-  items.forEach(function(it){ container.appendChild(it); });
-}
 
 window._applyMercadosSort = function(key) {
   var cnt = document.getElementById('cnt');
-  if (!cnt) return;
-  var prcs = window._pcPrices || {};
-  var chg24 = window._pcChange24 || {};
-  var getSym = function(el){ return (el.id || '').replace('row-', ''); };
-  if (key === 'default') {
-    // Restaurar orden original — re-renderizar tab actual si hay función
-    if (typeof window.renderTab === 'function') {
-      try { window.renderTab(window._activeTab||'cripto', window._activePais); } catch(_){}
-    }
-    return;
-  }
-  if (key === 'pct_hoy') {
-    _sortDOMRowsBySymbol(cnt, '.item-row', function(el){ return chg24[getSym(el)] || 0; }, true);
-  } else if (key === 'precio') {
-    _sortDOMRowsBySymbol(cnt, '.item-row', function(el){ return prcs[getSym(el)] || 0; }, true);
-  } else if (key === 'ticker') {
-    _sortDOMRowsBySymbol(cnt, '.item-row', function(el){ return getSym(el); }, false);
-  } else if (key === 'senal_ia') {
-    _sortDOMRowsBySymbol(cnt, '.item-row', function(el){
-      var s = _getSignalForSym(getSym(el));
-      return _signalDirOrder(s && s.direccion);
-    }, false); // ascending: alcista primero
-  } else if (key === 'prob') {
-    _sortDOMRowsBySymbol(cnt, '.item-row', function(el){
-      var s = _getSignalForSym(getSym(el));
-      return s ? (s.confianza || s.prob_principal || 0) : 0;
+  if (!cnt || key === 'default') return;
+  var sel = '.mkt-row, [id^="mkt-row-"], [data-mkt-row]';
+  if (key === 'nombre') {
+    _sortDOMItems(cnt, sel, function(el){
+      var s = el.querySelector('[id^="mkt-sym-"], .mkt-sym');
+      return s ? s.textContent.trim() : el.textContent.trim().substr(0,5);
+    }, false);
+  } else if (key === 'precio' || key === 'variacion' || key === 'mcap') {
+    // extraer del texto: precios y % visibles
+    _sortDOMItems(cnt, sel, function(el){
+      var match = key === 'variacion'
+        ? el.textContent.match(/([+\-]?[\d.,]+)\s*%/)
+        : el.textContent.match(/\$([\d.,]+)/);
+      return match ? parseFloat(match[1].replace(/\./g,'').replace(',','.')) : 0;
     }, true);
   }
 };
 
 window._applyWatchlistSort = function(key) {
   var wc = document.getElementById('watch-cnt');
-  if (!wc) return;
-  // Detectar items de activos (los que tienen onclick=wlOpenDetail)
-  var activos = Array.from(wc.querySelectorAll('div[onclick^="wlOpenDetail"]'));
-  if (key === 'default' || activos.length < 2) {
-    if (key === 'default' && typeof window.renderWatchCnt === 'function') {
-      try { window.renderWatchCnt(); } catch(_){}
+  if (!wc || key === 'default') return;
+  // Sort solo los items de activos (preservar children[0..2])
+  var allChildren = Array.from(wc.children);
+  var activos = allChildren.slice(3); // primeros 3 son selector + barra acciones + sort-bar
+  if (activos.length < 2) return;
+  activos.sort(function(a,b){
+    var ta = a.textContent, tb = b.textContent;
+    if (key === 'nombre') {
+      var sa = (ta.match(/^\s*([A-Z=]+)/) || [,''])[1];
+      var sb = (tb.match(/^\s*([A-Z=]+)/) || [,''])[1];
+      return sa.localeCompare(sb);
     }
-    return;
-  }
-  var prcs = window._pcPrices || {};
-  var chg24 = window._pcChange24 || {};
-  var hist = window._wlCompareHist || {};
-  var getSym = function(el){
-    var m = (el.getAttribute('onclick')||'').match(/wlOpenDetail\('([^']+)'\)/);
-    return m ? m[1] : '';
-  };
-  activos.sort(function(a, b) {
-    var sa = getSym(a), sb = getSym(b);
-    if (key === 'pct_hoy') return (chg24[sb]||0) - (chg24[sa]||0);
-    if (key === 'pct_7d') return ((hist[sb]&&hist[sb]['7d'])||0) - ((hist[sa]&&hist[sa]['7d'])||0);
-    if (key === 'pct_30d') return ((hist[sb]&&hist[sb]['1m'])||0) - ((hist[sa]&&hist[sa]['1m'])||0);
-    if (key === 'prob') {
-      var sigA = _getSignalForSym(sa), sigB = _getSignalForSym(sb);
-      return ((sigB&&(sigB.confianza||sigB.prob_principal))||0) - ((sigA&&(sigA.confianza||sigA.prob_principal))||0);
-    }
-    if (key === 'senal_ia') {
-      var sigA = _getSignalForSym(sa), sigB = _getSignalForSym(sb);
-      return _signalDirOrder(sigA&&sigA.direccion) - _signalDirOrder(sigB&&sigB.direccion);
-    }
-    if (key === 'ticker') return sa.localeCompare(sb);
-    return 0;
+    var ma, mb;
+    if (key === 'precio') { ma = ta.match(/\$([\d.,]+)/); mb = tb.match(/\$([\d.,]+)/); }
+    else if (key === 'variacion') { ma = ta.match(/([+\-]?[\d.,]+)\s*%/); mb = tb.match(/([+\-]?[\d.,]+)\s*%/); }
+    else if (key === 'senalia') { ma = ta.match(/(\d+)\s*%/); mb = tb.match(/(\d+)\s*%/); }
+    var va = ma ? parseFloat(ma[1].replace(/\./g,'').replace(',','.')) : 0;
+    var vb = mb ? parseFloat(mb[1].replace(/\./g,'').replace(',','.')) : 0;
+    return vb - va;
   });
   activos.forEach(function(it){ wc.appendChild(it); });
 };
 
 window._applyIASort = function(key) {
   var cnt = document.getElementById('ia-list');
-  if (!cnt) return;
-  if (key === 'default') {
-    if (typeof window.generarSenalesIA === 'function') {
-      try { window.generarSenalesIA(); } catch(_){}
-    }
-    return;
-  }
+  if (!cnt || key === 'default') return;
   var items = Array.from(cnt.children);
   if (items.length < 2) return;
-  var chg24 = window._pcChange24 || {};
-  var hist = window._wlCompareHist || {};
-  var getSym = function(el){
-    var m = (el.id||'').match(/ia-row-(\d+)/);
-    if (!m) return '';
-    var idx = parseInt(m[1], 10);
-    var sigs = window._iaSignals || [];
-    return sigs[idx] ? sigs[idx].simbolo : '';
-  };
-  items.sort(function(a, b) {
-    var sa = getSym(a), sb = getSym(b);
-    var sigA = _getSignalForSym(sa), sigB = _getSignalForSym(sb);
-    if (key === 'pct_hoy') return (chg24[sb]||0) - (chg24[sa]||0);
-    if (key === 'pct_7d') return ((hist[sb]&&hist[sb]['7d'])||0) - ((hist[sa]&&hist[sa]['7d'])||0);
-    if (key === 'pct_30d') return ((hist[sb]&&hist[sb]['1m'])||0) - ((hist[sa]&&hist[sa]['1m'])||0);
-    if (key === 'prob') return ((sigB&&(sigB.confianza||sigB.prob_principal))||0) - ((sigA&&(sigA.confianza||sigA.prob_principal))||0);
-    if (key === 'upside') return ((sigB&&sigB.upside)||0) - ((sigA&&sigA.upside)||0);
-    if (key === 'ticker') return sa.localeCompare(sb);
+  items.sort(function(a,b){
+    var ta = a.textContent, tb = b.textContent;
+    if (key === 'nombre') {
+      var sa = (ta.match(/([A-Z=]{2,})/) || [,''])[1];
+      var sb = (tb.match(/([A-Z=]{2,})/) || [,''])[1];
+      return sa.localeCompare(sb);
+    }
+    if (key === 'variacion') {
+      var ma = ta.match(/([+\-]?[\d.,]+)\s*%/);
+      var mb = tb.match(/([+\-]?[\d.,]+)\s*%/);
+      return (mb?parseFloat(mb[1].replace(',','.')):0) - (ma?parseFloat(ma[1].replace(',','.')):0);
+    }
+    if (key === 'altaconv') {
+      var ha = /ALTA CONV/.test(ta) ? 1 : 0;
+      var hb = /ALTA CONV/.test(tb) ? 1 : 0;
+      return hb - ha;
+    }
     return 0;
   });
   items.forEach(function(it){ cnt.appendChild(it); });
