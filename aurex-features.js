@@ -4048,9 +4048,9 @@ function _renderIALista(signals, keepLoadingBar) {
     var abbr = s.abbr || s.simbolo.substring(0,3);
     var actColor = s.color || 'var(--textDim)';
     var logoHtml = s.logo ?
-      '<img src="'+s.logo+'" style="width:22px;height:22px;object-fit:contain" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
-      '<span style="display:none;width:22px;height:22px;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>' :
-      '<span style="display:flex;width:22px;height:22px;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>';
+      '<img src="'+s.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;background:#161B22" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">'+
+      '<span style="display:none;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>' :
+      '<span style="display:flex;width:22px;height:22px;border-radius:50%;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:'+actColor+'">'+abbr+'</span>';
     // Dots IA (5x5 como nativa, posición derecha debajo del %)
     var dotsHtml = (function(){var sc=s.scores||{};var keys=['tendencia','rsi','volumen','volatilidad','correlacion','oro_petroleo','macro','earnings','macd','soporte_resist'];var dots='';keys.forEach(function(k){var v=sc[k]||0;if(v>0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--green);margin:0 1px"></span>';else if(v<-0.01)dots+='<span style="display:inline-block;width:5px;height:5px;border-radius:2.5px;background:var(--red);margin:0 1px"></span>';});return dots?'<span style="display:inline-flex;flex-wrap:wrap;gap:2px;justify-content:flex-end;margin-top:3px">'+dots+'</span>':'';})();
     // Upside al objetivo (como nativa — compacto en misma línea)
