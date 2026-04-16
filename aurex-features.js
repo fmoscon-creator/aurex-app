@@ -5351,6 +5351,22 @@ window._applyIASort = function(key) {
     'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
     'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
     '.lp-cancel:active{background:var(--border);}' +
+    /* Header enriquecido Mercados */
+    '.lp-header-rich{display:flex;align-items:center;gap:10px;padding:6px 0 10px;position:relative;}' +
+    '.lp-header-rich .lp-logo{width:38px;height:38px;border-radius:50%;object-fit:cover;flex-shrink:0;}' +
+    '.lp-header-rich .lp-info{flex:1;text-align:left;}' +
+    '.lp-header-rich .lp-close{position:absolute;top:2px;right:0;font-size:20px;cursor:pointer;' +
+    'color:var(--textSec);line-height:1;padding:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.lp-chips{display:flex;gap:6px;margin-bottom:6px;}' +
+    '.lp-chip{flex:1;background:var(--bg);border-radius:8px;padding:6px 4px;text-align:center;}' +
+    '.lp-chip-label{font-size:9px;color:var(--textDim);margin-bottom:2px;}' +
+    '.lp-chip-val{font-size:11px;font-weight:700;color:var(--text);}' +
+    '.lp-signal{text-align:center;padding:4px 0 6px;font-size:12px;color:var(--textSec);}' +
+    '.lp-signal strong{font-weight:700;}' +
+    '.lp-fav-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 14px;cursor:pointer;' +
+    'font-size:14px;font-weight:700;border-radius:11px;background:var(--gold);color:#1a1a2e;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
+    '.lp-fav-btn:active{opacity:0.7;}' +
     /* Evitar selección de texto y menú nativo iOS al hacer long press */
     '[id^="port-row-"], #cnt .item-row, #watch-cnt > div, ' +
     '#longpress-modal, #longpress-modal *, .lp-option, .lp-cancel {' +
@@ -5432,17 +5448,9 @@ function _lpGetActivoMeta(sym) {
 window._lpAgregarFavorito = function(ticker) {
   try {
     var pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]');
-    if (pins.indexOf(ticker) >= 0) {
-      alert(ticker + ' ya está en favoritos');
-      return;
-    }
-    if (pins.length >= 4) {
-      alert('Máximo 4 favoritos. Quitá uno antes de agregar.');
-      return;
-    }
+    if (pins.indexOf(ticker) >= 0) return;
     pins.push(ticker);
     localStorage.setItem('aurex_pins', JSON.stringify(pins));
-    alert(ticker + ' agregado a favoritos');
   } catch(e) { console.error('aurex_pins', e); }
 };
 
@@ -5474,6 +5482,127 @@ window._lpCompartirMercados = function(ticker) {
     navigator.clipboard.writeText(texto);
     alert('Copiado al portapapeles');
   }
+};
+
+window._lpQuitarFavorito = function(ticker) {
+  try {
+    var pins = JSON.parse(localStorage.getItem('aurex_pins') || '[]');
+    var idx = pins.indexOf(ticker);
+    if (idx < 0) return;
+    pins.splice(idx, 1);
+    localStorage.setItem('aurex_pins', JSON.stringify(pins));
+  } catch(e) { console.error('aurex_pins remove', e); }
+};
+
+function _isFavorito(ticker) {
+  try { return (JSON.parse(localStorage.getItem('aurex_pins') || '[]')).indexOf(ticker) >= 0; } catch(e) { return false; }
+}
+
+// Modal enriquecido para Mercados (igual a nativa IMG_1758)
+window._showMercadosLPSheet = function(ticker, meta) {
+  window._closeLPSheet();
+  var name = meta ? meta.n : ticker;
+  var logo = meta ? meta.logo : '';
+  var sig = _getSignalForSym(ticker);
+  var prcs = window._pcPrices || {};
+  var chg24 = window._pcChange24 || {};
+  var precio = prcs[ticker] || 0;
+  var pct24 = chg24[ticker] || 0;
+  var objetivo = sig ? sig.objetivo : null;
+  var direccion = sig ? sig.direccion : null;
+  var confianza = sig ? (sig.confianza || sig.prob_principal || 0) : 0;
+  var isFav = _isFavorito(ticker);
+
+  var overlay = document.createElement('div');
+  overlay.id = 'longpress-overlay';
+  var modal = document.createElement('div');
+  modal.id = 'longpress-modal';
+
+  // Header con logo + nombre + ✕
+  var header = document.createElement('div');
+  header.className = 'lp-header-rich';
+  header.innerHTML =
+    (logo ? '<img class="lp-logo" src="' + logo + '" alt="">' : '') +
+    '<div class="lp-info">' +
+      '<span class="lp-ticker">' + ticker + '</span>' +
+      '<span class="lp-name">' + name + '</span>' +
+    '</div>' +
+    '<span class="lp-close">&times;</span>';
+  modal.appendChild(header);
+  header.querySelector('.lp-close').addEventListener('click', window._closeLPSheet);
+
+  // 3 chips: Precio | 24h | Objetivo IA
+  var fmtNum = function(v, dec) {
+    if (!v) return '--';
+    return '$' + Number(v).toLocaleString('es-AR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
+  };
+  var dec = precio > 100 ? 2 : (precio > 1 ? 2 : (precio > 0.01 ? 4 : 6));
+  var pct24Str = (pct24 >= 0 ? '+' : '') + pct24.toFixed(2) + '%';
+  var pct24Color = pct24 >= 0 ? 'var(--green)' : 'var(--red)';
+  var objColor = objetivo && precio && Number(objetivo) > precio ? 'var(--green)' : 'var(--red)';
+  var objDec = objetivo && Number(objetivo) > 100 ? 2 : (Number(objetivo) > 1 ? 2 : 4);
+
+  var chips = document.createElement('div');
+  chips.className = 'lp-chips';
+  chips.innerHTML =
+    '<div class="lp-chip"><div class="lp-chip-label">Precio</div><div class="lp-chip-val">' + fmtNum(precio, dec) + '</div></div>' +
+    '<div class="lp-chip"><div class="lp-chip-label">24h</div><div class="lp-chip-val" style="color:' + pct24Color + '">' + pct24Str + '</div></div>' +
+    '<div class="lp-chip"><div class="lp-chip-label">Objetivo IA</div><div class="lp-chip-val" style="color:' + objColor + '">' + (objetivo ? fmtNum(objetivo, objDec) : '--') + '</div></div>';
+  modal.appendChild(chips);
+
+  // Señal IA
+  if (direccion) {
+    var dirLabel = direccion === 'alcista' ? 'ALCISTA' : direccion === 'bajista' ? 'BAJISTA' : direccion.toUpperCase();
+    var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : 'var(--gold)';
+    var sigDiv = document.createElement('div');
+    sigDiv.className = 'lp-signal';
+    sigDiv.innerHTML = 'Señal IA <strong style="color:' + dirColor + '">' + dirLabel + ' ' + Math.round(confianza) + '%</strong>';
+    modal.appendChild(sigDiv);
+  }
+
+  // Botón Favoritos (dorado, igual a nativa)
+  var favBtn = document.createElement('div');
+  favBtn.className = 'lp-fav-btn';
+  favBtn.innerHTML = isFav
+    ? '★ Quitar de Favoritos'
+    : '★ Agregar a Favoritos';
+  if (!isFav) {
+    favBtn.style.background = 'transparent';
+    favBtn.style.border = '1.5px solid var(--gold)';
+    favBtn.style.color = 'var(--gold)';
+  }
+  favBtn.addEventListener('click', function() {
+    window._closeLPSheet();
+    if (isFav) {
+      window._lpQuitarFavorito(ticker);
+    } else {
+      window._lpAgregarFavorito(ticker);
+    }
+  });
+  modal.appendChild(favBtn);
+
+  // Agregar a Portfolio
+  var portBtn = document.createElement('div');
+  portBtn.className = 'lp-option';
+  portBtn.innerHTML = '<span class="lp-icon">💼</span><span>Agregar a Portfolio</span>';
+  portBtn.addEventListener('click', function() {
+    window._closeLPSheet();
+    setTimeout(function(){ if (window.openPortModal) window.openPortModal(ticker); }, 50);
+  });
+  modal.appendChild(portBtn);
+
+  // Cerrar
+  var cancel = document.createElement('div');
+  cancel.className = 'lp-cancel';
+  cancel.textContent = 'Cerrar';
+  cancel.addEventListener('click', window._closeLPSheet);
+  modal.appendChild(cancel);
+
+  overlay.appendChild(modal);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) window._closeLPSheet();
+  });
+  document.body.appendChild(overlay);
 };
 
 // Editar posición — abre modal mínimo de edición de cantidad y precio
@@ -5560,18 +5689,8 @@ function _attachAllMercadosLP() {
     if (el._lpAttached) return;
     var ticker = el.id.replace('row-', '');
     var meta = _lpGetActivoMeta(ticker);
-    var name = meta ? meta.n : '';
     _attachLongPress(el, function() {
-      window._showLPSheet(ticker, name, [
-        { icon:'📊', label:'Análisis IA completo', variant:'primary',
-          action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
-        { icon:'⭐', label:'Agregar a Favoritos',
-          action: function(){ window._lpAgregarFavorito(ticker); } },
-        { icon:'💼', label:'Agregar a Portfolio',
-          action: function(){ if (window.openPortModal) window.openPortModal(ticker); } },
-        { icon:'📤', label:'Compartir',
-          action: function(){ window._lpCompartirMercados(ticker); } }
-      ]);
+      window._showMercadosLPSheet(ticker, meta);
     });
   });
 }
