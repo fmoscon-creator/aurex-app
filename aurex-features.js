@@ -2026,17 +2026,21 @@ window.renderWatchCnt = function(){
   if(lists.length > 2) html += '<div style="position:absolute;right:14px;top:0;bottom:0;display:flex;align-items:center;pointer-events:none"><div style="background:rgba(212,160,23,0.19);border-radius:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center"><span style="font-size:16px;color:var(--gold);font-weight:800">›</span></div></div>';
   html += '</div>';
 
-  // Header lista seleccionada
+  // Header lista seleccionada — 2 filas como nativa
   if(currentList){
-    html += '<div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 11px 8px;padding:10px 13px;border-radius:10px;border:1px solid var(--border2);background:var(--card)">';
-    html += '<div style="width:8px;height:8px;border-radius:4px;background:'+currentList.color+'"></div>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--text);flex:1">'+currentList.name+'</span>';
+    html += '<div style="margin:0 11px 8px;padding:10px 13px;border-radius:10px;border:1px solid var(--border2);background:var(--card)">';
+    // Fila 1: dot + nombre + PRINCIPAL
+    html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">';
+    html += '<div style="width:10px;height:10px;border-radius:5px;background:'+currentList.color+'"></div>';
+    html += '<span style="font-size:13px;font-weight:700;color:var(--text);flex-shrink:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+currentList.name+'</span>';
     if(currentList.is_primary) {
-      html += '<span style="font-size:8px;font-weight:700;color:var(--gold);background:var(--goldBg);padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
+      html += '<span style="font-size:8px;font-weight:800;color:var(--gold);background:var(--navBg,#0D1117);border:1px solid var(--gold);padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
     } else {
-      html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:var(--textSec);background:var(--border);padding:4px 8px;border-radius:6px;cursor:pointer;border:1px solid var(--border2);text-decoration:none">☆ Marcar principal</a>';
+      html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:var(--text);background:var(--chipBg,var(--border));border:1px solid var(--border2);padding:4px 8px;border-radius:6px;cursor:pointer;text-decoration:none">☆ Marcar principal</a>';
     }
-    html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
+    html += '</div>';
+    // Fila 2: Comparar + 📤 + Agregar + 🗑️ (en fila)
+    html += '<div style="display:flex;align-items:center;gap:10px">';
     var _cmpLabel = '⚖️ Comparar';
     var _cmpStyle = 'font-size:12px;font-weight:700;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
@@ -2047,8 +2051,10 @@ window.renderWatchCnt = function(){
       _cmpStyle = 'font-size:12px;font-weight:700;color:var(--red);background:#F8514920;padding:8px 14px;border-radius:8px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
     }
     html += '<a href="javascript:void(0)" data-wl="compareMode" style="'+_cmpStyle+'">'+_cmpLabel+'</a>';
+    html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
     html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;cursor:pointer;padding:4px">🗑️</div>';
+    html += '</div>';
     html += '</div>';
   }
 
