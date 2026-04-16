@@ -3672,6 +3672,7 @@ function generarSenalesIA() {
           s.nombre = s.nombre || (activo ? activo.n : s.simbolo);
           s.tipo = s.tipo || (activo ? activo.tipo : '');
           s.logo = activo ? activo.logo : '';
+          s.color = activo ? activo.color : '';
           s.confianza = s.confianza || s.probPrincipal || s.prob_principal || 50;
           s.prob_principal = s.confianza;
           s.prob_alcista = s.prob_alcista || (s.direccion==='alcista' ? s.confianza : 100-s.confianza);
@@ -4055,7 +4056,7 @@ function _renderIALista(signals, keepLoadingBar) {
     var upsideHtml = '';
     if(s.upside != null){
       var uSign = s.upside >= 0 ? '↑+' : '↓';
-      upsideHtml = '<span style="color:var(--textDim)"> · </span><span style="color:'+dirColor+';font-weight:700">'+uSign+Math.abs(s.upside).toFixed(1)+'% al obj.</span>';
+      upsideHtml = '<span style="color:var(--textDim)"> · </span><span style="color:'+dirColor+';font-weight:800">'+uSign+Math.abs(s.upside).toFixed(1)+'% al precio objetivo</span>';
     }
     return '<div class="ia-row" id="ia-row-'+i+'" onclick="toggleIARow('+i+')" style="border-bottom:0.5px solid #13171D;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);touch-action:manipulation">' +
       '<div style="display:flex;align-items:center;gap:9px;padding:12px 13px">' +
@@ -4064,12 +4065,12 @@ function _renderIALista(signals, keepLoadingBar) {
         // Centro — 3 líneas compactas
         '<div style="flex:1;min-width:0">' +
           '<div style="display:flex;align-items:center;gap:5px">' +
-            '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
-            '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
-            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
+            '<span style="font-size:13px;font-weight:700;color:var(--text)">'+s.simbolo+'</span>' +
+            '<span style="font-size:8px;font-weight:800;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
+            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:800;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
           '</div>' +
           '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
-          '<div style="margin-top:3px"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
+          '<div style="margin-top:3px"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:800">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
         '</div>' +
         // Derecha — precio, %, dots (como nativa sigRight)
         '<div style="align-items:flex-end;text-align:right;flex-shrink:0">' +
