@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=129"></script>
+<script src="aurex-v3.js?v=130"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -810,7 +810,17 @@ function calculateAlerts(){
 
   // Dedup
   var seen={};
+  var beforeDedup = alerts.length;
   window._alertTriggered = alerts.filter(function(a){var k=a.sym+'_'+a.tipo+'_'+a.icon;if(seen[k])return false;seen[k]=1;return true;});
+  var afterDedup = window._alertTriggered.length;
+  var removed = beforeDedup - afterDedup;
+  // Log para debug
+  var subCounts = {};
+  window._alertTriggered.forEach(function(a){ var k=a.tipo+'_'+(a.sub||''); subCounts[k]=(subCounts[k]||0)+1; });
+  console.log('[ALERTAS] Total: '+afterDedup+' (antes dedup: '+beforeDedup+', removidos: '+removed+')');
+  console.log('[ALERTAS] Señales filtradas: '+filtered.length+' de '+sigs.length);
+  console.log('[ALERTAS] Por sub-tipo:', JSON.stringify(subCounts));
+  console.log('[ALERTAS] Skipped por change>50:', sigs.filter(function(s){var p=s.precio||0;var p24=s.precio24h||0;var c=(p>0.001&&p24>0.001)?((p-p24)/p24*100):0;return Math.abs(c)>50;}).length);
   renderTriggeredAlerts();
   // Update count
   var el = document.getElementById('alert-active');
