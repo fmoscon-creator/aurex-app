@@ -4084,10 +4084,10 @@ function _renderIALista(signals, keepLoadingBar) {
             '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
           '</div>' +
           '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
-          '<div style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
+          '<div style="display:flex;align-items:center;gap:6px;margin-top:3px;flex-wrap:wrap"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
         '</div>' +
-        // Derecha — precio, %, dots (como nativa sigRight)
-        '<div style="align-items:flex-end;text-align:right;flex-shrink:0">' +
+        // Derecha — precio, %, dots (como nativa sigRight: minWidth 80)
+        '<div style="align-items:flex-end;text-align:right;flex-shrink:0;min-width:80px">' +
           '<div style="font-size:13px;font-weight:700;color:var(--text)">'+precioFmt+'</div>' +
           '<div style="font-size:11px;font-weight:500;color:'+pctColor+';margin-top:2px">'+pctStr+'</div>' +
           dotsHtml +
