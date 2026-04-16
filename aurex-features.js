@@ -888,17 +888,17 @@ function _renderPortfolioItems(items){
     var ch24 = window._pcChange24 && window._pcChange24[item.simbolo] !== undefined ? window._pcChange24[item.simbolo] : (precio > 0 && item.precio_compra > 0 ? ((precio - item.precio_compra)/item.precio_compra*100) : 0);
     var cc = ch24 >= 0 ? 'var(--green)' : 'var(--red)';
     var cs = ch24 >= 0 ? '+' : '';
-    var isCrypto = (item.tipo||'').toLowerCase() === 'cripto';
+    var isCrypto = (item.tipo||'').toLowerCase() === 'cripto' || (item.tipo||'').toLowerCase() === 'stable';
+    // Usar marketState del API Yahoo si existe (dato real del mercado)
     var mktState = !isCrypto && window._pcMarketState && window._pcMarketState[item.simbolo];
-    // Time-based fallback: if no marketState yet, detect by regularMarketTime or weekend
-    var _mktTime = !isCrypto && window._pcMarketTime && window._pcMarketTime[item.simbolo];
-    var _nowNY = new Date(Date.now() - 5*3600000);
-    var _dayNY = _nowNY.getUTCDay();
-    var _isWeekend = (_dayNY === 0 || _dayNY === 6);
-    var _stalePrice = _mktTime ? (Date.now() - _mktTime > 7200000) : false;
+    var _now = new Date();
+    var _utcH = _now.getUTCHours();
+    var _utcDay = _now.getUTCDay();
+    var _isWeekend = (_utcDay === 0 || _utcDay === 6);
+    var _nyseOpen = _utcH >= 14 && _utcH < 21;
     var mktClosed = !isCrypto && (
-      (mktState && mktState !== 'REGULAR' && mktState !== 'PRE') ||
-      (!mktState && (_isWeekend || _stalePrice))
+      mktState ? (mktState !== 'REGULAR') :
+      (_isWeekend || !_nyseOpen)
     );
     var prevCloseVal = !isCrypto && window._pcPrevClose && window._pcPrevClose[item.simbolo];
     var prevClosePct = prevCloseVal && window._pcPrices && window._pcPrices[item.simbolo] && prevCloseVal > 0 ? ((window._pcPrices[item.simbolo]-prevCloseVal)/prevCloseVal*100) : null;
