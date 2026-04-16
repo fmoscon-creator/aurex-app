@@ -4050,20 +4050,7 @@ function _renderIALista(signals, keepLoadingBar) {
   listEl.innerHTML = filtered.map(function(s, i) {
     var dirColor = s.direccion==='alcista'?'var(--green)':s.direccion==='bajista'?'var(--red)':'var(--gold)';
     var dirBg = s.direccion==='alcista'?'#3FB95020':s.direccion==='bajista'?'#FF444420':'var(--goldBg)';
-    var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV-IA';
-    // Para ALTA CONV-IA, obtener la sub-dirección del escenario_principal
-    var altaConfDirLabel = '';
-    var altaConfDirColor = '';
-    if (s.direccion === 'alta_conf') {
-      var escDir = (s.escenario_principal || '').toLowerCase();
-      if (escDir.indexOf('alcista') >= 0) {
-        altaConfDirLabel = '\u2191 ALCISTA';
-        altaConfDirColor = 'var(--green)';
-      } else if (escDir.indexOf('bajista') >= 0) {
-        altaConfDirLabel = '\u2193 BAJISTA';
-        altaConfDirColor = 'var(--red)';
-      }
-    }
+    var dirLabel = s.direccion==='alcista'?'ALCISTA':s.direccion==='bajista'?'BAJISTA':'ALTA CONV';
     var tipoColor = s.tipo==='cripto'?'#A78BFA':s.tipo==='accion'?'#58A6FF':s.tipo==='etf'?'#F0883E':s.tipo==='metal'?'#FFD700':s.tipo==='materia_prima'?'#C8A96E':s.tipo==='bono'?'#79C0FF':'var(--gold)';
     var tipoLabel = s.tipo==='cripto'?'Cripto':s.tipo==='accion'?'Acciones':s.tipo==='etf'?'ETF':s.tipo==='metal'?'Metal':s.tipo==='materia_prima'?'Mat. Prima':s.tipo==='bono'?'Bono':'Otro';
     var estrellas = '';
@@ -4095,7 +4082,6 @@ function _renderIALista(signals, keepLoadingBar) {
           '<div style="display:flex;align-items:center;gap:5px">' +
             '<span style="font-size:13px;font-weight:600;color:var(--text)">'+s.simbolo+'</span>' +
             '<span style="font-size:8px;font-weight:700;background:'+dirBg+';color:'+dirColor+';border:0.5px solid '+dirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+dirLabel+'</span>' +
-            (altaConfDirLabel ? '<span style="font-size:8px;font-weight:700;background:'+altaConfDirColor+'20;color:'+altaConfDirColor+';border:0.5px solid '+altaConfDirColor+'60;border-radius:6px;padding:1px 6px;white-space:nowrap">'+altaConfDirLabel+'</span>' : '') +
           '</div>' +
           '<div style="font-size:10px;color:var(--textDim);margin-top:1px">'+(s.nombre||s.simbolo)+'</div>' +
           '<div style="margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis"><span style="font-size:10px;color:var(--textSec)">PROB. IA <span style="color:'+dirColor+';font-weight:700">'+s.confianza+'%</span></span>'+upsideHtml+'</div>' +
