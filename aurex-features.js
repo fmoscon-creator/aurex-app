@@ -5143,30 +5143,30 @@ window._refreshHoyPct = function() {
     'user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
     '.sort-btn .sort-arrow{color:var(--gold);font-size:10px;}' +
     /* Modal central */
-    '#sort-overlay{position:fixed;inset:0;z-index:2050;background:rgba(0,0,0,0.5);' +
-    'display:flex;align-items:center;justify-content:center;padding:20px;}' +
-    '#sort-modal{background:var(--card);border-radius:18px;width:100%;max-width:340px;' +
-    'max-height:80vh;overflow-y:auto;padding:18px 14px;animation:lp-fadein 0.18s ease-out;' +
-    'display:flex;flex-direction:column;gap:6px;-webkit-user-select:none;user-select:none;' +
-    '-webkit-touch-callout:none;border:2px solid var(--gold);' +
-    'box-shadow:0 0 24px rgba(247,208,96,0.45),0 8px 28px rgba(0,0,0,0.35);}' +
+    '#sort-overlay{position:fixed;inset:0;z-index:2050;background:rgba(0,0,0,0.55);' +
+    'display:flex;align-items:center;justify-content:center;padding:24px;}' +
+    '#sort-modal{background:#fff;border-radius:20px;width:100%;max-width:340px;' +
+    'max-height:80vh;overflow-y:auto;padding:16px;animation:lp-fadein 0.18s ease-out;' +
+    'display:flex;flex-direction:column;gap:4px;-webkit-user-select:none;user-select:none;' +
+    '-webkit-touch-callout:none;border:3px solid var(--gold);' +
+    'box-shadow:0 10px 35px rgba(0,0,0,0.35);}' +
     '.sort-header{display:flex;align-items:center;justify-content:center;gap:8px;' +
-    'padding:6px 0 14px;border-bottom:1px solid var(--border);margin-bottom:6px;}' +
-    '.sort-header-icon{width:28px;height:28px;border-radius:8px;background:#3B82F6;' +
-    'display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;}' +
-    '.sort-header-title{font-size:16px;font-weight:700;color:var(--text);}' +
-    '.sort-item{display:flex;align-items:center;gap:12px;padding:11px 12px;cursor:pointer;' +
-    'border-radius:11px;background:transparent;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
-    '.sort-item.active{background:var(--goldBg);border:1px solid var(--gold);}' +
-    '.sort-item-icon{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;' +
-    'justify-content:center;font-size:14px;flex-shrink:0;}' +
+    'padding:8px 0 12px;border-bottom:1px solid rgba(247,208,96,0.25);margin-bottom:10px;}' +
+    '.sort-header-icon{font-size:18px;color:var(--gold);}' +
+    '.sort-header-title{font-size:15px;font-weight:800;color:#111;letter-spacing:0.3px;}' +
+    '.sort-item{display:flex;align-items:center;gap:10px;padding:11px 12px;cursor:pointer;' +
+    'border-radius:10px;background:transparent;margin-bottom:4px;border-left:3px solid transparent;' +
+    '-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.sort-item.active{background:rgba(247,208,96,0.12);border-left:3px solid var(--gold);}' +
+    '.sort-item-icon{font-size:16px;flex-shrink:0;}' +
     '.sort-item-text{flex:1;min-width:0;}' +
-    '.sort-item-label{font-size:14px;font-weight:600;color:var(--text);}' +
-    '.sort-item-desc{font-size:11px;color:var(--textSec);margin-top:1px;}' +
-    '.sort-item-check{color:var(--gold);font-size:16px;font-weight:700;}' +
-    '.sort-cancel{margin-top:10px;background:transparent;border:1px solid var(--border2);' +
-    'border-radius:11px;padding:13px;text-align:center;font-size:14px;font-weight:600;' +
-    'color:var(--text);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
+    '.sort-item-label{font-size:13px;font-weight:600;color:#111;}' +
+    '.sort-item.active .sort-item-label{font-weight:800;}' +
+    '.sort-item-desc{font-size:10px;color:#888;margin-top:1px;}' +
+    '.sort-item-check{color:var(--gold);font-size:16px;font-weight:800;}' +
+    '.sort-cancel{margin-top:10px;background:transparent;border:1px solid var(--gold);' +
+    'border-radius:10px;padding:10px;text-align:center;font-size:13px;font-weight:700;' +
+    'color:#111;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);}' +
     '.sort-cancel:active{background:var(--border);}';
   document.head.appendChild(st);
 })();
@@ -5238,7 +5238,7 @@ function _openSortModal(tab, onApply) {
   // Header
   var hdr = document.createElement('div');
   hdr.className = 'sort-header';
-  hdr.innerHTML = '<div class="sort-header-icon">⇅</div>' +
+  hdr.innerHTML = '<span class="sort-header-icon">↕</span>' +
     '<span class="sort-header-title">Ordenar por</span>';
   modal.appendChild(hdr);
   // Items
@@ -5246,7 +5246,7 @@ function _openSortModal(tab, onApply) {
     var it = document.createElement('div');
     it.className = 'sort-item' + (o.k === cur ? ' active' : '');
     it.innerHTML =
-      '<div class="sort-item-icon" style="background:' + o.bg + ';">' + o.ic + '</div>' +
+      '<div class="sort-item-icon">' + o.ic + '</div>' +
       '<div class="sort-item-text">' +
         '<div class="sort-item-label">' + o.l + '</div>' +
         '<div class="sort-item-desc">' + o.d + '</div>' +
