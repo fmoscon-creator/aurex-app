@@ -4128,17 +4128,18 @@ function _renderFearGreed(containerId) {
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
-    var bg = active ? (d.color||'var(--gold)') : 'var(--border)';
+    var bg = active ? (d.color||'var(--gold)') : '#1a1a2e';
     var col = active ? '#fff' : 'var(--textSec)';
     var fw = active ? '700' : '500';
-    filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;">'+catLabels[c]+'</div>';
+    var bdr = active ? 'none' : '1px solid var(--border2)';
+    filterBtns += '<div data-pulse-cat="'+c+'" data-pulse-el="'+elId+'" style="font-size:9px;font-weight:'+fw+';color:'+col+';background:'+bg+';border-radius:10px;padding:4px 8px;cursor:pointer;white-space:nowrap;flex-shrink:0;border:'+bdr+';">'+catLabels[c]+'</div>';
   });
   var nvars = Object.keys(d.vars).length;
   el.innerHTML =
     '<div style="margin:8px 14px 6px;border-radius:14px;padding:'+(compact?'8px 10px':'12px 14px 10px')+';background:var(--card);border:1px solid var(--border);">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' +
         '<span style="font-size:'+(compact?'10':'11')+'px;font-weight:700;color:var(--gold);letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
-        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid var(--border2);white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
+        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:var(--textSec);cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid var(--border2);white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
       '</div>' +
       '<div id="pulse-filters-'+elId+'" style="display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
       '<div style="display:flex;align-items:center;gap:10px;">' +
@@ -4196,19 +4197,22 @@ window.showFearGreedInfo = function() {
     ['&#x1F30D;','Geopol&#xED;tica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? 'var(--text)' : 'var(--textDim)']
   ];
   var tableRows = rows.map(function(r) {
-    return '<tr><td style="padding:3px 4px;color:'+r[5]+';font-weight:500;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:8px;padding:3px 4px;">'+r[2]+'</td><td style="color:#555;padding:3px 4px;">'+r[3]+'</td><td style="color:#222;font-weight:600;padding:3px 4px;">'+r[4]+'</td></tr>';
+    var valStr = r[4] || '--';
+    var valColor = '#222';
+    if (typeof valStr === 'string') {
+      if (valStr.indexOf('+') === 0) valColor = '#16a34a';
+      else if (valStr.indexOf('-') === 0) valColor = '#dc2626';
+    }
+    return '<tr><td style="padding:3px 4px;color:'+r[5]+';font-weight:500;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:8px;padding:3px 4px;">'+r[2]+'</td><td style="color:#555;padding:3px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:600;padding:3px 4px;">'+valStr+'</td></tr>';
   }).join('');
   ov.innerHTML =
-    '<div style="background:#fff;border-radius:16px;padding:18px;max-width:360px;width:100%;margin:auto;">' +
-      '<div style="font-size:13px;font-weight:700;color:#111;margin-bottom:3px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
-      '<div style="font-size:9px;color:#666;margin-bottom:10px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
-      '<div style="font-size:10px;color:#555;line-height:1.6;margin-bottom:8px;">' +
-        '<b style="color:#111;">Las 5 zonas:</b> ' +
-        '&#x1F534; 0-20 Miedo Extremo &nbsp;' +
-        '&#x1F7E0; 21-40 Miedo &nbsp;' +
-        '&#x1F7E1; 41-60 Neutral &nbsp;' +
-        '&#x1F7E2; 61-80 Codicia &nbsp;' +
-        '&#x1F49C; 81-100 Codicia Extrema' +
+    '<div style="background:#fff;border-radius:18px;padding:20px;max-width:390px;width:100%;margin:auto;">' +
+      '<div style="font-size:14px;font-weight:700;color:#111;margin-bottom:4px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
+      '<div style="font-size:10px;color:#666;margin-bottom:10px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
+      '<div style="font-size:10px;color:#555;line-height:1.7;margin-bottom:8px;">' +
+        '<b style="color:#111;">Las 5 zonas:</b><br>' +
+        '&#x1F534; 0-20 Miedo Extremo &nbsp; &#x1F7E0; 21-40 Miedo &nbsp; &#x1F7E1; 41-60 Neutral<br>' +
+        '&#x1F7E2; 61-80 Codicia &nbsp; &#x1F49C; 81-100 Codicia Extrema' +
       '</div>' +
       '<div style="font-size:10px;font-weight:700;color:#111;margin-bottom:6px;">Variables activas (12 de 14):</div>' +
       '<table style="width:100%;font-size:9px;border-collapse:collapse;">' +
@@ -4216,7 +4220,7 @@ window.showFearGreedInfo = function() {
         tableRows +
       '</table>' +
       '<div style="font-size:8px;color:#999;margin-top:8px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos son fallback estimados. 14 variables a cobertura completa en m&#xFA;ltiples mercados.</div>' +
-      '<div id="pulse-info-close" style="margin-top:14px;text-align:center;padding:12px;background:var(--gold);border-radius:12px;color:#111;font-weight:700;cursor:pointer;font-size:14px;">Entendido</div>' +
+      '<div id="pulse-info-close" style="margin-top:16px;text-align:center;padding:16px;background:var(--gold);border-radius:14px;color:#111;font-weight:700;cursor:pointer;font-size:16px;">Entendido</div>' +
     '</div>';
   document.body.appendChild(ov);
   document.getElementById('pulse-info-close').addEventListener('click', function(){ ov.remove(); });
