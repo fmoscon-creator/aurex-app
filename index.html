@@ -587,7 +587,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=49"></script>
+<script src="aurex-v3.js?v=50"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -1713,7 +1713,7 @@ function runConversion(){
   <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" autocomplete="off"
     style="width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;"
     oninput="filterMktSearch()" />
-  <div id="mkt-search-results" style="display:none;background:var(--card);border:1px solid var(--border2);border-radius:10px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;"></div>
+  <div id="mkt-search-results" style="display:none;background:#fff;border:1px solid #ddd;border-radius:10px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;"></div>
 </div>
 <!-- SUMMARY -->
 <div class="sumrow" id="sumrow" style="display:none;padding:0;border:none;"></div>
@@ -1796,7 +1796,7 @@ function filterMktSearch(){
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
         var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
-        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;background:var(--bg);border:0.5px solid var(--border);-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:var(--text);">'+a.s+tag+'</div><div style="font-size:10px;color:var(--textSec);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;cursor:pointer;background:#f5f5f5;border:0.5px solid #e0e0e0;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:10px;color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
       }).join('');
     });
   }
@@ -1808,63 +1808,10 @@ window._mktOpenDetail = function(idx){
   var res = document.getElementById('mkt-search-results');
   if(inp) inp.value = '';
   if(res) res.style.display = 'none';
-  var old = document.getElementById('mkt-search-detail-overlay');
-  if(old) old.remove();
-  var pd = window._IA_PRECIOS ? (window._IA_PRECIOS[a.s] || null) : null;
-  var sig = window._iaSignals ? (window._iaSignals.find(function(x){return x.simbolo===a.s;}) || null) : null;
-  var precio = pd ? pd.precio : (sig ? sig.precio : null);
-  var p24h = pd ? pd.precio24h : (sig ? sig.precio24h : null);
-  var p7d = pd ? pd.precio7d : null;
-  var pct24 = (precio && p24h && p24h > 0) ? (((precio - p24h) / p24h) * 100).toFixed(2) : null;
-  var pct7 = (precio && p7d && p7d > 0) ? (((precio - p7d) / p7d) * 100).toFixed(2) : null;
-  var objetivo = sig ? sig.objetivo : null;
-  var direccion = sig ? sig.direccion : null;
-  var probAlc = sig ? sig.prob_alcista : null;
-  var upside = sig ? sig.upside : null;
-  var fmt = window._fmt || function(v,d){return v ? v.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}) : '--';};
-  var precioStr = precio ? fmt(precio, precio < 1 ? 6 : 2) : '--';
-  var pct24Str = pct24 !== null ? (pct24 >= 0 ? '+' : '') + pct24 + '%' : '--';
-  var pct24Color = pct24 !== null ? (parseFloat(pct24) >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--textDim)';
-  var pct7Str = pct7 !== null ? (pct7 >= 0 ? '+' : '') + pct7 + '%' : '--';
-  var pct7Color = pct7 !== null ? (parseFloat(pct7) >= 0 ? 'var(--green)' : 'var(--red)') : 'var(--textDim)';
-  var objetivoStr = objetivo ? '$' + parseFloat(objetivo).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--';
-  var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : 'var(--textDim)';
-  var dirLabel = !direccion ? 'Sin se&#241;al' : (direccion === 'alta_conf' ? (sig && sig.escenario_principal ? sig.escenario_principal : 'Alta Conv-IA') : (direccion.charAt(0).toUpperCase() + direccion.slice(1)));
-  var probStr = probAlc !== null ? probAlc + '%' : '';
-  var overlay = document.createElement('div');
-  overlay.id = 'mkt-search-detail-overlay';
-  overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
-  overlay.onclick = function(e){ if(e.target===overlay) overlay.remove(); };
-  var logoHtml = a.logo ? '<img src="' + a.logo + '" style="width:40px;height:40px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'">' : '';
-  overlay.innerHTML = '<div style="background:#1C1C1E;border:1px solid var(--border);border-radius:16px;padding:20px;width:88%;max-width:360px;font-family:sans-serif;">'
-    + '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">'
-    + logoHtml
-    + '<div><div style="font-size:18px;font-weight:700;color:var(--text);">' + a.s + '</div>'
-    + '<div style="font-size:12px;color:var(--textDim);">' + a.n + ' &middot; ' + a.tipo + '</div></div>'
-    + '<div style="margin-left:auto;cursor:pointer;font-size:22px;color:var(--textDim);line-height:1;" onclick="document.getElementById(\'mkt-search-detail-overlay\').remove()">&#x2715;</div>'
-    + '</div>'
-    + '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px;">'
-    + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Precio</div>'
-    + '<div style="font-size:14px;font-weight:700;color:var(--text);">' + precioStr + '</div></div>'
-    + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">24h</div>'
-    + '<div style="font-size:14px;font-weight:700;color:' + pct24Color + ';">' + pct24Str + '</div></div>'
-    + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">7d</div>'
-    + '<div style="font-size:14px;font-weight:700;color:' + pct7Color + ';">' + pct7Str + '</div></div>'
-    + '</div>'
-    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;">'
-    + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Objetivo IA</div>'
-    + '<div style="font-size:14px;font-weight:700;color:var(--gold);">' + objetivoStr + '</div></div>'
-    + '<div style="background:#252528;border-radius:10px;padding:10px;text-align:center;">'
-    + '<div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">Se&#241;al IA</div>'
-    + '<div style="font-size:13px;font-weight:700;color:' + dirColor + ';"> ' + dirLabel + (probStr ? ' ' + probStr : '') + '</div></div>'
-    + '</div>'
-    + '<button onclick="document.getElementById(\'mkt-search-detail-overlay\').remove();" style="width:100%;padding:12px;background:var(--gold);border:none;border-radius:10px;color:var(--chipTextActive);font-size:14px;font-weight:700;cursor:pointer;">Ver en Mercados</button>'
-    + '</div>';
-  document.body.appendChild(overlay);
+  // Abrir mismo modal enriquecido que long press (igual a nativa POP BUSQUEDA)
+  if(window._showMercadosLPSheet) {
+    window._showMercadosLPSheet(a.s, a);
+  }
 };
 </script>
 
@@ -3953,15 +3900,26 @@ document.addEventListener("DOMContentLoaded", function(){
 </script>
 
 <!-- Modal Aviso Legal (Fase 4 F1-bis) -->
-<div id="modal-aviso-legal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:flex-end;justify-content:center;">
-  <div style="background:var(--card);border-radius:16px 16px 0 0;padding:20px 16px 32px;max-height:70vh;overflow-y:auto;width:100%;max-width:480px;border:2px solid var(--gold);border-bottom:none;box-shadow:0 0 24px rgba(247,208,96,0.45),0 -8px 28px rgba(0,0,0,0.35);">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
-      <span style="font-weight:700;font-size:15px;color:var(--text)">⚖️ Aviso Legal</span>
-      <span onclick="document.getElementById('modal-aviso-legal').style.display='none'" style="font-size:20px;cursor:pointer;color:var(--text);padding:4px 8px;">✕</span>
+<div id="modal-aviso-legal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.5);align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:16px;padding:24px 20px;max-height:80vh;overflow-y:auto;width:calc(100% - 40px);max-width:380px;border:3px solid var(--gold);box-shadow:0 0 24px rgba(247,208,96,0.45),0 8px 28px rgba(0,0,0,0.35);">
+    <div style="text-align:center;margin-bottom:16px;">
+      <span style="font-weight:700;font-size:16px;color:#111;">⚖️ AVISO LEGAL</span>
     </div>
-    <p style="font-size:13px;color:var(--textSec);line-height:1.6;margin:0;">
-      La información, análisis, señales de IA, precios objetivo y cualquier contenido de AUREX tiene carácter exclusivamente informativo y educativo. No constituye consejo, recomendación ni asesoramiento de inversión. Toda decisión de inversión es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 12px;">
+      La información proporcionada por AUREX tiene carácter exclusivamente informativo y educativo. No constituye asesoramiento financiero, recomendación de inversión, ni oferta de compra o venta de ningún activo financiero.
     </p>
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 12px;">
+      Las señales, análisis e indicadores mostrados son generados por algoritmos automatizados y no deben interpretarse como garantía de resultados futuros. Invertir conlleva riesgos, incluida la posible pérdida del capital invertido.
+    </p>
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 16px;">
+      Consulte siempre a un asesor financiero certificado antes de tomar decisiones de inversión.
+    </p>
+    <div style="text-align:center;font-size:11px;color:#999;margin-bottom:16px;">
+      © 2026 AUREX — Fernando Moscon
+    </div>
+    <div onclick="document.getElementById('modal-aviso-legal').style.display='none'" style="text-align:center;cursor:pointer;font-size:14px;font-weight:600;color:#dc2626;">
+      ✕ Cerrar
+    </div>
   </div>
 </div>
 
