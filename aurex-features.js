@@ -2032,7 +2032,7 @@ window.renderWatchCnt = function(){
     // Fila 1: dot + nombre + PRINCIPAL
     html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">';
     html += '<div style="width:10px;height:10px;border-radius:5px;background:'+currentList.color+'"></div>';
-    html += '<span style="font-size:13px;font-weight:700;color:var(--text);flex-shrink:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+currentList.name+'</span>';
+    html += '<span style="font-size:13px;font-weight:800;color:var(--text);flex-shrink:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+currentList.name+'</span>';
     if(currentList.is_primary) {
       html += '<span style="font-size:8px;font-weight:800;color:var(--gold);background:var(--navBg,#0D1117);border:1px solid var(--gold);padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
     } else {
@@ -2042,17 +2042,17 @@ window.renderWatchCnt = function(){
     // Fila 2: Comparar + 📤 + Agregar + 🗑️ (en fila)
     html += '<div style="display:flex;align-items:center;gap:10px">';
     var _cmpLabel = '⚖️ Comparar';
-    var _cmpStyle = 'font-size:12px;font-weight:700;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
+    var _cmpStyle = 'font-size:12px;font-weight:800;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
       _cmpLabel = '⚖️ Comparar ' + window._wlCompareItems.length;
-      _cmpStyle = 'font-size:12px;font-weight:700;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
+      _cmpStyle = 'font-size:12px;font-weight:800;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     } else if(window._wlCompareMode){
       _cmpLabel = '✕ Cancelar';
       _cmpStyle = 'font-size:12px;font-weight:700;color:var(--red);background:#F8514920;padding:8px 14px;border-radius:8px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
     }
     html += '<a href="javascript:void(0)" data-wl="compareMode" style="'+_cmpStyle+'">'+_cmpLabel+'</a>';
     html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
-    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:700;cursor:pointer;text-decoration:none">+ Agregar</a>';
+    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:800;cursor:pointer;text-decoration:none">+ Agregar</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;cursor:pointer;padding:4px">🗑️</div>';
     html += '</div>';
     html += '</div>';
