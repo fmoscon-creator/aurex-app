@@ -5512,8 +5512,9 @@ function _refreshFavStars() {
         star.className = 'fav-star';
         star.textContent = '⭐';
         star.style.cssText = 'font-size:14px;flex-shrink:0;';
-        // Insertar ANTES del logo (primer hijo del row)
-        el.insertBefore(star, el.firstChild);
+        // Insertar ENTRE el logo (img, hijo 0) y el div ticker+nombre (hijo 1)
+        var nameCol = el.children[1];
+        if (nameCol) el.insertBefore(star, nameCol);
       }
     } else {
       if (existing) existing.remove();
