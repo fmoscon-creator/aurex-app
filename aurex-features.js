@@ -288,8 +288,10 @@ function _appendMktRow(cnt, item, tab) {
     '</div>'+
     '<div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;flex-shrink:0;">'+
       '<span id="p-'+item.s+'" style="color:var(--text);font-size:13px;font-weight:600;">...</span>'+
-      '<span id="lbl-'+item.s+'" style="font-size:9px;color:var(--gold);font-weight:700;display:none;"></span>'+
-      '<span id="c-'+item.s+'" style="font-size:11px;color:var(--textSec);">...</span>'+
+      '<div style="display:flex;align-items:center;gap:3px;justify-content:flex-end;">'+
+        '<span id="lbl-'+item.s+'" style="font-size:9px;color:var(--gold);font-weight:700;display:none;"></span>'+
+        '<span id="c-'+item.s+'" style="font-size:11px;color:var(--textSec);">...</span>'+
+      '</div>'+
       dotsHtml+
     '<div style="display:flex;gap:2px;margin-top:2px;">'+['24h','7d','1m','3m','1a'].map(function(p){return '<span class="mkt-tf-btn" data-tf="'+p+'" ontouchstart="stf(null,\''+p+'\')" onclick="stf(null,\''+p+'\')" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'var(--gold)':'var(--border)')+';color:'+(p==='24h'?'#111':'var(--textSec)')+';cursor:pointer;touch-action:manipulation;">'+p+'</span>';}).join('')+'</div>'+
     '</div>';
