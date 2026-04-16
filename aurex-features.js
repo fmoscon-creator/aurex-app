@@ -4554,6 +4554,17 @@ function _initHeaderLogos() {
   var portScreens = document.querySelectorAll('.screen');
   if (portScreens[0] && portScreens[0].children[0] && portScreens[0].children[0].children[0]) {
     var portHlRow = portScreens[0].children[0].children[0];
+    // Botón Idioma 🇪🇸 con borde dorado + ▾ (delante de ⚖️)
+    if (!portHlRow.querySelector('.lang-chip')) {
+      var langChip = document.createElement('div');
+      langChip.className = 'lang-chip';
+      langChip.onclick = function(){ window._openIdiomaModal(); };
+      var curLang = localStorage.getItem('aurex_lang') || 'es';
+      var flags = {es:'🇪🇸',en:'🇬🇧',pt:'🇧🇷',zh:'🇨🇳'};
+      langChip.innerHTML = '<span id="lang-flag">' + (flags[curLang]||'🇪🇸') + '</span> <span style="font-size:8px;">&#9660;</span>';
+      langChip.style.cssText = 'display:flex;align-items:center;gap:2px;padding:3px 7px;border:1.5px solid var(--gold);border-radius:6px;cursor:pointer;font-size:14px;margin-left:auto;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+      portHlRow.appendChild(langChip);
+    }
     window._addLegalChip(portHlRow, null, true);
   }
 }
@@ -5800,8 +5811,8 @@ window._setIdioma = function(code) {
   if (ov) ov.remove();
   // Actualizar bandera en el botón del header
   var flags = { es: '🇪🇸', en: '🇬🇧', pt: '🇧🇷', zh: '🇨🇳' };
-  var btns = document.querySelectorAll('[onclick="window._openIdiomaModal()"]');
-  btns.forEach(function(b) { b.textContent = flags[code] || '🇪🇸'; });
+  var flagEl = document.getElementById('lang-flag');
+  if (flagEl) flagEl.textContent = flags[code] || '🇪🇸';
 };
 
 // === LIVE refresh timer (punto 14) ===
