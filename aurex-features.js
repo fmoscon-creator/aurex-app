@@ -5363,12 +5363,12 @@ window._applyIASort = function(key) {
     '.lp-chip{flex:1;background:#f0f0f0;border:1px solid #e0e0e0;border-radius:10px;padding:8px 4px;text-align:center;}' +
     '.lp-chip-label{font-size:9px;color:#888;margin-bottom:3px;}' +
     '.lp-chip-val{font-size:14px;font-weight:700;color:#222;}' +
-    '.lp-signal{text-align:center;padding:6px 0 8px;font-size:12px;color:#888;}' +
-    '.lp-signal strong{display:block;font-size:15px;margin-top:2px;}' +
+    '.lp-signal{text-align:center;padding:8px 12px;font-size:12px;color:#888;background:#f0f0f0;border-radius:10px;margin-bottom:4px;}' +
+    '.lp-signal strong{display:block;font-size:15px;margin-top:3px;}' +
     '.lp-signal strong{font-weight:700;}' +
     '.lp-fav-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 14px;cursor:pointer;' +
-    'font-size:14px;font-weight:700;border-radius:11px;background:var(--gold);color:#111;' +
-    '-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
+    'font-size:14px;font-weight:700;border-radius:11px;background:#FEF3C7;color:#111;' +
+    'border:1.5px solid #D4A017;-webkit-tap-highlight-color:rgba(0,0,0,0);user-select:none;}' +
     '.lp-fav-btn:active{opacity:0.7;}' +
     /* Evitar selección de texto y menú nativo iOS al hacer long press */
     '[id^="port-row-"], #cnt .item-row, #watch-cnt > div, ' +
@@ -5594,11 +5594,8 @@ window._showMercadosLPSheet = function(ticker, meta) {
   favBtn.innerHTML = isFav
     ? '★ Quitar de Favoritos'
     : '★ Agregar a Favoritos';
-  if (!isFav) {
-    favBtn.style.background = 'transparent';
-    favBtn.style.border = '1.5px solid var(--gold)';
-    favBtn.style.color = 'var(--gold)';
-  }
+  // Ambos estados: amarillo claro con borde dorado (como nativa)
+  // El CSS .lp-fav-btn ya tiene bg:#FEF3C7, border:#D4A017
   favBtn.addEventListener('click', function() {
     window._closeLPSheet();
     if (isFav) {
@@ -5612,7 +5609,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   // Agregar a Portfolio
   var portBtn = document.createElement('div');
   portBtn.className = 'lp-option';
-  portBtn.style.cssText = 'background:#fff;border:1.5px solid #ddd;color:#333;';
+  portBtn.style.cssText = 'background:#DBEAFE;border:1.5px solid #3B82F6;color:#1e3a5f;';
   portBtn.innerHTML = '<span class="lp-icon">💼</span><span>Agregar a Portfolio</span>';
   portBtn.addEventListener('click', function() {
     window._closeLPSheet();
