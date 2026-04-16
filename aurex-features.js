@@ -1391,14 +1391,13 @@ function _openAddActivoModal(prefillTicker){
     '<div style="display:flex;flex-direction:column;gap:10px;">' +
     '<div><input id="pa-search" type="text" placeholder="Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)" autocomplete="off" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:10px;padding:10px 12px;color:#111;font-size:14px;outline:none;" oninput="filterPortSearch()" /></div>' +
     '<div id="pa-results" style="max-height:220px;overflow-y:auto;display:flex;flex-direction:column;gap:0;"></div>' +
-    '<div id="pa-selected" style="display:none;background:#f8f8f8;border-radius:10px;padding:12px;border:1px solid #ddd;">' +
-    '<div id="pa-sel-name" style="font-size:13px;font-weight:600;color:#111;margin-bottom:10px;"></div>' +
-    '<div style="display:flex;gap:8px;">' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#666;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="number" min="0" step="any" placeholder="Ej: 0.5" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
-    '<div style="flex:1;"><div style="font-size:10px;color:#666;margin-bottom:4px;">Precio de compra (USD)</div><input id="pa-price" type="number" min="0" step="any" placeholder="Ej: 65000" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
-    '</div>' +
+    '<div id="pa-selected" style="display:none;">' +
+    '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><input id="pa-sel-input" type="text" readonly style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;margin-bottom:6px;" /><div id="pa-sel-name" style="font-size:12px;font-weight:600;color:#111;background:#eee;display:inline-block;padding:3px 10px;border-radius:12px;"></div></div>' +
+    '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:11px;color:#666;margin-bottom:4px;">Cantidad</div><input id="pa-qty" type="number" min="0" step="any" placeholder="Ej: 0.5" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
+    '<div style="background:#f5f5f5;border-radius:10px;padding:10px 12px;margin-bottom:8px;"><div style="font-size:11px;color:#666;margin-bottom:4px;">Precio de compra (USD)</div><input id="pa-price" type="number" min="0" step="any" placeholder="Ej: 65000" style="width:100%;box-sizing:border-box;background:#fff;border:1px solid #ddd;border-radius:8px;padding:9px 10px;color:#111;font-size:14px;outline:none;" /></div>' +
+    '<div id="pa-preview" style="background:#FEF3C7;border-radius:10px;padding:12px;margin-bottom:8px;"><div style="font-size:11px;font-weight:700;color:#111;margin-bottom:6px;">📊 VISTA PREVIA</div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;margin-bottom:3px;"><span>Precio actual de mercado:</span><span id="pa-preview-price" style="font-weight:700;">--</span></div><div style="display:flex;justify-content:space-between;font-size:12px;color:#333;"><span>Valor que sumará al portfolio:</span><span id="pa-preview-value" style="font-weight:700;">$0,00</span></div></div>' +
     '<div id="pa-err" style="color:#dc2626;font-size:11px;margin-top:4px;display:none;"></div>' +
-    '<div onclick="savePortActivo()" style="margin-top:12px;background:var(--gold);color:#111;border-radius:10px;padding:12px;text-align:center;font-size:15px;font-weight:700;cursor:pointer;">Guardar</div>' +
+    '<div onclick="savePortActivo()" style="margin-top:4px;background:var(--gold);color:#111;border-radius:12px;padding:14px;text-align:center;font-size:15px;font-weight:700;cursor:pointer;">Guardar</div>' +
     '</div>' +
     '<input id="pa-sym" type="hidden" value="" />' +
     '</div>';
@@ -1464,7 +1463,7 @@ window._renderSearchResult = function(a, idx, onclickFnName) {
   var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
   var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':a.tipo==='bono'?'Bono':a.tipo==='metal'?'Metal':a.tipo==='materia_prima'?'Commodity':(a.tipo||'Activo');
   var yahooTag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 4px;">YAHOO</span>' : '';
-  return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:10px 10px;cursor:pointer;background:#fff;border-bottom:1px solid #eee;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
+  return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:8px;cursor:pointer;background:#f5f5f5;margin-bottom:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
     logoHtml +
     '<div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:700;color:#111;">' + a.s + '</span><span style="font-size:13px;color:#666;">' + a.n + '</span>' + yahooTag + '</div>' +
     '<span style="font-size:11px;color:' + tipoColor + ';flex-shrink:0;">' + tipoLabel + '</span>' +
@@ -1506,11 +1505,27 @@ window.selectPortActivo = function(sym, nombre){
   for(var i=0;i<acts.length;i++){ if(acts[i].s===sym){ act=acts[i]; break; } }
   if(!act) act = {s:sym, n:nombre, tipo:'accion'};
   if(sel) sel.style.display = 'block';
-  var logoStr = act.logo ? '<img src="' + act.logo + '" style="width:20px;height:20px;border-radius:50%;vertical-align:middle;margin-right:6px;" onerror="this.style.display=\'none\';" />' : '';
-  if(selName) selName.innerHTML = logoStr + sym + ' <span style="color:var(--textSec);font-weight:400;font-size:11px;">' + nombre + '</span>';
+  var selInput = document.getElementById('pa-sel-input');
+  if(selInput) selInput.value = sym + ' - ' + nombre;
+  if(selName) selName.textContent = sym + '  ' + nombre;
   if(symInput) symInput.value = sym + '|' + nombre + '|' + (act ? act.tipo : 'accion');
   var res = document.getElementById('pa-results');
   if(res) res.style.display = 'none';
+  // Vista previa: cargar precio actual
+  var previewPrice = document.getElementById('pa-preview-price');
+  var previewValue = document.getElementById('pa-preview-value');
+  var prcs = window._pcPrices || {};
+  var curPrice = prcs[sym] || 0;
+  if(previewPrice) previewPrice.textContent = curPrice ? '$' + curPrice.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--';
+  // Actualizar vista previa al cambiar cantidad
+  function _updatePreview(){
+    var q = parseFloat((document.getElementById('pa-qty')||{}).value) || 0;
+    var val = q * curPrice;
+    if(previewValue) previewValue.textContent = '$' + val.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2});
+  }
+  var qtyEl = document.getElementById('pa-qty');
+  if(qtyEl) { qtyEl.oninput = _updatePreview; }
+  _updatePreview();
 }
 
 window.savePortActivo = function(){
