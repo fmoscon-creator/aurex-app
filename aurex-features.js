@@ -929,7 +929,14 @@ function _renderPortfolioItems(items){
         '<div onclick="movePortfolioItem(\''+item.id+'\', -1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+upColor+';cursor:'+upCursor+';">&#9650;</div>' +
         '<div onclick="movePortfolioItem(\''+item.id+'\', 1)" style="width:18px;height:16px;display:flex;align-items:center;justify-content:center;font-size:11px;color:'+dnColor+';cursor:'+dnCursor+';">&#9660;</div>' +
       '</div>' +
-      (rowAct && rowAct.logo ? '<img src="'+rowAct.logo+'" style="width:28px;height:28px;border-radius:50%;object-fit:cover;margin-right:8px;flex-shrink:0;" onerror="this.style.display=\'none\'" />' : '<div style="width:28px;height:28px;border-radius:50%;background:'+(rowAct&&rowAct.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text);margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>') +
+      (function(){
+        var sig = _getSignalForSym(item.simbolo);
+        var dir = sig ? (sig.direccion||'').toLowerCase() : '';
+        var logoBg = dir==='alcista' ? '#1A3A2A' : dir==='bajista' ? '#3A1A1A' : '#333';
+        return rowAct && rowAct.logo
+          ? '<div style="width:28px;height:28px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;"><img src="'+rowAct.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'" /></div>'
+          : '<div style="width:28px;height:28px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text);margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>';
+      })() +
       '<div style="flex:1;min-width:0;cursor:pointer;overflow:hidden;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
         '<div style="display:flex;align-items:center;gap:6px;">' +
           '<span style="font-weight:700;color:var(--text);font-size:14px;">'+item.simbolo+'</span>' +
@@ -941,11 +948,13 @@ function _renderPortfolioItems(items){
       '<div style="margin-left:auto;text-align:right;flex-shrink:0;">' +
         '<div style="font-size:14px;font-weight:700;color:var(--text);">$'+fmtNum(valor)+'</div>' +
       '</div>' +
+      '<span style="font-size:18px;color:var(--gold);font-weight:700;margin-left:2px;margin-right:-4px;">&#8250;</span>' +
       '<div onclick="deletePortfolioItem(\''+item.id+'\')" style="font-size:15px;color:var(--textDim);cursor:pointer;padding:4px;" title="Eliminar">&#128465;</div>' +
     '</div>' +
     '<div style="display:flex;align-items:center;justify-content:flex-end;margin-top:4px;padding-left:50px;">' +
       '<div style="display:flex;align-items:center;gap:4px;">' +
-        (mktClosed ? '<span style="font-size:9px;color:var(--gold);font-weight:700;margin-right:2px;">Ult. cierre</span>' : '') +
+        (isCrypto ? '<span style="font-size:8px;color:var(--green);font-weight:700;border:0.5px solid var(--green);border-radius:3px;padding:0.5px 3px;margin-right:2px;">24/7</span>' : '') +
+        (mktClosed && !isCrypto ? '<span style="font-size:9px;color:var(--gold);font-weight:700;margin-right:2px;">Ult. cierre</span>' : '') +
         '<span id="pct-'+item.id+'" style="font-size:11px;font-weight:600;color:'+cc+';">'+(mktClosed && prevClosePct!==null ? _fmt(prevClosePct,'pct') : _fmt(ch24,'pct'))+'</span>' +
         '<div style="display:flex;gap:2px;">' +
           ['24h','7d','1m','3m','1y'].map(function(p){ return '<span onclick="portPeriod(\''+item.id+'\',\''+item.simbolo+'\',\''+item.tipo+'\',\''+p+'\')" id="pp-'+p+'-'+item.id+'" style="font-size:9px;padding:1px 3px;border-radius:3px;background:'+(p==='24h'?'var(--gold)':'var(--border)')+';color:'+(p==='24h'?'var(--bg)':'var(--textSec)')+';cursor:pointer;touch-action:manipulation;">'+p+'</span>'; }).join('') +
