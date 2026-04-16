@@ -2018,8 +2018,8 @@ window.renderWatchCnt = function(){
     var isSel = list.id === _wlSelectedList;
     var itemCount = _wlGetItems(list.id).length;
     html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:130px;background:var(--card);border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'var(--border)')+';cursor:pointer;flex-shrink:0">';
-    html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:11px">⭐</span>':'')+'<span style="font-size:12px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
-    html += '<div style="font-size:9px;color:var(--textDim);margin-top:3px">'+itemCount+' activos</div>';
+    html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:11px">⭐</span>':'')+'<span style="font-size:13px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
+    html += '<div style="font-size:10px;color:var(--textDim);margin-top:3px">'+itemCount+' activos</div>';
     html += '</div>';
   });
   html += '</div>';
