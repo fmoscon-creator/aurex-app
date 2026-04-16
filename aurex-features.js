@@ -1562,17 +1562,92 @@ window.savePortActivo = function(){
   var qtyInput = document.getElementById('pa-qty');
   var priceInput = document.getElementById('pa-price');
   var errEl = document.getElementById('pa-err');
-  if(!symInput || !symInput.value){ if(errEl){errEl.textContent='Seleccion\u00e1 un activo de la lista';errEl.style.display='block';} return; }
+  if(!symInput || !symInput.value){ if(errEl){errEl.textContent='Seleccioná un activo de la lista';errEl.style.display='block';} return; }
   var parts = symInput.value.split('|');
   var sym = parts[0], nombre = parts[1] || parts[0], tipo = parts[2] || 'accion';
   var qty = parseFloat(qtyInput ? qtyInput.value : 0);
   var price = parseFloat(priceInput ? priceInput.value : 0);
-  if(!qty || qty <= 0){ if(errEl){errEl.textContent='Ingres\u00e1 una cantidad mayor a 0';errEl.style.display='block';} return; }
-  if(!price || price <= 0){ if(errEl){errEl.textContent='Ingres\u00e1 un precio de compra mayor a 0';errEl.style.display='block';} return; }
+  if(!qty || qty <= 0){ if(errEl){errEl.textContent='Ingresá una cantidad mayor a 0';errEl.style.display='block';} return; }
+  if(!price || price <= 0){ if(errEl){errEl.textContent='Ingresá un precio de compra mayor a 0';errEl.style.display='block';} return; }
   if(errEl) errEl.style.display='none';
+  // Dedupe check — idéntico a nativa saveAsset línea 450
+  var items = window._portItems || [];
+  var existing = null;
+  for(var i=0;i<items.length;i++){ if(items[i].simbolo===sym){ existing=items[i]; break; } }
+  if(existing) {
+    var sumQty = existing.cantidad + qty;
+    var avgPrice = parseFloat(((existing.cantidad * existing.precio_compra) + (qty * price)) / sumQty).toFixed(4);
+    window.closePortModal();
+    window._showDupeModal(sym, existing, qty, price, sumQty, parseFloat(avgPrice));
+    return;
+  }
   window.addPortfolioItem(sym, nombre, qty, price, tipo);
   window.closePortModal();
-};;
+};
+
+// Modal de duplicados — idéntico a nativa dupeModal (líneas 981-1050)
+window._showDupeModal = function(sym, existing, newQty, newPrice, sumQty, avgPrice) {
+  var old = document.getElementById('dupe-modal-overlay');
+  if(old) old.remove();
+  var fmt = function(v){ return v ? v.toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '0,00'; };
+  var ov = document.createElement('div');
+  ov.id = 'dupe-modal-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.onclick = function(e){ if(e.target===ov){ ov.remove(); } };
+  ov.innerHTML =
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:20px;padding:20px;width:100%;max-width:380px;">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px;">' +
+        '<span style="font-size:28px;">⚠️</span>' +
+        '<div style="flex:1;"><div style="font-size:15px;font-weight:800;color:#111;">'+sym+' ya está en tu portfolio</div><div style="font-size:11px;color:#888;margin-top:2px;">¿Qué querés hacer?</div></div>' +
+        '<span onclick="document.getElementById(\'dupe-modal-overlay\').remove()" style="font-size:20px;color:#999;cursor:pointer;padding:4px 8px;">✕</span>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin:14px 0;">' +
+        '<div style="flex:1;padding:10px;border-radius:10px;background:#f5f5f5;border:1px solid #ddd;">' +
+          '<div style="font-size:9px;font-weight:700;color:#888;letter-spacing:0.5px;margin-bottom:6px;">ACTUAL</div>' +
+          '<div style="font-size:11px;color:#888;">Cantidad</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">'+existing.cantidad+'</div>' +
+          '<div style="font-size:11px;color:#888;">Precio compra</div>' +
+          '<div style="font-size:13px;font-weight:700;color:#111;">$'+fmt(existing.precio_compra)+'</div>' +
+        '</div>' +
+        '<div style="flex:1;padding:10px;border-radius:10px;background:#f5f5f5;border:1px solid var(--gold);">' +
+          '<div style="font-size:9px;font-weight:700;color:var(--gold);letter-spacing:0.5px;margin-bottom:6px;">NUEVO</div>' +
+          '<div style="font-size:11px;color:#888;">Cantidad</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">'+newQty+'</div>' +
+          '<div style="font-size:11px;color:#888;">Precio compra</div>' +
+          '<div style="font-size:13px;font-weight:700;color:#111;">$'+fmt(newPrice)+'</div>' +
+        '</div>' +
+      '</div>' +
+      '<div id="dupe-btn-sumar" style="background:#16a34a;border-radius:10px;padding:13px;margin-bottom:10px;cursor:pointer;text-align:center;">' +
+        '<div style="font-size:14px;font-weight:800;color:#fff;">➕ Sumar al existente</div>' +
+        '<div style="font-size:10px;color:#fff;margin-top:3px;opacity:0.9;">Total: '+sumQty+' '+sym+' · Precio promedio ponderado: $'+fmt(avgPrice)+'</div>' +
+      '</div>' +
+      '<div id="dupe-btn-reemplazar" style="background:#dc2626;border-radius:10px;padding:13px;margin-bottom:10px;cursor:pointer;text-align:center;">' +
+        '<div style="font-size:14px;font-weight:800;color:#fff;">↻ Reemplazar valores</div>' +
+        '<div style="font-size:10px;color:#fff;margin-top:3px;opacity:0.9;">Descarta lo anterior · Nuevo: '+newQty+' '+sym+' @ $'+fmt(newPrice)+'</div>' +
+      '</div>' +
+      '<div id="dupe-btn-cancelar" style="background:transparent;border:1px solid #ddd;border-radius:10px;padding:13px;cursor:pointer;text-align:center;">' +
+        '<div style="font-size:13px;font-weight:600;color:#888;">Cancelar</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+  document.getElementById('dupe-btn-sumar').addEventListener('click', function(){
+    ov.remove();
+    existing.cantidad = sumQty;
+    existing.precio_compra = avgPrice;
+    try { localStorage.setItem('aurex_port_items', JSON.stringify(window._portItems)); } catch(e){}
+    if(typeof window._renderPortfolioItems === 'function') window._renderPortfolioItems(window._portItems);
+    if(typeof window._updateTotals === 'function') window._updateTotals(window._portItems);
+  });
+  document.getElementById('dupe-btn-reemplazar').addEventListener('click', function(){
+    ov.remove();
+    existing.cantidad = newQty;
+    existing.precio_compra = newPrice;
+    try { localStorage.setItem('aurex_port_items', JSON.stringify(window._portItems)); } catch(e){}
+    if(typeof window._renderPortfolioItems === 'function') window._renderPortfolioItems(window._portItems);
+    if(typeof window._updateTotals === 'function') window._updateTotals(window._portItems);
+  });
+  document.getElementById('dupe-btn-cancelar').addEventListener('click', function(){ ov.remove(); });
+};
 window.openPortModal = function(prefillTicker){ _openAddActivoModal(prefillTicker); };
 window.openAddActivo = function(prefillTicker){ _openAddActivoModal(prefillTicker); };
 window.closePortModal = function(){ var m = document.getElementById('port-modal'); if(m) m.style.display='none'; var errEl=document.getElementById('pa-err'); if(errEl){errEl.style.display='none';errEl.textContent='';} var res=document.getElementById('pa-results'); if(res) res.style.display='flex'; };
