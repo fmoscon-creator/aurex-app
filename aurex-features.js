@@ -56,7 +56,7 @@ window._findAssetGlobal = function(sym) {
   // Buscar en datos extra (comm, metales, futuros, etfs, bonos)
   var d = window._mktDataSections;
   if(d){
-    var sections = ['comm','metales','futuros','bonos','etfs'];
+    var sections = ['comm','metales','futuros','bonos','etf','divisas'];
     for(var si=0;si<sections.length;si++){
       var sec = d[sections[si]];
       if(sec){ for(var j=0;j<sec.length;j++){ if(sec[j].s===sym) return sec[j]; } }
@@ -957,10 +957,12 @@ function _renderPortfolioItems(items){
       (function(){
         var sig = _getSignalForSym(item.simbolo);
         var dir = sig ? (sig.direccion||'').toLowerCase() : '';
-        var logoBg = dir==='alcista' ? '#1A3A2A' : dir==='bajista' ? '#3A1A1A' : '#333';
-        return rowAct && rowAct.logo
-          ? '<div style="width:28px;height:28px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;"><img src="'+rowAct.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover;" onerror="this.style.display=\'none\'" /></div>'
-          : '<div style="width:28px;height:28px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--text);margin-right:8px;flex-shrink:0;">'+item.simbolo[0]+'</div>';
+        var logoBg = dir==='alcista' ? '#1A3A2A' : dir==='bajista' ? '#3A1A1A' : (rowAct && rowAct.color ? rowAct.color : '#333');
+        if(rowAct && rowAct.logo) {
+          return '<div style="width:28px;height:28px;border-radius:50%;background:'+logoBg+';display:flex;align-items:center;justify-content:center;margin-right:8px;flex-shrink:0;overflow:hidden"><img src="'+rowAct.logo+'" style="width:22px;height:22px;border-radius:50%;object-fit:cover" onerror="this.outerHTML=\'<span style=font-size:10px;font-weight:700;color:#fff>'+item.simbolo.substring(0,3)+'</span>\'" /></div>';
+        }
+        var fallbackBg = rowAct && rowAct.color ? rowAct.color : logoBg;
+        return '<div style="width:28px;height:28px;border-radius:50%;background:'+fallbackBg+';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;margin-right:8px;flex-shrink:0;">'+item.simbolo.replace('=F','').substring(0,3)+'</div>';
       })() +
       '<div style="flex:1;min-width:0;cursor:pointer;overflow:hidden;" onclick="openPortItemDetail(\x27'+item.id+'\x27)">' +
         '<div style="display:flex;align-items:center;gap:6px;">' +

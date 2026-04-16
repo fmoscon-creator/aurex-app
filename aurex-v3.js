@@ -192,7 +192,8 @@ var DATA={
     {s:'PPLT',n:'Platino ETF',logo:'https://financialmodelingprep.com/image-stock/PPLT.png',color:'#E5E4E2'},
     {s:'PALL',n:'Paladio ETF',logo:'https://financialmodelingprep.com/image-stock/PALL.png',color:'#CED0CF'},
     {s:'JJU',n:'Aluminio ETF',color:'#848484'},{s:'JJZ',n:'Zinc ETF',color:'#848484'},
-    {s:'SLX',n:'Steel/Hierro ETF',color:'#666'},{s:'DBB',n:'Base Metals ETF',logo:'https://financialmodelingprep.com/image-stock/DBB.png',color:'#848484'},{s:'ALUM',n:'Aluminio',color:'#848484'}
+    {s:'SLX',n:'Steel/Hierro ETF',color:'#666'},{s:'DBB',n:'Base Metals ETF',logo:'https://financialmodelingprep.com/image-stock/DBB.png',color:'#848484'},{s:'ALUM',n:'Aluminio',color:'#848484'},
+    {s:'ALI=F',n:'Aluminio',color:'#848789'}
   ],
   futuros: [
     {s:'ES=F',n:'S&P 500 Fut',logo:'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCAzMiAzMic+PGNpcmNsZSBjeD0nMTYnIGN5PScxNicgcj0nMTYnIGZpbGw9JyMxQTZCM0MnLz48dGV4dCB4PScxNicgeT0nMjEnIGZvbnQtZmFtaWx5PSdBcmlhbCxzYW5zLXNlcmlmJyBmb250LXNpemU9JzEzJyBmb250LXdlaWdodD0nYm9sZCcgZmlsbD0nI2ZmZicgdGV4dC1hbmNob3I9J21pZGRsZSc+RVM8L3RleHQ+PC9zdmc+',color:'#003087'},
