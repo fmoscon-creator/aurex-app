@@ -3,6 +3,11 @@
 (function _loadPortCacheImmediate(){
   try {
     var cached = JSON.parse(localStorage.getItem('aurex_port_items_cache') || 'null');
+    // Restaurar precios cacheados ANTES de renderizar
+    var cachedPrices = JSON.parse(localStorage.getItem('aurex_pc_prices_cache') || 'null');
+    var cachedChange24 = JSON.parse(localStorage.getItem('aurex_pc_change24_cache') || 'null');
+    if (cachedPrices) window._pcPrices = cachedPrices;
+    if (cachedChange24) window._pcChange24 = cachedChange24;
     if (cached && cached.length > 0) {
       window._portItemsCached = cached;
       document.addEventListener('DOMContentLoaded', function(){
@@ -852,7 +857,12 @@ function _renderPortfolioItems(items){
     items = ordered.concat(rem);
   }
   window._portItems = items;
-  try { localStorage.setItem('aurex_port_items_cache', JSON.stringify(items)); } catch(e){}
+  try {
+    localStorage.setItem('aurex_port_items_cache', JSON.stringify(items));
+    // Cachear precios y cambios 24h para que el refresh muestre datos correctos
+    if(window._pcPrices) localStorage.setItem('aurex_pc_prices_cache', JSON.stringify(window._pcPrices));
+    if(window._pcChange24) localStorage.setItem('aurex_pc_change24_cache', JSON.stringify(window._pcChange24));
+  } catch(e){}
   var prcs = window._pcPrices || {};
   var fmtNum = function(n,d){ return n.toLocaleString('es-AR',{minimumFractionDigits:d||2,maximumFractionDigits:d||2}); };
   cnt.innerHTML = items.map(function(item, idx){
