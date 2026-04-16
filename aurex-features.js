@@ -4818,7 +4818,7 @@ window._calcPortPeriod = function(period) {
   var el1 = document.getElementById('port-pnl-usd');
   var el2 = document.getElementById('port-pnl-pct');
   if(el1){el1.textContent=(isPos?'+':'-')+'$'+Math.abs(diff).toLocaleString(navigator.language||'en-US',{minimumFractionDigits:2,maximumFractionDigits:2});el1.style.color=color;}
-  if(el2){el2.textContent=_fmt(pct,'pct');el2.style.color=color;el2.style.background=bg;}
+  if(el2){el2.textContent=_fmt(pct,'pct');el2.style.color=color;el2.style.background='transparent';}
   // F2: sincronizar indicador Hoy
   if (typeof window._refreshHoyPct === 'function') window._refreshHoyPct();
 };
