@@ -2114,8 +2114,8 @@ window.renderWatchCnt = function(){
       var isCompareMode = window._wlCompareMode;
       var isSelected = window._wlCompareItems && window._wlCompareItems.indexOf(item.s) >= 0;
       var rowClick = isCompareMode ? 'wlToggleCompare(\''+item.s+'\')' : 'wlOpenDetail(\''+item.s+'\')';
-      var lpAttr = isCompareMode ? '' : ' ontouchstart="this._lpT=setTimeout(function(){this._lp=1;wlShowActionMenu(\''+item.s+'\')}.bind(this),400)" ontouchend="clearTimeout(this._lpT);if(this._lp){this._lp=0;event.preventDefault();}" ontouchmove="clearTimeout(this._lpT)"';
-      html += '<div onclick="if(this._lp){this._lp=0;return;}'+rowClick+'"'+lpAttr+' style="padding:0;border-bottom:0.5px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
+      var lpAttr = isCompareMode ? '' : ' ontouchstart="this._lpT=setTimeout(function(){this._lp=1;wlShowActionMenu(\''+item.s+'\')}.bind(this),400)" ontouchend="clearTimeout(this._lpT);if(this._lp){this._lp=0;event.preventDefault();event.stopPropagation();return false;}" ontouchmove="clearTimeout(this._lpT)" oncontextmenu="event.preventDefault()"';
+      html += '<div onclick="if(this._lp){this._lp=0;event.stopPropagation();return false;}'+rowClick+'"'+lpAttr+' style="padding:0;border-bottom:0.5px solid var(--border);cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0)">';
       html += '<div style="display:flex;align-items:center;gap:6px;padding:10px 12px">';
       if(isCompareMode) {
         html += '<div data-wl-compare="'+item.s+'" style="width:22px;height:22px;border-radius:11px;border:2px solid '+(isSelected?'var(--gold)':'var(--border)')+';background:'+(isSelected?'var(--gold)':'transparent')+';display:flex;align-items:center;justify-content:center;margin-right:4px;flex-shrink:0">'+(isSelected?'<span style="color:var(--chipTextActive);font-size:12px;font-weight:800">✓</span>':'')+'</div>';
