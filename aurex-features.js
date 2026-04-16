@@ -5126,6 +5126,9 @@ window._refreshHoyPct = function() {
   var isPos = !pct.startsWith('-');
   hoyPct.textContent = pct;
   hoyPct.style.color = isPos ? 'var(--green)' : 'var(--red)';
+  // Emoji dinámico: 🎉 si positivo, 😟 si negativo (nativa línea 653)
+  var emojiEl = document.getElementById('port-fila-emoji');
+  if (emojiEl) emojiEl.textContent = isPos ? '🎉' : '😟';
 };
 
 // --- Fase 4 F3: Sort menus (modal central — réplica nativa) ---
