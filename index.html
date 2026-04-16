@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=128"></script>
+<script src="aurex-v3.js?v=129"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -740,7 +740,7 @@ function calculateAlerts(){
   var scopeSyms = scope==='portfolio' ? (window._alertPortSyms||[]) : scope==='watchlist' ? (window._alertWLSyms||[]) : sigs.map(function(s){return s.simbolo;});
   var filtered = sigs.filter(function(s){return scopeSyms.indexOf(s.simbolo)>=0;});
   var checks = document.querySelectorAll('.alert-section input[type=checkbox]');
-  var toggleIds = ['ia_cambio','ia_alta','ia_umbral','ia_portfolio','pulse_zona','pulse_cat','pulse_thermo','precio_objetivo','precio_variacion','precio_maxmin','ev_fomc','ev_cpi','ev_apertura','ev_earnings','ev_gdelt'];
+  var toggleIds = ['ia_cambio','ia_alta','ia_umbral','ia_portfolio','pulse_zona','pulse_cat','pulse_thermo','precio_variacion','precio_maxmin','precio_rsi','ev_fomc','ev_cpi','ev_apertura','ev_earnings','ev_gdelt'];
   var toggles = {};
   checks.forEach(function(c,i){if(toggleIds[i])toggles[toggleIds[i]]=c.checked;});
   var pctThreshold = 5;
@@ -757,18 +757,40 @@ function calculateAlerts(){
     var sym = sig.simbolo;
     var fP = precio>=1000?'$'+Math.round(precio).toLocaleString('es-AR'):precio>=1?'$'+precio.toFixed(2):precio>=0.01?'$'+precio.toFixed(4):'$'+precio.toFixed(6);
 
+    // IA: Alta Convicción (>= 85%) — idéntico a nativa línea 208
     if(toggles.ia_alta && dir.indexOf('ALTA CONV')>=0 && prob>=85)
       alerts.push({tipo:'ia',sub:'alta_conv',sym:sym,icon:'⚡',titulo:sym+' — ALTA CONV '+prob+'%',desc:fP+' · '+(change>=0?'+':'')+change.toFixed(1)+'%',color:'var(--gold)'});
+
+    // IA: Cambio de señal BAJISTA (prob >= 80) — nativa línea 213
     if(toggles.ia_cambio && dir==='BAJISTA' && prob>=80)
       alerts.push({tipo:'ia',sub:'cambio',sym:sym,icon:'📉',titulo:sym+' — BAJISTA '+prob+'%',desc:fP+' · Senal bajista fuerte',color:'var(--red)'});
+
+    // IA: Cambio de señal ALCISTA (prob >= 80) — nativa línea 216
+    if(toggles.ia_cambio && dir==='ALCISTA' && prob>=80)
+      alerts.push({tipo:'ia',sub:'cambio',sym:sym,icon:'📈',titulo:sym+' — ALCISTA '+prob+'%',desc:fP+' · Senal alcista fuerte',color:'var(--green)'});
+
+    // IA: Umbral probabilidad — nativa línea 221
     if(toggles.ia_umbral && prob>=probThreshold && !(dir.indexOf('ALTA CONV')>=0&&prob>=85))
       alerts.push({tipo:'ia',sub:'umbral',sym:sym,icon:'🎯',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · Supera umbral '+probThreshold+'%',color:'#A78BFA'});
+
+    // PRECIO: Variación brusca — nativa línea 226
     if(toggles.precio_variacion && Math.abs(change)>=pctThreshold)
       alerts.push({tipo:'precio',sub:'variacion',sym:sym,icon:change>=0?'📈':'📉',titulo:sym+' '+(change>=0?'+':'')+change.toFixed(1)+'%',desc:fP+' en 24hs',color:change>=0?'var(--green)':'var(--red)'});
-    if(toggles.precio_maxmin && sig.rsi){
-      if(sig.rsi>=70) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔺',titulo:sym+' — RSI '+sig.rsi,desc:'Sobrecompra · '+fP,color:'var(--red)'});
-      else if(sig.rsi<=30) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'🔻',titulo:sym+' — RSI '+sig.rsi,desc:'Sobreventa · '+fP,color:'var(--green)'});
+
+    // PRECIO: Nuevo máximo/mínimo 30d (usa soporte_resist) — nativa línea 231
+    if(toggles.precio_maxmin && sig.scores){
+      var sr = sig.scores.soporte_resist||0;
+      if(sr < -0.03) alerts.push({tipo:'precio',sub:'maxmin',sym:sym,icon:'🔺',titulo:sym+' — Cerca de maximo 30d',desc:fP+' · Zona de resistencia',color:'var(--red)'});
+      else if(sr > 0.03) alerts.push({tipo:'precio',sub:'maxmin',sym:sym,icon:'🔻',titulo:sym+' — Cerca de minimo 30d',desc:fP+' · Zona de soporte',color:'var(--green)'});
     }
+
+    // PRECIO: RSI Extremo — nativa línea 238
+    if(toggles.precio_rsi && sig.rsi){
+      if(sig.rsi>=70) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'⚠️',titulo:sym+' — RSI '+sig.rsi,desc:'Sobrecompra · '+fP,color:'var(--red)'});
+      else if(sig.rsi<=30) alerts.push({tipo:'precio',sub:'rsi',sym:sym,icon:'⚠️',titulo:sym+' — RSI '+sig.rsi,desc:'Sobreventa · '+fP,color:'var(--green)'});
+    }
+
+    // IA: Señal en Portfolio — nativa línea 244
     if(toggles.ia_portfolio && scope==='portfolio' && prob>=70)
       alerts.push({tipo:'ia',sub:'portfolio',sym:sym,icon:'💼',titulo:sym+' — '+dir+' '+prob+'%',desc:fP+' · En tu portfolio',color:'#A78BFA'});
   });
