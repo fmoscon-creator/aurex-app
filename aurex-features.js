@@ -5760,15 +5760,60 @@ window._initLongPressActions = function() {
   obs('watch-cnt', _attachAllWatchlistLP);
 };
 
+// === Modal Idioma (igual a nativa IMG_1772) ===
+window._openIdiomaModal = function() {
+  var existing = document.getElementById('idioma-modal-overlay');
+  if (existing) existing.remove();
+  var currentLang = localStorage.getItem('aurex_lang') || 'es';
+  var langs = [
+    { code: 'es', flag: '🇪🇸', name: 'Español', soon: false },
+    { code: 'en', flag: '🇬🇧', name: 'English', soon: false },
+    { code: 'pt', flag: '•', name: 'Português', soon: true },
+    { code: 'zh', flag: '•', name: '中文', soon: true }
+  ];
+  var rows = langs.map(function(l) {
+    var selected = l.code === currentLang;
+    var check = selected ? '<span style="color:#22c55e;font-size:16px;font-weight:700;">✓</span>' : '';
+    var soonTag = l.soon ? ' <span style="color:#999;font-size:11px;">· SOON</span>' : '';
+    var textColor = l.soon ? '#999' : '#222';
+    return '<div onclick="' + (l.soon ? '' : "window._setIdioma('" + l.code + "')") + '" style="display:flex;align-items:center;justify-content:space-between;padding:14px 4px;border-bottom:1px solid #eee;cursor:' + (l.soon ? 'default' : 'pointer') + ';">' +
+      '<span style="font-size:14px;color:' + textColor + ';">' + l.flag + ' ' + l.name + soonTag + '</span>' +
+      check +
+    '</div>';
+  }).join('');
+  var ov = document.createElement('div');
+  ov.id = 'idioma-modal-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.onclick = function(e) { if (e.target === ov) ov.remove(); };
+  ov.innerHTML =
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px;width:100%;max-width:300px;">' +
+      '<div style="text-align:center;font-size:16px;font-weight:700;color:#111;margin-bottom:14px;">🌐 Idioma</div>' +
+      rows +
+      '<div onclick="document.getElementById(\'idioma-modal-overlay\').remove()" style="margin-top:14px;text-align:center;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:14px;font-weight:600;color:#333;cursor:pointer;">Cancelar</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+};
+
+window._setIdioma = function(code) {
+  localStorage.setItem('aurex_lang', code);
+  var ov = document.getElementById('idioma-modal-overlay');
+  if (ov) ov.remove();
+  // Actualizar bandera en el botón del header
+  var flags = { es: '🇪🇸', en: '🇬🇧', pt: '🇧🇷', zh: '🇨🇳' };
+  var btns = document.querySelectorAll('[onclick="window._openIdiomaModal()"]');
+  btns.forEach(function(b) { b.textContent = flags[code] || '🇪🇸'; });
+};
+
 // === LIVE refresh timer (punto 14) ===
 window._liveLastFetch = Date.now();
 (function _initLiveTimer() {
   function updateLiveTime() {
-    var el = document.getElementById('liveTime');
-    if (!el) return;
     var diff = Math.floor((Date.now() - (window._liveLastFetch || Date.now())) / 1000);
-    if (diff < 60) el.textContent = '· hace ' + diff + 's';
-    else el.textContent = '· hace ' + Math.floor(diff / 60) + ' min';
+    var txt = diff < 60 ? '· hace ' + diff + 's' : '· hace ' + Math.floor(diff / 60) + ' min';
+    var el = document.getElementById('liveTime');
+    if (el) el.textContent = txt;
+    var el2 = document.getElementById('liveTimePort');
+    if (el2) el2.textContent = txt;
   }
   setInterval(updateLiveTime, 10000);
   updateLiveTime();
