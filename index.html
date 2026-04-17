@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=135"></script>
+<script src="aurex-v3.js?v=136"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -677,36 +677,36 @@ function showAlertVars(tipo){
   var sub = isIA ? '10 variables de analisis por activo' : '14 variables macro del mercado global';
   var color = isIA ? '#A78BFA' : '#EC4899';
   var vars = isIA ? [
-    {n:'Tendencia 24h',d:'Variacion % del precio en 24hs',p:'Alto',c:'var(--green)'},
-    {n:'RSI14 Real',d:'Sobrecompra/sobreventa',p:'Alto',c:'var(--green)'},
-    {n:'Volumen Real',d:'Ratio volumen actual vs promedio',p:'Alto',c:'var(--green)'},
-    {n:'Volatilidad',d:'Amplitud del rango diario',p:'Medio',c:'var(--gold)'},
-    {n:'Correlacion BTC/SPY',d:'Relacion cripto vs mercado',p:'Medio',c:'var(--gold)'},
-    {n:'Oro/Petroleo',d:'Activos refugio y energia',p:'Medio',c:'var(--gold)'},
-    {n:'Macro FED',d:'Eventos macro de alto impacto',p:'Medio',c:'var(--gold)'},
-    {n:'Earnings',d:'Reportes de resultados proximos',p:'Medio',c:'var(--gold)'},
-    {n:'MACD 12/26',d:'Convergencia/divergencia medias',p:'Alto',c:'var(--green)'},
-    {n:'Soporte/Resist. 30d',d:'Distancia a soporte y resistencia',p:'Alto',c:'var(--green)'},
+    {n:'Tendencia 24h',d:'Variacion % del precio en 24hs',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'RSI14 Real',d:'Sobrecompra/sobreventa',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Volumen Real',d:'Ratio volumen actual vs promedio',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Volatilidad',d:'Amplitud del rango diario',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'Correlacion BTC/SPY',d:'Relacion cripto vs mercado',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'Oro/Petroleo',d:'Activos refugio y energia',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'Macro FED',d:'Eventos macro de alto impacto',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'Earnings',d:'Reportes de resultados proximos',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'MACD 12/26',d:'Convergencia/divergencia medias',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Soporte/Resist. 30d',d:'Distancia a soporte y resistencia',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
   ] : [
-    {n:'BTC momentum',d:'Binance',p:'12%',c:'#F7931A'},
-    {n:'ETH momentum',d:'Binance',p:'8%',c:'#627EEA'},
-    {n:'VIX',d:'Yahoo',p:'14%',c:'var(--red)'},
-    {n:'SP500 momentum',d:'Yahoo',p:'8%',c:'#4A9EFF'},
-    {n:'ES=F SP Futuro',d:'Yahoo',p:'8%',c:'#4A9EFF'},
-    {n:'NQ=F Nasdaq',d:'Yahoo',p:'6%',c:'#4A9EFF'},
-    {n:'YM=F Dow',d:'Yahoo',p:'4%',c:'#4A9EFF'},
-    {n:'RTY=F Russell',d:'Yahoo',p:'3%',c:'#4A9EFF'},
-    {n:'Oro GC=F',d:'Yahoo',p:'8%',c:'var(--gold)'},
-    {n:'Plata SI=F',d:'Yahoo',p:'4%',c:'#C0C0C0'},
-    {n:'Petroleo CL=F',d:'Yahoo',p:'5%',c:'#8B5CF6'},
-    {n:'Cobre HG=F',d:'Yahoo',p:'4%',c:'#F7931A'},
-    {n:'Macro FED',d:'FRED',p:'12%',c:'var(--green)'},
-    {n:'Geopolitica',d:'GDELT',p:'4%',c:'var(--red)'},
+    {n:'BTC momentum',d:'Binance',p:'12%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
+    {n:'ETH momentum',d:'Binance',p:'8%',c:'#627EEA',bg:'rgba(98,126,234,0.12)'},
+    {n:'VIX',d:'Yahoo',p:'14%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
+    {n:'SP500 momentum',d:'Yahoo',p:'8%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
+    {n:'ES=F SP Futuro',d:'Yahoo',p:'8%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
+    {n:'NQ=F Nasdaq',d:'Yahoo',p:'6%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
+    {n:'YM=F Dow',d:'Yahoo',p:'4%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
+    {n:'RTY=F Russell',d:'Yahoo',p:'3%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
+    {n:'Oro GC=F',d:'Yahoo',p:'8%',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:'Plata SI=F',d:'Yahoo',p:'4%',c:'#C0C0C0',bg:'rgba(192,192,192,0.12)'},
+    {n:'Petroleo CL=F',d:'Yahoo',p:'5%',c:'#8B5CF6',bg:'rgba(139,92,246,0.12)'},
+    {n:'Cobre HG=F',d:'Yahoo',p:'4%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
+    {n:'Macro FED',d:'FRED',p:'12%',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Geopolitica',d:'GDELT',p:'4%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
   ];
   var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">'+(isIA?'🤖':'💓')+'</div><div><div style="font-size:15px;font-weight:700;color:'+color+'">'+title+'</div><div style="font-size:10px;color:var(--textSec)">'+sub+'</div></div></div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-vars-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
   if(isIA) html += '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px"><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--green);border-radius:2px"></div><span style="font-size:9px;color:var(--green);font-weight:600">Peso Alto</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--gold);border-radius:2px"></div><span style="font-size:9px;color:var(--gold);font-weight:600">Peso Medio</span></div></div>';
   vars.forEach(function(v,i){
-    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid var(--border);border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:var(--gold);width:20px;text-align:center">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">'+v.n+'</div><div style="font-size:9px;color:var(--textSec);margin-top:1px">'+v.d+'</div></div><div style="background:'+v.c+'20;padding:3px 8px;border-radius:6px"><span style="font-size:10px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
+    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid var(--border);border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:#D4A017;width:20px;text-align:center">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">'+v.n+'</div><div style="font-size:9px;color:var(--textSec);margin-top:1px">'+v.d+'</div></div><div style="background:'+v.bg+';padding:3px 8px;border-radius:6px"><span style="font-size:10px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
   });
   html += '</div>';
   var overlay = document.createElement('div');
