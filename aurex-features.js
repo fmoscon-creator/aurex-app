@@ -4956,7 +4956,7 @@ function _initHeaderLogos() {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
     hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
-    hdrDiv.innerHTML = '<span class="aurex-logo-wrap">' + _makeSVG('_al').replace('<svg ', '<svg class="aurex-logo" ') + '</span><span style="font-weight:500;color:var(--gold);font-size:16px;letter-spacing:1px;">AUREX</span><span style="color:var(--textSec);font-size:13px;"> Alertas</span><span style="margin-left:auto;display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-weight:700"><span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite"></span>LIVE<span id="alertas-live-time" style="color:var(--textSec);font-weight:500">· ahora</span></span>';
+    hdrDiv.innerHTML = '<span class="aurex-logo-wrap">' + _makeSVG('_al').replace('<svg ', '<svg class="aurex-logo" ') + '</span><span style="font-weight:500;color:var(--gold);font-size:16px;letter-spacing:1px;">AUREX</span><span style="color:var(--textSec);font-size:13px;"> Alertas</span>';
     alertasScreen.insertBefore(hdrDiv, alertasScreen.firstChild);
   }
 
@@ -5007,9 +5007,16 @@ function _initHeaderLogos() {
     wrapper.appendChild(nuevoEl);
   }
 
-  // ALERTAS: appendChild con margin-left:auto (sin LIVE)
+  // ALERTAS: ⚖️ + LIVE (en ese orden, como nativa)
   var alHdr = document.querySelector('#screen-alertas .aurex-hdr-added');
   window._addLegalChip(alHdr, null, true);
+  if(alHdr && !alHdr.querySelector('#alertas-live-wrap')){
+    var liveSpan = document.createElement('span');
+    liveSpan.id = 'alertas-live-wrap';
+    liveSpan.style.cssText = 'display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-weight:700;margin-left:8px';
+    liveSpan.innerHTML = '<span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite"></span>LIVE<span id="alertas-live-time" style="color:var(--textSec);font-weight:500">· ahora</span>';
+    alHdr.appendChild(liveSpan);
+  }
 
   // PORTFOLIO: appendChild con margin-left:auto (padre sin space-between)
   var portScreens = document.querySelectorAll('.screen');
