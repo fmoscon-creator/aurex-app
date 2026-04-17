@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=137"></script>
+<script src="aurex-v3.js?v=138"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -700,13 +700,13 @@ function showAlertVars(tipo){
     {n:'Plata SI=F',d:'Yahoo',p:'4%',c:'#C0C0C0',bg:'rgba(192,192,192,0.12)'},
     {n:'Petroleo CL=F',d:'Yahoo',p:'5%',c:'#8B5CF6',bg:'rgba(139,92,246,0.12)'},
     {n:'Cobre HG=F',d:'Yahoo',p:'4%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
-    {n:'Macro FED',d:'FRED',p:'12%',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Macro FED',d:'FRED',p:'12%',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
     {n:'Geopolitica',d:'GDELT',p:'4%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
   ];
   var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">'+(isIA?'🤖':'💓')+'</div><div><div style="font-size:15px;font-weight:700;color:'+color+'">'+title+'</div><div style="font-size:10px;color:var(--textSec)">'+sub+'</div></div></div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-vars-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
   if(isIA) html += '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px"><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--green);border-radius:2px"></div><span style="font-size:9px;color:var(--green);font-weight:600">Peso Alto</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--gold);border-radius:2px"></div><span style="font-size:9px;color:var(--gold);font-weight:600">Peso Medio</span></div></div>';
   vars.forEach(function(v,i){
-    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid var(--border);border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:#D4A017;width:20px;text-align:center">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">'+v.n+'</div><div style="font-size:9px;color:var(--textSec);margin-top:1px">'+v.d+'</div></div><div style="background:'+v.bg+';padding:3px 8px;border-radius:6px"><span style="font-size:10px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
+    html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid var(--border);border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:#D4A017;width:20px;text-align:center;flex-shrink:0">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">'+v.n+'</div><div style="font-size:9px;color:var(--textSec);margin-top:1px">'+v.d+'</div></div><div style="background:'+v.bg+';padding:4px 10px;border-radius:6px;text-align:center;min-width:40px"><span style="font-size:11px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
   });
   html += '</div>';
   var overlay = document.createElement('div');
