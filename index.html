@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=136"></script>
+<script src="aurex-v3.js?v=137"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -665,7 +665,7 @@ function updateAlertCount(){
     checks.forEach(function(c){if(c.checked)active++;});
     totalActive+=active;
     var cnt=document.getElementById(s+'-alert-count');
-    if(cnt){cnt.textContent=active+'/'+totals[s];cnt.style.color=active===totals[s]?'var(--green)':'var(--gold)';}
+    if(cnt){cnt.textContent=active+'/'+totals[s];cnt.style.color=active===totals[s]?'var(--green)':'var(--gold)';var badge=cnt.parentElement;if(badge)badge.style.borderColor=active===totals[s]?'var(--green)':'var(--border)';}
   });
   var el=document.getElementById('alert-active');
   if(el)el.textContent=totalActive;
@@ -677,16 +677,16 @@ function showAlertVars(tipo){
   var sub = isIA ? '10 variables de analisis por activo' : '14 variables macro del mercado global';
   var color = isIA ? '#A78BFA' : '#EC4899';
   var vars = isIA ? [
-    {n:'Tendencia 24h',d:'Variacion % del precio en 24hs',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
-    {n:'RSI14 Real',d:'Sobrecompra/sobreventa',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
-    {n:'Volumen Real',d:'Ratio volumen actual vs promedio',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
-    {n:'Volatilidad',d:'Amplitud del rango diario',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'Correlacion BTC/SPY',d:'Relacion cripto vs mercado',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'Oro/Petroleo',d:'Activos refugio y energia',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'Macro FED',d:'Eventos macro de alto impacto',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'Earnings',d:'Reportes de resultados proximos',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'MACD 12/26',d:'Convergencia/divergencia medias',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
-    {n:'Soporte/Resist. 30d',d:'Distancia a soporte y resistencia',p:'Alto',c:'#3FB950',bg:'#1A3A2A'},
+    {n:'Tendencia 24h',d:'Variacion % del precio en 24hs',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:'RSI14 Real',d:'Sobrecompra/sobreventa',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:'Volumen Real',d:'Ratio volumen actual vs promedio',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:'Volatilidad',d:'Amplitud del rango diario',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:'Correlacion BTC/SPY',d:'Relacion cripto vs mercado',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:'Oro/Petroleo',d:'Activos refugio y energia',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:'Macro FED',d:'Eventos macro de alto impacto',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:'Earnings',d:'Reportes de resultados proximos',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:'MACD 12/26',d:'Convergencia/divergencia medias',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:'Soporte/Resist. 30d',d:'Distancia a soporte y resistencia',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
   ] : [
     {n:'BTC momentum',d:'Binance',p:'12%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
     {n:'ETH momentum',d:'Binance',p:'8%',c:'#627EEA',bg:'rgba(98,126,234,0.12)'},
@@ -2088,7 +2088,7 @@ window._mktOpenDetail = function(idx){
   <div onclick="toggleAlertSection('ia')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">🤖</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas IA</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Motor IA — 10 variables</div></div>
-    <div style="border:1px solid var(--border);border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:var(--gold)" id="ia-alert-count">4/4</span></div>
+    <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="ia-alert-count">4/4</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="ia-arrow">▼</span>
   </div>
   <div id="ia-alert-body" style="display:none;border-top:0.5px solid var(--border)">
@@ -2103,7 +2103,7 @@ window._mktOpenDetail = function(idx){
   <div onclick="toggleAlertSection('pulse')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">💓</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas PULSE</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">AUREX Pulse — 14 variables macro</div></div>
-    <div style="border:1px solid var(--border);border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:var(--gold)" id="pulse-alert-count">3/3</span></div>
+    <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="pulse-alert-count">3/3</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="pulse-arrow">▼</span>
   </div>
   <div id="pulse-alert-body" style="display:none;border-top:0.5px solid var(--border)">
@@ -2117,7 +2117,7 @@ window._mktOpenDetail = function(idx){
   <div onclick="toggleAlertSection('precio')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">💰</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas de Precio</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Monitoreo de precios en tiempo real</div></div>
-    <div style="border:1px solid var(--border);border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:var(--gold)" id="precio-alert-count">3/3</span></div>
+    <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="precio-alert-count">3/3</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="precio-arrow">▼</span>
   </div>
   <div id="precio-alert-body" style="display:none;border-top:0.5px solid var(--border)">
@@ -2131,7 +2131,7 @@ window._mktOpenDetail = function(idx){
   <div onclick="toggleAlertSection('eventos')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">📅</span>
     <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas de Eventos</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Calendario economico y corporativo</div></div>
-    <div style="border:1px solid var(--border);border-radius:10px;padding:2px 8px"><span style="font-size:10px;font-weight:700;color:var(--gold)" id="eventos-alert-count">5/5</span></div>
+    <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="eventos-alert-count">5/5</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="eventos-arrow">▼</span>
   </div>
   <div id="eventos-alert-body" style="display:none;border-top:0.5px solid var(--border)">
