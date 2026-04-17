@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=131"></script>
+<script src="aurex-v3.js?v=132"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -817,6 +817,8 @@ function calculateAlerts(){
   if(el) el.textContent = checks.length ? Array.from(checks).filter(function(c){return c.checked;}).length : 0;
   var sc = document.getElementById('alert-scope-count');
   if(sc) sc.textContent = scopeSyms.length;
+  // Calcular conteo de alertas para los 3 scopes y mostrar en botones
+  _updateScopeCounts(sigs, toggles, pctThreshold, probThreshold);
 }
 
 function renderTriggeredAlerts(){
@@ -931,6 +933,45 @@ function showAlertInfoModal(tipo){
   overlay.innerHTML = '<div style="background:var(--card);border-radius:20px;width:100%;max-width:380px;max-height:70vh;overflow-y:auto;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)">'+html+'</div>';
   overlay.onclick = function(e){if(e.target===overlay)overlay.remove();};
   document.body.appendChild(overlay);
+}
+
+// Calcular alertas por scope sin renderizar (para mostrar en botones)
+function _countAlertsForScope(sigs, scopeSyms, toggles, pctT, probT){
+  var count = 0;
+  var seen = {};
+  sigs.forEach(function(sig){
+    if(scopeSyms.indexOf(sig.simbolo)<0) return;
+    var prob=sig.confianza||sig.probPrincipal||0;
+    var precio=sig.precio||0; var p24=sig.precio24h||0;
+    var chg=(precio>0.001&&p24>0.001)?((precio-p24)/p24*100):0;
+    if(Math.abs(chg)>50) return;
+    var dir=(sig.direccion||'').toUpperCase(); var sym=sig.simbolo;
+    var add=function(tipo,sub,icon){var k=sym+'_'+tipo+'_'+icon;if(!seen[k]){seen[k]=1;count++;}};
+    if(toggles.ia_alta&&dir.indexOf('ALTA CONV')>=0&&prob>=85) add('ia','alta_conv','⚡');
+    if(toggles.ia_cambio&&dir==='BAJISTA'&&prob>=80) add('ia','cambio','📉');
+    if(toggles.ia_cambio&&dir==='ALCISTA'&&prob>=80) add('ia','cambio','📈');
+    if(toggles.ia_umbral&&prob>=probT&&!(dir.indexOf('ALTA CONV')>=0&&prob>=85)) add('ia','umbral','🎯');
+    if(toggles.precio_variacion&&Math.abs(chg)>=pctT) add('precio','variacion',chg>=0?'📈':'📉');
+    if(toggles.precio_maxmin&&sig.scores){var sr=sig.scores.soporte_resist||0;if(sr<-0.03)add('precio','maxmin','🔺');else if(sr>0.03)add('precio','maxmin','🔻');}
+    if(toggles.precio_rsi&&sig.rsi){if(sig.rsi>=70)add('precio','rsi','⚠️');else if(sig.rsi<=30)add('precio','rsi','⚠️');}
+    if(toggles.ia_portfolio&&scopeSyms===window._alertPortSyms&&prob>=70) add('ia','portfolio','💼');
+  });
+  // Pulse (no depende del scope)
+  var pulse=window._alertPulse||{};
+  if(toggles.pulse_zona){var gs=pulse.GLOBAL?(pulse.GLOBAL.value||0):0;if(gs>0&&gs<=20)count++;else if(gs>=80)count++;}
+  if(toggles.pulse_cat){['CRIPTO','ACCIONES','COMOD','FUTUROS'].forEach(function(cat){var raw=pulse[cat];var sc=raw?(typeof raw==='number'?raw:(raw.value||0)):0;if(sc>0&&(sc<=25||sc>=75))count++;});}
+  return count;
+}
+function _updateScopeCounts(sigs, toggles, pctT, probT){
+  var portSyms=window._alertPortSyms||[];
+  var wlSyms=window._alertWLSyms||[];
+  var allSyms=sigs.map(function(s){return s.simbolo;});
+  var cPort=_countAlertsForScope(sigs,portSyms,toggles,pctT,probT);
+  var cWL=_countAlertsForScope(sigs,wlSyms,toggles,pctT,probT);
+  var cAll=_countAlertsForScope(sigs,allSyms,toggles,pctT,probT);
+  var e1=document.getElementById('scope-count-portfolio');if(e1)e1.textContent=cPort+' alertas';
+  var e2=document.getElementById('scope-count-watchlist');if(e2)e2.textContent=cWL+' alertas';
+  var e3=document.getElementById('scope-count-todos');if(e3)e3.textContent=cAll+' alertas';
 }
 
 // Toggle change recalcula
@@ -2005,9 +2046,9 @@ window._mktOpenDetail = function(idx){
 <div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:12px;border:1.5px solid var(--gold)">
   <div style="font-size:10px;color:var(--gold);font-weight:800;margin-bottom:10px;text-align:center;letter-spacing:1px">ALERTAS SOBRE</div>
   <div style="display:flex;gap:8px" id="alert-scope-btns">
-    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Portfolio</div></div>
-    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Watchlist</div></div>
-    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:800;color:#000">Todos (350)</div></div>
+    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Portfolio</div><div id="scope-count-portfolio" style="font-size:9px;font-weight:700;color:var(--gold);margin-top:3px">—</div></div>
+    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Watchlist</div><div id="scope-count-watchlist" style="font-size:9px;font-weight:700;color:var(--gold);margin-top:3px">—</div></div>
+    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:800;color:#000">Todos (350)</div><div id="scope-count-todos" style="font-size:9px;font-weight:700;color:#000;margin-top:3px">—</div></div>
   </div>
 </div>
 
