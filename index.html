@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=140"></script>
+<script src="aurex-v3.js?v=141"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -2451,6 +2451,18 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:18px">🌙</span>
+          <div>
+            <div style="font-size:13px;color:var(--text);font-weight:500">Modo oscuro</div>
+            <div style="font-size:10px;color:var(--textSec);margin-top:2px">Apariencia oscura de la app</div>
+          </div>
+        </div>
+        <div style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;opacity:0.5;cursor:default">
+          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
+        </div>
+      </div>
       <div style="display:flex;flex-direction:column;padding:12px 0;border-bottom:1px solid var(--border);gap:10px">
         <div>
           <div style="font-size:14px;color:var(--text);font-weight:500">
@@ -2646,7 +2658,7 @@ display:flex;align-items:center;justify-content:space-between}
         padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
           <div style="font-size:14px;color:var(--text);font-weight:500">
-            &#128200; Variaci&#243;n brusca
+            📉 Variaci&#243;n brusca
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
             Sube o baja m&#225;s del 5% en 24hs tu portafolio
@@ -2695,7 +2707,7 @@ display:flex;align-items:center;justify-content:space-between}
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
       <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:var(--text);font-weight:500">&#128226; Notificaciones push</div>
+          <div style="font-size:14px;color:var(--text);font-weight:500">📲 Notificaciones push</div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; todas las notificaciones</div>
         </div>
         <div onclick="pacNotif(this,'notif_push')" data-on="1"
@@ -2726,7 +2738,7 @@ display:flex;align-items:center;justify-content:space-between}
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
         <div>
-          <div style="font-size:14px;color:var(--text);font-weight:500">&#128139; Newsletter semanal</div>
+          <div style="font-size:14px;color:var(--text);font-weight:500">💌 Newsletter semanal</div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">An&#225;lisis y novedades cada semana</div>
         </div>
         <div onclick="pacNotif(this,'notif_newsletter')" data-on="1"
@@ -2786,7 +2798,7 @@ display:flex;align-items:center;justify-content:space-between}
           <span style="font-size:20px">&#128140;</span>
           <div>
             <div style="font-size:14px;color:var(--text);font-weight:500">Contactar soporte</div>
-            <div style="font-size:11px;color:var(--textDim);margin-top:2px">soporte@aurexapp.com</div>
+            <div style="font-size:11px;color:var(--textDim);margin-top:2px">app.aurex@gmail.com</div>
           </div>
         </div>
         <span style="color:var(--textDim);font-size:16px">&#8250;</span>
@@ -2820,11 +2832,22 @@ display:flex;align-items:center;justify-content:space-between}
           <span style="font-size:12px;color:var(--textSec);font-weight:600">AUREX v1.0.0 &#127775;</span>
         </div>
         <div style="display:flex;gap:16px">
-          <span onclick="pacLegal('terminos')" style="font-size:11px;color:var(--textDim);cursor:pointer;text-decoration:underline">T&#233;rminos de uso</span>
-          <span onclick="pacLegal('privacidad')" style="font-size:11px;color:var(--textDim);cursor:pointer;text-decoration:underline">Pol&#237;tica de privacidad</span>
+          <span onclick="pacLegal('terminos')" style="font-size:11px;color:#58A6FF;cursor:pointer;text-decoration:underline">T&#233;rminos de uso</span>
+          <span onclick="pacLegal('privacidad')" style="font-size:11px;color:#58A6FF;cursor:pointer;text-decoration:underline">Pol&#237;tica de privacidad</span>
+        </div>
+        <div style="margin-top:12px;background:var(--bg);border-radius:10px;padding:12px;border:0.5px solid var(--border)">
+          <div style="font-size:9px;color:#8B949E;line-height:14px;text-align:center">AUREX no es un asesor financiero. Las se&#241;ales, an&#225;lisis e indicadores mostrados son generados por algoritmos automatizados y no deben interpretarse como garant&#237;a de resultados futuros. Invertir conlleva riesgos, incluida la posible p&#233;rdida del capital invertido. Consulte siempre a un asesor financiero certificado antes de tomar decisiones de inversi&#243;n.</div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+<!-- Card Aviso Legal antes de Sesion (como nativa) -->
+<div class="pac-bloque" onclick="if(window._openAvisoLegal)window._openAvisoLegal()" style="cursor:pointer">
+  <div style="display:flex;align-items:center;padding:14px 16px;gap:10px">
+    <span style="font-size:16px">⚖️</span>
+    <span style="flex:1;font-size:13px;font-weight:500;color:var(--text)">Aviso Legal</span>
+    <span style="font-size:18px;color:var(--textSec)">›</span>
   </div>
 </div>
 <div class="pac-bloque" id="pac-b9">
@@ -2838,10 +2861,10 @@ display:flex;align-items:center;justify-content:space-between}
           Vas a salir de tu cuenta en este dispositivo.
         </div>
         <button onclick="pacCerrarSesion()"
-          style="width:100%;background:var(--card);border:1px solid var(--textSec);
-          border-radius:10px;color:var(--text);font-size:15px;font-weight:700;
-          padding:13px;cursor:pointer;letter-spacing:.3px">
-          &#128682; Cerrar sesi&#243;n
+          style="width:100%;background:#1A0808;border:0.5px solid rgba(231,76,60,0.25);
+          border-radius:10px;color:#e74c3c;font-size:13px;font-weight:500;
+          padding:13px;cursor:pointer">
+          Cerrar sesi&#243;n
         </button>
       </div>
       <div style="margin-top:16px;border:1px solid #e74c3c44;border-radius:10px;padding:14px">
@@ -3521,23 +3544,84 @@ function pacInitNotif(){
   if(h){ var saved=localStorage.getItem('notif_hora'); if(saved) h.value=saved; }
 }
 function pacAbrirFaq(){
-  var m=document.getElementById('auth-msg');
-  if(m){m.textContent='Secci&#243;n FAQ pr&#243;ximamente';setTimeout(function(){m.textContent='';},2500);}
+  var m=document.getElementById('modal-faq-perfil');
+  if(!m){
+    m=document.createElement('div');
+    m.id='modal-faq-perfil';
+    m.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;justify-content:center;align-items:center;padding:16px';
+    m.onclick=function(e){if(e.target===m)m.style.display='none';};
+    var faqs=[
+      {q:'¿Qué es AUREX?',a:'AUREX es una plataforma de inversión con inteligencia artificial que analiza 350+ activos globales en tiempo real (criptomonedas, acciones, ETFs, commodities, futuros y divisas). Nuestro motor IA v7 evalúa 10 variables por activo para generar señales de compra/venta con probabilidad.',qen:'What is AUREX?',aen:'AUREX is an AI-powered investment platform that analyzes 350+ global assets in real time (cryptocurrencies, stocks, ETFs, commodities, futures, and currencies). Our IA v7 engine evaluates 10 variables per asset to generate buy/sell signals with probability.'},
+      {q:'¿Cómo funciona el Motor IA?',a:'El Motor IA v7 analiza 10 variables en tiempo real: Tendencia 24h, RSI14, Volumen, Volatilidad, Correlación BTC/SPY, Oro/Petróleo, Macro FED, Earnings, MACD y Soporte/Resistencia. Genera una señal ALCISTA, BAJISTA o ALTA CONV-IA con probabilidad del 55% al 88%.',qen:'How does the AI Engine work?',aen:'The IA v7 Engine analyzes 10 real-time variables: 24h Trend, RSI14, Volume, Volatility, BTC/SPY Correlation, Gold/Oil, FED Macro, Earnings, MACD, and Support/Resistance. It generates BULLISH, BEARISH, or HIGH CONV-AI signals with 55% to 88% probability.'},
+      {q:'¿Qué es AUREX Pulse?',a:'AUREX Pulse es nuestro índice de sentimiento de mercado con 14 variables ponderadas. Va de 0 (Miedo Extremo) a 100 (Codicia Extrema). Tiene 5 filtros: Global, Cripto, Acciones, Commodities y Futuros. Incluye 3 indicadores: AUREX Pulse, BTC Sentiment y Crypto Fear & Greed.',qen:'What is AUREX Pulse?',aen:'AUREX Pulse is our market sentiment index with 14 weighted variables. It ranges from 0 (Extreme Fear) to 100 (Extreme Greed). It has 5 filters: Global, Crypto, Stocks, Commodities, and Futures. Includes 3 indicators: AUREX Pulse, BTC Sentiment, and Crypto Fear & Greed.'},
+      {q:'¿Qué planes hay disponibles?',a:'FREE: 5 activos, 3 señales/día, Pulse básico. PRO ($9.99/mes): activos ilimitados, señales ilimitadas, alertas push, exportar portfolio. ELITE ($19.99/mes): todo lo de PRO + Pulse completo, análisis avanzado, alertas WhatsApp, soporte prioritario.',qen:'What plans are available?',aen:'FREE: 5 assets, 3 signals/day, basic Pulse. PRO ($9.99/mo): unlimited assets, unlimited signals, push alerts, export portfolio. ELITE ($19.99/mo): everything in PRO + full Pulse, advanced analysis, WhatsApp alerts, priority support.'},
+      {q:'¿Cómo funcionan las alertas?',a:'Las alertas te notifican cuando: un activo alcanza tu precio objetivo, cambia la señal IA, hay variación brusca (+/-5%), o AUREX Pulse entra en zona extrema. Podés recibirlas por push, email o WhatsApp (según tu plan).',qen:'How do alerts work?',aen:'Alerts notify you when: an asset reaches your target price, the AI signal changes, there is a sharp variation (+/-5%), or AUREX Pulse enters an extreme zone. You can receive them via push, email, or WhatsApp (depending on your plan).'},
+      {q:'¿Es seguro invertir con AUREX?',a:'AUREX no es un asesor financiero. Las señales IA son herramientas de análisis, no recomendaciones de inversión. Toda inversión conlleva riesgo. Consultá siempre a un profesional antes de operar.',qen:'Is it safe to invest with AUREX?',aen:'AUREX is not a financial advisor. AI signals are analysis tools, not investment recommendations. All investments carry risk. Always consult a professional before trading.'}
+    ];
+    var html='<div style="background:var(--card);border-radius:20px;width:92%;max-width:400px;max-height:85vh;overflow-y:auto;padding:20px;border:2px solid var(--gold);box-shadow:0 15px 40px rgba(0,0,0,0.5)">';
+    html+='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span style="font-size:16px;font-weight:700;color:var(--text)">❓ Centro de ayuda</span><span onclick="document.getElementById(\'modal-faq-perfil\').style.display=\'none\'" style="width:32px;height:32px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--textSec)">✕</span></div>';
+    for(var i=0;i<faqs.length;i++){
+      var f=faqs[i];
+      html+='<div style="margin-bottom:14px;background:var(--bg);border-radius:10px;padding:12px;border:0.5px solid var(--border)">';
+      html+='<div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:4px">'+f.q+'</div>';
+      html+='<div style="font-size:11px;color:var(--text);line-height:16px;margin-bottom:8px">'+f.a+'</div>';
+      html+='<div style="font-size:11px;font-weight:600;color:var(--textSec);margin-bottom:2px">'+f.qen+'</div>';
+      html+='<div style="font-size:10px;color:var(--textSec);line-height:14px">'+f.aen+'</div>';
+      html+='</div>';
+    }
+    html+='</div>';
+    m.innerHTML=html;
+    document.body.appendChild(m);
+  }
+  m.style.display='flex';
 }
 function pacCalificar(){
-  var m=document.getElementById('auth-msg');
-  if(m){m.textContent='&#11088; &#161;Gracias por calificar AUREX!';setTimeout(function(){m.textContent='';},2500);}
+  var m=document.getElementById('modal-rating-perfil');
+  if(!m){
+    m=document.createElement('div');
+    m.id='modal-rating-perfil';
+    m.style.cssText='display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;justify-content:center;align-items:center;padding:16px';
+    m.onclick=function(e){if(e.target===m)m.style.display='none';};
+    m.innerHTML='<div style="background:var(--card);border-radius:20px;width:80%;max-width:340px;padding:24px;border:2px solid var(--gold);box-shadow:0 15px 40px rgba(0,0,0,0.5);text-align:center">'+
+      '<div style="font-size:18px;font-weight:700;color:var(--text);margin-bottom:6px">Calificá AUREX</div>'+
+      '<div style="font-size:12px;color:var(--textSec);margin-bottom:16px">Tu opinión nos ayuda a mejorar la app para vos</div>'+
+      '<div id="rating-stars" style="display:flex;gap:8px;justify-content:center;margin-bottom:20px"></div>'+
+      '<div id="rating-label" style="font-size:13px;color:var(--gold);font-weight:600;margin-bottom:12px;min-height:18px"></div>'+
+      '<button onclick="var l=document.getElementById(\'rating-label\');l.textContent=\'¡Gracias! Tu calificación fue enviada\';l.style.color=\'var(--green)\';setTimeout(function(){document.getElementById(\'modal-rating-perfil\').style.display=\'none\';l.textContent=\'\';},1500)" style="background:var(--gold);border:none;border-radius:10px;padding:12px 30px;font-size:14px;font-weight:700;color:#000;cursor:pointer">Enviar</button>'+
+      '<div onclick="document.getElementById(\'modal-rating-perfil\').style.display=\'none\'" style="margin-top:10px;font-size:12px;color:var(--textSec);cursor:pointer">Cancelar</div>'+
+      '</div>';
+    document.body.appendChild(m);
+    var starsDiv=m.querySelector('#rating-stars');
+    window._ratingVal=0;
+    for(var s=1;s<=5;s++){
+      (function(star){
+        var btn=document.createElement('span');
+        btn.style.cssText='font-size:32px;cursor:pointer';
+        btn.textContent='☆';
+        btn.dataset.star=star;
+        btn.onclick=function(){
+          window._ratingVal=star;
+          var all=starsDiv.querySelectorAll('span');
+          for(var j=0;j<all.length;j++) all[j].textContent=parseInt(all[j].dataset.star)<=star?'⭐':'☆';
+          var lbl=document.getElementById('rating-label');
+          if(lbl) lbl.textContent=star===5?'¡Excelente!':star>=4?'¡Muy buena!':star>=3?'Buena':'Gracias por tu feedback';
+        };
+        starsDiv.appendChild(btn);
+      })(s);
+    }
+  }
+  m.style.display='flex';
 }
 function pacContacto(){
-  window.location.href='mailto:soporte@aurexapp.com';
+  window.location.href='mailto:app.aurex@gmail.com';
 }
 function pacRed(r){
   var urls={ig:'https://instagram.com/aurexapp',tw:'https://x.com/aurexapp',yt:'https://youtube.com/@aurexapp'};
   if(urls[r]) window.open(urls[r],'_blank');
 }
 function pacLegal(t){
-  var m=document.getElementById('auth-msg');
-  if(m){m.textContent=t==='terminos'?'T&#233;rminos pr&#243;ximamente':'Pol&#237;tica pr&#243;ximamente';setTimeout(function(){m.textContent='';},2500);}
+  if(t==='terminos') window.open('https://aurex.live/docs/terms.html','_blank');
+  else if(t==='privacidad') window.open('https://aurex.live/docs/privacy.html','_blank');
 }
 window.pacNotif=pacNotif;
 window.pacSaveHora=pacSaveHora;
