@@ -4964,7 +4964,7 @@ function _initHeaderLogos() {
   if (perfilScreen && !perfilScreen.querySelector('.aurex-hdr-added')) {
     var hdrDiv = document.createElement('div');
     hdrDiv.className = 'aurex-hdr-added';
-    hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 6px;';
+    hdrDiv.style.cssText = 'display:flex;align-items:center;gap:6px;padding:10px 16px 8px;border-bottom:1px solid #21262D;';
     hdrDiv.innerHTML = '<span class="aurex-logo-wrap">' + _makeSVG('_pf').replace('<svg ', '<svg class="aurex-logo" ') + '</span><span style="font-weight:500;color:var(--gold);font-size:16px;letter-spacing:1px;">AUREX</span><span style="color:var(--textSec);font-size:13px;"> Perfil</span>';
     perfilScreen.insertBefore(hdrDiv, perfilScreen.firstChild);
   }
@@ -5016,6 +5016,17 @@ function _initHeaderLogos() {
     liveSpan.style.cssText = 'display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-weight:700;margin-left:8px';
     liveSpan.innerHTML = '<span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite"></span>LIVE<span id="alertas-live-time" style="color:var(--textSec);font-weight:500">· ahora</span>';
     alHdr.appendChild(liveSpan);
+  }
+
+  // PERFIL: ⚖️ + LIVE (como Alertas)
+  var pfHdr = document.querySelector('#screen-perfil .aurex-hdr-added');
+  window._addLegalChip(pfHdr, null, true);
+  if(pfHdr && !pfHdr.querySelector('#perfil-live-wrap')){
+    var pfLive = document.createElement('span');
+    pfLive.id = 'perfil-live-wrap';
+    pfLive.style.cssText = 'display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-weight:700;margin-left:8px';
+    pfLive.innerHTML = '<span style="width:5px;height:5px;border-radius:50%;background:var(--green);animation:lp 1.5s infinite"></span>LIVE<span id="perfil-live-time" style="color:var(--textSec);font-weight:500">· ahora</span>';
+    pfHdr.appendChild(pfLive);
   }
 
   // PORTFOLIO: appendChild con margin-left:auto (padre sin space-between)

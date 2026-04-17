@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=138"></script>
+<script src="aurex-v3.js?v=139"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -747,6 +747,18 @@ function loadAlertEngine(){
         var el=document.getElementById('alertas-live-time');
         if(!el || !window._alertasLiveTs) return;
         var diff = Math.floor((Date.now()-window._alertasLiveTs)/1000);
+        if(diff<5) el.textContent='· ahora';
+        else if(diff<60) el.textContent='· hace '+diff+'s';
+        else el.textContent='· hace '+Math.floor(diff/60)+' min';
+      }, 5000);
+    }
+    // Timer LIVE refresh para Perfil (misma fuente de datos que Alertas)
+    window._perfilLiveTs = Date.now();
+    if(!window._perfilLiveInterval){
+      window._perfilLiveInterval = setInterval(function(){
+        var el=document.getElementById('perfil-live-time');
+        if(!el || !window._perfilLiveTs) return;
+        var diff = Math.floor((Date.now()-window._perfilLiveTs)/1000);
         if(diff<5) el.textContent='· ahora';
         else if(diff<60) el.textContent='· hace '+diff+'s';
         else el.textContent='· hace '+Math.floor(diff/60)+' min';
