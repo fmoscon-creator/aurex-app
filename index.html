@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=139"></script>
+<script src="aurex-v3.js?v=140"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -2318,11 +2318,11 @@ display:flex;align-items:center;justify-content:space-between}
     <div style="display:flex;flex-direction:column;align-items:center;padding:8px 0 12px">
       <div style="position:relative;margin-bottom:12px">
         <div id="auth-avatar-initial"
-          style="width:72px;height:72px;border-radius:50%;background:#c9a84c;color:var(--chipTextActive);
-          font-size:30px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:pointer;"
+          style="width:76px;height:76px;border-radius:50%;background:rgba(212,160,23,0.12);border:2.5px solid var(--gold);color:var(--gold);
+          font-size:26px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer;"
           onclick="document.getElementById('auth-avatar-input').click()">
         </div>
-        <img id="auth-avatar-img" style="display:none;width:72px;height:72px;border-radius:50%;object-fit:cover;position:absolute;top:0;left:0;cursor:pointer;" onclick="document.getElementById('auth-avatar-input').click()" />
+        <img id="auth-avatar-img" style="display:none;width:76px;height:76px;border-radius:50%;object-fit:cover;border:2.5px solid var(--gold);position:absolute;top:0;left:0;cursor:pointer;" onclick="document.getElementById('auth-avatar-input').click()" />
         <div style="position:absolute;bottom:0;right:0;width:22px;height:22px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #111;"
           onclick="document.getElementById('auth-avatar-input').click()">
           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -2350,6 +2350,9 @@ display:flex;align-items:center;justify-content:space-between}
       <div id="auth-celular-txt"
         style="font-size:12px;color:#c9a84c;background:rgba(201,168,76,0.12);
         border-radius:20px;padding:3px 14px;display:inline-block"></div>
+      <div style="margin-top:8px;padding:3px 12px;border-radius:20px;border:1px solid rgba(139,148,158,0.3);background:rgba(139,148,158,0.12);display:inline-block">
+        <span style="font-size:10px;font-weight:700;color:#8B949E;letter-spacing:0.5px">PLAN FREE</span>
+      </div>
     </div>
   </div>
 </div>
@@ -2378,7 +2381,7 @@ display:flex;align-items:center;justify-content:space-between}
 </div>
 <div class="pac-bloque" id="pac-b3">
   <div class="pac-titulo" onclick="pacToggle('pac-b3');pacInitCuenta()">
-    <span>&#128273; Mi Cuenta</span><span class="pac-chevron">&#9660;</span>
+    <span>⚙️ Mi cuenta</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:10px;padding-top:4px">
@@ -2444,7 +2447,7 @@ display:flex;align-items:center;justify-content:space-between}
 </div>
 <div class="pac-bloque" id="pac-b4">
   <div class="pac-titulo" onclick="pacToggle('pac-b4');pacInitLang()">
-    <span>&#9881; Preferencias</span><span class="pac-chevron">&#9660;</span>
+    <span>🎨 Preferencias</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
@@ -2595,7 +2598,7 @@ display:flex;align-items:center;justify-content:space-between}
 </div>
 <div class="pac-bloque" id="pac-b6">
   <div class="pac-titulo" onclick="pacToggle('pac-b6');pacInitAlertas()">
-    <span>&#128241; Alertas</span><span class="pac-chevron">&#9660;</span>
+    <span>🔔 Alertas</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
@@ -2686,7 +2689,7 @@ display:flex;align-items:center;justify-content:space-between}
 </div>
 <div class="pac-bloque" id="pac-b7">
   <div class="pac-titulo" onclick="pacToggle('pac-b7');pacInitNotif()">
-    <span>&#128276; Notificaciones</span><span class="pac-chevron">&#9660;</span>
+    <span>📩 Notificaciones</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
