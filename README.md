@@ -17,8 +17,19 @@ Live: https://aurex.live
 
 ---
 
+## ARQUITECTURA — 3 REPOS
+
+| Repo | Qué es | Deploy | URL |
+|------|--------|--------|-----|
+| `fmoscon-creator/aurex-app` (este) | PWA (HTML+JS) | GitHub Pages | https://aurex.live |
+| `fmoscon-creator/aurex-backend` | Backend Node.js API | Railway auto-deploy | https://aurex-app-production.up.railway.app |
+| `fmoscon-creator/AurexApp` | App nativa iOS | Xcode → App Store | App Store |
+
+**IMPORTANTE:** El backend NO vive en este repo. Vive en `aurex-backend` (repo separado). Railway deploya desde ahí. Ver `DEPLOY.md` en ese repo para instrucciones.
+
 ## STACK
 - PWA: HTML + JS + Supabase Auth
-- Backend: Railway
+- Backend: Node.js + Express (repo `aurex-backend`)
 - DB: Supabase
-- Repo: https://github.com/fmoscon-creator/aurex-app
+- WhatsApp: Evolution API (Railway)
+- iOS: React Native (repo `AurexApp`)
