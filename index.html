@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=144"></script>
+<script src="aurex-v3.js?v=145"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -2507,10 +2507,10 @@ display:flex;align-items:center;justify-content:space-between}
             Visible en tab Mercados
           </div>
         </div>
-        <div style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
+        <div style="width:44px;height:26px;background:var(--gold);border-radius:13px;
           display:flex;align-items:center;justify-content:flex-end;padding:0 3px;
           cursor:pointer" onclick="pacTogglePulse(this)" data-on="1">
-          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
+          <div style="width:20px;height:20px;background:#000;border-radius:50%"></div>
         </div>
       </div>
     </div>
@@ -2648,58 +2648,42 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
-        <div>
-          <div style="font-size:14px;color:var(--text);font-weight:500">📲 Notificaciones push</div>
-          <div style="font-size:11px;color:var(--textDim);margin-top:2px">Activ&#225; todas las notificaciones</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;flex:1">
+          <span style="font-size:18px">📲</span>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500">Notificaciones push</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Activá todas las notificaciones</div></div>
         </div>
-        <div onclick="pacNotif(this,'notif_push')" data-on="1"
-          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
-          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
-        </div>
+        <div onclick="pacNotif(this,'notif_push')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
-      <div style="padding:11px 0;border-bottom:1px solid var(--border)">
+      <div style="padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;justify-content:space-between">
-          <div>
-            <div style="font-size:14px;color:var(--text);font-weight:500">&#128197; Resumen diario</div>
-            <div style="font-size:11px;color:var(--textDim);margin-top:2px">Recib&#237; un resumen de tu portafolio</div>
+          <div style="display:flex;align-items:center;gap:8px;flex:1">
+            <span style="font-size:18px">📅</span>
+            <div><div style="font-size:13px;color:var(--text);font-weight:500">Resumen diario</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Recibí un resumen de tu portafolio</div></div>
           </div>
-          <div onclick="pacNotif(this,'notif_resumen')" data-on="1"
-            style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
-            display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-            <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
-          </div>
+          <div onclick="pacNotif(this,'notif_resumen')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
         </div>
-        <div style="display:flex;align-items:center;gap:8px;margin-top:8px">
-          <div style="font-size:11px;color:var(--textDim)">Hora del resumen:</div>
-          <input id="notif-hora" type="time" value="08:00"
-            onchange="pacSaveHora()"
-            style="background:var(--card);border:1px solid var(--border);border-radius:6px;
-            color:#c9a84c;font-size:13px;padding:4px 8px;outline:none;cursor:pointer" />
+        <div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-left:34px">
+          <div style="font-size:11px;color:var(--textSec)">Hora del resumen:</div>
+          <div onclick="pacShowHoraPicker()" style="border:1px solid var(--gold);border-radius:6px;padding:4px 10px;cursor:pointer">
+            <span id="notif-hora-display" style="font-size:12px;color:var(--gold);font-weight:600">09:00 ▾</span>
+          </div>
+          <input id="notif-hora" type="hidden" value="09:00" />
         </div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--border)">
-        <div>
-          <div style="font-size:14px;color:var(--text);font-weight:500">💌 Newsletter semanal</div>
-          <div style="font-size:11px;color:var(--textDim);margin-top:2px">An&#225;lisis y novedades cada semana</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
+        <div style="display:flex;align-items:center;gap:8px;flex:1">
+          <span style="font-size:18px">💌</span>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500">Newsletter semanal</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Análisis y novedades cada semana</div></div>
         </div>
-        <div onclick="pacNotif(this,'notif_newsletter')" data-on="1"
-          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
-          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
-        </div>
+        <div onclick="pacNotif(this,'notif_newsletter')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
-        <div>
-          <div style="font-size:14px;color:var(--text);font-weight:500">&#128640; Novedades AUREX</div>
-          <div style="font-size:11px;color:var(--textDim);margin-top:2px">Updates y nuevas funciones de la app</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
+        <div style="display:flex;align-items:center;gap:8px;flex:1">
+          <span style="font-size:18px">🚀</span>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500">Novedades AUREX</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Updates y nuevas funciones de la app</div></div>
         </div>
-        <div onclick="pacNotif(this,'notif_novedades')" data-on="1"
-          style="width:44px;height:26px;background:#c9a84c;border-radius:13px;
-          display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer">
-          <div style="width:20px;height:20px;background:var(--bg);border-radius:50%"></div>
-        </div>
+        <div onclick="pacNotif(this,'notif_novedades')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
     </div>
   </div>
@@ -3276,7 +3260,7 @@ function pacSavePwd(){
 function pacTogglePulse(el){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'var(--border)';
+  el.style.background=on?'var(--gold)':'var(--border)';var _th=el.querySelector('div');if(_th)_th.style.background=on?'#000':'var(--textSec)';
   el.style.justifyContent=on?'flex-end':'flex-start';
   localStorage.setItem('aurex_pulse_visible', on?'1':'0');
 }
@@ -3305,8 +3289,10 @@ function pacInitLang(){
 function pacAlerta(el, key){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'var(--border)';
+  el.style.background=on?'var(--gold)':'var(--border)';
   el.style.justifyContent=on?'flex-end':'flex-start';
+  var thumb=el.querySelector('div');
+  if(thumb) thumb.style.background=on?'#000':'var(--textSec)';
   localStorage.setItem(key, on?'1':'0');
 }
 function pacInitAlertas(){
@@ -3317,7 +3303,7 @@ function pacInitAlertas(){
     var saved=localStorage.getItem(m[1]);
     var on=saved===null?true:saved==='1';
     el.dataset.on=on?'1':'0';
-    el.style.background=on?'#c9a84c':'var(--border)';
+    el.style.background=on?'var(--gold)':'var(--border)';var _th=el.querySelector('div');if(_th)_th.style.background=on?'#000':'var(--textSec)';
     el.style.justifyContent=on?'flex-end':'flex-start';
   });
   var u=window._currentUser;
@@ -3464,7 +3450,7 @@ window.pacInitCelB6=pacInitCelB6;
 function pacNotif(el,key){
   var on=el.dataset.on!=='1';
   el.dataset.on=on?'1':'0';
-  el.style.background=on?'#c9a84c':'var(--border)';
+  el.style.background=on?'var(--gold)':'var(--border)';var _th=el.querySelector('div');if(_th)_th.style.background=on?'#000':'var(--textSec)';
   el.style.justifyContent=on?'flex-end':'flex-start';
   localStorage.setItem(key,on?'1':'0');
 }
@@ -3480,11 +3466,14 @@ function pacInitNotif(){
     var saved=localStorage.getItem(key);
     var on=saved===null?true:saved==='1';
     el.dataset.on=on?'1':'0';
-    el.style.background=on?'#c9a84c':'var(--border)';
+    el.style.background=on?'var(--gold)':'var(--border)';var _th=el.querySelector('div');if(_th)_th.style.background=on?'#000':'var(--textSec)';
     el.style.justifyContent=on?'flex-end':'flex-start';
   });
   var h=document.getElementById('notif-hora');
-  if(h){ var saved=localStorage.getItem('notif_hora'); if(saved) h.value=saved; }
+  var hd=document.getElementById('notif-hora-display');
+  var savedH=localStorage.getItem('notif_hora');
+  if(h && savedH) h.value=savedH;
+  if(hd && savedH) hd.textContent=savedH+' ▾';
 }
 function pacAbrirFaq(){
   var m=document.getElementById('modal-faq-perfil');
@@ -3555,6 +3544,32 @@ function pacCalificar(){
   }
   m.style.display='flex';
 }
+function pacShowHoraPicker(){
+  var horas=['06:00','07:00','08:00','09:00','10:00','12:00','14:00','18:00','20:00','22:00'];
+  var m=document.createElement('div');
+  m.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:99999;display:flex;justify-content:center;align-items:center;padding:16px';
+  m.onclick=function(e){if(e.target===m){m.remove();}};
+  var html='<div style="background:var(--card);border-radius:20px;padding:20px;width:80%;max-width:300px;border:2px solid var(--gold);box-shadow:0 15px 40px rgba(0,0,0,0.5)">';
+  html+='<div style="font-size:14px;font-weight:700;color:var(--text);text-align:center;margin-bottom:14px">Hora del resumen diario</div>';
+  for(var i=0;i<horas.length;i++){
+    html+='<div onclick="pacSelectHora(\''+horas[i]+'\',this)" style="padding:10px;text-align:center;font-size:14px;color:var(--text);cursor:pointer;border-bottom:0.5px solid var(--border)">'+horas[i]+'</div>';
+  }
+  html+='<div onclick="this.closest(\'div[style*=fixed]\').remove()" style="padding:10px;text-align:center;font-size:13px;color:var(--textSec);cursor:pointer;margin-top:4px">Cancelar</div>';
+  html+='</div>';
+  m.innerHTML=html;
+  document.body.appendChild(m);
+}
+function pacSelectHora(h,el){
+  var inp=document.getElementById('notif-hora');
+  var disp=document.getElementById('notif-hora-display');
+  if(inp) inp.value=h;
+  if(disp) disp.textContent=h+' ▾';
+  localStorage.setItem('notif_hora',h);
+  var modal=el.closest('div[style*="fixed"]');
+  if(modal) modal.remove();
+}
+window.pacShowHoraPicker=pacShowHoraPicker;
+window.pacSelectHora=pacSelectHora;
 function pacContacto(){
   window.location.href='mailto:app.aurex@gmail.com';
 }
