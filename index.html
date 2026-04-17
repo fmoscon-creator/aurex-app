@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=134"></script>
+<script src="aurex-v3.js?v=135"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -643,6 +643,15 @@ function toggleWABanner(){
   var isOn = toggle ? toggle.checked : false;
   if(ti) ti.textContent = isOn ? 'WhatsApp conectado' : 'Alertas por WhatsApp';
   if(ch){ ch.textContent = isOn ? '✓' : '—'; ch.style.color = isOn ? 'var(--green)' : 'var(--textDim)'; }
+  // Modal informativo como nativa (Alert.alert)
+  if(isOn){
+    var old=document.getElementById('wa-alert-modal');if(old)old.remove();
+    var ov=document.createElement('div');ov.id='wa-alert-modal';
+    ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
+    ov.innerHTML='<div style="background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:300px;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)"><div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px">WhatsApp Alertas</div><div style="font-size:13px;color:var(--textSec);line-height:1.5;margin-bottom:20px">Proximamente podras recibir alertas automaticas por WhatsApp. Te avisaremos cuando este disponible.</div><div onclick="document.getElementById(\'wa-alert-modal\').remove()" style="background:var(--gold);border-radius:10px;padding:12px;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:#000">OK</span></div></div>';
+    ov.onclick=function(e){if(e.target===ov)ov.remove();};
+    document.body.appendChild(ov);
+  }
 }
 function updateAlertCount(){
   var sections=['ia','pulse','precio','eventos'];
