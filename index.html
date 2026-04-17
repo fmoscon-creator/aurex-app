@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=147"></script>
+<script src="aurex-v3.js?v=149"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -2250,32 +2250,10 @@ window._mktOpenDetail = function(idx){
 <canvas id="perfil-canvas"></canvas>
 <!-- ESTADO NO LOGUEADO (replica nativa LoginScreen) -->
 <div id="auth-guest" style="display:none;flex-direction:column;align-items:center;justify-content:center;padding:24px;min-height:100%;position:relative;z-index:1;box-sizing:border-box">
-<!-- Logo grande como nativa (160px) -->
+<!-- Logo real AUREX con texto -->
 <div style="margin-bottom:12px">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 300" width="160" height="160">
-<defs>
-<linearGradient id="gApr" x1="20%" y1="0%" x2="80%" y2="100%">
-<stop offset="0%" stop-color="#F7D060"/>
-<stop offset="50%" stop-color="var(--gold)"/>
-<stop offset="100%" stop-color="#8B6208"/>
-</linearGradient>
-<linearGradient id="gCpr" x1="0%" y1="0%" x2="100%" y2="100%">
-<stop offset="0%" stop-color="#F0C030"/>
-<stop offset="100%" stop-color="#9A7010"/>
-</linearGradient>
-</defs>
-<circle cx="150" cy="150" r="118" fill="none" stroke="url(#gCpr)" stroke-width="3.5"/>
-<circle cx="150" cy="150" r="100" fill="none" stroke="url(#gCpr)" stroke-width="1.5"/>
-<circle cx="150" cy="150" r="94" fill="none" stroke="url(#gCpr)" stroke-width="1" opacity="0.8"/>
-<line x1="150" y1="78" x2="108" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
-<line x1="150" y1="78" x2="192" y2="168" stroke="url(#gApr)" stroke-width="3" stroke-linecap="round"/>
-<line x1="120" y1="148" x2="180" y2="148" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round"/>
-<polyline points="132,178 150,195 168,178" fill="none" stroke="url(#gApr)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-<circle cx="150" cy="195" r="3" fill="url(#gApr)"/>
-</svg>
+<img src="logo-aurex.png" alt="AUREX" style="width:220px;height:auto" />
 </div>
-<!-- AUREX 42px bold gold -->
-<div style="font-size:42px;font-weight:bold;color:var(--gold);text-align:center;margin-bottom:8px">AUREX</div>
 <!-- Subtítulo como nativa -->
 <div style="font-size:16px;color:var(--textSec);text-align:center;margin-bottom:48px">Portfolio Tracker con IA</div>
 <!-- Form Login (default) -->
