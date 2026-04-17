@@ -588,7 +588,7 @@ input[type=range]::-moz-range-thumb { width: 16px; height: 16px; border-radius: 
   }
 })();
 </script>
-<script src="aurex-v3.js?v=130"></script>
+<script src="aurex-v3.js?v=131"></script>
 <script>document.write('<scr'+'ipt src="aurex-features.js?t='+Date.now()+'"><\/scr'+'ipt>');</script>
 <script>
 // FORCE BACKEND: sobreescribir termometro para SIEMPRE leer del backend
@@ -703,7 +703,7 @@ function showAlertVars(tipo){
   var overlay = document.createElement('div');
   overlay.id = 'alert-vars-modal';
   overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
-  overlay.innerHTML = '<div style="background:var(--card);border-radius:16px;width:100%;max-width:440px;max-height:80vh;overflow-y:auto;border:1px solid var(--border2)">'+html+'</div>';
+  overlay.innerHTML = '<div style="background:var(--card);border-radius:20px;width:100%;max-width:440px;max-height:80vh;overflow-y:auto;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)">'+html+'</div>';
   overlay.onclick = function(e){ if(e.target === overlay) overlay.remove(); };
   document.body.appendChild(overlay);
 }
@@ -810,17 +810,7 @@ function calculateAlerts(){
 
   // Dedup
   var seen={};
-  var beforeDedup = alerts.length;
   window._alertTriggered = alerts.filter(function(a){var k=a.sym+'_'+a.tipo+'_'+a.icon;if(seen[k])return false;seen[k]=1;return true;});
-  var afterDedup = window._alertTriggered.length;
-  var removed = beforeDedup - afterDedup;
-  // Log para debug
-  var subCounts = {};
-  window._alertTriggered.forEach(function(a){ var k=a.tipo+'_'+(a.sub||''); subCounts[k]=(subCounts[k]||0)+1; });
-  console.log('[ALERTAS] Total: '+afterDedup+' (antes dedup: '+beforeDedup+', removidos: '+removed+')');
-  console.log('[ALERTAS] Señales filtradas: '+filtered.length+' de '+sigs.length);
-  console.log('[ALERTAS] Por sub-tipo:', JSON.stringify(subCounts));
-  console.log('[ALERTAS] Skipped por change>50:', sigs.filter(function(s){var p=s.precio||0;var p24=s.precio24h||0;var c=(p>0.001&&p24>0.001)?((p-p24)/p24*100):0;return Math.abs(c)>50;}).length);
   renderTriggeredAlerts();
   // Update count
   var el = document.getElementById('alert-active');
@@ -919,13 +909,13 @@ function showAlertInfoModal(tipo){
     var checks = document.querySelectorAll('.alert-section input[type=checkbox]:checked');
     title = checks.length + ' Alertas activas';
     var scope = window._alertScope||'todos';
-    subtitle = 'Monitoreando ' + (scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos (304)');
+    subtitle = 'Monitoreando ' + (scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos (350)');
     var toggleLabels = ['Cambio de senal','Alta Conviccion','Umbral probabilidad','Senal en Portfolio','Cambio de zona','Por categoria','Termometro de Riesgo','Precio objetivo','Variacion brusca','Nuevo maximo/minimo','FED FOMC','CPI / PBI','Apertura mercados','Earnings portfolio','Geopolitica GDELT'];
     var allChecks = document.querySelectorAll('.alert-section input[type=checkbox]');
     allChecks.forEach(function(c,i){if(c.checked && toggleLabels[i]) items.push({icon:'✅',label:toggleLabels[i]});});
   } else {
     var scope = window._alertScope||'todos';
-    var count = scope==='portfolio'?(window._alertPortSyms||[]).length:scope==='watchlist'?(window._alertWLSyms||[]).length:304;
+    var count = scope==='portfolio'?(window._alertPortSyms||[]).length:scope==='watchlist'?(window._alertWLSyms||[]).length:350;
     title = count + ' Activos monitoreados';
     subtitle = scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos los activos';
     sections.forEach(function(s){items.push({icon:s.icon,label:s.title+': '+s.count+' tipos'});});
@@ -938,7 +928,7 @@ function showAlertInfoModal(tipo){
   var overlay = document.createElement('div');
   overlay.id = 'alert-info-modal';
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
-  overlay.innerHTML = '<div style="background:var(--card);border-radius:16px;width:100%;max-width:380px;max-height:70vh;overflow-y:auto;border:1px solid var(--border2)">'+html+'</div>';
+  overlay.innerHTML = '<div style="background:var(--card);border-radius:20px;width:100%;max-width:380px;max-height:70vh;overflow-y:auto;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)">'+html+'</div>';
   overlay.onclick = function(e){if(e.target===overlay)overlay.remove();};
   document.body.appendChild(overlay);
 }
@@ -1991,8 +1981,8 @@ window._mktOpenDetail = function(idx){
 <div class="screen" id="screen-alertas" style="flex-direction:column;flex:1;min-height:0;overflow:hidden">
 <div class="cnt" id="alertas-cnt" style="overflow-y:auto;flex:1;padding-bottom:20px">
 
-<!-- Banner WhatsApp — compacto con toggle -->
-<div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:var(--card);border-radius:10px;padding:10px;border:1px solid #25D36640">
+<!-- Banner WhatsApp — fondo #0D2818 como nativa -->
+<div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:#0D2818;border-radius:10px;padding:10px;border:1px solid #25D36640">
   <span style="font-size:20px">💬</span>
   <div style="flex:1">
     <div style="font-size:12px;font-weight:700;color:#25D366" id="wa-title">Alertas por WhatsApp</div>
@@ -2001,23 +1991,23 @@ window._mktOpenDetail = function(idx){
 </div>
 
 <!-- Resumen — numeros grandes, clickeables -->
-<div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:14px;border:0.5px solid var(--gold20)">
+<div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:14px;border:1.5px solid var(--gold)">
   <div style="display:flex;align-items:center">
     <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('alertas')"><div style="font-size:28px;font-weight:900;color:var(--green)" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">ALERTAS ON</div></div>
     <div style="width:1px;height:28px;background:var(--border)"></div>
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="alert-scope-count">304</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">ACTIVOS</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="alert-scope-count">350</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">ACTIVOS</div></div>
     <div style="width:1px;height:28px;background:var(--border)"></div>
     <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:var(--textDim)" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">WHATSAPP</div></div>
   </div>
 </div>
 
 <!-- Filtro general: Portfolio / Watchlist / Todos -->
-<div style="margin:10px 11px;background:rgba(212,160,23,0.05);border-radius:12px;padding:12px;border:1.5px solid var(--gold20)">
-  <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px;text-align:center;letter-spacing:1px">ALERTAS SOBRE</div>
+<div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:12px;border:1.5px solid var(--gold)">
+  <div style="font-size:10px;color:var(--gold);font-weight:800;margin-bottom:10px;text-align:center;letter-spacing:1px">ALERTAS SOBRE</div>
   <div style="display:flex;gap:8px" id="alert-scope-btns">
-    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:700;color:var(--textSec)">Mi Portfolio</div></div>
-    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:700;color:var(--textSec)">Mi Watchlist</div></div>
-    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--goldBg);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:700;color:var(--gold)">Todos (304)</div></div>
+    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Portfolio</div></div>
+    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Watchlist</div></div>
+    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:800;color:#000">Todos (350)</div></div>
   </div>
 </div>
 
@@ -2141,9 +2131,7 @@ window._mktOpenDetail = function(idx){
   </div>
 </div>
 
-<div style="margin:8px 12px 12px;background:var(--card);border-radius:10px;padding:10px;border:0.5px solid var(--border)">
-  <p style="font-size:9px;color:var(--textSec);line-height:14px;text-align:center;margin:0">⚖️ Aviso Legal — Las alertas y senales de AUREX tienen caracter exclusivamente informativo y educativo. No constituyen consejo, recomendacion ni asesoramiento de inversion. Toda decision de inversion es responsabilidad exclusiva del usuario. AUREX no es un asesor financiero registrado.</p>
-</div>
+<!-- Disclaimer removido — ya está en ⚖️ del header (como nativa) -->
 </div>
 </div>
 
