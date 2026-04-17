@@ -128,99 +128,6 @@ app.post('/webhook/lemonsqueezy', async (req, res) => {
   }
 });
 
-// ─── WHATSAPP VIA EVOLUTION API ──────────────────────────────────────────────
-const EVO_URL = 'https://evo-v1-production.up.railway.app';
-const EVO_KEY = '9be85d34699f4593dc8195d82b8d2805408fe793056b7517ecfdb78c01d1aaad';
-const EVO_INSTANCE = 'aurex';
-const ADMIN_PHONE = '5491167891320'; // Fernando personal
-
-async function sendWhatsApp(phone, text) {
-  try {
-    const res = await fetch(`${EVO_URL}/message/sendText/${EVO_INSTANCE}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': EVO_KEY },
-      body: JSON.stringify({
-        number: phone.replace(/\+/g, '').replace(/\s/g, ''),
-        options: { delay: 1000, presence: 'composing' },
-        textMessage: { text }
-      })
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      console.error('[WhatsApp] Error:', data);
-      return { ok: false, error: data };
-    }
-    console.log('[WhatsApp] Enviado a', phone);
-    return { ok: true, data };
-  } catch (e) {
-    console.error('[WhatsApp] Exception:', e.message);
-    return { ok: false, error: e.message };
-  }
-}
-
-// Endpoint para enviar WhatsApp manualmente (admin/testing)
-app.post('/api/whatsapp/send', async (req, res) => {
-  const { phone, message, adminKey } = req.body;
-  if (adminKey !== process.env.ADMIN_KEY && adminKey !== 'aurex-admin-2026') {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
-  if (!phone || !message) return res.status(400).json({ error: 'phone and message required' });
-  const result = await sendWhatsApp(phone, message);
-  res.json(result);
-});
-
-// Endpoint para alertas de usuario (PRO/ELITE)
-app.post('/api/whatsapp/alert', async (req, res) => {
-  const { userId, alertText } = req.body;
-  if (!userId || !alertText) return res.status(400).json({ error: 'userId and alertText required' });
-
-  try {
-    // Buscar usuario y su plan
-    const { data: profile, error: profErr } = await supabase
-      .from('profiles')
-      .select('plan, celular, whatsapp_daily_count, whatsapp_last_reset')
-      .eq('id', userId)
-      .single();
-
-    if (profErr || !profile) return res.status(404).json({ error: 'User not found' });
-    if (!profile.celular) return res.status(400).json({ error: 'No phone number configured' });
-
-    // Verificar plan
-    const plan = (profile.plan || 'free').toLowerCase();
-    const limit = plan === 'elite' ? 10 : plan === 'pro' ? 3 : 0;
-    if (limit === 0) return res.status(403).json({ error: 'WhatsApp alerts require PRO or ELITE plan' });
-
-    // Verificar límite diario
-    const today = new Date().toISOString().slice(0, 10);
-    const lastReset = (profile.whatsapp_last_reset || '').slice(0, 10);
-    let dailyCount = profile.whatsapp_daily_count || 0;
-
-    if (lastReset !== today) {
-      dailyCount = 0; // nuevo día, resetear contador
-    }
-
-    if (dailyCount >= limit) {
-      return res.status(429).json({ error: `Daily limit reached (${limit}/day for ${plan.toUpperCase()})` });
-    }
-
-    // Enviar
-    const result = await sendWhatsApp(profile.celular, `🔔 AUREX Alert\n━━━━━━━━━━━━\n${alertText}`);
-
-    if (result.ok) {
-      // Incrementar contador
-      await supabase.from('profiles').update({
-        whatsapp_daily_count: dailyCount + 1,
-        whatsapp_last_reset: new Date().toISOString()
-      }).eq('id', userId);
-    }
-
-    res.json(result);
-  } catch (e) {
-    console.error('[WhatsApp Alert] Error:', e.message);
-    res.status(500).json({ error: e.message });
-  }
-});
-
 // ─── CRON JOB — MONITOREO DE ALERTAS (cada 5 minutos) ───────────────────────
 cron.schedule('*/5 * * * *', async () => {
   console.log('[Cron] Verificando alertas de precio...');
@@ -241,44 +148,7 @@ cron.schedule('*/5 * * * *', async () => {
     }
 
     console.log('[Cron]', alertas.length, 'alertas activas encontradas');
-
-    // Para cada alerta activa, verificar si el usuario tiene WhatsApp habilitado
-    for (const alerta of alertas) {
-      try {
-        const { data: profile } = await supabase
-          .from('profiles')
-          .select('plan, celular, whatsapp_enabled, whatsapp_daily_count, whatsapp_last_reset')
-          .eq('id', alerta.user_id)
-          .single();
-
-        if (!profile || !profile.celular || !profile.whatsapp_enabled) continue;
-
-        const plan = (profile.plan || 'free').toLowerCase();
-        const limit = plan === 'elite' ? 10 : plan === 'pro' ? 3 : 0;
-        if (limit === 0) continue;
-
-        const today = new Date().toISOString().slice(0, 10);
-        const lastReset = (profile.whatsapp_last_reset || '').slice(0, 10);
-        let dailyCount = lastReset !== today ? 0 : (profile.whatsapp_daily_count || 0);
-        if (dailyCount >= limit) continue;
-
-        // Enviar alerta
-        const msg = `🔔 ${alerta.titulo || 'Alerta AUREX'}\n${alerta.descripcion || ''}`;
-        const result = await sendWhatsApp(profile.celular, msg);
-
-        if (result.ok) {
-          await supabase.from('profiles').update({
-            whatsapp_daily_count: dailyCount + 1,
-            whatsapp_last_reset: new Date().toISOString()
-          }).eq('id', alerta.user_id);
-
-          // Marcar alerta como notificada
-          await supabase.from('alertas').update({ notificada: true }).eq('id', alerta.id);
-        }
-      } catch (e) {
-        console.error('[Cron WhatsApp] Error usuario', alerta.user_id, e.message);
-      }
-    }
+    // TODO: verificar precios y disparar notificaciones push
   } catch (err) {
     console.error('[Cron] Error inesperado:', err.message);
   }
