@@ -221,6 +221,117 @@ Components (5):
 
 ---
 
-*Sección 3 (Deploy) — Pendiente*
+## Sección 3: DEPLOY
+
+*Verificado: 18/abril/2026 por CODE (archivos config + CLI + historial)*
+
+### 3.1 Backend (aurex-backend → Railway)
+
+**Proceso:**
+```
+1. Editar código en aurex-backend (local: /tmp/aurex-backend)
+2. git add + git commit + git push origin main
+3. Railway detecta push vía webhook GitHub
+4. Nixpacks lee nixpacks.toml → instala Node.js 20
+5. npm install (dependencias de package.json)
+6. Ejecuta: node server.js (definido en railway.json)
+7. Servidor arranca en PORT 3000
+```
+
+**Archivos que controlan el deploy** (verificados):
+| Archivo | Contenido verificado | Función |
+|---------|---------------------|---------|
+| `railway.json` | `builder: NIXPACKS`, `startCommand: node server.js`, `restartPolicyType: ON_FAILURE` | Config Railway |
+| `nixpacks.toml` | `nixPkgs = ["nodejs_20"]`, `cmd = "node server.js"` | Fuerza Node.js 20 |
+| `Procfile` | `web: node server.js` | Alternativa (Railway prioriza railway.json) |
+| `package.json` | `scripts.start: "node server.js"` | npm start |
+
+**Tiempo de deploy**: ~4-5 minutos (build + deploy)
+
+**Verificar deploy exitoso**:
+```bash
+railway deployment list --json | python3 -c "import json,sys; d=json.load(sys.stdin)[0]; print(d['status'])"
+# Debe decir: SUCCESS
+```
+
+**REGLAS:**
+- ❌ **NUNCA** usar `railway up` — sube archivos sin Nixpacks, rompe todo
+- ❌ **NUNCA** eliminar `nixpacks.toml` — Railway vuelve a usar Caddy
+- ✅ **SIEMPRE** deployar vía push a GitHub main
+- ✅ **SIEMPRE** verificar STATUS: SUCCESS antes de probar
+
+**Incidente documentado (17/abril/2026):**
+`railway up` desde `/backend` subió archivos sin Node.js → backend caído ~1 hora. Fix: `nixpacks.toml` + `NIXPACKS_NO_CACHE=1` + `railway redeploy --yes`.
+
+### 3.2 PWA (aurex-app → GitHub Pages)
+
+**Proceso:**
+```
+1. Editar código en aurex-app (local: ~/Desktop/aurex-app)
+2. Incrementar cache bust: aurex-v3.js?v=XXX en index.html
+3. git add + git commit + git push origin main
+4. GitHub Pages auto-deploya (~1 minuto)
+5. Verificar: aurex.live (F5 forzar recarga)
+```
+
+**Cache bust actual**: `v=149` (verificado en index.html)
+
+**Nota**: No hay archivo CNAME. El dominio aurex.live está configurado en GitHub Settings del repo, no en el código.
+
+### 3.3 Nativa iOS (AurexApp → App Store)
+
+**Proceso:**
+```
+1. Trabajar en branch dev
+2. Cuando Apple apruebe build actual:
+   git checkout main && git merge dev
+3. Abrir AurexApp.xcworkspace en Xcode
+4. Incrementar build number (CURRENT_PROJECT_VERSION)
+5. Product → Archive → Distribute to App Store
+6. App Store Connect: seleccionar build → Submit for Review
+```
+
+**Config verificada en Xcode project:**
+| Dato | Valor verificado |
+|------|-----------------|
+| Bundle ID | com.fernandomoscon.aurex |
+| Marketing Version | 1.0 |
+| Build en proyecto Xcode | 11 |
+| Build real (TestFlight) | 13 (10/abril 17:06 PM) |
+| Próximo build | 14 |
+
+**NOTA**: El build number en Xcode project (11) NO coincide con el de TestFlight (13). Fernando incrementa manualmente en Xcode antes de cada Archive. El dato real es el de TestFlight.
+
+**Branches:**
+| Branch | Cuándo usar |
+|--------|------------|
+| `dev` | Desarrollo diario |
+| `main` | Solo para builds que van a App Store |
+| NO mergear dev→main hasta que Apple apruebe el build actual |
+
+### 3.4 Rollback
+
+**Backend**: revertir último commit y pushear
+```bash
+cd /tmp/aurex-backend
+git revert HEAD && git push origin main
+# Railway redeploya automáticamente
+```
+
+**PWA**: revertir último commit y pushear
+```bash
+cd ~/Desktop/aurex-app
+git revert HEAD && git push origin main
+# GitHub Pages redeploya
+```
+
+**Nativa**: usar safety points
+```bash
+cd ~/AurexApp
+git checkout safety-point-YYYY-MM-DD-nombre
+```
+
+---
+
 *Sección 5 (Base de datos) — Pendiente verificación tablas alerts vs alertas*
 *Sección 6 (APIs/Endpoints) — Pendiente*
