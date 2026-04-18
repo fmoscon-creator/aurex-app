@@ -692,6 +692,143 @@ git checkout <branch> && git reset --hard <tag>
 
 ---
 
-*Sección 10 (Apple) — Pendiente verificación Escritorio*
-*Sección 12 (Reglas de trabajo) — Pendiente*
-*Sección 13 (Estado Features PWA) — Pendiente*
+## Sección 10: APPLE
+
+*Verificado: 18/abril/2026 por Escritorio (App Store Connect) + CODE (memoria documentada)*
+
+### 10.1 Cuenta
+
+| Dato | Valor | Verificado por |
+|------|-------|---------------|
+| Programa | Apple Developer Program | Escritorio |
+| Team ID | TX7C2F79U9 | Fernando (directo) |
+| Apple Account | fmoscon@gmail.com | CODE (documentado) |
+
+### 10.2 App
+
+| Dato | Valor | Verificado por |
+|------|-------|---------------|
+| App Name | AUREX | Escritorio (ASC) |
+| Apple ID | 6761672161 | Escritorio (ASC) |
+| Bundle ID | com.fernandomoscon.aurex | CODE (Xcode project) + Escritorio (ASC) |
+| Idioma metadata | Español (España) | Escritorio (ASC) |
+| Versión en revisión | 1.0 (build 9) | Escritorio (ASC) |
+| Estado | Pendiente de revisión | Escritorio (ASC) |
+
+### 10.3 Builds en TestFlight
+
+*Verificado por Escritorio en App Store Connect*
+
+| Build | Fecha | Hora | Estado |
+|-------|-------|------|--------|
+| 9 | 9/abril | 21:07 PM | Enviado a App Store Review |
+| 10 | 10/abril | 12:47 PM | TestFlight |
+| 11 | 10/abril | 15:12 PM | TestFlight |
+| 12 | 10/abril | 15:21 PM | TestFlight |
+| 13 | 10/abril | 17:06 PM | TestFlight (más reciente) |
+
+**Próximo build**: 14
+
+**NOTA**: Build number en Xcode project (11) no coincide con TestFlight (13). Fernando incrementa manualmente en Xcode antes de cada Archive.
+
+### 10.4 Caso abierto con Apple
+
+| Dato | Valor |
+|------|-------|
+| Case ID | 102872158784 |
+| Canal | Email vía developer.apple.com/contact |
+| Fecha | 17/abril/2026 |
+| Motivo | 9 días en Waiting for Review + Expedited sin respuesta |
+| Expedited Request | Enviado 16/abril (ASC) + 18/abril (formulario web) |
+| Respuesta Apple | "We'll expedite review for AUREX" (18/abril) |
+| Contacto soporte | developer.apple.com/contact/topic/select → App Review |
+| Teléfono USA | +1 (408) 961-2010 (inglés) |
+
+---
+
+## Sección 12: REGLAS DE TRABAJO
+
+*Documentadas a partir de incidentes y feedback de sesiones 16-18/abril/2026*
+
+### 12.1 Infraestructura
+
+| Regla | Por qué |
+|-------|---------|
+| ❌ NUNCA usar `railway up` desde CLI | Sube archivos sin Nixpacks → rompe build (incidente 17/abril) |
+| ❌ NUNCA eliminar `nixpacks.toml` | Railway vuelve a usar Caddy en vez de Node |
+| ❌ NUNCA tocar infra sin ciclo Reporte → Propuesta → OK → Ejecución | Incidente 17/abril: deploys impulsivos causaron 1 hora de caída |
+| ✅ SIEMPRE deployar backend vía push a GitHub main | Railway auto-deploya vía webhook |
+| ✅ SIEMPRE verificar STATUS: SUCCESS después de push | `railway deployment list --json` |
+| ✅ SIEMPRE pushear al repo correcto (aurex-backend, NO aurex-app) | Causa raíz del incidente 17/abril |
+
+### 12.2 Código
+
+| Regla | Por qué |
+|-------|---------|
+| ❌ NUNCA pushear sin validar pixel por pixel antes | Múltiples versiones de WhatsApp template con errores |
+| ❌ NUNCA ejecutar sin OK explícito de Fernando | Fernando es el titular del proyecto |
+| ❌ NUNCA decidir cambios de producto sin OK de Fernando | CODE decide técnico, Fernando decide producto |
+| ❌ NUNCA inventar datos sin verificar contra fuente real | Build number mal (11 vs 13), repo equivocado |
+| ✅ SIEMPRE verificar sintaxis (`node -c`) antes de commit | Strings rotos en i18n (italiano, árabe) |
+| ✅ SIEMPRE leer código existente antes de modificar | Duplicación innecesaria de WhatsApp code |
+| ✅ PWA replica EXACTO la nativa (REGLA MAESTRA) | Consistency visual entre plataformas |
+
+### 12.3 Nativa iOS
+
+| Regla | Por qué |
+|-------|---------|
+| Trabajar en branch `dev` | `main` = producción/App Store |
+| NO mergear dev→main hasta que Apple apruebe build actual | Aislar variables si hay rechazo |
+| REGLA DE ORO: leer código completo → analizar → presentar → OK → codificar | Evita errores por trabajar sin contexto |
+| Probar en iPhone real | Simulador tiene bugs de networking/biometrics |
+| Sacar y LEER screenshot antes de pedir validación | Fernando NO valida técnico, CODE sí |
+
+### 12.4 Comunicación
+
+| Regla | Por qué |
+|-------|---------|
+| Responder siempre en español | Fernando es hispanohablante |
+| Un tema a la vez | Evita confusión y errores |
+| NUNCA preguntar a Fernando datos que CODE puede verificar | Filesystem, código, APIs — CODE lo lee solo |
+| NUNCA pedir a Fernando clickear en portales/dashboards | Buscar alternativa o documentar como pendiente |
+| Cuando pido algo a Fernando, ESPERO en silencio | No mandar propuestas paralelas |
+
+---
+
+## Sección 13: ESTADO FEATURES PWA
+
+*Verificado: 18/abril/2026 por Escritorio (specs) + CODE (código)*
+
+### 13.1 Features implementadas
+
+| Feature | Nombre | Estado | Verificado |
+|---------|--------|--------|-----------|
+| F1-bis | Chip ⚖️ Aviso Legal en headers | ✅ Implementado | CODE (aurex-features.js) |
+| F2 | Indicador "Hoy" animado en Portfolio | ✅ Implementado | CODE (index.html) |
+| F3 | Sort menus flotantes premium (4 tabs) | ✅ Implementado | CODE (aurex-features.js) |
+
+### 13.2 Features con SPEC escrito, pendientes implementación
+
+| Feature | Nombre | Estado | Spec en |
+|---------|--------|--------|---------|
+| F4 | Long press en filas de activos | SPEC ✅ / Código ❌ | docs/TAB_WATCHLIST_SPEC.md |
+| F5 | Cross-tab Portfolio/Mercados/Watchlist | SPEC ✅ / Código ❌ | docs/ |
+
+### 13.3 PWA — Estado general
+
+| Aspecto | Estado |
+|---------|--------|
+| Perfil tab | ✅ Replicado de nativa (22 puntos) |
+| Login screen | ✅ Replicado de nativa (logo real) |
+| i18n | ❌ No tiene sistema — todo hardcodeado en español |
+| Modo claro | ✅ Implementado (toggle en Preferencias) |
+| Alertas | ✅ Motor completo, scope counts, WhatsApp toggle |
+| IA | ✅ Señales, sort, filter, Mi Portfolio, LIVE |
+| Watchlist | ✅ CRUD, comparador, compartir |
+| Mercados | ✅ AUREX Pulse, 350+ activos, filtros |
+
+---
+
+*Manual Estructural AUREX — Versión 1.0*
+*Secciones 1-13 completadas*
+*Última actualización: 18/abril/2026*
