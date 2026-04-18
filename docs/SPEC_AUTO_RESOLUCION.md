@@ -451,7 +451,7 @@ ALTER TABLE health_events ADD COLUMN IF NOT EXISTS source_status text;
 | server.js | `checkAlertas` L159: usar fetchCryptoPriceBatch | L159 |
 | server.js | `_fetchCryptoCompareIA()` nueva función fallback IA | Después de L386 |
 | server.js | `calcularSenalesIA` L480: fallback a _fetchCryptoCompareIA | L480 |
-| server.js | healthCheck: eliminar check Binance separado (integrado en fetchCrypto) | L786-795 |
+| server.js | healthCheck: agregar lectura de global._lastCryptoSource para mensajes diferenciados | L786-795 |
 | server.js | /api/ia-signals: agregar meta.cryptoSource | L503-509 |
 | server.js | COINGECKO_IDS mapa | Nueva constante |
 | Supabase | ALTER TABLE add source_status | SQL |
