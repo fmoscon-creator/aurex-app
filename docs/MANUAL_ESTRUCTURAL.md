@@ -806,13 +806,10 @@ git checkout <branch> && git reset --hard <tag>
 | F1-bis | Chip ⚖️ Aviso Legal en headers | ✅ Implementado | CODE (aurex-features.js) |
 | F2 | Indicador "Hoy" animado en Portfolio | ✅ Implementado | CODE (index.html) |
 | F3 | Sort menus flotantes premium (4 tabs) | ✅ Implementado | CODE (aurex-features.js) |
+| F4 | Long press en filas de activos | ✅ Implementado | CODE + Escritorio (aurex-features.js L5941-6271) |
+| F5 | Cross-tab Portfolio/Mercados/Watchlist | ✅ Implementado | CODE + Escritorio (aurex-features.js L6100-6129) |
 
-### 13.2 Features con SPEC escrito, pendientes implementación
-
-| Feature | Nombre | Estado | Spec en |
-|---------|--------|--------|---------|
-| F4 | Long press en filas de activos | SPEC ✅ / Código ❌ | docs/TAB_WATCHLIST_SPEC.md |
-| F5 | Cross-tab Portfolio/Mercados/Watchlist | SPEC ✅ / Código ❌ | docs/ |
+*F4 y F5 estaban marcados como "pendientes" en error. Verificados 18/abril/2026: el sistema `_attachLongPress` + `_showLPSheet` implementa long press en Portfolio y Mercados con acciones (Análisis IA, Editar, Compartir, Eliminar, Favoritos, Agregar a Portfolio).*
 
 ### 13.3 PWA — Estado general
 
