@@ -381,4 +381,122 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 ---
 
-*Sección 6 (APIs/Endpoints) — Pendiente*
+## Sección 6: APIs / ENDPOINTS
+
+*Verificado: 18/abril/2026 por CODE (grep server.js + curl en producción)*
+
+**Base URL**: `https://aurex-app-production.up.railway.app`
+
+### 6.1 Health / General
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/` | Health check — devuelve status, app, version, time | ✅ OK |
+
+### 6.2 Motor IA + Datos
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/activos` | Lista 350+ activos (de activos.json) | ✅ OK |
+| GET | `/api/ia-signals` | Señales IA calculadas (350 activos) | ✅ OK — 350 señales |
+| POST | `/api/ia-signals` | Forzar recálculo de señales | No probado |
+| GET | `/api/pulse` | AUREX Pulse scores (Global, Cripto, Acciones, Futuros, Commodities) | ✅ OK |
+
+### 6.3 Precios
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/stock/:symbol` | Precio vía Alpha Vantage (cache 60s) | ✅ OK — AAPL $270.23 |
+| GET | `/api/yahoo` | Proxy Yahoo Finance (chart data) | ✅ OK |
+| GET | `/api/yahoo/search` | Búsqueda Yahoo Finance | ✅ OK |
+
+### 6.4 Portfolio (CRUD)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/portfolio/:userId` | Listar activos del portfolio (enriquecido con logos) | No probado (requiere userId) |
+| POST | `/api/portfolio` | Agregar activo al portfolio | No probado |
+| PATCH | `/api/portfolio/:id` | Editar activo | No probado |
+| DELETE | `/api/portfolio/:id` | Eliminar activo | No probado |
+
+### 6.5 Alertas (CRUD)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/alertas/:userId` | Listar alertas del usuario | No probado (requiere userId) |
+| POST | `/api/alertas` | Crear alerta | No probado |
+| PATCH | `/api/alertas/:id` | Editar alerta | No probado |
+| DELETE | `/api/alertas/:id` | Eliminar alerta | No probado |
+
+### 6.6 Watchlist v1 (legacy)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/watchlist/:userId` | Listar watchlist v1 | No probado |
+| POST | `/api/watchlist` | Agregar a watchlist v1 | No probado |
+| DELETE | `/api/watchlist/:id` | Eliminar de watchlist v1 | No probado |
+
+### 6.7 Watchlists v2 (activa)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/watchlists/:userId` | Listar listas del usuario | No probado |
+| GET | `/api/watchlists/:userId/items` | Items de todas las listas | No probado |
+| POST | `/api/watchlists` | Crear lista | No probado |
+| PATCH | `/api/watchlists/:id` | Editar lista | No probado |
+| DELETE | `/api/watchlists/:id` | Eliminar lista (+ items) | No probado |
+| POST | `/api/watchlist-items` | Agregar item a lista | No probado |
+| PATCH | `/api/watchlist-items/:id` | Editar item | No probado |
+| DELETE | `/api/watchlist-items/:id` | Eliminar item | No probado |
+
+### 6.8 Usuarios
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| GET | `/api/usuario/:userId` | Obtener datos usuario | No probado |
+| POST | `/api/usuario` | Crear/obtener usuario (upsert por email) | No probado |
+| PATCH | `/api/usuario/:userId` | Editar usuario | No probado |
+| POST | `/api/login` | Proxy login Supabase Auth | No probado |
+| POST | `/api/avatar` | Upload foto perfil (base64 → Supabase Storage) | No probado |
+
+### 6.9 WhatsApp (Evolution API)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| POST | `/api/whatsapp/send` | Enviar mensaje texto (requiere numero + mensaje) | ✅ OK |
+| POST | `/api/whatsapp/test-image` | Enviar imagen alerta (4 templates, dark/light) | ✅ OK |
+| GET | `/api/whatsapp/status` | Estado conexión Evolution (open/close) | ✅ OK — state: open |
+| POST | `/api/test-admin-alert` | Enviar alerta admin test | ✅ OK |
+
+### 6.10 Telegram
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| POST | `/api/test-telegram` | Enviar mensaje test al bot | No probado |
+
+### 6.11 Twilio (fallback WhatsApp)
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| POST | `/api/test-whatsapp` | Enviar WhatsApp vía Twilio (fallback) | No probado |
+
+### 6.12 Webhooks
+
+| Método | Ruta | Función | Probado |
+|--------|------|---------|---------|
+| POST | `/webhook/lemonsqueezy` | Webhook Lemon Squeezy pagos (verifica firma HMAC) | No probado |
+
+### 6.13 Cron Jobs
+
+| Job | Intervalo | Función |
+|-----|-----------|---------|
+| `checkAlertas` | Cada 30 segundos | Verifica alertas de precio → dispara WhatsApp/Telegram |
+| Cálculo IA | Cada ~5 minutos | Recalcula señales para 350 activos |
+| Cálculo Pulse | Cada ~5 minutos | Recalcula scores Pulse (5 filtros) |
+
+**Total: 36 endpoints + 3 cron jobs**
+
+---
+
+*Sección 7 (Flujo de datos) — Pendiente*
+*Sección 8 (WhatsApp) — Pendiente*
