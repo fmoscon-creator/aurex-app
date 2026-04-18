@@ -122,6 +122,105 @@ Components (5):
 
 ---
 
-*Sección 2 (Infraestructura) — En verificación por Escritorio*
+## Sección 2: INFRAESTRUCTURA
+
+*Verificado: 18/abril/2026 por Escritorio (Railway dashboard) + CODE (CLI)*
+
+### 2.1 Railway — Backend API
+
+| Dato | Valor | Verificado por |
+|------|-------|---------------|
+| Proyecto | lavish-ambition | Escritorio (dashboard) |
+| Servicio | aurex-app | Escritorio (dashboard) |
+| Región | us-east4 (Virginia, USA) | Escritorio (dashboard) |
+| Replicas | 1 | Escritorio (dashboard) |
+| CPU | 8 vCPU (límite plan) | Escritorio (dashboard) |
+| RAM | 8 GB (límite plan) | Escritorio (dashboard) |
+| URL pública | aurex-app-production.up.railway.app | CODE (curl OK) |
+| Puerto | 3000 | Escritorio (dashboard) |
+| URL privada | aurex-app.railway.internal | Escritorio (dashboard) |
+| Builder | Nixpacks (railway.json) | CODE (archivo verificado) |
+| Provider | Node (nixpacks.toml) | CODE (archivo verificado) |
+| Restart policy | On Failure (railway.json) | CODE (archivo verificado) |
+| Source repo | fmoscon-creator/aurex-backend → main | Escritorio (dashboard) |
+| Auto-deploy | Sí — push a main dispara deploy vía webhook GitHub | Escritorio (dashboard) |
+
+### 2.2 Railway — Evolution API (WhatsApp)
+
+| Dato | Valor | Verificado por |
+|------|-------|---------------|
+| Servicio | evo-v1 | Escritorio (dashboard) |
+| Estado | Online | CODE (API: state=open) |
+| URL | evo-v1-production.up.railway.app | CODE (curl OK) |
+| Instancia | aurex | CODE (API verificada) |
+| Versión | Evolution v1.8.7 | Escritorio (dashboard) |
+
+### 2.3 Supabase
+
+| Dato | Valor | Verificado por |
+|------|-------|---------------|
+| URL | dklljnfhlzmfsfmxrpie.supabase.co | CODE (variable Railway) |
+| Tablas | 9 verificadas | CODE (query directo) |
+
+**Tablas reales** (verificadas por CODE via service key):
+| Tabla | Función |
+|-------|---------|
+| `alertas` | Alertas de precio activas del usuario |
+| `alertas_historial` | Historial de alertas disparadas |
+| `alerts` | PENDIENTE VERIFICAR — posible duplicado o legacy |
+| `portfolio` | Activos del portfolio del usuario |
+| `profiles` | Perfil usuario (plan, celular, preferencias) |
+| `usuarios` | Datos de usuario (email, plan, fecha creación) |
+| `watchlist` | Watchlist v1 (posible legacy) |
+| `watchlist_items` | Items de watchlists v2 |
+| `watchlists` | Listas de watchlist v2 |
+
+**PENDIENTE VERIFICAR**: tabla `alerts` vs `alertas` — ¿cuál se usa? ¿`watchlist` es legacy de v1?
+
+### 2.4 Otros servicios
+
+| Servicio | Función | Estado |
+|----------|---------|--------|
+| GitHub Pages | Hosting PWA aurex.live | Activo |
+| Apple Developer | App Store iOS | Build 9 pendiente revisión |
+| Meta/WhatsApp | Cloud API (dormido, no se usa) | Dormido |
+| PayPal Business | Pagos PWA | Activo |
+| RevenueCat | IAP iOS (StoreKit) | PENDIENTE VERIFICAR estado |
+
+---
+
+## Sección 4: VARIABLES DE ENTORNO
+
+*Verificado: 18/abril/2026 por CODE (CLI) + Escritorio (dashboard) — coinciden*
+
+**16 variables de usuario** (configuradas manualmente):
+
+| Variable | Función |
+|----------|---------|
+| `SUPABASE_URL` | URL de Supabase |
+| `SUPABASE_SERVICE_KEY` | Key admin Supabase (bypasa RLS) |
+| `EVOLUTION_API_URL` | URL Evolution API (WhatsApp) |
+| `EVOLUTION_API_KEY` | API key Evolution |
+| `EVOLUTION_INSTANCE` | Nombre instancia (aurex) |
+| `ADMIN_WHATSAPP` | Número admin Fernando (5491167891320) |
+| `ANTHROPIC_API_KEY` | Key Claude API (análisis IA en alertas) |
+| `ALPHA_VANTAGE_KEY` | Key precios acciones |
+| `TELEGRAM_BOT_TOKEN` | Token bot Telegram alertas |
+| `TWILIO_ACCOUNT_SID` | Twilio SID (fallback WhatsApp) |
+| `TWILIO_AUTH_TOKEN` | Twilio auth token |
+| `TWILIO_WHATSAPP_FROM` | Número Twilio WhatsApp |
+| `LEMONSQUEEZY_WEBHOOK_SECRET` | Secret webhooks pagos |
+| `FRONTEND_URL` | CORS origin (*) |
+| `PORT` | Puerto servidor (3000) |
+| `NIXPACKS_NO_CACHE` | Forzar rebuild limpio (dejar en 1) |
+
+**Variable ELIMINADA**: `NIXPACKS_ROOT_DIR=backend` — fue causa del incidente de backend caído el 17/abril. Eliminada correctamente.
+
+**12 variables automáticas Railway** (inyectadas por Railway, no tocar):
+`RAILWAY_ENVIRONMENT`, `RAILWAY_ENVIRONMENT_ID`, `RAILWAY_ENVIRONMENT_NAME`, `RAILWAY_PRIVATE_DOMAIN`, `RAILWAY_PROJECT_ID`, `RAILWAY_PROJECT_NAME`, `RAILWAY_PUBLIC_DOMAIN`, `RAILWAY_SERVICE_AUREX_APP_URL`, `RAILWAY_SERVICE_EVO_V1_URL`, `RAILWAY_SERVICE_ID`, `RAILWAY_SERVICE_NAME`, `RAILWAY_STATIC_URL`
+
+---
+
 *Sección 3 (Deploy) — Pendiente*
-*Sección 4 (Variables) — Pendiente cruce CODE + Escritorio (16 usuario + 12 Railway = 28 total)*
+*Sección 5 (Base de datos) — Pendiente verificación tablas alerts vs alertas*
+*Sección 6 (APIs/Endpoints) — Pendiente*
