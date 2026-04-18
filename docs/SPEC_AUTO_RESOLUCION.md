@@ -1,8 +1,9 @@
-# SPEC: Sistema de Auto-Resolución y Fallback AUREX — v2 (Detalle técnico)
+# SPEC: Sistema de Auto-Resolución y Fallback AUREX — v3 (Corregido)
 
-**Estado**: Para revisión de Escritorio
+**Estado**: Corregido con 4 fixes de Escritorio
 **Fecha**: 18/abril/2026
 **Datos**: Verificados contra código real + APIs probadas + rate limits documentados
+**Revisiones**: v1 borrador → v2 detalle técnico → v3 correcciones Escritorio
 
 ---
 
@@ -106,6 +107,10 @@ const CRYPTO_CACHE_NORMAL_TTL = 60000;      // 60s cuando fuente primaria OK
 const CRYPTO_CACHE_FALLBACK_TTL = 300000;    // 5min cuando en fallback
 const CRYPTO_CACHE_EMERGENCY_TTL = 1800000;  // 30min cuando todo falla
 
+// NOTA: fetchCryptoPriceBatch SOLO retorna precios con source.
+// NO gestiona health state — eso lo hace healthCheck leyendo el source.
+// Fix Problema 1 y 2 de Escritorio.
+
 async function fetchCryptoPriceBatch(symbols) {
   const result = {};
   const now = Date.now();
@@ -125,8 +130,7 @@ async function fetchCryptoPriceBatch(symbols) {
         result[sym] = { price: parseFloat(p.price), source: 'binance', stale: false, ts: now };
         cryptoCache[sym] = result[sym];
       });
-      if (_health.binance) { _health.binance = false; await resolveAlert('binance'); }
-      return result;
+      return result; // source: 'binance' — healthCheck lee esto
     }
   } catch(e) {}
 
@@ -145,12 +149,11 @@ async function fetchCryptoPriceBatch(symbols) {
           cryptoCache[sym] = result[sym];
         }
       });
-      if (!_health.binance) { _health.binance = true; await openAlert('binance', 'DOWN — using CryptoCompare fallback. Data OK.'); }
-      return result;
+      return result; // source: 'cryptocompare' — healthCheck sabe que Binance falló
     }
   } catch(e) {}
 
-  // 3. CoinGecko batch (fallback 2 — 10k/mes, solo si es calcularSenalesIA)
+  // 3. CoinGecko batch (fallback 2 — 10k/mes)
   try {
     const ids = symbols.map(s => COINGECKO_IDS[s]).filter(Boolean).join(',');
     if (ids) {
@@ -168,7 +171,7 @@ async function fetchCryptoPriceBatch(symbols) {
             cryptoCache[sym] = result[sym];
           }
         });
-        return result;
+        return result; // source: 'coingecko'
       }
     }
   } catch(e) {}
@@ -180,7 +183,7 @@ async function fetchCryptoPriceBatch(symbols) {
       if (age < CRYPTO_CACHE_EMERGENCY_TTL) {
         result[sym] = {
           price: cryptoCache[sym].price,
-          source: cryptoCache[sym].source + ' (cached)',
+          source: 'cache',
           stale: true,
           staleSince: cryptoCache[sym].ts,
           ageMinutes: Math.round(age / 60000),
@@ -190,8 +193,7 @@ async function fetchCryptoPriceBatch(symbols) {
     }
   });
 
-  if (!_health.binance) { _health.binance = true; await openAlert('binance', 'ALL crypto sources DOWN. Serving cached data.'); }
-  return result;
+  return result; // source: 'cache' — healthCheck sabe que todo falló
 }
 ```
 
@@ -257,7 +259,83 @@ async function fetchStockPriceBatch(symbols) {
 }
 ```
 
-### 3.3 Modificar: checkAlertas (L152)
+### 3.3 Nueva función: _fetchCryptoCompareIA(sym) — fallback para motor IA
+
+**Ubicación**: server.js, después de _fetchBinanceIA (L386)
+**Usada por**: calcularSenalesIA cuando _fetchBinanceIA retorna null
+**Mapeo verificado**: 9 campos idénticos a _fetchBinanceIA (aprobado por Escritorio)
+
+```javascript
+async function _fetchCryptoCompareIA(sym) {
+  try {
+    const [tickerR, histR] = await Promise.all([
+      fetch('https://min-api.cryptocompare.com/data/pricemultifull?fsyms=' + sym + '&tsyms=USD',
+        { signal: AbortSignal.timeout(5000) }),
+      fetch('https://min-api.cryptocompare.com/data/v2/histoday?fsym=' + sym + '&tsym=USD&limit=16',
+        { signal: AbortSignal.timeout(5000) })
+    ]);
+    const ticker = await tickerR.json();
+    const hist = await histR.json();
+
+    const t = ticker?.RAW?.[sym]?.USD;
+    const klines = hist?.Data?.Data;
+    if (!t || !Array.isArray(klines) || klines.length === 0) return null;
+
+    const cls = klines.map(k => k.close).filter(x => x > 0);
+    const vols = klines.map(k => k.volumefrom).filter(x => x > 0);
+    const av = vols.length > 1
+      ? vols.slice(0, -1).reduce((a, b) => a + b, 0) / (vols.length - 1)
+      : vols[0] || 1;
+
+    return {
+      precio:    t.PRICE,          // ← Binance: lastPrice
+      precio24h: t.OPEN24HOUR,     // ← Binance: prevClosePrice
+      vol24h:    t.VOLUME24HOUR,   // ← Binance: volume
+      volProm:   av,                // ← Binance: avg(klines vols[0..n-1])
+      hi:        t.HIGH24HOUR,     // ← Binance: highPrice
+      lo:        t.LOW24HOUR,      // ← Binance: lowPrice
+      cls:       cls,               // ← Binance: klines closes array (16-17 entries)
+      hiMax:     Math.max(...cls),  // ← Binance: max(klines closes)
+      loMin:     Math.min(...cls),  // ← Binance: min(klines closes)
+    };
+  } catch(e) { return null; }
+}
+```
+
+**Mapeo campo por campo (verificado contra _calcIAScore L410-422):**
+
+| Campo | Usado en _calcIAScore | Binance source | CryptoCompare source | Match |
+|-------|----------------------|----------------|---------------------|-------|
+| precio | L412: tendencia | lastPrice | RAW.sym.USD.PRICE | ✅ |
+| precio24h | L412: (precio-precio24h)/precio24h | prevClosePrice | RAW.sym.USD.OPEN24HOUR | ✅ |
+| vol24h | L416: vol24h/volProm | volume | RAW.sym.USD.VOLUME24HOUR | ✅ |
+| volProm | L416: denominador | avg klines vols | avg histoday volumefrom | ✅ |
+| hi | L418: (hi-lo)/precio | highPrice | RAW.sym.USD.HIGH24HOUR | ✅ |
+| lo | L418: denominador | lowPrice | RAW.sym.USD.LOW24HOUR | ✅ |
+| cls | L414: _calcRSI14(cls) ≥15 | klines closes (16) | histoday closes (17) | ✅ |
+| hiMax | L446: soporte/resist | max(closes) | max(closes) | ✅ |
+| loMin | L446: soporte/resist | min(closes) | min(closes) | ✅ |
+
+**Nota MACD**: _calcIAScore tiene guard `cls.length >= 26` para MACD/EMA26. Con 16 entries (Binance) o 17 (CryptoCompare), ese bloque queda inactivo en ambos. Comportamiento idéntico, sin regresión.
+
+### 3.4 Modificar: calcularSenalesIA — fallback interno
+
+**Cambio en L480 (dentro del loop de activos crypto):**
+
+**Antes**:
+```javascript
+let d = await _fetchBinanceIA(act.y || act.s);
+```
+
+**Después**:
+```javascript
+let d = await _fetchBinanceIA(act.y || act.s);
+if (!d) d = await _fetchCryptoCompareIA(act.s); // fallback con OHLCV completo
+```
+
+Si ambos fallan, `d` es null y `_calcIAScore` no se ejecuta para ese activo — usa la señal anterior cacheada. Mismo comportamiento que hoy cuando Binance falla.
+
+### 3.5 Modificar: checkAlertas (L152)
 
 **Cambio**: Reemplazar fetch directo a Binance por `fetchCryptoPriceBatch`
 
@@ -273,16 +351,33 @@ const cpResult = await fetchCryptoPriceBatch(cryptoSyms.map(s => s.replace('USDT
 Object.keys(cpResult).forEach(sym => { cp[sym] = cpResult[sym].price; });
 ```
 
-### 3.4 Modificar: healthCheck — mensajes diferenciados
+### 3.6 Modificar: healthCheck — lee source de fetchCryptoPriceBatch
 
-**Antes**: `await openAlert('binance', 'Error: ' + e.message)`
+**Fix Problema 2**: healthCheck gestiona alertas, fetchCryptoPriceBatch solo retorna datos.
 
-**Después**: Los mensajes se generan dentro de `fetchCryptoPriceBatch` según cuál fallback se activó:
-- Fallback CryptoCompare: `'DOWN — using CryptoCompare fallback. Data OK.'`
-- Fallback CoinGecko: `'DOWN — using CoinGecko fallback. Data OK.'`
-- Todo falla: `'ALL crypto sources DOWN. Serving cached data.'`
+healthCheck mantiene su propio check de Binance (1 call cada 5min), pero ADEMÁS lee el `source` del último fetchCryptoPriceBatch para generar mensajes diferenciados:
 
-El healthCheck ya no necesita su propio check de Binance — `fetchCryptoPriceBatch` lo hace con cada llamada.
+```javascript
+// En healthCheck, bloque Binance actualizado:
+// 1. Check directo Binance (ya existe, 1 call spot)
+// 2. Si falla: verificar qué source está usando fetchCryptoPriceBatch
+//    y generar mensaje apropiado
+
+// Variable global que fetchCryptoPriceBatch actualiza:
+global._lastCryptoSource = 'binance'; // se actualiza con cada call
+
+// En healthCheck:
+if (binanceFailed) {
+  const src = global._lastCryptoSource || 'unknown';
+  if (src === 'cryptocompare' || src === 'coingecko') {
+    await openAlert('binance', 'DOWN — using ' + src + ' fallback. Data OK.');
+  } else if (src === 'cache') {
+    await openAlert('binance', 'ALL crypto sources DOWN. Serving cached data.');
+  } else {
+    await openAlert('binance', 'DOWN. Error: ' + errorMsg);
+  }
+}
+```
 
 ### 3.5 Modificar: respuesta API /api/ia-signals
 
@@ -341,7 +436,7 @@ checkAlertas corre cada 30s. Si Binance cae:
 ## 5. TABLA SUPABASE: CAMBIO
 
 ```sql
-ALTER TABLE health_events ADD COLUMN source_status text;
+ALTER TABLE health_events ADD COLUMN IF NOT EXISTS source_status text;
 -- Valores: 'primary_down', 'fallback_active', 'all_down', 'cache_only'
 ```
 
@@ -354,7 +449,8 @@ ALTER TABLE health_events ADD COLUMN source_status text;
 | server.js | `fetchCryptoPriceBatch()` nueva función | Después de L91 |
 | server.js | `fetchStockPriceBatch()` nueva función | Después de fetchCrypto |
 | server.js | `checkAlertas` L159: usar fetchCryptoPriceBatch | L159 |
-| server.js | `calcularSenalesIA` L376: usar fetchCryptoPriceBatch | L376-377 |
+| server.js | `_fetchCryptoCompareIA()` nueva función fallback IA | Después de L386 |
+| server.js | `calcularSenalesIA` L480: fallback a _fetchCryptoCompareIA | L480 |
 | server.js | healthCheck: eliminar check Binance separado (integrado en fetchCrypto) | L786-795 |
 | server.js | /api/ia-signals: agregar meta.cryptoSource | L503-509 |
 | server.js | COINGECKO_IDS mapa | Nueva constante |
