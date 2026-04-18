@@ -333,5 +333,52 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 ---
 
-*Sección 5 (Base de datos) — Pendiente verificación tablas alerts vs alertas*
+## Sección 5: BASE DE DATOS (Supabase)
+
+*Verificado: 18/abril/2026 por CODE (queries directos + grep de código)*
+
+### 5.1 Conexión
+
+| Dato | Valor | Verificado |
+|------|-------|-----------|
+| URL | dklljnfhlzmfsfmxrpie.supabase.co | CODE (variable Railway) |
+| Auth | Supabase Auth (email + password) | CODE (código nativa + PWA) |
+| Anon Key | Hardcodeada en nativa `supabase.js` y PWA `index.html` | CODE (grep) |
+| Service Key | En Railway variables (bypasa RLS) | CODE (variable Railway) |
+
+### 5.2 Tablas — Estado real
+
+**9 tablas** existen en Supabase. Verificadas por uso en código + conteo de filas:
+
+| Tabla | Filas | Usada en server.js | Usada en PWA | Usada en nativa | Estado |
+|-------|-------|-------------------|-------------|-----------------|--------|
+| `alertas` | 0 | ✅ 7 queries | ❌ | ❌ | **ACTIVA** — alertas de precio |
+| `alertas_historial` | 0 | ✅ 1 insert | ❌ | ❌ | **ACTIVA** — historial disparadas |
+| `alerts` | 0 | ❌ no se usa | ❌ | ❌ | **LEGACY** — no la usa ningún código |
+| `portfolio` | 0 | ✅ 4 queries | ❌ | ❌ | **ACTIVA** — activos del usuario |
+| `profiles` | 0 | ❌ no se usa | ❌ | ❌ | **SIN USO** — existe pero ningún código la consulta |
+| `usuarios` | 0 | ✅ 4 queries | ✅ 2 queries | ❌ | **ACTIVA** — datos usuario |
+| `watchlist` | 0 | ✅ 3 queries | ❌ | ❌ | **LEGACY v1** — server.js la usa pero hay v2 |
+| `watchlist_items` | 0 | ✅ 4 queries | ❌ | ❌ | **ACTIVA v2** — items de listas |
+| `watchlists` | 0 | ✅ 5 queries | ❌ | ❌ | **ACTIVA v2** — listas de watchlist |
+
+**Storage**: bucket `avatars` — fotos de perfil (server.js endpoint `/api/avatar`)
+
+### 5.3 Resolución de pendientes
+
+**`alerts` vs `alertas`**: La tabla `alerts` (con s en inglés) tiene 0 filas y NO es referenciada por ningún código. Es legacy — probablemente fue la primera versión antes de renombrar a `alertas`. **Se puede eliminar.**
+
+**`watchlist` vs `watchlists`**: Server.js usa AMBAS. `watchlist` es la v1 (endpoints `/api/watchlist/`), `watchlists` + `watchlist_items` es la v2 (endpoints `/api/watchlists/`). La nativa usa v2. **`watchlist` v1 es legacy pero server.js aún la sirve** — no eliminar sin migrar.
+
+**`profiles` vs `usuarios`**: `profiles` existe pero ningún código la consulta activamente. `usuarios` es la tabla activa. `profiles` podría ser de un intento previo de Lemon Squeezy webhook (que hace upsert a `profiles`). **Mantener ambas por ahora.**
+
+### 5.4 Acciones recomendadas
+
+- [ ] Eliminar tabla `alerts` (legacy, 0 filas, sin código)
+- [ ] Migrar de `watchlist` v1 a v2 y eliminar endpoints v1
+- [ ] Clarificar relación `profiles` vs `usuarios` — unificar si es posible
+- [ ] Todas las tablas tienen 0 filas — normal porque no hay usuarios reales aún
+
+---
+
 *Sección 6 (APIs/Endpoints) — Pendiente*
