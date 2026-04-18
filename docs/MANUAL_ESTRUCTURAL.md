@@ -498,5 +498,200 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 ---
 
-*Sección 7 (Flujo de datos) — Pendiente*
-*Sección 8 (WhatsApp) — Pendiente*
+## Sección 7: FLUJO DE DATOS
+
+*Verificado: 18/abril/2026 por CODE (grep server.js + index.html)*
+
+### 7.1 Fuentes de datos
+
+| Fuente | Qué provee | Usado en |
+|--------|-----------|----------|
+| Binance API | Precios cripto en tiempo real | server.js (checkAlertas) + PWA (fetch directo) |
+| Yahoo Finance | Precios acciones/futuros/indices, chart data | server.js (proxy /api/yahoo, cálculo Pulse) |
+| Alpha Vantage | Precios acciones (fallback, cache 60s) | server.js (/api/stock) |
+| CoinGecko | Precios cripto (fallback PWA) | PWA index.html (fetch directo) |
+| CoinCap | Logos cripto | Nativa + PWA (URLs de imagen) |
+| FMP | Logos acciones | Nativa + PWA (URLs de imagen) |
+| ExchangeRate API | Tipos de cambio (conversor) | PWA index.html |
+
+### 7.2 Cron Jobs (verificados en server.js)
+
+| Job | Intervalo | Línea | Función |
+|-----|-----------|-------|---------|
+| `checkAlertas` | Cada 30 segundos | L170 | Lee alertas activas → verifica precios Binance/Yahoo → dispara WhatsApp/Telegram |
+| `calcularPulse` | Cada 5 minutos | L680 | Calcula scores Pulse (5 filtros) usando Yahoo Finance |
+| `calcularSenalesIA` | Cada 5 minutos | L686 | Calcula señales IA para 350 activos |
+| `healthCheck` | Cada 5 minutos | L749 | PENDIENTE VERIFICAR función |
+
+### 7.3 Flujo PWA → Backend
+
+PWA (`index.html`) consume del backend estas 4 APIs al cargar:
+```
+1. /api/ia-signals → señales IA (350 activos)
+2. /api/portfolio/:userId → activos del usuario
+3. /api/watchlists/:userId/items → items watchlists
+4. /api/pulse → scores AUREX Pulse
+```
+
+### 7.4 Flujo Nativa → Backend
+
+La nativa consume las mismas APIs via `fetch()` pero desde React Native. La URL del backend está en las pantallas directamente (`https://aurex-app-production.up.railway.app`).
+
+---
+
+## Sección 8: WHATSAPP
+
+*Verificado: 18/abril/2026 por CODE (server.js + alertImage.js + curl)*
+
+### 8.1 Infraestructura
+
+| Componente | Detalle | Verificado |
+|-----------|---------|-----------|
+| Servicio | Evolution API v1.8.7 en Railway (evo-v1) | ✅ state: open |
+| Instancia | aurex | ✅ API verificada |
+| Línea emisora | +54 9 11 3360 2563 (eSIM Claro, iPhone Fernando) | Documentado |
+| Línea admin | +54 9 11 6789 1320 (WhatsApp personal Fernando) | ✅ mensajes recibidos |
+
+### 8.2 Funciones en server.js
+
+| Función | Qué hace |
+|---------|----------|
+| `sendWhatsAppEvolution(phone, text)` | Envía mensaje de texto via Evolution API |
+| `sendWhatsAppImage(phone, imageBuffer, caption)` | Envía imagen con caption via Evolution API |
+| `notifyAdmin(subject, body)` | Envía alerta admin (intenta imagen, fallback texto) |
+| `dispararAlerta(alerta, precio)` | Dispara alerta completa (imagen + fallback texto + fallback Twilio) |
+
+### 8.3 Templates de imagen (alertImage.js)
+
+| Template | Subtítulo | Contenido | Probado |
+|----------|-----------|-----------|---------|
+| `ia` | AI Alert | Ticker + BULLISH/BEARISH + % + Price/Target/Stop + barra | ✅ dark + light |
+| `precio` | Price Alert | Ticker + TARGET REACHED + Current Price vs Target + Difference % | ✅ dark + light |
+| `pulse` | AUREX Pulse | 5 cards (Global/Crypto/Stocks/Commod/Futures) con scores + zonas | ✅ dark + light |
+| `admin` | System Alert | Mensaje de error + timestamp | ✅ dark + light |
+
+**Tecnología**: pureimage (canvas JS puro) + sharp (logo composite + resize Retina 2x)
+**Fuente**: Inter (Bold, Medium, Regular) en `assets/fonts/`
+**Idioma**: Inglés, formato numérico americano
+**Logo**: transparente con texto AUREX, 100px circular, mismo dark y light
+
+### 8.4 Cadena de fallback
+
+```
+1. Genera imagen (pureimage) → envía via Evolution sendMedia
+2. Si imagen falla → envía texto plano via Evolution sendText
+3. Si Evolution falla → envía via Twilio WhatsApp
+```
+
+### 8.5 Límites por plan (código en server.js, NO activo aún)
+
+| Plan | Alertas WhatsApp/día |
+|------|---------------------|
+| FREE | 0 (solo push) |
+| PRO | 3 |
+| ELITE | 10 |
+
+**NOTA**: Los límites están codificados en el endpoint pero el cron `checkAlertas` aún no los aplica — envía a todos los que tienen `whatsapp_numero` en la alerta.
+
+---
+
+## Sección 9: i18n (INTERNACIONALIZACIÓN)
+
+*Verificado: 18/abril/2026 por CODE (grep i18n.js + screens)*
+
+### 9.1 Estado actual
+
+| Dato | Valor | Verificado |
+|------|-------|-----------|
+| Archivo | `AurexApp/src/lib/i18n.js` | ✅ |
+| Total keys | 712 por idioma | ✅ grep count |
+| Idiomas | 8 | ✅ |
+| Selectores | PerfilScreen (8 opciones) + LanguageButton (8 opciones) | ✅ |
+
+### 9.2 Idiomas
+
+| Código | Idioma | Bandera | Estado |
+|--------|--------|---------|--------|
+| es | Español | 🇪🇸 | ✅ Completo |
+| en | English | 🇺🇸 | ✅ Completo |
+| pt | Português | 🇧🇷 | ✅ Completo |
+| zh | 中文 | 🇨🇳 | ✅ Completo |
+| fr | Français | 🇫🇷 | ✅ Completo |
+| it | Italiano | 🇮🇹 | ✅ Completo |
+| hi | हिन्दी | 🇮🇳 | ✅ Completo |
+| ar | العربية | 🇦🇪 | ✅ Completo |
+
+### 9.3 Hardcodes pendientes (español sin traducir)
+
+| Pantalla | Qué falta | Complejidad |
+|----------|-----------|-------------|
+| PortfolioScreen | Motivos análisis IA (5 frases con interpolación) | Alta — requiere templates |
+| AlertasScreen | IA_VARS names/descriptions (10 variables) | Media — constante fuera del componente |
+| PWA (index.html) | Todo — no tiene sistema i18n | Alta — todo hardcodeado en español |
+
+### 9.4 Cómo agregar un idioma nuevo
+
+```
+1. Agregar traducciones a cada key en src/lib/i18n.js (712 keys)
+2. Agregar opción en PerfilScreen.js (Alert picker de idiomas)
+3. Agregar en LanguageButton.js (LANG_OPTIONS array)
+4. Agregar al mapa IDIOMAS y lógica de banderas en PerfilScreen.js
+5. Verificar: node -c src/lib/i18n.js (sintaxis)
+6. Probar en app: cambiar idioma y recorrer todas las tabs
+```
+
+---
+
+## Sección 11: SAFETY POINTS
+
+*Verificado: 18/abril/2026 por CODE (git tag -l en los 3 repos)*
+
+### 11.1 AurexApp (Nativa) — 5 tags
+
+| Tag | Fecha | Estado |
+|-----|-------|--------|
+| `safety-point-2026-04-15-whatsapp-live` | 15/abril | Build 9, ES/EN, modo claro |
+| `safety-point-2026-04-16-nativa-estable` | 16/abril | Post pop temporalidad |
+| `safety-point-2026-04-16-i18n-perfil-completo` | 16/abril | Perfil 9 solapas traducidas |
+| `safety-point-2026-04-16-8-idiomas-completo` | 16/abril | 8 idiomas + PT/ZH |
+| `safety-point-2026-04-17-8idiomas-whatsapp-templates` | 17/abril | Estado actual dev |
+
+### 11.2 aurex-backend — 1 tag
+
+| Tag | Fecha | Estado |
+|-----|-------|--------|
+| `safety-point-2026-04-17-whatsapp-4templates` | 17/abril | 4 templates WhatsApp |
+
+### 11.3 aurex-app (PWA) — 3 tags
+
+| Tag | Fecha | Estado |
+|-----|-------|--------|
+| `safety-point-2026-04-15-pre-port-nativa` | 15/abril | PWA pre-port nativa |
+| `safety-point-2026-04-16-perfil-login-ok` | 16/abril | Perfil + login replicados |
+| `safety-point-2026-04-17-pwa-arquitectura` | 17/abril | /backend eliminado + README |
+
+### 11.4 Cómo usar
+
+```bash
+# Ver estado sin perder trabajo
+git checkout <tag>
+
+# Volver al branch actual
+git checkout <branch>
+
+# Resetear branch a un safety point (DESTRUCTIVO)
+git checkout <branch> && git reset --hard <tag>
+```
+
+### 11.5 Cuándo crear uno nuevo
+
+- Después de completar un set grande de features
+- Antes de refactorizaciones grandes
+- Antes de tocar áreas compartidas (backend)
+- Cuando Fernando valida que todo funciona
+
+---
+
+*Sección 10 (Apple) — Pendiente verificación Escritorio*
+*Sección 12 (Reglas de trabajo) — Pendiente*
+*Sección 13 (Estado Features PWA) — Pendiente*
