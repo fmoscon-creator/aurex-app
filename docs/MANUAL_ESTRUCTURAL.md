@@ -799,17 +799,60 @@ git checkout <branch> && git reset --hard <tag>
 
 *Verificado: 18/abril/2026 por Escritorio (specs) + CODE (código)*
 
-### 13.1 Features implementadas
+### 13.1 Features implementadas (verificado grep completo 18/abril/2026)
 
-| Feature | Nombre | Estado | Verificado |
-|---------|--------|--------|-----------|
-| F1-bis | Chip ⚖️ Aviso Legal en headers | ✅ Implementado | CODE (aurex-features.js) |
-| F2 | Indicador "Hoy" animado en Portfolio | ✅ Implementado | CODE (index.html) |
-| F3 | Sort menus flotantes premium (4 tabs) | ✅ Implementado | CODE (aurex-features.js) |
-| F4 | Long press en filas de activos | ✅ Implementado | CODE + Escritorio (aurex-features.js L5941-6271) |
-| F5 | Cross-tab Portfolio/Mercados/Watchlist | ✅ Implementado | CODE + Escritorio (aurex-features.js L6100-6129) |
+| Feature | Nombre | Archivo | Líneas | Funciones clave |
+|---------|--------|---------|--------|----------------|
+| F1-bis | Chip ⚖️ Aviso Legal en headers | aurex-features.js | 5052-5081 | `_openAvisoLegal`, `_addLegalChip` |
+| F2 | Indicador "Hoy" animado en Portfolio | aurex-features.js | 5397+ | `_initHoyIndicator` |
+| F3 | Sort menus flotantes (4 tabs) | aurex-features.js | 5541-5680 | `_openSortModal`, `_buildSortBtn`, `_sortCfgs`, `_applyIASort` |
+| F4 | Long press en filas (Portfolio + Mercados) | aurex-features.js | 5892-6271 | `_attachLongPress`, `_showLPSheet`, `_attachAllPortfolioLP`, `_attachAllMercadosLP` |
+| F5 | Cross-tab (Agregar a Portfolio + Favoritos desde Mercados) | aurex-features.js | 5962-6129 | `_lpAgregarFavorito`, `_lpQuitarFavorito`, `openPortModal`, `_lpCompartirPortfolio`, `_lpEditarPortItem` |
 
-*F4 y F5 estaban marcados como "pendientes" en error. Verificados 18/abril/2026: el sistema `_attachLongPress` + `_showLPSheet` implementa long press en Portfolio y Mercados con acciones (Análisis IA, Editar, Compartir, Eliminar, Favoritos, Agregar a Portfolio).*
+### 13.2 Otras features implementadas en PWA
+
+| Feature | Archivo | Líneas | Funciones clave |
+|---------|---------|--------|----------------|
+| Onboarding (4 pasos) | aurex-features.js / aurex-v3.js | 112-117 | `initOnboarding`, `obNext`, `obFinish`, `obSelectPlan` |
+| Constelación animada (onboarding) | aurex-features.js / aurex-v3.js | 117 | `initConstellacion` |
+| Conversor de monedas | aurex-features.js | 622-750 | `openPortConversor`, `updatePortConv`, `swapPortConv`, `pcLoadPrices` |
+| Portfolio persistente (Supabase) | aurex-features.js | 752-995 | `loadPortfolioSupa`, `_renderPortfolioItems`, `_refreshPortPrices`, `deletePortfolioItem` |
+| Portfolio currency switch (USD/USDT/BTC) | aurex-features.js | 999+ | Currency toggle en header |
+| Mercados: tabs + países + timeframes | aurex-features.js / aurex-v3.js | 267-530 | `renderTab`, `sw`, `swPais`, `stf` |
+| Mercados: editar orden filas | aurex-features.js / aurex-v3.js | 550-605 | `toggleEdit`, `_moveRow` |
+| Binance precios RT (crypto) | aurex-features.js / aurex-v3.js | 372-405 | `fetchBinance` |
+| Yahoo Finance precios (stocks) | aurex-features.js / aurex-v3.js | 408-445 | `fetchYahoo` |
+| Background loading activos | aurex-features.js / aurex-v3.js | 450-500 | `_loadMktBackground` |
+| AUREX Pulse Fear & Greed 14X | aurex-features.js | 4267-4690 | `_renderFearGreed`, `_renderFearGreedGauge`, `_fetchPulseForCategory` |
+| Pulse filtros (Global/Cripto/Acciones/Futuros/Commod) | aurex-features.js | 4524-4634 | Filtros dentro de `_renderFearGreed` |
+| RSI real desde datos históricos | aurex-features.js | 3449+ | Cálculo RSI |
+| Banner Futuros/Indices/Bonos/Commodities | aurex-features.js | 4696-4848 | `_renderFuturesBanner` |
+| Banner Combo (Mercados) | aurex-features.js | 5320+ | `_renderComboBanner` |
+| Banner Noticias del día | aurex-features.js | 4849-4885 | `_renderMktNewsBanner` |
+| Logo unificado en tabs | aurex-features.js | 4886-5050 | `_initHeaderLogos` |
+| Compartir señal (overlay modal) | aurex-features.js | 4218+ | `_compartirSenal` |
+| Watchlist CRUD + comparador | aurex-features.js | 1800-2650 | `renderWatchCnt`, `wlShowActionMenu`, `wlShowCompare`, `wlShareList`, `wlDeleteList` |
+| IA señales + sort + filtros | aurex-features.js | 3900-4210 | `_iaTogglePortfolio`, `_applyIASort`, filtros IA |
+| Motor Alertas (toggle, scope, pulse zones) | index.html | 631-968 | `calculateAlerts`, `renderTriggeredAlerts`, `toggleAlertSection`, `_countAlertsForScope` |
+| Push notifications (básicas) | aurex-features.js | 610-617 | `initPushNotifications`, `requestPushPermission`, `showAlertNotification` |
+| Modo claro/oscuro | aurex-v3.js | 3898+ | `aurexSetTheme` |
+| Selector de idioma (modal) | aurex-features.js | 6276+ | `_openIdiomaModal` |
+| Login / Registro | index.html | 2251-2321 | `authDoLogin`, `authDoRegister`, `authSwitchTab` |
+| Perfil: 9 secciones acordeón | index.html | 2290-2874 | `pacToggle`, `pacAlerta`, `pacNotif`, `pacCalificar`, `pacAbrirFaq` |
+| Perfil: modal planes (FREE/PRO/ELITE) | index.html | 2877-3230 | `abrirModalPlanes`, `planTab` |
+| Asset búsqueda global | aurex-features.js | 52-74 | `_findAssetGlobal` |
+| Sparklines 24h | aurex-features.js / aurex-v3.js | 276-286 | `_buildSparklineSVG` |
+| Dots IA (10 variables visual) | aurex-features.js / aurex-v3.js | 287-294 | `_buildDotsHTML` |
+
+### 13.3 PWA — Lo que NO tiene
+
+| Aspecto | Estado |
+|---------|--------|
+| i18n | ❌ No tiene sistema — todo hardcodeado en español |
+| Filtro sticky scroll | ❌ No implementado |
+| WhatsApp alertas reales (usuario) | ❌ Solo toggle visual |
+| Push notifications reales | ❌ Solo permiso básico, sin backend |
+| RTL (árabe) | ❌ No implementado |
 
 ### 13.3 PWA — Estado general
 
