@@ -91,6 +91,7 @@
     sesion_actual: { es: 'Sesión actual', en: 'Current session' },
     ultimos_accesos: { es: '🕐 Últimos accesos', en: '🕐 Recent access' },
     hoy: { es: 'Hoy', en: 'Today' },
+    navegador_web: { es: 'Navegador web', en: 'Web browser' },
 
     // === B6: ALERTAS (Perfil) ===
     b6_alertas: { es: '🔔 Alertas', en: '🔔 Alerts' },

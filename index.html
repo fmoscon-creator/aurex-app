@@ -3358,13 +3358,14 @@ function pacInitSeg(){
   if(/iPhone/.test(ua)) dev='iPhone';
   else if(/Android/.test(ua)) dev='Android';
   else if(/iPad/.test(ua)) dev='iPad';
-  else dev='Navegador web';
+  else dev=window.t ? t('navegador_web') : 'Navegador web';
   var el=document.getElementById('seg-dispositivo');
   var el2=document.getElementById('seg-session-info');
   if(el) el.textContent=dev;
   if(el2){
     var now=new Date();
-    el2.textContent='Hoy '+now.getHours()+':'+('0'+now.getMinutes()).slice(-2);
+    var hoy=window.t ? t('hoy') : 'Hoy';
+    el2.textContent=hoy+' '+now.getHours()+':'+('0'+now.getMinutes()).slice(-2);
   }
   var acc=document.getElementById('seg-accesos');
   if(acc){
@@ -4001,6 +4002,7 @@ window.navTo = function(screen) {
   if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
   if(screen==='watchlist'){ setTimeout(function(){ if(window._wlSyncFromSupabase) _wlSyncFromSupabase(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); }); else if(window.renderWatchCnt) window.renderWatchCnt(); },50); }
   if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
+  if(window._i18n) window._i18n.applyTranslations();
 };
 
 //  Selector de pas para telfono 
