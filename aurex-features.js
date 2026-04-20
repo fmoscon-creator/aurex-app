@@ -1378,7 +1378,7 @@ window.editMarketBanner = function(){
   popup.id = 'aurex-mkt-edit-popup';
   popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
   popup.innerHTML =
-    '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
         '<span style="font-size:16px;font-weight:700;color:#111;">'+t('mkt_edit_banner_title')+'</span>' +
         '<span onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
@@ -4382,7 +4382,7 @@ function _goldToScore(pct) { return Math.min(100, Math.max(0, 50 - pct*25)); }
 function _oilToScore(pct) { return Math.min(100, Math.max(0, 50 - Math.abs(pct)*15)); }
 
 function _calcPulseScore(raw, cat) {
-  if(!raw) return { value:50, label:'Neutral', color:'var(--gold)', emoji:'😐', vars:{} };
+  if(!raw) return { value:50, label:t('mkt_gauge_neutral'), color:'var(--gold)', emoji:'😐', vars:{} };
   var scores = {}, weighted = 0, totalW = 0;
   function add(key, score, weight) {
     scores[key] = Math.round(score);
@@ -4439,7 +4439,7 @@ function _calcPulseScore(raw, cat) {
     if(raw.macro) add('Macro_FED', raw.macro.score, 12);
     if(raw.geo)   add('Geopolitica', raw.geo.score, 4);
   }
-  if(totalW===0) return { value:50, label:'Neutral', color:'var(--gold)', emoji:'😐', vars:scores };
+  if(totalW===0) return { value:50, label:t('mkt_gauge_neutral'), color:'var(--gold)', emoji:'😐', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
   if(v<=20)      { label=t('mkt_gauge_miedo_ext');  color='#C62828'; emoji='😱'; }
@@ -4588,7 +4588,7 @@ function _renderFearGreed(containerId) {
   if(raw.gcf)              bits.push('Oro: <b style="color:'+(raw.gcf.pct<=0?'var(--green)':'var(--red)')+'">'+_fmt(raw.gcf.pct,'pct')+'</b>');
   var dataLine = '<div style="display:flex;flex-wrap:wrap;gap:5px;font-size:9px;color:var(--textSec);margin-top:3px;">'+bits.join('')+'</div>';
   var cats = ['GLOBAL','CRIPTO','ACCIONES','COMOD','FUTUROS'];
-  var catLabels = {GLOBAL:'🟩 GLOBAL',CRIPTO:'🪙 CRIPTO',ACCIONES:'📈 ACCIONES',COMOD:'🟤 COMOD',FUTUROS:'⚡ FUTUROS'};
+  var catLabels = {GLOBAL:'🟩 '+t('mkt_pulse_cat_global'),CRIPTO:'🪙 '+t('mkt_pulse_cat_cripto'),ACCIONES:'📈 '+t('mkt_pulse_cat_acciones'),COMOD:'🟤 '+t('mkt_pulse_cat_comod'),FUTUROS:'⚡ '+t('mkt_pulse_cat_futuros')};
   var filterBtns = '';
   cats.forEach(function(c) {
     var active = c===cat;
@@ -4670,7 +4670,7 @@ window.showFearGreedInfo = function() {
     return '<tr style="border-bottom:1px solid #eee;"><td style="padding:6px 4px;color:'+r[5]+';font-weight:600;font-size:11px;">'+r[0]+' '+r[1]+'</td><td style="color:#888;font-size:10px;padding:6px 4px;">'+r[2]+'</td><td style="color:#555;font-size:11px;padding:6px 4px;">'+r[3]+'</td><td style="color:'+valColor+';font-weight:700;font-size:11px;padding:6px 4px;">'+valStr+'</td></tr>';
   }).join('');
   ov.innerHTML =
-    '<div style="background:#fff;border-radius:18px;padding:22px;width:calc(100% - 32px);max-width:420px;margin:auto;">' +
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:18px;padding:22px;width:calc(100% - 32px);max-width:420px;margin:auto;">' +
       '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">'+t('mkt_pulse_info_title')+'</div>' +
       '<div style="font-size:11px;color:#666;margin-bottom:12px;">'+t('mkt_pulse_info_subtitle')+'</div>' +
       '<div style="font-size:11px;color:#555;line-height:1.7;margin-bottom:10px;">' +
@@ -4815,7 +4815,7 @@ window.editFuturesBanner = function(){
   popup.id = 'aurex-fut-edit-popup';
   popup.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
   popup.innerHTML =
-    '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
         '<span style="font-size:16px;font-weight:700;color:#111;">'+t('mkt_fut_edit_title')+'</span>' +
         '<span onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
@@ -5509,7 +5509,7 @@ window._refreshHoyPct = function() {
     /* Modal central */
     '#sort-overlay{position:fixed;inset:0;z-index:2050;background:rgba(0,0,0,0.55);' +
     'display:flex;align-items:center;justify-content:center;padding:24px;}' +
-    '#sort-modal{background:#fff;border-radius:20px;width:100%;max-width:340px;' +
+    '#sort-modal{background:#fff;border:3px solid var(--gold);border-radius:20px;width:100%;max-width:340px;' +
     'max-height:80vh;overflow-y:auto;padding:16px;animation:lp-fadein 0.18s ease-out;' +
     'display:flex;flex-direction:column;gap:4px;-webkit-user-select:none;user-select:none;' +
     '-webkit-touch-callout:none;border:1px solid var(--gold);' +
@@ -5845,7 +5845,7 @@ window._applyIASort = function(key) {
     '@keyframes lp-fadein { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }' +
     '#longpress-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.7);' +
     'display:flex;align-items:center;justify-content:center;padding:20px;}' +
-    '#longpress-modal{background:#fff;border-radius:18px;width:100%;max-width:320px;' +
+    '#longpress-modal{background:#fff;border:3px solid var(--gold);border-radius:18px;width:100%;max-width:320px;' +
     'padding:18px 14px;animation:lp-fadein 0.18s ease-out;display:flex;flex-direction:column;gap:8px;' +
     'box-shadow:0 8px 32px rgba(0,0,0,0.25);}' +
     '.lp-header{text-align:center;padding:4px 0 12px;}' +
@@ -6049,6 +6049,35 @@ window._showMercadosLPSheet = function(ticker, meta) {
   var direccion = sig ? sig.direccion : null;
   var confianza = sig ? (sig.confianza || sig.prob_principal || 0) : 0;
   var isFav = _isFavorito(ticker);
+  // Fetch precio si no está en cache
+  if(!precio) {
+    fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol=' + ticker + '&interval=1d&range=1d')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.chart && d.chart.result && d.chart.result[0]) {
+          var p = d.chart.result[0].meta.regularMarketPrice || 0;
+          var prev = d.chart.result[0].meta.chartPreviousClose || p;
+          if(p) {
+            if(!window._pcPrices) window._pcPrices = {};
+            window._pcPrices[ticker] = p;
+            if(!window._pcChange24) window._pcChange24 = {};
+            window._pcChange24[ticker] = prev > 0 ? ((p - prev) / prev * 100) : 0;
+            // Actualizar chips en el modal si sigue abierto
+            var chipEl = document.querySelector('#longpress-modal .lp-chips');
+            if(chipEl) {
+              var dec2 = p > 100 ? 2 : (p > 1 ? 2 : (p > 0.01 ? 4 : 6));
+              var pct2 = window._pcChange24[ticker] || 0;
+              var pctStr2 = (pct2 >= 0 ? '+' : '') + pct2.toFixed(2) + '%';
+              var pctCol2 = pct2 >= 0 ? 'var(--green)' : 'var(--red)';
+              chipEl.innerHTML =
+                '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_precio')+'</div><div class="lp-chip-val">$' + Number(p).toLocaleString('es-AR',{minimumFractionDigits:dec2,maximumFractionDigits:dec2}) + '</div></div>' +
+                '<div class="lp-chip"><div class="lp-chip-label">24h</div><div class="lp-chip-val" style="color:'+pctCol2+'">'+pctStr2+'</div></div>' +
+                '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_objetivo_ia')+'</div><div class="lp-chip-val">' + (objetivo ? '$'+Number(objetivo).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--') + '</div></div>';
+            }
+          }
+        }
+      }).catch(function(){});
+  }
 
   var overlay = document.createElement('div');
   overlay.id = 'longpress-overlay';

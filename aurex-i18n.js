@@ -600,7 +600,14 @@
     // Variables Peso label
     mkt_vars_peso: { es: 'Peso', en: 'Weight', pt: 'Peso', zh: '权重', fr: 'Poids', it: 'Peso', hi: 'भार', ar: 'الوزن' },
     mkt_vars_peso_alta: { es: 'Alta', en: 'High', pt: 'Alta', zh: '高', fr: 'Élevé', it: 'Alto', hi: 'उच्च', ar: 'عالي' },
-    mkt_vars_peso_media: { es: 'Media', en: 'Medium', pt: 'Média', zh: '中', fr: 'Moyen', it: 'Medio', hi: 'मध्यम', ar: 'متوسط' }
+    mkt_vars_peso_media: { es: 'Media', en: 'Medium', pt: 'Média', zh: '中', fr: 'Moyen', it: 'Medio', hi: 'मध्यम', ar: 'متوسط' },
+
+    // Pulse filter tabs
+    mkt_pulse_cat_global: { es: 'GLOBAL', en: 'GLOBAL', pt: 'GLOBAL', zh: '全球', fr: 'GLOBAL', it: 'GLOBALE', hi: 'ग्लोबल', ar: 'عالمي' },
+    mkt_pulse_cat_cripto: { es: 'CRIPTO', en: 'CRYPTO', pt: 'CRIPTO', zh: '加密', fr: 'CRYPTO', it: 'CRYPTO', hi: 'क्रिप्टो', ar: 'كريبتو' },
+    mkt_pulse_cat_acciones: { es: 'ACCIONES', en: 'STOCKS', pt: 'AÇÕES', zh: '股票', fr: 'ACTIONS', it: 'AZIONI', hi: 'स्टॉक', ar: 'أسهم' },
+    mkt_pulse_cat_comod: { es: 'COMOD', en: 'COMMOD', pt: 'COMOD', zh: '商品', fr: 'MAT.P', it: 'COMMOD', hi: 'कमोडि', ar: 'سلع' },
+    mkt_pulse_cat_futuros: { es: 'FUTUROS', en: 'FUTURES', pt: 'FUTUROS', zh: '期货', fr: 'FUTURES', it: 'FUTURES', hi: 'फ्यूचर्स', ar: 'آجلة' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══
