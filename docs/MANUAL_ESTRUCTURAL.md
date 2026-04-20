@@ -348,19 +348,22 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 ### 5.2 Tablas — Estado real
 
-**9 tablas** existen en Supabase. Verificadas por uso en código + conteo de filas:
+**12 tablas** existen en Supabase. Verificadas por uso en código + conteo de filas:
 
-| Tabla | Filas | Usada en server.js | Usada en PWA | Usada en nativa | Estado |
-|-------|-------|-------------------|-------------|-----------------|--------|
-| `alertas` | 0 | ✅ 7 queries | ❌ | ❌ | **ACTIVA** — alertas de precio |
-| `alertas_historial` | 0 | ✅ 1 insert | ❌ | ❌ | **ACTIVA** — historial disparadas |
-| `alerts` | 0 | ❌ no se usa | ❌ | ❌ | **LEGACY** — no la usa ningún código |
-| `portfolio` | 0 | ✅ 4 queries | ❌ | ❌ | **ACTIVA** — activos del usuario |
-| `profiles` | 0 | ❌ no se usa | ❌ | ❌ | **SIN USO** — existe pero ningún código la consulta |
-| `usuarios` | 0 | ✅ 4 queries | ✅ 2 queries | ❌ | **ACTIVA** — datos usuario |
-| `watchlist` | 0 | ✅ 3 queries | ❌ | ❌ | **LEGACY v1** — server.js la usa pero hay v2 |
-| `watchlist_items` | 0 | ✅ 4 queries | ❌ | ❌ | **ACTIVA v2** — items de listas |
-| `watchlists` | 0 | ✅ 5 queries | ❌ | ❌ | **ACTIVA v2** — listas de watchlist |
+| Tabla | Usada en server.js | Estado |
+|-------|-------------------|--------|
+| `alertas` | ✅ 7 queries | **ACTIVA** — alertas de precio |
+| `alertas_historial` | ✅ 1 insert | **ACTIVA** — historial disparadas |
+| `alerts` | ❌ no se usa | **LEGACY** — no la usa ningún código |
+| `health_events` | ✅ 8+ queries | **ACTIVA** — alertas de sistema con IDs (BN, CC, CA, WA, DB, IA) |
+| `daily_reports` | ✅ insert + select | **ACTIVA** — reportes diarios persistidos |
+| `monthly_reports` | ✅ insert + select | **ACTIVA** — reportes mensuales persistidos |
+| `portfolio` | ✅ 4 queries | **ACTIVA** — activos del usuario |
+| `profiles` | ❌ no se usa | **SIN USO** — ningún código la consulta |
+| `usuarios` | ✅ 4 queries | **ACTIVA** — datos usuario |
+| `watchlist` | ✅ 3 queries | **LEGACY v1** — server.js la usa pero hay v2 |
+| `watchlist_items` | ✅ 4 queries | **ACTIVA v2** — items de listas |
+| `watchlists` | ✅ 5 queries | **ACTIVA v2** — listas de watchlist |
 
 **Storage**: bucket `avatars` — fotos de perfil (server.js endpoint `/api/avatar`)
 
@@ -383,15 +386,18 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 ## Sección 6: APIs / ENDPOINTS
 
-*Verificado: 18/abril/2026 por CODE (grep server.js + curl en producción)*
+*Verificado: 20/abril/2026 por CODE (grep server.js + curl en producción)*
 
 **Base URL**: `https://aurex-app-production.up.railway.app`
 
-### 6.1 Health / General
+### 6.1 Health / General / Monitoreo
 
 | Método | Ruta | Función | Probado |
 |--------|------|---------|---------|
 | GET | `/` | Health check — devuelve status, app, version, time | ✅ OK |
+| GET | `/api/health/status` | Estado alertas + flags + reportes diarios/mensuales | ✅ OK |
+| POST | `/api/health/test-report` | Forzar reporte diario | ✅ OK |
+| POST | `/api/health/test-monthly` | Forzar reporte mensual | ✅ OK |
 
 ### 6.2 Motor IA + Datos
 
@@ -491,10 +497,15 @@ git checkout safety-point-YYYY-MM-DD-nombre
 | Job | Intervalo | Función |
 |-----|-----------|---------|
 | `checkAlertas` | Cada 30 segundos | Verifica alertas de precio → dispara WhatsApp/Telegram |
-| Cálculo IA | Cada ~5 minutos | Recalcula señales para 350 activos |
-| Cálculo Pulse | Cada ~5 minutos | Recalcula scores Pulse (5 filtros) |
+| `calcularSenalesIA` | Cada 5 minutos | Recalcula señales para 350 activos |
+| `calcularPulse` | Cada 5 minutos | Recalcula scores Pulse (5 filtros) |
+| `healthCheck` | Cada 5 minutos | Verifica 4 servicios → alerta/mitigar/resolver + fallbacks directo |
+| `dailyHealthReport` | 08:00 AR (11:00 UTC) | Reporte diario + persistencia en Supabase |
+| `monthlyHealthReport` | 18:00 AR (21:00 UTC) días 28-31 | Reporte mensual último día hábil |
 
-**Total: 36 endpoints + 3 cron jobs**
+**Nota**: healthCheck, dailyHealthReport y monthlyHealthReport solo arrancan después de `restoreHealthState()`.
+
+**Total: 40 endpoints + 6 cron jobs**
 
 ---
 
@@ -506,13 +517,16 @@ git checkout safety-point-YYYY-MM-DD-nombre
 
 | Fuente | Qué provee | Usado en |
 |--------|-----------|----------|
-| Binance API | Precios cripto en tiempo real | server.js (checkAlertas) + PWA (fetch directo) |
+| Binance API | Precios cripto en tiempo real (primaria) | server.js (checkAlertas, healthCheck) + PWA |
+| CryptoCompare | Precios cripto (fallback 1 — 100k/mes) | server.js (fetchCryptoPriceBatch, healthCheck) |
+| CoinGecko | Precios cripto (fallback 2 — 10k/mes) | server.js (fetchCryptoPriceBatch) + PWA |
 | Yahoo Finance | Precios acciones/futuros/indices, chart data | server.js (proxy /api/yahoo, cálculo Pulse) |
 | Alpha Vantage | Precios acciones (fallback, cache 60s) | server.js (/api/stock) |
-| CoinGecko | Precios cripto (fallback PWA) | PWA index.html (fetch directo) |
 | CoinCap | Logos cripto | Nativa + PWA (URLs de imagen) |
 | FMP | Logos acciones | Nativa + PWA (URLs de imagen) |
 | ExchangeRate API | Tipos de cambio (conversor) | PWA index.html |
+
+**Cadena de fallback crypto**: Binance → CryptoCompare → CoinGecko → Cache local (30min TTL)
 
 ### 7.2 Cron Jobs (verificados en server.js)
 

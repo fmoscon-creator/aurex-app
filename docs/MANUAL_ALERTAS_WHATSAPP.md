@@ -1,7 +1,7 @@
 # MANUAL DE ALERTAS WHATSAPP Y REPORTES DE SEGURIDAD AUREX
 
 **Estado**: Verificado contra código real
-**Última actualización**: 18/abril/2026
+**Última actualización**: 20/abril/2026
 **Autores**: CODE + Escritorio
 **Repo**: aurex-backend (server.js + alertImage.js)
 
@@ -14,10 +14,12 @@
 | Componente | Función | Ubicación |
 |-----------|---------|-----------|
 | Evolution API v1.8.7 | Envío de mensajes WhatsApp | Railway servicio evo-v1 |
-| server.js | Lógica de alertas, health check, crons | Railway servicio aurex-app |
-| alertImage.js | Generación de imágenes para alertas | Railway servicio aurex-app |
-| health_events (Supabase) | Persistencia de alertas con IDs | Supabase |
-| Fuentes Inter (TTF) | Tipografía en imágenes | assets/fonts/ |
+| server.js | Lógica de alertas, health check, crons, fallbacks | Railway servicio aurex-app |
+| alertImage.js | Generación de imágenes para alertas (4 templates) | Railway servicio aurex-app |
+| health_events (Supabase) | Persistencia de alertas con IDs y estados | Supabase |
+| daily_reports (Supabase) | Historial de reportes diarios | Supabase |
+| monthly_reports (Supabase) | Historial de reportes mensuales | Supabase |
+| Fuentes Inter (TTF) | Tipografía en imágenes (Bold, Medium, Regular) | assets/fonts/ |
 
 ### 1.2 Líneas WhatsApp
 
@@ -44,9 +46,9 @@ Se disparan cuando un activo alcanza el precio objetivo configurado por el usuar
 | Dato | Valor |
 |------|-------|
 | Trigger | Cron `checkAlertas` cada 30 segundos |
-| Función | `dispararAlerta(alerta, precio)` — server.js L118 |
+| Función | `dispararAlerta(alerta, precio)` |
 | Envío | Imagen generada → fallback texto Evolution → fallback Twilio |
-| Fuente precios | Binance (crypto) + Alpha Vantage (stocks) |
+| Fuente precios | Binance → CryptoCompare → CoinGecko → cache |
 | Análisis | Claude API genera análisis IA breve por alerta |
 | Historial | Guarda en tabla `alertas_historial` |
 
@@ -58,7 +60,9 @@ Se disparan automáticamente cuando un servicio crítico falla.
 |------|-----------|---------------|-----------|
 | Evolution API | WA | Estado conexión WhatsApp (state = open) | 5 min |
 | Supabase | DB | Query de prueba a tabla usuarios | 5 min |
-| Binance | BN | Fetch BTC price con timeout 5s | 5 min |
+| Binance | BN | Fetch BTC price con timeout 5s + fallback directo | 5 min |
+| CryptoCompare | CC | Fallback crypto cuando CryptoCompare cae | 5 min |
+| Cache | CA | Todas las fuentes en vivo caídas, sirviendo cache | 5 min |
 | IA Signals | IA | Último cálculo > 10 minutos | 5 min |
 | System | SYS | Reservado para alertas manuales | Manual |
 
@@ -70,12 +74,12 @@ Se disparan automáticamente cuando un servicio crítico falla.
 
 ```
 [PREFIJO]-[NÚMERO DE 3 DÍGITOS]
-Ejemplos: WA-001, DB-003, BN-012, IA-001, SYS-001
+Ejemplos: WA-001, DB-003, BN-012, CC-001, CA-001, IA-001, SYS-001
 ```
 
 ### 3.2 Generación
 
-- Función: `getNextAlertId(type)` — server.js L700
+- Función: `getNextAlertId(type)`
 - Lee último alert_id del tipo en Supabase
 - Extrae número, incrementa +1
 - Pad a 3 dígitos: 1 → 001, 42 → 042
@@ -91,7 +95,15 @@ Ejemplos: WA-001, DB-003, BN-012, IA-001, SYS-001
 
 ## 4. CICLO DE VIDA DE UNA ALERTA
 
-### 4.1 Apertura
+### 4.1 Tres estados
+
+| Estado | Significado | WhatsApp | Icono |
+|--------|-------------|----------|-------|
+| ACTIVE | Servicio caído, alerta abierta | 🚨 Imagen SYSTEM ALERT + caption | 🔴 |
+| MITIGATED | Servicio caído pero datos OK via fallback | 🟡 MITIGATED + fuente fallback | 🟡 |
+| RESOLVED | Servicio restaurado | ✅ RESOLVED + duración | ✅ |
+
+### 4.2 Apertura (ACTIVE)
 
 ```
 1. healthCheck() detecta fallo
@@ -103,44 +115,148 @@ Ejemplos: WA-001, DB-003, BN-012, IA-001, SYS-001
 7. Marca notified=true
 ```
 
-Función: `openAlert(type, message)` — server.js L712
+Función: `openAlert(type, message)`
 
-### 4.2 Resolución
+### 4.3 Mitigación (MITIGATED)
 
 ```
-1. healthCheck() detecta recuperación
+1. healthCheck() detecta que servicio sigue caído
+2. Prueba CryptoCompare directamente (5s timeout)
+3. Si CryptoCompare OK → src = 'cryptocompare'
+4. Si CryptoCompare falla → prueba CoinGecko (5s timeout)
+5. Si fallback activo: busca alerta active con mitigated_at IS NULL
+6. Actualiza: mitigated_at + mitigation_source
+7. Envía WhatsApp: "🟡 MITIGATED BN-002 — data OK via cryptocompare"
+8. Si ya fue mitigado: no hace nada (idempotente)
+```
+
+Función: `mitigateAlert(type, source)`
+
+**Clave**: El healthCheck prueba los fallbacks **directamente** en el catch block de Binance. No depende de `fetchCryptoPriceBatch` ni de que existan alertas de usuario. Es autónomo.
+
+### 4.4 Resolución (RESOLVED)
+
+```
+1. healthCheck() detecta recuperación (servicio responde OK)
 2. Busca alerta active del tipo
 3. Calcula duración (resolved_at - triggered_at)
-4. Actualiza: status=resolved, duration_seconds
-5. Envía WhatsApp texto: "✅ RESOLVED BN-003 — Duration: 4m 32s"
+4. Actualiza: status=resolved, resolved_at, duration_seconds
+5. Envía WhatsApp: "✅ RESOLVED BN-003 — Duration: 4m 32s"
 6. Marca resolution_notified=true
 ```
 
-Función: `resolveAlert(type)` — server.js L738
+Función: `resolveAlert(type)`
 
-### 4.3 Dedup
+### 4.5 Diagrama de flujo
+
+```
+                    Servicio cae
+                         │
+                    ┌─────▼─────┐
+                    │  ACTIVE   │  🚨 WhatsApp imagen
+                    │  (alert)  │
+                    └─────┬─────┘
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+     Fallback activo          Servicio vuelve
+     (CC/CG OK)               (Binance OK)
+              │                       │
+        ┌─────▼─────┐          ┌─────▼─────┐
+        │ MITIGATED │          │ RESOLVED  │
+        │  (datos   │  🟡      │ (cerrado) │  ✅
+        │   OK via  │          └───────────┘
+        │  fallback)│
+        └─────┬─────┘
+              │
+       Servicio vuelve
+              │
+        ┌─────▼─────┐
+        │ RESOLVED  │  ✅ WhatsApp texto + duración
+        └───────────┘
+```
+
+### 4.6 Dedup
 
 - Si ya existe una alerta `active` del mismo tipo → NO crea otra
 - Dos incidentes separados = dos IDs diferentes
 - Ejemplo: BN-003 (active → resolved), luego BN-004 (nuevo incidente)
 
-### 4.4 Cooldown
+### 4.7 Cooldown
 
 - 15 minutos entre alertas repetidas del mismo tipo
-- Variable: `HEALTH_COOLDOWN = 15 * 60 * 1000` — server.js L698
+- Variable: `HEALTH_COOLDOWN = 15 * 60 * 1000`
 - Evita spam si un servicio parpadea
 
 ---
 
-## 5. TABLA SUPABASE: health_events
+## 5. FALLBACK DE PRECIOS CRYPTO
 
-### 5.1 Columnas (verificadas contra Supabase real)
+### 5.1 Cadena de fallback (fetchCryptoPriceBatch)
+
+| Orden | Fuente | Endpoint | Límite gratuito |
+|-------|--------|----------|----------------|
+| 1 (primaria) | Binance | `/api/v3/ticker/price` (batch) | Ilimitado |
+| 2 (fallback) | CryptoCompare | `/data/pricemulti` (batch) | 100k calls/mes |
+| 3 (fallback) | CoinGecko | `/api/v3/simple/price` (batch) | 10k calls/mes |
+| 4 (emergencia) | Cache local | En memoria (TTL 30min) | — |
+
+### 5.2 Comportamiento
+
+- Cada precio incluye: `{ price, source, stale, ts }`
+- `global._lastCryptoSource` se actualiza con cada fetch exitoso
+- Cache de emergencia: TTL 30 minutos, marcado como `stale: true`
+
+### 5.3 healthCheck prueba fallbacks directamente
+
+Cuando Binance falla en el healthCheck, el catch block prueba CryptoCompare y CoinGecko **directamente** con timeout de 5 segundos cada uno, sin depender de `fetchCryptoPriceBatch`.
+
+### 5.4 Alertas en cascada
+
+| Situación | Alerta BN | Alerta CC | Alerta CA |
+|-----------|-----------|-----------|-----------|
+| Binance OK | — | — | — |
+| Binance DOWN, CC OK | BN-xxx ACTIVE | — | — |
+| Binance DOWN, CC DOWN, CG OK | BN-xxx ACTIVE | CC-xxx ACTIVE | — |
+| Todo DOWN, sirviendo cache | BN-xxx ACTIVE | CC-xxx ACTIVE | CA-xxx ACTIVE |
+| Todo DOWN, sin cache | BN-xxx ACTIVE | CC-xxx ACTIVE | CA-xxx ACTIVE (no data) |
+| Binance vuelve | BN RESOLVED | CC RESOLVED | CA RESOLVED |
+
+---
+
+## 6. RESTAURACIÓN DE ESTADO AL REINICIAR
+
+### 6.1 Problema
+
+Cuando Railway redeploya, `_health = {}` se reinicia vacío. Si había una alerta activa, el servidor pierde el flag.
+
+### 6.2 Solución: restoreHealthState()
+
+Lee alertas `active` de Supabase y restaura `_health[type] = true`.
+
+### 6.3 Orden de inicialización
+
+```javascript
+restoreHealthState().then(() => {
+  cron.schedule('*/5 * * * *', healthCheck);
+  cron.schedule('0 11 * * *', dailyHealthReport);
+  cron.schedule('0 21 28-31 * *', monthlyHealthReport);
+});
+```
+
+Los crons SOLO arrancan después de restaurar el estado.
+
+---
+
+## 7. TABLA SUPABASE: health_events
+
+### 7.1 Columnas
 
 | Columna | Tipo | Descripción |
 |---------|------|-------------|
 | id | uuid (PK, auto) | ID interno Supabase |
-| alert_id | text | ID visible: WA-001, DB-001, etc. |
-| type | text | evolution / supabase / binance / ia_stale / system |
+| alert_id | text | ID visible: WA-001, BN-002, CC-001, CA-001 |
+| type | text | evolution / supabase / binance / cryptocompare / cache / ia_stale / system |
 | status | text | active / resolved |
 | message | text | Descripción del problema |
 | resolution_message | text | Descripción de la resolución |
@@ -149,17 +265,198 @@ Función: `resolveAlert(type)` — server.js L738
 | duration_seconds | integer | Duración del incidente en segundos |
 | notified | boolean | Si se envió WhatsApp de apertura |
 | resolution_notified | boolean | Si se envió WhatsApp de cierre |
+| mitigated_at | timestamptz | Cuándo se mitigó (fallback activo) |
+| mitigation_source | text | Fuente del fallback: cryptocompare / coingecko |
 
-### 5.2 Índices
+### 7.2 Índices
 
 - `idx_health_events_type_status` — búsqueda rápida por tipo + estado
 - `idx_health_events_triggered` — ordenar por fecha
 
 ---
 
-## 6. TEMPLATES DE IMAGEN WHATSAPP
+## 8. TABLA SUPABASE: daily_reports
 
-### 6.1 Tecnología
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | uuid (PK, auto) | ID interno |
+| reported_at | timestamptz | Cuándo se generó |
+| resolved_count | integer | Alertas resueltas en las últimas 24h |
+| active_count | integer | Alertas activas al momento del reporte |
+| total_count | integer | Total incidentes en las últimas 24h |
+| report_text | text | Texto completo del reporte enviado por WhatsApp |
+| events_snapshot | jsonb | Snapshot de health_events al momento del reporte |
+
+---
+
+## 9. TABLA SUPABASE: monthly_reports
+
+| Columna | Tipo | Descripción |
+|---------|------|-------------|
+| id | uuid (PK, auto) | ID interno |
+| reported_at | timestamptz | Cuándo se generó |
+| month_label | text | "Abril 2026" |
+| report_text | text | Texto completo del reporte mensual |
+| total_incidents | integer | Total incidentes del mes |
+| resolved_count | integer | Resueltos en el mes |
+| active_count | integer | Activos al cierre del mes |
+| services | jsonb | Stats por servicio (uptime %, fallback %, downtime) |
+| events_snapshot | jsonb | Todos los eventos del mes |
+
+---
+
+## 10. REPORTE DIARIO
+
+### 10.1 Configuración
+
+| Dato | Valor |
+|------|-------|
+| Función | `dailyHealthReport()` |
+| Cron | `0 11 * * *` (11:00 UTC = 08:00 AM Argentina) |
+| Canal | WhatsApp texto a admin |
+| Persistencia | Tabla `daily_reports` en Supabase |
+
+### 10.2 Formato del reporte
+
+```
+📊 AUREX Daily Health Report
+━━━━━━━━━━━━━━━━━━
+
+🔌 CONEXIONES ACTUALES:
+✅ Railway Backend
+✅ Evolution API (state: open)
+✅ Supabase
+🟡 Binance → Fallback CryptoCompare OK
+✅ Alpha Vantage
+
+📋 INCIDENTES ÚLTIMAS 24H:
+✅ BN-001 · binance · 18/abr 14:35 · Duración: 47m 48s
+🟡 BN-002 · binance · 18/abr 15:30 · Sin resolver: 20h 40m (mitigated via cryptocompare)
+
+Total: 1 resolved, 1 active
+━━━━━━━━━━━━━━━━━━
+aurex.live
+```
+
+### 10.3 Bloque CONEXIONES ACTUALES
+
+Verifica en tiempo real al generar el reporte:
+- **Railway Backend**: siempre Online si el proceso corre
+- **Evolution API**: fetch al endpoint connectionState, verifica state = open
+- **Supabase**: query de prueba a tabla usuarios
+- **Binance**: fetch con 5s timeout; si falla, muestra fallback activo (CryptoCompare/CoinGecko/cache)
+- **Alpha Vantage**: check liviano con GLOBAL_QUOTE
+
+### 10.4 Si no hubo incidentes
+
+```
+📊 AUREX Daily Health Report
+━━━━━━━━━━━━━━━━━━
+
+🔌 CONEXIONES ACTUALES:
+✅ Railway Backend
+✅ Evolution API (state: open)
+✅ Supabase
+✅ Binance
+✅ Alpha Vantage
+
+📋 INCIDENTES ÚLTIMAS 24H:
+✅ No incidents in last 24h.
+
+━━━━━━━━━━━━━━━━━━
+aurex.live
+```
+
+---
+
+## 11. REPORTE MENSUAL
+
+### 11.1 Configuración
+
+| Dato | Valor |
+|------|-------|
+| Función | `monthlyHealthReport()` → `_buildAndSendMonthlyReport()` |
+| Cron | `0 21 28-31 * *` (21:00 UTC = 18:00 AR, últimos días del mes) |
+| Ejecución | Solo el último día hábil del mes (no sábado ni domingo) |
+| Canal | WhatsApp texto a admin |
+| Persistencia | Tabla `monthly_reports` en Supabase |
+| Test | `POST /api/health/test-monthly` (bypass verificación día hábil) |
+
+### 11.2 Formato del reporte
+
+```
+📊 AUREX Monthly Report — Abril 2026
+━━━━━━━━━━━━━━━━━━
+
+📈 RESUMEN:
+Total incidentes: 2
+Resueltos: 1 · Activos: 1
+
+🔌 UPTIME POR SERVICIO:
+✅ Railway Backend · 100%
+🟡 Binance · 1% primaria · 85% fallback
+✅ CryptoCompare · 100%
+✅ Price Sources · 100%
+✅ Evolution API · 100%
+✅ Supabase · 100%
+✅ IA Signals · 100%
+✅ Alpha Vantage · 100%
+
+📋 INCIDENTES DEL MES:
+🟡 BN-002 · 18/abr · 21h 54m+ (mitigated via cryptocompare)
+✅ BN-001 · 18/abr · 47m 48s
+
+━━━━━━━━━━━━━━━━━━
+aurex.live
+```
+
+### 11.3 Cálculo de uptime
+
+- **Período**: desde el primer evento del mes hasta ahora (no el mes completo, para meses parciales)
+- **Downtime**: suma de `duration_seconds` (resueltos) + elapsed (activos)
+- **Mitigated time**: tiempo entre `mitigated_at` y `resolved_at` (o now si sigue activo)
+- **Primary %**: `Math.max(0, (total - downtime) / total * 100)`
+- **Fallback %**: `mitigated_time / total * 100`
+
+---
+
+## 12. ENDPOINT DE MONITOREO
+
+### 12.1 GET /api/health/status
+
+Endpoint público que devuelve el estado actual sin credenciales.
+
+```
+GET https://aurex-app-production.up.railway.app/api/health/status
+```
+
+### 12.2 Respuesta
+
+```json
+{
+  "ok": true,
+  "timestamp": "2026-04-20T...",
+  "lastCryptoSource": "cryptocompare",
+  "activeFlags": { "binance": true },
+  "events": [...],
+  "dailyReports": [...],
+  "monthlyReports": [...]
+}
+```
+
+| Campo | Descripción |
+|-------|-------------|
+| lastCryptoSource | Fuente activa: binance / cryptocompare / coingecko / cache / unknown |
+| activeFlags | Estado en memoria de `_health` — servicios marcados como caídos |
+| events | Últimas 20 alertas de health_events |
+| dailyReports | Últimos 7 reportes diarios |
+| monthlyReports | Últimos 3 reportes mensuales |
+
+---
+
+## 13. TEMPLATES DE IMAGEN WHATSAPP
+
+### 13.1 Tecnología
 
 | Componente | Librería | Función |
 |-----------|----------|---------|
@@ -167,13 +464,13 @@ Función: `resolveAlert(type)` — server.js L738
 | Logo composite | sharp | Superpone logo + resize Retina 2x |
 | Fuentes | Inter TTF (Bold, Medium, Regular) | Texto legible en todas las plataformas |
 
-### 6.2 Resolución
+### 13.2 Resolución
 
 - Canvas: 800x400 pixels
 - Resize final: 1600x800 (Retina 2x, Lanczos3)
 - Logo: 100px, transparente, mismo para dark y light
 
-### 6.3 Cuatro templates
+### 13.3 Cuatro templates
 
 | Template | Tipo | Subtítulo | Contenido |
 |----------|------|-----------|-----------|
@@ -182,27 +479,7 @@ Función: `resolveAlert(type)` — server.js L738
 | Pulse | `pulse` | AUREX Pulse | 5 cards (Global/Crypto/Stocks/Commod/Futures) con scores + zonas |
 | Admin | `admin` | System Alert | Alert ID + tipo + mensaje error + timestamp |
 
-### 6.4 Diseño visual
-
-- **Fondo dark**: #0D1117 (como la app)
-- **Fondo light**: #F5F0E8 (crema dorado AUREX)
-- **Fondo admin**: #1A0808 (dark) / #FFF0F0 (light)
-- **Borde superior**: 4px color acento
-- **Cards**: accent bar lateral 5px + borde 2px + fondo card
-- **Colores**: gold #D4A017, green #3FB950, red #F85149 (iguales dark y light)
-- **Líneas header/footer**: gold 2px
-- **Idioma**: Inglés, formato numérico americano
-
-### 6.5 Captions por tipo
-
-| Tipo | Formato caption |
-|------|----------------|
-| IA | `📈 BTC BULLISH 82% / 🎯 Target $72,846 / aurex.live` |
-| Precio | `🎯 ETH $3,850.00 Now / +10.0% of Target / aurex.live` |
-| Pulse | `💓 AUREX Pulse 72 · Greed / Global Market Sentiment / aurex.live` |
-| Admin | `🚨 ALERT BN-003 — Binance DOWN / timestamp / aurex.live` |
-
-### 6.6 Cadena de fallback
+### 13.4 Cadena de fallback
 
 ```
 1. Genera imagen (pureimage) → envía via Evolution sendMedia
@@ -212,118 +489,58 @@ Función: `resolveAlert(type)` — server.js L738
 
 ---
 
-## 7. REPORTE DIARIO
+## 14. ENDPOINTS
 
-### 7.1 Configuración
+### 14.1 WhatsApp
 
-| Dato | Valor |
-|------|-------|
-| Función | `dailyHealthReport()` — server.js L806 |
-| Cron | `0 11 * * *` (11:00 UTC = 08:00 AM Argentina) |
-| Canal | WhatsApp texto a admin |
-| Fuente datos | Tabla health_events últimas 24h |
+| Método | Ruta | Función |
+|--------|------|---------|
+| POST | `/api/whatsapp/send` | Enviar texto (numero + mensaje) |
+| POST | `/api/whatsapp/test-image` | Enviar imagen alerta test |
+| GET | `/api/whatsapp/status` | Estado conexión Evolution |
+| POST | `/api/test-admin-alert` | Enviar alerta admin test |
+| POST | `/api/test-whatsapp` | Enviar via Twilio (fallback) |
 
-### 7.2 Formato del reporte
+### 14.2 Monitoreo
 
-```
-📊 AUREX Daily Health Report
-━━━━━━━━━━━━━━━━━━
-
-✅ RESOLVED (2):
-  BN-003  binance  4m
-  WA-012  evolution  3m
-
-🔴 ACTIVE (1):
-  DB-007  supabase  ⚠️
-
-Total: 2 resolved, 1 active
-━━━━━━━━━━━━━━━━━━
-aurex.live
-```
-
-### 7.3 Si no hubo incidentes
-
-```
-📊 AUREX Daily Health Report
-━━━━━━━━━━━━━━━━━━
-
-✅ All systems operational.
-No incidents in last 24h.
-
-aurex.live
-```
-
-### 7.4 Límite de filas
-
-- Máximo 6 alertas resueltas visibles
-- Si hay más: "... and X more"
-- Alertas activas: todas visibles (son urgentes)
+| Método | Ruta | Función |
+|--------|------|---------|
+| GET | `/api/health/status` | Estado alertas + flags + reportes |
+| POST | `/api/health/test-report` | Forzar reporte diario |
+| POST | `/api/health/test-monthly` | Forzar reporte mensual |
 
 ---
 
-## 8. ENDPOINTS
+## 15. CRON JOBS
 
-### 8.1 WhatsApp
+| Job | Intervalo | Función |
+|-----|-----------|---------|
+| checkAlertas | 30 seg | Alertas de precio usuario → WhatsApp |
+| calcularPulse | 5 min | Scores AUREX Pulse |
+| calcularSenalesIA | 5 min | Señales IA 350 activos |
+| healthCheck | 5 min | Verifica servicios → alerta/mitigar/resolver + fallbacks directo |
+| dailyHealthReport | 08:00 AR (11:00 UTC) | Reporte diario + persistencia |
+| monthlyHealthReport | 18:00 AR (21:00 UTC) días 28-31 | Reporte mensual último día hábil |
 
-| Método | Ruta | Función | Auth |
-|--------|------|---------|------|
-| POST | `/api/whatsapp/send` | Enviar texto (numero + mensaje) | No |
-| POST | `/api/whatsapp/test-image` | Enviar imagen alerta test | No |
-| GET | `/api/whatsapp/status` | Estado conexión Evolution | No |
-| POST | `/api/test-admin-alert` | Enviar alerta admin test | No |
-| POST | `/api/test-whatsapp` | Enviar via Twilio (fallback) | No |
-
-### 8.2 Parámetros test-image
-
-```json
-{
-  "numero": "5491167891320",
-  "type": "ia | precio | pulse | admin",
-  "symbol": "BTC",
-  "direction": "ALCISTA | BAJISTA | ALTA CONV-IA",
-  "probability": 82,
-  "price": 67450,
-  "target": 72846,
-  "stop": 64752,
-  "theme": "dark | light",
-  "pulseScore": 72,
-  "pulseCrypto": 69,
-  "pulseStocks": 85,
-  "pulseCommod": 21,
-  "pulseFutures": 90,
-  "message": "texto para admin"
-}
-```
+**Nota**: healthCheck, dailyHealthReport y monthlyHealthReport solo arrancan después de que `restoreHealthState()` complete.
 
 ---
 
-## 9. CRON JOBS
-
-| Job | Intervalo | Función | Línea |
-|-----|-----------|---------|-------|
-| checkAlertas | 30 seg | Alertas de precio usuario → WhatsApp | L152 |
-| calcularPulse | 5 min | Scores AUREX Pulse | L680 |
-| calcularSenalesIA | 5 min | Señales IA 350 activos | L686 |
-| healthCheck | 5 min | Verifica 4 servicios → alerta si falla | L762 |
-| dailyHealthReport | 08:00 AR (11:00 UTC) | Reporte diario | L806 |
-
----
-
-## 10. ARCHIVOS
+## 16. ARCHIVOS
 
 | Archivo | Función |
 |---------|---------|
-| server.js | Todo: endpoints, crons, alertas, health check |
-| alertImage.js | 4 templates de imagen (IA, Precio, Pulse, Admin) |
-| assets/logo.png | Logo AUREX transparente (dark mode) |
-| assets/logo-dark.png | Logo AUREX fondo negro (light mode) |
-| assets/fonts/Inter-Bold.ttf | Fuente bold |
-| assets/fonts/Inter-Medium.ttf | Fuente medium |
-| assets/fonts/Inter-Regular.ttf | Fuente regular |
+| `server.js` | Todo: endpoints, crons, alertas, health check, fallbacks, reportes |
+| `alertImage.js` | 4 templates de imagen (IA, Precio, Pulse, Admin) |
+| `assets/logo.png` | Logo AUREX transparente (dark mode) |
+| `assets/logo-dark.png` | Logo AUREX fondo negro (light mode) |
+| `assets/fonts/Inter-Bold.ttf` | Fuente bold |
+| `assets/fonts/Inter-Medium.ttf` | Fuente medium |
+| `assets/fonts/Inter-Regular.ttf` | Fuente regular |
 
 ---
 
-## 11. LÍMITES POR PLAN
+## 17. LÍMITES POR PLAN
 
 | Plan | Alertas WhatsApp/día | Estado |
 |------|---------------------|--------|
@@ -331,13 +548,13 @@ aurex.live
 | PRO | 3 | Codificado, no activo |
 | ELITE | 10 | Codificado, no activo |
 
-**NOTA**: Los límites están en el código pero el cron `checkAlertas` aún no los aplica. Envía a todos los que tienen `whatsapp_numero` en la alerta.
+**NOTA**: Los límites están en el código pero el cron `checkAlertas` aún no los aplica.
 
 ---
 
-## 12. TESTING
+## 18. TESTING
 
-### 12.1 Enviar alerta IA test
+### 18.1 Enviar alerta IA test
 
 ```bash
 curl -X POST https://aurex-app-production.up.railway.app/api/whatsapp/test-image \
@@ -345,46 +562,57 @@ curl -X POST https://aurex-app-production.up.railway.app/api/whatsapp/test-image
   -d '{"numero":"5491167891320","type":"ia","symbol":"BTC","direction":"ALCISTA","probability":82,"price":67450,"target":72846,"stop":64752,"theme":"dark"}'
 ```
 
-### 12.2 Verificar estado WhatsApp
+### 18.2 Verificar estado WhatsApp
 
 ```bash
 curl https://aurex-app-production.up.railway.app/api/whatsapp/status
-# Respuesta OK: {"instance":{"instanceName":"aurex","state":"open"}}
 ```
 
-### 12.3 Enviar alerta admin test
+### 18.3 Verificar estado de salud (monitoreo)
 
 ```bash
-curl -X POST https://aurex-app-production.up.railway.app/api/test-admin-alert \
-  -H "Content-Type: application/json" \
-  -d '{"subject":"Test","body":"Prueba del sistema de alertas"}'
+curl https://aurex-app-production.up.railway.app/api/health/status
 ```
 
-### 12.4 Verificar health_events en Supabase
+### 18.4 Forzar reporte diario
 
 ```bash
-# Via API REST con service key
-curl "$SUPABASE_URL/rest/v1/health_events?select=*&order=triggered_at.desc&limit=10" \
-  -H "apikey: $SUPABASE_SERVICE_KEY" \
-  -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"
+curl -X POST https://aurex-app-production.up.railway.app/api/health/test-report
+```
+
+### 18.5 Forzar reporte mensual
+
+```bash
+curl -X POST https://aurex-app-production.up.railway.app/api/health/test-monthly
 ```
 
 ---
 
-## 13. INCIDENTES DOCUMENTADOS
+## 19. INCIDENTES DOCUMENTADOS
 
-| Fecha | ID | Tipo | Descripción | Duración |
-|-------|-----|------|-------------|----------|
-| 17/abril 01:50 | BN-001 | Binance | Falla conexión Railway→Binance | ~5 min (auto-resuelto) |
-| 17/abril ~15:30 | — | Backend | Deploy roto por `railway up` desde CLI | ~1 hora |
+| Fecha | ID | Tipo | Descripción | Duración | Estado |
+|-------|-----|------|-------------|----------|--------|
+| 17/abr 01:50 | BN-001 | Binance | Falla conexión Railway→Binance | 47m 48s | RESOLVED |
+| 17/abr ~15:30 | — | Backend | Deploy roto por `railway up` desde CLI | ~1 hora | RESOLVED |
+| 18/abr 15:30 | BN-002 | Binance | Falla conexión Railway→Binance (us-east4) | 45h+ | MITIGATED via cryptocompare |
 
-### 13.1 Incidente Railway 17/abril
+### 19.1 Incidente Railway 17/abril
 
 - **Causa**: `railway up` desde carpeta /backend subió archivos sin Node.js
 - **Fix**: nixpacks.toml + NIXPACKS_NO_CACHE=1 + railway redeploy
 - **Lección**: NUNCA usar `railway up`, SIEMPRE push a GitHub
-- **Documentado en**: MANUAL_ESTRUCTURAL.md Sección 3
+
+### 19.2 Incidente BN-002 18/abril
+
+- **Causa**: Binance inaccesible desde Railway us-east4 (bloqueo permanente)
+- **Detección**: healthCheck abrió BN-002 automáticamente
+- **Mitigación**: CryptoCompare sirviendo datos correctamente
+- **Bugs corregidos**:
+  1. `restoreHealthState()` sin await → fix: `.then()`
+  2. healthCheck dependía de `_lastCryptoSource` de `fetchCryptoPriceBatch` → fix: prueba fallbacks directo
+- **Estado**: MITIGATED, 45h+ sin resolución. Binance bloqueado permanentemente desde Railway us-east4.
+- **Análisis pendiente**: Evaluar alternativas post-Apple (Railway región, hosting, proxy)
 
 ---
 
-*Generado por CODE para AUREX — 18/abril/2026*
+*Generado por CODE para AUREX — 20/abril/2026*
