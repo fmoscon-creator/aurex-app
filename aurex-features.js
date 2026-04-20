@@ -891,6 +891,8 @@ function _renderPortfolioEmpty(){
     '<button onclick="openPortModal()" style="background:var(--gold);color:var(--bg);border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:700;cursor:pointer;">'+t('port_empty_btn')+'</span>' +
   '</div>';
 }
+// Re-render empty state on lang change
+if(window._i18n) window._i18n.onLangChange(function(){ if(!window._portItems || window._portItems.length===0) _renderPortfolioEmpty(); });
 
 function _renderPortfolioItems(items){
   var cnt = document.getElementById('port-cnt');
