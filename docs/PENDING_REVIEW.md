@@ -1,44 +1,37 @@
-# PENDING REVIEW — Fix gauge i18n + Variables popup + Banners card visual
+# PENDING REVIEW — Fix bordes dorados + Pulse gauge + filtros Pulse
 
-**Archivos** (LOCAL, no pusheados): aurex-i18n.js, aurex-features.js
+**Archivos** (LOCAL): aurex-i18n.js, aurex-features.js, index.html
 
 ---
 
-## Fix 1: Bug Gauge — "Codicia" hardcodeado (Bug 1 de Escritorio)
+## Fix 1: Bordes dorados en TODOS los popups (6 popups)
 
-**L4445-4449**: Labels cortas de zona del gauge → `t('mkt_gauge_*')`
-5 keys nuevas: mkt_gauge_miedo_ext, mkt_gauge_miedo, mkt_gauge_neutral, mkt_gauge_codicia, mkt_gauge_codicia_ext
+| Popup | Línea | Antes | Después |
+|-------|-------|-------|---------|
+| Market edit | L1381 | background:#fff;border-radius:16px | + border:3px solid var(--gold) |
+| Futures edit | L4818 | background:#fff;border-radius:16px | + border:3px solid var(--gold) |
+| Pulse info | L4673 | background:#fff;border-radius:18px | + border:3px solid var(--gold) |
+| Sort modal | L5512 CSS | background:#fff;border-radius:20px | + border:3px solid var(--gold) |
+| Long press | L5848 CSS | background:#fff;border-radius:18px | + border:3px solid var(--gold) |
+| Search results | index.html L1817 | background:#fff;border-radius:12px | + border:3px solid var(--gold) |
 
-## Fix 2: showIAVariablesPopup() completo
+## Fix 2: Pulse gauge — "Codicia" / "Neutral" fallbacks
 
-**L3945-3955**: 10 variables varDefs → `t('mkt_var1_label')` ... `t('mkt_var10_label')` + `t('mkt_var1_desc')` ... `t('mkt_var10_desc')`
-**L3961-3964**: "Mercado ahora:" + "al alza" + "a la baja" → t()
-**L3988**: summaryMkt duplicado → t()
-**L3991**: Título "AUREX IA ⚡ — 10 VARIABLES" → t('mkt_vars_title')
-**L3994**: Subtítulo → t('mkt_vars_subtitle')
-**L3996**: Descripción → t('mkt_vars_desc')
-**L3978**: "Peso Alta/Media" → t('mkt_vars_peso') + t('mkt_vars_peso_alta')/t('mkt_vars_peso_media')
+- L4385: fallback `'Neutral'` → `t('mkt_gauge_neutral')`
+- L4442: fallback `'Neutral'` → `t('mkt_gauge_neutral')`
+(L4445-4449 ya estaban con t() del commit anterior)
 
-Keys nuevas: 3 (mkt_vars_peso, mkt_vars_peso_alta, mkt_vars_peso_media)
-Keys ya existentes aplicadas: mkt_var1-10_label, mkt_var1-10_desc, mkt_vars_title, mkt_vars_subtitle, mkt_vars_desc, mkt_vars_mercado_ahora, mkt_vars_al_alza, mkt_vars_a_la_baja
+## Fix 3: Filtros Pulse tabs (GLOBAL, CRIPTO, ACCIONES, COMOD, FUTUROS)
 
-## Fix 3: Banners Mercados/Futuros — demarcación visual
+- L4591: `catLabels` hardcodeado → usa `t('mkt_pulse_cat_*')`
+- 5 keys nuevas: mkt_pulse_cat_global, mkt_pulse_cat_cripto, mkt_pulse_cat_acciones, mkt_pulse_cat_comod, mkt_pulse_cat_futuros
 
-**Problema**: Background `var(--bg)` se pierde con el fondo general gris.
-**Fix**: Cambio a `background:var(--card);border:1px solid var(--border2);border-radius:10px;margin:4px 10px;`
+## Nota: Precio "--" en FIL
 
-- L1360: _renderMarketBanner inner div
-- L4792: _renderFuturesBanner inner div
-
-Ambos banners ahora tienen card con borde y border-radius, visualmente separados del fondo.
-
-## Fix 4: Futures suffix traducido
-
-**L4784**: `item.n + ' Fut'` → `item.n + t('mkt_fut_suffix')`
+El `--` en el long press de FIL no es bug de i18n — es que FIL no está en el cache de precios (no viene de Binance ni está en _pcPrices). Es tema de data/cobertura, no de traducción.
 
 ---
 
 ## Verificación
 - `node -c aurex-features.js` → OK
 - `node -c aurex-i18n.js` → OK
-- Total keys nuevas en este commit: 8 (5 gauge + 3 peso)
