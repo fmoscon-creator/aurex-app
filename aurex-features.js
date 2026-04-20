@@ -1264,10 +1264,10 @@ function _renderThermoRisk(items){
   var pHC  = buckets.HC.val/totVal*100;
   var pSin = buckets.SIN.val/totVal*100;
   var segs = [];
-  if(pAlc>0) segs.push({p:pAlc, c:'var(--green)', l:'📈 Alcista',       syms:buckets.ALCISTA.syms});
-  if(pBaj>0) segs.push({p:pBaj, c:'var(--red)', l:'📉 Bajista',       syms:buckets.BAJISTA.syms});
-  if(pHC>0)  segs.push({p:pHC,  c:'var(--gold)', l:'⚡ Sin dirección', syms:buckets.HC.syms});
-  if(pSin>0) segs.push({p:pSin, c:'var(--textSec)', l:'⚫ Sin señal',      syms:buckets.SIN.syms});
+  if(pAlc>0) segs.push({p:pAlc, c:'var(--green)', l:t('port_thermo_leg_alcista'),       syms:buckets.ALCISTA.syms});
+  if(pBaj>0) segs.push({p:pBaj, c:'var(--red)', l:t('port_thermo_leg_bajista'),       syms:buckets.BAJISTA.syms});
+  if(pHC>0)  segs.push({p:pHC,  c:'var(--gold)', l:t('port_thermo_leg_sindir'), syms:buckets.HC.syms});
+  if(pSin>0) segs.push({p:pSin, c:'var(--textSec)', l:t('port_thermo_leg_sinsenal'),      syms:buckets.SIN.syms});
   var bar = segs.map(function(s){
     return '<div style="width:'+s.p.toFixed(0)+'%;background:'+s.c+';height:100%;border-radius:2px;"></div>';
   }).join('');
@@ -1284,26 +1284,26 @@ function _renderThermoRisk(items){
   var hcSyms  = buckets.HC.syms.join(', ');
   var msg = '';
   if(pBaj >= 50){
-    msg = '🔴 Revisá urgente — <span style="color:var(--red);"><b>'+bajSyms+'</b></span> en baja confirmada.<br><span style="color:var(--textSec);font-size:9px;">La IA confirmó caída. Evaluá reducir posición antes de que baje más.</span>';
+    msg = t('port_thermo_msg_baj50')+'<span style="color:var(--red);"><b>'+bajSyms+'</b></span>'+t('port_thermo_msg_baj50_suf')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_baj50_tip')+'</span>';
   } else if(pBaj >= 20){
-    msg = '⚠️ Vigilar: <span style="color:var(--red);"><b>'+bajSyms+'</b></span> con señal bajista.<br><span style="color:var(--textSec);font-size:9px;">Señal débil de baja. Monitorea de cerca antes de decidir.</span>';
+    msg = t('port_thermo_msg_baj20')+'<span style="color:var(--red);"><b>'+bajSyms+'</b></span>'+t('port_thermo_msg_baj20_suf')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_baj20_tip')+'</span>';
   } else if(pAlc >= 50){
-    msg = '🟢 Buen momento — <span style="color:var(--green);"><b>'+alcSyms+'</b></span> con momentum positivo.<br><span style="color:var(--textSec);font-size:9px;">La IA confirmó suba. Buen momento para mantener o aumentar posición.</span>';
+    msg = t('port_thermo_msg_alc50')+'<span style="color:var(--green);"><b>'+alcSyms+'</b></span>'+t('port_thermo_msg_alc50_suf')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_alc50_tip')+'</span>';
   } else if(pHC >= 40){
-    msg = '⚡ Esperá señal antes de operar: <span style="color:var(--gold);"><b>'+hcSyms+'</b></span>.<br><span style="color:var(--textSec);font-size:9px;">La IA está monitoreando. Confirma dirección cuando el mercado define. Volvé mañana.</span>';
+    msg = t('port_thermo_msg_hc40')+'<span style="color:var(--gold);"><b>'+hcSyms+'</b></span>.<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_hc40_tip')+'</span>';
   } else if(pSin >= 70){
-    msg = '⚫ Sin datos suficientes hoy — no operar hasta nueva señal.<br><span style="color:var(--textSec);font-size:9px;">La IA necesita más datos. Sin acción recomendada por ahora.</span>';
+    msg = t('port_thermo_msg_sin70')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_sin70_tip')+'</span>';
   } else {
     var dom = segs[0];
-    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b> — cartera con señales mixtas.<br><span style="color:var(--textSec);font-size:9px;">Revisá cada activo individualmente antes de operar.</span>';
+    msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b>'+t('port_thermo_msg_mix')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_mix_tip')+'</span>';
   }
   el.innerHTML =
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">' +
       '<div style="display:flex;align-items:center;gap:5px;">' +
-        '<div style="font-size:10px;color:var(--text);font-weight:700;letter-spacing:.3px;">TERMÓMETRO DE RIESGO</div>' +
+        '<div style="font-size:10px;color:var(--text);font-weight:700;letter-spacing:.3px;">'+t('port_thermo_bar_title')+'</div>' +
         '<div onclick="showThermoHelp()" style="font-size:9px;color:var(--textSec);font-weight:700;cursor:pointer;border:1px solid var(--border2);border-radius:50%;width:15px;height:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">?</div>' +
       '</div>' +
-      '<div style="font-size:8px;color:var(--textSec);letter-spacing:.5px;font-weight:500;">CAPITAL POR SEÑAL IA</div>' +
+      '<div style="font-size:8px;color:var(--textSec);letter-spacing:.5px;font-weight:500;">'+t('port_thermo_bar_subtitle')+'</div>' +
       '<div onclick="showThermoInfo()" style="font-size:9px;color:#E6B800;font-weight:700;cursor:pointer;border:1px solid #E6B800;border-radius:4px;padding:0 5px;letter-spacing:.5px;">VAR</div>' +
     '</div>' +
     '<div style="height:8px;border-radius:6px;overflow:hidden;display:flex;gap:1px;background:var(--border);margin-bottom:6px;">'+bar+'</div>' +
@@ -5036,7 +5036,7 @@ function _initHeaderLogos() {
       langChip.className = 'lang-chip';
       langChip.onclick = function(){ window._openIdiomaModal(); };
       var curLang = localStorage.getItem('aurex_lang') || 'es';
-      var flags = {es:'🇪🇸',en:'🇺🇸',pt:'🇧🇷',zh:'🇨🇳'};
+      var flags = {es:'🇪🇸',en:'🇺🇸',pt:'🇧🇷',zh:'🇨🇳',fr:'🇫🇷',it:'🇮🇹',hi:'🇮🇳',ar:'🇦🇪'};
       langChip.innerHTML = '<span id="lang-flag">' + (flags[curLang]||'🇪🇸') + '</span> <span style="font-size:8px;">&#9660;</span>';
       langChip.style.cssText = 'display:flex;align-items:center;gap:2px;padding:3px 7px;border:1.5px solid var(--gold);border-radius:6px;cursor:pointer;font-size:14px;margin-left:auto;-webkit-tap-highlight-color:rgba(0,0,0,0);';
       portHlRow.appendChild(langChip);
@@ -5536,40 +5536,40 @@ window._refreshHoyPct = function() {
 // Definición de opciones por tab — cada una con icono, label, descripción y color de fondo
 window._sortCfgs = {
   portfolio: { key:'aurex_sort_portfolio', def:'valor', opts:[
-    {k:'valor',     l:'Valor',        d:'Valor de mercado actual',           ic:'📊', bg:'#22c55e20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pnl_usd',   l:'P&L $',        d:'Ganancia total absoluta desde compra', ic:'💰', bg:'#22c55e20'},
-    {k:'pnl_pct',   l:'P&L %',        d:'Ganancia total en % desde compra',  ic:'💰', bg:'#22c55e20'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'},
-    {k:'fecha',     l:'Fecha',        d:'Orden de carga original',           ic:'⏰', bg:'#9CA3AF20'}
+    {k:'valor',     lk:'sort_valor',     dk:'sort_valor_d',     ic:'📊', bg:'#22c55e20'},
+    {k:'pct_hoy',   lk:'sort_pct_hoy',   dk:'sort_pct_hoy_d',   ic:'📈', bg:'#ef444420'},
+    {k:'pnl_usd',   lk:'sort_pnl_usd',   dk:'sort_pnl_usd_d',   ic:'💰', bg:'#22c55e20'},
+    {k:'pnl_pct',   lk:'sort_pnl_pct',   dk:'sort_pnl_pct_d',   ic:'💰', bg:'#22c55e20'},
+    {k:'senal_ia',  lk:'sort_senal_ia',  dk:'sort_senal_ia_d',  ic:'🔼', bg:'#3B82F620'},
+    {k:'prob',      lk:'sort_prob',      dk:'sort_prob_d',      ic:'🎯', bg:'#ef444420'},
+    {k:'ticker',    lk:'sort_ticker',    dk:'sort_ticker_d',    ic:'🔤', bg:'#3B82F620'},
+    {k:'fecha',     lk:'sort_fecha',     dk:'sort_fecha_d',     ic:'⏰', bg:'#9CA3AF20'}
   ]},
   mercados: { key:'aurex_sort_mercados', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden del catálogo original',       ic:'⏰', bg:'#9CA3AF20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'precio',    l:'Precio',       d:'Mayor precio arriba',               ic:'💲', bg:'#22c55e20'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'}
+    {k:'default',   lk:'sort_default',   dk:'sort_default_d',   ic:'⏰', bg:'#9CA3AF20'},
+    {k:'pct_hoy',   lk:'sort_pct_hoy',   dk:'sort_pct_hoy_d',   ic:'📈', bg:'#ef444420'},
+    {k:'precio',    lk:'sort_precio',    dk:'sort_precio_d',    ic:'💲', bg:'#22c55e20'},
+    {k:'ticker',    lk:'sort_ticker',    dk:'sort_ticker_d',    ic:'🔤', bg:'#3B82F620'},
+    {k:'senal_ia',  lk:'sort_senal_ia',  dk:'sort_senal_ia_d',  ic:'🔼', bg:'#3B82F620'},
+    {k:'prob',      lk:'sort_prob',      dk:'sort_prob_d',      ic:'🎯', bg:'#ef444420'}
   ]},
   watchlist: { key:'aurex_sort_watchlist', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden del catálogo original',       ic:'⏰', bg:'#9CA3AF20'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pct_7d',    l:'% 7d',         d:'Mayor cambio en 7 días',            ic:'📈', bg:'#ef444420'},
-    {k:'pct_30d',   l:'% 30d',        d:'Mayor cambio en 30 días',           ic:'📈', bg:'#ef444420'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'senal_ia',  l:'Señal IA',     d:'ALCISTA → ALTA CONV → BAJISTA',     ic:'🔼', bg:'#3B82F620'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'}
+    {k:'default',   lk:'sort_default',   dk:'sort_default_d',   ic:'⏰', bg:'#9CA3AF20'},
+    {k:'pct_hoy',   lk:'sort_pct_hoy',   dk:'sort_pct_hoy_d',   ic:'📈', bg:'#ef444420'},
+    {k:'pct_7d',    lk:'sort_pct_7d',    dk:'sort_pct_7d_d',    ic:'📈', bg:'#ef444420'},
+    {k:'pct_30d',   lk:'sort_pct_30d',   dk:'sort_pct_30d_d',   ic:'📈', bg:'#ef444420'},
+    {k:'prob',      lk:'sort_prob',      dk:'sort_prob_d',      ic:'🎯', bg:'#ef444420'},
+    {k:'senal_ia',  lk:'sort_senal_ia',  dk:'sort_senal_ia_d',  ic:'🔼', bg:'#3B82F620'},
+    {k:'ticker',    lk:'sort_ticker',    dk:'sort_ticker_d',    ic:'🔤', bg:'#3B82F620'}
   ]},
   ia: { key:'aurex_sort_ia', def:'default', opts:[
-    {k:'default',   l:'Default',      d:'Orden por confianza IA',            ic:'🎯', bg:'#ef444420'},
-    {k:'pct_hoy',   l:'% Hoy',        d:'Mayor cambio en 24 horas',          ic:'📈', bg:'#ef444420'},
-    {k:'pct_7d',    l:'% 7d',         d:'Mayor cambio en 7 días',            ic:'📈', bg:'#ef444420'},
-    {k:'pct_30d',   l:'% 30d',        d:'Mayor cambio en 30 días',           ic:'📈', bg:'#ef444420'},
-    {k:'prob',      l:'Probabilidad', d:'Mayor confianza IA arriba',         ic:'🎯', bg:'#ef444420'},
-    {k:'upside',    l:'Upside',       d:'Mayor % al objetivo',               ic:'🚀', bg:'#22c55e20'},
-    {k:'ticker',    l:'Ticker',       d:'Alfabético (A → Z)',                ic:'🔤', bg:'#3B82F620'}
+    {k:'default',   lk:'sort_default',   dk:'sort_default_ia_d', ic:'🎯', bg:'#ef444420'},
+    {k:'pct_hoy',   lk:'sort_pct_hoy',   dk:'sort_pct_hoy_d',   ic:'📈', bg:'#ef444420'},
+    {k:'pct_7d',    lk:'sort_pct_7d',    dk:'sort_pct_7d_d',    ic:'📈', bg:'#ef444420'},
+    {k:'pct_30d',   lk:'sort_pct_30d',   dk:'sort_pct_30d_d',   ic:'📈', bg:'#ef444420'},
+    {k:'prob',      lk:'sort_prob',      dk:'sort_prob_d',      ic:'🎯', bg:'#ef444420'},
+    {k:'upside',    lk:'sort_upside',    dk:'sort_upside_d',    ic:'🚀', bg:'#22c55e20'},
+    {k:'ticker',    lk:'sort_ticker',    dk:'sort_ticker_d',    ic:'🔤', bg:'#3B82F620'}
   ]}
 };
 window._currSort = {};
@@ -5601,7 +5601,7 @@ function _openSortModal(tab, onApply) {
   var hdr = document.createElement('div');
   hdr.className = 'sort-header';
   hdr.innerHTML = '<span class="sort-header-icon">↕</span>' +
-    '<span class="sort-header-title">Ordenar por</span>';
+    '<span class="sort-header-title">'+t('port_sort_title')+'</span>';
   modal.appendChild(hdr);
   // Items
   cfg.opts.forEach(function(o) {
@@ -5610,8 +5610,8 @@ function _openSortModal(tab, onApply) {
     it.innerHTML =
       '<div class="sort-item-icon">' + o.ic + '</div>' +
       '<div class="sort-item-text">' +
-        '<div class="sort-item-label">' + o.l + '</div>' +
-        '<div class="sort-item-desc">' + o.d + '</div>' +
+        '<div class="sort-item-label">' + t(o.lk) + '</div>' +
+        '<div class="sort-item-desc">' + t(o.dk) + '</div>' +
       '</div>' +
       (o.k === cur ? '<div class="sort-item-check">✓</div>' : '');
     it.addEventListener('click', function() {
@@ -5619,7 +5619,7 @@ function _openSortModal(tab, onApply) {
       _closeSortModal();
       // Actualizar label del botón visible
       var btn = document.getElementById(tab + '-sort-btn');
-      if (btn) btn.innerHTML = 'Ordenar: <span class="sort-value">' + o.l + '</span> <span class="sort-arrow">↓</span>';
+      if (btn) btn.innerHTML = t('port_sort_btn_prefix')+' <span class="sort-value">' + t(o.lk) + '</span> <span class="sort-arrow">↓</span>';
       if (onApply) onApply(o.k);
     });
     modal.appendChild(it);
@@ -5627,7 +5627,7 @@ function _openSortModal(tab, onApply) {
   // Cancelar
   var cancel = document.createElement('div');
   cancel.className = 'sort-cancel';
-  cancel.textContent = 'Cancelar';
+  cancel.textContent = t('cancelar');
   cancel.addEventListener('click', _closeSortModal);
   modal.appendChild(cancel);
   ov.appendChild(modal);
@@ -5645,7 +5645,7 @@ function _buildSortBtn(tab, onApply) {
   var btn = document.createElement('div');
   btn.className = 'sort-btn';
   btn.id = tab+'-sort-btn';
-  btn.innerHTML = 'Ordenar: <span class="sort-value">'+curOpt.l+'</span> <span class="sort-arrow">↓</span>';
+  btn.innerHTML = t('port_sort_btn_prefix')+' <span class="sort-value">'+t(curOpt.lk)+'</span> <span class="sort-arrow">↓</span>';
   btn.onclick = function(e) {
     e.stopPropagation();
     _openSortModal(tab, onApply);
@@ -6276,8 +6276,12 @@ window._openIdiomaModal = function() {
   var langs = [
     { code: 'es', flag: '🇪🇸', name: 'Español', soon: false },
     { code: 'en', flag: '🇺🇸', name: 'English', soon: false },
-    { code: 'pt', flag: '🇧🇷', name: 'Português', soon: true },
-    { code: 'zh', flag: '🇨🇳', name: '中文', soon: true }
+    { code: 'pt', flag: '🇧🇷', name: 'Português', soon: false },
+    { code: 'zh', flag: '🇨🇳', name: '中文', soon: false },
+    { code: 'fr', flag: '🇫🇷', name: 'Français', soon: false },
+    { code: 'it', flag: '🇮🇹', name: 'Italiano', soon: false },
+    { code: 'hi', flag: '🇮🇳', name: 'हिन्दी', soon: false },
+    { code: 'ar', flag: '🇦🇪', name: 'العربية', soon: false }
   ];
   var rows = langs.map(function(l) {
     var selected = l.code === currentLang;
@@ -6295,9 +6299,9 @@ window._openIdiomaModal = function() {
   ov.onclick = function(e) { if (e.target === ov) ov.remove(); };
   ov.innerHTML =
     '<div style="background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px;width:100%;max-width:300px;">' +
-      '<div style="text-align:center;font-size:16px;font-weight:700;color:#111;margin-bottom:14px;">🌐 Idioma</div>' +
+      '<div style="text-align:center;font-size:16px;font-weight:700;color:#111;margin-bottom:14px;">'+t('idioma_label')+'</div>' +
       rows +
-      '<div onclick="document.getElementById(\'idioma-modal-overlay\').remove()" style="margin-top:14px;text-align:center;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:14px;font-weight:600;color:#333;cursor:pointer;">Cancelar</div>' +
+      '<div onclick="document.getElementById(\'idioma-modal-overlay\').remove()" style="margin-top:14px;text-align:center;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:14px;font-weight:600;color:#333;cursor:pointer;">'+t('cancelar')+'</div>' +
     '</div>';
   document.body.appendChild(ov);
 };
