@@ -1811,7 +1811,7 @@ function runConversion(){
 
 <!-- BUSQUEDA UNIVERSAL -->
 <div id="mkt-search-bar" style="padding:8px 14px 0;flex-shrink:0;">
-  <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" autocomplete="off"
+  <input id="mkt-universal-search" type="text" placeholder="Buscar cualquier activo... (IBIT, HOOD, MSTR, BTC...)" data-i18n="mkt_search_placeholder" data-i18n-attr="placeholder" autocomplete="off"
     style="width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--border2);border-radius:10px;padding:9px 12px;color:var(--text);font-size:13px;outline:none;"
     oninput="filterMktSearch()" />
   <div id="mkt-search-results" style="display:none;background:#fff;border-radius:12px;margin-top:4px;max-height:260px;overflow-y:auto;position:relative;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,0.12);"></div>
@@ -1826,34 +1826,34 @@ function runConversion(){
 <div id="pin-modal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:100;align-items:flex-end;justify-content:center">
   <div style="background:var(--card);border-radius:20px 20px 0 0;width:100%;max-width:100%;padding:20px 16px 32px;border-top:1px solid var(--border2)">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-      <span style="font-size:15px;font-weight:500;color:var(--text)">Editar activos destacados</span>
-      <span onclick="closePinModal()" style="font-size:13px;color:var(--gold);cursor:pointer">Listo </span>
+      <span style="font-size:15px;font-weight:500;color:var(--text)" data-i18n="mkt_pin_title">Editar activos destacados</span>
+      <span onclick="closePinModal()" style="font-size:13px;color:var(--gold);cursor:pointer" data-i18n="mkt_listo">Listo </span>
     </div>
-    <p style="font-size:11px;color:var(--textDim);margin-bottom:12px">Toc cualquier activo para fijarlo o quitarlo de los 4 destacados</p>
+    <p style="font-size:11px;color:var(--textDim);margin-bottom:12px" data-i18n="mkt_pin_desc">Toc cualquier activo para fijarlo o quitarlo de los 4 destacados</p>
     <div id="pin-list" style="display:flex;flex-direction:column;gap:6px;max-height:320px;overflow-y:auto"></div>
   </div>
 </div>
 
 <!-- TABS -->
 <div class="tabs">
-  <div class="tab on"  onclick="sw('cripto',this)"> Cripto</div>
-  <div class="tab"     onclick="sw('acciones',this)"> Acciones</div>
-  <div class="tab"     onclick="sw('stable',this)"> Stable & DeFi</div>
-  <div class="tab"     onclick="sw('futuros',this)"> Futuros</div>
-  <div class="tab"     onclick="sw('comm',this)"> Commodities</div>
-  <div class="tab"     onclick="sw('divisas',this)"> Divisas</div>
-  <div class="tab"     onclick="sw('etf',this)"> ETF & Bonos</div>
+  <div class="tab on"  onclick="sw('cripto',this)" data-i18n="mkt_tab_cripto"> Cripto</div>
+  <div class="tab"     onclick="sw('acciones',this)" data-i18n="mkt_tab_acciones"> Acciones</div>
+  <div class="tab"     onclick="sw('stable',this)" data-i18n="mkt_tab_stable"> Stable & DeFi</div>
+  <div class="tab"     onclick="sw('futuros',this)" data-i18n="mkt_tab_futuros"> Futuros</div>
+  <div class="tab"     onclick="sw('comm',this)" data-i18n="mkt_tab_commodities"> Commodities</div>
+  <div class="tab"     onclick="sw('divisas',this)" data-i18n="mkt_tab_divisas"> Divisas</div>
+  <div class="tab"     onclick="sw('etf',this)" data-i18n="mkt_tab_etf"> ETF & Bonos</div>
 </div>
 
 <!-- FILTRO PASES -->
 <div class="pais-row" id="pais-row">
-  <div class="pais on" onclick="swPais('usa',this)"> EE.UU.</div>
-  <div class="pais"    onclick="swPais('arg',this)"> Argentina</div>
-  <div class="pais"    onclick="swPais('br',this)"> Brasil</div>
-  <div class="pais"    onclick="swPais('eu',this)"> Europa</div>
-  <div class="pais"    onclick="swPais('es',this)"> Espa&#241;a</div>
-  <div class="pais"    onclick="swPais('jp',this)"> Jap&#243;n</div>
-  <div class="pais"    onclick="swPais('cn',this)"> China</div>
+  <div class="pais on" onclick="swPais('usa',this)" data-i18n="mkt_pais_usa"> EE.UU.</div>
+  <div class="pais"    onclick="swPais('arg',this)" data-i18n="mkt_pais_arg"> Argentina</div>
+  <div class="pais"    onclick="swPais('br',this)" data-i18n="mkt_pais_br"> Brasil</div>
+  <div class="pais"    onclick="swPais('eu',this)" data-i18n="mkt_pais_eu"> Europa</div>
+  <div class="pais"    onclick="swPais('es',this)" data-i18n="mkt_pais_es"> Espa&#241;a</div>
+  <div class="pais"    onclick="swPais('jp',this)" data-i18n="mkt_pais_jp"> Jap&#243;n</div>
+  <div class="pais"    onclick="swPais('cn',this)" data-i18n="mkt_pais_cn"> China</div>
 </div>
 
 <!-- TIMEFRAME + EDITAR -->
@@ -1865,14 +1865,14 @@ function runConversion(){
     <div class="tf" onclick="stf(this,'3m')">3m</div>
     <div class="tf" onclick="stf(this,'1a')">1a</div>
   </div>
-  <span class="tf-time" id="tf-time">Act. ahora</span>
-  <div class="edit-btn" id="edit-btn" onclick="toggleEdit()"> Editar orden</div>
+  <span class="tf-time" id="tf-time" data-i18n="mkt_tf_ahora">Act. ahora</span>
+  <div class="edit-btn" id="edit-btn" onclick="toggleEdit()" data-i18n="mkt_editar_orden"> Editar orden</div>
 </div>
 
 <!-- BANNER MODO EDICIN -->
 <div class="edit-banner" id="edit-banner">
-  <span>Arrastr para reordenar  Toc  para ocultar</span>
-  <span onclick="toggleEdit()" style="color:var(--gold);cursor:pointer">Listo </span>
+  <span data-i18n="mkt_edit_instrucciones">Arrastr para reordenar  Toc  para ocultar</span>
+  <span onclick="toggleEdit()" style="color:var(--gold);cursor:pointer" data-i18n="mkt_listo">Listo </span>
 </div>
 
 <div class="cnt" id="cnt"></div>
@@ -1887,15 +1887,15 @@ function filterMktSearch(){
   res.style.flexDirection='column';
   res.style.gap='4px';
   res.style.padding='6px';
-  res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">Buscando...</div>';
+  res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">'+t('mkt_buscando')+'</div>';
   if(window._buscarActivos){
     window._buscarActivos(q, function(results){
-      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">Sin resultados para "'+q+'"</div>'; return; }
+      if(!results.length){ res.innerHTML='<div style="font-size:11px;color:#999;padding:12px;text-align:center;">'+t('mkt_sin_resultados')+q+'"</div>'; return; }
       window._mktSearchActs = results;
       res.innerHTML = results.map(function(a,i){
         var logoHtml = a.logo ? '<img src="'+a.logo+'" style="width:24px;height:24px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />' : '<div style="width:24px;height:24px;border-radius:50%;background:'+(a.color||'var(--border)')+';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:var(--text);flex-shrink:0;">'+(a.abbr||a.s.substring(0,3).toUpperCase())+'</div>';
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
-        var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':(a.tipo||'Activo');
+        var tipoLabel = a.tipo==='cripto'?t('mkt_tipo_cripto'):a.tipo==='accion'?t('mkt_tipo_accion'):a.tipo==='etf'?t('mkt_tipo_etf'):(a.tipo||t('mkt_tipo_activo'));
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
         return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:#f5f5f5;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
       }).join('');
@@ -1983,16 +1983,16 @@ window._mktOpenDetail = function(idx){
 <!-- PILLS FILTRO -->
 <div style="padding:8px 14px;border-bottom:1px solid var(--border);flex-shrink:0;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none">
   <div id="ia-filtros" style="display:flex;gap:6px;white-space:nowrap">
-    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:var(--gold);color:var(--chipTextActive);border:1px solid var(--gold);-webkit-tap-highlight-color:rgba(0,0,0,0)">Todo</div>
-    <div class="ia-pill" onclick="setIAFiltro('alcista',this)" data-filtro="alcista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--green);border:1px solid #3FB95060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Alcista</div>
-    <div class="ia-pill" onclick="setIAFiltro('bajista',this)" data-filtro="bajista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--red);border:1px solid #FF444460;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bajista</div>
-    <div class="ia-pill" onclick="setIAFiltro('alta_conf',this)" data-filtro="alta_conf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--gold);border:1px solid var(--gold40);-webkit-tap-highlight-color:rgba(0,0,0,0)">Conf. IA</div>
-    <div class="ia-pill" onclick="setIAFiltro('cripto',this)" data-filtro="cripto" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#A78BFA;border:1px solid #A78BFA60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Cripto</div>
-    <div class="ia-pill" onclick="setIAFiltro('accion',this)" data-filtro="accion" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#58A6FF;border:1px solid #58A6FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Acciones</div>
-    <div class="ia-pill" onclick="setIAFiltro('etf',this)" data-filtro="etf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#F0883E;border:1px solid #F0883E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">ETF</div>
-    <div class="ia-pill" onclick="setIAFiltro('metal',this)" data-filtro="metal" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FFD700;border:1px solid #FFD70060;-webkit-tap-highlight-color:rgba(0,0,0,0)">Metales</div>
-    <div class="ia-pill" onclick="setIAFiltro('materia_prima',this)" data-filtro="materia_prima" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#C8A96E;border:1px solid #C8A96E60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Mat. Primas</div>
-    <div class="ia-pill" onclick="setIAFiltro('bono',this)" data-filtro="bono" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#79C0FF;border:1px solid #79C0FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)">Bonos</div>
+    <div class="ia-pill active" onclick="setIAFiltro('todo',this)" data-filtro="todo" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:var(--gold);color:var(--chipTextActive);border:1px solid var(--gold);-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_todo">Todo</div>
+    <div class="ia-pill" onclick="setIAFiltro('alcista',this)" data-filtro="alcista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--green);border:1px solid #3FB95060;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_alcista">Alcista</div>
+    <div class="ia-pill" onclick="setIAFiltro('bajista',this)" data-filtro="bajista" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--red);border:1px solid #FF444460;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_bajista">Bajista</div>
+    <div class="ia-pill" onclick="setIAFiltro('alta_conf',this)" data-filtro="alta_conf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:var(--gold);border:1px solid var(--gold40);-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_conf">Conf. IA</div>
+    <div class="ia-pill" onclick="setIAFiltro('cripto',this)" data-filtro="cripto" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#A78BFA;border:1px solid #A78BFA60;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_cripto">Cripto</div>
+    <div class="ia-pill" onclick="setIAFiltro('accion',this)" data-filtro="accion" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#58A6FF;border:1px solid #58A6FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_acciones">Acciones</div>
+    <div class="ia-pill" onclick="setIAFiltro('etf',this)" data-filtro="etf" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#F0883E;border:1px solid #F0883E60;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_etf">ETF</div>
+    <div class="ia-pill" onclick="setIAFiltro('metal',this)" data-filtro="metal" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#FFD700;border:1px solid #FFD70060;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_metales">Metales</div>
+    <div class="ia-pill" onclick="setIAFiltro('materia_prima',this)" data-filtro="materia_prima" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#C8A96E;border:1px solid #C8A96E60;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_materias">Mat. Primas</div>
+    <div class="ia-pill" onclick="setIAFiltro('bono',this)" data-filtro="bono" style="display:inline-flex;align-items:center;padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;background:transparent;color:#79C0FF;border:1px solid #79C0FF60;-webkit-tap-highlight-color:rgba(0,0,0,0)" data-i18n="mkt_ia_bonos">Bonos</div>
   </div>
 </div>
 

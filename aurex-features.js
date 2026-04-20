@@ -535,8 +535,8 @@ window.stf=function(el,tf){
   document.querySelectorAll('.mkt-tf-btn').forEach(function(b){b.style.background=b.dataset.tf===tf?'var(--gold)':'var(--border)';b.style.color=b.dataset.tf===tf?'#111':'var(--textSec)';});
   var tfEl=document.getElementById('tf-time');
   if(tfEl){
-    var labels={'24h':'Act. ahora','7d':'Últimos 7d','1m':'Último mes','3m':'Últimos 3m','1a':'Último año'};
-    tfEl.textContent=labels[tf]||'Act. ahora';
+    var labels={'24h':t('mkt_tf_ahora'),'7d':t('mkt_tf_7d'),'1m':t('mkt_tf_1m'),'3m':t('mkt_tf_3m'),'1a':t('mkt_tf_1y')};
+    tfEl.textContent=labels[tf]||t('mkt_tf_ahora');
   }
   if(_activeTab==='cripto'||_activeTab==='stable'){
     // Cripto: use Binance for 24h, Yahoo for historical
@@ -1348,7 +1348,7 @@ function _renderMarketBanner(containerId){
       else { mins=(24*60-utcMin)+mkt.open; }
       lbl = Math.floor(mins/60)+'h'+(mins%60)+'m';
     }
-    var statusTxt = open ? 'ABIERTO' : 'CERRADO';
+    var statusTxt = open ? t('mkt_status_abierto') : t('mkt_status_cerrado');
     return '<div style="display:inline-flex;flex-direction:column;align-items:center;padding:5px 8px;min-width:62px;">'
       + '<span style="font-size:10px;font-weight:700;color:var(--text);">' + mkt.flag + ' ' + mkt.id + '</span>'
       + '<span style="font-size:10px;font-weight:700;color:'+color+';line-height:1.4;">' + statusTxt + '</span>'
@@ -1380,11 +1380,11 @@ window.editMarketBanner = function(){
   popup.innerHTML =
     '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<span style="font-size:16px;font-weight:700;color:#111;">Mercados en banner</span>' +
+        '<span style="font-size:16px;font-weight:700;color:#111;">'+t('mkt_edit_banner_title')+'</span>' +
         '<span onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove();if(typeof _renderMarketBanner===&apos;function&apos;){var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-mkt-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderMarketBanner(&apos;tmp-mkt-listo&apos;);var _sa=document.getElementById(&apos;combo-slide-a&apos;);if(_sa)_sa.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-mkt-edit-popup&apos;).remove();if(typeof _renderMarketBanner===&apos;function&apos;){var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-mkt-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderMarketBanner(&apos;tmp-mkt-listo&apos;);var _sa=document.getElementById(&apos;combo-slide-a&apos;);if(_sa)_sa.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">'+t('mkt_listo')+'</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
@@ -4526,7 +4526,7 @@ function _renderFearGreed(containerId) {
   var cat = window._pulseActiveFilter || 'GLOBAL';
   var cached = window._pulseCache[cat];
   if(!cached) {
-    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:var(--textDim);">Calculando AUREX PULSEâ¢...</div>';
+    el.innerHTML = '<div style="padding:6px 14px;font-size:10px;color:var(--textDim);">'+t('mkt_pulse_loading')+'</div>';
     _fetchPulseForCategory(cat).then(function(){ _renderFearGreed(containerId); });
     return;
   }
@@ -4575,11 +4575,11 @@ function _renderFearGreed(containerId) {
       }).catch(function(){});
   }
   var edu;
-  if(d.value<=20)      edu='Pánico extremo. Históricamente zonas de oportunidad para inversores de largo plazo.';
-  else if(d.value<=40) edu='Temor generalizado. Los inversores están vendiendo. Posibles oportunidades si el contexto es sólido.';
-  else if(d.value<=60) edu='Mercado equilibrado. Ni euforia ni pánico. Momento ideal para analizar fundamentals.';
-  else if(d.value<=80) edu='Optimismo en el mercado. Precios pueden estar elevados. Considerar toma de ganancias.';
-  else                 edu='Euforia extrema. Alta probabilidad de corrección próxima. Máxima precaución.';
+  if(d.value<=20)      edu=t('mkt_pulse_edu_panico');
+  else if(d.value<=40) edu=t('mkt_pulse_edu_temor');
+  else if(d.value<=60) edu=t('mkt_pulse_edu_equilibrado');
+  else if(d.value<=80) edu=t('mkt_pulse_edu_optimismo');
+  else                 edu=t('mkt_pulse_edu_euforia');
   var raw = window._pulseRaw || {};
   var bits = [];
   if(raw.vix)              bits.push('VIX: <b style="color:var(--text)">'+_fmt(raw.vix.price,'precio')+'</b>');
@@ -4603,7 +4603,7 @@ function _renderFearGreed(containerId) {
     '<div style="margin:8px 14px 6px;border-radius:14px;padding:'+(compact?'8px 10px':'12px 14px 10px')+';background:var(--card);border:1px solid var(--border);">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">' +
         '<span style="font-size:'+(compact?'10':'11')+'px;font-weight:700;color:var(--gold);letter-spacing:0.5px;">&#x26A1; AUREX PULSE&#x2122;</span>' +
-        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid #58A6FF;white-space:nowrap;font-weight:600;">&#x1F4CA; Ver variables</div>' +
+        '<div id="pulse-info-btn-'+elId+'" style="font-size:9px;color:#58A6FF;cursor:pointer;padding:3px 10px;border-radius:10px;border:1px solid #58A6FF;white-space:nowrap;font-weight:600;">'+t('mkt_pulse_ver_variables')+'</div>' +
       '</div>' +
       '<div id="pulse-filters-'+elId+'" style="display:flex;gap:5px;flex-wrap:nowrap;overflow-x:auto;margin-bottom:8px;-webkit-overflow-scrolling:touch;">'+filterBtns+'</div>' +
       '<div style="display:flex;align-items:center;gap:10px;">' +
@@ -4647,18 +4647,18 @@ window.showFearGreedInfo = function() {
   var rows = [
     ['&#x1FA99;','BTC momentum','Binance','12%', fmtPct(raw.btcPct),'#58A6FF'],
     ['&#x1FA99;','ETH momentum','Binance','8%',  fmtPct(raw.ethPct),'#58A6FF'],
-    ['&#x1F4C9;','VIX volatilidad','Yahoo','14%',fmtPrice(raw.vix),'#FF6B6B'],
+    ['&#x1F4C9;',t('mkt_pulse_var_vix'),'Yahoo','14%',fmtPrice(raw.vix),'#FF6B6B'],
     ['&#x1F4C8;','S&P500 momentum','Yahoo','8%', fmtPct(raw.sp500&&raw.sp500.pct),'var(--green)'],
     ['&#x26A1;','ES=F S&P Futuro','Yahoo','8%',  fmtPct(raw.esf&&raw.esf.pct),'var(--green)'],
     ['&#x26A1;','NQ=F Nasdaq Fut','Yahoo','6%',  fmtPct(raw.nqf&&raw.nqf.pct),'var(--green)'],
     ['&#x26A1;','YM=F Dow Futuro','Yahoo','4%',  fmtPct(raw.ymf&&raw.ymf.pct),'var(--green)'],
     ['&#x26A1;','RTY=F Russell Fut','Yahoo','3%',fmtPct(raw.rtyf&&raw.rtyf.pct),'var(--green)'],
-    ['&#x1F947;','Oro GC=F','Yahoo','8%',         fmtPct(raw.gcf&&raw.gcf.pct),'var(--gold)'],
-    ['&#x26AA;','Plata SI=F','Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'var(--gold)'],
-    ['&#x1F6E2;','Petr&#xF3;leo CL=F','Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'var(--gold)'],
-    ['&#x1FA9C;','Cobre HG=F','Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'var(--gold)'],
+    ['&#x1F947;',t('mkt_pulse_var_oro'),'Yahoo','8%',         fmtPct(raw.gcf&&raw.gcf.pct),'var(--gold)'],
+    ['&#x26AA;',t('mkt_pulse_var_plata'),'Yahoo','4%',         fmtPct(raw.sif&&raw.sif.pct),'var(--gold)'],
+    ['&#x1F6E2;',t('mkt_pulse_var_petroleo'),'Yahoo','5%',fmtPct(raw.clf&&raw.clf.pct),'var(--gold)'],
+    ['&#x1FA9C;',t('mkt_pulse_var_cobre'),'Yahoo','4%',        fmtPct(raw.hgf&&raw.hgf.pct),'var(--gold)'],
     ['&#x1F3E6;','Macro FED','FRED API','12%', raw.macro ? raw.macro.score+' pts' : 'Calc...', raw.macro ? 'var(--text)' : 'var(--textDim)'],
-    ['&#x1F30D;','Geopol&#xED;tica','GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? 'var(--text)' : 'var(--textDim)']
+    ['&#x1F30D;',t('mkt_pulse_var_geopolitica'),'GDELT','4%', raw.geo ? raw.geo.score+' pts' : 'Calc...', raw.geo ? 'var(--text)' : 'var(--textDim)']
   ];
   var tableRows = rows.map(function(r) {
     var valStr = r[4] || '--';
@@ -4671,20 +4671,20 @@ window.showFearGreedInfo = function() {
   }).join('');
   ov.innerHTML =
     '<div style="background:#fff;border-radius:18px;padding:22px;width:calc(100% - 32px);max-width:420px;margin:auto;">' +
-      '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">&#x26A1; AUREX FEAR &amp; GREED 14X&#x2122;</div>' +
-      '<div style="font-size:11px;color:#666;margin-bottom:12px;">El &#xED;ndice de sentimiento m&#xE1;s completo del mercado</div>' +
+      '<div style="font-size:15px;font-weight:700;color:#111;margin-bottom:4px;">'+t('mkt_pulse_info_title')+'</div>' +
+      '<div style="font-size:11px;color:#666;margin-bottom:12px;">'+t('mkt_pulse_info_subtitle')+'</div>' +
       '<div style="font-size:11px;color:#555;line-height:1.7;margin-bottom:10px;">' +
-        '<b style="color:#111;">Las 5 zonas:</b><br>' +
-        '&#x1F534; 0-20 Miedo Extremo &nbsp; &#x1F7E0; 21-40 Miedo &nbsp; &#x1F7E1; 41-60 Neutral<br>' +
-        '&#x1F7E2; 61-80 Codicia &nbsp; &#x1F49C; 81-100 Codicia Extrema' +
+        '<b style="color:#111;">'+t('mkt_pulse_zonas_title')+'</b><br>' +
+        t('mkt_pulse_zona_miedo_ext')+' &nbsp; '+t('mkt_pulse_zona_miedo')+' &nbsp; '+t('mkt_pulse_zona_neutral')+'<br>' +
+        t('mkt_pulse_zona_codicia')+' &nbsp; '+t('mkt_pulse_zona_codicia_ext') +
       '</div>' +
-      '<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:8px;">Variables activas (12 de 14):</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#111;margin-bottom:8px;">'+t('mkt_pulse_vars_title')+'</div>' +
       '<table style="width:100%;font-size:11px;border-collapse:collapse;">' +
-        '<tr style="color:#999;font-size:9px;border-bottom:1px solid #ddd;"><td style="padding:4px 4px;">VARIABLE</td><td style="padding:4px 4px;">FUENTE</td><td style="padding:4px 4px;">PESO</td><td style="padding:4px 4px;">VALOR</td></tr>' +
+        '<tr style="color:#999;font-size:9px;border-bottom:1px solid #ddd;"><td style="padding:4px 4px;">'+t('mkt_pulse_th_variable')+'</td><td style="padding:4px 4px;">'+t('mkt_pulse_th_fuente')+'</td><td style="padding:4px 4px;">'+t('mkt_pulse_th_peso')+'</td><td style="padding:4px 4px;">'+t('mkt_pulse_th_valor')+'</td></tr>' +
         tableRows +
       '</table>' +
-      '<div style="font-size:8px;color:#999;margin-top:10px;line-height:1.4;font-style:italic;">* Macro FED (FRED API) y Geopol&#xED;tica (GDELT Project) activos son fallback estimados. 14 variables a cobertura completa en m&#xFA;ltiples mercados.</div>' +
-      '<div id="pulse-info-close" style="margin-top:18px;text-align:center;padding:16px;background:var(--gold);border-radius:14px;color:#111;font-weight:700;cursor:pointer;font-size:16px;">Entendido</div>' +
+      '<div style="font-size:8px;color:#999;margin-top:10px;line-height:1.4;font-style:italic;">'+t('mkt_pulse_disclaimer')+'</div>' +
+      '<div id="pulse-info-close" style="margin-top:18px;text-align:center;padding:16px;background:var(--gold);border-radius:14px;color:#111;font-weight:700;cursor:pointer;font-size:16px;">'+t('port_entendido')+'</div>' +
     '</div>';
   document.body.appendChild(ov);
   document.getElementById('pulse-info-close').addEventListener('click', function(){ ov.remove(); });
@@ -4817,11 +4817,11 @@ window.editFuturesBanner = function(){
   popup.innerHTML =
     '<div style="background:#fff;border-radius:16px;padding:20px;width:calc(100% - 40px);max-width:340px;max-height:85vh;overflow-y:auto;">' +
       '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">' +
-        '<span style="font-size:16px;font-weight:700;color:#111;">Futuros en banner</span>' +
+        '<span style="font-size:16px;font-weight:700;color:#111;">'+t('mkt_fut_edit_title')+'</span>' +
         '<span onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove()" style="font-size:20px;cursor:pointer;color:#999;padding:4px 8px;">&#x2715;</span>' +
       '</div>' +
       rows +
-      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _fetchFuturesData===&apos;function&apos;)_fetchFuturesData().then(function(){if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}});" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">Listo</button>' +
+      '<button onclick="document.getElementById(&apos;aurex-fut-edit-popup&apos;).remove();if(typeof _fetchFuturesData===&apos;function&apos;)_fetchFuturesData().then(function(){if(typeof _renderFuturesBanner===&apos;function&apos;){_renderFuturesBanner(&apos;port-futures-banner&apos;);_renderFuturesBanner(&apos;mkt-futures-banner&apos;);var _tmp=document.createElement(&apos;div&apos;);_tmp.id=&apos;tmp-fut-listo&apos;;_tmp.style.display=&apos;none&apos;;document.body.appendChild(_tmp);_renderFuturesBanner(&apos;tmp-fut-listo&apos;);var _sb=document.getElementById(&apos;combo-slide-b&apos;);if(_sb)_sb.innerHTML=_tmp.innerHTML;document.body.removeChild(_tmp);}});" style="width:100%;background:#22c55e;border:none;border-radius:12px;padding:14px;color:#fff;font-size:15px;font-weight:700;cursor:pointer;margin-top:16px;">'+t('mkt_listo')+'</button>' +
     '</div>';
   document.body.appendChild(popup);
 };
@@ -5980,7 +5980,7 @@ window._lpCompartirPortfolio = function(ticker, item) {
     navigator.share({ title: 'AUREX — ' + ticker, text: texto }).catch(function(){});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(texto);
-    alert('Copiado al portapapeles');
+    alert(t('mkt_copiado'));
   }
 };
 
@@ -5993,7 +5993,7 @@ window._lpCompartirMercados = function(ticker) {
     navigator.share({ title: 'AUREX — ' + ticker, text: texto }).catch(function(){});
   } else if (navigator.clipboard) {
     navigator.clipboard.writeText(texto);
-    alert('Copiado al portapapeles');
+    alert(t('mkt_copiado'));
   }
 };
 
@@ -6082,18 +6082,18 @@ window._showMercadosLPSheet = function(ticker, meta) {
   var chips = document.createElement('div');
   chips.className = 'lp-chips';
   chips.innerHTML =
-    '<div class="lp-chip"><div class="lp-chip-label">Precio</div><div class="lp-chip-val">' + fmtNum(precio, dec) + '</div></div>' +
+    '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_precio')+'</div><div class="lp-chip-val">' + fmtNum(precio, dec) + '</div></div>' +
     '<div class="lp-chip"><div class="lp-chip-label">24h</div><div class="lp-chip-val" style="color:' + pct24Color + '">' + pct24Str + '</div></div>' +
-    '<div class="lp-chip"><div class="lp-chip-label">Objetivo IA</div><div class="lp-chip-val" style="color:' + objColor + '">' + (objetivo ? fmtNum(objetivo, objDec) : '--') + '</div></div>';
+    '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_objetivo_ia')+'</div><div class="lp-chip-val" style="color:' + objColor + '">' + (objetivo ? fmtNum(objetivo, objDec) : '--') + '</div></div>';
   modal.appendChild(chips);
 
   // Señal IA
   if (direccion) {
-    var dirLabel = direccion === 'alcista' ? 'ALCISTA' : direccion === 'bajista' ? 'BAJISTA' : direccion.toUpperCase();
+    var dirLabel = direccion === 'alcista' ? t('port_signal_alcista') : direccion === 'bajista' ? t('port_signal_bajista') : direccion.toUpperCase();
     var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : 'var(--gold)';
     var sigDiv = document.createElement('div');
     sigDiv.className = 'lp-signal';
-    sigDiv.innerHTML = 'Señal IA <strong style="color:' + dirColor + '">' + dirLabel + ' ' + Math.round(confianza) + '%</strong>';
+    sigDiv.innerHTML = t('mkt_lp_senal_ia') + '<strong style="color:' + dirColor + '">' + dirLabel + ' ' + Math.round(confianza) + '%</strong>';
     modal.appendChild(sigDiv);
   }
 
@@ -6101,8 +6101,8 @@ window._showMercadosLPSheet = function(ticker, meta) {
   var favBtn = document.createElement('div');
   favBtn.className = 'lp-fav-btn';
   favBtn.innerHTML = isFav
-    ? '★ Quitar de Favoritos'
-    : '★ Agregar a Favoritos';
+    ? t('mkt_lp_quitar_fav')
+    : t('mkt_lp_agregar_fav');
   // Ambos estados: amarillo claro con borde dorado (como nativa)
   // El CSS .lp-fav-btn ya tiene bg:#FEF3C7, border:#D4A017
   favBtn.addEventListener('click', function() {
@@ -6119,7 +6119,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   var portBtn = document.createElement('div');
   portBtn.className = 'lp-option';
   portBtn.style.cssText = 'background:#DBEAFE;border:1.5px solid #3B82F6;color:#1e3a5f;';
-  portBtn.innerHTML = '<span class="lp-icon">💼</span><span>Agregar a Portfolio</span>';
+  portBtn.innerHTML = '<span class="lp-icon">💼</span><span>'+t('mkt_lp_agregar_portfolio')+'</span>';
   portBtn.addEventListener('click', function() {
     window._closeLPSheet();
     setTimeout(function(){ if (window.openPortModal) window.openPortModal(ticker); }, 50);
@@ -6129,7 +6129,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   // Cerrar
   var cancel = document.createElement('div');
   cancel.className = 'lp-cancel';
-  cancel.textContent = 'Cerrar';
+  cancel.textContent = t('mkt_lp_cerrar');
   cancel.addEventListener('click', window._closeLPSheet);
   modal.appendChild(cancel);
 
@@ -6323,7 +6323,7 @@ window._liveLastFetch = Date.now();
 (function _initLiveTimer() {
   function updateLiveTime() {
     var diff = Math.floor((Date.now() - (window._liveLastFetch || Date.now())) / 1000);
-    var txt = diff < 60 ? '· hace ' + diff + 's' : '· hace ' + Math.floor(diff / 60) + ' min';
+    var txt = diff < 60 ? t('mkt_live_hace_s') + diff + 's' : t('mkt_live_hace_s') + Math.floor(diff / 60) + t('mkt_live_hace_min');
     var el = document.getElementById('liveTime');
     if (el) el.textContent = txt;
     var el2 = document.getElementById('liveTimePort');
