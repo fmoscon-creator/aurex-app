@@ -1,68 +1,44 @@
-# PENDING REVIEW — Mercados i18n completo (~90 keys × 8 idiomas)
+# PENDING REVIEW — Fix gauge i18n + Variables popup + Banners card visual
 
-**Archivos modificados** (LOCAL, no pusheados):
-- aurex-i18n.js — +90 keys nuevas sección `// === MERCADOS ===`
-- index.html — 32 data-i18n aplicados + 3 t() en script inline
-- aurex-features.js — 10+ funciones modificadas con t()
+**Archivos** (LOCAL, no pusheados): aurex-i18n.js, aurex-features.js
 
 ---
 
-## Cambios por archivo
+## Fix 1: Bug Gauge — "Codicia" hardcodeado (Bug 1 de Escritorio)
 
-### aurex-i18n.js
-Sección `// === MERCADOS ===` con subcategorías:
-- Búsqueda (4 keys)
-- Pin Modal (3 keys)
-- Tabs categorías (7 keys)
-- Sub-filtros países (7 keys)
-- Timeframe (6 keys)
-- Edit mode (1 key)
-- Filtros IA (10 keys)
-- Banner Mercados status (3 keys)
-- AUREX Pulse (2 keys + 5 educativas)
-- Pulse Info modal (14 keys: título, subtítulo, zonas, headers tabla, variables, disclaimer)
-- Ver Variables popup (pendiente — keys definidas, implementación en siguiente commit)
-- Long Press Mercados (7 keys)
-- Futuros banner (2 keys)
-- Otros: mkt_copiado, mkt_live_hace_s, mkt_live_hace_min
+**L4445-4449**: Labels cortas de zona del gauge → `t('mkt_gauge_*')`
+5 keys nuevas: mkt_gauge_miedo_ext, mkt_gauge_miedo, mkt_gauge_neutral, mkt_gauge_codicia, mkt_gauge_codicia_ext
 
-### index.html
-- L1814: mkt_search_placeholder (data-i18n-attr="placeholder")
-- L1829-1832: mkt_pin_title, mkt_listo, mkt_pin_desc
-- L1839-1845: 7 tabs (mkt_tab_*)
-- L1850-1856: 7 países (mkt_pais_*)
-- L1868-1869: mkt_tf_ahora, mkt_editar_orden
-- L1874-1875: mkt_edit_instrucciones, mkt_listo
-- L1986-1995: 10 filtros IA (mkt_ia_*)
-- L1890,1893: mkt_buscando, mkt_sin_resultados (inline JS)
-- L1898: tipo labels con t()
+## Fix 2: showIAVariablesPopup() completo
 
-### aurex-features.js
-- L538: timeframe labels → t('mkt_tf_*')
-- L1351: ABIERTO/CERRADO → t('mkt_status_*')
-- L1383,1387: editMarketBanner title/button
-- L4529: Pulse loading → t('mkt_pulse_loading')
-- L4578-4582: 5 edu strings → t('mkt_pulse_edu_*')
-- L4606: Ver variables → t('mkt_pulse_ver_variables')
-- L4650-4661: Variable names translated (VIX, Oro, Plata, Petróleo, Cobre, Geopolítica)
-- L4674-4687: Pulse Info modal completo → t()
-- L4820,4824: Futuros edit title/button
-- L6085-6132: Long press sheet (Precio, Objetivo IA, Señal IA, Favoritos, Portfolio, Cerrar)
-- L6092: ALCISTA/BAJISTA → t('port_signal_*')
-- L6326: Live timer → t('mkt_live_hace_*')
-- L5983,5996: alert Copiado → t('mkt_copiado')
+**L3945-3955**: 10 variables varDefs → `t('mkt_var1_label')` ... `t('mkt_var10_label')` + `t('mkt_var1_desc')` ... `t('mkt_var10_desc')`
+**L3961-3964**: "Mercado ahora:" + "al alza" + "a la baja" → t()
+**L3988**: summaryMkt duplicado → t()
+**L3991**: Título "AUREX IA ⚡ — 10 VARIABLES" → t('mkt_vars_title')
+**L3994**: Subtítulo → t('mkt_vars_subtitle')
+**L3996**: Descripción → t('mkt_vars_desc')
+**L3978**: "Peso Alta/Media" → t('mkt_vars_peso') + t('mkt_vars_peso_alta')/t('mkt_vars_peso_media')
+
+Keys nuevas: 3 (mkt_vars_peso, mkt_vars_peso_alta, mkt_vars_peso_media)
+Keys ya existentes aplicadas: mkt_var1-10_label, mkt_var1-10_desc, mkt_vars_title, mkt_vars_subtitle, mkt_vars_desc, mkt_vars_mercado_ahora, mkt_vars_al_alza, mkt_vars_a_la_baja
+
+## Fix 3: Banners Mercados/Futuros — demarcación visual
+
+**Problema**: Background `var(--bg)` se pierde con el fondo general gris.
+**Fix**: Cambio a `background:var(--card);border:1px solid var(--border2);border-radius:10px;margin:4px 10px;`
+
+- L1360: _renderMarketBanner inner div
+- L4792: _renderFuturesBanner inner div
+
+Ambos banners ahora tienen card con borde y border-radius, visualmente separados del fondo.
+
+## Fix 4: Futures suffix traducido
+
+**L4784**: `item.n + ' Fut'` → `item.n + t('mkt_fut_suffix')`
 
 ---
 
-## Keys reutilizadas
-- port_entendido (botón Entendido en Pulse info)
-- port_signal_alcista, port_signal_bajista (long press)
-- cancelar (ya existente)
-- mkt_listo (compartida entre 4 botones "Listo")
-
-## Pendiente para siguiente commit
-- showIAVariablesPopup() (10 variables × label + desc) — keys definidas en i18n, falta aplicar t() en la función
-
-## Verificación sintaxis
+## Verificación
 - `node -c aurex-features.js` → OK
 - `node -c aurex-i18n.js` → OK
+- Total keys nuevas en este commit: 8 (5 gauge + 3 peso)
