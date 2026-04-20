@@ -2556,7 +2556,7 @@ display:flex;align-items:center;justify-content:space-between}
               font-weight:700;padding:2px 6px;border-radius:4px">SOON</span>
           </div>
           <div style="font-size:11px;color:var(--textDim);margin-top:2px">
-            Face ID / Touch ID
+            <span data-i18n="face_touch_id">Face ID / Touch ID</span>
           </div>
         </div>
         <div style="width:44px;height:26px;background:var(--border);border-radius:13px;
@@ -2605,41 +2605,68 @@ display:flex;align-items:center;justify-content:space-between}
   </div>
   <div class="pac-cuerpo">
     <div style="display:flex;flex-direction:column;gap:0;padding-top:4px">
-      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px"><div style="background:rgba(212,160,23,0.06);border:1px solid rgba(212,160,23,0.25);border-radius:10px;padding:12px;margin-bottom:10px"><div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.5px;margin-bottom:4px">⚡ TU NÚMERO, TUS ALERTAS AL INSTANTE</div><div style="font-size:10px;color:var(--textSec);line-height:1.4">AUREX te avisa directo a tu celé­fono cuando el mercado se mueve. Sin delays.</div></div><div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border);margin-bottom:10px"><div style="display:flex;align-items:center;gap:8px;flex:1"><span style="font-size:18px">📱</span><div><div style="font-size:13px;color:var(--text);font-weight:500">Recibir alertas en este número</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Activá para recibir notificaciones push</div></div></div><div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div></div><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><span style="font-size:10px;color:var(--textSec);font-weight:500;text-transform:uppercase;letter-spacing:.5px">Número de celular</span><span style="font-size:11px;color:var(--green)">✓</span></div><div style="display:flex;gap:8px;align-items:center"><input id="celular-input-b6" type="hidden" /><select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:var(--bg);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:14px;padding:12px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>🇦🇷 +54</option><option value="+1">🇺🇸 +1</option><option value="+52">🇲🇽 +52</option><option value="+55">🇧🇷 +55</option><option value="+57">🇨🇴 +57</option><option value="+56">🇨🇱 +56</option><option value="+51">🇵🇪 +51</option><option value="+58">🇻🇪 +58</option><option value="+598">🇺🇾 +598</option><option value="+595">🇵🇾 +595</option><option value="+34">🇪🇸 +34</option><option value="+44">🇬🇧 +44</option><option value="+33">🇫🇷 +33</option><option value="+39">🇮🇹 +39</option><option value="+49">🇩🇪 +49</option></select><input id="cel-num-b6" style="flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" /><button onclick="authSaveCelularB6()" style="background:var(--gold);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:600;padding:10px 14px;cursor:pointer;white-space:nowrap">Guardar</button></div><div style="font-size:11px;color:var(--gold);margin-top:4px">* Necesario para alertas automáticas</div><div id="cel-txt-b6" style="font-size:11px;color:var(--green);margin-top:4px;min-height:14px"></div></div>
+      <div style="padding:4px 0 14px;border-bottom:1px solid var(--border);margin-bottom:4px">
+        <div style="background:rgba(212,160,23,0.06);border:1px solid rgba(212,160,23,0.25);border-radius:10px;padding:12px;margin-bottom:10px">
+          <div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.5px;margin-bottom:4px" data-i18n="alertas_titulo_banner">⚡ TU NÚMERO, TUS ALERTAS AL INSTANTE</div>
+          <div style="font-size:10px;color:var(--textSec);line-height:1.4" data-i18n="alertas_desc_banner">AUREX te avisa directo a tu celéfono cuando el mercado se mueve. Sin delays.</div>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border);margin-bottom:10px">
+          <div style="display:flex;align-items:center;gap:8px;flex:1">
+            <span style="font-size:18px">📱</span>
+            <div>
+              <div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="recibir_alertas_numero">Recibir alertas en este número</div>
+              <div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="activar_notif_push">Activá para recibir notificaciones push</div>
+            </div>
+          </div>
+          <div onclick="pacAlerta(this,'alerta_cel_activo')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:6px">
+          <span style="font-size:10px;color:var(--textSec);font-weight:500;text-transform:uppercase;letter-spacing:.5px" data-i18n="numero_celular_label">Número de celular</span>
+          <span style="font-size:11px;color:var(--green)">✓</span>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input id="celular-input-b6" type="hidden" />
+          <select id="cel-prefix-b6" onchange="pacUpdateCelB6()" style="background:var(--bg);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-size:14px;padding:12px 6px;cursor:pointer;outline:none;min-width:100px"><option value="+54" selected>🇦🇷 +54</option><option value="+1">🇺🇸 +1</option><option value="+52">🇲🇽 +52</option><option value="+55">🇧🇷 +55</option><option value="+57">🇨🇴 +57</option><option value="+56">🇨🇱 +56</option><option value="+51">🇵🇪 +51</option><option value="+58">🇻🇪 +58</option><option value="+598">🇺🇾 +598</option><option value="+595">🇵🇾 +595</option><option value="+34">🇪🇸 +34</option><option value="+44">🇬🇧 +44</option><option value="+33">🇫🇷 +33</option><option value="+39">🇮🇹 +39</option><option value="+49">🇩🇪 +49</option></select>
+          <input id="cel-num-b6" style="flex:1;background:var(--bg);border:1px solid var(--border2);border-radius:10px;padding:12px;color:var(--text);font-size:14px;outline:none" type="tel" placeholder="9 11 1234-5678" oninput="pacUpdateCelB6()" />
+          <button onclick="authSaveCelularB6()" style="background:var(--gold);border:none;border-radius:8px;color:#000;font-size:12px;font-weight:600;padding:10px 14px;cursor:pointer;white-space:nowrap"><span data-i18n="guardar">Guardar</span></button>
+        </div>
+        <div style="font-size:11px;color:var(--gold);margin-top:4px" data-i18n="necesario_alertas">* Necesario para alertas automáticas</div>
+        <div id="cel-txt-b6" style="font-size:11px;color:var(--green);margin-top:4px;min-height:14px"></div>
+      </div>
       <div style="font-size:12px;color:var(--textSec);margin:8px 0 10px">
-        Recibí notificaciones push cuando ocurra:
+        <span data-i18n="recibir_notif_cuando">Recibí notificaciones push cuando ocurra:</span>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:16px">🎯</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Precio objetivo</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Cuando un activo alcanza tu precio</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="alerta_precio_obj">Precio objetivo</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="alerta_precio_obj_desc">Cuando un activo alcanza tu precio</div></div>
         </div>
         <div class="pac-toggle" onclick="pacAlerta(this,'alerta_precio')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:16px">🤖</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Señal IA</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Nueva señal de compra o venta</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="alerta_senal_ia">Señal IA</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="alerta_senal_ia_desc">Nueva señal de compra o venta</div></div>
         </div>
         <div class="pac-toggle" onclick="pacAlerta(this,'alerta_ia')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:16px">📉</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Variación brusca</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Sube o baja más del 5% en 24hs tu portafolio</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="alerta_variacion">Variación brusca</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="alerta_variacion_desc">Sube o baja más del 5% en 24hs tu portafolio</div></div>
         </div>
         <div class="pac-toggle" onclick="pacAlerta(this,'alerta_variacion')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:16px">🔴</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">AUREX Pulse extremo</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Cuando Pulse supera zona de riesgo</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="alerta_pulse_extremo">AUREX Pulse extremo</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="alerta_pulse_desc">Cuando Pulse supera zona de riesgo</div></div>
         </div>
         <div class="pac-toggle" onclick="pacAlerta(this,'alerta_pulse')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
       <div style="background:var(--bg);border-radius:8px;padding:10px 12px;margin-top:10px;border:0.5px solid var(--border)">
         <div style="font-size:10px;color:var(--textSec);text-align:center">
-          🔒 Las alertas push requieren plan PRO o ELITE
+          <span data-i18n="alertas_requieren_plan">🔒 Las alertas push requieren plan PRO o ELITE</span>
         </div>
       </div>
     </div>
@@ -2654,7 +2681,7 @@ display:flex;align-items:center;justify-content:space-between}
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:18px">📲</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Notificaciones push</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Activá todas las notificaciones</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="notif_push">Notificaciones push</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="notif_push_desc">Activá todas las notificaciones</div></div>
         </div>
         <div onclick="pacNotif(this,'notif_push')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
@@ -2662,12 +2689,12 @@ display:flex;align-items:center;justify-content:space-between}
         <div style="display:flex;align-items:center;justify-content:space-between">
           <div style="display:flex;align-items:center;gap:8px;flex:1">
             <span style="font-size:18px">📅</span>
-            <div><div style="font-size:13px;color:var(--text);font-weight:500">Resumen diario</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Recibí un resumen de tu portafolio</div></div>
+            <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="notif_resumen">Resumen diario</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="notif_resumen_desc">Recibí un resumen de tu portafolio</div></div>
           </div>
           <div onclick="pacNotif(this,'notif_resumen')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-top:8px;padding-left:34px">
-          <div style="font-size:11px;color:var(--textSec)">Hora del resumen:</div>
+          <div style="font-size:11px;color:var(--textSec)" data-i18n="notif_hora_resumen">Hora del resumen:</div>
           <div onclick="pacShowHoraPicker()" style="border:1px solid var(--gold);border-radius:6px;padding:4px 10px;cursor:pointer">
             <span id="notif-hora-display" style="font-size:12px;color:var(--gold);font-weight:600">09:00 ▾</span>
           </div>
@@ -2677,14 +2704,14 @@ display:flex;align-items:center;justify-content:space-between}
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:0.5px solid var(--border)">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:18px">💌</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Newsletter semanal</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Análisis y novedades cada semana</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="notif_newsletter">Newsletter semanal</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="notif_newsletter_desc">Análisis y novedades cada semana</div></div>
         </div>
         <div onclick="pacNotif(this,'notif_newsletter')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0">
         <div style="display:flex;align-items:center;gap:8px;flex:1">
           <span style="font-size:18px">🚀</span>
-          <div><div style="font-size:13px;color:var(--text);font-weight:500">Novedades AUREX</div><div style="font-size:10px;color:var(--textSec);margin-top:2px">Updates y nuevas funciones de la app</div></div>
+          <div><div style="font-size:13px;color:var(--text);font-weight:500" data-i18n="notif_novedades">Novedades AUREX</div><div style="font-size:10px;color:var(--textSec);margin-top:2px" data-i18n="notif_novedades_desc">Updates y nuevas funciones de la app</div></div>
         </div>
         <div onclick="pacNotif(this,'notif_novedades')" data-on="1" style="width:44px;height:26px;background:var(--gold);border-radius:13px;display:flex;align-items:center;justify-content:flex-end;padding:0 3px;cursor:pointer"><div style="width:20px;height:20px;background:#000;border-radius:50%"></div></div>
       </div>
