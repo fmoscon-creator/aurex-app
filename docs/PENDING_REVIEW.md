@@ -1,75 +1,57 @@
-# PENDING REVIEW — Portfolio i18n completo (95 keys × 8 idiomas)
+# PENDING REVIEW — Fix Portfolio i18n: Termómetro visual + Sort + Modal Idioma 8 idiomas
 
-**Commit**: pendiente push
-**Archivos modificados**: 3
+**Archivos modificados** (NO pusheados, solo local):
+- aurex-i18n.js — +45 keys nuevas (termómetro visual + sort)
+- aurex-features.js — 3 fixes:
 
 ---
 
-## Resumen de cambios
+## Fix 1: Modal Idioma — solo tenía 4 idiomas, ahora 8
 
-### 1. aurex-i18n.js — +95 keys nuevas (sección `// === PORTFOLIO ===`)
-- Header: port_header_title, port_valor_total, port_period_*, port_activos_label, port_mejor_24h, port_agregar_activos, port_conv_btn
-- Modales: port_detalle_title, port_agregar_activo, port_conversor_title, port_conv_*
-- Picker: port_picker_title, port_picker_search_placeholder, port_picker_fiat, port_picker_stocks
-- Estado vacío: port_empty_title, port_empty_desc, port_empty_btn
-- Cuenta requerida: port_need_account_*
-- Formulario agregar: port_search_placeholder, port_cantidad_*, port_precio_*, port_preview_*
-- Búsqueda: port_buscando, port_sin_resultados, port_cargando
-- Validaciones: port_err_select_activo, port_err_cantidad, port_err_precio
-- Duplicados: port_dupe_*
-- Termómetro: port_thermo_*, port_signal_*, port_entendido
-- Thermo Help: port_thermo_help_*
-- 52 semanas: port_52w_*
-- Detalle señal: port_detail_objetivo, port_detail_stop_loss, port_detail_upside, port_detail_downside, port_sin_senal_hoy
-- Grid info: port_pnl_usd, port_entrada, port_min_52sem, port_max_52sem
-- Simulador: port_sim_*
-- Compartir: port_compartir
-- Eliminar: port_confirm_eliminar
-- Editar: port_editar_title, port_item_not_found, port_err_edit_values
-- Long press: port_lp_analisis, port_lp_editar, port_lp_compartir, port_lp_confirmar_eliminar
+**L5039**: `flags` objeto expandido de 4 a 8 (agrega fr, it, hi, ar)
+**L6276-6284**: Array `langs` expandido de 4 a 8 idiomas, todos con `soon: false`
+**L6298-6300**: Título usa `t('idioma_label')`, Cancelar usa `t('cancelar')`
 
-Reutiliza keys existentes: `guardar`, `cancelar`
+## Fix 2: Termómetro visual (_renderThermoBuckets) — todo en español
 
-### 2. index.html — 22 data-i18n aplicados
-- L1471: port_header_title
-- L1484: port_valor_total
-- L1495-1500: port_period_24h/7d/1m/3m/1y/buy (dropdown items)
-- L1512: port_activos_label
-- L1516: port_mejor_24h (data-i18n-html)
-- L1519: port_agregar_activos (data-i18n-html)
-- L1520: port_conv_btn (data-i18n-html)
-- L1531: port_detalle_title
-- L1550: port_agregar_activo
-- L1561: port_conversor_title
-- L1565: port_conv_monto
-- L1570: port_conv_de
-- L1582: port_conv_a
-- L1594: port_conv_resultado
-- L1596: port_conv_placeholder
-- L1603: port_picker_title
-- L1608: port_picker_search_placeholder (data-i18n-attr="placeholder")
-- L1683: renderAssetList typeName usa t() para fiat y stocks
+**L1267-1270**: Labels de leyenda → `t('port_thermo_leg_alcista')`, etc.
+**L1286-1298**: 6 mensajes de recomendación → `t('port_thermo_msg_*')`
+**L1303**: "TERMÓMETRO DE RIESGO" → `t('port_thermo_bar_title')`
+**L1306**: "CAPITAL POR SEÑAL IA" → `t('port_thermo_bar_subtitle')`
 
-### 3. aurex-features.js — 12 funciones modificadas con t()
-- `_renderPortfolioEmpty()` — 3 strings
-- `pcLoadPrices()` — 3 strings
-- `showThermoInfo()` — 11 strings
-- `showThermoHelp()` — 11 strings
-- `openAddActivo()` — 4 strings (cuenta requerida)
-- `_openAddActivoModal()` — 11 strings (formulario completo)
-- `filterPortSearch()` — 2 strings
-- `selectPortActivo()` — 1 string (Cargando...)
-- `savePortActivo()` — 3 strings (validaciones)
-- `_showDupeModal()` — 14 strings (modal completo)
-- `openPortItemDetail()` — 22 strings (52w, signal, grid, simulator, compartir)
-- `deletePortfolioItem()` — 1 string (confirm)
-- `_lpEditarPortItem()` — 6 strings (modal editar)
-- `_attachAllPortfolioLP()` — 4 strings (long press labels)
+Keys nuevas (22):
+- port_thermo_bar_title, port_thermo_bar_subtitle
+- port_thermo_leg_alcista, port_thermo_leg_bajista, port_thermo_leg_sindir, port_thermo_leg_sinsenal
+- port_thermo_msg_baj50, port_thermo_msg_baj50_suf, port_thermo_msg_baj50_tip
+- port_thermo_msg_baj20, port_thermo_msg_baj20_suf, port_thermo_msg_baj20_tip
+- port_thermo_msg_alc50, port_thermo_msg_alc50_suf, port_thermo_msg_alc50_tip
+- port_thermo_msg_hc40, port_thermo_msg_hc40_tip
+- port_thermo_msg_sin70, port_thermo_msg_sin70_tip
+- port_thermo_msg_mix, port_thermo_msg_mix_tip
+
+## Fix 3: Sort modal + botón — todo en español
+
+**L5538-5573**: `_sortCfgs` cambia `l:` y `d:` por `lk:` y `dk:` (keys de traducción)
+**L5604**: "Ordenar por" → `t('port_sort_title')`
+**L5613-5614**: Labels/desc → `t(o.lk)` / `t(o.dk)`
+**L5622**: Botón tras selección → `t('port_sort_btn_prefix')`
+**L5630**: "Cancelar" → `t('cancelar')`
+**L5648**: Botón inicial → `t('port_sort_btn_prefix')` + `t(curOpt.lk)`
+
+Keys nuevas (23):
+- port_sort_title, port_sort_btn_prefix
+- sort_valor, sort_valor_d, sort_pct_hoy, sort_pct_hoy_d
+- sort_pnl_usd, sort_pnl_usd_d, sort_pnl_pct, sort_pnl_pct_d
+- sort_senal_ia, sort_senal_ia_d, sort_prob, sort_prob_d
+- sort_ticker, sort_ticker_d, sort_fecha, sort_fecha_d
+- sort_default, sort_default_d, sort_precio, sort_precio_d
+- sort_pct_7d, sort_pct_7d_d, sort_pct_30d, sort_pct_30d_d
+- sort_upside, sort_upside_d, sort_default_ia_d
 
 ---
 
 ## Verificación
-- Todos los 8 idiomas presentes en cada key: ES, EN, PT, ZH, FR, IT, HI, AR
-- Keys `guardar` y `cancelar` reutilizadas correctamente (ya existían)
-- Strings que NO se traducen: nombres cryptos/stocks, tickers, "P&L", "Stop Loss", "LIVE", periodos cortos (24h/7d/1m/3m/1y)
-- `port_detail_upside` y `port_detail_downside` implementados como 2 keys separadas (aclaración de Escritorio)
+- Todas las keys con 8 idiomas: ES, EN, PT, ZH, FR, IT, HI, AR
+- Modal Idioma ahora muestra 8 banderas seleccionables (ninguna SOON)
+- Termómetro visual traduce: título, subtítulo, 4 labels leyenda, 6 mensajes
+- Sort traduce: título modal, botón, 8 opciones portfolio, 6 mercados, 7 watchlist, 7 IA
