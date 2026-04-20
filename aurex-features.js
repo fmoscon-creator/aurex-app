@@ -995,6 +995,7 @@ function _renderPortfolioItems(items){
 }
 
 
+
 // === Portfolio currency switch: USD / USDT / BTC ===
 window._portCurrency = 'USD'; // default
 
@@ -6306,11 +6307,11 @@ window._openIdiomaModal = function() {
 };
 
 window._setIdioma = function(code) {
-  localStorage.setItem('aurex_lang', code);
+  if (window._i18n) window._i18n.setLang(code);
+  else localStorage.setItem('aurex_lang', code);
   var ov = document.getElementById('idioma-modal-overlay');
   if (ov) ov.remove();
-  // Actualizar bandera en el botón del header
-  var flags = { es: '🇪🇸', en: '🇺🇸', pt: '🇧🇷', zh: '🇨🇳' };
+  var flags = { es: '🇪🇸', en: '🇺🇸', pt: '🇧🇷', zh: '🇨🇳', fr: '🇫🇷', it: '🇮🇹', hi: '🇮🇳', ar: '🇦🇪' };
   var flagEl = document.getElementById('lang-flag');
   if (flagEl) flagEl.textContent = flags[code] || '🇪🇸';
 };
