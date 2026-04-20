@@ -241,7 +241,159 @@
       hi: 'निवेश निर्णय लेने से पहले हमेशा प्रमाणित वित्तीय सलाहकार से परामर्श लें।',
       ar: 'استشر دائماً مستشاراً مالياً معتمداً قبل اتخاذ قرارات استثمارية.'
     },
-    aviso_legal_cerrar: { es: '✕ Cerrar', en: '✕ Close', pt: '✕ Fechar', zh: '✕ 关闭', fr: '✕ Fermer', it: '✕ Chiudi', hi: '✕ बंद करें', ar: '✕ إغلاق' }
+    aviso_legal_cerrar: { es: '✕ Cerrar', en: '✕ Close', pt: '✕ Fechar', zh: '✕ 关闭', fr: '✕ Fermer', it: '✕ Chiudi', hi: '✕ बंद करें', ar: '✕ إغلاق' },
+
+    // === PORTFOLIO ===
+
+    // Header
+    port_header_title: { es: 'Portfolio', en: 'Portfolio', pt: 'Portfólio', zh: '投资组合', fr: 'Portfolio', it: 'Portfolio', hi: 'Portfolio', ar: 'Portfolio' },
+    port_valor_total: { es: 'VALOR TOTAL', en: 'TOTAL VALUE', pt: 'VALOR TOTAL', zh: '总价值', fr: 'VALEUR TOTALE', it: 'VALORE TOTALE', hi: 'कुल मूल्य', ar: 'القيمة الإجمالية' },
+    port_period_24h: { es: '24 horas', en: '24 hours', pt: '24 horas', zh: '24小时', fr: '24 heures', it: '24 ore', hi: '24 घंटे', ar: '24 ساعة' },
+    port_period_7d: { es: '7 días', en: '7 days', pt: '7 dias', zh: '7天', fr: '7 jours', it: '7 giorni', hi: '7 दिन', ar: '7 أيام' },
+    port_period_1m: { es: '1 mes', en: '1 month', pt: '1 mês', zh: '1个月', fr: '1 mois', it: '1 mese', hi: '1 महीना', ar: 'شهر واحد' },
+    port_period_3m: { es: '3 meses', en: '3 months', pt: '3 meses', zh: '3个月', fr: '3 mois', it: '3 mesi', hi: '3 महीने', ar: '3 أشهر' },
+    port_period_1y: { es: '1 año', en: '1 year', pt: '1 ano', zh: '1年', fr: '1 an', it: '1 anno', hi: '1 वर्ष', ar: 'سنة واحدة' },
+    port_period_buy: { es: 'Desde compra', en: 'Since purchase', pt: 'Desde compra', zh: '自购买', fr: "Depuis l'achat", it: "Dall'acquisto", hi: 'खरीद से', ar: 'منذ الشراء' },
+    port_activos_label: { es: 'Activos', en: 'Assets', pt: 'Ativos', zh: '资产', fr: 'Actifs', it: 'Asset', hi: 'एसेट', ar: 'أصول' },
+    port_mejor_24h: { es: '🏆 Mejor 24h', en: '🏆 Best 24h', pt: '🏆 Melhor 24h', zh: '🏆 最佳24h', fr: '🏆 Meilleur 24h', it: '🏆 Migliore 24h', hi: '🏆 श्रेष्ठ 24h', ar: '🏆 الأفضل 24س' },
+    port_agregar_activos: { es: 'Agregar Activos ＋', en: 'Add Assets ＋', pt: 'Adicionar Ativos ＋', zh: '添加资产 ＋', fr: 'Ajouter Actifs ＋', it: 'Aggiungi Asset ＋', hi: 'एसेट जोड़ें ＋', ar: 'إضافة أصول ＋' },
+    port_conv_btn: { es: '⇄ Conv.', en: '⇄ Conv.', pt: '⇄ Conv.', zh: '⇄ 换算', fr: '⇄ Conv.', it: '⇄ Conv.', hi: '⇄ कन्व.', ar: '⇄ تحويل' },
+
+    // Modal Detalle
+    port_detalle_title: { es: 'Detalle', en: 'Detail', pt: 'Detalhe', zh: '详情', fr: 'Détail', it: 'Dettaglio', hi: 'विवरण', ar: 'التفاصيل' },
+
+    // Modal Agregar
+    port_agregar_activo: { es: 'Agregar activo', en: 'Add asset', pt: 'Adicionar ativo', zh: '添加资产', fr: 'Ajouter un actif', it: 'Aggiungi asset', hi: 'एसेट जोड़ें', ar: 'إضافة أصل' },
+
+    // Modal Conversor
+    port_conversor_title: { es: 'Conversor', en: 'Converter', pt: 'Conversor', zh: '换算器', fr: 'Convertisseur', it: 'Convertitore', hi: 'कनवर्टर', ar: 'المحوّل' },
+    port_conv_monto: { es: 'Monto', en: 'Amount', pt: 'Valor', zh: '金额', fr: 'Montant', it: 'Importo', hi: 'राशि', ar: 'المبلغ' },
+    port_conv_de: { es: 'De', en: 'From', pt: 'De', zh: '从', fr: 'De', it: 'Da', hi: 'से', ar: 'من' },
+    port_conv_a: { es: 'A', en: 'To', pt: 'Para', zh: '到', fr: 'À', it: 'A', hi: 'को', ar: 'إلى' },
+    port_conv_resultado: { es: 'Resultado', en: 'Result', pt: 'Resultado', zh: '结果', fr: 'Résultat', it: 'Risultato', hi: 'परिणाम', ar: 'النتيجة' },
+    port_conv_placeholder: { es: 'Ingresá un monto para convertir', en: 'Enter an amount to convert', pt: 'Insira um valor para converter', zh: '输入要换算的金额', fr: 'Entrez un montant à convertir', it: 'Inserisci un importo da convertire', hi: 'कनवर्ट करने के लिए राशि दर्ज करें', ar: 'أدخل مبلغاً للتحويل' },
+    port_conv_loading: { es: 'Obteniendo precios...', en: 'Getting prices...', pt: 'Obtendo preços...', zh: '获取价格中...', fr: 'Obtention des prix...', it: 'Ottenimento prezzi...', hi: 'मूल्य प्राप्त हो रहे हैं...', ar: 'جلب الأسعار...' },
+    port_conv_live: { es: 'Precios en vivo via Binance', en: 'Live prices via Binance', pt: 'Preços ao vivo via Binance', zh: '通过Binance实时价格', fr: 'Prix en direct via Binance', it: 'Prezzi live via Binance', hi: 'Binance से लाइव मूल्य', ar: 'أسعار مباشرة عبر Binance' },
+    port_conv_offline: { es: 'Precios sin conexion (aprox)', en: 'Offline prices (approx)', pt: 'Preços offline (aprox)', zh: '离线价格（近似）', fr: 'Prix hors ligne (approx)', it: 'Prezzi offline (approx)', hi: 'ऑफ़लाइन मूल्य (अनुमानित)', ar: 'أسعار دون اتصال (تقريبية)' },
+
+    // Asset Picker
+    port_picker_title: { es: 'Seleccionar activo', en: 'Select asset', pt: 'Selecionar ativo', zh: '选择资产', fr: 'Sélectionner un actif', it: 'Seleziona asset', hi: 'एसेट चुनें', ar: 'اختر أصلاً' },
+    port_picker_search_placeholder: { es: 'Buscar por nombre o ticker...', en: 'Search by name or ticker...', pt: 'Buscar por nome ou ticker...', zh: '按名称或代码搜索...', fr: 'Rechercher par nom ou ticker...', it: 'Cerca per nome o ticker...', hi: 'नाम या टिकर से खोजें...', ar: 'البحث بالاسم أو الرمز...' },
+    port_picker_fiat: { es: 'Monedas Fiat', en: 'Fiat Currencies', pt: 'Moedas Fiat', zh: '法定货币', fr: 'Monnaies Fiat', it: 'Valute Fiat', hi: 'फिएट मुद्राएँ', ar: 'عملات ورقية' },
+    port_picker_stocks: { es: 'Acciones USA', en: 'US Stocks', pt: 'Ações EUA', zh: '美股', fr: 'Actions US', it: 'Azioni USA', hi: 'अमेरिकी स्टॉक', ar: 'أسهم أمريكية' },
+
+    // Estado vacío
+    port_empty_title: { es: 'Tu portfolio esta vacio', en: 'Your portfolio is empty', pt: 'Seu portfólio está vazio', zh: '您的投资组合为空', fr: 'Votre portfolio est vide', it: 'Il tuo portfolio è vuoto', hi: 'आपका portfolio खाली है', ar: 'محفظتك فارغة' },
+    port_empty_desc: { es: 'Agrega tu primer activo para empezar a seguir tu cartera en tiempo real', en: 'Add your first asset to start tracking your portfolio in real time', pt: 'Adicione seu primeiro ativo para começar a acompanhar seu portfólio em tempo real', zh: '添加您的第一个资产以开始实时跟踪您的投资组合', fr: 'Ajoutez votre premier actif pour commencer à suivre votre portefeuille en temps réel', it: 'Aggiungi il tuo primo asset per iniziare a seguire il tuo portafoglio in tempo reale', hi: 'रियल-टाइम में अपने portfolio को ट्रैक करने के लिए अपना पहला एसेट जोड़ें', ar: 'أضف أول أصل لبدء متابعة محفظتك في الوقت الحقيقي' },
+    port_empty_btn: { es: '+ Agregar primer activo', en: '+ Add first asset', pt: '+ Adicionar primeiro ativo', zh: '+ 添加第一个资产', fr: '+ Ajouter le premier actif', it: '+ Aggiungi primo asset', hi: '+ पहला एसेट जोड़ें', ar: '+ إضافة أول أصل' },
+
+    // Cuenta requerida
+    port_need_account_title: { es: 'Necesitás una cuenta', en: 'You need an account', pt: 'Você precisa de uma conta', zh: '您需要一个账户', fr: 'Vous avez besoin d\'un compte', it: 'Hai bisogno di un account', hi: 'आपको एक खाता चाहिए', ar: 'تحتاج إلى حساب' },
+    port_need_account_desc: { es: 'Para guardar activos reales, creá tu cuenta gratis.', en: 'To save real assets, create your free account.', pt: 'Para salvar ativos reais, crie sua conta grátis.', zh: '要保存真实资产，请创建免费账户。', fr: 'Pour sauvegarder des actifs réels, créez votre compte gratuit.', it: 'Per salvare asset reali, crea il tuo account gratuito.', hi: 'वास्तविक एसेट सहेजने के लिए मुफ़्त खाता बनाएँ।', ar: 'لحفظ أصول حقيقية، أنشئ حسابك المجاني.' },
+    port_need_account_btn: { es: 'Crear cuenta gratis →', en: 'Create free account →', pt: 'Criar conta grátis →', zh: '创建免费账户 →', fr: 'Créer un compte gratuit →', it: 'Crea account gratuito →', hi: 'मुफ़्त खाता बनाएँ →', ar: 'إنشاء حساب مجاني ←' },
+    port_need_account_login: { es: 'Ya tengo cuenta', en: 'I already have an account', pt: 'Já tenho conta', zh: '我已有账户', fr: "J'ai déjà un compte", it: 'Ho già un account', hi: 'मेरा खाता पहले से है', ar: 'لدي حساب بالفعل' },
+
+    // Modal Agregar — campos
+    port_search_placeholder: { es: 'Buscar ticker o nombre (ej: IBIT, HOOD, BTC...)', en: 'Search ticker or name (e.g.: IBIT, HOOD, BTC...)', pt: 'Buscar ticker ou nome (ex: IBIT, HOOD, BTC...)', zh: '搜索代码或名称（例：IBIT, HOOD, BTC...）', fr: 'Rechercher ticker ou nom (ex : IBIT, HOOD, BTC...)', it: 'Cerca ticker o nome (es: IBIT, HOOD, BTC...)', hi: 'टिकर या नाम खोजें (उदा: IBIT, HOOD, BTC...)', ar: 'البحث بالرمز أو الاسم (مثل: IBIT, HOOD, BTC...)' },
+    port_cantidad_label: { es: 'Cantidad', en: 'Quantity', pt: 'Quantidade', zh: '数量', fr: 'Quantité', it: 'Quantità', hi: 'मात्रा', ar: 'الكمية' },
+    port_cantidad_placeholder: { es: 'Ej: 0.5', en: 'E.g.: 0.5', pt: 'Ex: 0.5', zh: '例：0.5', fr: 'Ex : 0.5', it: 'Es: 0.5', hi: 'उदा: 0.5', ar: 'مثال: 0.5' },
+    port_precio_compra_label: { es: 'Precio de compra (USD)', en: 'Purchase price (USD)', pt: 'Preço de compra (USD)', zh: '购买价格 (USD)', fr: "Prix d'achat (USD)", it: 'Prezzo di acquisto (USD)', hi: 'खरीद मूल्य (USD)', ar: 'سعر الشراء (USD)' },
+    port_precio_placeholder: { es: 'Ej: 65000', en: 'E.g.: 65000', pt: 'Ex: 65000', zh: '例：65000', fr: 'Ex : 65000', it: 'Es: 65000', hi: 'उदा: 65000', ar: 'مثال: 65000' },
+    port_preview_title: { es: '📊 VISTA PREVIA', en: '📊 PREVIEW', pt: '📊 PRÉ-VISUALIZAÇÃO', zh: '📊 预览', fr: '📊 APERÇU', it: '📊 ANTEPRIMA', hi: '📊 पूर्वावलोकन', ar: '📊 معاينة' },
+    port_preview_precio_mercado: { es: 'Precio actual de mercado:', en: 'Current market price:', pt: 'Preço atual de mercado:', zh: '当前市场价格：', fr: 'Prix actuel du marché :', it: 'Prezzo attuale di mercato:', hi: 'वर्तमान बाज़ार मूल्य:', ar: 'سعر السوق الحالي:' },
+    port_preview_valor_sumara: { es: 'Valor que sumará al portfolio:', en: 'Value to add to portfolio:', pt: 'Valor que somará ao portfólio:', zh: '将添加到投资组合的价值：', fr: 'Valeur ajoutée au portfolio :', it: 'Valore che si aggiungerà al portfolio:', hi: 'Portfolio में जुड़ने वाला मूल्य:', ar: 'القيمة المضافة إلى Portfolio:' },
+    port_preview_pnl_inicial: { es: 'P&L inicial (vs precio compra):', en: 'Initial P&L (vs purchase price):', pt: 'P&L inicial (vs preço compra):', zh: '初始盈亏（对比购买价）：', fr: "P&L initial (vs prix d'achat) :", it: 'P&L iniziale (vs prezzo acquisto):', hi: 'प्रारंभिक P&L (खरीद मूल्य बनाम):', ar: 'P&L الأولي (مقابل سعر الشراء):' },
+
+    // Búsqueda
+    port_buscando: { es: 'Buscando...', en: 'Searching...', pt: 'Buscando...', zh: '搜索中...', fr: 'Recherche...', it: 'Ricerca...', hi: 'खोज रहे हैं...', ar: 'جارٍ البحث...' },
+    port_sin_resultados: { es: 'Sin resultados para "', en: 'No results for "', pt: 'Sem resultados para "', zh: '没有找到"', fr: 'Aucun résultat pour "', it: 'Nessun risultato per "', hi: 'कोई परिणाम नहीं "', ar: 'لا نتائج لـ "' },
+    port_cargando: { es: 'Cargando...', en: 'Loading...', pt: 'Carregando...', zh: '加载中...', fr: 'Chargement...', it: 'Caricamento...', hi: 'लोड हो रहा है...', ar: 'جارٍ التحميل...' },
+
+    // Validaciones
+    port_err_select_activo: { es: 'Seleccioná un activo de la lista', en: 'Select an asset from the list', pt: 'Selecione um ativo da lista', zh: '请从列表中选择资产', fr: 'Sélectionnez un actif de la liste', it: 'Seleziona un asset dalla lista', hi: 'सूची से एसेट चुनें', ar: 'اختر أصلاً من القائمة' },
+    port_err_cantidad: { es: 'Ingresá una cantidad mayor a 0', en: 'Enter a quantity greater than 0', pt: 'Insira uma quantidade maior que 0', zh: '请输入大于0的数量', fr: 'Entrez une quantité supérieure à 0', it: 'Inserisci una quantità maggiore di 0', hi: '0 से अधिक मात्रा दर्ज करें', ar: 'أدخل كمية أكبر من 0' },
+    port_err_precio: { es: 'Ingresá un precio de compra mayor a 0', en: 'Enter a purchase price greater than 0', pt: 'Insira um preço de compra maior que 0', zh: '请输入大于0的购买价格', fr: "Entrez un prix d'achat supérieur à 0", it: 'Inserisci un prezzo di acquisto maggiore di 0', hi: '0 से अधिक खरीद मूल्य दर्ज करें', ar: 'أدخل سعر شراء أكبر من 0' },
+
+    // Modal Duplicados
+    port_dupe_title_suffix: { es: 'ya está en tu portfolio', en: 'is already in your portfolio', pt: 'já está no seu portfólio', zh: '已在您的投资组合中', fr: 'est déjà dans votre portfolio', it: 'è già nel tuo portfolio', hi: 'पहले से आपके portfolio में है', ar: 'موجود بالفعل في محفظتك' },
+    port_dupe_question: { es: '¿Qué querés hacer?', en: 'What do you want to do?', pt: 'O que você quer fazer?', zh: '您想怎么做？', fr: 'Que voulez-vous faire ?', it: 'Cosa vuoi fare?', hi: 'आप क्या करना चाहते हैं?', ar: 'ماذا تريد أن تفعل؟' },
+    port_dupe_actual: { es: 'ACTUAL', en: 'CURRENT', pt: 'ATUAL', zh: '当前', fr: 'ACTUEL', it: 'ATTUALE', hi: 'वर्तमान', ar: 'الحالي' },
+    port_precio_compra_short: { es: 'Precio compra', en: 'Purchase price', pt: 'Preço compra', zh: '购买价格', fr: "Prix d'achat", it: 'Prezzo acquisto', hi: 'खरीद मूल्य', ar: 'سعر الشراء' },
+    port_dupe_nuevo: { es: 'NUEVO', en: 'NEW', pt: 'NOVO', zh: '新', fr: 'NOUVEAU', it: 'NUOVO', hi: 'नया', ar: 'جديد' },
+    port_dupe_sumar: { es: '➕ Sumar al existente', en: '➕ Add to existing', pt: '➕ Somar ao existente', zh: '➕ 合并到现有', fr: "➕ Ajouter à l'existant", it: '➕ Somma al esistente', hi: '➕ मौजूद में जोड़ें', ar: '➕ إضافة إلى الموجود' },
+    port_dupe_total: { es: 'Total:', en: 'Total:', pt: 'Total:', zh: '总计：', fr: 'Total :', it: 'Totale:', hi: 'कुल:', ar: 'المجموع:' },
+    port_dupe_promedio: { es: 'Precio promedio ponderado:', en: 'Weighted avg price:', pt: 'Preço médio ponderado:', zh: '加权平均价格：', fr: 'Prix moyen pondéré :', it: 'Prezzo medio ponderato:', hi: 'भारित औसत मूल्य:', ar: 'متوسط السعر المرجح:' },
+    port_dupe_reemplazar: { es: '↻ Reemplazar valores', en: '↻ Replace values', pt: '↻ Substituir valores', zh: '↻ 替换数值', fr: '↻ Remplacer les valeurs', it: '↻ Sostituisci valori', hi: '↻ मान बदलें', ar: '↻ استبدال القيم' },
+    port_dupe_descarta: { es: 'Descarta lo anterior · Nuevo:', en: 'Discards previous · New:', pt: 'Descarta o anterior · Novo:', zh: '丢弃之前的 · 新：', fr: "Supprime l'ancien · Nouveau :", it: 'Scarta il precedente · Nuovo:', hi: 'पिछला हटाएँ · नया:', ar: 'تجاهل السابق · جديد:' },
+
+    // Termómetro de Riesgo
+    port_thermo_title: { es: '🌡️ Termómetro de Riesgo', en: '🌡️ Risk Thermometer', pt: '🌡️ Termômetro de Risco', zh: '🌡️ 风险温度计', fr: '🌡️ Thermomètre de Risque', it: '🌡️ Termometro di Rischio', hi: '🌡️ जोखिम थर्मामीटर', ar: '🌡️ مقياس المخاطر' },
+    port_thermo_desc: { es: 'Muestra cómo está distribuido el capital de tu cartera según las señales activas de AUREX IA:', en: 'Shows how your portfolio capital is distributed according to active AUREX AI signals:', pt: 'Mostra como o capital do seu portfólio está distribuído segundo os sinais ativos da AUREX IA:', zh: '显示您的投资组合资金如何根据AUREX AI活跃信号分布：', fr: 'Montre comment le capital de votre portefeuille est réparti selon les signaux actifs AUREX IA :', it: 'Mostra come il capitale del tuo portafoglio è distribuito secondo i segnali attivi di AUREX IA:', hi: 'दिखाता है कि AUREX AI सक्रिय सिग्नल के अनुसार आपका portfolio पूँजी कैसे वितरित है:', ar: 'يوضح كيف يتوزع رأس مال محفظتك وفقاً لإشارات AUREX AI النشطة:' },
+    port_signal_alcista: { es: 'ALCISTA', en: 'BULLISH', pt: 'ALTISTA', zh: '看涨', fr: 'HAUSSIER', it: 'RIALZISTA', hi: 'तेज़ी', ar: 'صاعد' },
+    port_thermo_alcista_desc: { es: 'La IA ve momentum positivo: precio subiendo, volumen comprador. Alta probabilidad de suba en 24-48hs.', en: 'AI sees positive momentum: price rising, buying volume. High probability of increase in 24-48h.', pt: 'A IA vê momentum positivo: preço subindo, volume comprador. Alta probabilidade de alta em 24-48h.', zh: 'AI检测到正面动能：价格上涨，买入量增加。24-48小时内上涨概率高。', fr: "L'IA voit un momentum positif : prix en hausse, volume acheteur. Forte probabilité de hausse en 24-48h.", it: "L'IA vede momentum positivo: prezzo in salita, volume acquisti. Alta probabilità di rialzo in 24-48h.", hi: 'AI सकारात्मक गति देख रहा है: मूल्य बढ़ रहा है, खरीद मात्रा। 24-48 घंटे में वृद्धि की उच्च संभावना।', ar: 'الذكاء الاصطناعي يرى زخماً إيجابياً: السعر يرتفع، حجم شراء. احتمال ارتفاع عالٍ خلال 24-48 ساعة.' },
+    port_signal_alta_conv: { es: 'ALTA CONV-IA', en: 'HIGH CONV-AI', pt: 'ALTA CONV-IA', zh: '高度AI收敛', fr: 'HAUTE CONV-IA', it: 'ALTA CONV-IA', hi: 'उच्च CONV-AI', ar: 'تقارب AI عالي' },
+    port_thermo_conv_desc: { es: 'La señal más valiosa y rara. Máxima atención: movimiento fuerte inminente. Solo 1-2 activos por día reciben esta señal.', en: 'The most valuable and rare signal. Maximum attention: strong move imminent. Only 1-2 assets per day receive this signal.', pt: 'O sinal mais valioso e raro. Máxima atenção: movimento forte iminente. Apenas 1-2 ativos por dia recebem este sinal.', zh: '最有价值和稀有的信号。最高关注：即将出现强烈走势。每天仅1-2个资产收到此信号。', fr: 'Le signal le plus précieux et rare. Attention maximale : mouvement fort imminent. Seuls 1-2 actifs par jour reçoivent ce signal.', it: 'Il segnale più prezioso e raro. Massima attenzione: movimento forte imminente. Solo 1-2 asset al giorno ricevono questo segnale.', hi: 'सबसे मूल्यवान और दुर्लभ सिग्नल। अधिकतम ध्यान: मजबूत चाल आसन्न। प्रतिदिन केवल 1-2 एसेट को यह सिग्नल मिलता है।', ar: 'الإشارة الأكثر قيمة وندرة. انتباه أقصى: حركة قوية وشيكة. فقط 1-2 أصول يومياً تتلقى هذه الإشارة.' },
+    port_signal_bajista: { es: 'BAJISTA', en: 'BEARISH', pt: 'BAIXISTA', zh: '看跌', fr: 'BAISSIER', it: 'RIBASSISTA', hi: 'मंदी', ar: 'هابط' },
+    port_thermo_bajista_desc: { es: 'La IA ve momentum negativo: precio cayendo, volumen vendedor. Alta probabilidad de baja en 24-48hs.', en: 'AI sees negative momentum: price falling, selling volume. High probability of decline in 24-48h.', pt: 'A IA vê momentum negativo: preço caindo, volume vendedor. Alta probabilidade de queda em 24-48h.', zh: 'AI检测到负面动能：价格下跌，卖出量增加。24-48小时内下跌概率高。', fr: "L'IA voit un momentum négatif : prix en baisse, volume vendeur. Forte probabilité de baisse en 24-48h.", it: "L'IA vede momentum negativo: prezzo in calo, volume vendite. Alta probabilità di ribasso in 24-48h.", hi: 'AI नकारात्मक गति देख रहा है: मूल्य गिर रहा है, बिक्री मात्रा। 24-48 घंटे में गिरावट की उच्च संभावना।', ar: 'الذكاء الاصطناعي يرى زخماً سلبياً: السعر ينخفض، حجم بيع. احتمال انخفاض عالٍ خلال 24-48 ساعة.' },
+    port_signal_sin_senal: { es: 'SIN SEÑAL', en: 'NO SIGNAL', pt: 'SEM SINAL', zh: '无信号', fr: 'SANS SIGNAL', it: 'SENZA SEGNALE', hi: 'कोई सिग्नल नहीं', ar: 'بدون إشارة' },
+    port_thermo_sin_senal_desc: { es: 'No hay señal activa hoy para este activo. No es una alerta, simplemente el modelo no detectó nada destacable.', en: 'No active signal today for this asset. Not an alert, the model simply did not detect anything notable.', pt: 'Não há sinal ativo hoje para este ativo. Não é um alerta, simplesmente o modelo não detectou nada notável.', zh: '今天该资产没有活跃信号。这不是警报，只是模型未检测到任何值得注意的情况。', fr: "Pas de signal actif aujourd'hui pour cet actif. Ce n'est pas une alerte, le modèle n'a simplement rien détecté de notable.", it: "Nessun segnale attivo oggi per questo asset. Non è un avviso, semplicemente il modello non ha rilevato nulla di notevole.", hi: 'आज इस एसेट के लिए कोई सक्रिय सिग्नल नहीं। यह अलर्ट नहीं है, बस मॉडल ने कुछ उल्लेखनीय नहीं पाया।', ar: 'لا إشارة نشطة اليوم لهذا الأصل. ليس تنبيهاً، ببساطة لم يكتشف النموذج شيئاً ملحوظاً.' },
+    port_entendido: { es: 'Entendido', en: 'Got it', pt: 'Entendido', zh: '明白了', fr: 'Compris', it: 'Capito', hi: 'समझ गया', ar: 'فهمت' },
+
+    // Thermo Help
+    port_thermo_help_title: { es: '🌡️ Cómo leer el Termómetro', en: '🌡️ How to read the Thermometer', pt: '🌡️ Como ler o Termômetro', zh: '🌡️ 如何解读温度计', fr: '🌡️ Comment lire le Thermomètre', it: '🌡️ Come leggere il Termometro', hi: '🌡️ थर्मामीटर कैसे पढ़ें', ar: '🌡️ كيف تقرأ المقياس' },
+    port_thermo_help_verde: { es: '🟢 Verde — Alcista', en: '🟢 Green — Bullish', pt: '🟢 Verde — Altista', zh: '🟢 绿色 — 看涨', fr: '🟢 Vert — Haussier', it: '🟢 Verde — Rialzista', hi: '🟢 हरा — तेज़ी', ar: '🟢 أخضر — صاعد' },
+    port_thermo_help_verde_desc: { es: 'Señal confirmada de suba. Buen momento para mantener o aumentar posición.', en: 'Confirmed upward signal. Good time to hold or increase position.', pt: 'Sinal confirmado de alta. Bom momento para manter ou aumentar posição.', zh: '确认的上涨信号。持有或增加仓位的好时机。', fr: 'Signal confirmé de hausse. Bon moment pour maintenir ou augmenter la position.', it: 'Segnale confermato di rialzo. Buon momento per mantenere o aumentare la posizione.', hi: 'वृद्धि का पुष्ट सिग्नल। स्थिति बनाए रखने या बढ़ाने का अच्छा समय।', ar: 'إشارة صعود مؤكدة. وقت مناسب للاحتفاظ أو زيادة المركز.' },
+    port_thermo_help_rojo: { es: '🔴 Rojo — Bajista', en: '🔴 Red — Bearish', pt: '🔴 Vermelho — Baixista', zh: '🔴 红色 — 看跌', fr: '🔴 Rouge — Baissier', it: '🔴 Rosso — Ribassista', hi: '🔴 लाल — मंदी', ar: '🔴 أحمر — هابط' },
+    port_thermo_help_rojo_desc: { es: 'Señal confirmada de caída. Evaluá reducir antes de que baje más.', en: 'Confirmed downward signal. Consider reducing before it drops further.', pt: 'Sinal confirmado de queda. Avalie reduzir antes que caia mais.', zh: '确认的下跌信号。考虑在进一步下跌前减仓。', fr: 'Signal confirmé de baisse. Envisagez de réduire avant que ça baisse davantage.', it: 'Segnale confermato di ribasso. Valuta di ridurre prima che scenda ancora.', hi: 'गिरावट का पुष्ट सिग्नल। और गिरने से पहले कम करने पर विचार करें।', ar: 'إشارة هبوط مؤكدة. فكر في التقليل قبل أن ينخفض أكثر.' },
+    port_thermo_help_dorado: { es: '⚡ Dorado — Sin dirección', en: '⚡ Gold — No direction', pt: '⚡ Dourado — Sem direção', zh: '⚡ 金色 — 无方向', fr: '⚡ Doré — Sans direction', it: '⚡ Oro — Senza direzione', hi: '⚡ सुनहरा — दिशाहीन', ar: '⚡ ذهبي — بدون اتجاه' },
+    port_thermo_help_dorado_desc: { es: 'Movimiento fuerte inminente sin confirmar. Esperá la señal — no operar todavía.', en: 'Strong unconfirmed move imminent. Wait for signal — do not trade yet.', pt: 'Movimento forte iminente sem confirmação. Espere o sinal — não opere ainda.', zh: '即将出现未确认的强烈走势。等待信号——暂不操作。', fr: 'Mouvement fort imminent non confirmé. Attendez le signal — ne pas opérer encore.', it: 'Movimento forte imminente non confermato. Aspetta il segnale — non operare ancora.', hi: 'बिना पुष्टि के मजबूत चाल आसन्न। सिग्नल की प्रतीक्षा करें — अभी ट्रेड न करें।', ar: 'حركة قوية وشيكة غير مؤكدة. انتظر الإشارة — لا تتداول بعد.' },
+    port_thermo_help_gris: { es: '⚫ Gris — Sin señal', en: '⚫ Grey — No signal', pt: '⚫ Cinza — Sem sinal', zh: '⚫ 灰色 — 无信号', fr: '⚫ Gris — Sans signal', it: '⚫ Grigio — Senza segnale', hi: '⚫ ग्रे — कोई सिग्नल नहीं', ar: '⚫ رمادي — بدون إشارة' },
+    port_thermo_help_gris_desc: { es: 'La IA no tiene datos suficientes hoy. Sin acción recomendada.', en: 'AI does not have enough data today. No recommended action.', pt: 'A IA não tem dados suficientes hoje. Sem ação recomendada.', zh: '今天AI没有足够数据。无推荐操作。', fr: "L'IA n'a pas assez de données aujourd'hui. Aucune action recommandée.", it: "L'IA non ha dati sufficienti oggi. Nessuna azione raccomandata.", hi: 'आज AI के पास पर्याप्त डेटा नहीं है। कोई अनुशंसित कार्रवाई नहीं।', ar: 'الذكاء الاصطناعي ليس لديه بيانات كافية اليوم. لا إجراء موصى به.' },
+    port_thermo_help_footer: { es: 'El % indica cuánto de tu capital está en cada zona. Se actualiza con precios actuales.', en: 'The % indicates how much of your capital is in each zone. Updated with current prices.', pt: 'O % indica quanto do seu capital está em cada zona. Atualizado com preços atuais.', zh: '%表示您有多少资金在每个区域。按当前价格更新。', fr: 'Le % indique combien de votre capital est dans chaque zone. Mis à jour avec les prix actuels.', it: 'La % indica quanto del tuo capitale è in ogni zona. Aggiornato con i prezzi attuali.', hi: '% दर्शाता है कि आपकी कितनी पूँजी प्रत्येक ज़ोन में है। वर्तमान मूल्यों के साथ अपडेट।', ar: 'النسبة تشير إلى مقدار رأس مالك في كل منطقة. يتم التحديث بالأسعار الحالية.' },
+
+    // Detalle activo — 52 semanas
+    port_52w_zone_low: { es: 'Precio cerca del mínimo anual — zona históricamente baja', en: 'Price near annual low — historically low zone', pt: 'Preço perto da mínima anual — zona historicamente baixa', zh: '价格接近年度最低——历史低位区', fr: 'Prix proche du minimum annuel — zone historiquement basse', it: 'Prezzo vicino al minimo annuale — zona storicamente bassa', hi: 'वार्षिक न्यूनतम के पास — ऐतिहासिक रूप से निम्न ज़ोन', ar: 'السعر قرب أدنى مستوى سنوي — منطقة منخفضة تاريخياً' },
+    port_52w_zone_mid: { es: 'Precio en zona media del rango anual', en: 'Price in the middle zone of annual range', pt: 'Preço na zona média do intervalo anual', zh: '价格处于年度区间中间', fr: 'Prix dans la zone médiane de la plage annuelle', it: 'Prezzo nella zona media del range annuale', hi: 'वार्षिक रेंज के मध्य ज़ोन में मूल्य', ar: 'السعر في المنطقة الوسطى للنطاق السنوي' },
+    port_52w_zone_high: { es: 'Precio cerca del máximo anual — zona históricamente alta', en: 'Price near annual high — historically high zone', pt: 'Preço perto da máxima anual — zona historicamente alta', zh: '价格接近年度最高——历史高位区', fr: 'Prix proche du maximum annuel — zone historiquement haute', it: 'Prezzo vicino al massimo annuale — zona storicamente alta', hi: 'वार्षिक अधिकतम के पास — ऐतिहासिक रूप से उच्च ज़ोन', ar: 'السعر قرب أعلى مستوى سنوي — منطقة مرتفعة تاريخياً' },
+    port_52w_min: { es: '↓ Mín:', en: '↓ Min:', pt: '↓ Mín:', zh: '↓ 最低:', fr: '↓ Min :', it: '↓ Min:', hi: '↓ न्यून:', ar: '↓ أدنى:' },
+    port_52w_label: { es: '52 semanas', en: '52 weeks', pt: '52 semanas', zh: '52周', fr: '52 semaines', it: '52 settimane', hi: '52 सप्ताह', ar: '52 أسبوعاً' },
+    port_52w_max: { es: '→ Máx:', en: '→ Max:', pt: '→ Máx:', zh: '→ 最高:', fr: '→ Max :', it: '→ Max:', hi: '→ अधि:', ar: '→ أعلى:' },
+    port_52w_pct_range: { es: '% del rango anual', en: '% of annual range', pt: '% do intervalo anual', zh: '% 年度区间', fr: '% de la plage annuelle', it: '% del range annuale', hi: '% वार्षिक रेंज', ar: '% من النطاق السنوي' },
+
+    // Detalle — señal IA
+    port_detail_objetivo: { es: 'Objetivo', en: 'Target', pt: 'Objetivo', zh: '目标', fr: 'Objectif', it: 'Obiettivo', hi: 'लक्ष्य', ar: 'الهدف' },
+    port_detail_stop_loss: { es: 'Stop Loss', en: 'Stop Loss', pt: 'Stop Loss', zh: 'Stop Loss', fr: 'Stop Loss', it: 'Stop Loss', hi: 'Stop Loss', ar: 'Stop Loss' },
+    port_detail_upside: { es: 'Upside', en: 'Upside', pt: 'Upside', zh: '上行空间', fr: 'Upside', it: 'Upside', hi: 'Upside', ar: 'Upside' },
+    port_detail_downside: { es: 'Downside', en: 'Downside', pt: 'Downside', zh: '下行风险', fr: 'Downside', it: 'Downside', hi: 'Downside', ar: 'Downside' },
+    port_sin_senal_hoy: { es: 'Sin senal activa hoy', en: 'No active signal today', pt: 'Sem sinal ativo hoje', zh: '今天无活跃信号', fr: "Pas de signal actif aujourd'hui", it: 'Nessun segnale attivo oggi', hi: 'आज कोई सक्रिय सिग्नल नहीं', ar: 'لا إشارة نشطة اليوم' },
+
+    // Detalle — grid info
+    port_pnl_usd: { es: 'P&L USD', en: 'P&L USD', pt: 'P&L USD', zh: 'P&L USD', fr: 'P&L USD', it: 'P&L USD', hi: 'P&L USD', ar: 'P&L USD' },
+    port_entrada: { es: 'Entrada', en: 'Entry', pt: 'Entrada', zh: '入场', fr: 'Entrée', it: 'Ingresso', hi: 'प्रवेश', ar: 'الدخول' },
+    port_min_52sem: { es: '↓ Mín 52 sem.', en: '↓ Min 52 wk', pt: '↓ Mín 52 sem.', zh: '↓ 最低52周', fr: '↓ Min 52 sem.', it: '↓ Min 52 sett.', hi: '↓ न्यून 52 सप्त.', ar: '↓ أدنى 52 أسبوع' },
+    port_max_52sem: { es: '→ Máx 52 sem.', en: '→ Max 52 wk', pt: '→ Máx 52 sem.', zh: '→ 最高52周', fr: '→ Max 52 sem.', it: '→ Max 52 sett.', hi: '→ अधि 52 सप्त.', ar: '→ أعلى 52 أسبوع' },
+
+    // Simulador
+    port_sim_title: { es: 'SIMULADOR DE ESCENARIOS', en: 'SCENARIO SIMULATOR', pt: 'SIMULADOR DE CENÁRIOS', zh: '情景模拟器', fr: 'SIMULATEUR DE SCÉNARIOS', it: 'SIMULATORE DI SCENARI', hi: 'परिदृश्य सिम्युलेटर', ar: 'محاكي السيناريوهات' },
+    port_sim_label: { es: 'Si el precio cambia:', en: 'If price changes:', pt: 'Se o preço mudar:', zh: '如果价格变化：', fr: 'Si le prix change :', it: 'Se il prezzo cambia:', hi: 'यदि मूल्य बदलता है:', ar: 'إذا تغير السعر:' },
+    port_sim_nuevo_precio: { es: 'Nuevo precio', en: 'New price', pt: 'Novo preço', zh: '新价格', fr: 'Nouveau prix', it: 'Nuovo prezzo', hi: 'नया मूल्य', ar: 'السعر الجديد' },
+    port_sim_pnl_activo: { es: 'P&L del activo', en: 'Asset P&L', pt: 'P&L do ativo', zh: '资产盈亏', fr: "P&L de l'actif", it: "P&L dell'asset", hi: 'एसेट P&L', ar: 'P&L الأصل' },
+    port_sim_impacto_total: { es: 'Impacto en portfolio total', en: 'Impact on total portfolio', pt: 'Impacto no portfólio total', zh: '对总投资组合的影响', fr: 'Impact sur le portfolio total', it: 'Impatto sul portfolio totale', hi: 'कुल portfolio पर प्रभाव', ar: 'التأثير على Portfolio الكلي' },
+    port_compartir: { es: 'Compartir', en: 'Share', pt: 'Compartilhar', zh: '分享', fr: 'Partager', it: 'Condividi', hi: 'शेयर करें', ar: 'مشاركة' },
+
+    // Eliminar
+    port_confirm_eliminar: { es: '¿Eliminar este activo del portfolio?', en: 'Remove this asset from portfolio?', pt: 'Excluir este ativo do portfólio?', zh: '从投资组合中删除此资产？', fr: 'Supprimer cet actif du portfolio ?', it: 'Eliminare questo asset dal portfolio?', hi: 'इस एसेट को portfolio से हटाएँ?', ar: 'حذف هذا الأصل من Portfolio؟' },
+
+    // Editar posición
+    port_item_not_found: { es: 'Item no encontrado', en: 'Item not found', pt: 'Item não encontrado', zh: '未找到项目', fr: 'Élément non trouvé', it: 'Elemento non trovato', hi: 'आइटम नहीं मिला', ar: 'العنصر غير موجود' },
+    port_editar_title: { es: 'Editar', en: 'Edit', pt: 'Editar', zh: '编辑', fr: 'Modifier', it: 'Modifica', hi: 'संपादित करें', ar: 'تعديل' },
+    port_err_edit_values: { es: 'Cantidad y precio deben ser mayores a 0', en: 'Quantity and price must be greater than 0', pt: 'Quantidade e preço devem ser maiores que 0', zh: '数量和价格必须大于0', fr: 'Quantité et prix doivent être supérieurs à 0', it: 'Quantità e prezzo devono essere maggiori di 0', hi: 'मात्रा और मूल्य 0 से अधिक होने चाहिए', ar: 'الكمية والسعر يجب أن تكون أكبر من 0' },
+
+    // Long Press
+    port_lp_analisis: { es: 'Análisis IA completo', en: 'Full AI Analysis', pt: 'Análise IA completa', zh: '完整AI分析', fr: 'Analyse IA complète', it: 'Analisi IA completa', hi: 'पूर्ण AI विश्लेषण', ar: 'تحليل AI كامل' },
+    port_lp_editar: { es: 'Editar', en: 'Edit', pt: 'Editar', zh: '编辑', fr: 'Modifier', it: 'Modifica', hi: 'संपादित करें', ar: 'تعديل' },
+    port_lp_compartir: { es: 'Compartir', en: 'Share', pt: 'Compartilhar', zh: '分享', fr: 'Partager', it: 'Condividi', hi: 'शेयर करें', ar: 'مشاركة' },
+    port_lp_confirmar_eliminar: { es: 'Eliminar', en: 'Delete', pt: 'Excluir', zh: '删除', fr: 'Supprimer', it: 'Eliminare', hi: 'हटाएँ', ar: 'حذف' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══
