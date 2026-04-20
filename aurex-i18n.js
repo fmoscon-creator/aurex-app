@@ -588,7 +588,19 @@
     // Otros
     mkt_copiado: { es: 'Copiado al portapapeles', en: 'Copied to clipboard', pt: 'Copiado para a área de transferência', zh: '已复制到剪贴板', fr: 'Copié dans le presse-papiers', it: 'Copiato negli appunti', hi: 'क्लिपबोर्ड पर कॉपी किया गया', ar: 'تم النسخ إلى الحافظة' },
     mkt_live_hace_s: { es: '· hace ', en: '· ', pt: '· há ', zh: '· ', fr: '· il y a ', it: '· ', hi: '· ', ar: '· منذ ' },
-    mkt_live_hace_min: { es: ' min', en: ' min ago', pt: ' min', zh: ' 分钟前', fr: ' min', it: ' min fa', hi: ' मिनट पहले', ar: ' دقيقة' }
+    mkt_live_hace_min: { es: ' min', en: ' min ago', pt: ' min', zh: ' 分钟前', fr: ' min', it: ' min fa', hi: ' मिनट पहले', ar: ' دقيقة' },
+
+    // Gauge labels (cortos)
+    mkt_gauge_miedo_ext: { es: 'Miedo Extremo', en: 'Extreme Fear', pt: 'Medo Extremo', zh: '极度恐惧', fr: 'Peur Extrême', it: 'Paura Estrema', hi: 'अत्यधिक भय', ar: 'خوف شديد' },
+    mkt_gauge_miedo: { es: 'Miedo', en: 'Fear', pt: 'Medo', zh: '恐惧', fr: 'Peur', it: 'Paura', hi: 'भय', ar: 'خوف' },
+    mkt_gauge_neutral: { es: 'Neutral', en: 'Neutral', pt: 'Neutro', zh: '中性', fr: 'Neutre', it: 'Neutrale', hi: 'तटस्थ', ar: 'محايد' },
+    mkt_gauge_codicia: { es: 'Codicia', en: 'Greed', pt: 'Ganância', zh: '贪婪', fr: 'Avidité', it: 'Avidità', hi: 'लालच', ar: 'جشع' },
+    mkt_gauge_codicia_ext: { es: 'Codicia Extrema', en: 'Extreme Greed', pt: 'Ganância Extrema', zh: '极度贪婪', fr: 'Avidité Extrême', it: 'Avidità Estrema', hi: 'अत्यधिक लालच', ar: 'جشع شديد' },
+
+    // Variables Peso label
+    mkt_vars_peso: { es: 'Peso', en: 'Weight', pt: 'Peso', zh: '权重', fr: 'Poids', it: 'Peso', hi: 'भार', ar: 'الوزن' },
+    mkt_vars_peso_alta: { es: 'Alta', en: 'High', pt: 'Alta', zh: '高', fr: 'Élevé', it: 'Alto', hi: 'उच्च', ar: 'عالي' },
+    mkt_vars_peso_media: { es: 'Media', en: 'Medium', pt: 'Média', zh: '中', fr: 'Moyen', it: 'Medio', hi: 'मध्यम', ar: 'متوسط' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══

@@ -1357,7 +1357,7 @@ function _renderMarketBanner(containerId){
   }
   var items = ALL_MKTS.map(mktItem).filter(Boolean).join('');
   var editBtn = '<div onclick="editMarketBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;margin-left:auto;flex-shrink:0;">&#9998;</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:var(--bg);border-bottom:1px solid var(--border);overflow-x:auto;-webkit-overflow-scrolling:touch;">'+items+editBtn+'</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;gap:0;padding:8px 10px;background:var(--card);border:1px solid var(--border2);border-radius:10px;margin:4px 10px;overflow-x:auto;-webkit-overflow-scrolling:touch;">'+items+editBtn+'</div>';
 }
 
 window.editMarketBanner = function(){
@@ -3943,25 +3943,25 @@ window.showIAVariablesPopup = function() {
     varScoreAvg[k] = cnt > 0 ? sum / cnt : 0;
   });
   var varDefs = [
-    {k:'tendencia',      n:'1. Tendencia 24h',         d:'Variación % del precio en las últimas 24hs. Mide el momentum inmediato.',p:'Alta'},
-    {k:'rsi',            n:'2. RSI14 Real',             d:'Índice de Fuerza Relativa de 14 períodos desde Binance/Yahoo. Detecta sobrecompra (>70) y sobreventa (<30).',p:'Alta'},
-    {k:'volumen',        n:'3. Volumen Real',           d:'Ratio de volumen actual vs promedio de los últimos 5 días. Confirma si el movimiento tiene convicción.',p:'Alta'},
-    {k:'volatilidad',    n:'4. Volatilidad',            d:'Amplitud del rango diario (high–low / precio). Alta volatilidad = mayor riesgo.',p:'Media'},
-    {k:'correlacion',    n:'5. Correlación BTC/SPY',    d:'Para cripto: correlación con BTC. Para acciones: con S&P500. Detecta arrastre sistémico.',p:'Media'},
-    {k:'oro_petroleo',   n:'6. Oro / Petr&#xF3;leo',         d:'Precios de activos refugio. Oro alto = aversión al riesgo. Impacta según tipo de activo.',p:'Media'},
-    {k:'macro',          n:'7. Macro FED',              d:'Eventos macro de alto impacto programados (FOMC, CPI, PBI). Incrementa incertidumbre.',p:'Media'},
-    {k:'earnings',       n:'8. Earnings',               d:'Reportes de resultados próximos. Históricamente elevan la volatilidad del activo.',p:'Media'},
-    {k:'macd',           n:'9. MACD (12/26)',           d:'Divergencia entre EMA12 y EMA26 calculada sobre los últimos 30 días de precios de cierre. Detecta cruces de momentum.',p:'Alta'},
-    {k:'soporte_resist', n:'10. Soporte / Resist. 30d', d:'Distancia del precio actual al máximo y mínimo de los últimos 30 días. Detecta zonas de oferta y demanda técnica.',p:'Alta'}
+    {k:'tendencia',      n:t('mkt_var1_label'),  d:t('mkt_var1_desc'),p:'Alta'},
+    {k:'rsi',            n:t('mkt_var2_label'),  d:t('mkt_var2_desc'),p:'Alta'},
+    {k:'volumen',        n:t('mkt_var3_label'),  d:t('mkt_var3_desc'),p:'Alta'},
+    {k:'volatilidad',    n:t('mkt_var4_label'),  d:t('mkt_var4_desc'),p:'Media'},
+    {k:'correlacion',    n:t('mkt_var5_label'),  d:t('mkt_var5_desc'),p:'Media'},
+    {k:'oro_petroleo',   n:t('mkt_var6_label'),  d:t('mkt_var6_desc'),p:'Media'},
+    {k:'macro',          n:t('mkt_var7_label'),  d:t('mkt_var7_desc'),p:'Media'},
+    {k:'earnings',       n:t('mkt_var8_label'),  d:t('mkt_var8_desc'),p:'Media'},
+    {k:'macd',           n:t('mkt_var9_label'),  d:t('mkt_var9_desc'),p:'Alta'},
+    {k:'soporte_resist', n:t('mkt_var10_label'), d:t('mkt_var10_desc'),p:'Alta'}
   ];
   var posCount = varDefs.filter(function(v){ return varScoreAvg[v.k] > 0.01; }).length;
   var negCount = varDefs.filter(function(v){ return varScoreAvg[v.k] < -0.01; }).length;
   var summaryHtml = signals.length > 0
     ? '<div style="display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:8px 12px;margin-bottom:12px">' +
-        '<span style="font-size:11px;color:var(--textSec)">Mercado ahora:</span>' +
-        '<span style="font-size:13px;font-weight:800;color:var(--green)">→ ' + posCount + ' al alza</span>' +
+        '<span style="font-size:11px;color:var(--textSec)">'+t('mkt_vars_mercado_ahora')+'</span>' +
+        '<span style="font-size:13px;font-weight:800;color:var(--green)">→ ' + posCount + t('mkt_vars_al_alza')+'</span>' +
         '<span style="color:var(--textDim);font-size:11px">·</span>' +
-        '<span style="font-size:13px;font-weight:800;color:var(--red)">↓ ' + negCount + ' a la baja</span>' +
+        '<span style="font-size:13px;font-weight:800;color:var(--red)">↓ ' + negCount + t('mkt_vars_a_la_baja')+'</span>' +
       '</div>'
     : '';
   var varsHtml = varDefs.map(function(v) {
@@ -3975,7 +3975,7 @@ window.showIAVariablesPopup = function() {
     return '<div style="border-left:3px solid '+blColor+';border-radius:8px;padding:10px;margin-bottom:8px;background:'+bg+'">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
         '<span style="font-size:13px;font-weight:700;color:'+color+'">'+arrow+v.n+'</span>' +
-        '<span style="font-size:10px;color:var(--textSec)">Peso '+v.p+'</span>' +
+        '<span style="font-size:10px;color:var(--textSec)">'+t('mkt_vars_peso')+' '+(v.p==='Alta'?t('mkt_vars_peso_alta'):t('mkt_vars_peso_media'))+'</span>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--textSec);line-height:14px">'+v.d+'</div>' +
     '</div>';
@@ -3985,15 +3985,15 @@ window.showIAVariablesPopup = function() {
   overlay.style.cssText = 'position:fixed;inset:0;background:#000000CC;z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px';
   var alcCount = signals.filter(function(s){return s.direccion==='alcista';}).length;
   var bajCount = signals.filter(function(s){return s.direccion==='bajista';}).length;
-  var summaryMkt = '<div style="background:var(--bg);border-radius:8px;padding:10px;margin-bottom:10px;border:0.5px solid var(--border)"><span style="font-size:11px;color:var(--textSec)">Mercado ahora:  <span style="color:var(--green);font-weight:700">→ '+alcCount+' al alza</span>  ·  <span style="color:var(--red);font-weight:700">↓ '+bajCount+' a la baja</span></span></div>';
+  var summaryMkt = '<div style="background:var(--bg);border-radius:8px;padding:10px;margin-bottom:10px;border:0.5px solid var(--border)"><span style="font-size:11px;color:var(--textSec)">'+t('mkt_vars_mercado_ahora')+'  <span style="color:var(--green);font-weight:700">→ '+alcCount+t('mkt_vars_al_alza')+'</span>  ·  <span style="color:var(--red);font-weight:700">↓ '+bajCount+t('mkt_vars_a_la_baja')+'</span></span></div>';
   overlay.innerHTML = '<div style="background:var(--card);border:2px solid var(--gold);border-radius:20px;padding:20px;width:92%;max-width:420px;max-height:85vh;overflow-y:auto">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">' +
-      '<span style="font-size:16px;font-weight:700;color:var(--text)">AUREX IA ⚡ — 10 VARIABLES</span>' +
+      '<span style="font-size:16px;font-weight:700;color:var(--text)">'+t('mkt_vars_title')+'</span>' +
       '<div onclick="window._closeIAVarsPopup()" style="width:32px;height:32px;border-radius:6px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--textSec);cursor:pointer">✕</div>' +
     '</div>' +
-    '<div style="font-size:11px;color:var(--textSec);margin-bottom:10px">Motor de señales v7 — tiempo real</div>' +
+    '<div style="font-size:11px;color:var(--textSec);margin-bottom:10px">'+t('mkt_vars_subtitle')+'</div>' +
     summaryMkt +
-    '<div style="font-size:10px;color:var(--textSec);line-height:15px;margin-bottom:12px">Cada señal es el resultado de puntuar 10 variables independientes. El score total determina la dirección y la probabilidad. Rango de probabilidad: 55%–88%.</div>' +
+    '<div style="font-size:10px;color:var(--textSec);line-height:15px;margin-bottom:12px">'+t('mkt_vars_desc')+'</div>' +
     varsHtml +
   '</div>';
   overlay.onclick = function(e) { if(e.target === overlay) window._closeIAVarsPopup(); };
@@ -4442,11 +4442,11 @@ function _calcPulseScore(raw, cat) {
   if(totalW===0) return { value:50, label:'Neutral', color:'var(--gold)', emoji:'😐', vars:scores };
   var v = Math.min(100, Math.max(0, Math.round(weighted/totalW)));
   var label, color, emoji;
-  if(v<=20)      { label='Miedo Extremo';  color='#C62828'; emoji='😱'; }
-  else if(v<=40) { label='Miedo';           color='#FF6B6B'; emoji='😰'; }
-  else if(v<=60) { label='Neutral';         color='var(--gold)'; emoji='😐'; }
-  else if(v<=80) { label='Codicia';         color='var(--green)'; emoji='😏'; }
-  else           { label='Codicia Extrema'; color='#00E676'; emoji='🤑'; }
+  if(v<=20)      { label=t('mkt_gauge_miedo_ext');  color='#C62828'; emoji='😱'; }
+  else if(v<=40) { label=t('mkt_gauge_miedo');           color='#FF6B6B'; emoji='😰'; }
+  else if(v<=60) { label=t('mkt_gauge_neutral');         color='var(--gold)'; emoji='😐'; }
+  else if(v<=80) { label=t('mkt_gauge_codicia');         color='var(--green)'; emoji='😏'; }
+  else           { label=t('mkt_gauge_codicia_ext'); color='#00E676'; emoji='🤑'; }
   return { value:v, label:label, color:color, emoji:emoji, vars:scores };
 }
 
@@ -4781,7 +4781,7 @@ function _renderFuturesBanner(containerId) {
     var pctStr = _fmt(pct,'pct');
     var pctColor = pct >= 0 ? 'var(--green)' : 'var(--red)';
     var priceStr = item.dec === 0 ? _fmt(d.price,'qty') : _fmt(d.price,'precio');
-    var fullName = item.n + ' Fut';
+    var fullName = item.n + t('mkt_fut_suffix');
     return '<div style="display:flex;flex-direction:column;align-items:center;min-width:70px;padding:4px 8px;flex-shrink:0;">' +
       '<div style="font-size:10px;font-weight:700;color:var(--text);white-space:nowrap;">'+fullName+'</div>' +
       '<div style="font-size:10px;color:var(--text);white-space:nowrap;">$'+priceStr+'</div>' +
@@ -4789,7 +4789,7 @@ function _renderFuturesBanner(containerId) {
     '</div>';
   }).filter(Boolean).join('');
   var editBtn = '<div onclick="editFuturesBanner()" style="font-size:12px;color:#3B9EF5;cursor:pointer;padding:4px 8px;border-radius:4px;border:1px solid #3B9EF5;flex-shrink:0;margin-right:10px;">&#9998;</div>';
-  el.innerHTML = '<div style="display:flex;align-items:center;background:var(--bg);border-bottom:1px solid var(--border);">' + '<div style="flex:1;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 4px 8px 10px;">' + chips + '</div>' + editBtn + '</div>';
+  el.innerHTML = '<div style="display:flex;align-items:center;background:var(--card);border:1px solid var(--border2);border-radius:10px;margin:4px 10px;">' + '<div style="flex:1;display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:8px 4px 8px 10px;">' + chips + '</div>' + editBtn + '</div>';
 }
 
 window.editFuturesBanner = function(){
