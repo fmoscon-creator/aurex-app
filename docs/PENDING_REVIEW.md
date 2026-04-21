@@ -1,49 +1,34 @@
-# PENDING REVIEW — Alertas i18n implementado (~70 keys × 8 idiomas)
+# PENDING REVIEW — Alertas i18n COMPLETO (2 faltantes corregidos)
 
-**Archivos** (LOCAL, no pusheados): aurex-i18n.js, index.html
+**Archivos** (LOCAL): aurex-i18n.js, index.html
 
 ---
 
-## aurex-i18n.js — sección `// === ALERTAS ===`
-~70 keys nuevas cubriendo:
-- Banner WhatsApp (title, conectado, popup title+desc)
-- Resumen (ALERTAS ON, ACTIVOS)
-- Filtro ALERTAS SOBRE (Mi Portfolio, Mi Watchlist, Todos)
-- Motor IA + Pulse buttons (10/14 variables)
-- 4 secciones × toggles (IA:4, Pulse:3, Precio:3, Eventos:5 = 15 total)
-- Cada toggle: label + description
-- Zonas AUREX Pulse (title)
-- Alertas activas (title, empty state ×2)
-- Filtros principales (Todas, IA, Precio, Pulse)
-- Sub-filtros (11 labels)
-- Info modal (alertas activas, monitoreando, activos monitoreados)
-- Vars modal (subtitles, peso alto/medio)
-- Scope counts suffix
+## Faltante 1 CORREGIDO: 15 toggles con data-i18n
 
-## index.html — data-i18n + t() aplicados
-- L2089: al_wa_title
-- L2097: al_alertas_on
-- L2099: al_activos_upper
-- L2107: al_alertas_sobre
-- L2109-2111: al_mi_portfolio, al_mi_watchlist, al_todos
-- L2118: al_motor_ia, al_10_variables
-- L2121: al_14_variables
-- L2187: al_zonas_pulse
-- L2217: al_activas_ahora
-- L2229-2231: al_sin_alertas, al_sin_alertas_desc
-- toggleWABanner: t('al_wa_conectado'), t('al_wa_title'), t('al_wa_popup_title'), t('al_wa_popup_desc')
-- renderTriggeredAlerts: mainFilters con t(), subDefs con t(), empty state con t()
-- _updateScopeCounts: t('al_alertas_suffix')
-- showAlertInfoModal: t('al_info_alertas_activas'), t('al_info_monitoreando'), t('al_info_activos_monitoreados'), t('al_info_todos_activos')
+Cada toggle tiene data-i18n en label + description:
 
-## Visual — Card wrapper Alertas Activas
-`background:var(--card);border:1px solid var(--border2);border-radius:12px;margin:10px 11px;`
+**IA (4):** al_ia_cambio/desc, al_ia_alta/desc, al_ia_umbral/desc, al_ia_portfolio/desc
+**Pulse (3):** al_pulse_zona/desc, al_pulse_cat/desc, al_pulse_thermo/desc
+**Precio (3):** al_precio_obj/desc, al_precio_var/desc, al_precio_maxmin/desc
+**Eventos (5):** FED FOMC (no traduce label, sí desc), CPI/PBI (no traduce label, sí desc), al_ev_apertura/desc, al_ev_earnings/desc, al_ev_gdelt/desc
+
+4 section headers también: al_sec_ia/desc, al_sec_pulse/desc, al_sec_precio/desc, al_sec_eventos/desc
+
+## Faltante 2 CORREGIDO: showAlertVars modal variables traducidas
+
+**10 variables IA:** usan t('mkt_var1_label') a t('mkt_var10_label') + t('mkt_var1_desc') a t('mkt_var10_desc')
+Pesos: t('al_peso_alto') / t('al_peso_medio')
+
+**14 variables Pulse:** nombres traducibles usan t('mkt_pulse_var_vix'), t('mkt_pulse_var_oro'), t('mkt_pulse_var_plata'), t('mkt_pulse_var_petroleo'), t('mkt_pulse_var_cobre'), t('mkt_pulse_var_geopolitica')
+Los demás (BTC/ETH momentum, SP500, ES=F, NQ=F, YM=F, RTY=F, Macro FED) son nombres técnicos/propios — no se traducen (igual que nativa).
+
+Title y subtitle del modal: t('al_motor_ia'), t('al_vars_ia_subtitle'), t('al_vars_pulse_subtitle')
+Legend: t('al_peso_alto'), t('al_peso_medio')
 
 ---
 
 ## Verificación
 - `node -c aurex-i18n.js` → OK
-
-## Pendiente (no incluido en este commit)
-- Los 15 toggles HTML tienen labels hardcodeados (requiere restructurar el HTML de cada .alert-item). Se hará en commit separado si Fernando lo pide, o se puede usar applyTranslations() que ya corre.
-- showAlertVars modal: variable names hardcodeados (pueden reutilizar mkt_var labels existentes)
+- 15 toggles: todos con data-i18n
+- showAlertVars: 10 IA vars + 6 Pulse vars traducidas + legends + titles
