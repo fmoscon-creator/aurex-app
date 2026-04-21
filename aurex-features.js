@@ -1955,10 +1955,10 @@ window.wlDeleteList = function(listId){
   card.style.cssText = 'width:100%;max-width:300px;background:var(--card);border-radius:16px;padding:20px;box-shadow:0 10px 20px rgba(0,0,0,0.35)';
   card.onclick = function(e){ e.stopPropagation(); };
   var html = '';
-  html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Eliminar lista</div>';
+  html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">'+t('wl_eliminar')+' lista</div>';
   html += '<div style="font-size:13px;color:var(--textSec);margin-bottom:20px">'+t('wl_delete_desc')+'</div>';
   html += '<div style="display:flex;gap:12px">';
-  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove()" style="flex:1;padding:12px;border-radius:10px;background:var(--border);text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:600;color:var(--text)">Cancelar</span></div>';
+  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove()" style="flex:1;padding:12px;border-radius:10px;background:var(--border);text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:600;color:var(--text)">'+t('cancelar')+'</span></div>';
   html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove();if(window._wlSelectedList===\''+listId+'\')window._wlSelectedList=null;window._wlDeleteListDB(\''+listId+'\',function(){renderWatchCnt();})" style="flex:1;padding:12px;border-radius:10px;background:#F8514920;border:1px solid #F8514960;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:var(--red)">'+t('wl_eliminar')+'</span></div>';
   html += '</div>';
   card.innerHTML = html;
@@ -2356,7 +2356,7 @@ window.wlShowActionMenu = function(ticker){
   overlay.style.cssText = 'position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
   overlay.onclick = function(e){ if(e.target===overlay){ overlay.remove(); } };
   var card = document.createElement('div');
-  card.style.cssText = 'width:100%;max-width:320px;background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--border2);box-shadow:0 10px 20px rgba(0,0,0,0.35)';
+  card.style.cssText = 'width:100%;max-width:320px;background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--border2);box-shadow:0 10px 20px rgba(0,0,0,0.35);-webkit-user-select:none;user-select:none';
   card.onclick = function(e){ e.stopPropagation(); };
   var html = '';
   // Header
@@ -2380,8 +2380,8 @@ window.wlShowActionMenu = function(ticker){
   html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--red)">'+t('wl_quitar_de_lista')+'</span>';
   html += '</div>';
   // Cancelar
-  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove()" style="padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer">';
-  html += '<span style="font-size:12px;font-weight:600;color:var(--textSec)">Cancelar</span>';
+  html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove()" style="padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer;-webkit-user-select:none;user-select:none">';
+  html += '<span style="font-size:12px;font-weight:600;color:var(--textSec)">'+t('cancelar')+'</span>';
   html += '</div>';
   card.innerHTML = html;
   overlay.appendChild(card);
@@ -2448,7 +2448,21 @@ window.wlToggleCompare = function(sym){
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
   else if(window._wlCompareItems.length < 5) { window._wlCompareItems.push(sym); }
   else { alert(t('wl_maximo_5')); return; }
-  renderWatchCnt();
+  // Update solo el checkbox visual sin re-renderizar todo (evita flash/titila)
+  var isNowSelected = window._wlCompareItems.indexOf(sym) >= 0;
+  var circle = document.querySelector('[data-wl-compare="'+sym+'"]');
+  if(circle){
+    circle.style.borderColor = isNowSelected ? 'var(--gold)' : 'var(--border)';
+    circle.style.background = isNowSelected ? 'var(--gold)' : 'transparent';
+    circle.innerHTML = isNowSelected ? '<span style="color:var(--chipTextActive);font-size:12px;font-weight:800">✓</span>' : '';
+  }
+  // Update counter text
+  var _cc = window._wlCompareItems.length;
+  var counterEl = document.querySelector('#watch-cnt [style*="text-align:center"] span');
+  if(counterEl) counterEl.textContent = _cc >= 2 ? '✓ '+_cc+t('wl_seleccionados') : t('wl_selecciona_2_5');
+  // Update compare button label
+  var cmpBtn = document.querySelector('[data-wl="compareMode"]');
+  if(cmpBtn && _cc >= 2) cmpBtn.textContent = t('wl_comparar') + ' ' + _cc;
 };
 
 window._wlCompareHist = {}; // { ticker: { '24h': change, '7d': change, ... } }
