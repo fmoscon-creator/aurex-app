@@ -1300,6 +1300,7 @@ function _renderThermoRisk(items){
     msg = '<b>'+dom.p.toFixed(0)+'% '+dom.l+'</b>'+t('port_thermo_msg_mix')+'<br><span style="color:var(--textSec);font-size:9px;">'+t('port_thermo_msg_mix_tip')+'</span>';
   }
   el.innerHTML =
+    '<div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:10px 12px;margin-bottom:4px;">' +
     '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">' +
       '<div style="display:flex;align-items:center;gap:5px;">' +
         '<div style="font-size:10px;color:var(--text);font-weight:700;letter-spacing:.3px;">'+t('port_thermo_bar_title')+'</div>' +
@@ -1310,7 +1311,8 @@ function _renderThermoRisk(items){
     '</div>' +
     '<div style="height:8px;border-radius:6px;overflow:hidden;display:flex;gap:1px;background:var(--border);margin-bottom:6px;">'+bar+'</div>' +
     '<div style="margin-bottom:4px;">'+leg+'</div>' +
-    '<div style="font-size:10px;color:var(--textSec);line-height:1.4;">'+msg+'</div>';
+    '<div style="font-size:10px;color:var(--textSec);line-height:1.4;">'+msg+'</div>' +
+    '</div>';
 }
 
 function _renderMarketBanner(containerId){
@@ -1549,6 +1551,32 @@ function _openAddActivoModal(prefillTicker){
   }
 }
 
+// Fetch precios para resultados de búsqueda sin precio en cache
+window._fetchSearchPrices = function(results, idPrefix) {
+  var toFetch = results.filter(function(a){ return !(window._pcPrices||{})[a.s]; });
+  toFetch.forEach(function(a){
+    var sym = a.ySymbol || a.s;
+    fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=1d')
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.chart && d.chart.result && d.chart.result[0]){
+          var p = d.chart.result[0].meta.regularMarketPrice || 0;
+          if(p){
+            if(!window._pcPrices) window._pcPrices = {};
+            window._pcPrices[a.s] = p;
+            var origIdx = results.indexOf(a);
+            var el = document.getElementById(idPrefix + origIdx);
+            if(el){
+              var dec = p > 100 ? 2 : (p > 1 ? 2 : 4);
+              el.style.fontSize='12px'; el.style.fontWeight='700'; el.style.color='#111';
+              el.textContent = '$' + Number(p).toLocaleString('es-AR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+            }
+          }
+        }
+      }).catch(function(){});
+  });
+};
+
 window._buscarActivos = function(q, cb) {
   var local = window._IA_ACTIVOS || [];
   var ql = q.toLowerCase().trim();
@@ -1584,12 +1612,14 @@ window._renderSearchResult = function(a, idx, onclickFnName) {
     ? '<img src="' + a.logo + '" style="width:26px;height:26px;border-radius:50%;object-fit:cover;flex-shrink:0;" onerror="this.style.display=\'none\';" />'
     : '<div style="width:26px;height:26px;border-radius:50%;background:' + (a.color||'#ddd') + ';display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff;flex-shrink:0;">' + (a.abbr||a.s.substring(0,3).toUpperCase()) + '</div>';
   var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
-  var tipoLabel = a.tipo==='cripto'?'Cripto':a.tipo==='accion'?'Accion':a.tipo==='etf'?'ETF':a.tipo==='bono'?'Bono':a.tipo==='metal'?'Metal':a.tipo==='materia_prima'?'Commodity':(a.tipo||'Activo');
+  var tipoLabel = a.tipo==='cripto'?t('mkt_tipo_cripto'):a.tipo==='accion'?t('mkt_tipo_accion'):a.tipo==='etf'?t('mkt_tipo_etf'):a.tipo==='bono'?t('mkt_ia_bonos'):a.tipo==='metal'?t('mkt_ia_metales'):a.tipo==='materia_prima'?t('mkt_ia_materias'):(a.tipo||t('mkt_tipo_activo'));
   var yahooTag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 4px;">YAHOO</span>' : '';
+  var cachedP = (window._pcPrices||{})[a.s];
+  var priceHtml = cachedP ? '<span style="font-size:12px;font-weight:700;color:#111;flex-shrink:0;">$'+Number(cachedP).toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>' : '<span id="port-sr-p-'+idx+'" style="font-size:11px;color:#999;flex-shrink:0;">...</span>';
   return '<div onclick="' + onclickFnName + '(' + idx + ')" style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:8px;cursor:pointer;background:#f5f5f5;margin-bottom:4px;-webkit-tap-highlight-color:rgba(0,0,0,0);">' +
     logoHtml +
     '<div style="flex:1;min-width:0;display:flex;align-items:center;gap:6px;"><span style="font-size:14px;font-weight:700;color:#111;">' + a.s + '</span><span style="font-size:13px;color:#666;">' + a.n + '</span>' + yahooTag + '</div>' +
-    '<span style="font-size:11px;color:' + tipoColor + ';flex-shrink:0;">' + tipoLabel + '</span>' +
+    priceHtml +
     '</div>';
 };
 
@@ -1601,6 +1631,7 @@ window.filterPortSearch = function(){
     var local = (window._IA_ACTIVOS||[]).slice(0,20);
     window._portSearchActs = local;
     res.innerHTML = local.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');
+    window._fetchSearchPrices(local, 'port-sr-p-');
     return;
   }
   res.innerHTML = '<div style="font-size:11px;color:#999;padding:8px;text-align:center;">'+t('port_buscando')+'</div>';
@@ -1611,6 +1642,7 @@ window.filterPortSearch = function(){
       return;
     }
     res.innerHTML = results.map(function(a,i){ return window._renderSearchResult(a, i, 'window._portPickIdx'); }).join('');
+    window._fetchSearchPrices(results, 'port-sr-p-');
   });
 };
 window._portPickIdx = function(idx){
