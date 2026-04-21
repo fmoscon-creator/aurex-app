@@ -1,30 +1,27 @@
-# PENDING REVIEW — Onboarding i18n (6 keys × 8 idiomas)
+# PENDING REVIEW — Nativa: card wrapper Termómetro + Pulse mejorado
 
-**Archivos** (LOCAL): aurex-i18n.js, index.html
-
-Nativa leída: OnboardingScreen.js (74 líneas). Usa t() con 8 keys i18n. Las slides son imágenes fijas — solo botones se traducen.
+**Archivos** (LOCAL, NATIVA): PortfolioScreen.js, MercadosScreen.js
 
 ---
 
-## aurex-i18n.js — sección `// === ONBOARDING ===`
-6 keys: ob_comenzar, ob_siguiente, ob_ver_planes, ob_empezar_gratis, ob_crear_cuenta, ob_ya_tengo_cuenta
-Traducciones copiadas exactas de nativa i18n.js L453-458.
+## Fix 1: Termómetro Portfolio — card con bordes
 
-## index.html — 6 data-i18n aplicados
-- L1221: ob_comenzar (Slide 1 button)
-- L1275: ob_siguiente (Slide 2 button)
-- L1352: ob_ver_planes (Slide 3 button)
-- L1419: ob_empezar_gratis (Slide 4 main button)
-- L1421: ob_crear_cuenta (Slide 4 secondary)
-- L1422: ob_ya_tengo_cuenta (Slide 4 tertiary)
+**Archivo**: PortfolioScreen.js L1529
+**ANTES**: `thermoWrap: { paddingHorizontal: 14, paddingTop: 8, paddingBottom: 4 }`
+**DESPUÉS**: `thermoWrap: { marginHorizontal: 14, marginTop: 8, marginBottom: 4, backgroundColor: C.card, borderRadius: 12, padding: 10, borderWidth: 1, borderColor: C.border2 }`
 
-## No incluido (igual que nativa)
-- Contenido visual de las slides (imágenes/canvas fijas)
-- Disclaimer legal (ya traducido en Perfil como `disclaimer_legal`)
-- Botón "← Volver" (no existe en PWA, nativa sí lo tiene)
+Mismo tratamiento que en PWA (commit 5041b9c).
+
+## Fix 2: AUREX Pulse Mercados — border más visible
+
+**Archivo**: MercadosScreen.js L1463-1465
+**ANTES**: `borderRadius: 10, padding: 10, borderWidth: 0.5, borderColor: ${C.gold}45`
+**DESPUÉS**: `borderRadius: 12, padding: 12, borderWidth: 1, borderColor: C.border2`
+
+Cambia de borde gold semitransparente (0.5px, casi invisible) a borde sutil pero visible (1px, border2).
 
 ---
 
 ## Verificación
-- `node -c aurex-i18n.js` → OK
-- Réplica exacta de keys de nativa i18n.js
+- Ambos cambios son solo estilos CSS (no funcional)
+- Coherentes con PWA donde ya se hizo este ajuste
