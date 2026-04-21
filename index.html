@@ -642,14 +642,14 @@ function toggleWABanner(){
   var ti = document.getElementById('wa-title');
   var ch = document.getElementById('wa-check');
   var isOn = toggle ? toggle.checked : false;
-  if(ti) ti.textContent = isOn ? 'WhatsApp conectado' : 'Alertas por WhatsApp';
+  if(ti) ti.textContent = isOn ? t('al_wa_conectado') : t('al_wa_title');
   if(ch){ ch.textContent = isOn ? '✓' : '—'; ch.style.color = isOn ? 'var(--green)' : 'var(--textDim)'; }
   // Modal informativo como nativa (Alert.alert)
   if(isOn){
     var old=document.getElementById('wa-alert-modal');if(old)old.remove();
     var ov=document.createElement('div');ov.id='wa-alert-modal';
     ov.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;padding:24px';
-    ov.innerHTML='<div style="background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:300px;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)"><div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px">WhatsApp Alertas</div><div style="font-size:13px;color:var(--textSec);line-height:1.5;margin-bottom:20px">Proximamente podras recibir alertas automaticas por WhatsApp. Te avisaremos cuando este disponible.</div><div onclick="document.getElementById(\'wa-alert-modal\').remove()" style="background:var(--gold);border-radius:10px;padding:12px;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:#000">OK</span></div></div>';
+    ov.innerHTML='<div style="background:var(--card);border-radius:20px;padding:20px;width:100%;max-width:300px;border:2px solid var(--gold);box-shadow:0 10px 20px rgba(0,0,0,0.35)"><div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:12px">'+t('al_wa_popup_title')+'</div><div style="font-size:13px;color:var(--textSec);line-height:1.5;margin-bottom:20px">'+t('al_wa_popup_desc')+'</div><div onclick="document.getElementById(\'wa-alert-modal\').remove()" style="background:var(--gold);border-radius:10px;padding:12px;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:#000">OK</span></div></div>';
     ov.onclick=function(e){if(e.target===ov)ov.remove();};
     document.body.appendChild(ov);
   }
@@ -674,38 +674,38 @@ function updateAlertCount(){
 function showAlertVars(tipo){
   var existing = document.getElementById('alert-vars-modal'); if(existing) existing.remove();
   var isIA = tipo === 'ia';
-  var title = isIA ? '🤖 Motor IA' : '💓 AUREX Pulse';
-  var sub = isIA ? '10 variables de analisis por activo' : '14 variables macro del mercado global';
+  var title = isIA ? '🤖 '+t('al_motor_ia') : '💓 AUREX Pulse';
+  var sub = isIA ? t('al_vars_ia_subtitle') : t('al_vars_pulse_subtitle');
   var color = isIA ? '#A78BFA' : '#EC4899';
   var vars = isIA ? [
-    {n:'Tendencia 24h',d:'Variacion % del precio en 24hs',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
-    {n:'RSI14 Real',d:'Sobrecompra/sobreventa',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
-    {n:'Volumen Real',d:'Ratio volumen actual vs promedio',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
-    {n:'Volatilidad',d:'Amplitud del rango diario',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
-    {n:'Correlacion BTC/SPY',d:'Relacion cripto vs mercado',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
-    {n:'Oro/Petroleo',d:'Activos refugio y energia',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
-    {n:'Macro FED',d:'Eventos macro de alto impacto',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
-    {n:'Earnings',d:'Reportes de resultados proximos',p:'Medio',c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
-    {n:'MACD 12/26',d:'Convergencia/divergencia medias',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
-    {n:'Soporte/Resist. 30d',d:'Distancia a soporte y resistencia',p:'Alto',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:t('mkt_var1_label'),d:t('mkt_var1_desc'),p:t('al_peso_alto'),c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:t('mkt_var2_label'),d:t('mkt_var2_desc'),p:t('al_peso_alto'),c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:t('mkt_var3_label'),d:t('mkt_var3_desc'),p:t('al_peso_alto'),c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:t('mkt_var4_label'),d:t('mkt_var4_desc'),p:t('al_peso_medio'),c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:t('mkt_var5_label'),d:t('mkt_var5_desc'),p:t('al_peso_medio'),c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:t('mkt_var6_label'),d:t('mkt_var6_desc'),p:t('al_peso_medio'),c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:t('mkt_var7_label'),d:t('mkt_var7_desc'),p:t('al_peso_medio'),c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:t('mkt_var8_label'),d:t('mkt_var8_desc'),p:t('al_peso_medio'),c:'#D4A017',bg:'rgba(212,160,23,0.18)'},
+    {n:t('mkt_var9_label'),d:t('mkt_var9_desc'),p:t('al_peso_alto'),c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
+    {n:t('mkt_var10_label'),d:t('mkt_var10_desc'),p:t('al_peso_alto'),c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
   ] : [
     {n:'BTC momentum',d:'Binance',p:'12%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
     {n:'ETH momentum',d:'Binance',p:'8%',c:'#627EEA',bg:'rgba(98,126,234,0.12)'},
-    {n:'VIX',d:'Yahoo',p:'14%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
+    {n:t('mkt_pulse_var_vix'),d:'Yahoo',p:'14%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
     {n:'SP500 momentum',d:'Yahoo',p:'8%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
     {n:'ES=F SP Futuro',d:'Yahoo',p:'8%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
     {n:'NQ=F Nasdaq',d:'Yahoo',p:'6%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
     {n:'YM=F Dow',d:'Yahoo',p:'4%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
     {n:'RTY=F Russell',d:'Yahoo',p:'3%',c:'#4A9EFF',bg:'rgba(74,158,255,0.12)'},
-    {n:'Oro GC=F',d:'Yahoo',p:'8%',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
-    {n:'Plata SI=F',d:'Yahoo',p:'4%',c:'#C0C0C0',bg:'rgba(192,192,192,0.12)'},
-    {n:'Petroleo CL=F',d:'Yahoo',p:'5%',c:'#8B5CF6',bg:'rgba(139,92,246,0.12)'},
-    {n:'Cobre HG=F',d:'Yahoo',p:'4%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
+    {n:t('mkt_pulse_var_oro'),d:'Yahoo',p:'8%',c:'#D4A017',bg:'rgba(212,160,23,0.12)'},
+    {n:t('mkt_pulse_var_plata'),d:'Yahoo',p:'4%',c:'#C0C0C0',bg:'rgba(192,192,192,0.12)'},
+    {n:t('mkt_pulse_var_petroleo'),d:'Yahoo',p:'5%',c:'#8B5CF6',bg:'rgba(139,92,246,0.12)'},
+    {n:t('mkt_pulse_var_cobre'),d:'Yahoo',p:'4%',c:'#F7931A',bg:'rgba(247,147,26,0.12)'},
     {n:'Macro FED',d:'FRED',p:'12%',c:'#3FB950',bg:'rgba(63,185,80,0.18)'},
-    {n:'Geopolitica',d:'GDELT',p:'4%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
+    {n:t('mkt_pulse_var_geopolitica'),d:'GDELT',p:'4%',c:'#F85149',bg:'rgba(248,81,73,0.12)'},
   ];
   var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px"><div style="display:flex;align-items:center;gap:8px"><div style="font-size:22px">'+(isIA?'🤖':'💓')+'</div><div><div style="font-size:15px;font-weight:700;color:'+color+'">'+title+'</div><div style="font-size:10px;color:var(--textSec)">'+sub+'</div></div></div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-vars-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
-  if(isIA) html += '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px"><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--green);border-radius:2px"></div><span style="font-size:9px;color:var(--green);font-weight:600">Peso Alto</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--gold);border-radius:2px"></div><span style="font-size:9px;color:var(--gold);font-weight:600">Peso Medio</span></div></div>';
+  if(isIA) html += '<div style="display:flex;gap:12px;justify-content:center;margin-bottom:12px"><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--green);border-radius:2px"></div><span style="font-size:9px;color:var(--green);font-weight:600">'+t('al_peso_alto')+'</span></div><div style="display:flex;align-items:center;gap:4px"><div style="width:10px;height:3px;background:var(--gold);border-radius:2px"></div><span style="font-size:9px;color:var(--gold);font-weight:600">'+t('al_peso_medio')+'</span></div></div>';
   vars.forEach(function(v,i){
     html += '<div style="display:flex;align-items:center;gap:8px;padding:8px 6px;border-bottom:0.5px solid var(--border);border-left:2px solid '+v.c+';border-radius:4px;margin-bottom:2px"><span style="font-size:10px;font-weight:800;color:#D4A017;width:20px;text-align:center;flex-shrink:0">'+(i+1)+'</span><div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--text)">'+v.n+'</div><div style="font-size:9px;color:var(--textSec);margin-top:1px">'+v.d+'</div></div><div style="background:'+v.bg+';padding:4px 10px;border-radius:6px;text-align:center;min-width:40px"><span style="font-size:11px;font-weight:700;color:'+v.c+'">'+v.p+'</span></div></div>';
   });
@@ -863,7 +863,7 @@ function renderTriggeredAlerts(){
   // Render filtros principales con conteo
   var filtersEl = document.getElementById('alert-type-filters');
   if(filtersEl){
-    var mainFilters = [{key:'todas',label:'Todas'},{key:'ia',label:'🤖 IA'},{key:'precio',label:'💰 Precio'},{key:'pulse',label:'💓 Pulse'}];
+    var mainFilters = [{key:'todas',label:t('al_filter_todas')},{key:'ia',label:t('al_filter_ia')},{key:'precio',label:t('al_filter_precio')},{key:'pulse',label:t('al_filter_pulse')}];
     filtersEl.innerHTML = mainFilters.map(function(f){
       var count = f.key==='todas' ? all.length : all.filter(function(a){return a.tipo===f.key;}).length;
       var isSel = typeF===f.key;
@@ -883,11 +883,11 @@ function renderTriggeredAlerts(){
   if(typeF !== 'todas'){
     var typeAlerts = all.filter(function(a){return a.tipo===typeF;});
     var subDefs = typeF==='ia' ? [
-      {key:null,label:'Todas IA',clr:'#A78BFA'},{key:'alta_conv',label:'⚡ Alta Conv',clr:'#A78BFA'},{key:'cambio',label:'📉 Cambio',clr:'#A78BFA'},{key:'umbral',label:'🎯 Umbral',clr:'#A78BFA'},{key:'portfolio',label:'💼 Portfolio',clr:'#A78BFA'}
+      {key:null,label:t('al_sub_todas_ia'),clr:'#A78BFA'},{key:'alta_conv',label:t('al_sub_alta_conv'),clr:'#A78BFA'},{key:'cambio',label:t('al_sub_cambio'),clr:'#A78BFA'},{key:'umbral',label:t('al_sub_umbral'),clr:'#A78BFA'},{key:'portfolio',label:t('al_sub_portfolio'),clr:'#A78BFA'}
     ] : typeF==='precio' ? [
-      {key:null,label:'Todos Precio',clr:'var(--gold)'},{key:'variacion',label:'📈 Variacion',clr:'var(--gold)'},{key:'rsi',label:'🔺 RSI',clr:'var(--gold)'}
+      {key:null,label:t('al_sub_todos_precio'),clr:'var(--gold)'},{key:'variacion',label:t('al_sub_variacion'),clr:'var(--gold)'},{key:'rsi',label:t('al_sub_rsi'),clr:'var(--gold)'}
     ] : [
-      {key:null,label:'Todos Pulse',clr:'#EC4899'},{key:'zona',label:'🔴 Zona',clr:'#EC4899'},{key:'cat',label:'📊 Categoria',clr:'#EC4899'}
+      {key:null,label:t('al_sub_todos_pulse'),clr:'#EC4899'},{key:'zona',label:t('al_sub_zona'),clr:'#EC4899'},{key:'cat',label:t('al_sub_categoria'),clr:'#EC4899'}
     ];
     subEl.innerHTML = subDefs.map(function(f){
       var count = f.key ? typeAlerts.filter(function(a){return a.sub===f.key;}).length : typeAlerts.length;
@@ -907,7 +907,7 @@ function renderTriggeredAlerts(){
   var list = document.getElementById('alert-triggered-list');
   if(!list) return;
   if(shown.length===0){
-    list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">✅</div><div style="font-size:13px;font-weight:500;color:var(--textSec)">Sin alertas en este filtro</div><div style="font-size:10px;color:var(--textSec);margin-top:4px">Proba cambiando filtros o umbrales</div></div>';
+    list.innerHTML='<div style="text-align:center;padding:24px"><div style="font-size:28px;margin-bottom:6px">✅</div><div style="font-size:13px;font-weight:500;color:var(--textSec)">'+t('al_sin_alertas_filtro')+'</div><div style="font-size:10px;color:var(--textSec);margin-top:4px">'+t('al_proba_filtros')+'</div></div>';
     return;
   }
   list.innerHTML = shown.map(function(a){
@@ -943,17 +943,17 @@ function showAlertInfoModal(tipo){
   var sections = [{icon:'🤖',title:'Alertas IA',count:4},{icon:'💓',title:'Alertas PULSE',count:3},{icon:'💰',title:'Alertas de Precio',count:3},{icon:'📅',title:'Alertas de Eventos',count:5}];
   if(tipo==='alertas'){
     var checks = document.querySelectorAll('.alert-section input[type=checkbox]:checked');
-    title = checks.length + ' Alertas activas';
+    title = checks.length + ' ' + t('al_info_alertas_activas');
     var scope = window._alertScope||'todos';
-    subtitle = 'Monitoreando ' + (scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos (350)');
+    subtitle = t('al_info_monitoreando') + ' ' + (scope==='portfolio'?t('al_mi_portfolio'):scope==='watchlist'?t('al_mi_watchlist'):t('al_todos'));
     var toggleLabels = ['Cambio de senal','Alta Conviccion','Umbral probabilidad','Senal en Portfolio','Cambio de zona','Por categoria','Termometro de Riesgo','Precio objetivo','Variacion brusca','Nuevo maximo/minimo','FED FOMC','CPI / PBI','Apertura mercados','Earnings portfolio','Geopolitica GDELT'];
     var allChecks = document.querySelectorAll('.alert-section input[type=checkbox]');
     allChecks.forEach(function(c,i){if(c.checked && toggleLabels[i]) items.push({icon:'✅',label:toggleLabels[i]});});
   } else {
     var scope = window._alertScope||'todos';
     var count = scope==='portfolio'?(window._alertPortSyms||[]).length:scope==='watchlist'?(window._alertWLSyms||[]).length:350;
-    title = count + ' Activos monitoreados';
-    subtitle = scope==='portfolio'?'Mi Portfolio':scope==='watchlist'?'Mi Watchlist':'Todos los activos';
+    title = count + ' ' + t('al_info_activos_monitoreados');
+    subtitle = scope==='portfolio'?t('al_mi_portfolio'):scope==='watchlist'?t('al_mi_watchlist'):t('al_info_todos_activos');
     sections.forEach(function(s){items.push({icon:s.icon,label:s.title+': '+s.count+' tipos'});});
   }
   var html = '<div style="padding:20px"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div><div style="font-size:16px;font-weight:700;color:var(--gold)">'+title+'</div>'+(subtitle?'<div style="font-size:10px;color:var(--textSec);margin-top:2px">'+subtitle+'</div>':'')+'</div><a href="javascript:void(0)" onclick="document.getElementById(\'alert-info-modal\').remove()" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
@@ -1003,9 +1003,9 @@ function _updateScopeCounts(sigs, toggles, pctT, probT){
   var cPort=_countAlertsForScope(sigs,portSyms,toggles,pctT,probT);
   var cWL=_countAlertsForScope(sigs,wlSyms,toggles,pctT,probT);
   var cAll=_countAlertsForScope(sigs,allSyms,toggles,pctT,probT);
-  var e1=document.getElementById('scope-count-portfolio');if(e1)e1.textContent=cPort+' alertas';
-  var e2=document.getElementById('scope-count-watchlist');if(e2)e2.textContent=cWL+' alertas';
-  var e3=document.getElementById('scope-count-todos');if(e3)e3.textContent=cAll+' alertas';
+  var e1=document.getElementById('scope-count-portfolio');if(e1)e1.textContent=cPort+t('al_alertas_suffix');
+  var e2=document.getElementById('scope-count-watchlist');if(e2)e2.textContent=cWL+t('al_alertas_suffix');
+  var e3=document.getElementById('scope-count-todos');if(e3)e3.textContent=cAll+t('al_alertas_suffix');
 }
 
 // Toggle change recalcula
@@ -2086,7 +2086,7 @@ window._mktOpenDetail = function(idx){
 <div style="display:flex;align-items:center;gap:10px;margin:10px 11px;background:#0D2818;border-radius:10px;padding:10px;border:1px solid #25D36640">
   <span style="font-size:20px">💬</span>
   <div style="flex:1">
-    <div style="font-size:12px;font-weight:700;color:#25D366" id="wa-title">Alertas por WhatsApp</div>
+    <div style="font-size:12px;font-weight:700;color:#25D366" id="wa-title" data-i18n="al_wa_title">Alertas por WhatsApp</div>
   </div>
   <label class="toggle-sw"><input type="checkbox" id="wa-toggle" onchange="toggleWABanner()"><span class="toggle-slider"></span></label>
 </div>
@@ -2094,9 +2094,9 @@ window._mktOpenDetail = function(idx){
 <!-- Resumen — numeros grandes, clickeables -->
 <div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:14px;border:1.5px solid var(--gold)">
   <div style="display:flex;align-items:center">
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('alertas')"><div style="font-size:28px;font-weight:900;color:var(--green)" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">ALERTAS ON</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('alertas')"><div style="font-size:28px;font-weight:900;color:var(--green)" id="alert-active">15</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px" data-i18n="al_alertas_on">ALERTAS ON</div></div>
     <div style="width:1px;height:28px;background:var(--border)"></div>
-    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="alert-scope-count">350</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">ACTIVOS</div></div>
+    <div style="flex:1;text-align:center;cursor:pointer" onclick="showAlertInfoModal('activos')"><div style="font-size:28px;font-weight:900;color:var(--gold)" id="alert-scope-count">350</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px" data-i18n="al_activos_upper">ACTIVOS</div></div>
     <div style="width:1px;height:28px;background:var(--border)"></div>
     <div style="flex:1;text-align:center;cursor:pointer" onclick="var t=document.getElementById('wa-toggle');if(t){t.checked=!t.checked;toggleWABanner();}"><div style="font-size:28px;font-weight:900;color:var(--textDim)" id="wa-check">—</div><div style="font-size:9px;font-weight:700;color:var(--textSec);margin-top:2px">WHATSAPP</div></div>
   </div>
@@ -2104,21 +2104,21 @@ window._mktOpenDetail = function(idx){
 
 <!-- Filtro general: Portfolio / Watchlist / Todos -->
 <div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:12px;border:1.5px solid var(--gold)">
-  <div style="font-size:10px;color:var(--gold);font-weight:800;margin-bottom:10px;text-align:center;letter-spacing:1px">ALERTAS SOBRE</div>
+  <div style="font-size:10px;color:var(--gold);font-weight:800;margin-bottom:10px;text-align:center;letter-spacing:1px" data-i18n="al_alertas_sobre">ALERTAS SOBRE</div>
   <div style="display:flex;gap:8px" id="alert-scope-btns">
-    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Portfolio</div><div id="scope-count-portfolio" style="font-size:14px;font-weight:900;color:var(--gold);margin-top:4px">—</div></div>
-    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:800;color:var(--text)">Mi Watchlist</div><div id="scope-count-watchlist" style="font-size:14px;font-weight:900;color:var(--gold);margin-top:4px">—</div></div>
-    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:800;color:#000">Todos (350)</div><div id="scope-count-todos" style="font-size:14px;font-weight:900;color:#000;margin-top:4px">—</div></div>
+    <div onclick="setAlertScope('portfolio')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="portfolio"><div style="font-size:20px;margin-bottom:4px">💼</div><div style="font-size:11px;font-weight:800;color:var(--text)" data-i18n="al_mi_portfolio">Mi Portfolio</div><div id="scope-count-portfolio" style="font-size:14px;font-weight:900;color:var(--gold);margin-top:4px">—</div></div>
+    <div onclick="setAlertScope('watchlist')" style="flex:1;background:var(--bg);border:1.5px solid var(--border2);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="watchlist"><div style="font-size:20px;margin-bottom:4px">👀</div><div style="font-size:11px;font-weight:800;color:var(--text)" data-i18n="al_mi_watchlist">Mi Watchlist</div><div id="scope-count-watchlist" style="font-size:14px;font-weight:900;color:var(--gold);margin-top:4px">—</div></div>
+    <div onclick="setAlertScope('todos')" style="flex:1;background:var(--gold);border:1.5px solid var(--gold);border-radius:10px;padding:10px;text-align:center;cursor:pointer" data-scope="todos"><div style="font-size:20px;margin-bottom:4px">🌍</div><div style="font-size:11px;font-weight:800;color:#000" data-i18n="al_todos">Todos (350)</div><div id="scope-count-todos" style="font-size:14px;font-weight:900;color:#000;margin-top:4px">—</div></div>
   </div>
 </div>
 
 <!-- Motor IA + AUREX Pulse — compactos con color -->
 <div style="display:flex;gap:8px;margin:8px 11px">
   <a href="javascript:void(0)" onclick="showAlertVars('ia')" style="flex:1;display:flex;align-items:center;gap:8px;background:#A78BFA10;border-radius:10px;padding:10px;border:1px solid #A78BFA40;text-decoration:none;cursor:pointer">
-    <span style="font-size:20px">🤖</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#A78BFA">Motor IA</div><div style="font-size:10px;color:var(--textSec)">10 variables</div></div><span style="font-size:12px;color:#A78BFA;font-weight:700">→</span>
+    <span style="font-size:20px">🤖</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#A78BFA" data-i18n="al_motor_ia">Motor IA</div><div style="font-size:10px;color:var(--textSec)" data-i18n="al_10_variables">10 variables</div></div><span style="font-size:12px;color:#A78BFA;font-weight:700">→</span>
   </a>
   <a href="javascript:void(0)" onclick="showAlertVars('pulse')" style="flex:1;display:flex;align-items:center;gap:8px;background:#EC489910;border-radius:10px;padding:10px;border:1px solid #EC489940;text-decoration:none;cursor:pointer">
-    <span style="font-size:20px">💓</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#EC4899">AUREX Pulse</div><div style="font-size:10px;color:var(--textSec)">14 variables</div></div><span style="font-size:12px;color:#EC4899;font-weight:700">→</span>
+    <span style="font-size:20px">💓</span><div style="flex:1"><div style="font-size:13px;font-weight:800;color:#EC4899">AUREX Pulse</div><div style="font-size:10px;color:var(--textSec)" data-i18n="al_14_variables">14 variables</div></div><span style="font-size:12px;color:#EC4899;font-weight:700">→</span>
   </a>
 </div>
 
@@ -2126,65 +2126,65 @@ window._mktOpenDetail = function(idx){
 <div class="alert-section" style="margin:8px 11px;background:var(--card);border-radius:12px;border:0.5px solid var(--border);overflow:hidden">
   <div onclick="toggleAlertSection('ia')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">🤖</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas IA</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Motor IA — 10 variables</div></div>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)" data-i18n="al_sec_ia">Alertas IA</span><div style="font-size:9px;color:var(--textSec);margin-top:2px" data-i18n="al_sec_ia_desc">Motor IA — 10 variables</div></div>
     <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="ia-alert-count">4/4</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="ia-arrow">▼</span>
   </div>
   <div id="ia-alert-body" style="display:none;border-top:0.5px solid var(--border)">
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Cambio de senal</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Cuando un activo cambia de ALCISTA a BAJISTA o viceversa</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Alta Conviccion</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Cuando la IA detecta senal de maxima conviccion (85-88%)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Umbral probabilidad</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Alerta cuando la probabilidad supera el umbral configurado</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Senal en Portfolio</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Nueva senal IA en activos de tu cartera personal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ia_cambio">Cambio de senal</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ia_cambio_desc">Cuando un activo cambia de ALCISTA a BAJISTA o viceversa</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ia_alta">Alta Conviccion</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ia_alta_desc">Cuando la IA detecta senal de maxima conviccion (85-88%)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ia_umbral">Umbral probabilidad</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ia_umbral_desc">Alerta cuando la probabilidad supera el umbral configurado</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ia_portfolio">Senal en Portfolio</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ia_portfolio_desc">Nueva senal IA en activos de tu cartera personal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
   </div>
 </div>
 
 <div class="alert-section" style="margin:8px 11px;background:var(--card);border-radius:12px;border:0.5px solid var(--border);overflow:hidden">
   <div onclick="toggleAlertSection('pulse')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">💓</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas PULSE</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">AUREX Pulse — 14 variables macro</div></div>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)" data-i18n="al_sec_pulse">Alertas PULSE</span><div style="font-size:9px;color:var(--textSec);margin-top:2px" data-i18n="al_sec_pulse_desc">AUREX Pulse — 14 variables macro</div></div>
     <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="pulse-alert-count">3/3</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="pulse-arrow">▼</span>
   </div>
   <div id="pulse-alert-body" style="display:none;border-top:0.5px solid var(--border)">
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Cambio de zona</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Cuando Pulse cambia de zona (Miedo Extremo / Neutral / Codicia)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Por categoria</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Alerta por categoria: Cripto, Acciones, Futuros, Commodities</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Termometro de Riesgo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Cuando tu portfolio entra en zona de riesgo segun IA</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_pulse_zona">Cambio de zona</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_pulse_zona_desc">Cuando Pulse cambia de zona (Miedo Extremo / Neutral / Codicia)</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_pulse_cat">Por categoria</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_pulse_cat_desc">Alerta por categoria: Cripto, Acciones, Futuros, Commodities</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_pulse_thermo">Termometro de Riesgo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_pulse_thermo_desc">Cuando tu portfolio entra en zona de riesgo segun IA</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
   </div>
 </div>
 
 <div class="alert-section" style="margin:8px 11px;background:var(--card);border-radius:12px;border:0.5px solid var(--border);overflow:hidden">
   <div onclick="toggleAlertSection('precio')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">💰</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas de Precio</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Monitoreo de precios en tiempo real</div></div>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)" data-i18n="al_sec_precio">Alertas de Precio</span><div style="font-size:9px;color:var(--textSec);margin-top:2px" data-i18n="al_sec_precio_desc">Monitoreo de precios en tiempo real</div></div>
     <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="precio-alert-count">3/3</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="precio-arrow">▼</span>
   </div>
   <div id="precio-alert-body" style="display:none;border-top:0.5px solid var(--border)">
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Precio objetivo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Cuando un activo alcanza el precio target que definiste</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Variacion brusca</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Sube o baja mas del % configurado en 24hs</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Nuevo maximo/minimo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Nuevo maximo o minimo de 52 semanas</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_precio_obj">Precio objetivo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_precio_obj_desc">Cuando un activo alcanza el precio target que definiste</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_precio_var">Variacion brusca</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_precio_var_desc">Sube o baja mas del % configurado en 24hs</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_precio_maxmin">Nuevo maximo/minimo</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_precio_maxmin_desc">Nuevo maximo o minimo de 52 semanas</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
   </div>
 </div>
 
 <div class="alert-section" style="margin:8px 11px;background:var(--card);border-radius:12px;border:0.5px solid var(--border);overflow:hidden">
   <div onclick="toggleAlertSection('eventos')" style="display:flex;align-items:center;gap:10px;padding:12px;cursor:pointer">
     <span style="font-size:22px">📅</span>
-    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)">Alertas de Eventos</span><div style="font-size:9px;color:var(--textSec);margin-top:2px">Calendario economico y corporativo</div></div>
+    <div style="flex:1"><span style="font-size:13px;font-weight:700;color:var(--text)" data-i18n="al_sec_eventos">Alertas de Eventos</span><div style="font-size:9px;color:var(--textSec);margin-top:2px" data-i18n="al_sec_eventos_desc">Calendario economico y corporativo</div></div>
     <div style="border:1px solid var(--green);border-radius:10px;padding:2px 8px;display:flex;align-items:center;justify-content:center"><span style="font-size:10px;font-weight:700;color:var(--green)" id="eventos-alert-count">5/5</span></div>
     <span style="font-size:10px;color:var(--textSec)" id="eventos-arrow">▼</span>
   </div>
   <div id="eventos-alert-body" style="display:none;border-top:0.5px solid var(--border)">
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">FED FOMC</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Decisiones de tasas de interes de la Reserva Federal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">CPI / PBI</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Publicacion de datos de inflacion y crecimiento</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Apertura mercados</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Notificacion cuando abren los mercados globales</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Earnings portfolio</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Reportes de resultados trimestrales de activos en tu cartera</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
-    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">Geopolitica GDELT</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px">Eventos geopoliticos de alto impacto detectados por GDELT</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">FED FOMC</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ev_fomc_desc">Decisiones de tasas de interes de la Reserva Federal</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)">CPI / PBI</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ev_cpi_desc">Publicacion de datos de inflacion y crecimiento</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ev_apertura">Apertura mercados</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ev_apertura_desc">Notificacion cuando abren los mercados globales</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px;border-bottom:0.5px solid var(--border)"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ev_earnings">Earnings portfolio</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ev_earnings_desc">Reportes de resultados trimestrales de activos en tu cartera</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
+    <div class="alert-item" style="display:flex;align-items:flex-start;gap:10px;padding:12px 14px"><div style="flex:1"><span style="font-size:13px;font-weight:500;color:var(--text)" data-i18n="al_ev_gdelt">Geopolitica GDELT</span><div style="font-size:10px;color:var(--textSec);margin-top:2px;line-height:14px" data-i18n="al_ev_gdelt_desc">Eventos geopoliticos de alto impacto detectados por GDELT</div></div><label class="toggle-sw"><input type="checkbox" checked onchange="updateAlertCount()"><span class="toggle-slider"></span></label></div>
   </div>
 </div>
 
 <!-- Zonas AUREX Pulse con filtros -->
 <div style="margin:10px 11px;background:var(--card);border-radius:12px;padding:14px;border:0.5px solid var(--border)">
-  <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px">Zonas AUREX Pulse</div>
+  <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="al_zonas_pulse">Zonas AUREX Pulse</div>
   <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto" id="pulse-zone-filters">
     <span onclick="setPulseZoneFilter('GLOBAL')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:var(--chipTextActive);font-size:9px;font-weight:700;cursor:pointer">GLOBAL</span>
     <span onclick="setPulseZoneFilter('CRIPTO')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">CRIPTO</span>
@@ -2212,9 +2212,9 @@ window._mktOpenDetail = function(idx){
 </div>
 
 <!-- Alertas activas ahora -->
-<div style="padding:13px;margin-top:10px;border-bottom:0.5px solid var(--border)">
+<div style="padding:13px;margin:10px 11px;background:var(--card);border:1px solid var(--border2);border-radius:12px">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-    <span style="font-size:11px;font-weight:700;color:var(--textSec);letter-spacing:0.5px">ALERTAS ACTIVAS AHORA</span>
+    <span style="font-size:11px;font-weight:700;color:var(--textSec);letter-spacing:0.5px" data-i18n="al_activas_ahora">ALERTAS ACTIVAS AHORA</span>
     <span id="alert-triggered-count" style="display:none;background:var(--red);border-radius:10px;padding:2px 6px;font-size:10px;font-weight:800;color:var(--text)">0</span>
   </div>
   <div style="display:flex;gap:6px;overflow-x:auto" id="alert-type-filters">
@@ -2227,8 +2227,8 @@ window._mktOpenDetail = function(idx){
 <div id="alert-triggered-list">
   <div style="text-align:center;padding:24px">
     <div style="font-size:28px;margin-bottom:6px">✅</div>
-    <div style="font-size:13px;font-weight:500;color:var(--textSec)">Sin alertas activas</div>
-    <div style="font-size:10px;color:var(--textSec);margin-top:4px">Las alertas aparecen aca cuando se activan</div>
+    <div style="font-size:13px;font-weight:500;color:var(--textSec)" data-i18n="al_sin_alertas">Sin alertas activas</div>
+    <div style="font-size:10px;color:var(--textSec);margin-top:4px" data-i18n="al_sin_alertas_desc">Las alertas aparecen aca cuando se activan</div>
   </div>
 </div>
 

@@ -696,7 +696,114 @@
     fmt_prom: { es: 'prom.', en: 'avg.', pt: 'méd.', zh: '均', fr: 'moy.', it: 'med.', hi: 'औसत', ar: 'متوسط' },
     cerca_soporte: { es: 'cerca soporte', en: 'near support', pt: 'perto do suporte', zh: '接近支撑', fr: 'près du support', it: 'vicino supporto', hi: 'सपोर्ट के करीब', ar: 'قريب من الدعم' },
     cerca_resistencia: { es: 'cerca resist.', en: 'near resist.', pt: 'perto da resist.', zh: '接近阻力', fr: 'près de la résist.', it: 'vicino resist.', hi: 'रेज़िस्ट. के करीब', ar: 'قريب من المقاومة' },
-    zona_media_ia: { es: 'zona media', en: 'mid zone', pt: 'zona média', zh: '中间区域', fr: 'zone médiane', it: 'zona media', hi: 'मध्य ज़ोन', ar: 'منطقة وسطى' }
+    zona_media_ia: { es: 'zona media', en: 'mid zone', pt: 'zona média', zh: '中间区域', fr: 'zone médiane', it: 'zona media', hi: 'मध्य ज़ोन', ar: 'منطقة وسطى' },
+
+    // === ALERTAS ===
+
+    // Banner WhatsApp
+    al_wa_title: { es: 'Alertas por WhatsApp', en: 'WhatsApp Alerts', pt: 'Alertas por WhatsApp', zh: 'WhatsApp提醒', fr: 'Alertes WhatsApp', it: 'Avvisi WhatsApp', hi: 'WhatsApp अलर्ट', ar: 'تنبيهات WhatsApp' },
+    al_wa_conectado: { es: 'WhatsApp conectado', en: 'WhatsApp connected', pt: 'WhatsApp conectado', zh: 'WhatsApp已连接', fr: 'WhatsApp connecté', it: 'WhatsApp connesso', hi: 'WhatsApp कनेक्ट', ar: 'WhatsApp متصل' },
+    al_wa_popup_title: { es: 'WhatsApp Alertas', en: 'WhatsApp Alerts', pt: 'WhatsApp Alertas', zh: 'WhatsApp提醒', fr: 'WhatsApp Alertes', it: 'WhatsApp Avvisi', hi: 'WhatsApp अलर्ट', ar: 'تنبيهات WhatsApp' },
+    al_wa_popup_desc: { es: 'Proximamente podras recibir alertas automaticas por WhatsApp. Te avisaremos cuando este disponible.', en: 'Soon you will be able to receive automatic alerts via WhatsApp. We will notify you when available.', pt: 'Em breve você poderá receber alertas automáticas por WhatsApp. Avisaremos quando estiver disponível.', zh: '您很快就能通过WhatsApp接收自动提醒。可用时我们会通知您。', fr: 'Bientôt vous pourrez recevoir des alertes automatiques par WhatsApp. Nous vous préviendrons quand disponible.', it: 'Presto potrai ricevere avvisi automatici via WhatsApp. Ti avviseremo quando disponibile.', hi: 'जल्द ही आप WhatsApp से स्वचालित अलर्ट प्राप्त कर सकेंगे। उपलब्ध होने पर हम सूचित करेंगे।', ar: 'قريباً ستتمكن من تلقي تنبيهات تلقائية عبر WhatsApp. سنخبرك عند توفرها.' },
+
+    // Resumen
+    al_alertas_on: { es: 'ALERTAS ON', en: 'ALERTS ON', pt: 'ALERTAS ON', zh: '已开启', fr: 'ALERTES ON', it: 'AVVISI ON', hi: 'अलर्ट ON', ar: 'تنبيهات ON' },
+    al_activos_upper: { es: 'ACTIVOS', en: 'ASSETS', pt: 'ATIVOS', zh: '资产', fr: 'ACTIFS', it: 'ASSET', hi: 'एसेट', ar: 'أصول' },
+
+    // Filtro ALERTAS SOBRE
+    al_alertas_sobre: { es: 'ALERTAS SOBRE', en: 'ALERTS FOR', pt: 'ALERTAS SOBRE', zh: '提醒范围', fr: 'ALERTES SUR', it: 'AVVISI SU', hi: 'अलर्ट:', ar: 'تنبيهات حول' },
+    al_mi_portfolio: { es: 'Mi Portfolio', en: 'My Portfolio', pt: 'Meu Portfólio', zh: '我的投资组合', fr: 'Mon Portfolio', it: 'Il mio Portfolio', hi: 'मेरा Portfolio', ar: 'Portfolio الخاص بي' },
+    al_mi_watchlist: { es: 'Mi Watchlist', en: 'My Watchlist', pt: 'Minha Watchlist', zh: '我的自选列表', fr: 'Ma Watchlist', it: 'La mia Watchlist', hi: 'मेरी Watchlist', ar: 'قائمة المتابعة' },
+    al_todos: { es: 'Todos (350)', en: 'All (350)', pt: 'Todos (350)', zh: '全部 (350)', fr: 'Tous (350)', it: 'Tutti (350)', hi: 'सभी (350)', ar: 'الكل (350)' },
+
+    // Motor IA + Pulse buttons
+    al_motor_ia: { es: 'Motor IA', en: 'AI Engine', pt: 'Motor IA', zh: 'AI引擎', fr: 'Moteur IA', it: 'Motore IA', hi: 'AI इंजन', ar: 'محرك AI' },
+    al_10_variables: { es: '10 variables', en: '10 variables', pt: '10 variáveis', zh: '10个变量', fr: '10 variables', it: '10 variabili', hi: '10 वेरिएबल', ar: '10 متغيرات' },
+    al_14_variables: { es: '14 variables', en: '14 variables', pt: '14 variáveis', zh: '14个变量', fr: '14 variables', it: '14 variabili', hi: '14 वेरिएबल', ar: '14 متغيرات' },
+
+    // Sección Alertas IA
+    al_sec_ia: { es: 'Alertas IA', en: 'AI Alerts', pt: 'Alertas IA', zh: 'AI提醒', fr: 'Alertes IA', it: 'Avvisi IA', hi: 'AI अलर्ट', ar: 'تنبيهات AI' },
+    al_sec_ia_desc: { es: 'Motor IA — 10 variables', en: 'AI Engine — 10 variables', pt: 'Motor IA — 10 variáveis', zh: 'AI引擎 — 10个变量', fr: 'Moteur IA — 10 variables', it: 'Motore IA — 10 variabili', hi: 'AI इंजन — 10 वेरिएबल', ar: 'محرك AI — 10 متغيرات' },
+    al_ia_cambio: { es: 'Cambio de senal', en: 'Signal change', pt: 'Mudança de sinal', zh: '信号变化', fr: 'Changement de signal', it: 'Cambio segnale', hi: 'सिग्नल बदलाव', ar: 'تغيير الإشارة' },
+    al_ia_cambio_desc: { es: 'Cuando un activo cambia de ALCISTA a BAJISTA o viceversa', en: 'When an asset changes from BULLISH to BEARISH or vice versa', pt: 'Quando um ativo muda de ALTISTA a BAIXISTA ou vice-versa', zh: '当资产从看涨变为看跌或反之', fr: "Quand un actif passe de HAUSSIER à BAISSIER ou inversement", it: 'Quando un asset cambia da RIALZISTA a RIBASSISTA o viceversa', hi: 'जब कोई एसेट तेज़ी से मंदी या विपरीत बदलता है', ar: 'عندما يتغير أصل من صاعد إلى هابط أو العكس' },
+    al_ia_alta: { es: 'Alta Conviccion', en: 'High Conviction', pt: 'Alta Convicção', zh: '高确信度', fr: 'Haute Conviction', it: 'Alta Convinzione', hi: 'उच्च विश्वास', ar: 'ثقة عالية' },
+    al_ia_alta_desc: { es: 'Cuando la IA detecta senal de maxima conviccion (85-88%)', en: 'When AI detects maximum conviction signal (85-88%)', pt: 'Quando a IA detecta sinal de máxima convicção (85-88%)', zh: '当AI检测到最高确信度信号 (85-88%)', fr: "Quand l'IA détecte un signal de conviction maximale (85-88%)", it: "Quando l'IA rileva segnale di massima convinzione (85-88%)", hi: 'जब AI अधिकतम विश्वास सिग्नल पाता है (85-88%)', ar: 'عندما يكتشف AI إشارة قناعة قصوى (85-88%)' },
+    al_ia_umbral: { es: 'Umbral probabilidad', en: 'Probability threshold', pt: 'Limiar de probabilidade', zh: '概率阈值', fr: 'Seuil de probabilité', it: 'Soglia probabilità', hi: 'संभावना सीमा', ar: 'عتبة الاحتمالية' },
+    al_ia_umbral_desc: { es: 'Alerta cuando la probabilidad supera el umbral configurado', en: 'Alert when probability exceeds configured threshold', pt: 'Alerta quando a probabilidade supera o limiar configurado', zh: '当概率超过配置的阈值时提醒', fr: "Alerte quand la probabilité dépasse le seuil configuré", it: 'Avviso quando la probabilità supera la soglia configurata', hi: 'जब संभावना कॉन्फ़िगर सीमा से अधिक हो', ar: 'تنبيه عندما تتجاوز الاحتمالية العتبة المحددة' },
+    al_ia_portfolio: { es: 'Senal en Portfolio', en: 'Signal in Portfolio', pt: 'Sinal no Portfólio', zh: 'Portfolio中的信号', fr: 'Signal dans Portfolio', it: 'Segnale nel Portfolio', hi: 'Portfolio में सिग्नल', ar: 'إشارة في Portfolio' },
+    al_ia_portfolio_desc: { es: 'Nueva senal IA en activos de tu cartera personal', en: 'New AI signal on assets in your personal portfolio', pt: 'Novo sinal IA em ativos da sua carteira pessoal', zh: '您个人投资组合中资产的新AI信号', fr: 'Nouveau signal IA sur les actifs de votre portefeuille personnel', it: 'Nuovo segnale IA su asset del tuo portafoglio personale', hi: 'आपके व्यक्तिगत portfolio एसेट में नया AI सिग्नल', ar: 'إشارة AI جديدة على أصول محفظتك الشخصية' },
+
+    // Sección Alertas PULSE
+    al_sec_pulse: { es: 'Alertas PULSE', en: 'PULSE Alerts', pt: 'Alertas PULSE', zh: 'PULSE提醒', fr: 'Alertes PULSE', it: 'Avvisi PULSE', hi: 'PULSE अलर्ट', ar: 'تنبيهات PULSE' },
+    al_sec_pulse_desc: { es: 'AUREX Pulse — 14 variables macro', en: 'AUREX Pulse — 14 macro variables', pt: 'AUREX Pulse — 14 variáveis macro', zh: 'AUREX Pulse — 14个宏观变量', fr: 'AUREX Pulse — 14 variables macro', it: 'AUREX Pulse — 14 variabili macro', hi: 'AUREX Pulse — 14 मैक्रो वेरिएबल', ar: 'AUREX Pulse — 14 متغيراً اقتصادياً' },
+    al_pulse_zona: { es: 'Cambio de zona', en: 'Zone change', pt: 'Mudança de zona', zh: '区域变化', fr: 'Changement de zone', it: 'Cambio zona', hi: 'ज़ोन बदलाव', ar: 'تغيير المنطقة' },
+    al_pulse_zona_desc: { es: 'Cuando Pulse cambia de zona (Miedo Extremo / Neutral / Codicia)', en: 'When Pulse changes zone (Extreme Fear / Neutral / Greed)', pt: 'Quando Pulse muda de zona (Medo Extremo / Neutro / Ganância)', zh: '当Pulse变换区域（极度恐惧/中性/贪婪）', fr: 'Quand Pulse change de zone (Peur Extrême / Neutre / Avidité)', it: 'Quando Pulse cambia zona (Paura Estrema / Neutrale / Avidità)', hi: 'जब Pulse ज़ोन बदलता है (अत्यधिक भय / तटस्थ / लालच)', ar: 'عندما يتغير Pulse للمنطقة (خوف شديد / محايد / جشع)' },
+    al_pulse_cat: { es: 'Por categoria', en: 'By category', pt: 'Por categoria', zh: '按类别', fr: 'Par catégorie', it: 'Per categoria', hi: 'श्रेणी के अनुसार', ar: 'حسب الفئة' },
+    al_pulse_cat_desc: { es: 'Alerta por categoria: Cripto, Acciones, Futuros, Commodities', en: 'Alert by category: Crypto, Stocks, Futures, Commodities', pt: 'Alerta por categoria: Cripto, Ações, Futuros, Commodities', zh: '按类别提醒：加密、股票、期货、商品', fr: 'Alerte par catégorie : Crypto, Actions, Futures, Matières premières', it: 'Avviso per categoria: Crypto, Azioni, Futures, Commodities', hi: 'श्रेणी अलर्ट: क्रिप्टो, स्टॉक, फ्यूचर्स, कमोडिटीज़', ar: 'تنبيه حسب الفئة: كريبتو، أسهم، آجلة، سلع' },
+    al_pulse_thermo: { es: 'Termometro de Riesgo', en: 'Risk Thermometer', pt: 'Termômetro de Risco', zh: '风险温度计', fr: 'Thermomètre de Risque', it: 'Termometro di Rischio', hi: 'जोखिम थर्मामीटर', ar: 'مقياس المخاطر' },
+    al_pulse_thermo_desc: { es: 'Cuando tu portfolio entra en zona de riesgo segun IA', en: 'When your portfolio enters a risk zone according to AI', pt: 'Quando seu portfólio entra em zona de risco segundo IA', zh: '当您的投资组合根据AI进入风险区域', fr: "Quand votre portfolio entre en zone de risque selon l'IA", it: "Quando il tuo portfolio entra in zona di rischio secondo l'IA", hi: 'जब AI के अनुसार आपका portfolio जोखिम ज़ोन में प्रवेश करता है', ar: 'عندما تدخل محفظتك منطقة خطر وفقاً لـ AI' },
+
+    // Sección Alertas Precio
+    al_sec_precio: { es: 'Alertas de Precio', en: 'Price Alerts', pt: 'Alertas de Preço', zh: '价格提醒', fr: 'Alertes de Prix', it: 'Avvisi Prezzo', hi: 'मूल्य अलर्ट', ar: 'تنبيهات السعر' },
+    al_sec_precio_desc: { es: 'Monitoreo de precios en tiempo real', en: 'Real-time price monitoring', pt: 'Monitoramento de preços em tempo real', zh: '实时价格监控', fr: 'Surveillance des prix en temps réel', it: 'Monitoraggio prezzi in tempo reale', hi: 'रियल-टाइम मूल्य निगरानी', ar: 'مراقبة الأسعار في الوقت الحقيقي' },
+    al_precio_obj: { es: 'Precio objetivo', en: 'Target price', pt: 'Preço alvo', zh: '目标价格', fr: 'Prix objectif', it: 'Prezzo obiettivo', hi: 'लक्ष्य मूल्य', ar: 'السعر المستهدف' },
+    al_precio_obj_desc: { es: 'Cuando un activo alcanza el precio target que definiste', en: 'When an asset reaches the target price you set', pt: 'Quando um ativo atinge o preço alvo que você definiu', zh: '当资产达到您设定的目标价格', fr: "Quand un actif atteint le prix cible que vous avez défini", it: 'Quando un asset raggiunge il prezzo target che hai definito', hi: 'जब कोई एसेट आपके सेट लक्ष्य मूल्य पर पहुँचता है', ar: 'عندما يصل أصل إلى السعر المستهدف الذي حددته' },
+    al_precio_var: { es: 'Variacion brusca', en: 'Sharp variation', pt: 'Variação brusca', zh: '剧烈波动', fr: 'Variation brusque', it: 'Variazione brusca', hi: 'तीव्र भिन्नता', ar: 'تغير حاد' },
+    al_precio_var_desc: { es: 'Sube o baja mas del % configurado en 24hs', en: 'Rises or falls more than configured % in 24h', pt: 'Sobe ou desce mais do % configurado em 24h', zh: '24小时内涨跌超过配置的百分比', fr: 'Monte ou descend de plus du % configuré en 24h', it: 'Sale o scende più del % configurato in 24h', hi: '24 घंटे में कॉन्फ़िगर % से अधिक बढ़ता या गिरता है', ar: 'يرتفع أو ينخفض أكثر من النسبة المحددة خلال 24 ساعة' },
+    al_precio_maxmin: { es: 'Nuevo maximo/minimo', en: 'New high/low', pt: 'Novo máximo/mínimo', zh: '新高/低', fr: 'Nouveau max/min', it: 'Nuovo massimo/minimo', hi: 'नया उच्च/निम्न', ar: 'ارتفاع/انخفاض جديد' },
+    al_precio_maxmin_desc: { es: 'Nuevo maximo o minimo de 52 semanas', en: 'New 52-week high or low', pt: 'Novo máximo ou mínimo de 52 semanas', zh: '新的52周最高或最低', fr: 'Nouveau maximum ou minimum de 52 semaines', it: 'Nuovo massimo o minimo di 52 settimane', hi: '52 सप्ताह का नया उच्च या निम्न', ar: 'ارتفاع أو انخفاض جديد لـ 52 أسبوعاً' },
+
+    // Sección Alertas Eventos
+    al_sec_eventos: { es: 'Alertas de Eventos', en: 'Event Alerts', pt: 'Alertas de Eventos', zh: '事件提醒', fr: "Alertes d'Événements", it: 'Avvisi Eventi', hi: 'इवेंट अलर्ट', ar: 'تنبيهات الأحداث' },
+    al_sec_eventos_desc: { es: 'Calendario economico y corporativo', en: 'Economic and corporate calendar', pt: 'Calendário econômico e corporativo', zh: '经济和企业日历', fr: 'Calendrier économique et corporatif', it: 'Calendario economico e aziendale', hi: 'आर्थिक और कॉर्पोरेट कैलेंडर', ar: 'التقويم الاقتصادي والشركات' },
+    al_ev_fomc_desc: { es: 'Decisiones de tasas de interes de la Reserva Federal', en: 'Federal Reserve interest rate decisions', pt: 'Decisões de taxas de juros do Federal Reserve', zh: '美联储利率决议', fr: "Décisions de taux d'intérêt de la Réserve Fédérale", it: 'Decisioni sui tassi di interesse della Federal Reserve', hi: 'फेडरल रिजर्व की ब्याज दर निर्णय', ar: 'قرارات أسعار الفائدة للاحتياطي الفيدرالي' },
+    al_ev_cpi_desc: { es: 'Publicacion de datos de inflacion y crecimiento', en: 'Inflation and growth data release', pt: 'Publicação de dados de inflação e crescimento', zh: '通胀和增长数据发布', fr: "Publication des données d'inflation et de croissance", it: 'Pubblicazione dati inflazione e crescita', hi: 'मुद्रास्फीति और विकास डेटा जारी', ar: 'نشر بيانات التضخم والنمو' },
+    al_ev_apertura: { es: 'Apertura mercados', en: 'Market open', pt: 'Abertura mercados', zh: '市场开盘', fr: 'Ouverture des marchés', it: 'Apertura mercati', hi: 'बाज़ार खुलना', ar: 'افتتاح الأسواق' },
+    al_ev_apertura_desc: { es: 'Notificacion cuando abren los mercados globales', en: 'Notification when global markets open', pt: 'Notificação quando os mercados globais abrem', zh: '全球市场开盘通知', fr: "Notification à l'ouverture des marchés mondiaux", it: 'Notifica quando i mercati globali aprono', hi: 'वैश्विक बाज़ार खुलने पर सूचना', ar: 'إشعار عند افتتاح الأسواق العالمية' },
+    al_ev_earnings: { es: 'Earnings portfolio', en: 'Portfolio earnings', pt: 'Earnings portfólio', zh: 'Portfolio财报', fr: 'Earnings portfolio', it: 'Earnings portfolio', hi: 'Portfolio earnings', ar: 'أرباح Portfolio' },
+    al_ev_earnings_desc: { es: 'Reportes de resultados trimestrales de activos en tu cartera', en: 'Quarterly earnings reports of assets in your portfolio', pt: 'Relatórios de resultados trimestrais de ativos em sua carteira', zh: '您投资组合中资产的季度财报', fr: 'Rapports de résultats trimestriels des actifs de votre portefeuille', it: 'Report trimestrali degli asset nel tuo portafoglio', hi: 'आपके portfolio एसेट की तिमाही कमाई रिपोर्ट', ar: 'تقارير أرباح ربع سنوية لأصول محفظتك' },
+    al_ev_gdelt: { es: 'Geopolitica GDELT', en: 'Geopolitics GDELT', pt: 'Geopolítica GDELT', zh: '地缘政治 GDELT', fr: 'Géopolitique GDELT', it: 'Geopolitica GDELT', hi: 'भू-राजनीति GDELT', ar: 'الجيوسياسة GDELT' },
+    al_ev_gdelt_desc: { es: 'Eventos geopoliticos de alto impacto detectados por GDELT', en: 'High-impact geopolitical events detected by GDELT', pt: 'Eventos geopolíticos de alto impacto detectados pelo GDELT', zh: 'GDELT检测到的高影响地缘政治事件', fr: "Événements géopolitiques à fort impact détectés par GDELT", it: 'Eventi geopolitici ad alto impatto rilevati da GDELT', hi: 'GDELT द्वारा पाए गए उच्च-प्रभाव भू-राजनीतिक इवेंट', ar: 'أحداث جيوسياسية عالية التأثير مكتشفة بواسطة GDELT' },
+
+    // Zonas Pulse
+    al_zonas_pulse: { es: 'Zonas AUREX Pulse', en: 'AUREX Pulse Zones', pt: 'Zonas AUREX Pulse', zh: 'AUREX Pulse 区域', fr: 'Zones AUREX Pulse', it: 'Zone AUREX Pulse', hi: 'AUREX Pulse ज़ोन', ar: 'مناطق AUREX Pulse' },
+
+    // Alertas activas
+    al_activas_ahora: { es: 'ALERTAS ACTIVAS AHORA', en: 'ACTIVE ALERTS NOW', pt: 'ALERTAS ATIVAS AGORA', zh: '当前活跃提醒', fr: 'ALERTES ACTIVES MAINTENANT', it: 'AVVISI ATTIVI ORA', hi: 'अभी सक्रिय अलर्ट', ar: 'تنبيهات نشطة الآن' },
+    al_filter_todas: { es: 'Todas', en: 'All', pt: 'Todas', zh: '全部', fr: 'Toutes', it: 'Tutte', hi: 'सभी', ar: 'الكل' },
+    al_filter_ia: { es: '🤖 IA', en: '🤖 AI', pt: '🤖 IA', zh: '🤖 AI', fr: '🤖 IA', it: '🤖 IA', hi: '🤖 AI', ar: '🤖 AI' },
+    al_filter_precio: { es: '💰 Precio', en: '💰 Price', pt: '💰 Preço', zh: '💰 价格', fr: '💰 Prix', it: '💰 Prezzo', hi: '💰 मूल्य', ar: '💰 السعر' },
+    al_filter_pulse: { es: '💓 Pulse', en: '💓 Pulse', pt: '💓 Pulse', zh: '💓 Pulse', fr: '💓 Pulse', it: '💓 Pulse', hi: '💓 Pulse', ar: '💓 Pulse' },
+    al_sin_alertas: { es: 'Sin alertas activas', en: 'No active alerts', pt: 'Sem alertas ativas', zh: '无活跃提醒', fr: 'Aucune alerte active', it: 'Nessun avviso attivo', hi: 'कोई सक्रिय अलर्ट नहीं', ar: 'لا تنبيهات نشطة' },
+    al_sin_alertas_desc: { es: 'Las alertas aparecen aca cuando se activan', en: 'Alerts appear here when triggered', pt: 'Os alertas aparecem aqui quando são ativados', zh: '触发时提醒将显示在此', fr: 'Les alertes apparaissent ici quand elles se déclenchent', it: 'Gli avvisi appaiono qui quando si attivano', hi: 'ट्रिगर होने पर अलर्ट यहाँ दिखाई देंगे', ar: 'التنبيهات تظهر هنا عند تفعيلها' },
+    al_sin_alertas_filtro: { es: 'Sin alertas en este filtro', en: 'No alerts in this filter', pt: 'Sem alertas neste filtro', zh: '此筛选无提醒', fr: 'Aucune alerte dans ce filtre', it: 'Nessun avviso in questo filtro', hi: 'इस फ़िल्टर में कोई अलर्ट नहीं', ar: 'لا تنبيهات في هذا الفلتر' },
+    al_proba_filtros: { es: 'Proba cambiando filtros o umbrales', en: 'Try changing filters or thresholds', pt: 'Tente mudar filtros ou limiares', zh: '尝试更改筛选或阈值', fr: 'Essayez de changer les filtres ou seuils', it: 'Prova a cambiare filtri o soglie', hi: 'फ़िल्टर या सीमा बदलकर देखें', ar: 'جرب تغيير الفلاتر أو العتبات' },
+
+    // Sub-filtros
+    al_sub_todas_ia: { es: 'Todas IA', en: 'All AI', pt: 'Todas IA', zh: '全部AI', fr: 'Toutes IA', it: 'Tutte IA', hi: 'सभी AI', ar: 'كل AI' },
+    al_sub_alta_conv: { es: '⚡ Alta Conv', en: '⚡ High Conv', pt: '⚡ Alta Conv', zh: '⚡ 高确信', fr: '⚡ Haute Conv', it: '⚡ Alta Conv', hi: '⚡ उच्च विश्वास', ar: '⚡ ثقة عالية' },
+    al_sub_cambio: { es: '📉 Cambio', en: '📉 Change', pt: '📉 Mudança', zh: '📉 变化', fr: '📉 Changement', it: '📉 Cambio', hi: '📉 बदलाव', ar: '📉 تغيير' },
+    al_sub_umbral: { es: '🎯 Umbral', en: '🎯 Threshold', pt: '🎯 Limiar', zh: '🎯 阈值', fr: '🎯 Seuil', it: '🎯 Soglia', hi: '🎯 सीमा', ar: '🎯 عتبة' },
+    al_sub_portfolio: { es: '💼 Portfolio', en: '💼 Portfolio', pt: '💼 Portfólio', zh: '💼 Portfolio', fr: '💼 Portfolio', it: '💼 Portfolio', hi: '💼 Portfolio', ar: '💼 Portfolio' },
+    al_sub_todos_precio: { es: 'Todos Precio', en: 'All Price', pt: 'Todos Preço', zh: '全部价格', fr: 'Tous Prix', it: 'Tutti Prezzo', hi: 'सभी मूल्य', ar: 'كل السعر' },
+    al_sub_variacion: { es: '📈 Variacion', en: '📈 Variation', pt: '📈 Variação', zh: '📈 波动', fr: '📈 Variation', it: '📈 Variazione', hi: '📈 भिन्नता', ar: '📈 تغير' },
+    al_sub_rsi: { es: '🔺 RSI', en: '🔺 RSI', pt: '🔺 RSI', zh: '🔺 RSI', fr: '🔺 RSI', it: '🔺 RSI', hi: '🔺 RSI', ar: '🔺 RSI' },
+    al_sub_todos_pulse: { es: 'Todos Pulse', en: 'All Pulse', pt: 'Todos Pulse', zh: '全部Pulse', fr: 'Tous Pulse', it: 'Tutti Pulse', hi: 'सभी Pulse', ar: 'كل Pulse' },
+    al_sub_zona: { es: '🔴 Zona', en: '🔴 Zone', pt: '🔴 Zona', zh: '🔴 区域', fr: '🔴 Zone', it: '🔴 Zona', hi: '🔴 ज़ोन', ar: '🔴 منطقة' },
+    al_sub_categoria: { es: '📊 Categoria', en: '📊 Category', pt: '📊 Categoria', zh: '📊 类别', fr: '📊 Catégorie', it: '📊 Categoria', hi: '📊 श्रेणी', ar: '📊 فئة' },
+
+    // Info modal
+    al_info_alertas_activas: { es: 'Alertas activas', en: 'Active alerts', pt: 'Alertas ativas', zh: '活跃提醒', fr: 'Alertes actives', it: 'Avvisi attivi', hi: 'सक्रिय अलर्ट', ar: 'تنبيهات نشطة' },
+    al_info_monitoreando: { es: 'Monitoreando', en: 'Monitoring', pt: 'Monitorando', zh: '监控中', fr: 'Surveillance de', it: 'Monitoraggio di', hi: 'निगरानी:', ar: 'مراقبة' },
+    al_info_activos_monitoreados: { es: 'Activos monitoreados', en: 'Monitored assets', pt: 'Ativos monitorados', zh: '被监控资产', fr: 'Actifs surveillés', it: 'Asset monitorati', hi: 'निगरानी में एसेट', ar: 'أصول مراقَبة' },
+    al_info_todos_activos: { es: 'Todos los activos', en: 'All assets', pt: 'Todos os ativos', zh: '所有资产', fr: 'Tous les actifs', it: 'Tutti gli asset', hi: 'सभी एसेट', ar: 'جميع الأصول' },
+    al_alertas_suffix: { es: ' alertas', en: ' alerts', pt: ' alertas', zh: ' 个提醒', fr: ' alertes', it: ' avvisi', hi: ' अलर्ट', ar: ' تنبيهات' },
+
+    // Vars modal
+    al_vars_ia_subtitle: { es: '10 variables de analisis por activo', en: '10 analysis variables per asset', pt: '10 variáveis de análise por ativo', zh: '每个资产10个分析变量', fr: "10 variables d'analyse par actif", it: '10 variabili di analisi per asset', hi: 'प्रति एसेट 10 विश्लेषण वेरिएबल', ar: '10 متغيرات تحليل لكل أصل' },
+    al_vars_pulse_subtitle: { es: '14 variables macro del mercado global', en: '14 global market macro variables', pt: '14 variáveis macro do mercado global', zh: '全球市场14个宏观变量', fr: '14 variables macro du marché mondial', it: '14 variabili macro del mercato globale', hi: 'वैश्विक बाज़ार के 14 मैक्रो वेरिएबल', ar: '14 متغيراً اقتصادياً للسوق العالمي' },
+    al_peso_alto: { es: 'Peso Alto', en: 'High Weight', pt: 'Peso Alto', zh: '高权重', fr: 'Poids Élevé', it: 'Peso Alto', hi: 'उच्च भार', ar: 'وزن عالي' },
+    al_peso_medio: { es: 'Peso Medio', en: 'Medium Weight', pt: 'Peso Médio', zh: '中权重', fr: 'Poids Moyen', it: 'Peso Medio', hi: 'मध्यम भार', ar: 'وزن متوسط' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══
