@@ -5877,7 +5877,7 @@ window._applyIASort = function(key) {
     '@keyframes lp-fadein { from { opacity:0; transform:scale(0.96); } to { opacity:1; transform:scale(1); } }' +
     '#longpress-overlay{position:fixed;inset:0;z-index:2000;background:rgba(0,0,0,0.7);' +
     'display:flex;align-items:center;justify-content:center;padding:20px;}' +
-    '#longpress-modal{background:#fff;border:3px solid var(--gold);border-radius:18px;width:100%;max-width:320px;' +
+    '#longpress-modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;width:100%;max-width:320px;' +
     'padding:18px 14px;animation:lp-fadein 0.18s ease-out;display:flex;flex-direction:column;gap:8px;' +
     'box-shadow:0 8px 32px rgba(0,0,0,0.25);}' +
     '.lp-header{text-align:center;padding:4px 0 12px;}' +
@@ -6070,7 +6070,9 @@ function _refreshFavStars() {
 // Long press Mercados — réplica EXACTA de nativa MercadosScreen L1300-1363
 window._showMercadosLPSheet = function(ticker, meta) {
   window._closeLPSheet();
-  var name = meta ? meta.n : ticker;
+  // Protección: si ticker es objeto, extraer .s
+  if(typeof ticker === 'object' && ticker !== null) { meta = ticker; ticker = ticker.s || ''; }
+  var name = meta ? (meta.n || meta.nombre || '') : '';
   var isFav = _isFavorito(ticker);
 
   var overlay = document.createElement('div');
@@ -6085,13 +6087,12 @@ window._showMercadosLPSheet = function(ticker, meta) {
     (name && name !== ticker ? '<div style="font-size:10px;color:var(--textSec);margin-top:1px;">'+name+'</div>' : '');
   modal.appendChild(header);
 
-  // 1. 📊 Análisis IA completo (gold bg + border, destacado) — nativa L1314-1320
+  // 1. 📊 Análisis IA completo — nativa: gold15 bg + 1px gold border
   var analisisBtn = document.createElement('div');
   analisisBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:rgba(212,160,23,0.08);border:1px solid var(--gold);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
-  analisisBtn.innerHTML = '<span style="font-size:16px;margin-right:8px;">📊</span><span style="flex:1;font-size:13px;font-weight:700;color:var(--gold);">'+t('mkt_lp_analisis')+'</span>';
+  analisisBtn.innerHTML = '<span style="font-size:16px;margin-right:8px;">📊</span><span style="flex:1;font-size:13px;font-weight:700;color:var(--gold);">'+t('port_lp_analisis')+'</span>';
   analisisBtn.addEventListener('click', function() {
     window._closeLPSheet();
-    // Abrir detalle del activo (igual que nativa setShowSearchDetail)
     var acts = window._IA_ACTIVOS || [];
     var act = null;
     for(var i=0;i<acts.length;i++){ if(acts[i].s===ticker){ act=acts[i]; break; } }
@@ -6101,10 +6102,10 @@ window._showMercadosLPSheet = function(ticker, meta) {
   });
   modal.appendChild(analisisBtn);
 
-  // 2. ⭐/☆ Favoritos (bg oscuro) — nativa L1322-1330
+  // 2. ⭐/☆ Favoritos — nativa: C.bg background
   var favBtn = document.createElement('div');
   favBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
-  favBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">'+(isFav?'⭐':'☆')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+(isFav?t('mkt_lp_quitar_fav'):t('mkt_lp_agregar_fav'))+'</span>';
+  favBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">'+(isFav?'⭐':'☆')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+(isFav?t('mkt_lp_quitar_fav').replace('★ ',''):t('mkt_lp_agregar_fav').replace('★ ',''))+'</span>';
   favBtn.addEventListener('click', function() {
     window._closeLPSheet();
     if(isFav) window._lpQuitarFavorito(ticker);
@@ -6112,7 +6113,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   });
   modal.appendChild(favBtn);
 
-  // 3. 💼 Agregar a Portfolio (bg oscuro) — nativa L1332-1338
+  // 3. 💼 Agregar a Portfolio — nativa: C.bg background
   var portBtn = document.createElement('div');
   portBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
   portBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">💼</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('mkt_lp_agregar_portfolio')+'</span>';
@@ -6122,12 +6123,12 @@ window._showMercadosLPSheet = function(ticker, meta) {
   });
   modal.appendChild(portBtn);
 
-  // 4. 📤 Compartir (bg oscuro) — nativa L1340-1351
+  // 4. 📤 Compartir — nativa: C.bg background, marginBottom:8
   var shareBtn = document.createElement('div');
   shareBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:8px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
   shareBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">📤</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('port_compartir')+'</span>';
   shareBtn.addEventListener('click', function() {
-    var msg = ticker + ' — ' + (name||'') + '\nvía AUREX — aurex.live';
+    var msg = ticker + ' \u2014 ' + (name||'') + '\nv\u00EDa AUREX \u2014 aurex.live';
     if(navigator.share) {
       navigator.share({text:msg}).catch(function(){});
     } else {
@@ -6137,7 +6138,7 @@ window._showMercadosLPSheet = function(ticker, meta) {
   });
   modal.appendChild(shareBtn);
 
-  // 5. Cancelar (border, texto secundario) — nativa L1353-1358
+  // 5. Cancelar — nativa: border only, no bg, centered
   var cancel = document.createElement('div');
   cancel.style.cssText = 'padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
   cancel.innerHTML = '<span style="font-size:12px;font-weight:600;color:var(--textSec);">'+t('cancelar')+'</span>';
