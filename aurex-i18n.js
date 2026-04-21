@@ -803,7 +803,15 @@
     al_vars_ia_subtitle: { es: '10 variables de analisis por activo', en: '10 analysis variables per asset', pt: '10 variáveis de análise por ativo', zh: '每个资产10个分析变量', fr: "10 variables d'analyse par actif", it: '10 variabili di analisi per asset', hi: 'प्रति एसेट 10 विश्लेषण वेरिएबल', ar: '10 متغيرات تحليل لكل أصل' },
     al_vars_pulse_subtitle: { es: '14 variables macro del mercado global', en: '14 global market macro variables', pt: '14 variáveis macro do mercado global', zh: '全球市场14个宏观变量', fr: '14 variables macro du marché mondial', it: '14 variabili macro del mercato globale', hi: 'वैश्विक बाज़ार के 14 मैक्रो वेरिएबल', ar: '14 متغيراً اقتصادياً للسوق العالمي' },
     al_peso_alto: { es: 'Peso Alto', en: 'High Weight', pt: 'Peso Alto', zh: '高权重', fr: 'Poids Élevé', it: 'Peso Alto', hi: 'उच्च भार', ar: 'وزن عالي' },
-    al_peso_medio: { es: 'Peso Medio', en: 'Medium Weight', pt: 'Peso Médio', zh: '中权重', fr: 'Poids Moyen', it: 'Peso Medio', hi: 'मध्यम भार', ar: 'وزن متوسط' }
+    al_peso_medio: { es: 'Peso Medio', en: 'Medium Weight', pt: 'Peso Médio', zh: '中权重', fr: 'Poids Moyen', it: 'Peso Medio', hi: 'मध्यम भार', ar: 'وزن متوسط' },
+
+    // === ONBOARDING ===
+    ob_comenzar: { es: 'Comenzar', en: 'Get started', pt: 'Começar', zh: '开始', fr: 'Commencer', it: 'Inizia', hi: 'शुरू करें', ar: 'البدء' },
+    ob_siguiente: { es: 'Siguiente', en: 'Next', pt: 'Próximo', zh: '下一步', fr: 'Suivant', it: 'Avanti', hi: 'अगला', ar: 'التالي' },
+    ob_ver_planes: { es: 'Ver Planes', en: 'View Plans', pt: 'Ver Planos', zh: '查看方案', fr: 'Voir les Plans', it: 'Vedi Piani', hi: 'योजनाएँ देखें', ar: 'عرض الخطط' },
+    ob_empezar_gratis: { es: 'Empezar gratis', en: 'Start free', pt: 'Começar grátis', zh: '免费开始', fr: 'Commencer gratuitement', it: 'Inizia gratis', hi: 'मुफ़्त में शुरू करें', ar: 'ابدأ مجاناً' },
+    ob_crear_cuenta: { es: 'Crear cuenta gratis', en: 'Create free account', pt: 'Criar conta grátis', zh: '创建免费账户', fr: 'Créer un compte gratuit', it: 'Crea account gratuito', hi: 'मुफ़्त खाता बनाएँ', ar: 'إنشاء حساب مجاني' },
+    ob_ya_tengo_cuenta: { es: 'Ya tengo cuenta', en: 'I have an account', pt: 'Já tenho conta', zh: '我已有账户', fr: "J'ai déjà un compte", it: 'Ho già un account', hi: 'मेरा पहले से खाता है', ar: 'لديّ حساب بالفعل' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══

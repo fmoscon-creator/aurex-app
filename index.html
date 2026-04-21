@@ -1218,7 +1218,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
   <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:20px;"><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
-  <div style="position:relative;z-index:1;width:100%;padding:0 24px 44px;box-sizing:border-box;"><button onclick="showObs2()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Comenzar</button></div>
+  <div style="position:relative;z-index:1;width:100%;padding:0 24px 44px;box-sizing:border-box;"><button onclick="showObs2()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;" data-i18n="ob_comenzar">Comenzar</button></div>
 </div>
 <div id="obs2" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99998;background:var(--bg);flex-direction:column;align-items:center;justify-content:space-between;overflow:hidden;box-sizing:border-box;">
   <canvas id="obs2Stars" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;display:block;"></canvas>
@@ -1272,7 +1272,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
-    <button onclick="showObs3()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Siguiente</button>
+    <button onclick="showObs3()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;" data-i18n="ob_siguiente">Siguiente</button>
   </div>
 </div>
 
@@ -1349,7 +1349,7 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
-    <button onclick="showObs4()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Ver Planes</button>
+    <button onclick="showObs4()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;" data-i18n="ob_ver_planes">Ver Planes</button>
   </div>
 </div>
 
@@ -1416,10 +1416,10 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
   <div style="position:relative;z-index:1;display:flex;gap:8px;align-items:center;margin-bottom:16px;"><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:8px;height:3px;background:var(--border);border-radius:2px;"></div><div style="width:22px;height:3px;background:var(--gold);border-radius:2px;"></div></div>
   <div style="position:relative;z-index:1;width:100%;padding:0 24px 40px;box-sizing:border-box;">
-    <button onclick="startApp()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;">Empezar gratis</button>
+    <button onclick="startApp()" style="width:100%;padding:17px;background:linear-gradient(135deg,var(--gold),#F0C040);color:var(--bg);font-size:16px;font-weight:800;border:none;border-radius:14px;cursor:pointer;letter-spacing:1px;" data-i18n="ob_empezar_gratis">Empezar gratis</button>
     <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;flex-wrap:wrap;">
-      <div onclick="startApp();setTimeout(function(){navTo('perfil');authSwitchTab('register');},300);" style="font-size:12px;color:var(--gold);font-weight:700;cursor:pointer;padding:6px 14px;border:1px solid var(--gold40);border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);">Crear cuenta gratis</div>
-      <div onclick="window._openRegister=true;startApp();setTimeout(function(){navTo('perfil');},400);" style="font-size:12px;color:var(--textSec);cursor:pointer;padding:6px 14px;border:1px solid var(--border2);border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);">Ya tengo cuenta</div>
+      <div onclick="startApp();setTimeout(function(){navTo('perfil');authSwitchTab('register');},300);" style="font-size:12px;color:var(--gold);font-weight:700;cursor:pointer;padding:6px 14px;border:1px solid var(--gold40);border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);" data-i18n="ob_crear_cuenta">Crear cuenta gratis</div>
+      <div onclick="window._openRegister=true;startApp();setTimeout(function(){navTo('perfil');},400);" style="font-size:12px;color:var(--textSec);cursor:pointer;padding:6px 14px;border:1px solid var(--border2);border-radius:20px;-webkit-tap-highlight-color:rgba(0,0,0,0);" data-i18n="ob_ya_tengo_cuenta">Ya tengo cuenta</div>
     </div>
   </div>
 </div>
