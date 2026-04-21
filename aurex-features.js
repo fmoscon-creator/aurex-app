@@ -4144,7 +4144,7 @@ function _renderIALista(signals, keepLoadingBar) {
       // Barra probabilidad (como nativa: marginH 13, marginTop -4, marginBottom 4)
       '<div style="margin:0 13px;margin-top:-4px;margin-bottom:4px;height:3px;background:#21262D;border-radius:2px"><div style="height:100%;width:'+Math.min(s.confianza,100)+'%;background:'+dirColor+';border-radius:2px;transition:width 0.5s"></div></div>' +
       // Detalle expandido
-      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:var(--card);border-bottom:1px solid var(--border);position:relative;">' + '<div onclick="toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:32px;height:32px;border-radius:16px;background:var(--border);border:1.5px solid var(--textDim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--text);z-index:2;-webkit-tap-highlight-color:rgba(0,0,0,0)">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
+      '<div id="ia-detail-'+i+'" style="display:none;padding:0 14px 14px;background:var(--card);border-bottom:1px solid var(--border);position:relative;">' + '<div onclick="event.stopPropagation();toggleIARow('+i+')" style="position:absolute;top:6px;right:8px;width:32px;height:32px;border-radius:16px;background:var(--border);border:1.5px solid var(--textDim);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--text);z-index:2;-webkit-tap-highlight-color:rgba(0,0,0,0)">&#x2715;</div>' + _buildIADetail(s)+'</div>' +
     '</div>';
   }).join('');
   if (keepLoadingBar && lb) listEl.appendChild(lb);
