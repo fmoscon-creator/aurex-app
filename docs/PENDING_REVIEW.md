@@ -1,35 +1,21 @@
-# PENDING REVIEW — Fix Watchlist: eliminar lista i18n + comparar UX + LP user-select
+# ESTADO ACTUAL — Watchlist fixes
 
-**Archivo**: aurex-features.js
+## Bug 4 (compare toggle) — YA EN PRODUCCIÓN
 
----
+Commit `91e987d` contiene el fix. Verificado en código local:
 
-## Fix 1: Pop eliminar lista en español
+```
+wlToggleCompare NO llama renderWatchCnt()
+```
 
-**L1958**: "Eliminar lista" → `t('wl_eliminar') + ' lista'`
-**L1961**: "Cancelar" → `t('cancelar')`
+El diff del commit confirma: +14 líneas que hacen update visual directo del DOM (circle + counter + button label).
 
-## Fix 2: Comparar — checkbox difícil de tocar (titila, no toma)
+Si Escritorio ve `renderWatchCnt()` todavía, es cache. Verificar con hard refresh o `?v=` en la URL.
 
-**Causa**: `wlToggleCompare()` llamaba `renderWatchCnt()` que destruye y recrea TODO el DOM.
+## Resumen commits Watchlist hoy:
 
-**Fix**: `wlToggleCompare()` ya NO llama `renderWatchCnt()`. En su lugar actualiza solo:
-- El checkbox visual (border color + background + ✓)
-- El counter text ("✓ 2 seleccionados...")
-- El label del botón Comparar ("⚖️ Comparar 2")
-
-Sin re-render. El DOM se mantiene estable. Tap instantáneo.
-
-## Fix 3: Long press — "Cancelar" en español + texto se selecciona
-
-**Causa**: L2384 "Cancelar" hardcodeado sin t(). Card del long press sin user-select:none.
-
-**Fix**:
-- L2384: "Cancelar" → `t('cancelar')`
-- L2359: card agrega `-webkit-user-select:none;user-select:none`
-- L2383: div cancelar también con `user-select:none`
-
----
-
-## Verificación
-- `node -c aurex-features.js` → OK
+| Commit | Contenido |
+|--------|-----------|
+| fb9f3e3 | Watchlist i18n completo — 45 keys × 8 idiomas |
+| 91e987d | Delete modal i18n + compare no-rerender + LP user-select |
+| 1516114 | Fix "Delete lista" → key completa wl_eliminar_lista |
