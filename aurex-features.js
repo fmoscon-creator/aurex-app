@@ -6067,136 +6067,86 @@ function _refreshFavStars() {
   });
 }
 
-// Modal enriquecido para Mercados (igual a nativa IMG_1758)
+// Long press Mercados — réplica EXACTA de nativa MercadosScreen L1300-1363
 window._showMercadosLPSheet = function(ticker, meta) {
   window._closeLPSheet();
   var name = meta ? meta.n : ticker;
-  var logo = meta ? meta.logo : '';
-  var sig = _getSignalForSym(ticker);
-  var prcs = window._pcPrices || {};
-  var chg24 = window._pcChange24 || {};
-  var precio = prcs[ticker] || 0;
-  var pct24 = chg24[ticker] || 0;
-  var objetivo = sig ? sig.objetivo : null;
-  var direccion = sig ? sig.direccion : null;
-  var confianza = sig ? (sig.confianza || sig.prob_principal || 0) : 0;
   var isFav = _isFavorito(ticker);
-  // Fetch precio si no está en cache
-  if(!precio) {
-    fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol=' + ticker + '&interval=1d&range=1d')
-      .then(function(r){ return r.json(); })
-      .then(function(d){
-        if(d.chart && d.chart.result && d.chart.result[0]) {
-          var p = d.chart.result[0].meta.regularMarketPrice || 0;
-          var prev = d.chart.result[0].meta.chartPreviousClose || p;
-          if(p) {
-            if(!window._pcPrices) window._pcPrices = {};
-            window._pcPrices[ticker] = p;
-            if(!window._pcChange24) window._pcChange24 = {};
-            window._pcChange24[ticker] = prev > 0 ? ((p - prev) / prev * 100) : 0;
-            // Actualizar chips en el modal si sigue abierto
-            var chipEl = document.querySelector('#longpress-modal .lp-chips');
-            if(chipEl) {
-              var dec2 = p > 100 ? 2 : (p > 1 ? 2 : (p > 0.01 ? 4 : 6));
-              var pct2 = window._pcChange24[ticker] || 0;
-              var pctStr2 = (pct2 >= 0 ? '+' : '') + pct2.toFixed(2) + '%';
-              var pctCol2 = pct2 >= 0 ? 'var(--green)' : 'var(--red)';
-              chipEl.innerHTML =
-                '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_precio')+'</div><div class="lp-chip-val">$' + Number(p).toLocaleString('es-AR',{minimumFractionDigits:dec2,maximumFractionDigits:dec2}) + '</div></div>' +
-                '<div class="lp-chip"><div class="lp-chip-label">24h</div><div class="lp-chip-val" style="color:'+pctCol2+'">'+pctStr2+'</div></div>' +
-                '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_objetivo_ia')+'</div><div class="lp-chip-val">' + (objetivo ? '$'+Number(objetivo).toLocaleString('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '--') + '</div></div>';
-            }
-          }
-        }
-      }).catch(function(){});
-  }
 
   var overlay = document.createElement('div');
   overlay.id = 'longpress-overlay';
   var modal = document.createElement('div');
   modal.id = 'longpress-modal';
 
-  // Header con logo + nombre + ✕
+  // Header: ticker + nombre centrado con separador (nativa L1309-1312)
   var header = document.createElement('div');
-  header.className = 'lp-header-rich';
-  header.innerHTML =
-    (logo ? '<img class="lp-logo" src="' + logo + '" alt="">' : '') +
-    '<div class="lp-info">' +
-      '<span class="lp-ticker">' + ticker + '</span>' +
-      '<span class="lp-name">' + name + '</span>' +
-    '</div>' +
-    '<span class="lp-close">&times;</span>';
+  header.style.cssText = 'text-align:center;padding:6px 0 10px;border-bottom:0.5px solid var(--border);margin-bottom:8px;';
+  header.innerHTML = '<div style="font-size:14px;font-weight:800;color:var(--text);">'+ticker+'</div>' +
+    (name && name !== ticker ? '<div style="font-size:10px;color:var(--textSec);margin-top:1px;">'+name+'</div>' : '');
   modal.appendChild(header);
-  header.querySelector('.lp-close').addEventListener('click', window._closeLPSheet);
 
-  // 3 chips: Precio | 24h | Objetivo IA
-  var fmtNum = function(v, dec) {
-    if (!v) return '--';
-    return '$' + Number(v).toLocaleString('es-AR', { minimumFractionDigits: dec, maximumFractionDigits: dec });
-  };
-  var dec = precio > 100 ? 2 : (precio > 1 ? 2 : (precio > 0.01 ? 4 : 6));
-  var pct24Str = (pct24 >= 0 ? '+' : '') + pct24.toFixed(2) + '%';
-  var pct24Color = pct24 >= 0 ? 'var(--green)' : 'var(--red)';
-  var objColor = objetivo && precio && Number(objetivo) > precio ? 'var(--green)' : 'var(--red)';
-  var objDec = objetivo && Number(objetivo) > 100 ? 2 : (Number(objetivo) > 1 ? 2 : 4);
+  // 1. 📊 Análisis IA completo (gold bg + border, destacado) — nativa L1314-1320
+  var analisisBtn = document.createElement('div');
+  analisisBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:rgba(212,160,23,0.08);border:1px solid var(--gold);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  analisisBtn.innerHTML = '<span style="font-size:16px;margin-right:8px;">📊</span><span style="flex:1;font-size:13px;font-weight:700;color:var(--gold);">'+t('mkt_lp_analisis')+'</span>';
+  analisisBtn.addEventListener('click', function() {
+    window._closeLPSheet();
+    // Abrir detalle del activo (igual que nativa setShowSearchDetail)
+    var acts = window._IA_ACTIVOS || [];
+    var act = null;
+    for(var i=0;i<acts.length;i++){ if(acts[i].s===ticker){ act=acts[i]; break; } }
+    if(!act) act = {s:ticker, n:name, tipo:'accion'};
+    window._mktSearchActs = [act];
+    if(window._mktOpenDetail) window._mktOpenDetail(0);
+  });
+  modal.appendChild(analisisBtn);
 
-  var chips = document.createElement('div');
-  chips.className = 'lp-chips';
-  chips.innerHTML =
-    '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_precio')+'</div><div class="lp-chip-val">' + fmtNum(precio, dec) + '</div></div>' +
-    '<div class="lp-chip"><div class="lp-chip-label">24h</div><div class="lp-chip-val" style="color:' + pct24Color + '">' + pct24Str + '</div></div>' +
-    '<div class="lp-chip"><div class="lp-chip-label">'+t('mkt_lp_objetivo_ia')+'</div><div class="lp-chip-val" style="color:' + objColor + '">' + (objetivo ? fmtNum(objetivo, objDec) : '--') + '</div></div>';
-  modal.appendChild(chips);
-
-  // Señal IA
-  if (direccion) {
-    var dirLabel = direccion === 'alcista' ? t('port_signal_alcista') : direccion === 'bajista' ? t('port_signal_bajista') : direccion.toUpperCase();
-    var dirColor = direccion === 'alcista' ? 'var(--green)' : direccion === 'bajista' ? 'var(--red)' : 'var(--gold)';
-    var sigDiv = document.createElement('div');
-    sigDiv.className = 'lp-signal';
-    sigDiv.innerHTML = t('mkt_lp_senal_ia') + '<strong style="color:' + dirColor + '">' + dirLabel + ' ' + Math.round(confianza) + '%</strong>';
-    modal.appendChild(sigDiv);
-  }
-
-  // Botón Favoritos (dorado, igual a nativa)
+  // 2. ⭐/☆ Favoritos (bg oscuro) — nativa L1322-1330
   var favBtn = document.createElement('div');
-  favBtn.className = 'lp-fav-btn';
-  favBtn.innerHTML = isFav
-    ? t('mkt_lp_quitar_fav')
-    : t('mkt_lp_agregar_fav');
-  // Ambos estados: amarillo claro con borde dorado (como nativa)
-  // El CSS .lp-fav-btn ya tiene bg:#FEF3C7, border:#D4A017
+  favBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  favBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">'+(isFav?'⭐':'☆')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+(isFav?t('mkt_lp_quitar_fav'):t('mkt_lp_agregar_fav'))+'</span>';
   favBtn.addEventListener('click', function() {
     window._closeLPSheet();
-    if (isFav) {
-      window._lpQuitarFavorito(ticker);
-    } else {
-      window._lpAgregarFavorito(ticker);
-    }
+    if(isFav) window._lpQuitarFavorito(ticker);
+    else window._lpAgregarFavorito(ticker);
   });
   modal.appendChild(favBtn);
 
-  // Agregar a Portfolio
+  // 3. 💼 Agregar a Portfolio (bg oscuro) — nativa L1332-1338
   var portBtn = document.createElement('div');
-  portBtn.className = 'lp-option';
-  portBtn.style.cssText = 'background:#DBEAFE;border:1.5px solid #3B82F6;color:#1e3a5f;';
-  portBtn.innerHTML = '<span class="lp-icon">💼</span><span>'+t('mkt_lp_agregar_portfolio')+'</span>';
+  portBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  portBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">💼</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('mkt_lp_agregar_portfolio')+'</span>';
   portBtn.addEventListener('click', function() {
     window._closeLPSheet();
-    setTimeout(function(){ if (window.openPortModal) window.openPortModal(ticker); }, 50);
+    setTimeout(function(){ if(window.openPortModal) window.openPortModal(ticker); }, 50);
   });
   modal.appendChild(portBtn);
 
-  // Cerrar
+  // 4. 📤 Compartir (bg oscuro) — nativa L1340-1351
+  var shareBtn = document.createElement('div');
+  shareBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:8px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  shareBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">📤</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('port_compartir')+'</span>';
+  shareBtn.addEventListener('click', function() {
+    var msg = ticker + ' — ' + (name||'') + '\nvía AUREX — aurex.live';
+    if(navigator.share) {
+      navigator.share({text:msg}).catch(function(){});
+    } else {
+      navigator.clipboard.writeText(msg).then(function(){ alert(t('mkt_copiado')); }).catch(function(){});
+    }
+    window._closeLPSheet();
+  });
+  modal.appendChild(shareBtn);
+
+  // 5. Cancelar (border, texto secundario) — nativa L1353-1358
   var cancel = document.createElement('div');
-  cancel.className = 'lp-cancel';
-  cancel.textContent = t('mkt_lp_cerrar');
+  cancel.style.cssText = 'padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  cancel.innerHTML = '<span style="font-size:12px;font-weight:600;color:var(--textSec);">'+t('cancelar')+'</span>';
   cancel.addEventListener('click', window._closeLPSheet);
   modal.appendChild(cancel);
 
   overlay.appendChild(modal);
   overlay.addEventListener('click', function(e) {
-    if (e.target === overlay) window._closeLPSheet();
+    if(e.target === overlay) window._closeLPSheet();
   });
   document.body.appendChild(overlay);
 };
