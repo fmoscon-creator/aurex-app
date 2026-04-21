@@ -1,23 +1,30 @@
-# PENDING REVIEW — Fix contraste filtros y sub-filtros Alertas
+# PENDING REVIEW — Onboarding i18n (6 keys × 8 idiomas)
 
-**Archivo**: index.html
+**Archivos** (LOCAL): aurex-i18n.js, index.html
+
+Nativa leída: OnboardingScreen.js (74 líneas). Usa t() con 8 keys i18n. Las slides son imágenes fijas — solo botones se traducen.
 
 ---
 
-## Problema
-Los números en los badges de filtros/sub-filtros de "Active Alerts Now" no se ven cuando NO están seleccionados. Mismo problema en filtros de Pulse Zones.
+## aurex-i18n.js — sección `// === ONBOARDING ===`
+6 keys: ob_comenzar, ob_siguiente, ob_ver_planes, ob_empezar_gratis, ob_crear_cuenta, ob_ya_tengo_cuenta
+Traducciones copiadas exactas de nativa i18n.js L453-458.
 
-## Causa
-- Filtros principales (L870): badge tenía `background:var(--textSec)` con texto que heredaba `color:var(--textSec)` = gris sobre gris
-- Sub-filtros (L895): mismo problema
-- Pulse Zones (L2190-2193): `color:var(--textSec)` poco visible sobre `background:var(--border)`
+## index.html — 6 data-i18n aplicados
+- L1221: ob_comenzar (Slide 1 button)
+- L1275: ob_siguiente (Slide 2 button)
+- L1352: ob_ver_planes (Slide 3 button)
+- L1419: ob_empezar_gratis (Slide 4 main button)
+- L1421: ob_crear_cuenta (Slide 4 secondary)
+- L1422: ob_ya_tengo_cuenta (Slide 4 tertiary)
 
-## Fix
-- Filtros principales: texto no seleccionado → `color:var(--text)`, badge → `background:var(--border2);color:var(--text)`
-- Sub-filtros: ídem
-- Pulse Zones: `color:var(--textSec)` → `color:var(--text)`
+## No incluido (igual que nativa)
+- Contenido visual de las slides (imágenes/canvas fijas)
+- Disclaimer legal (ya traducido en Perfil como `disclaimer_legal`)
+- Botón "← Volver" (no existe en PWA, nativa sí lo tiene)
 
 ---
 
 ## Verificación
-- Contraste visible en modo claro y oscuro
+- `node -c aurex-i18n.js` → OK
+- Réplica exacta de keys de nativa i18n.js
