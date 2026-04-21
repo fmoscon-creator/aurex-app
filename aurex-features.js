@@ -1955,7 +1955,7 @@ window.wlDeleteList = function(listId){
   card.style.cssText = 'width:100%;max-width:300px;background:var(--card);border-radius:16px;padding:20px;box-shadow:0 10px 20px rgba(0,0,0,0.35)';
   card.onclick = function(e){ e.stopPropagation(); };
   var html = '';
-  html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">'+t('wl_eliminar')+' lista</div>';
+  html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">'+t('wl_eliminar_lista')+'</div>';
   html += '<div style="font-size:13px;color:var(--textSec);margin-bottom:20px">'+t('wl_delete_desc')+'</div>';
   html += '<div style="display:flex;gap:12px">';
   html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove()" style="flex:1;padding:12px;border-radius:10px;background:var(--border);text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:600;color:var(--text)">'+t('cancelar')+'</span></div>';

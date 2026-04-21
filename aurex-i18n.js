@@ -633,6 +633,7 @@
     wl_agregar_primer: { es: 'Agregar primer activo', en: 'Add first asset', pt: 'Adicionar primeiro ativo', zh: '添加第一个资产', fr: 'Ajouter le premier actif', it: 'Aggiungi primo asset', hi: 'पहला एसेट जोड़ें', ar: 'إضافة أول أصل' },
     wl_delete_desc: { es: 'Se eliminaran todos los activos', en: 'All assets will be deleted', pt: 'Todos os ativos serão excluídos', zh: '所有资产将被删除', fr: 'Tous les actifs seront supprimés', it: 'Tutti gli asset verranno eliminati', hi: 'सभी एसेट हटा दिए जाएँगे', ar: 'سيتم حذف جميع الأصول' },
     wl_eliminar: { es: 'Eliminar', en: 'Delete', pt: 'Excluir', zh: '删除', fr: 'Supprimer', it: 'Elimina', hi: 'हटाएँ', ar: 'حذف' },
+    wl_eliminar_lista: { es: 'Eliminar lista', en: 'Delete list', pt: 'Excluir lista', zh: '删除列表', fr: 'Supprimer la liste', it: 'Elimina lista', hi: 'सूची हटाएँ', ar: 'حذف القائمة' },
     wl_compartir_senal: { es: 'Compartir señal', en: 'Share signal', pt: 'Compartilhar sinal', zh: '分享信号', fr: 'Partager le signal', it: 'Condividi segnale', hi: 'सिग्नल शेयर करें', ar: 'مشاركة الإشارة' },
     wl_quitar_de_lista: { es: 'Quitar de esta lista', en: 'Remove from this list', pt: 'Remover desta lista', zh: '从此列表移除', fr: 'Retirer de cette liste', it: 'Rimuovi da questa lista', hi: 'इस सूची से हटाएँ', ar: 'إزالة من هذه القائمة' },
     wl_principal: { es: '⭐ PRINCIPAL', en: '⭐ PRIMARY', pt: '⭐ PRINCIPAL', zh: '⭐ 主要', fr: '⭐ PRINCIPALE', it: '⭐ PRINCIPALE', hi: '⭐ प्राथमिक', ar: '⭐ رئيسية' },
