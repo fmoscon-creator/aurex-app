@@ -657,7 +657,46 @@
     wl_stop: { es: 'STOP', en: 'STOP', pt: 'STOP', zh: 'STOP', fr: 'STOP', it: 'STOP', hi: 'STOP', ar: 'STOP' },
     wl_variables_modelo: { es: 'VARIABLES DEL MODELO', en: 'MODEL VARIABLES', pt: 'VARIÁVEIS DO MODELO', zh: '模型变量', fr: 'VARIABLES DU MODÈLE', it: 'VARIABILI DEL MODELLO', hi: 'मॉडल वेरिएबल', ar: 'متغيرات النموذج' },
     wl_ult_cierre: { es: 'Ult.cierre', en: 'Prev.close', pt: 'Últ.fech.', zh: '昨收', fr: 'Clôt.préc.', it: 'Chius.prec.', hi: 'पिछला बंद', ar: 'إغلاق سابق' },
-    wl_cancelar_modo: { es: '✕ Cancelar', en: '✕ Cancel', pt: '✕ Cancelar', zh: '✕ 取消', fr: '✕ Annuler', it: '✕ Annulla', hi: '✕ रद्द करें', ar: '✕ إلغاء' }
+    wl_cancelar_modo: { es: '✕ Cancelar', en: '✕ Cancel', pt: '✕ Cancelar', zh: '✕ 取消', fr: '✕ Annuler', it: '✕ Annulla', hi: '✕ रद्द करें', ar: '✕ إلغاء' },
+
+    // === IA / SEÑALES ===
+
+    ia_senales_ia: { es: 'Señales IA', en: 'AI Signals', pt: 'Sinais IA', zh: 'AI信号', fr: 'Signaux IA', it: 'Segnali IA', hi: 'AI सिग्नल', ar: 'إشارات AI' },
+    ia_ahora: { es: '· ahora', en: '· now', pt: '· agora', zh: '· 现在', fr: '· maintenant', it: '· ora', hi: '· अभी', ar: '· الآن' },
+    ia_alcistas: { es: 'ALCISTAS', en: 'BULLISH', pt: 'ALTISTAS', zh: '看涨', fr: 'HAUSSIERS', it: 'RIALZISTI', hi: 'तेज़ी', ar: 'صاعدة' },
+    ia_bajistas: { es: 'BAJISTAS', en: 'BEARISH', pt: 'BAIXISTAS', zh: '看跌', fr: 'BAISSIERS', it: 'RIBASSISTI', hi: 'मंदी', ar: 'هابطة' },
+    ia_mi_portfolio: { es: '💼 Mi Portfolio', en: '💼 My Portfolio', pt: '💼 Meu Portfólio', zh: '💼 我的投资组合', fr: '💼 Mon Portfolio', it: '💼 Il mio Portfolio', hi: '💼 मेरा Portfolio', ar: '💼 Portfolio الخاص بي' },
+    ia_variables_btn: { es: '🔍 Variables', en: '🔍 Variables', pt: '🔍 Variáveis', zh: '🔍 变量', fr: '🔍 Variables', it: '🔍 Variabili', hi: '🔍 वेरिएबल', ar: '🔍 متغيرات' },
+    ia_eventos_del_dia: { es: 'EVENTOS DEL DIA', en: "TODAY'S EVENTS", pt: 'EVENTOS DO DIA', zh: '今日事件', fr: "ÉVÉNEMENTS DU JOUR", it: 'EVENTI DEL GIORNO', hi: 'आज की घटनाएँ', ar: 'أحداث اليوم' },
+    ia_justificacion: { es: 'JUSTIFICACION DEL ANALISIS', en: 'ANALYSIS JUSTIFICATION', pt: 'JUSTIFICATIVA DA ANÁLISE', zh: '分析依据', fr: "JUSTIFICATION DE L'ANALYSE", it: "GIUSTIFICAZIONE DELL'ANALISI", hi: 'विश्लेषण का औचित्य', ar: 'مبررات التحليل' },
+    ia_variables_modelo: { es: 'VARIABLES DEL MODELO', en: 'MODEL VARIABLES', pt: 'VARIÁVEIS DO MODELO', zh: '模型变量', fr: 'VARIABLES DU MODÈLE', it: 'VARIABILI DEL MODELLO', hi: 'मॉडल वेरिएबल', ar: 'متغيرات النموذج' },
+    ia_vars_alcistas: { es: 'alcistas', en: 'bullish', pt: 'altistas', zh: '看涨', fr: 'haussiers', it: 'rialzisti', hi: 'तेज़ी', ar: 'صاعدة' },
+    ia_vars_bajistas: { es: 'bajistas', en: 'bearish', pt: 'baixistas', zh: '看跌', fr: 'baissiers', it: 'ribassisti', hi: 'मंदी', ar: 'هابطة' },
+    ia_otros_escenarios: { es: 'OTROS ESCENARIOS', en: 'OTHER SCENARIOS', pt: 'OUTROS CENÁRIOS', zh: '其他情景', fr: 'AUTRES SCÉNARIOS', it: 'ALTRI SCENARI', hi: 'अन्य परिदृश्य', ar: 'سيناريوهات أخرى' },
+    ia_compartir_senal: { es: '📤 Compartir senal', en: '📤 Share signal', pt: '📤 Compartilhar sinal', zh: '📤 分享信号', fr: '📤 Partager le signal', it: '📤 Condividi segnale', hi: '📤 सिग्नल शेयर करें', ar: '📤 مشاركة الإشارة' },
+    ia_compartir_senal_de: { es: 'Compartir señal', en: 'Share signal', pt: 'Compartilhar sinal', zh: '分享信号', fr: 'Partager le signal', it: 'Condividi segnale', hi: 'सिग्नल शेयर करें', ar: 'مشاركة الإشارة' },
+    ia_subtitulo: { es: 'SENALES IA - ORDENADAS POR PROBABILIDAD', en: 'AI SIGNALS - ORDERED BY PROBABILITY', pt: 'SINAIS IA - ORDENADOS POR PROBABILIDADE', zh: 'AI信号 - 按概率排序', fr: 'SIGNAUX IA - CLASSÉS PAR PROBABILITÉ', it: 'SEGNALI IA - ORDINATI PER PROBABILITÀ', hi: 'AI सिग्नल - संभावना के अनुसार', ar: 'إشارات AI - مرتبة حسب الاحتمالية' },
+    ia_contexto_tendencia: { es: 'CONTEXTO TENDENCIA', en: 'TREND CONTEXT', pt: 'CONTEXTO TENDÊNCIA', zh: '趋势背景', fr: 'CONTEXTE TENDANCE', it: 'CONTESTO TENDENZA', hi: 'ट्रेंड संदर्भ', ar: 'سياق الاتجاه' },
+
+    // Formatos variables IA
+    fmt_baja: { es: 'baja', en: 'low', pt: 'baixa', zh: '低', fr: 'faible', it: 'bassa', hi: 'कम', ar: 'منخفض' },
+    fmt_alta: { es: 'alta', en: 'high', pt: 'alta', zh: '高', fr: 'élevée', it: 'alta', hi: 'उच्च', ar: 'مرتفع' },
+    fmt_normal: { es: 'normal', en: 'normal', pt: 'normal', zh: '正常', fr: 'normal', it: 'normale', hi: 'सामान्य', ar: 'طبيعي' },
+    fmt_positiva: { es: 'positiva', en: 'positive', pt: 'positiva', zh: '正', fr: 'positive', it: 'positiva', hi: 'सकारात्मक', ar: 'إيجابي' },
+    fmt_negativa: { es: 'negativa', en: 'negative', pt: 'negativa', zh: '负', fr: 'négative', it: 'negativa', hi: 'नकारात्मक', ar: 'سلبي' },
+    fmt_neutral: { es: 'neutral', en: 'neutral', pt: 'neutro', zh: '中性', fr: 'neutre', it: 'neutrale', hi: 'तटस्थ', ar: 'محايد' },
+    fmt_favorable: { es: 'favorable', en: 'favorable', pt: 'favorável', zh: '有利', fr: 'favorable', it: 'favorevole', hi: 'अनुकूल', ar: 'ملائم' },
+    fmt_adverso: { es: 'adverso', en: 'adverse', pt: 'adverso', zh: '不利', fr: 'défavorable', it: 'avverso', hi: 'प्रतिकूल', ar: 'معاكس' },
+    fmt_evento_activo: { es: 'evento activo', en: 'active event', pt: 'evento ativo', zh: '活跃事件', fr: 'événement actif', it: 'evento attivo', hi: 'सक्रिय घटना', ar: 'حدث نشط' },
+    fmt_sin_eventos: { es: 'sin eventos', en: 'no events', pt: 'sem eventos', zh: '无事件', fr: 'aucun événement', it: 'nessun evento', hi: 'कोई घटना नहीं', ar: 'لا أحداث' },
+    fmt_proximos: { es: 'próximos', en: 'upcoming', pt: 'próximos', zh: '即将', fr: 'à venir', it: 'prossimi', hi: 'आगामी', ar: 'قادم' },
+    fmt_sin_reporte: { es: 'sin reporte', en: 'no report', pt: 'sem relatório', zh: '无报告', fr: 'aucun rapport', it: 'nessun rapporto', hi: 'कोई रिपोर्ट नहीं', ar: 'لا تقارير' },
+    fmt_alcista: { es: 'alcista', en: 'bullish', pt: 'altista', zh: '看涨', fr: 'haussier', it: 'rialzista', hi: 'तेज़ी', ar: 'صاعد' },
+    fmt_bajista: { es: 'bajista', en: 'bearish', pt: 'baixista', zh: '看跌', fr: 'baissier', it: 'ribassista', hi: 'मंदी', ar: 'هابط' },
+    fmt_prom: { es: 'prom.', en: 'avg.', pt: 'méd.', zh: '均', fr: 'moy.', it: 'med.', hi: 'औसत', ar: 'متوسط' },
+    cerca_soporte: { es: 'cerca soporte', en: 'near support', pt: 'perto do suporte', zh: '接近支撑', fr: 'près du support', it: 'vicino supporto', hi: 'सपोर्ट के करीब', ar: 'قريب من الدعم' },
+    cerca_resistencia: { es: 'cerca resist.', en: 'near resist.', pt: 'perto da resist.', zh: '接近阻力', fr: 'près de la résist.', it: 'vicino resist.', hi: 'रेज़िस्ट. के करीब', ar: 'قريب من المقاومة' },
+    zona_media_ia: { es: 'zona media', en: 'mid zone', pt: 'zona média', zh: '中间区域', fr: 'zone médiane', it: 'zona media', hi: 'मध्य ज़ोन', ar: 'منطقة وسطى' }
   };
 
   // ═══ FUNCIONES PÚBLICAS ═══
