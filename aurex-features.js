@@ -1956,10 +1956,10 @@ window.wlDeleteList = function(listId){
   card.onclick = function(e){ e.stopPropagation(); };
   var html = '';
   html += '<div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:8px">Eliminar lista</div>';
-  html += '<div style="font-size:13px;color:var(--textSec);margin-bottom:20px">Se eliminaran todos los activos</div>';
+  html += '<div style="font-size:13px;color:var(--textSec);margin-bottom:20px">'+t('wl_delete_desc')+'</div>';
   html += '<div style="display:flex;gap:12px">';
   html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove()" style="flex:1;padding:12px;border-radius:10px;background:var(--border);text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:600;color:var(--text)">Cancelar</span></div>';
-  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove();if(window._wlSelectedList===\''+listId+'\')window._wlSelectedList=null;window._wlDeleteListDB(\''+listId+'\',function(){renderWatchCnt();})" style="flex:1;padding:12px;border-radius:10px;background:#F8514920;border:1px solid #F8514960;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:var(--red)">Eliminar</span></div>';
+  html += '<div onclick="document.getElementById(\'wl-delete-overlay\').remove();if(window._wlSelectedList===\''+listId+'\')window._wlSelectedList=null;window._wlDeleteListDB(\''+listId+'\',function(){renderWatchCnt();})" style="flex:1;padding:12px;border-radius:10px;background:#F8514920;border:1px solid #F8514960;text-align:center;cursor:pointer"><span style="font-size:14px;font-weight:700;color:var(--red)">'+t('wl_eliminar')+'</span></div>';
   html += '</div>';
   card.innerHTML = html;
   overlay.appendChild(card);
@@ -2055,7 +2055,7 @@ window.renderWatchCnt = function(){
 
   // Sin listas: estado vacio
   if(lists.length === 0){
-    cnt.innerHTML = '<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">👀</div><div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">Tu Watchlist esta vacia</div><div style="font-size:12px;color:var(--textDim);line-height:1.6;margin-bottom:16px">Crea tu primera lista para seguir activos<br>con senales IA en tiempo real</div><span data-wl="createList" style="display:inline-block;padding:10px 20px;border-radius:10px;background:var(--goldBg);border:1px solid var(--gold);color:var(--gold);font-size:12px;font-weight:600;cursor:pointer">Crear primera lista</span></div>';
+    cnt.innerHTML = '<div style="text-align:center;padding:60px 20px"><div style="font-size:40px;margin-bottom:12px">👀</div><div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:6px">'+t('wl_vacia_title')+'</div><div style="font-size:12px;color:var(--textDim);line-height:1.6;margin-bottom:16px">'+t('wl_vacia_desc')+'</div><span data-wl="createList" style="display:inline-block;padding:10px 20px;border-radius:10px;background:var(--goldBg);border:1px solid var(--gold);color:var(--gold);font-size:12px;font-weight:600;cursor:pointer">'+t('wl_crear_primera')+'</span></div>';
     return;
   }
 
@@ -2079,7 +2079,7 @@ window.renderWatchCnt = function(){
     var itemCount = _wlGetItems(list.id).length;
     html += '<div onclick="wlSelectList(\''+list.id+'\')" style="min-width:130px;background:var(--card);border-radius:10px;padding:10px;border:1.5px solid '+(isSel?list.color:'var(--border)')+';cursor:pointer;flex-shrink:0">';
     html += '<div style="display:flex;align-items:center;gap:4px">'+(list.is_primary?'<span style="font-size:11px">⭐</span>':'')+'<span style="font-size:13px;font-weight:700;color:'+list.color+'">'+list.name+'</span></div>';
-    html += '<div style="font-size:10px;color:var(--textDim);margin-top:3px">'+itemCount+' activos</div>';
+    html += '<div style="font-size:10px;color:var(--textDim);margin-top:3px">'+itemCount+t('wl_activos_count')+'</div>';
     html += '</div>';
   });
   html += '</div>';
@@ -2094,25 +2094,25 @@ window.renderWatchCnt = function(){
     html += '<div style="width:10px;height:10px;border-radius:5px;background:'+currentList.color+'"></div>';
     html += '<span style="font-size:13px;font-weight:800;color:var(--text);flex-shrink:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+currentList.name+'</span>';
     if(currentList.is_primary) {
-      html += '<span style="font-size:8px;font-weight:800;color:var(--gold);background:var(--navBg,#0D1117);border:1px solid var(--gold);padding:2px 6px;border-radius:4px">⭐ PRINCIPAL</span>';
+      html += '<span style="font-size:8px;font-weight:800;color:var(--gold);background:var(--navBg,#0D1117);border:1px solid var(--gold);padding:2px 6px;border-radius:4px">'+t('wl_principal')+'</span>';
     } else {
-      html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:var(--text);background:var(--chipBg,var(--border));border:1px solid var(--border2);padding:4px 8px;border-radius:6px;cursor:pointer;text-decoration:none">☆ Marcar principal</a>';
+      html += '<a href="javascript:void(0)" data-wl="setPrimary" data-wl-param="'+currentList.id+'" style="font-size:10px;font-weight:600;color:var(--text);background:var(--chipBg,var(--border));border:1px solid var(--border2);padding:4px 8px;border-radius:6px;cursor:pointer;text-decoration:none">☆ '+t('wl_marcar_principal')+'</a>';
     }
     html += '</div>';
     // Fila 2: Comparar + 📤 + Agregar + 🗑️ (en fila)
     html += '<div style="display:flex;align-items:center;gap:10px">';
-    var _cmpLabel = '⚖️ Comparar';
+    var _cmpLabel = t('wl_comparar');
     var _cmpStyle = 'font-size:12px;font-weight:800;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     if(window._wlCompareMode && window._wlCompareItems && window._wlCompareItems.length >= 2){
-      _cmpLabel = '⚖️ Comparar ' + window._wlCompareItems.length;
+      _cmpLabel = t('wl_comparar') + ' ' + window._wlCompareItems.length;
       _cmpStyle = 'font-size:12px;font-weight:800;color:#000;background:var(--gold);padding:8px 14px;border-radius:8px;text-decoration:none;cursor:pointer';
     } else if(window._wlCompareMode){
-      _cmpLabel = '✕ Cancelar';
+      _cmpLabel = t('wl_cancelar_modo');
       _cmpStyle = 'font-size:12px;font-weight:700;color:var(--red);background:#F8514920;padding:8px 14px;border-radius:8px;border:1px solid #F8514940;text-decoration:none;cursor:pointer';
     }
     html += '<a href="javascript:void(0)" data-wl="compareMode" style="'+_cmpStyle+'">'+_cmpLabel+'</a>';
     html += '<a href="javascript:void(0)" data-wl="shareList" style="font-size:16px;cursor:pointer;padding:4px;text-decoration:none">📤</a>';
-    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:800;cursor:pointer;text-decoration:none">+ Agregar</a>';
+    html += '<a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="padding:8px 14px;border-radius:8px;background:var(--gold);color:#000;font-size:12px;font-weight:800;cursor:pointer;text-decoration:none">'+t('wl_agregar')+'</a>';
     html += '<div onclick="wlDeleteList(\''+currentList.id+'\')" style="font-size:14px;cursor:pointer;padding:4px">🗑️</div>';
     html += '</div>';
     html += '</div>';
@@ -2121,12 +2121,12 @@ window.renderWatchCnt = function(){
   // Botón comparar (arriba de los activos, siempre visible)
   if(window._wlCompareMode){
     var _cc = window._wlCompareItems ? window._wlCompareItems.length : 0;
-    html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:var(--textSec)">'+(_cc >= 2 ? '✓ '+_cc+' seleccionados — toca ⚖️ Comparar arriba' : 'Selecciona 2 a 5 activos')+'</span></div>';
+    html += '<div style="padding:6px 14px;text-align:center"><span style="font-size:10px;color:var(--textSec)">'+(_cc >= 2 ? '✓ '+_cc+t('wl_seleccionados') : t('wl_selecciona_2_5'))+'</span></div>';
   }
 
   // Lista de activos
   if(currentItems.length === 0){
-    html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:var(--textSec)">Lista vacia</div><a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:var(--goldBg);border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:600;cursor:pointer">Agregar primer activo</span></div>';
+    html += '<div style="text-align:center;padding:40px 20px"><div style="font-size:28px;margin-bottom:8px">📋</div><div style="font-size:13px;color:var(--textSec)">'+t('wl_lista_vacia')+'</div><a href="javascript:void(0)" ontouchstart="wlOpenAddModal()" data-wl="addAsset" style="display:inline-block;margin-top:12px;padding:8px 16px;border-radius:8px;background:var(--goldBg);border:1px solid var(--gold);color:var(--gold);font-size:11px;font-weight:600;cursor:pointer">'+t('wl_agregar_primer')+'</span></div>';
   } else {
     currentItems.forEach(function(item){
       // Compatibilidad Supabase (ticker) y localStorage (s)
@@ -2367,17 +2367,17 @@ window.wlShowActionMenu = function(ticker){
   // Análisis IA completo (destacado)
   html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlOpenDetail(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--gold15,rgba(212,160,23,0.15));border:1px solid var(--gold);margin-bottom:6px;cursor:pointer">';
   html += '<span style="font-size:16px;margin-right:8px">📊</span>';
-  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--gold)">Análisis IA completo</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--gold)">'+t('port_lp_analisis')+'</span>';
   html += '</div>';
   // Compartir señal — abre modal con WhatsApp/Telegram/Mail (como nativa)
   html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlShowShareSignal(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer">';
   html += '<span style="font-size:15px;margin-right:8px">📤</span>';
-  html += '<span style="flex:1;font-size:13px;font-weight:600;color:var(--text)">Compartir señal</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:600;color:var(--text)">'+t('wl_compartir_senal')+'</span>';
   html += '</div>';
   // Quitar de esta lista
   html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove();wlRemoveAsset(\''+ticker+'\')" style="display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:#F8514912;border:1px solid #F8514960;margin-bottom:8px;cursor:pointer">';
   html += '<span style="font-size:15px;margin-right:8px">🗑️</span>';
-  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--red)">Quitar de esta lista</span>';
+  html += '<span style="flex:1;font-size:13px;font-weight:700;color:var(--red)">'+t('wl_quitar_de_lista')+'</span>';
   html += '</div>';
   // Cancelar
   html += '<div onclick="document.getElementById(\'wl-action-overlay\').remove()" style="padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer">';
@@ -2447,7 +2447,7 @@ window.wlToggleCompare = function(sym){
   var idx = window._wlCompareItems.indexOf(sym);
   if(idx >= 0) { window._wlCompareItems.splice(idx, 1); }
   else if(window._wlCompareItems.length < 5) { window._wlCompareItems.push(sym); }
-  else { alert('Maximo 5 activos'); return; }
+  else { alert(t('wl_maximo_5')); return; }
   renderWatchCnt();
 };
 
@@ -2465,7 +2465,7 @@ window.wlCompareSetPeriod = function(p){
   });
   // Actualizar label y valores de cambio
   var labelEl = document.getElementById('wl-cmp-chg-label');
-  if(labelEl) labelEl.textContent = 'Cambio '+p;
+  if(labelEl) labelEl.textContent = t('wl_cambio')+' '+p;
   var items = window._wlCompareItems || [];
   var hist = window._wlCompareHist || {};
   items.forEach(function(t, i){
@@ -2572,7 +2572,7 @@ window.wlShowCompare = function(){
   var bestSym = items[0]; var bestChg = getChange(items[0]);
   items.forEach(function(t){ var c=getChange(t); if(c>bestChg){bestChg=c;bestSym=t;} });
 
-  var html = '<div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:700;color:var(--gold)">⚖️ Comparador AUREX</span><a href="javascript:void(0)" onclick="document.getElementById(\'wl-compare-overlay\').remove();window._wlCompareMode=false;window._wlCompareItems=[];renderWatchCnt();" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
+  var html = '<div style="padding:14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between"><span style="font-size:15px;font-weight:700;color:var(--gold)">'+t('wl_comparador_title')+'</span><a href="javascript:void(0)" onclick="document.getElementById(\'wl-compare-overlay\').remove();window._wlCompareMode=false;window._wlCompareItems=[];renderWatchCnt();" style="width:32px;height:32px;border-radius:16px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--text);text-decoration:none">✕</a></div>';
 
   // Period buttons — al tocar re-renderizan TODO el comparador (como nativa setState)
   html += '<div style="display:flex;justify-content:center;gap:6px;padding:10px;border-bottom:0.5px solid var(--border)">';
