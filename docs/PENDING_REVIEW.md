@@ -1,27 +1,51 @@
-# PENDING REVIEW — Nativa: card wrapper Termómetro + Pulse mejorado
-
-**Archivos** (LOCAL, NATIVA): PortfolioScreen.js, MercadosScreen.js
+# PENDING REVIEW — Fallback Yahoo directo en Nativa (4 archivos, 6 catches)
 
 ---
 
-## Fix 1: Termómetro Portfolio — card con bordes
+## Problema
+Los 297 activos no-crypto dependen de Yahoo via Railway proxy. Si Railway cae → sin precios. Catches vacíos.
 
-**Archivo**: PortfolioScreen.js L1529
-**ANTES**: `thermoWrap: { paddingHorizontal: 14, paddingTop: 8, paddingBottom: 4 }`
-**DESPUÉS**: `thermoWrap: { marginHorizontal: 14, marginTop: 8, marginBottom: 4, backgroundColor: C.card, borderRadius: 12, padding: 10, borderWidth: 1, borderColor: C.border2 }`
-
-Mismo tratamiento que en PWA (commit 5041b9c).
-
-## Fix 2: AUREX Pulse Mercados — border más visible
-
-**Archivo**: MercadosScreen.js L1463-1465
-**ANTES**: `borderRadius: 10, padding: 10, borderWidth: 0.5, borderColor: ${C.gold}45`
-**DESPUÉS**: `borderRadius: 12, padding: 12, borderWidth: 1, borderColor: C.border2`
-
-Cambia de borde gold semitransparente (0.5px, casi invisible) a borde sutil pero visible (1px, border2).
+## Fix
+En cada catch donde falla `${BACKEND}/api/yahoo`, intentar Yahoo directo: `https://query1.finance.yahoo.com/v8/finance/chart/...` desde el celular. Si también falla → null (igual que antes).
 
 ---
 
-## Verificación
-- Ambos cambios son solo estilos CSS (no funcional)
-- Coherentes con PWA donde ya se hizo este ajuste
+## Archivos modificados (NATIVA — branch dev)
+
+### MercadosScreen.js — 2 fixes
+
+**fetchOne (L398):** catch `{ return null }` → try Yahoo directo con mismo ySym/interval/range → return `{ sym, price, change, closes }` o null.
+
+**loadFuturesPrices (L426):** catch `{ return null }` → try Yahoo directo `range=2d` → return `{ sym, price, change }` o null.
+
+### WatchlistScreen.js — 2 fixes
+
+**Precios no-crypto (L389):** catch `(e) {}` → try Yahoo directo `range=1d` → `p[sym] = { price, change }` o silencio.
+
+**Histórico períodos (L429):** catch `(e) {}` → try Yahoo directo con el range del período → `all[per][ticker] = valid[0]` o silencio.
+
+### PortfolioScreen.js — 2 fixes
+
+**loadPrices no-crypto (L155):** catch con log → try Yahoo directo `range=1d` → `allPrices[i.simbolo] = { price, change24h }` o log error.
+
+**ensurePrice (L401):** catch `(e) {}` → try Yahoo directo → `setPrices` o silencio.
+
+---
+
+## Patrón del fallback (idéntico en los 6 lugares)
+
+```js
+} catch {
+  try {
+    const res2 = await fetch(`https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=1d&_=${Date.now()}`);
+    const d2 = await res2.json();
+    // extraer price, change del meta
+  } catch { /* silencio — ya se intentaron 2 vías */ }
+}
+```
+
+## Impacto
+- 297 activos (acciones, ETFs, bonos, commodities, metales, divisas, mat.primas) + futuros
+- Cobertura: todas las pantallas que usan Yahoo via proxy
+- No toca backend ni PWA
+- No requiere API key (Yahoo es público)
