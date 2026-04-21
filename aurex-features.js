@@ -391,7 +391,24 @@ function fetchBinance(tab){
         if(pel) pel.textContent=_fmt(price,'precio');
         if(cel){cel.textContent=_fmt(pct,'pct');cel.style.color=pct>=0?'var(--green)':'var(--red)';}
       });
-    }).catch(function(){});
+    }).catch(function(){
+      // Fallback: backend Railway crypto-prices (CryptoCompare/Kraken/CoinGecko)
+      fetch('https://aurex-app-production.up.railway.app/api/crypto-prices')
+        .then(function(r){return r.json();})
+        .then(function(d){
+          if(d && d.prices){
+            Object.keys(d.prices).forEach(function(sym){
+              var p=d.prices[sym];
+              if(p && p.price){
+                var pel=document.getElementById('p-'+sym),cel=document.getElementById('c-'+sym);
+                if(pel) pel.textContent=_fmt(p.price,'precio');
+                if(!window._pcPrices) window._pcPrices={};
+                window._pcPrices[sym]=p.price;
+              }
+            });
+          }
+        }).catch(function(){});
+    });
   // Fetch sparklines for cripto (batch klines)
   arr.forEach(function(item){
     fetch('https://api.binance.com/api/v3/klines?symbol='+item.s+'USDT&interval=1d&limit=7')
