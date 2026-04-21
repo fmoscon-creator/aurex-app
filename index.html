@@ -1897,8 +1897,34 @@ function filterMktSearch(){
         var tipoColor = a.tipo==='cripto'?'#A78BFA':a.tipo==='accion'?'#58A6FF':a.tipo==='etf'?'#F0883E':'var(--textSec)';
         var tipoLabel = a.tipo==='cripto'?t('mkt_tipo_cripto'):a.tipo==='accion'?t('mkt_tipo_accion'):a.tipo==='etf'?t('mkt_tipo_etf'):(a.tipo||t('mkt_tipo_activo'));
         var tag = a._fromYahoo ? ' <span style="font-size:8px;background:#58A6FF20;color:#58A6FF;border-radius:3px;padding:1px 3px;">YAHOO</span>' : '';
-        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:#f5f5f5;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div></div>';
+        var cachedP = (window._pcPrices||{})[a.s];
+        var priceHtml = cachedP ? '<span style="font-size:13px;font-weight:700;color:#111;">$'+Number(cachedP).toLocaleString("es-AR",{minimumFractionDigits:2,maximumFractionDigits:2})+'</span>' : '<span id="mkt-sr-p-'+i+'" style="font-size:11px;color:#999;">...</span>';
+        return '<div onclick="window._mktOpenDetail('+i+')" style="display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;cursor:pointer;background:#f5f5f5;-webkit-tap-highlight-color:rgba(0,0,0,0);">'+logoHtml+'<div style="flex:1;min-width:0;"><div style="font-size:14px;font-weight:700;color:#111;">'+a.s+tag+'</div><div style="font-size:11px;color:#888;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">'+a.n+' <span style="color:'+tipoColor+'">&#9830; '+tipoLabel+'</span></div></div>'+priceHtml+'</div>';
       }).join('');
+      // Fetch precios para resultados sin cache
+      var toFetch = results.filter(function(a,i){ return !(window._pcPrices||{})[a.s]; });
+      if(toFetch.length > 0) {
+        toFetch.forEach(function(a,idx){
+          fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+(a.ySymbol||a.s)+'&interval=1d&range=1d')
+            .then(function(r){return r.json();})
+            .then(function(d){
+              if(d.chart&&d.chart.result&&d.chart.result[0]){
+                var p=d.chart.result[0].meta.regularMarketPrice||0;
+                if(p){
+                  if(!window._pcPrices)window._pcPrices={};
+                  window._pcPrices[a.s]=p;
+                  var origIdx=results.indexOf(a);
+                  var el=document.getElementById('mkt-sr-p-'+origIdx);
+                  if(el){
+                    var dec=p>100?2:(p>1?2:4);
+                    el.style.fontSize='13px';el.style.fontWeight='700';el.style.color='#111';
+                    el.textContent='$'+Number(p).toLocaleString("es-AR",{minimumFractionDigits:dec,maximumFractionDigits:dec});
+                  }
+                }
+              }
+            }).catch(function(){});
+        });
+      }
     });
   }
 }
