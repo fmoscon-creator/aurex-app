@@ -867,7 +867,7 @@ function renderTriggeredAlerts(){
     filtersEl.innerHTML = mainFilters.map(function(f){
       var count = f.key==='todas' ? all.length : all.filter(function(a){return a.tipo===f.key;}).length;
       var isSel = typeF===f.key;
-      return '<span onclick="setAlertTypeFilter(\''+f.key+'\')" style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;background:'+(isSel?'var(--gold)':'var(--border)')+';color:'+(isSel?'#000':'var(--textSec)')+';font-size:9px;font-weight:700;cursor:pointer">'+f.label+'<span style="background:'+(isSel?'#00000030':'var(--textSec)')+';border-radius:8px;padding:1px 4px;font-size:7px;font-weight:800">'+count+'</span></span>';
+      return '<span onclick="setAlertTypeFilter(\''+f.key+'\')" style="display:flex;align-items:center;gap:4px;padding:5px 10px;border-radius:6px;background:'+(isSel?'var(--gold)':'var(--border)')+';color:'+(isSel?'#000':'var(--text)')+';font-size:9px;font-weight:700;cursor:pointer">'+f.label+'<span style="background:'+(isSel?'#00000030':'var(--border2)')+';color:'+(isSel?'#000':'var(--text)')+';border-radius:8px;padding:1px 4px;font-size:7px;font-weight:800">'+count+'</span></span>';
     }).join('');
   }
 
@@ -892,7 +892,7 @@ function renderTriggeredAlerts(){
     subEl.innerHTML = subDefs.map(function(f){
       var count = f.key ? typeAlerts.filter(function(a){return a.sub===f.key;}).length : typeAlerts.length;
       var isSel = subF===f.key;
-      return '<span onclick="setAlertSubFilter('+(f.key?'\''+f.key+'\'':'null')+')" style="display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:5px;background:'+(isSel?f.clr:'var(--border)')+';color:'+(isSel?'#000':'var(--textSec)')+';font-size:8px;font-weight:700;cursor:pointer;white-space:nowrap">'+f.label+'<span style="background:'+(isSel?'#00000030':'var(--textSec)')+';border-radius:8px;padding:1px 3px;font-size:7px;font-weight:800">'+count+'</span></span>';
+      return '<span onclick="setAlertSubFilter('+(f.key?'\''+f.key+'\'':'null')+')" style="display:flex;align-items:center;gap:3px;padding:4px 8px;border-radius:5px;background:'+(isSel?f.clr:'var(--border)')+';color:'+(isSel?'#000':'var(--text)')+';font-size:8px;font-weight:700;cursor:pointer;white-space:nowrap">'+f.label+'<span style="background:'+(isSel?'#00000030':'var(--border2)')+';color:'+(isSel?'#000':'var(--text)')+';border-radius:8px;padding:1px 3px;font-size:7px;font-weight:800">'+count+'</span></span>';
     }).join('');
     subEl.style.display = 'flex';
   } else {
@@ -2187,10 +2187,10 @@ window._mktOpenDetail = function(idx){
   <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px" data-i18n="al_zonas_pulse">Zonas AUREX Pulse</div>
   <div style="display:flex;gap:6px;margin-bottom:10px;overflow-x:auto" id="pulse-zone-filters">
     <span onclick="setPulseZoneFilter('GLOBAL')" style="padding:5px 10px;border-radius:6px;background:var(--gold);color:var(--chipTextActive);font-size:9px;font-weight:700;cursor:pointer">GLOBAL</span>
-    <span onclick="setPulseZoneFilter('CRIPTO')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">CRIPTO</span>
-    <span onclick="setPulseZoneFilter('ACCIONES')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">ACCIONES</span>
-    <span onclick="setPulseZoneFilter('COMOD')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">COMOD</span>
-    <span onclick="setPulseZoneFilter('FUTUROS')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--textSec);font-size:9px;font-weight:700;cursor:pointer">FUTUROS</span>
+    <span onclick="setPulseZoneFilter('CRIPTO')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--text);font-size:9px;font-weight:700;cursor:pointer">CRIPTO</span>
+    <span onclick="setPulseZoneFilter('ACCIONES')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--text);font-size:9px;font-weight:700;cursor:pointer">ACCIONES</span>
+    <span onclick="setPulseZoneFilter('COMOD')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--text);font-size:9px;font-weight:700;cursor:pointer">COMOD</span>
+    <span onclick="setPulseZoneFilter('FUTUROS')" style="padding:5px 10px;border-radius:6px;background:var(--border);color:var(--text);font-size:9px;font-weight:700;cursor:pointer">FUTUROS</span>
   </div>
   <div style="position:relative;margin-bottom:4px" id="pulse-zone-bar">
     <div style="display:flex;height:12px;border-radius:6px;overflow:hidden;gap:2px">
