@@ -2298,8 +2298,9 @@ window.wlOpenDetail = function(sym){
   html += '<div onclick="event.stopPropagation();if(typeof _compartirSenal===\'function\')_compartirSenal(\''+sym+'\')" style="width:100%;background:var(--border);border:1px solid var(--border2);border-radius:8px;padding:10px;text-align:center;color:var(--text);font-size:12px;font-weight:600;cursor:pointer">📤 Compartir senal</div>';
   body.innerHTML = html;
   modal.style.cssText = 'display:flex;position:fixed;top:0;left:0;width:100%;height:100%;background:#000000CC;z-index:110;align-items:flex-end;justify-content:center';
+  modal.onclick = function(e){ if(e.target===modal) wlCloseDetail(); };
 };
-window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m) m.style.display='none'; };
+window.wlCloseDetail = function(){ var m=document.getElementById('wl-detail-modal'); if(m){ m.style.display='none'; m.onclick=null; } };
 
 // ─── COMPARTIR SEÑAL — Modal con WhatsApp/Telegram/Mail (como nativa) ───
 window.wlShowShareSignal = function(ticker){
