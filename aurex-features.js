@@ -1705,7 +1705,7 @@ window.selectPortActivo = function(sym, nombre){
           _renderPrice();
           _updatePreview();
         }
-      }).catch(function(){});
+      }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=1d').then(function(r){return r.json();}).then(function(d){if(d.chart&&d.chart.result&&d.chart.result[0]){window._paCurrentPrice=d.chart.result[0].meta.regularMarketPrice||0;_renderPrice();_updatePreview();}}).catch(function(){if(previewPrice)previewPrice.textContent='Error de precio';}); });
   }
   function _updatePreview(){
     var q = parseFloat((document.getElementById('pa-qty')||{}).value) || 0;
