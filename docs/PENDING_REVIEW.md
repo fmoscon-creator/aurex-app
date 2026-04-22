@@ -14,16 +14,17 @@ Código local. Solo aurex-features.js. `node -c` → OK.
 | 4 | L2571 | Watchlist comparador crypto | catch → fetch `/api/crypto-prices` → `_wlCompareHist` |
 | 5 | L870 | Portfolio crypto batch | catch → fetch `/api/crypto-prices` → `_pcPrices` + `.finally(done)` |
 
-## GRUPO 2 — 5 catches stocks → Yahoo directo
+## GRUPO 2 — 6 catches stocks → Yahoo directo
 
 | # | Línea | Contexto | Fix |
 |---|-------|----------|-----|
-| 6 | L2280 | Watchlist stocks | catch → fetch `query1.finance.yahoo.com` directo → `prcs[sym]` |
-| 7 | L2442 | Watchlist histórico stocks | catch → Yahoo directo → `_wlHistPrices` con `valid[valid.length-1]` |
-| 8 | L2585 | Watchlist comparador stocks | catch → Yahoo directo → `_wlCompareHist` |
-| 9 | L897 | Portfolio stocks batch | catch → Yahoo directo → `_pcPrices` + `.finally(done)` |
+| 6 | L465 | **Mercados stocks principal** | catch → Yahoo directo con mismo ySym/interval/range → update DOM |
+| 7 | L2280 | Watchlist stocks | catch → fetch `query1.finance.yahoo.com` directo → `prcs[sym]` |
+| 8 | L2442 | Watchlist histórico stocks | catch → Yahoo directo → `_wlHistPrices` con `valid[valid.length-1]` |
+| 9 | L2585 | Watchlist comparador stocks | catch → Yahoo directo → `_wlCompareHist` |
+| 10 | L897 | Portfolio stocks batch | catch → Yahoo directo → `_pcPrices` + `.finally(done)` |
 
-(L1576 resultó ser `_fetchSearchPrices` no un fetch stocks Mercados — no aplica)
+(L1576 resultó ser `_fetchSearchPrices` — no aplica)
 
 ## GRUPO 3 — Señales IA → localStorage
 
@@ -50,4 +51,4 @@ Función nueva `_iaLoadFromCache()`: lee cache, valida, hace `_actualizarContado
 | aurex_wl_pwa_cache | { lists, items } |
 | aurex_port_items_cache | (ya existía — ahora se usa en catch) |
 
-## Total: 14 catches modificados + 1 función nueva + 1 catch corregido = 16 fixes
+## Total: 15 catches modificados + 1 función nueva + 1 catch corregido = 17 fixes
