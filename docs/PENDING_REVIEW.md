@@ -1,52 +1,53 @@
-# PENDING REVIEW — Cache AsyncStorage para Señales IA y Pulse (4 archivos)
+# PENDING REVIEW — 16 fallbacks PWA (aurex-features.js)
+
+Código local. Solo aurex-features.js. `node -c` → OK.
 
 ---
 
-## Problema
-Si Railway cae → sin señales IA ni Pulse en toda la app. Pantallas vacías.
+## GRUPO 1 — 5 catches crypto → `/api/crypto-prices`
 
-## Fix
-Al recibir datos exitosos del backend → guardar en AsyncStorage.
-Si backend falla → leer de AsyncStorage (datos de la última sesión exitosa).
+| # | Línea | Contexto | Fix |
+|---|-------|----------|-----|
+| 1 | L380 | Precios crypto individuales Mercados | catch → fetch `/api/crypto-prices` → update DOM + `_pcPrices` |
+| 2 | L2274 | Watchlist crypto | catch → fetch `/api/crypto-prices` → `prcs[sym]` + renderWatchCnt |
+| 3 | L2435 | Watchlist histórico crypto | catch → fetch `/api/crypto-prices` → `_wlHistPrices[period]` |
+| 4 | L2571 | Watchlist comparador crypto | catch → fetch `/api/crypto-prices` → `_wlCompareHist` |
+| 5 | L870 | Portfolio crypto batch | catch → fetch `/api/crypto-prices` → `_pcPrices` + `.finally(done)` |
 
----
+## GRUPO 2 — 5 catches stocks → Yahoo directo
 
-## Archivos modificados (NATIVA — branch dev)
+| # | Línea | Contexto | Fix |
+|---|-------|----------|-----|
+| 6 | L2280 | Watchlist stocks | catch → fetch `query1.finance.yahoo.com` directo → `prcs[sym]` |
+| 7 | L2442 | Watchlist histórico stocks | catch → Yahoo directo → `_wlHistPrices` con `valid[valid.length-1]` |
+| 8 | L2585 | Watchlist comparador stocks | catch → Yahoo directo → `_wlCompareHist` |
+| 9 | L897 | Portfolio stocks batch | catch → Yahoo directo → `_pcPrices` + `.finally(done)` |
 
-### IAScreen.js
-- Import: `import AsyncStorage from '@react-native-async-storage/async-storage'` (NUEVO)
-- `loadSignals` éxito (L114): `AsyncStorage.setItem('aurex_ia_cache', JSON.stringify({ signals, prices, ts }))`
-- `loadSignals` fallo (antes del cálculo local): lee `aurex_ia_cache`, si existe → usa esos datos + log con antigüedad en minutos
+(L1576 resultó ser `_fetchSearchPrices` no un fetch stocks Mercados — no aplica)
 
-### MercadosScreen.js (ya tenía AsyncStorage importado)
-- `loadPulse` éxito (L626): `AsyncStorage.setItem('aurex_pulse_cache', JSON.stringify({ data, ts }))`
-- `loadPulse` fallo: lee `aurex_pulse_cache` como FALLBACK 1 antes del cálculo local (FALLBACK 2)
-- `loadIASignals` éxito (L672): `AsyncStorage.setItem('aurex_ia_signals_map', JSON.stringify(map))`
-- `loadIASignals` fallo: lee `aurex_ia_signals_map`
+## GRUPO 3 — Señales IA → localStorage
 
-### WatchlistScreen.js
-- Import: `import AsyncStorage from '@react-native-async-storage/async-storage'` (NUEVO)
-- `loadSignals` éxito (L312): `AsyncStorage.setItem('aurex_wl_ia_cache', JSON.stringify(map))`
-- `loadSignals` fallo: lee `aurex_wl_ia_cache`
+| # | Línea | Fix |
+|---|-------|-----|
+| 10 | L3821 | Éxito backend → `localStorage.setItem('aurex_ia_pwa_cache', {signals, ts})` |
+| 11 | L3833 | Tras 3 reintentos fallidos → `_iaLoadFromCache()` lee localStorage |
 
-### PortfolioScreen.js (ya tenía AsyncStorage importado)
-- `useEffect ia-signals` éxito (L211): `AsyncStorage.setItem('aurex_port_ia_cache', JSON.stringify(sigs))`
-- `useEffect ia-signals` fallo: lee `aurex_port_ia_cache`
+Función nueva `_iaLoadFromCache()`: lee cache, valida, hace `_actualizarContadores` + `_renderIALista`. Muestra "Cache · X min" en timestamp.
 
----
+## GRUPO 4 — Portfolio + Watchlist datos → localStorage
 
-## Keys AsyncStorage usadas
+| # | Línea | Fix |
+|---|-------|-----|
+| 12 | L835 | Portfolio catch Supabase → lee `aurex_port_items_cache` antes de renderPortfolioEmpty (corrección Escritorio) |
+| 13 | L1874 | Watchlist sync éxito → `localStorage.setItem('aurex_wl_pwa_cache', {lists, items})` |
+| 14 | L1877+ | Watchlist sync fallo → `.catch` lee `aurex_wl_pwa_cache` → restaura `_wlListsCache` + `_wlItemsCache` |
 
-| Key | Qué guarda | Dónde se escribe | Dónde se lee |
-|-----|-----------|-----------------|-------------|
-| aurex_ia_cache | { signals, prices, ts } | IAScreen | IAScreen |
-| aurex_pulse_cache | { data, ts } | MercadosScreen | MercadosScreen |
-| aurex_ia_signals_map | { simbolo: signal } | MercadosScreen | MercadosScreen |
-| aurex_wl_ia_cache | { simbolo: signal } | WatchlistScreen | WatchlistScreen |
-| aurex_port_ia_cache | { simbolo: signal } | PortfolioScreen | PortfolioScreen |
+## Keys localStorage PWA (3 nuevas)
 
-## Impacto
-- Señales IA: cache en 4 screens
-- Pulse: cache en MercadosScreen
-- Si Railway cae → app muestra últimos datos conocidos (nunca vacía)
-- No toca backend ni PWA
+| Key | Dato |
+|-----|------|
+| aurex_ia_pwa_cache | { signals, ts } |
+| aurex_wl_pwa_cache | { lists, items } |
+| aurex_port_items_cache | (ya existía — ahora se usa en catch) |
+
+## Total: 14 catches modificados + 1 función nueva + 1 catch corregido = 16 fixes
