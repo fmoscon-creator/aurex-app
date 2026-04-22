@@ -377,7 +377,7 @@ function fetchBinance(tab){
     arr.forEach(function(item){
       var pel=document.getElementById('p-'+item.s),cel=document.getElementById('c-'+item.s);
       if(item.s==='USDT'||stableFixed[item.s]){if(pel)pel.textContent='$1.0000';if(cel){cel.textContent='+0.00%';cel.style.color='var(--textSec)';}return;}
-      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice),pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent=_fmt(pr,'precio');if(cel){cel.textContent=_fmt(pc,'pct');cel.style.color=pc>=0?'var(--green)':'var(--red)';}}).catch(function(){});
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(t){var pr=parseFloat(t.lastPrice),pc=parseFloat(t.priceChangePercent)||0;if(pel)pel.textContent=_fmt(pr,'precio');if(cel){cel.textContent=_fmt(pc,'pct');cel.style.color=pc>=0?'var(--green)':'var(--red)';}}).catch(function(){ fetch('https://aurex-app-production.up.railway.app/api/crypto-prices').then(function(r){return r.json();}).then(function(d){if(d&&d.prices&&d.prices[item.s]){var p=d.prices[item.s];if(pel)pel.textContent=_fmt(p.price,'precio');if(!window._pcPrices)window._pcPrices={};window._pcPrices[item.s]=p.price;}}).catch(function(){}); });
     });
     return;
   }
@@ -460,7 +460,7 @@ function fetchYahoo(tab,pais,tf){
           var sparkEl=document.getElementById('spark-'+item.s);
           if(sparkEl) sparkEl.innerHTML=_buildSparklineSVG(validCloses,isUp);
         }
-      }).catch(function(){});
+      }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+_ySym+'?interval='+interval+'&range='+range).then(function(r){return r.json();}).then(function(d){var meta=d.chart&&d.chart.result&&d.chart.result[0]?d.chart.result[0].meta:null;if(!meta)return;var price=meta.regularMarketPrice;if(!price)return;var prevClose=meta.chartPreviousClose||meta.previousClose||price;var pct=prevClose>0?((price-prevClose)/prevClose*100):0;if(pel)pel.textContent=_fmt(price,'precio');if(cel){cel.textContent=_fmt(pct,'pct');cel.style.color=pct>=0?'var(--green)':'var(--red)';}}).catch(function(){}); });
   }));
 }
 
@@ -830,7 +830,10 @@ function _fetchPortfolio(token, userId){
     // Luego buscar precios frescos para los símbolos del portfolio
     _refreshPortPrices(items);
   })
-  .catch(function(){ _renderPortfolioEmpty(); });
+  .catch(function(){
+    try{var cached=localStorage.getItem('aurex_port_items_cache');if(cached){var items=JSON.parse(cached);if(items&&items.length>0){window._portItems=items;_renderPortfolioItems(items);_refreshPortPrices(items);return;}}}catch(e){}
+    _renderPortfolioEmpty();
+  });
 }
 
 function _refreshPortPrices(items){
@@ -865,7 +868,7 @@ function _refreshPortPrices(items){
             window._pc52High[sym] = Math.max.apply(null, highs);
           }).catch(function(){});
         done();
-      }).catch(done);
+      }).catch(function(){ fetch('https://aurex-app-production.up.railway.app/api/crypto-prices').then(function(r){return r.json();}).then(function(d){if(d&&d.prices&&d.prices[sym]){if(!window._pcPrices)window._pcPrices={};window._pcPrices[sym]=d.prices[sym].price;}}).catch(function(){}).finally(done); });
   });
   yahooSyms.forEach(function(sym){
     fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+sym+'&interval=1d&range=1d')
@@ -892,7 +895,7 @@ function _refreshPortPrices(items){
           if(meta.fiftyTwoWeekHigh) window._pc52High[sym]=meta.fiftyTwoWeekHigh;
         }catch(e){}
         done();
-      }).catch(done);
+      }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+sym+'?interval=1d&range=1d').then(function(r){return r.json();}).then(function(d){try{var meta=d.chart.result[0].meta;if(!window._pcPrices)window._pcPrices={};if(meta.regularMarketPrice)window._pcPrices[sym]=parseFloat(meta.regularMarketPrice);var _prevClose=meta.previousClose||meta.chartPreviousClose;if(_prevClose&&meta.regularMarketPrice){if(!window._pcChange24)window._pcChange24={};window._pcChange24[sym]=((meta.regularMarketPrice-_prevClose)/_prevClose*100);}}catch(e){}}).catch(function(){}).finally(done); });
   });
 }
 
@@ -1858,9 +1861,15 @@ function _wlSyncFromSupabase(cb){
       sb.from('watchlist_items').select('*').eq('watchlist_id', list.id).order('position').then(function(r2){
         _wlItemsCache[list.id] = r2.data || [];
         done++;
-        if(done === _wlListsCache.length && cb) cb();
+        if(done === _wlListsCache.length){
+          try{localStorage.setItem('aurex_wl_pwa_cache',JSON.stringify({lists:_wlListsCache,items:_wlItemsCache}));}catch(e){}
+          if(cb) cb();
+        }
       });
     });
+  }).catch(function(){
+    try{var cached=localStorage.getItem('aurex_wl_pwa_cache');if(cached){var d=JSON.parse(cached);_wlListsCache=d.lists||[];_wlItemsCache=d.items||{};}}catch(e){}
+    if(cb) cb();
   });
 }
 
@@ -2271,11 +2280,11 @@ window.renderWatchCnt = function(){
     if(cryptoList.indexOf(item.s)>=0){
       fetch('https://api.binance.com/api/v3/ticker/24hr?symbol='+item.s+'USDT').then(function(r){return r.json();}).then(function(d){
         if(d.lastPrice){prcs[item.s]=parseFloat(d.lastPrice);chg24[item.s]=parseFloat(d.priceChangePercent);renderWatchCnt();}
-      }).catch(function(){});
+      }).catch(function(){ fetch('https://aurex-app-production.up.railway.app/api/crypto-prices').then(function(r){return r.json();}).then(function(d){if(d&&d.prices&&d.prices[item.s]){prcs[item.s]=d.prices[item.s].price;renderWatchCnt();}}).catch(function(){}); });
     } else {
       fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+item.s+'&interval=1d&range=1d').then(function(r){return r.json();}).then(function(d){
         try{var meta=d.chart.result[0].meta;if(meta.regularMarketPrice){prcs[item.s]=meta.regularMarketPrice;var prev=meta.previousClose||meta.chartPreviousClose;if(prev)chg24[item.s]=((meta.regularMarketPrice-prev)/prev*100);renderWatchCnt();}}catch(e){}
-      }).catch(function(){});
+      }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+item.s+'?interval=1d&range=1d').then(function(r){return r.json();}).then(function(d){try{var meta=d.chart.result[0].meta;if(meta.regularMarketPrice){prcs[item.s]=meta.regularMarketPrice;var prev=meta.previousClose||meta.chartPreviousClose;if(prev)chg24[item.s]=((meta.regularMarketPrice-prev)/prev*100);renderWatchCnt();}}catch(e){}}).catch(function(){}); });
     }
   });
 }
@@ -2427,13 +2436,13 @@ window.wlSetPeriod = function(ticker, period){
         .then(function(r){return r.json();})
         .then(function(data){
           if(Array.isArray(data)&&data.length>0){ window._wlHistPrices[period][ticker]=parseFloat(data[0][1]); renderWatchCnt(); }
-        }).catch(function(){});
+        }).catch(function(){ fetch('https://aurex-app-production.up.railway.app/api/crypto-prices').then(function(r){return r.json();}).then(function(d){if(d&&d.prices&&d.prices[ticker]){window._wlHistPrices[period][ticker]=d.prices[ticker].price;renderWatchCnt();}}).catch(function(){}); });
     } else if(range) {
       fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+ticker+'&interval=1d&range='+range)
         .then(function(r){return r.json();})
         .then(function(data){
           try{var closes=data.chart.result[0].indicators.quote[0].close;var valid=closes.filter(function(c){return c!=null;});if(valid.length>0){window._wlHistPrices[period][ticker]=valid[0];renderWatchCnt();}}catch(e){}
-        }).catch(function(){});
+        }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+ticker+'?interval=1d&range='+range).then(function(r){return r.json();}).then(function(data){try{var closes=data.chart.result[0].indicators.quote[0].close;var valid=closes.filter(function(c){return c!=null;});if(valid.length>0){window._wlHistPrices[period][ticker]=valid[0];renderWatchCnt();}}catch(e){}}).catch(function(){}); });
     }
   }
   renderWatchCnt();
@@ -2558,7 +2567,7 @@ window.wlLoadCompareHist = function(){
               window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;
               _wlCmpRefresh();
             }
-          }).catch(function(){});
+          }).catch(function(){ fetch('https://aurex-app-production.up.railway.app/api/crypto-prices').then(function(r){return r.json();}).then(function(d){if(d&&d.prices&&d.prices[t]){window._wlCompareHist[t][per]=0;_wlCmpRefresh();}}).catch(function(){}); });
       } else {
         fetch('https://aurex-app-production.up.railway.app/api/yahoo?symbol='+t+'&interval=1d&range='+range)
           .then(function(r){return r.json();})
@@ -2572,7 +2581,7 @@ window.wlLoadCompareHist = function(){
                 _wlCmpRefresh();
               }
             }
-          }).catch(function(){});
+          }).catch(function(){ fetch('https://query1.finance.yahoo.com/v8/finance/chart/'+t+'?interval=1d&range='+range).then(function(r){return r.json();}).then(function(data){if(data&&data.chart&&data.chart.result&&data.chart.result[0]){var closes=data.chart.result[0].indicators&&data.chart.result[0].indicators.quote&&data.chart.result[0].indicators.quote[0]?data.chart.result[0].indicators.quote[0].close:[];var valid=closes.filter(function(c){return c!=null;});if(valid.length>1){var first=valid[0];var last=valid[valid.length-1];window._wlCompareHist[t][per]=first>0?((last-first)/first*100):0;_wlCmpRefresh();}}}).catch(function(){}); });
       }
     });
   });
@@ -3800,20 +3809,37 @@ function generarSenalesIA() {
             else el.textContent='· hace '+Math.floor(diff/60)+' min';
           }, 5000);
         }
+        try{localStorage.setItem('aurex_ia_pwa_cache',JSON.stringify({signals:sigs,ts:Date.now()}));}catch(e){}
         console.log('[AUREX IA] OK — mostrando', sigs.length, 'senales del backend');
         return;
       }
       console.log('[AUREX IA] Backend vacio');
       window._iaRetries = (window._iaRetries||0) + 1;
       if(window._iaRetries < 3) setTimeout(function(){ generarSenalesIA(); }, 5000);
-      else console.log('[AUREX IA] Max reintentos alcanzado');
+      else _iaLoadFromCache();
     })
     .catch(function(err){
       console.error('[AUREX IA] Error backend:', err);
       window._iaRetries = (window._iaRetries||0) + 1;
       if(window._iaRetries < 3) setTimeout(function(){ generarSenalesIA(); }, 5000);
-      else console.log('[AUREX IA] Max reintentos alcanzado');
+      else _iaLoadFromCache();
     });
+}
+
+function _iaLoadFromCache(){
+  try{
+    var cached=localStorage.getItem('aurex_ia_pwa_cache');
+    if(!cached) return;
+    var d=JSON.parse(cached);
+    if(!d||!d.signals||!d.signals.length) return;
+    var age=Math.round((Date.now()-d.ts)/60000);
+    window._iaSignals=d.signals;
+    _actualizarContadores(d.signals);
+    _renderIALista(d.signals,false);
+    var upd=document.getElementById('ia-updated');
+    if(upd) upd.textContent='Cache · '+age+' min';
+    console.log('[AUREX IA] Cargado desde cache localStorage, edad:',age,'min');
+  }catch(e){console.error('[AUREX IA] Error leyendo cache:',e);}
 }
 
 function _generarSenalesIALocal() {
