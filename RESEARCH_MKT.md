@@ -522,13 +522,107 @@ AUREX = análisis con IA independiente de cualquier broker, sin conflicto de int
 
 ---
 
-## 5. Atom Finance / Iris Finance
+## 5. Atom Finance (con nota sobre Iris Finance)
 
-*[Pendiente — research en curso]*
+**ACLARACIÓN: Atom Finance e Iris Finance son DOS empresas distintas.**
+
+- **Atom Finance** = investment research B2C (relevante para AUREX, documentado abajo)
+- **Iris Finance** = AI-native FP&A para CPG brands B2B (founded mid-2024, $6.2M raised, founders Drew Fallon + Alexander Heckmann + Marko Iwanik) — **NO es competidor de AUREX**, es plataforma CFO interna para marcas de consumo, no para inversores. Lo descartamos.
+
+---
+
+### ATOM FINANCE — research
+
+**Empresa:** Atom Finance, Inc.
+**Founded:** 2019
+**Funding:** $10.6M Series A
+**URL:** https://atom.finance/ (al 28-abr-2026 devuelve "Site Not Found")
+**LinkedIn:** https://www.linkedin.com/company/atom-finance
+
+**⚠️ ESTADO ACTUAL CRÍTICO (al 28-abr-2026):** Atom Finance **cesó operaciones normales a fines de 2025**. El sitio devuelve "Site Not Found" hace varias semanas. La empresa fue adquirida en mayo 2024 (fuentes contradictorias: una dice por Toggle, otra por Reflexivity). NO hay anuncio oficial público de cierre.
+
+**Esta sección documenta su trayectoria como caso de estudio**, no como competidor activo.
+
+### 1. Posicionamiento (mientras estuvo activo)
+- "Investment research platform for individual investors"
+- "Levels the playing field by providing individual investors access to institutional-grade company data and investing resources"
+- Mensaje core: democratizar análisis financiero de calidad institucional para retail.
+
+### 2. Audiencia objetivo declarada
+- New y non-professional investors que quieren manejar sus propias inversiones.
+- Experienced investors que buscan ahorro de costos vs Bloomberg Terminal.
+- Budget-conscious traders que necesitan real-time data.
+- Younger investors cómodos con app-based tools.
+
+### 3. Modelo de monetización
+- **Freemium:**
+  - **Basic Plan:** gratis — breaking news + real-time stock quotes
+  - **Premium Plan:** $9.99/mes ($99/año) — real-time data, unlimited watchlists, deep analysis
+- Revenue secundario: advertising + affiliate partnerships con servicios financieros.
+
+### 4. Canales de marketing activos (mientras estuvo activo)
+- LinkedIn (https://www.linkedin.com/company/atom-finance)
+- App Store + Google Play
+- Product Hunt (con reviews)
+- Reviews en sitios independientes: WallStreetSurvivor, BullishBears, TraderHQ, Money Crashers
+- **NO se identificaron** estrategias de PR mayor o adquisición pagas significativas.
+
+### 5. Tipo de contenido por canal
+- Información limitada en mis búsquedas. Producto fue principalmente product-led, no content-led.
+- Reviews independientes destacan UX y comparación con Bloomberg Terminal.
+
+### 6. Tono y voz
+- Posicionamiento "democratizador" (institutional-grade tools at retail price).
+- Tono profesional pero accesible.
+
+### 7. Cómo se lanzaron y se cerraron
+- **2019:** lanzamiento con $10.6M Series A.
+- **2022:** alcanzaron 100,000+ users.
+- **Mayo 2024:** adquisición (por Toggle según una fuente, por Reflexivity según otra).
+- **Fines 2025:** cesaron operaciones normales, sitio web caído.
+- **Lección clave:** ni 100k users ni $10.6M en funding fueron suficientes para llegar a sostenibilidad operativa en el espacio de investment research B2C.
+
+### 8. Qué les funcionó y qué no para crecer
+**Lo que funcionó:**
+- Crecimiento de 0 a 100k users en ~3 años
+- Pricing competitivo ($9.99/mes vs Bloomberg $24k/año)
+- Posicionamiento "Bloomberg para retail"
+
+**Lo que NO funcionó (insight crítico):**
+- A pesar del crecimiento de usuarios, el modelo no llegó a sostenibilidad — venta/adquisición y cierre de operaciones a 6 años del lanzamiento.
+- El espacio de "AI/data investment research B2C" parece difícil de monetizar a escala porque los usuarios FREE consumen mucha data y la conversión a Premium es limitada.
+
+### 9. Reseñas (mientras estuvo activo)
+
+**Pros:**
+- Excelente para new y non-professional investors
+- Cost savings vs alternativas institucionales (Bloomberg Terminal)
+- Real-time data y unlimited watchlists destacados
+- "Genuine value" en el plan anual
+
+**Contras:**
+- UX issues señalados en reviews independientes (Medium tiene un análisis "Everything Wrong with Atom in less than 8 minutes")
+- Fue adquirida y eventualmente cerrada → ahora los usuarios perdieron acceso
+
+**Reviews de cierre:** los usuarios reportan que el sitio devuelve errores y no pueden acceder a sus datos.
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://traderhq.com/atom-finance-review-investment-research-platform/ — review completo + estado actual
+- https://www.crunchbase.com/organization/atom-finance — company profile
+- https://pitchbook.com/profiles/company/279790-21 — funding y valuación
+- https://www.linkedin.com/company/atom-finance — LinkedIn
+- https://startupintros.com/orgs/atom-finance — funding details
+- https://www.moneycrashers.com/atom-finance-review/ — review
+- https://bullishbears.com/atom-finance-review/ — review pricing
+- https://canvasbusinessmodel.com/blogs/how-it-works/atom-finance-how-it-works — modelo de negocio
+- https://medium.com/productsins/everything-wrong-with-atom-in-less-than-8-minutes-96b9d64b34e7 — UX review crítica
+- https://www.wallstreetsurvivor.com/atom-finance-review/ — review independiente
+- https://www.irisfinance.co/ — sitio Iris Finance (descartado, no es competidor)
+- https://financialit.net/news/fundraising-news/iris-finance-raises-62m-scale-ai-native-cfo-platform-cpg-brands — Iris Finance funding (referencia para descartar)
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
 
 ---
 
