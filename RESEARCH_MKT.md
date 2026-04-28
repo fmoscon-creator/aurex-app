@@ -297,12 +297,97 @@ AUREX = "la IA ya analizó el mercado por vos, solo necesitás leer la señal"
 
 ## 3. Public.com
 
-*[Pendiente — research en curso]*
+**Empresa:** Public Holdings, Inc.
+**URL:** https://public.com/
+**App Store:** https://apps.apple.com/us/app/public-investing/id1271469231
+**LinkedIn:** https://www.linkedin.com/company/publichello
+
+### 1. Posicionamiento
+- "Stocks, Bonds, Crypto & Options AI Investing App" (home title)
+- "Agentic Brokerage" — sistema IA en 3 partes (lanzado nov 2025) que permite a retail crear custom stock indexes con plain-language commands y eventualmente manejar el portfolio completo con agentes automáticos.
+- Mensaje core: investing más amplio que solo stocks (bonds, crypto, options, direct indexing) + IA que opera por vos.
+
+### 2. Audiencia objetivo declarada
+- Self-directed retail investors con apetito por productos sofisticados.
+- Productos requieren cierto conocimiento: options, bonds, direct indexing (mínimo $1.000), margin investing.
+- Skew: **NO principiantes puros** — más bien intermedios/avanzados. Aunque tiene education center "comprehensive" para captar también nuevos usuarios.
+
+### 3. Modelo de monetización
+- Membresía Public Premium (~$10/mes) — tasas de yield mejores + data
+- Ingresos por:
+  - Rebates en options trading (lanzado ene-2024, transaction costs reducidos a <$0 para members)
+  - Margin lending (lanzado nov-2024)
+  - High-yield cash account
+  - Direct indexing (mínimo $1.000, lanzado oct-2025)
+  - Crypto IRA (post-acquisition de Alto, nov-2025, $65M cash+stock)
+
+### 4. Canales de marketing activos (verificados)
+- LinkedIn (`linkedin.com/company/publichello`)
+- App Store + Google Play (presencia con reseñas)
+- Press releases (Axios, etc.) sobre lanzamientos de features
+- Adquisiciones estratégicas como vehículo de growth:
+  - Abr-2024: TradeApp accounts adquiridos a Stocktwits
+  - Ago-2024: Carta's startup stock marketplace
+  - Nov-2025: Alto's crypto IRA business
+- BBB profile activo (Better Business Bureau)
+- Trustpilot (con reviews mixtas, varias quejas de scams imitando la marca)
+
+### 5. Tipo de contenido por canal
+- **Blog/Education center:** "comprehensive, easy-to-read, broad content" (según review StockBrokers.com)
+- **Press releases:** anuncios de features (AI tools, options launch, agentic brokerage), funding, acquisitions
+- **Información limitada en mis búsquedas** sobre contenido específico en Instagram, TikTok, YouTube con autoría verificada. Probablemente activos pero no apareció contenido específico en mis queries.
+
+### 6. Tono y voz
+- **Press / corporativo:** técnico, focused en innovation y product launches con emojis cero.
+- **Producto in-app:** profesional, asume conocimiento de finanzas (para usar options, bonds, etc).
+- **Blog/Education:** accesible pero asumiendo curiosidad activa del lector.
+- Tono general: **fintech sofisticado** — "para inversor retail que quiere productos institucionales". No es "para principiantes" como Robinhood.
+
+### 7. Cómo se lanzaron
+- Public Holdings Inc. fundada como app de inversión social (commission-free trading)
+- Crecimiento por **product expansion en serie**: stocks → bonds → options → margin → direct indexing → crypto IRA → AI tools
+- Cada feature genera press cycle propio
+- Adquisiciones como aceleradores: TradeApp (Stocktwits), Carta marketplace, Alto crypto IRA
+
+### 8. Qué les funcionó para crecer
+- **Diversificación de productos** vs competidores que solo hacen stocks (Robinhood) o solo crypto (Coinbase). Public es "todo en uno".
+- **AI como diferenciador post-2024**: Generated Assets (mayo-2025), Agentic Brokerage (nov-2025). El AI research assistant convirtió "almost half of conversations into a transaction within 24 hours" — métrica de conversion alta gracias a IA.
+- **Adquisiciones tácticas** que traen usuarios y productos sin construir desde cero.
+- **Decisión de NO usar PFOF** (Payment For Order Flow) en su momento, lo usaron como diferenciador de marca contra Robinhood.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Options trading más barato que competidores
+- Education center destacado como standout feature
+- Diversidad de productos en una sola app
+- Equipo responde a feedback (vía in-app chat o email support@public.com)
+
+**Contras frecuentes:**
+- "Orders take a long time to fill" — performance de ejecución
+- Advanced features "difficult to read" — UX en sección avanzada
+- Withdrawal process con bugs (verificación de addresses bloqueada por dialogues)
+- Navigation entre secciones (learning center "feels detached" del resto)
+- Trustpilot tiene casos serios de **scams imitando la marca** ("scammers keep demanding more funds, fraudulent scheme") — no necesariamente fallas de Public sino phishing externo.
+
+**Conclusión reseñas:** producto bueno pero UX inconsistente entre secciones. La presencia de scammers imitando la marca implica que Public.com tiene awareness alto suficiente para que valga la pena suplantarla.
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://public.com/ — sitio oficial
+- https://en.wikipedia.org/wiki/Public_Holdings,_Inc. — info corporativa
+- https://www.axios.com/2025/11/17/ai-stock-market-public — Agentic Brokerage launch
+- https://pitchbook.com/profiles/company/222614-65 — funding y valuación
+- https://www.crunchbase.com/organization/publicdotcom — company profile
+- https://www.linkedin.com/company/publichello — LinkedIn
+- https://play.google.com/store/apps/details?id=com.public.app — Google Play
+- https://www.stockbrokers.com/review/public-com — review independiente
+- https://www.finder.com/stock-trading/public-review — review independiente
+- https://www.bbb.org/us/ny/new-york/profile/internet-service/publiccom-0121-87142673/customer-reviews — BBB reviews
+- https://www.trustpilot.com/review/public.com — Trustpilot reviews
 
 ### Análisis estratégico (Escritorio)
 
-
-[TEST endpoint POST /api/research/analysis - 28-abr-2026] Este es un análisis de prueba generado por Code para verificar que el endpoint funciona end-to-end. Escritorio puede sobrescribir libremente este texto cuando escriba el análisis estratégico real de Public.com.
+*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
 
 ---
 
