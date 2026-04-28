@@ -876,7 +876,33 @@ AUREX = senales IA listas para leer, para inversores que quieren el resultado de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
+
+Robinhood es el caso de estudio mas relevante para la estrategia de lanzamiento de AUREX, no por su producto sino por su mecanismo de adquisicion. El pre-launch waitlist con free stock referrals genero 1M+ de usuarios antes del lanzamiento publico. Ese es el benchmark de viralidad para apps financieras y hay una version de ese mecanismo que AUREX puede adaptar.
+
+**Es Robinhood competidor directo de AUREX?**
+No. Robinhood es un broker: custodia dinero, ejecuta trades, tiene licencia regulatoria de broker-dealer. AUREX no hace nada de eso. El solapamiento de audiencia es real pero el producto es distinto: el usuario de Robinhood quiere ejecutar trades gratis. El usuario de AUREX quiere entender el mercado antes de decidir donde ejecutar. Son capas complementarias del mismo proceso. De hecho, un usuario de Robinhood es un usuario potencial de AUREX: ya esta invertido, ya le importa el mercado, y necesita analisis para tomar mejores decisiones.
+
+**Aprendizaje de lanzamiento - el mas importante del research:**
+El pre-launch waitlist de Robinhood con free stock referrals fue el mecanismo de viralidad mas efectivo documentado en el espacio fintech. El principio: dar algo de valor real a cambio de referidos, crear urgencia con waitlist, hacer el producto aspiracional antes de que exista. Para AUREX la version adaptada es: antes del lanzamiento publico, lista de espera para acceso anticipado al plan PRO gratis por 3 meses a cambio de referir 3 amigos. Sin costo de adquisicion, con usuarios motivados a traer usuarios similares.
+
+**Aprendizaje de monetizacion:**
+Robinhood demuestra que el modelo commission-free mas PFOF no es replicable para AUREX (no somos broker) pero el modelo freemium con upgrade a Gold ($5/mes, 3.5M subscribers, 76% YoY) si es comparable. La metrica clave: 3.5M subscribers Gold sobre 27M funded customers = 13% de conversion de free a paid. Si AUREX logra la mitad de esa conversion (6-7% de FREE a PRO) con una base de 100k usuarios, eso es 6-7k usuarios PRO a $9.99/mes = $60-70k MRR. Eso es sostenibilidad.
+
+**Aprendizaje de marketing - lo que funciono:**
+La gamificacion de Robinhood (confetti en trades, notificaciones de stocks que se mueven, free stock weekly) fue controversial pero efectiva para adquisicion. La leccion no es copiar la gamificacion irresponsable sino entender que los momentos de celebracion en el producto generan sharing organico. Para AUREX: cuando una senal de Alta Conviccion se cumple, el producto tiene que celebrarlo visualmente de forma que el usuario quiera compartirlo. Ese momento de validacion es el equivalente saludable del confetti de Robinhood.
+
+**Aprendizaje de marketing - lo que no funciono:**
+La UX gamificada de Robinhood atrajo criticas regulatorias severas (FINRA, SEC) y el caso de Alex Kearns en 2020 danio permanentemente la reputacion de la marca con ciertos segmentos. Para AUREX: nunca gamificar de forma que induzca comportamiento financiero de riesgo. Las senales IA son herramientas de analisis, no invitaciones a apostar. El disclaimer de "no somos asesores financieros" tiene que estar presente pero de forma que no se sienta como letra chica sino como parte del posicionamiento honesto.
+
+**Canales autonomos vs requieren Fernando:**
+Robinhood gasto $15.3M en ads en X en 2025 para adquisicion mobile. Eso no es replicable para AUREX en fase inicial. Lo que si es replicable sin budget es el mecanismo viral: el programa de referidos con incentivo real (acceso PRO gratis, no solo descuento) y el momento de sharing organico cuando una senal se cumple. Ambos son autonomos una vez disenados: el usuario hace el trabajo de adquisicion.
+
+**El dato de timing mas importante:**
+Robinhood lanzo en 2015 con commission-free cuando todos los brokers cobraban comisiones. El timing fue perfecto porque resolvio un pain point real con tecnologia disponible. AUREX tiene el mismo timing advantage: lanza con senales IA en 8 idiomas cuando ninguna app de analisis para retail hispanohablante lo hace bien. El mercado hispanohablante es el equivalente al mercado de retail investors pre-Robinhood: subatendido, con disposicion a pagar, y sin una app que lo tome en serio.
+
+**Posicionamiento diferencial:**
+Robinhood = broker commission-free para principiantes que quieren ejecutar trades desde el celular.
+AUREX = analisis con IA para inversores que quieren entender el mercado antes de operar, en 8 idiomas, sin ser broker, sin conflicto de intereses.
 
 ---
 
