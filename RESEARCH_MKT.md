@@ -157,7 +157,103 @@ Para cada uno, en este orden estricto:
 
 ## 2. Composer
 
-*[Pendiente — research en curso]*
+**Empresa:** Composer.trade
+**Founder/CEO:** Benjamin Rollert
+**Funding:** $5.35M (seed) + $6M (siguiente ronda) — total ~$11M USD
+**URL:** https://www.composer.trade/
+**App Store:** https://apps.apple.com/us/app/composer-ai-trading/id6471564746
+**Equipo:** ~15 personas
+
+### 1. Posicionamiento
+- "Trading. Built Better."
+- "AI-native, no-code investing platform" — construir, backtest y ejecutar estrategias de trading sin código.
+- "Trade with AI" — feature lanzada 2025: plain English prompts → estrategias back-tested ejecutables en <60s.
+- Mensaje core: democratizar estrategias hedge-fund tipo algoritmos para retail.
+
+### 2. Audiencia objetivo declarada
+- **Sophisticated retail investors** — usuarios que ya investigan, leen Seeking Alpha, browsing subreddits como r/algotrading.
+- Geografía: NO concentrados en tech hubs (NY, SF) — distribuídos globalmente.
+- "Spend their free time reading books or browsing forums to get an edge up on mediocrity for retail people".
+- Es nicho informado, no masa general. NO apunta a principiantes.
+
+### 3. Modelo de monetización
+- **Suscripción mensual:** $32/mes (billed annually), trial 14 días.
+- **Fees adicionales reportados:** $30 "clearing fee" on deposits, "long fee sheet" según reseñas.
+- Total coste mensual reportado: $30-40 cuando se suman fees.
+
+### 4. Canales de marketing activos (verificados)
+- LinkedIn (https://www.linkedin.com/company/investcomposer)
+- App Store + Google Play
+- BusinessWire press releases
+- Medium del founder (Benjamin Rollert) — content marketing autoral
+- Trustpilot, Product Hunt, SlashDot, SourceForge — reviews orgánicos
+- Partnerships con Alpaca (broker)
+- BetaKit (medio canadiense de tech) — coverage de funding rounds
+
+### 5. Tipo de contenido por canal
+- **Founder's Medium:** posts técnicos sobre la filosofía del producto (ej. "Introducing Composer: an automated trading platform that allows you to build a portfolio of hedge-fund like strategies").
+- **Blog propio (composer.trade/learn):** "All About Investing", "Trading Strategies" — content educativo SEO-oriented.
+- **Press releases:** milestones, features (Trade with AI), funding rounds.
+- **Symphony Marketplace** (estrategias compartidas por usuarios) — el contenido lo genera la comunidad, Composer solo facilita la plataforma.
+- **NO se encontraron** ejemplos verificados de contenido propio en Instagram, TikTok o YouTube — coherente con audiencia "sophisticated" que vive en Reddit/forums, no en redes visuales.
+
+### 6. Tono y voz
+- **Producto y blog:** técnico-educativo, asume conocimiento previo del usuario, lenguaje fintech sin caricatura.
+- **CEO en Medium:** filosófico, transparente sobre estrategia ("The single most important thing is having an incredible user experience").
+- **Press releases:** corporativo standard.
+
+### 7. Cómo se lanzaron
+- Founder Benjamin Rollert publicó Medium post "Introducing Composer" como anuncio de lanzamiento.
+- Estrategia desde día 1: **product-led growth + word-of-mouth**.
+- Ben Rollert (CEO): "Having an incredible user experience is the single most important thing... You make a product that people want to share, you make it easy to share links and collaborate. That's how you get real product distribution".
+- Aprovechó la ola de growth de r/algotrading (de 13k a 1.3M users en años recientes).
+- Funding rounds (seed → siguiente) fueron drivers de coverage en medios fintech.
+
+### 8. Qué les funcionó para crecer
+
+**Driver principal: Symphony Marketplace = flywheel comunitario**
+- 80% de usuarios invierten en "symphonies" (estrategias) creadas por la comunidad, NO por Composer.
+- Eso crea retention + mutual trust + adquisición orgánica (usuarios traen amigos).
+
+**Segundo driver: targeting de nicho específico**
+- En lugar de masa, atacaron una sub-comunidad que YA buscaba activamente (r/algotrading).
+- 400% growth in trading volume, 600% growth AUM, incluso en bajadas de mercado.
+
+**Tercer driver: producto compartible**
+- Estrategias son contenido — se postean en Twitter/Reddit con resultados, generan curiosidad.
+- "Built-in virality" del producto.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Interfaz visual limpia
+- Backtesting accesible para non-coders
+- "Best middle ground" entre competidores
+- Customer service responsivo (en algunos casos)
+- Long-term users (~2 años) reportan satisfacción
+
+**Contras frecuentes:**
+- $30 clearing fee en depósitos = sorpresa negativa
+- "$30-40/mes con long fee sheet" — sensación de fees ocultos
+- Account closure difícil
+- Casos de bloqueo sin notificación tras disputas
+- "Releasing a financial product that is clearly not ready for real users feels irresponsible and borderline deceptive" — caso extremo
+- Customer service desaparece después del cargo
+
+**Conclusión reseñas:** producto técnico bueno pero modelo de monetización mal percibido (fees no claros = pérdida de confianza).
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://www.composer.trade/ — sitio oficial
+- https://apps.apple.com/us/app/composer-ai-trading/id6471564746 — App Store
+- https://www.linkedin.com/company/investcomposer — LinkedIn
+- https://www.businesswire.com/news/home/20251021050436/en/Composer-Supercharges-Investing-Platform-with-New-Trade-With-AI-Tool — Trade with AI launch
+- https://joinodf.com/stories/composer — funding $5.35M
+- https://betakit.com/composer-secures-6-million-to-help-retail-investors-adopt-sophisticated-trading-strategies/ — funding $6M
+- https://alpaca.markets/blog/how-composer-is-redefining-algorithmic-trading-with-their-no-code-platform/ — alpaca partnership + growth strategy
+- https://benjaminrollert.medium.com/introducing-composer-an-automated-trading-platform-that-allows-you-to-build-a-portfolio-of-f1567676c8b1 — founder launch post
+- https://www.trustpilot.com/review/composer.trade — reviews
+- https://www.wallstreetsurvivor.com/composer-review/ — review independiente
+- https://peterzaitsev.com/composer-social-trading-great-idea-with-poor-pricing-model/ — análisis del modelo de pricing
 
 ### Análisis estratégico (Escritorio)
 
