@@ -56,8 +56,19 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 - Build: 2 (versionName "1.0.1", versionCode 2)
 - Bundle: com.aurexapp
 - Categoría: Herramientas (cambiada desde Finanzas)
-- Prueba cerrada: 14 días requeridos, llevamos 4 (al 28-abr), con 12+ testers activos
+- Prueba cerrada: 14 días requeridos, llevamos 5 corridos (submit 23-abr 16:20 AR), con 12+ testers activos
 - Link prueba: https://play.google.com/apps/testing/com.aurexapp
+
+### TELEGRAM (canal alternativo de alertas — configurado 28-abr-2026)
+- Bot: @Aurexalertas_bot (id 8740136430, "Aurex Alertas")
+- Token: env var `TELEGRAM_BOT_TOKEN` en Railway aurex-app (existente desde antes)
+- Chat ID admin Fernando: ver env var `ADMIN_TELEGRAM_CHAT_ID` en Railway aurex-app (no se publica el valor en repo público por privacidad)
+- Función: canal redundante de alertas mientras WhatsApp del número AUREX está en revisión por suspensión del 28-abr (24hs). Cuando WhatsApp se restaure, sumarlo como canal adicional sin remover Telegram.
+- Riesgo de baneo: cero (Telegram permisivo con bots)
+
+### INCIDENTES ACTIVOS (al 28-abr-2026)
+- **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 10 días sin resolución; investigar alternativas post-Apple.
+- **WA-001 ACTIVE** — Evolution API (servicio evo-v1) sin sesión WhatsApp desde 28-abr 15:25 UTC. Causa: instancia "aurex" caída tras redeploys + suspensión del número AUREX por antifraude WhatsApp Business. En revisión por WhatsApp (hasta 24hs). Resolverá automáticamente cuando WhatsApp apruebe.
 
 ---
 
