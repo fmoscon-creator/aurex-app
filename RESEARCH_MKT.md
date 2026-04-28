@@ -416,11 +416,109 @@ AUREX = análisis con IA independiente de cualquier broker, sin conflicto de int
 
 ## 4. Stocktwits
 
-*[Pendiente — research en curso]*
+**Empresa:** Stocktwits, Inc.
+**Founders:** Howard Lindzon + Soren McBeth (2008–2009)
+**CEO actual:** Howard Lindzon (volvió como CEO en 2024)
+**Funding:** $43.3M total (Series B dic-2021 = $30M, valuación $210M)
+**Inversores:** Alameda Research Ventures, PEAK6 Strategic Capital, Times Bridge, BoxOne Ventures, +14 inversores
+**URL:** https://stocktwits.com/
+**LinkedIn:** https://www.linkedin.com/company/stocktwits
+**LinkedIn India:** https://www.linkedin.com/company/stocktwitsindia
+
+### 1. Posicionamiento
+- "Stock Market Live Quotes, Social Community Discussions, News, Stock Rankings & Earnings"
+- Red social financiera tipo Twitter pero específica para inversores, con cashtags ($AAPL, $TSLA) como navegación.
+- "Trading Community" — community-first, social-first.
+- Mensaje core: hablá del mercado con otros traders en tiempo real.
+
+### 2. Audiencia objetivo declarada
+- **Primaria:** retail mobile-first investors + active traders que buscan "real-time market chatter and trading execution".
+- **Secundaria:** institucional/professional traders que valoran curated insights y high-signal rooms.
+- **Emergente:** retail de mercados en crecimiento, especialmente India (foco fuerte de expansión 2024-2025).
+
+### 3. Modelo de monetización
+- **Free tier:** red social abierta, posts con cashtags, sentiment indicators básicos.
+- **Premium Rooms:** $7.99/mes o $84.99/año (~$7.08/mes) — acceso a rooms exclusivas con análisis de "top investors", alerts enhanced, video chats. Influencers monetizan su contenido.
+- **Data Licensing:** 35-50% del revenue total — venta de Social Sentiment API a Bloomberg, Google, hedge funds, quant funds, brokers. Es el segmento de mayor crecimiento.
+
+### 4. Canales de marketing activos (verificados)
+- **YouTube** — fuente principal de social traffic a stocktwits.com
+- **X/Twitter** — segunda fuente
+- **Reddit** — tercera fuente
+- **LinkedIn** (stocktwits + stocktwitsindia)
+- **Blog propio:** blog.stocktwits.com
+- **Eventos físicos:** Stocktoberfest West (conferencia anual)
+- **Integraciones API con medios:** Yahoo Finance, CNN Money, Reuters distribuyen posts de Stocktwits
+- **India social presence (verificado):** Instagram 575K, YouTube 20K (rápido crecimiento), Twitter 50K, Telegram 45K
+- **App Store + Google Play** (presencia con reseñas mixtas)
+
+### 5. Tipo de contenido por canal
+- **Plataforma propia:** posts con cashtags ($AAPL), polls de sentiment (Bullish/Bearish), Premium Rooms con video chats
+- **Blog:** "Introducing X feature", anuncios de Premium Rooms, market commentary
+- **YouTube India:** crecimiento rápido — content educativo + market analysis
+- **Twitter (matriz):** noticias del platform, milestones, Premium Rooms launches
+- **Stocktoberfest:** evento anual con investors top que generan PR cycle
+
+### 6. Tono y voz
+- **Plataforma:** informal, retail-friendly, jerga de trading ($TSLA, "moon", "diamond hands"). Estilo Twitter/X social.
+- **Blog corporativo:** profesional pero accesible, focus en features y community.
+- **CEO Howard Lindzon (visible en Twitter):** opinión propia, casual, informal, con personalidad.
+- **Tono general:** community-driven, colaborativo, anti-Wall-Street tradicional.
+
+### 7. Cómo se lanzaron
+- **2008:** Howard Lindzon escribe blog post sugiriendo que Twitter sería ideal para stocks/mercados.
+- **2009:** Lanzamiento como aplicación construida sobre la API de Twitter, organizando discusiones por cashtags.
+- **Crecimiento orgánico** vía adopción de cashtags por la propia comunidad de Twitter (que después Twitter copió oficialmente).
+- **Eventualmente** se convirtió en plataforma independiente con su propia app.
+- **2024:** Howard Lindzon vuelve como CEO, pivot a IA (acquisition de Thematic en julio 2025).
+
+### 8. Qué les funcionó para crecer
+- **First-mover advantage** en social trading (2008, antes de Reddit /r/wallstreetbets de 2012).
+- **Cashtags** como innovación de UX que después la industria entera adoptó.
+- **17 años de data acumulada** convertida en producto vendible (Social Sentiment API). Es el activo más valioso del platform.
+- **Pivot a IA con adquisición de Thematic (julio 2025)** — contextualizar 17 años de datos históricos.
+- **Premium Rooms** como modelo de monetización por creator (similar a Substack/Patreon para finanzas).
+- **Expansión a India** — mercado emergente con explosión de retail investors.
+- **Eventos anuales (Stocktoberfest)** que generan PR cycle y comunidad.
+- **Resilencia:** durante el crypto winter 2024 (-18-25% retail activity industria), Stocktwits creció paid Communities membership.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Interacción con otros traders es lo más valorado
+- Acceso a información útil "weeding through some garbage"
+- Cashtags como UX de navegación es eficaz
+
+**Contras frecuentes:**
+- **App crashes** — la queja más común. La app se cierra después de segundos o minutos.
+- **Consumo excesivo de cell data** — sobrecalienta el celular y drena la batería.
+- **Performance lenta** — nada se refresca solo, todo es delayed.
+- **Bots y "fake engagement"** — usuarios reportan que "el sitio está lleno de AI bots usados para mostrar fake engagement".
+- **Censura/moderación cuestionada** — usuarios que postean ideas contrarias a "hedge fund bots" reportan ser baneados. "Pumpers organizados reportan posts que advierten a retail naive".
+- **Rating bajo:** 1.6/5 en algunas plataformas de reviews independientes.
+
+**Conclusión reseñas:** producto con community real pero ejecución técnica débil y problemas de moderación percibidos. La gente lo usa por la comunidad, a pesar de los problemas técnicos.
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://stocktwits.com/ — sitio oficial
+- https://en.wikipedia.org/wiki/StockTwits — info corporativa e histórica
+- https://en.wikipedia.org/wiki/Howard_Lindzon — founder
+- https://stocktwits.com/news-articles/business/others/stocktwits-acquires-ai-startup-thematic/ch8KVxsR5pd — acquisition Thematic 2025
+- https://www.contextanalytics-ai.com/sentiment-strategies/measuring-investor-attention-and-sentiment-on-stocktwits/ — sentiment data uso
+- https://blog.stocktwits.com/introducing-premium-rooms-now-on-stocktwits-501de129c188 — Premium Rooms launch
+- https://rooms-web.stocktwits.com/rooms/premium — Premium Rooms público
+- https://www.prnewswire.com/news-releases/stocktwits-to-announce-groundbreaking-premium-rooms-at-stocktoberfest-west-to-connect-users-with-industry-leaders-300736184.html — Stocktoberfest
+- https://pitchbook.com/profiles/company/51165-19 — funding y valuación
+- https://www.crunchbase.com/organization/stocktwits — company profile
+- https://canvasbusinessmodel.com/blogs/marketing-strategy/stocktwits-marketing-strategy — análisis marketing
+- https://www.similarweb.com/website/stocktwits.com/ — traffic analytics
+- https://www.linkedin.com/company/stocktwits — LinkedIn matriz
+- https://www.linkedin.com/company/stocktwitsindia — LinkedIn India
+- https://www.howardlindzon.com/p/getting-started-stocktwits-ultimate-guide — guía del founder
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
 
 ---
 
