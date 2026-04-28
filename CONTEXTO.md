@@ -79,6 +79,8 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 3. Onboarding: corregir faltas de ortografía detectadas en emulador
 4. Corregir 2 líneas v1.0.0 hardcodeado en nativa (PerfilScreen.js L789 y L851)
    con Platform.OS — sólo cuando Apple/Google aprueben
+5. **Verificación WhatsApp Business +5491133602563 — códigos no llegan**
+   Tras suspensión + restauración del 28-abr-2026, los códigos de verificación NO llegan ni por SMS ni por llamada (audio corrupto). Timers escalados (28 min llamada / 58 min SMS). Verificado exhaustivamente que el 2563 NO está vinculado en ningún sistema Meta (Business Suite, Developers, Apps personales). Ticket de soporte enviado a WhatsApp el 28-abr 20:00 AR (esperando respuesta a fmoscon@gmail.com, suelen tardar 24-48 hs). Mientras tanto, AUREX opera con Telegram como canal de alertas. Pendiente: pedir opinión a Escritorio (puede acceder a las solapas del navegador para diagnóstico cruzado).
 
 ---
 
