@@ -628,11 +628,96 @@ AUREX = análisis con IA independiente de cualquier broker, sin conflicto de int
 
 ## 6. TradingView
 
-*[Pendiente — research en curso]*
+**Empresa:** TradingView, Inc.
+**Founded:** 2011
+**Equipo:** ~2.400 personas
+**Funding:** $298M raised, valuación **$3B** (Tiger Global Management lead investor)
+**Otros inversores:** Insight Partners, DRW Venture Capital
+**Revenue:** $172.9M (2023), creció 25% en 2025
+**URL:** https://www.tradingview.com/
+
+### 1. Posicionamiento
+- "Charting + social network for traders" — la app de gráficos financieros más popular del mundo, con red social integrada.
+- Mensaje core: "no es una app de charts, es una comunidad de traders compartiendo ideas".
+
+### 2. Audiencia objetivo declarada
+- **Individual traders e investors** (de novatos a pros)
+- **Financial professionals** — analistas, money managers que necesitan charting avanzado y data en tiempo real
+- **2024:** 30% increase en pro users (signal de adopción institucional creciente)
+- Cobertura: 150+ países
+
+### 3. Modelo de monetización
+**Freemium con 5 tiers:**
+- **Free** (permanente) — la base de adquisición
+- **Essential:** $14.95/mes ($155.40/año, 40% off)
+- **Plus:** $29.95/mes ($299.40/año, 50% off)
+- **Premium:** $59.95/mes ($599.40/año, 60% off)
+- **Ultimate:** solo para usuarios profesionales
+
+**Composición de revenue:**
+- 70% subscriptions (freemium)
+- 30% B2B licensing + advertising
+- Marketplace de scripts (third-party devs, TradingView toma comisión)
+- Real-time data feeds vendidos por separado
+
+### 4. Canales de marketing activos
+- **TradingView Social Network** — la red social interna es el motor de adquisición orgánica
+- **Marketplace de Scripts** — 100,000+ publicaciones creadas por la comunidad
+- **Blog y content propio**
+- **Internacionalización agresiva** — sites en India, Brazil, etc.
+- **Programa de referidos** y reputation system gamificado
+- **Strategic acquisitions** (ej. TradeIt 2019)
+- Recibe noticias y publicaciones de medios financieros (Bloomberg, etc.) que linkean a TradingView
+
+### 5. Tipo de contenido por canal
+- **Plataforma propia (social network):** ideas de trading publicadas por usuarios con cashtags, sistema de likes/followers/reputation, ranking de top contributors
+- **Marketplace de scripts:** 100,000+ indicators y strategies escritos en Pine Script (lenguaje propio de TradingView)
+- **Blog:** análisis de mercado, tutoriales, market news con charts embebidos
+- **Internacional:** versiones localizadas con contenido específico por mercado
+
+### 6. Tono y voz
+- **Producto in-app:** profesional pero accesible, jerga de trading sin caricatura
+- **Blog corporativo:** educativo, neutral, sin sensacionalismo de "you can become rich quick"
+- **Tono general:** comunidad de pros y prosumers — autoridad técnica + community-friendly
+
+### 7. Cómo se lanzaron
+- **2011:** lanzamiento como charting platform
+- Crecimiento basado en producto superior (HTML5 charts cuando todos eran Flash)
+- **Pivot crítico:** integración de social features (publicar ideas, seguir traders) → diferenciador clave
+- **Crecimiento orgánico** sostenido por años + adquisiciones tácticas
+- **2019:** adquirieron TradeIt para integrar trading directo desde charts ("millennial investing powerhouse")
+
+### 8. Qué les funcionó para crecer
+- **Producto técnicamente superior** desde el día uno (HTML5 charts en era Flash)
+- **Network effect del social network** — usuarios traen más usuarios para ver/seguir ideas
+- **Marketplace de scripts** = community contributions gratis para TradingView, valor para usuarios. Modelo plataforma puro.
+- **Pine Script** (lenguaje propio) genera lock-in: scripts solo corren en TradingView
+- **Internacionalización** — atacaron India y Brazil que son mercados con explosión retail
+- **Pricing tiered** captura todos los segmentos (free → Ultimate)
+- 100M+ users acumulados, 8M+ MAU
+- **B2B licensing** = revenue secundario sin canibalizar el B2C
+
+### 9. Reseñas y feedback
+- Generalmente reviews POSITIVAS — el producto es percibido como el estándar de la industria.
+- Pros: charts excelentes, community útil, scripts variados, multi-broker integration.
+- Contras: precio (los tiers superiores son caros), real-time data feeds extra, learning curve para Pine Script.
+- **Headwind 2026:** sharply higher user acquisition costs por cambios en algoritmos de Ad platforms (Meta principalmente). Eso afecta su margen.
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://www.tradingview.com/ — sitio oficial
+- https://www.tradingview.com/pricing/ — pricing tiers
+- https://canvasbusinessmodel.com/blogs/growth-strategy/tradingview-growth-strategy — growth strategy análisis
+- https://vizologi.com/business-strategy-canvas/tradingview-business-model-canvas/ — business model canvas
+- https://getlatka.com/companies/tradingview.com — revenue $172.9M
+- https://www.cbinsights.com/company/tradingview/financials — funding y valuación
+- https://www.businesswire.com/news/home/20190403005265/en/TradingView-Acquires-TradeIt-As-Next-Piece-In-Millennial-Investing-Powerhouse — acquisition TradeIt
+- https://www.tradingview.com/social-network/ — social network info
+- https://productmint.com/tradingview-business-model-how-does-tradingview-make-money/ — modelo de negocio
+- https://www.stockbrokers.com/review/tools/tradingview — review independiente
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
 
 ---
 
