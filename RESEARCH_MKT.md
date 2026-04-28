@@ -762,7 +762,30 @@ AUREX = senales IA propias con motor cuantitativo propio, modelo freemium mas da
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
+
+TradingView es el benchmark de producto mas importante para AUREX. No como competidor directo sino como estandar de calidad que los usuarios mas sofisticados ya conocen y contra el cual van a comparar inconscientemente cualquier herramienta de charts o analisis. La pregunta no es si AUREX puede competir con TradingView, sino cuales son los usuarios de TradingView que AUREX puede convertir.
+
+**Es TradingView competidor directo de AUREX?**
+Parcialmente y asimetricamente. TradingView es una plataforma de charting profesional con 100M+ usuarios, $3B de valuacion y $172M de revenue. AUREX no es una plataforma de charting. La audiencia que se solapa es el subconjunto de usuarios de TradingView que buscan senales automatizadas con IA y no quieren construir sus propios indicadores en Pine Script. Ese es un segmento real y no trivial: usuarios de TradingView que saben leer un chart pero no quieren dedicar horas a programar estrategias. AUREX puede ser el complemento de TradingView para ese segmento, no el reemplazo.
+
+**Aprendizaje de producto - el mas importante:**
+El network effect de TradingView viene del Marketplace de scripts y la red social de ideas. El 80% del valor lo genera la comunidad, no el equipo de TradingView. Para AUREX el equivalente es que las senales de Alta Conviccion sean compartibles de forma tan natural como las ideas de TradingView: un usuario ve una senal de AUREX que se cumple, la comparte, otro usuario la ve y descarga la app. Ese loop no existe todavia en AUREX. Hay que diseniarlo como feature de producto, no como afterthought de marketing.
+
+**Aprendizaje de monetizacion:**
+El modelo de TradingView tiene 5 tiers desde free hasta Ultimate, con 70% del revenue en suscripciones. El tier free es permanente y no degradado: el producto free es genuinamente bueno, lo que crea confianza y eventual conversion. El error que hay que evitar para AUREX es hacer el free demasiado restrictivo. El free tiene que ser util de verdad para que el usuario vea el valor del PRO. TradingView lo aprendio bien. Los $14.95/mes del Essential de TradingView vs $9.99 del PRO de AUREX posiciona a AUREX como mas accesible para el mismo tipo de usuario.
+
+**Aprendizaje de marketing:**
+TradingView no tiene estrategia de marketing en redes sociales verificada como driver principal. Crecio por superioridad tecnica de producto (HTML5 cuando todos usaban Flash) y por el network effect de la comunidad. La leccion para AUREX no es copiar los canales de TradingView sino entender que el producto tiene que ser lo suficientemente bueno para generar word-of-mouth organico. En el estado actual de AUREX eso significa que las senales IA tienen que acertar con una tasa que sorprenda al usuario en los primeros 7 dias.
+
+**El headwind que TradingView enfrenta y AUREX puede aprovechar:**
+En 2026, TradingView reporta sharply higher user acquisition costs por cambios en algoritmos de plataformas de ads (Meta principalmente). Eso significa que el canal de adquisicion paga se esta encareciendo para todos los players grandes. AUREX arranca en un momento donde el organic content bien ejecutado tiene ventaja comparativa sobre los players grandes que dependen de paid acquisition.
+
+**Canales autonomos vs requieren Fernando:**
+TradingView no tiene presencia organica verificada en Instagram o TikTok orientada a adquisicion. Su canal de adquisicion fue historicamente product-led y referrals. Para AUREX, la oportunidad autonoma es ocupar el espacio que TradingView no ocupa: contenido visual en redes sociales que muestre senales IA en accion, dirigido a usuarios que no saben programar Pine Script pero quieren el resultado. Ese es el gap entre lo que TradingView ofrece y lo que AUREX puede dar de forma inmediata.
+
+**Posicionamiento diferencial:**
+TradingView = plataforma de charting profesional con social network, para traders que quieren analizar y construir sus propias estrategias.
+AUREX = senales IA listas para leer, para inversores que quieren el resultado del analisis sin la complejidad de construirlo, en 8 idiomas, sin necesidad de saber programar.
 
 ---
 
