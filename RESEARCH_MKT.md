@@ -545,7 +545,7 @@ AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conf
 
 ---
 
-## 5. Atom Finance (con nota sobre Iris Finance)
+## 5. Atom Finance
 
 **ACLARACIÓN: Atom Finance e Iris Finance son DOS empresas distintas.**
 
