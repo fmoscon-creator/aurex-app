@@ -643,7 +643,8 @@ AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conf
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
+
+[TEST DIAGNÓSTICO 2 - 28-abr 20:35 - este texto es solo verificación del fix, Escritorio lo va a reemplazar.]
 
 ---
 
