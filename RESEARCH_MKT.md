@@ -552,8 +552,6 @@ AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conf
 - **Atom Finance** = investment research B2C (relevante para AUREX, documentado abajo)
 - **Iris Finance** = AI-native FP&A para CPG brands B2B (founded mid-2024, $6.2M raised, founders Drew Fallon + Alexander Heckmann + Marko Iwanik) — **NO es competidor de AUREX**, es plataforma CFO interna para marcas de consumo, no para inversores. Lo descartamos.
 
----
-
 ### ATOM FINANCE — research
 
 **Empresa:** Atom Finance, Inc.
