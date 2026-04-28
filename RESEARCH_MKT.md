@@ -151,7 +151,24 @@ Para cada uno, en este orden estricto:
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+**¿Es Magnifi competidor directo de AUREX?**
+Parcialmente. Comparten el concepto de "IA para inversores individuales", pero el modelo de negocio es diferente: Magnifi agrega portfolios existentes en otros brokers. AUREX trackea mercados en tiempo real con análisis IA propio. El usuario de Magnifi ya tiene cuenta en Schwab/E*Trade y quiere que una IA le ayude a entenderla. El usuario de AUREX quiere señales y análisis sin necesidad de tener cuenta en ningún broker. Audiencias que se solapan parcialmente pero use case distinto.
+
+**Aprendizaje de monetización:**
+$8.25-$14/mes confirma que el rango PRO de AUREX ($9.99/mes) está perfectamente posicionado. El mercado acepta ese ticket para una herramienta de inversión con IA.
+
+**Aprendizaje de producto:**
+Las reseñas negativas apuntan a que la IA parece basada en respuestas predefinidas. Los usuarios lo detectan rápido y se frustran. Cuando AUREX conecte la API real de Claude, esa diferenciación debe comunicarse explícitamente.
+
+**Aprendizaje de marketing:**
+Magnifi no tiene presencia orgánica en redes — sin Instagram, TikTok ni YouTube activos verificados. Creció por backing institucional, podcast con Nicole Lapin, y press releases de milestones. Ninguna de esas palancas está disponible para AUREX en fase inicial. La oportunidad es lo que Magnifi no hace: contenido orgánico con análisis en tiempo real demostrado visualmente. Magnifi no muestra el producto. AUREX puede mostrarlo.
+
+**Canales autónomos vs requieren Fernando:**
+Todos los canales de Magnifi que funcionaron requieren acción humana. Refuerza que AUREX necesita estrategia diferente: content-first con demos generados con IA, sin que Fernando grabe ni escriba nada.
+
+**Posicionamiento diferencial:**
+Magnifi = "IA para entender tu portfolio existente en otro broker"
+AUREX = "IA para leer el mercado ahora, sin broker, sin cuenta, en 8 idiomas"
 
 ---
 
