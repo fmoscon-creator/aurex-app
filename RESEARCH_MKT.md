@@ -518,7 +518,30 @@ AUREX = análisis con IA independiente de cualquier broker, sin conflicto de int
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
+
+Stocktwits es el competidor más interesante del research porque no compite directamente con AUREX en producto pero sí en tiempo de atención y en el mismo usuario. Es la red donde los retail investors van a hablar de lo que están mirando. AUREX necesita estar ahí, no competir con ella.
+
+**¿Es Stocktwits competidor directo de AUREX?**
+No en producto, sí en atención. Stocktwits es una red social de traders, no una herramienta de análisis IA. El usuario de Stocktwits quiere opiniones de otros inversores y sentimiento de comunidad. El usuario de AUREX quiere señales cuantitativas sin ruido humano. Son necesidades distintas y complementarias: un usuario puede usar Stocktwits para el pulso social y AUREX para el análisis objetivo. La amenaza real no es que Stocktwits reemplace a AUREX, sino que capture el tiempo del usuario antes de que llegue a AUREX.
+
+**Aprendizaje de monetización — el más importante del documento:**
+El 35-50% del revenue de Stocktwits viene de Data Licensing: vender su Social Sentiment API a Bloomberg, Google, hedge funds y quant funds. No viene de los usuarios Premium. Eso confirma el insight que Code mencionó en el cierre del día: el modelo de monetización dual (usuarios PRO/ELITE + venta de datos/señales agregados) es el camino correcto para AUREX a mediano plazo. AUREX acumula datos de comportamiento de 313 activos en tiempo real. Eso tiene valor para terceros. No es para fase inicial, pero hay que diseñar la arquitectura pensando en esa segunda palanca desde ahora.
+
+**Aprendizaje de producto:**
+Las reseñas de Stocktwits revelan el problema más grave de una red social financiera: los bots y el fake engagement destruyen la confianza. Usuarios reportan que el sitio está lleno de bots de IA usados para mostrar fake engagement, y que inversores que advierten contra pumps son baneados. AUREX tiene una ventaja estructural: las señales son cuantitativas, no opiniones. No hay bots que puedan corromper un RSI14 calculado sobre datos reales de Binance. Esa objetividad hay que comunicarla como diferenciador explícito.
+
+**Aprendizaje de marketing:**
+YouTube es la primera fuente de tráfico social de Stocktwits, antes que X/Twitter. Eso valida que el video explicativo de análisis de mercado tiene demanda real en la audiencia inversora. Para AUREX, la versión autónoma de eso es un video generado automáticamente con las señales del día: ticker, dirección, probabilidad, y los 5 motivos en texto sobre fondo oscuro. Sin que Fernando grabe nada. La expansión de Stocktwits India con Instagram 575K y YouTube en crecimiento rápido confirma también que los mercados emergentes hispanohablantes tienen el mismo potencial que India.
+
+**Canales autónomos vs requieren Fernando:**
+El crecimiento de Stocktwits fue community-driven durante 17 años. AUREX no puede replicar eso desde cero. Lo que sí puede replicar de forma autónoma es la distribución de señales en tiempo real: un post automático en X con la señal de Alta Convicción del día, con captura visual del producto, sin intervención manual. Stocktwits creció porque los cashtags convirtieron el producto en contenido compartible. AUREX tiene el equivalente: una señal de Alta Convicción es contenido compartible por naturaleza si se presenta bien visualmente.
+
+**El activo más valioso que Stocktwits construyó sin saber:**
+17 años de datos de sentimiento retail vendibles como API. AUREX tiene que pensar ya en qué datos acumula que tengan valor externo. Las señales IA históricas con acierto/error medible son ese activo. Empezar a registrarlas desde el lanzamiento, no como afterthought.
+
+**Posicionamiento diferencial:**
+Stocktwits = red social donde traders hablan del mercado, comunidad y opinion-driven.
+AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conflicto de intereses.
 
 ---
 
