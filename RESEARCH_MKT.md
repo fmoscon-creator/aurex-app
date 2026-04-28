@@ -746,11 +746,92 @@ AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conf
 
 ## 7. Robinhood
 
-*[Pendiente — research en curso]*
+**Empresa:** Robinhood Markets, Inc. (NASDAQ: HOOD)
+**Founded:** 2013 por Vladimir Tenev y Baiju Bhatt
+**IPO:** 2021
+**URL:** https://robinhood.com/
+**Funded customers:** 27.0 millones (Q4 2025)
+**Robinhood Gold subscribers:** 3.5M (Q2 2025), creció 76% YoY
+
+### 1. Posicionamiento
+- "Investing for everyone" / "Democratizing finance for all"
+- App móvil de trading commission-free para retail.
+- Mensaje core: cambiar la industria — sacar comisiones, hacer trading accesible para principiantes.
+
+### 2. Audiencia objetivo declarada
+- **Millennials y Gen Z** — retail nuevo, primer-time investors.
+- Mobile-first, app-only inicialmente.
+- Audiencia controvertida: muchas críticas por atraer usuarios sin experiencia con UX gamificada.
+- En 2024-2025: pivoting a usuarios más sofisticados (HNW, advisors) tras IPO y crecimiento.
+
+### 3. Modelo de monetización
+- **Comisiones-cero** en stocks, options, crypto (lo que disrumpió la industria)
+- **Payment For Order Flow (PFOF):** revenue principal — controversial, lo cobran a market makers por ejecutar trades. Es lo que Public.com usa como anti-diferenciador.
+- **Robinhood Gold:** $5/mes premium — high APY en cash, margin, market data Nasdaq Level II
+- **Crypto trading fees** post-Bitstamp acquisition
+- **Cash management** (interest)
+
+### 4. Canales de marketing activos
+- **Paid ads en X (Twitter):** $15.3M de gasto en 2025 específicamente para mobile app promotion
+- **NBA partnerships:** multi-year, jersey logo placements (estrategia mainstream)
+- **Rebrand visual oct-2024:** minimalist aesthetic, feather logo, neon green
+- **App Store + Google Play** (presencia masiva)
+- **Email marketing** intensivo a base existente
+- **Press releases** por earnings públicos (es empresa cotizante)
+- **Programa de referidos "free stock"** — gamification que dio tracción brutal en early days
+
+### 5. Tipo de contenido por canal
+- **Twitter/X:** anuncios producto, partnerships, market commentary, gamificación
+- **App in-app:** notificaciones de "stocks que están moviéndose", confetti animations en trades (controversial)
+- **Press releases corporativos:** earnings, acquisitions, expansiones internacionales
+- **NBA placements:** brand awareness offline
+
+### 6. Tono y voz
+- **Marketing externo:** democrático, accesible, "anti-Wall-Street", millenial-friendly
+- **Producto in-app:** simplificado al extremo (criticado por hacer trading "demasiado fácil" para beginners)
+- **Post-IPO:** tono más profesional, focus en "wealth building" en lugar de solo trading
+- **Pivot 2024-2025:** apuntan más alto (advisors, HNW) sin perder retail base
+
+### 7. Cómo se lanzaron
+- **2013:** founded en Stanford. Vladimir Tenev y Baiju Bhatt.
+- **2014-2015:** pre-launch waitlist viral con "free stock" referrals. Antes del lanzamiento ya tenían 1M+ en waitlist.
+- **2015:** lanzamiento público. Trading commission-free.
+- **2018-2020:** crecimiento explosivo, especialmente durante GameStop saga (enero 2021).
+- **2021:** IPO.
+- **2024-2025:** rebrand, expansion internacional (UK 2024, Asia/Singapore 2025), acquisitions (TradePMR, Bitstamp).
+
+### 8. Qué les funcionó para crecer
+- **Disrupción de modelo de negocio:** commission-free como diferencial de mercado primario
+- **Pre-launch waitlist con "free stock" referrals** — viralidad orgánica épica antes del lanzamiento
+- **UX simplificada** (controvertida pero efectiva): atrajo a usuarios que JAMÁS habrían entrado a un broker tradicional
+- **Mobile-first**: cuando otros brokers tenían apps malas, Robinhood era app-only de calidad
+- **Gamification** (controversial): notifications, confetti, "free stock" weekly
+- **GameStop saga (enero 2021):** PR cycle MASIVO — millones de nuevos usuarios incluso con la controversia de "trading restrictions"
+- **NBA partnerships:** brand awareness de masa
+- **Robinhood Gold +76% YoY:** monetización efectiva del freemium
+
+### 9. Reseñas y feedback
+- **Pros:** UX accesible, app limpia, commission-free, accesible para principiantes
+- **Contras:**
+  - Customer service histórico muy criticado (suicide of Alex Kearns en 2020 por confusión de UI)
+  - Trading restrictions durante GameStop saga (clientes atrapados)
+  - Gamification criticada por reguladores (FINRA, SEC)
+  - Pagos por order flow → conflictos de intereses
+  - Caídas técnicas en momentos de alto volumen
+
+### 10. Fuentes consultadas (28-abr-2026)
+- https://robinhood.com/ — sitio oficial
+- https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-third-quarter-2025-results — Q3 2025 earnings
+- https://investors.robinhood.com/news-releases/news-release-details/robinhood-reports-fourth-quarter-and-full-year-2025-results — Q4 2025
+- https://www.latterly.org/robinhood-marketing-strategy/ — case study marketing 2025
+- https://thebigmarketing.com/robinhood-marketing-strategy/ — análisis marketing
+- https://canvasbusinessmodel.com/blogs/growth-strategy/robinhood-growth-strategy — growth strategy
+- https://matrixbcg.com/blogs/marketing-strategy/robinhood — marketing strategy
+- https://canvasbusinessmodel.com/blogs/marketing-strategy/robinhood-marketing-strategy — sales y marketing
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
 
 ---
 
