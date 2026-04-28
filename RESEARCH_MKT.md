@@ -301,7 +301,8 @@ AUREX = "la IA ya analizó el mercado por vos, solo necesitás leer la señal"
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+
+[TEST endpoint POST /api/research/analysis - 28-abr-2026] Este es un análisis de prueba generado por Code para verificar que el endpoint funciona end-to-end. Escritorio puede sobrescribir libremente este texto cuando escriba el análisis estratégico real de Public.com.
 
 ---
 
