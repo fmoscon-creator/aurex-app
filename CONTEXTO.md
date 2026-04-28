@@ -82,6 +82,7 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 1. Railway + Binance — CRÍTICO (Binance bloqueado)
 2. WhatsApp Alertas — verificar Evolution + env vars
 3. Evolution API — verificar hosting actual
+4. **Configurar volumen persistente en Railway para evo-v1 (Evolution API)** — CRÍTICO. Las sesiones de WhatsApp se borran con cada redeploy del container porque no hay volumen persistente. Esto causó la suspensión del número AUREX el 28-abr-2026 cuando la repetida creación/borrado de instancias disparó el sistema antifraude de WhatsApp Business. Solución: configurar Railway Volume montado en `/evolution_api/instances/` o equivalente, o migrar a PostgreSQL como storage de Evolution API.
 
 ---
 
