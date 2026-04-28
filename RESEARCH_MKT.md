@@ -387,7 +387,30 @@ AUREX = "la IA ya analizó el mercado por vos, solo necesitás leer la señal"
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá vía POST /api/research/analysis]*
+
+Public.com no es competidor directo de AUREX sino competidor de referencia: es un broker con IA encima, AUREX es análisis con IA puro sin ejecución de trades. El usuario de Public.com tiene dinero depositado ahí y quiere operar. El usuario de AUREX quiere entender el mercado antes de decidir dónde y cómo operar. Son capas distintas del mismo proceso de inversión.
+
+**¿Es Public.com competidor directo de AUREX?**
+No. Public.com es un brokerage — custodia dinero real, ejecuta órdenes, ofrece cuentas de cash y margin. AUREX no hace ninguna de esas cosas. El solapamiento es parcial: ambos tienen IA que analiza mercados, pero Public.com la usa para convertir análisis en transacciones dentro de su propia plataforma. AUREX la usa para dar señales que el usuario puede ejecutar en cualquier broker que prefiera. Esa independencia de broker es una ventaja competitiva de AUREX que hay que comunicar explícitamente.
+
+**Aprendizaje de IA — la métrica más importante del documento:**
+El AI research assistant de Public.com convirtió casi la mitad de las conversaciones en una transacción dentro de las 24 horas. Es la prueba más concreta disponible de que una señal IA clara en el momento correcto genera acción inmediata del usuario. AUREX tiene ese mismo mecanismo con las señales de Alta Convicción IA. Cuando se conecte la API real de Claude, esa conversión debe medirse desde el día uno.
+
+**Aprendizaje de monetización:**
+Public Premium a ~$10/mes es el punto de comparación más directo con PRO de AUREX a $9.99/mes. El mercado valida ese ticket. Lo que hay que evitar es el error de Public.com en UX: según las reseñas, la sección de educación se siente desconectada del flujo principal. Para AUREX eso es una advertencia concreta: la coherencia entre tabs es crítica. Un usuario que pasa de Mercados a IA a Portfolio tiene que sentir que es el mismo producto, no tres apps pegadas.
+
+**Aprendizaje de marketing:**
+La estrategia de Public.com fue expansión de productos en serie: cada feature nueva genera su propio press cycle. AUREX no tiene ese volumen de features en fase inicial, pero puede aplicar el principio a escala menor: cada mejora al motor IA, cada nuevo activo agregado, cada idioma activado es un evento comunicable. El lanzamiento de PT y ZH cuando Apple/Google aprueben es un momento de PR real.
+
+**Aprendizaje de posicionamiento:**
+Public.com usó la decisión de no usar PFOF (Payment For Order Flow) como diferenciador de identidad contra Robinhood: no tenemos conflicto de intereses con tus trades. AUREX tiene un diferenciador equivalente y más fuerte: no somos broker, no custodiamos tu dinero, no ejecutamos órdenes, no ganamos cuando operás. Nuestras señales no tienen sesgo comercial. Eso hay que decirlo explícitamente en el onboarding y en el marketing.
+
+**Canales autónomos vs requieren Fernando:**
+Public.com creció principalmente por adquisiciones y press cycles de features. Ninguna de esas palancas aplica para AUREX en fase inicial. Lo que sí aplica es la métrica de conversión IA: si AUREX puede demostrar que sus señales correlacionan con movimientos reales de mercado en las 24-48 horas siguientes, ese dato solo es contenido viral que se puede generar automáticamente sin intervención de Fernando.
+
+**Posicionamiento diferencial:**
+Public.com = broker con IA para ejecutar dentro de su propia plataforma.
+AUREX = análisis con IA independiente de cualquier broker, sin conflicto de intereses, en 8 idiomas.
 
 ---
 
