@@ -274,7 +274,24 @@ AUREX = "IA para leer el mercado ahora, sin broker, sin cuenta, en 8 idiomas"
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio escribe acá]*
+**¿Es Composer competidor directo de AUREX?**
+No directamente. Composer es una plataforma de trading algorítmico sin código — el usuario construye y ejecuta estrategias automatizadas. AUREX no ejecuta trades, da señales y análisis. La audiencia de Composer es "sophisticated retail" que ya sabe lo que hace. La audiencia de AUREX incluye principiantes y experimentados. Son productos distintos en el espectro: Composer es para quien quiere automatizar su estrategia propia, AUREX es para quien quiere entender el mercado y recibir señales IA sin programar nada.
+
+**Aprendizaje de monetización:**
+El caso Composer confirma lo contrario a lo que muestra su crecimiento: los fees ocultos destruyen la confianza. $32/mes de suscripción + $30 clearing fee generó críticas severas aunque el producto técnico sea bueno. Para AUREX: precio claro, sin sorpresas, sin fees adicionales. El modelo de AUREX (FREE / PRO $9.99 / ELITE $19.99, todo transparente) es correcto. No agregar fees escondidos nunca.
+
+**Aprendizaje de producto:**
+El flywheel de Composer funciona porque el producto es compartible: las symphonies (estrategias) se postean en Reddit/Twitter con resultados y generan curiosidad orgánica. AUREX tiene el equivalente natural: el Termómetro de Riesgo y las señales IA son visuales y comparables. Una captura del termómetro en rojo con "AUREX detectó alto riesgo el día antes de la caída" es contenido viral por naturaleza. Eso hay que explotar.
+
+**Aprendizaje de marketing:**
+Composer no usa Instagram, TikTok ni YouTube. Creció atacando una subcomunidad específica que ya buscaba activamente: r/algotrading (de 13k a 1.3M usuarios). La lección para AUREX no es copiar ese canal (Reddit de algotrading es nicho técnico, no es la audiencia de AUREX) sino el principio: identificar dónde vive la audiencia exacta de AUREX y aparecer ahí con contenido relevante, no en todos lados. Para AUREX eso es: inversores hispanohablantes en Instagram y TikTok, e inversores en inglés en X y LinkedIn.
+
+**Canales autónomos vs requieren Fernando:**
+El growth de Composer fue 80% generado por la comunidad (symphonies compartidas), no por el equipo. Para AUREX el equivalente autónomo es: capturas automáticas del estado del mercado generadas por IA y publicadas sin intervención manual. El producto hace el trabajo de marketing si se muestra en el momento correcto.
+
+**Posicionamiento diferencial:**
+Composer = "construí y ejecutá tu propia estrategia algorítmica sin código"
+AUREX = "la IA ya analizó el mercado por vos, solo necesitás leer la señal"
 
 ---
 
