@@ -644,7 +644,30 @@ AUREX = señales cuantitativas sin ruido humano, objetivas por diseño, sin conf
 ### Análisis estratégico (Escritorio)
 
 
-[TEST DIAGNÓSTICO 2 - 28-abr 20:35 - este texto es solo verificación del fix, Escritorio lo va a reemplazar.]
+
+Atom Finance es el caso de estudio mas importante del research para AUREX. No porque sea un competidor activo, sino porque murio haciendo exactamente lo que AUREX planea hacer: investment research B2C con modelo freemium a $9.99/mes. Leer este caso como advertencia, no como referencia de marketing.
+
+**Es Atom Finance competidor directo de AUREX?**
+Era. Ya no existe operativamente. El solapamiento era casi perfecto: mismo modelo freemium, mismo precio ($9.99/mes), mismo posicionamiento democratizador, misma audiencia retail. La diferencia es que Atom Finance era principalmente un agregador de data y research institucional, mientras AUREX genera senales propias con motor IA propio. Esa diferencia es importante y hay que entender por que no fue suficiente para Atom.
+
+**El insight mas critico del documento completo:**
+100.000 usuarios y $10.6M de funding no fueron suficientes para llegar a sostenibilidad en investment research B2C. Atom Finance cerro a los 6 anos del lanzamiento. Eso no significa que el modelo es imposible, significa que con solo usuarios freemium el unit economics no cierra. La conversion de FREE a Premium en herramientas de analisis financiero es historicamente baja porque el usuario FREE recibe suficiente valor para no pagar. Esto confirma el insight de Stocktwits: AUREX necesita la segunda palanca de monetizacion (datos y senales agregados para terceros) desde el diseno inicial, no como plan B.
+
+**Aprendizaje de monetizacion - leccion existencial:**
+El modelo de Atom Finance era revenue por tres vias: suscripciones Premium mas advertising mas affiliate partnerships con servicios financieros. Ninguna de las tres fue suficiente. Para AUREX, la diferencia estructural tiene que ser que las senales IA propias sean el activo diferencial que los usuarios no pueden conseguir gratis en otro lado. Cuando se conecte la API real de Claude y las senales sean genuinamente mejores que lo que ofrece el mercado, la conversion a PRO/ELITE tiene mas chance de funcionar. Con senales hardcodeadas el problema de Atom se repetiria.
+
+**Aprendizaje de producto:**
+Las resenas de Atom Finance destacaban que el producto era genuinamente bueno: real-time data, unlimited watchlists, interface limpia. Pero la UX tenia problemas documentados. Un producto tecnicamente correcto con UX inconsistente no retiene usuarios que pagan. Para AUREX la coherencia entre tabs aplica con consecuencias graves: si el usuario FREE tiene mala experiencia, no convierte. Si el usuario PRO tiene mala experiencia, cancela y no vuelve.
+
+**La advertencia directa para AUREX:**
+Si AUREX llega a 100k usuarios con el motor IA actual y el modelo es solo suscripciones freemium, el destino de Atom es posible. La diferencia tiene que venir de tres cosas: senales IA genuinamente diferenciadas cuando se conecte Claude API, segunda palanca de monetizacion por datos, y diseno del producto para que compartir senales sea el mecanismo de adquisicion organica desde el dia uno.
+
+**Canales autonomos vs requieren Fernando:**
+Atom Finance no dejo playbook de marketing replicable. La leccion negativa es la mas util: no asumir que el producto solo adquiere usuarios. AUREX necesita el loop de adquisicion autonomo desde el lanzamiento: senal generada, captura automatica, post en redes, usuario nuevo ve la senal, descarga la app, ve que la senal se cumplio, convierte a PRO.
+
+**Posicionamiento diferencial:**
+Atom Finance = agregador de research institucional democratizado para retail, modelo freemium puro, cerrado 2025.
+AUREX = senales IA propias con motor cuantitativo propio, modelo freemium mas datos como segunda palanca, en 8 idiomas.
 
 ---
 
