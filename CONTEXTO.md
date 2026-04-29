@@ -29,6 +29,7 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 - aurex-app eb0f089 — sección 0.A en CLAUDE.md y subsección en INICIO_AUREX.md: procedimiento de arranque de Code desde home (`cd ~ && claude`) y ubicación de la memoria persistente (`~/.claude/projects/-Users-fernandomoscon/memory/`, 7 archivos: índice + 6 con reglas y datos operativos).
 - aurex-backend ec578af — endpoint nuevo `GET /api/whatsapp/connect-qr` para generar QR de vinculación de Evolution sin que la apikey salga de Railway. Acceso protegido por la env var `WHATSAPP_CONNECT_SECRET` (header `X-Secret` o query `?secret=...`).
 - aurex-backend bfd0ecb — soporte de pairing code en el mismo endpoint: si llega `?number=<numero>` se propaga a Evolution para devolver `pairingCode` en vez de QR. Quedó instalado pero NO funcional con Evolution v1.8.7 (esa versión ignora el parámetro y devuelve QR igual; pairing code requiere Evolution v2).
+- aurex-backend 09c4c32 — `dailyHealthReport` ahora manda también por Telegram (en paralelo a WhatsApp Evolution). `dailyProjectStatusReport` cambió de 20:00 AR (`0 23 * * *`) a 9:00 AR (`0 12 * * *`); también se actualizaron el título del reporte ("Reporte 9:00 hs AR") y el mensaje de error del catch para coherencia.
 
 ### APPLE — Build 17 iOS
 - **Nombre publicado en App Store: AUREX AI** (no "AUREX" — estaba ocupado, "AUREX AI" cumple Guideline 2.3.7)
@@ -70,8 +71,8 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 - Token: env var `TELEGRAM_BOT_TOKEN` en Railway aurex-app (existente desde antes)
 - Chat ID admin Fernando: env var `ADMIN_TELEGRAM_CHAT_ID` en Railway aurex-app (no se publica el valor en repo público por privacidad)
 - Reportes automáticos por Telegram al admin:
-  - Reporte diario salud: 8:00 AR (cron `0 11 * * *`).
-  - Reporte diario de proyecto (`dailyProjectStatusReport`): 20:00 AR (cron `0 23 * * *`). Manda 4 mensajes consecutivos: (1) cuerpo principal con stores Apple/Google + SHAs de los 3 repos + incidentes activos + crypto source; (2) link a `CONTEXTO.md`; (3) link a `INICIO_AUREX.md`; (4) `RESEARCH_API_KEY` si está seteada.
+  - Reporte diario salud (`dailyHealthReport`): 8:00 AR (cron `0 11 * * *`). Desde commit 09c4c32 se manda también por Telegram en paralelo al envío por WhatsApp Evolution (redundancia).
+  - Reporte diario de proyecto (`dailyProjectStatusReport`): 9:00 AR (cron `0 12 * * *`). Cambio de horario aplicado en commit 09c4c32 (antes corría a las 20:00). Manda 4 mensajes consecutivos: (1) cuerpo principal con stores Apple/Google + SHAs de los 3 repos + incidentes activos + crypto source; (2) link a `CONTEXTO.md`; (3) link a `INICIO_AUREX.md`; (4) `RESEARCH_API_KEY` si está seteada.
   - Reporte mensual: 18:00 AR del último día hábil (cron `0 21 28-31 * *`).
 - Riesgo de baneo: cero (Telegram permisivo con bots).
 
@@ -95,7 +96,7 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 5. **Reconectar sesión WhatsApp del 2563 a Evolution (QR mañana)**
    El 2563 ya está verificado (código por llamada el 28-abr-2026 noche, email + passkey activados como respaldo). El intento de vinculación del 29-abr ~03:00 AR no completó (ver WA-001 en incidentes). Procedimiento para retomar mañana cuando el cooldown se haya levantado: Code llama a `GET /api/whatsapp/connect-qr` con el secret guardado en `~/secret.txt` (la env var `WHATSAPP_CONNECT_SECRET` ya está cargada en Railway aurex-app), genera el PNG en `~/Downloads`, abre con Preview, Fernando escanea desde WhatsApp Business → Ajustes → Dispositivos vinculados. Si el QR vuelve a fallar, antes de seguir verificar que la instancia "aurex" exista en Evolution. Una vez conectada, activar las alertas Railway por WhatsApp para que corran en paralelo con Telegram (que queda como canal principal). El ticket WhatsApp soporte #1807446727774286 abierto el 28-abr probablemente ya no haga falta (la verificación se resolvió sola); conviene que Escritorio chequee Gmail por si llegó respuesta.
 
-6. **Cambiar horario del reporte diario de proyecto en Telegram: de 20:00 AR a 9:00 AR.** Decisión Fernando del 29-abr-2026 ~03:35 AR: el reporte a las 20:00 deja la info desactualizada hasta el día siguiente porque Fernando trabaja durante el día y la noche. A las 9:00 AR arranca el día con el reporte fresco en mano. Cambio: modificar el cron en `aurex-backend/server.js` (línea 1908) de `'0 23 * * *'` (20:00 AR = 23:00 UTC) a `'0 12 * * *'` (9:00 AR = 12:00 UTC). Una línea, un commit, un deploy de Railway. **NO ejecutar hoy — Code lo hace mañana cuando Fernando lo confirme.**
+6. ~~Cambiar horario del reporte diario de proyecto en Telegram de 20:00 a 9:00 AR.~~ **HECHO — 29-abr-2026 ~08:42 AR (commit 09c4c32 en aurex-backend).** El cron `dailyProjectStatusReport` ahora corre a las 9:00 AR (`0 12 * * *`). Mismo commit agregó envío por Telegram al `dailyHealthReport` (8:00 AR) para que llegue por Telegram aunque Evolution esté caído.
 
 ---
 
