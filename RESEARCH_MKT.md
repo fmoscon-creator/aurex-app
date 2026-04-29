@@ -2136,7 +2136,13 @@ Bitso no tiene señales IA para usuarios retail. Sus features de análisis son b
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Smallcase es el modelo más distinto de los 18 competidores documentados — marketplace puro de research providers, no produce análisis propio. Para AUREX la pregunta es si en LATAM se puede replicar el modelo "AUREX como plataforma + research providers regionales que crean señales sectoriales en español/portugués". Trust regulatorio (CNV en AR, CVM en BR, CNBV en MX) es el moat de Smallcase en India vía SEBI. India tiene 200M+ adultos invertibles vs LATAM hispanohablante 500M+ — el upside está disponible pero la barrera regulatoria es real. Smallcase también demuestra que tickets micro (~$0.25) habilitan adquisición masiva de retail principiante — relevante para tier FREE de AUREX.]*
+Smallcase es el referente más importante del research para entender cómo escalar un producto de análisis/inversión en un mercado emergente masivo. En India pasó de 0 a 10M+ usuarios registrados y $2.5B en volumen anual con un modelo que AUREX puede estudiar en profundidad: no produce research propio, facilita un marketplace donde gestores registrados crean las canastas. El moat no es la IA, es la regulación SEBI que obliga a los gestores a estar certificados.
+
+El insight estructural más importante: Smallcase creció principalmente por integración dentro de brokers existentes (Zerodha, Groww), no por adquisición directa. El usuario ya estaba en el broker y Smallcase apareció adentro como feature. Para AUREX eso abre una pregunta estratégica de mediano plazo: ¿hay brokers en LATAM que podrían integrar señales AUREX dentro de su app? Cocos Capital, Bitso o plataformas similares podrían ser ese canal sin que AUREX tenga que adquirir cada usuario de forma individual.
+
+La crítica más fuerte en las reseñas de Smallcase es que la fee de suscripción se cobra aunque el portfolio pierda. Eso es el argumento de venta más directo para el modelo de AUREX: el valor percibido no depende de la performance del mercado sino del análisis provisto. Cuando AUREX pueda mostrar que sus señales de Alta Convicción tienen tasa de acierto verificable, ese dato es el diferenciador frente a cualquier herramienta que cobra independientemente de si el análisis sirve.
+
+India tiene 200M+ adultos invertibles y está creciendo explosivamente. AUREX tiene soporte de Hindi ya incluido en los 8 idiomas. No es un mercado para entrar en fase inicial — primero consolidar LATAM hispanohablante — pero el idioma ya está habilitado y la categoría está validada.
 
 ---
 
@@ -2262,7 +2268,13 @@ Bitso no tiene señales IA para usuarios retail. Sus features de análisis son b
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Nubank Investimentos es el competidor LATAM más serio identificado — 107M brasileños base + IA in-house (Olivia 2021, Hyperplane 2024) + Vélez declarando IA como próximo paso. Pero su IA aplicada al usuario es para recomendaciones generales y seguridad (Smart Defenses), no para señales accionables específicas multi-asset. **Espacio claro para AUREX:** los usuarios de Nubank que quieren análisis IA granular y señales accionables tienen que ir a otro lado. Pregunta crítica: ¿AUREX puede integrarse con Nubank en algún momento como capa de análisis (similar al modelo de Smallcase con brokers indios), o tiene que construir audiencia propia desde cero? Riesgo competitivo real: Nubank tiene capacidad financiera y técnica para incorporar señales IA específicas como feature interno cuando lo decida — la ventaja temporal de AUREX es real pero acotada. Brasil específicamente: la barrera de idioma (portugués) y la regulación CVM hacen que AUREX entre tarde a Brasil; priorizar Argentina y México hispanohablante primero.]*
+Nubank Investimentos es el análisis más importante del research completo para entender los límites reales del posicionamiento de AUREX en LATAM. Con 107M de usuarios en Brasil, Nubank ya tiene integrada la inversión en el mismo app que la gente usa para pagar el supermercado. No compite con AUREX como herramienta de análisis — Nubank Investimentos es básico, sin señales IA sofisticadas — pero compite por el mismo espacio mental del usuario brasileño que ya "invierte" aunque sea en rendimientos de cuenta.
+
+El dato más crítico del research: el 66% de los brasileños esperan recibir recomendaciones de inversión de su institución financiera (IPSOS). Nubank lee ese dato y está construyendo IA de recomendaciones (adquisiciones Olivia 2021 + Hyperplane 2024). Cuando esas recomendaciones lleguen al usuario de Nubank directamente en el app, van a ser competencia real para AUREX en Brasil. La ventana de tiempo donde AUREX puede capturar ese segmento en Brasil antes de que Nubank active su IA de recomendaciones es concreta y limitada.
+
+La lección de posicionamiento más directa: Nubank creció porque eliminó la fricción de onboarding. Para invertir en Nubank Investimentos, si ya sos cliente Nubank, no hay que hacer nada nuevo — el KYC ya está hecho, la identidad ya está verificada, el dinero ya está en la app. AUREX tiene esa misma ventaja frente a brokers tradicionales: no necesitás depositar dinero, no necesitás verificar identidad, no necesitás hacer nada especial para empezar a recibir señales. Ese diferencial de fricción cero tiene que estar en el centro del mensaje de lanzamiento.
+
+Para Brasil específicamente: Nubank habla portugués, tiene 107M de usuarios, y está construyendo IA. Brasil requiere portugués, regulación distinta y un timing cuidadoso. La secuencia correcta para AUREX sigue siendo: España + LATAM hispanohablante primero, Brasil como etapa 2 con producto maduro.
 
 ---
 
@@ -2304,5 +2316,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 4 LATAM cerrada con análisis estratégico de Escritorio para los 5 competidores: Cocos, Lemon, Warren Brasil, Avenue, Bitso). Pendiente análisis estratégico de Pasada 5 (Smallcase + Nubank Investimentos) y síntesis estratégica global.*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 5 cerrada con análisis estratégico de Escritorio para Smallcase + Nubank Investimentos). 19 competidores con análisis cruzado completo. Pendiente: síntesis estratégica global + `PLAN_MKT.md` v2 + plan táctico de lanzamiento.*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*
