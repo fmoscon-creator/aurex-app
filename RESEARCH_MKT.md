@@ -1545,7 +1545,13 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Cocos es el competidor argentino más grande pero NO tiene IA como diferencial — es broker tradicional con app moderna. Eso le deja a AUREX un espacio claro: "no somos broker, somos análisis con IA". Tres preguntas: (1) ¿AUREX se posiciona como complemento de Cocos para sus 1M+ usuarios o como alternativa? (2) ¿La controversia política de Sbdar abre espacio para una marca AR neutral? (3) ¿AUREX puede ofrecer contenido educativo en español-AR donde Cocos no genera contenido útil?]*
+Cocos Capital es el referente más directo del mercado argentino para AUREX. Broker regulado por CNV, UX mobile-first, foco en jóvenes argentinos. Lo que tiene que AUREX no tiene: regulación, custodia en Caja de Valores, capacidad de ejecutar trades reales. Lo que AUREX tiene que Cocos no tiene: señales IA de mercado global, crypto en tiempo real, análisis automatizado.
+
+La diferencia estructural es importante: Cocos es broker, AUREX es herramienta de análisis. No compiten directamente pero sí compiten por el mismo usuario argentino joven que invierte. Un usuario de Cocos que quiere señales IA antes de operar es exactamente el usuario target de AUREX. El posicionamiento correcto en Argentina no es "somos mejores que Cocos" sino "usá AUREX para decidir qué comprar, usá Cocos para comprarlo".
+
+El dato más relevante del research: el CEO Sbdar fue abucheado por 12k+ estudiantes secundarios el 28-abr-2026 en el Movistar Arena por su conexión con el escándalo $LIBRA. Eso es una herida de reputación fresca en la audiencia joven argentina que es exactamente el target de AUREX. No se trata de atacar a Cocos, sino de entender que hay una oportunidad de posicionarse como herramienta de análisis objetivo sin conflictos de intereses — el diferenciador que Public.com también usa y que aplica con más fuerza en Argentina donde la confianza en las instituciones financieras es históricamente baja.
+
+El aprendizaje de marketing: Cocos usa el CEO como vocero principal con presencia fuerte en X. Eso generó tanto crecimiento como controversia. Para AUREX la lección es que un vocero con personalidad y opinión propia en redes genera tracción orgánica, pero hay que separar el posicionamiento personal del posicionamiento de marca cuando temas polémicos emergen.
 
 ---
 
@@ -1650,7 +1656,13 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Lemon es el caso AR más relevante para AUREX porque demuestra que "useful + español-AR + tono retail" funciona a 5M usuarios. Pregunta crítica: ¿AUREX puede entrar al mismo público pero con análisis IA en lugar de wallet? Diferencia estructural: Lemon custodia, AUREX no — eso baja barrera de onboarding pero también baja stickiness. La IG de Lemon (218K) y el TikTok (64.6K) son benchmarks concretos de qué números pretender en 12-24 meses para AUREX.]*
+Lemon Cash es el caso de crecimiento más espectacular de LATAM en el research: de menos de 10k a 2M+ usuarios con un solo producto — la Lemon Card con BTC cashback. Ese salto no fue por publicidad ni por IA, fue por conectar crypto con un caso de uso cotidiano tangible (tarjeta física con cashback en Bitcoin).
+
+La lección más aplicable a AUREX: el feature que dispara el crecimiento masivo suele ser el más simple y tangible, no el más sofisticado. La Lemon Card fue simple — pagás, ganás Bitcoin. Para AUREX el equivalente no es la señal IA compleja, sino el momento más simple y visual del producto: "AUREX dijo ALTA CONVICCIÓN en $BTC el lunes, el martes subió 8%". Ese screenshot es la Lemon Card de AUREX — la demostración de valor más simple que un usuario puede entender y compartir.
+
+Lemon tiene 2M+ usuarios pero no tiene señales IA de análisis de mercado. Su modelo es wallet + dolarización + cashback crypto. AUREX no compite en ese espacio. Pero sí compite por la atención del mismo usuario argentino crypto-curious. La oportunidad es posicionarse como el complemento de análisis que Lemon no ofrece: "usás Lemon para guardar crypto, usás AUREX para saber cuándo es buen momento para comprar más."
+
+El funding de $66M con inversores como F-Prime y Goodwater confirma que el mercado LATAM de crypto retail tiene validación institucional seria. No es mercado marginal.
 
 ---
 
@@ -1751,7 +1763,13 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Warren Brasil es el competidor LATAM con IA más relevante. Pero su IA es para PRODUCTIVIDAD INTERNA (Warren Flow ayuda a advisors humanos), no para generar señales que el usuario consume. Eso deja gap claro para AUREX: IA que genera señales directas para el usuario, sin advisor humano intermedio. Pregunta crítica: el "fee fijo sobre AUM" de Warren no es replicable para AUREX (no custodiamos), pero el principio "sem conflito de interesses" sí es replicable como mensaje. Warren tiene el mismo nombre que un competidor de Pasada 3 (WarrenAI / Investing.com) — mencionar la coincidencia en la síntesis para no confundir lectores del Plan MKT v2.]*
+Warren Brasil es el benchmark de lo que puede ser AUREX a 5 años en LATAM. No como modelo idéntico sino como prueba de que el mercado brasilo-latinoamericano de inversión digital acepta productos sofisticados: 1M+ usuarios, R$300M de capital, breakeven logrado, y ahora expansión con IA (Warren Flow para asesores).
+
+El aprendizaje más crítico: Warren Brasil tardó 7 años en llegar a breakeven (2017-2024). Eso no es una crítica — es la realidad de construir un producto de wealth management con regulación real en Brasil. Para AUREX la diferencia estructural es que no necesita regulación para operar como herramienta de análisis (no es broker, no custodia dinero), lo que acorta el camino a traction de forma significativa.
+
+Warren Brasil tiene IA pero para uso interno de asesores (Warren Flow), no para el usuario retail directamente. Ese es el gap exacto que AUREX llena: señales IA directo al usuario, sin intermediario humano, sin cuenta mínima, sin onboarding de broker.
+
+El mercado brasileño tiene 215M de personas y un sistema financiero maduro pero caro para retail. La combinación de idioma (portugués, no español) y regulación hace que entrar a Brasil desde Argentina sea complejo. Para AUREX la secuencia correcta es: Argentina y mercado hispanohablante primero, Brasil como expansión posterior cuando haya producto maduro y recursos para adaptación de idioma y compliance.
 
 ---
 
@@ -1855,7 +1873,11 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Avenue es competidor de capa distinta (broker para invertir en USA), no de IA. Pero su éxito muestra el valor del "puente al mercado USA" para retail LATAM. AUREX puede aprovechar ese puente con análisis IA de los activos USA que esos 900k usuarios ya tienen — análisis sin tener que abrir otra cuenta. Pregunta crítica: ¿AUREX debería integrarse vía API con Avenue (largo plazo) o solo posicionarse como complemento independiente? La adquisición Itaú demuestra que para players grandes el camino fue M&A, no construir IA in-house — eso es señal de que IA financiera retail no se construye fácil dentro de un banco.]*
+Avenue no es competidor directo de AUREX sino referencia de lo que pasa cuando un broker retail brasileño es adquirido por un banco grande (Itaú, R$1.4 bilhão). En 6 años pasó de startup a ser absorbida por el banco más grande de Brasil con 900k+ cuentas y R$20 bilhões en custodia.
+
+El dato más relevante para el posicionamiento de AUREX: Avenue no tiene IA de análisis propia. Su diferencial es acceso a acciones USA en dólares desde Brasil con cuenta regulada. Los usuarios de Avenue que quieren análisis IA tienen que buscarlo en otro lado. AUREX puede ser ese "otro lado" — la herramienta de análisis que los usuarios de Avenue usan para decidir qué comprar antes de ir a Avenue a ejecutarlo.
+
+La adquisición por Itaú confirma que cuando una fintech de inversión llega a escala en Brasil, los bancos tradicionales la compran. Eso es tanto una oportunidad (exit posible) como un riesgo (el banco puede copiar el producto internamente). Para AUREX, la ventaja defensiva es la globalidad del análisis: 313 activos en 8 idiomas es difícil de replicar para un banco que opera bajo regulación local estricta.
 
 ---
 
@@ -1975,7 +1997,13 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Bitso es el competidor LATAM más grande y maduro. Para AUREX, dos enfoques posibles: (a) coexistir como capa de análisis IA por encima de Bitso (los 9M usuarios de Bitso son potenciales usuarios AUREX para análisis IA antes de ejecutar trades en Bitso) o (b) competir directo en señales pero solo crypto (riesgoso, Bitso tiene moat regulatorio enorme). Pregunta crítica: ¿AUREX debería empezar con integración API hacia Bitso (read-only de portfolio) para aprovechar la base instalada o construir audiencia propia desde cero? La capacidad de Bitso de "9M usuarios + 130 cryptos + 4 países" es difícil de igualar en lo cripto, pero AUREX tiene ventaja en análisis IA + multi-asset (stocks USA + globales) que Bitso no profundiza.]*
+Bitso es el competidor LATAM más relevante del research en términos de escala y recursos: 9M de usuarios, $2.2B de valuación, regulación en 4 países, y ahora expandiendo a stocks USA via Alpaca. Es el primer unicornio crypto de LATAM y tiene una ventaja estructural de 10 años de datos de usuarios en la región que ningún competidor puede replicar.
+
+La diferencia fundamental con AUREX: Bitso es exchange, ejecuta trades, custodia activos. AUREX es herramienta de análisis pura, sin ejecución. No compiten directamente. Un usuario de Bitso que quiere señales IA antes de operar es exactamente el target de AUREX. El posicionamiento correcto en México es el mismo que en Argentina con Cocos: "analizá con AUREX, operá con Bitso."
+
+El aprendizaje de marketing más aplicable: Bitso creció en México usando remesas como caso de uso ancla — no fue "el exchange más sofisticado" sino "la forma más barata de mandar dinero a tu familia". La lección para AUREX en México es buscar el caso de uso cotidiano más simple del mercado mexicano y entrar por ahí, no por el análisis sofisticado. En México, con inflación moderada pero desconfianza bancaria alta, el ángulo de "entendé tu dinero antes de moverlo" tiene tracción real.
+
+Bitso no tiene señales IA para usuarios retail. Sus features de análisis son básicas — precio, historial, orderbook. Ese es el gap que AUREX llena en el ecosistema Bitso para sus 9M de usuarios.
 
 ---
 
@@ -2276,5 +2304,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 5 mini bonus agregada con 2 competidores blind spot: Smallcase para India, Nubank Investimentos para neo-bancos LATAM con inversión integrada). Análisis estratégico de Escritorio para Pasadas 4 y 5 reservado en blanco, esperando que Escritorio los complete.*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 4 LATAM cerrada con análisis estratégico de Escritorio para los 5 competidores: Cocos, Lemon, Warren Brasil, Avenue, Bitso). Pendiente análisis estratégico de Pasada 5 (Smallcase + Nubank Investimentos) y síntesis estratégica global.*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*

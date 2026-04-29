@@ -158,7 +158,7 @@ Pregunta central: ¿AUREX se compara con quién y por qué? ¿A quién le quiere
 - Regla de honestidad: si no hay fuente sólida, marcar "no verificado" en lugar de inventar.
 
 ### Hecho — Pasadas 1, 2, 3, 4 y 5 (19 competidores cerrados)
-Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1, 2 y 3 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 4 (LATAM acotada) y Pasada 5 (mini bonus blind spots) tienen secciones de análisis estratégico reservadas y vacías, esperando que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
+Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1, 2, 3 y 4 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 5 (mini bonus blind spots) tiene secciones de análisis estratégico reservadas y vacías, esperando que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
 
 **Pasadas 1 y 2 (históricos):**
 1. **Magnifi** — AI investing assistant (TIFIN, respaldado por J.P. Morgan). Freemium $8.25-14/mes. Creció por backing institucional y podcast con Nicole Lapin. Sin presencia orgánica en redes. Lección: AUREX puede hacer lo que Magnifi no hace — mostrar el producto en acción en redes.
@@ -213,7 +213,6 @@ Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots 
 
 ### Falta
 - **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén los análisis estratégicos de Pasadas 4 y 5 + el cruce final. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
-- **Análisis estratégico de Pasada 4** (5 secciones reservadas en blanco para los 5 competidores LATAM). Pendiente entrega de Escritorio.
 - **Análisis estratégico de Pasada 5** (2 secciones reservadas en blanco para Smallcase + Nubank Investimentos). Pendiente entrega de Escritorio.
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
