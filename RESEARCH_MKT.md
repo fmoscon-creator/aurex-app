@@ -35,10 +35,12 @@
 11. **RockFlow** — multi-país, Bobby + TradeGPT, Gen Z mobile
 12. **Guavy** — AI sentiment crypto-only, retail + API
 
-### Pasada 4 — Si queda tiempo, complementarios
-- Webull
-- Finviz
-- Stock Events
+### Pasada 4 — Competidores LATAM acotada (HECHA — 29-abr-2026)
+13. **Cocos Capital** (Argentina) — broker fintech AR, sin IA, líder local
+14. **Lemon Cash** (Argentina) — wallet crypto 5M usuarios, IG 218K + TikTok 64.6K
+15. **Warren Brasil** — wealthtech 300k clientes, IA productividad interna (Warren Flow)
+16. **Avenue** (Brasil) — broker USA-stocks, 900k cuentas, adquirido por Itaú
+17. **Bitso** (México) — 9M usuarios LATAM, $2.2B valuation, B2B + retail dual
 
 ---
 
@@ -1439,9 +1441,558 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ---
 
-## Pasada 4 — A definir con Fernando
+# PASADA 4 — Competidores LATAM (acotada, 5 competidores)
 
-*[Pendiente OK explícito. Posible foco: apps no-US (Europa, LATAM, Asia) para entender enfoques regionales — Brasil, India, México son candidatos lógicos por mercado retail emergente.]*
+> Objetivo: cubrir el blind spot de Pasadas 1-3 (cero competidores LATAM) antes de la síntesis. Foco específico: 2 Argentina (mercado local de Fernando), 2 Brasil (215M habitantes, retail más grande de LATAM), 1 México (130M habitantes, fintech más maduro de Hispanoamérica). Selección por tracción real verificable, no pre-revenue.
+
+## 13. Cocos Capital
+
+**Empresa:** Cocos Capital S.A.
+**HQ:** Buenos Aires, Argentina (oficina nueva en Córdoba abierta 2025)
+**Founded:** febrero 2021
+**Founders/CEO:** Ariel Sbdar (CEO) + Nicolás Mindlin
+**Educación CEO:** Licenciatura Economía Empresarial UTDT + Master HEC Paris (especialización M&A)
+**Regulación:** registrado y supervisado por CNV (Comisión Nacional de Valores) como ALyC (Agente de Liquidación y Compensación)
+**Custodia:** Caja de Valores
+**URL:** https://cocos.capital/
+**App Store:** https://apps.apple.com/ar/app/cocos-app/id1634675415
+**LinkedIn:** https://www.linkedin.com/in/arielsbdar/
+
+### 1. Posicionamiento
+- "Invertí, ahorrá y pagá" (tagline app).
+- Mensaje core: democratizar acceso a mercados financieros argentinos e internacionales con app simple y comisiones bajas.
+- "La fintech de inversión más grande de Argentina" (declarado, no verificado independiente al 29-abr-2026).
+
+### 2. Audiencia objetivo declarada
+- Retail argentino, foco en jóvenes y "primera vez inversores".
+- Skew hacia usuarios que quieren CEDEARs (acciones USA representadas en pesos) sin abrir cuenta en broker offshore.
+- Tickets desde montos chicos en pesos.
+- NO usa IA como diferencial (es broker tradicional con app moderna).
+
+### 3. Modelo de monetización
+- **Plan General:** 1% de comisión sobre stocks y CEDEARs.
+- **Cocos Gold:** comisión 0% en stocks y CEDEARs en pesos, fees secundarios.
+- **Cocos Pro:** comisión 0% en stocks/CEDEARs en pesos + features avanzadas.
+- Revenue secundario: spreads en MEP, bonos, fondos comunes.
+- Apertura de cuenta gratis.
+
+### 4. Canales de marketing activos (verificados)
+- **X (Twitter):** Sbdar muy activo personalmente como vocero (cuenta personal + corporativa).
+- **LinkedIn corporativo + perfil personal Sbdar.**
+- **Eventos físicos:** Experiencia Endeavor Sub20 (Movistar Arena, 12k+ estudiantes secundarios), apertura oficina Córdoba.
+- **Podcast:** Sbdar invitado en Cartografías (Spotify).
+- **PR media argentino:** La Nación, Infobae, El Economista, Infonegocios.
+- **App Store + Google Play:** Argentina.
+- **NO se identificó** estrategia consolidada en TikTok o Instagram corporativa con tracción declarada — el motor visible es PR + presencia personal del CEO.
+
+### 5. Tipo de contenido por canal
+- **X de Sbdar:** comentarios sobre mercado argentino, opinión sobre coyuntura económica, política financiera. Tono opinión personal, no neutral.
+- **PR media:** entrevistas con Sbdar, anuncios de expansión (oficina Córdoba), cobertura de controversias.
+- **Eventos:** charlas sobre emprendedurismo y finanzas para secundarios y universitarios.
+- **App Store:** descripciones de features, updates.
+
+### 6. Tono y voz
+- **Marca corporativa:** moderna, accesible, jovial. Visual con paleta cálida.
+- **CEO Sbdar:** vocero principal, personalidad fuerte y polémica, opinión política presente.
+- **Tono general:** "fintech argentina millennial-friendly". Diferente del tono institucional de bancos tradicionales (Galicia, Santander Río), más cercano al usuario joven retail.
+
+### 7. Cómo se lanzaron
+- **Febrero 2021:** founded por Sbdar + Mindlin.
+- Crecimiento rápido durante el boom de CEDEARs en Argentina (2021-2023, dolarización vía mercado de capitales).
+- Estrategia: aprovechar el vacío de brokers tradicionales con UX mobile pobre.
+- **2025:** apertura oficina física en Córdoba (Ciudad Empresaria) como segunda sede.
+- **2025:** ajuste de comisiones (introducción de planes Gold/Pro).
+
+### 8. Qué les funcionó para crecer
+- **UX mobile-first** muy superior a brokers tradicionales argentinos (incumbents legacy con apps malas).
+- **Foco en CEDEARs:** producto estrella en Argentina por contexto inflacionario y deseo de dolarización vía mercado.
+- **Vocería fuerte de Sbdar:** lo bueno y lo malo. Genera awareness orgánica vía X y PR, pero también lo expone a controversias.
+- **Comisión 0% en pesos** como gancho de adquisición.
+- **Regulación CNV** como diferenciador frente a apps crypto no reguladas.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- App moderna e intuitiva.
+- Acceso fácil a CEDEARs y MEP.
+- Apertura de cuenta rápida y gratuita.
+- Score editorial Bolsa24: 87/100 (mezcla de seguridad CNV + buena oferta de activos).
+
+**Contras frecuentes:**
+- **Customer service limitado:** demoras en respuesta de mail y verificación de cuentas.
+- **Reviews recientes** (post cambio de comisiones 2025) más críticas que reviews históricos.
+- **Controversia 28-abr-2026:** CEO abucheado en Movistar Arena por 12k+ estudiantes secundarios por su conexión pública con el escándalo $LIBRA — Sbdar fue de los primeros en amplificar el lanzamiento de $LIBRA en X. Esto puede afectar percepción de marca en jóvenes (audiencia objetivo).
+
+**Conclusión reseñas:** producto con buen sentimiento operativo (UX, oferta) pero tracción social golpeada por exposición política/cripto del CEO.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://cocos.capital/ — sitio oficial
+- https://apps.apple.com/ar/app/cocos-app/id1634675415 — App Store AR
+- https://play.google.com/store/apps/details?id=capital.cocos.app.twa — Google Play
+- https://www.crunchbase.com/organization/cocos-capital — Crunchbase
+- https://www.bolsa24.net/cocos-capital/ — review 87/100
+- https://www.rankia.com.ar/blog/trading-argentina/6959548-review-cocos-capital-analisis-opiniones — review Rankia
+- https://www.lanacion.com.ar/economia/quien-es-ariel-sbdar-el-ceo-de-cocos-capital-que-se-retiro-abucheado-de-un-evento-nid29042026/ — perfil Sbdar + controversia
+- https://www.infobae.com/economia/2026/04/28/por-que-me-dicen-vendepatria-alumnos-de-secundaria-abuchearon-al-ceo-de-una-fintech-en-un-megaevento-de-emprendedores/ — controversia $LIBRA
+- https://eleconomista.com.ar/finanzas/ariel-sbdar-ceo-cocos-capital-el-mercado-esta-miedo-n66592 — entrevista
+- https://infonegocios.info/nota-principal/con-ariel-sbdar-en-persona-cocos-presento-su-oficina-en-cordoba-que-servicios-ofrece-con-base-en-ciudad-empresaria — apertura Córdoba
+- https://www.complif.com/us/success-stories-general/como-ayudo-complif-a-cocos-capital — caso compliance
+- https://www.linkedin.com/in/arielsbdar/ — LinkedIn Sbdar
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Cocos es el competidor argentino más grande pero NO tiene IA como diferencial — es broker tradicional con app moderna. Eso le deja a AUREX un espacio claro: "no somos broker, somos análisis con IA". Tres preguntas: (1) ¿AUREX se posiciona como complemento de Cocos para sus 1M+ usuarios o como alternativa? (2) ¿La controversia política de Sbdar abre espacio para una marca AR neutral? (3) ¿AUREX puede ofrecer contenido educativo en español-AR donde Cocos no genera contenido útil?]*
+
+---
+
+## 14. Lemon Cash
+
+**Empresa:** Lemon Cash
+**HQ:** Buenos Aires, Argentina
+**Founded:** 2019
+**Founder/CEO:** Marcelo Cavazzoli
+**URL:** https://lemon.me/
+**App Store + Google Play:** activas en AR, PE
+**LinkedIn:** https://www.linkedin.com/company/lemonlat
+**Funding total:** USD $66M
+**Funding rounds principales:** Kingsway Capital, Goodwater Capital, F-Prime, ParaFi, Valor Capital. Series B $20M (F-Prime + ParaFi lead). Recibió inversión histórica de FTX (pre-colapso, ya no relevante operativamente).
+
+### 1. Posicionamiento
+- "The only wallet you need" / "tu wallet crypto" (taglines).
+- Wallet digital con capacidad bancaria + extra-bancaria + crypto.
+- Mensaje core: simplificar y democratizar acceso al crypto en Argentina y LATAM en contexto de alta inflación y restricciones cambiarias.
+
+### 2. Audiencia objetivo declarada
+- Retail argentino y latinoamericano, foco usuarios sub-bancarizados o con dificultad de acceso a USD.
+- Mercados activos al 29-abr-2026: Argentina + Perú; expansión planificada a Colombia, México, Brasil, Chile.
+- Skew: usuarios jóvenes mobile-first, atraídos por la Lemon Card (VISA prepaid) y el cashback en BTC.
+
+### 3. Modelo de monetización
+- **App gratuita.**
+- Revenue por:
+  - **Spreads** en compra-venta de cripto (BTC, ETH, stablecoins, 30+ tokens).
+  - **Lemon Card (VISA prepaid):** revenue por interchange + posibles fees secundarios.
+  - **Yields / staking** (en Lemon Earn cuando aplica).
+  - **Pagos** y conversiones fiat-cripto.
+- No hay tier premium freemium tradicional — el modelo es transaccional + financiero.
+
+### 4. Canales de marketing activos (verificados)
+- **Instagram:** @lemoncash.app — **218K seguidores, 1.043 posts** (al 29-abr-2026, según búsqueda).
+- **TikTok:** @lemonapp_ar — **64.6K seguidores, 864K likes**.
+- **X (Twitter):** @lemonapp_ar activo.
+- **LinkedIn corporativo.**
+- **YouTube** (canal corporativo activo, contenido educativo).
+- **App Store + Google Play.**
+- **PR media:** Bloomberg Línea, Medium (analistas independientes), Circle (case study), Realistic Optimist.
+- **Lemon Card como vehículo de marca offline:** la tarjeta física VISA es brand exposure cada vez que se usa.
+
+### 5. Tipo de contenido por canal
+- **Instagram:** posts y reels educativos sobre cripto, contenido sobre la Lemon Card, market commentary, ofertas y promociones.
+- **TikTok:** contenido corto en español argentino, foco "pesos, crypto, Lemon Card" — coherente con target retail joven.
+- **X:** anuncios producto, milestones, market commentary, customer service público.
+- **Medium / blog:** análisis de mercado, casos de uso de cripto en LATAM, expansión.
+
+### 6. Tono y voz
+- **Marca:** cercana, retail, en español argentino. Coloquial sin ser caricaturesco.
+- **Visual:** colores cálidos (amarillo limón), juvenil pero no infantilizante.
+- **Mensaje recurrente:** crypto como herramienta práctica de día a día (no especulación), enfocado en "useful crypto" — Bitcoin cashback, Visa Card, dólares digitales.
+
+### 7. Cómo se lanzaron
+- **2019:** founded por Marcelo Cavazzoli en Argentina.
+- **2021:** lanzamiento Lemon Card (VISA prepaid con BTC cashback) — el feature que disparó el crecimiento de menos de 10k a 2M+ usuarios.
+- **2022:** Series B de USD $20M (F-Prime + ParaFi).
+- **2023-2025:** expansión a Perú, planificación a Colombia/México/Brasil/Chile.
+- **Octubre 2025:** consolidación de Series B con $66M acumulado.
+
+### 8. Qué les funcionó para crecer
+- **Lemon Card (VISA + BTC cashback):** producto físico tangible que combinó crypto con uso cotidiano. De <10k a 2M+ usuarios post-lanzamiento.
+- **Inflación argentina como tailwind:** la dolarización vía stablecoins fue catalizador masivo (BTC y USDT como hedge).
+- **Tono "useful crypto":** narrativa diferenciada del hype tradicional cripto. Genera confianza con público no-cripto.
+- **Funding sólido ($66M):** capacidad de marketing y expansión.
+- **Mobile-first puro:** sin web previa, app desde el día uno.
+- **Programa de referidos:** mecanismo viral típico de fintech retail.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- BTC cashback como incentivo real, "good incentive to use Lemon".
+- Lemon Card sin costo de mantenimiento, "zero cost".
+- App simple de usar para retail no-cripto.
+- Facilidad de comprar dólares digitales en contexto de cepo cambiario argentino.
+
+**Contras frecuentes:**
+- Volatilidad en spreads cuando hay alta volatilidad cripto.
+- KYC ocasionalmente lento.
+- Fricciones con bancos tradicionales en transferencias en pesos.
+- Asociación histórica con FTX (no operacional pero presente en cobertura).
+
+**Conclusión reseñas:** producto con sentimiento mayoritariamente positivo en su mercado core (Argentina), con la Lemon Card como ancla de retención.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://lemon.me/ — sitio oficial
+- https://play.google.com/store/apps/details?id=com.applemoncash — Google Play
+- https://www.instagram.com/lemoncash.app/ — Instagram (218K)
+- https://www.tiktok.com/@lemonapp_ar — TikTok (64.6K)
+- https://x.com/lemonapp_ar — X
+- https://www.linkedin.com/company/lemonlat — LinkedIn
+- https://www.crunchbase.com/organization/lemon-cash — Crunchbase
+- https://lemon.me/en/blog/serie-b-20-m — Series B oficial
+- https://ventureburn.com/lemon-funding-round/ — coverage Series B
+- https://www.bloomberglinea.com/english/exclusive-argentinas-lemon-cash-received-investment-from-failed-crypto-exchange-ftx/ — exposición FTX
+- https://www.realisticoptimist.io/lemon-useful-crypto-in-argentina-66fd59b4430f80001b574254/ — análisis independiente
+- https://www.circle.com/case-studies/lemon — Circle case study (USDC)
+- https://medium.com/@endizonana03/lemon-cash-investment-analysis-45ab77a42a84 — investment analysis
+- https://www.valorcapitalgroup.com/marklemon-cashmark-wants-a-crypto-revolution-and-valor-just-joined-it — Valor Capital perspectiva
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Lemon es el caso AR más relevante para AUREX porque demuestra que "useful + español-AR + tono retail" funciona a 5M usuarios. Pregunta crítica: ¿AUREX puede entrar al mismo público pero con análisis IA en lugar de wallet? Diferencia estructural: Lemon custodia, AUREX no — eso baja barrera de onboarding pero también baja stickiness. La IG de Lemon (218K) y el TikTok (64.6K) son benchmarks concretos de qué números pretender en 12-24 meses para AUREX.]*
+
+---
+
+## 15. Warren Brasil
+
+**Empresa:** Warren Investimentos
+**HQ:** Brasil (matriz)
+**Founded:** 2017
+**Founders/CEO:** Tito Gusmão (CEO) + André Gusmão + Rodrigo Grundig + Marcelo Maisonnave
+**URL:** https://warren.com.br/
+**App Store + Google Play:** activas en Brasil
+**Regulación:** Banco Central + CVM (Comissão de Valores Mobiliários) + Anbima
+**Custodia:** Banco Santander
+**Funding:** R$ 300M (Citi Ventures entre los inversores)
+
+### 1. Posicionamiento
+- "Wealthtech" / robo-advisor con experiencia de private banking digital.
+- "Cliente no centro, sem conflito de interesses" (tagline corporativo de Tito Gusmão).
+- Mensaje core: democratizar wealth management profesional — combinar low-cost investing (Robinhood-style) + robo-advisor (Betterment-style) + private bank en una sola plataforma.
+
+### 2. Audiencia objetivo declarada
+- **Mass affluent + ultra-high net worth + family offices** — espectro completo de wealth management retail-pro.
+- **Millennials brasileños** declarados como target inicial original (chatbot + plataforma digital).
+- Mínimo de entrada bajo (R$100 ≈ $20 USD) → captura inversor primerizo.
+- Cliente paga fee anual sobre AUM, no por transacción → alinea incentivos con performance del usuario.
+
+### 3. Modelo de monetización
+- **Fee fijo anual sobre AUM:** 0.7% a 0.9%/año. A más patrimonio, menor el porcentaje (incentivo a crecer dentro de Warren).
+- **Sin comisiones por trade** dentro del esquema.
+- Mínimo primer aporte: R$ 100.
+- 1.000+ instrumentos: renda fixa, previdência privada, ações, fundos mutuos, digital assets (próximamente).
+- Revenue secundario: corretagem desde adquisición de Renascença (corretora cinquentenária).
+
+### 4. Canales de marketing activos (verificados)
+- **Sitio web propio + warren.com.br/magazine** (blog con contenido editorial).
+- **App iOS + Google Play.**
+- **PR media brasileño:** NeoFeed, Brazil Journal, Exame, StartSe, Infomoney, CNN Brasil.
+- **LinkedIn corporativo.**
+- **Citi Ventures partnership** como vehículo de credibilidad institucional.
+- **Instagram + YouTube corporativo** (presencia, no verificada en escala con búsqueda actual).
+- **Adquisiciones como vehículo de PR:** compra de Renascença (corretora 50 años) generó cobertura amplia.
+
+### 5. Tipo de contenido por canal
+- **Magazine warren.com.br:** contenido editorial sobre planificación financiera, perfil de inversor, retiro, casos de cliente. Tono educativo no especulativo.
+- **PR media:** anuncios de funding, breakeven (Q1 2024), agentes autónomos con IA, adquisiciones (Renascença).
+- **LinkedIn:** updates corporativos, milestones de growth, hires ejecutivos.
+- **Citi Ventures press:** validación institucional y partnership.
+
+### 6. Tono y voz
+- **Marca:** profesional, sobria, foco en planificación de largo plazo. NO es tono Gen Z ni gamificación — apunta a retail maduro.
+- **Tito Gusmão (vocero):** tono de "fim do modelo de agentes de investimentos" — discurso disruptivo pero institucional.
+- **Diferenciador comunicacional:** "sem conflito de interesses" — fee fijo sobre AUM en lugar de comisiones por trade es el corazón del mensaje.
+
+### 7. Cómo se lanzaron
+- **2017:** founded por los 4 co-founders.
+- **Modelo inicial:** chatbot + plataforma digital, target millennials. Conversación con un robot que arma perfil de inversor + sugiere portfolio.
+- **Crecimiento gradual** durante 2018-2023 con foco producto + adquisiciones tácticas.
+- **2022:** Citi Ventures invierte como validación.
+- **Q1 2024:** alcanzan breakeven y avanzan en agentes autónomos con IA (Warren Flow).
+- **R$ 300M aporte:** capital significativo para escala y nueva fase IA.
+
+### 8. Qué les funcionó para crecer
+- **Modelo "sem conflito de interesses":** narrativa diferenciada de los brokers tradicionales brasileños que ganan por volumen de trades.
+- **Fee fijo sobre AUM:** alinea incentivos y simplifica pricing (0.7-0.9% es entendible para retail).
+- **Adquisición de Renascença:** corretora cinquentenária = credibilidad histórica + base de clientes establecida.
+- **Citi Ventures partnership:** validación institucional para asuntos regulatorios y de mercado.
+- **300k+ clientes** acumulados al 29-abr-2026.
+- **Warren Flow (IA, Q1-2024):** primer producto IA dentro de Warren. Personaliza reportes de performance, multiplica capacidad de advisors humanos (un advisor pasa de manejar 120 a 300 clientes sin perder calidad). Es IA aplicada a productividad interna, no a generación de señales para usuarios.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Onboarding via chatbot percibido como simple.
+- Asset allocation automática es un ahorro de tiempo para retail no-pro.
+- Diversidad de productos (1.000+) sin tener que abrir cuentas en múltiples brokers.
+- Custodia Santander aporta tranquilidad regulatoria.
+
+**Contras frecuentes:**
+- Fee anual 0.7-0.9% percibido como alto por usuarios sofisticados que comparan con XP/Rico (que cobran por transacción y pueden ser más baratos para ciertos perfiles).
+- Reportes de performance históricamente menos detallados que en plataformas profesionales (problema que Warren Flow viene a resolver).
+- Tracking de objetivos de largo plazo: a algunos usuarios les cuesta entender la lógica de "metas" vs trading directo.
+
+**Conclusión reseñas:** producto con sentimiento positivo en target mass affluent (que valora simplicidad), mixto en target sofisticado (que prioriza control y costos transaccionales).
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://warren.com.br/ — sitio oficial
+- https://warren.com.br/magazine/tito-gusmao/ — perfil Tito Gusmão
+- https://play.google.com/store/apps/details?id=com.oiwarren.oiwarren — Google Play
+- https://www.crunchbase.com/organization/warren-2 — Crunchbase
+- https://www.crunchbase.com/person/tito-capitani-2 — Tito Gusmão Crunchbase
+- https://www.citi.com/ventures/perspectives/pressrelease/investing-in-warren.html — Citi Ventures
+- https://neofeed.com.br/wealth-management/warren-chega-ao-breakeven-e-avanca-em-agentes-autonomos/ — breakeven + IA
+- https://www.startse.com/artigos/warren-investimento-300-milhoes-agentes/ — R$ 300M aporte
+- https://www.cnnbrasil.com.br/economia/macroeconomia/warren-compra-a-corretora-renascenca/ — adquisición Renascença
+- https://www.projetodraft.com/com-um-chatbot-e-uma-plataforma-digital-o-warren-quer-transformar-os-millennials-em-investidores/ — chatbot inicial
+- https://exame.com/pme/corretora-com-robos-warren-recebe-r-25-mi-e-tera-mais-formas-de-investir/ — funding histórico
+- https://neofeed.com.br/negocios/na-warren-uma-corretora-vale-mais-do-que-duas/ — análisis competitivo
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Warren Brasil es el competidor LATAM con IA más relevante. Pero su IA es para PRODUCTIVIDAD INTERNA (Warren Flow ayuda a advisors humanos), no para generar señales que el usuario consume. Eso deja gap claro para AUREX: IA que genera señales directas para el usuario, sin advisor humano intermedio. Pregunta crítica: el "fee fijo sobre AUM" de Warren no es replicable para AUREX (no custodiamos), pero el principio "sem conflito de interesses" sí es replicable como mensaje. Warren tiene el mismo nombre que un competidor de Pasada 3 (WarrenAI / Investing.com) — mencionar la coincidencia en la síntesis para no confundir lectores del Plan MKT v2.]*
+
+---
+
+## 16. Avenue (Brasil)
+
+**Empresa:** Avenue Securities (Brasil) / Avenue Holding
+**HQ:** Miami, FL, USA (founders brasileños; opera bajo regulación SEC + FINRA)
+**Founded:** 2018
+**Adquisición Itaú:** 2022 → 35% por R$ 493M (R$ 160M aporte primario + R$ 333M secundario). 2023: aprobado por CADE (regulador antitrust BR). En 2 años Itaú asume control con 50.1%. Operación total ~R$ 1.4 bilhão.
+**URL:** https://avenue.us/
+**App Store:** https://apps.apple.com/us/app/avenue-conta-e-investimentos/id1425140944
+**Google Play:** https://play.google.com/store/apps/details?id=us.avenue
+**Cuentas habilitadas:** 900.000+ (al 29-abr-2026)
+**AUM:** R$ 20 bilhões em recursos sob custódia
+**Página dedicada Itaú:** https://www.itau.com.br/conta-internacional + https://avenue.us/itau/
+
+### 1. Posicionamiento
+- "Sua vida financeira global e completa" (tagline).
+- "A Avenue é uma empresa Itaú" (mensaje post-adquisición que refuerza credibilidad institucional).
+- Mensaje core: invertir en USD (acciones, bonds, ETFs USA) desde Brasil con cuenta internacional.
+
+### 2. Audiencia objetivo declarada
+- **Retail brasileño + retail alta renda** (mass affluent).
+- **B2B (cuentas internacionales corporativas).**
+- Skew: brasileños que quieren dolarización vía mercado regulado USA + clientes Itaú existentes que buscan complemento internacional.
+
+### 3. Modelo de monetización
+- **Plan Zero Brokerage:** 3 operaciones gratis al mes, plataforma simplificada.
+- **Plan Premium:** acceso completo + research + cotizaciones tiempo real, pagando solo brokerage por operación.
+- Revenue principal por brokerage USA + spreads en cambio BRL→USD.
+- Revenue secundario: cards (cuenta internacional con débito), CDs y bonds USA con spreads.
+- Apertura de cuenta en Avenue desde el app del Itaú = canal de adquisición masivo para Itaú clients.
+
+### 4. Canales de marketing activos (verificados)
+- **App Store + Google Play.**
+- **Sitio web avenue.us + página dedicada avenue.us/itau/.**
+- **Itaú app (canal de distribución masivo):** Itaú clients pueden abrir cuenta Avenue desde el app del banco.
+- **PR media brasileño:** Brazil Journal, Seu Dinheiro, NeoFeed, Exame, Suno, XP Investimentos análisis.
+- **Itaú Personnalité (segmento alta renda Itaú):** página dedicada cross-sell.
+- **NO se identificó** estrategia consolidada en TikTok / Instagram / YouTube como canal principal — el motor es PR institucional + cross-sell Itaú.
+
+### 5. Tipo de contenido por canal
+- **Sitio Avenue + blog:** content educativo sobre invertir en USD, comparativas BRL vs USD, casos prácticos.
+- **PR media:** cobertura de adquisición Itaú, milestones (900k cuentas, R$ 20bi AUM), regulaciones.
+- **Cross-sell Itaú:** Avenue como feature dentro de la propuesta de Itaú Personnalité.
+- **App stores:** descripciones, updates de feature.
+
+### 6. Tono y voz
+- **Marca:** sobria, institucional, premium-leaning. Foco "sua vida financeira global".
+- **Pos-Itaú:** mayor peso institucional, menos "fintech disruptiva", más "extensión internacional del banco más grande de Brasil".
+- **Tono general:** retail alta renda, profesional, sin gamificación.
+
+### 7. Cómo se lanzaron
+- **2018:** founded en Miami por brasileños para resolver el problema de invertir en USD desde Brasil con UX moderna.
+- **Crecimiento orgánico** durante 2018-2022 con foco mass affluent brasileño.
+- **2022:** Itaú compra 35% — Avenue gana acceso a base de clientes masiva.
+- **2023:** CADE aprueba la operación; refuerzo de credibilidad regulatoria.
+- **2024-2025:** Itaú avanza hacia control 50.1%; Avenue se integra cada vez más al ecosistema Itaú.
+
+### 8. Qué les funcionó para crecer
+- **Producto que resuelve un dolor real para retail brasileño:** invertir en USD desde Brasil con UX moderna fue gap claro contra alternativas tradicionales (Charles Schwab International, Interactive Brokers — ambos con UX peor).
+- **Adquisición Itaú como acelerador masivo:** acceso a base de clientes del banco más grande de Brasil = adquisición de bajo costo.
+- **Producto B2C + B2B integrado:** revenue dual.
+- **Una de las plataformas de renda fixa más grandes de LATAM** (CDs y Bonds USA) — diversifica más allá de equities.
+- **Aval CADE 2023:** removió incertidumbre regulatoria.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- App "intuitiva", same UX en banking + investing.
+- Soporte recientemente agregado para EUR (no solo USD).
+- Acceso a USA market sin necesidad de ir a Schwab/IBKR.
+- Apertura de cuenta integrada con Itaú aumenta confianza.
+
+**Contras frecuentes:**
+- **Estabilidad del app:** algunos usuarios reportan login problems y crashes.
+- **Pricing menos transparente** post integración Itaú (algunos reportes de fees no detallados claramente).
+- ACH y pagos internacionales con fricciones ocasionales.
+- Curva de aprendizaje para retail no-pro brasileño (operar USA market requiere entender FX, taxes, etc.).
+
+**Conclusión reseñas:** producto con buen sentimiento de funcionalidad core (invertir en USD), con fricciones operativas ocasionales típicas de plataforma cross-border.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://avenue.us/ — sitio oficial
+- https://avenue.us/about-us/ — about
+- https://avenue.us/itau/ — página dedicada Itaú
+- https://avenue.us/blog/conta-internacional-itau/ — blog Itaú
+- https://www.itau.com.br/conta-internacional — Itaú
+- https://www.itau.com.br/personnalite/conta-internacional — Itaú Personnalité
+- https://apps.apple.com/us/app/avenue-conta-e-investimentos/id1425140944 — App Store
+- https://play.google.com/store/apps/details?id=us.avenue — Google Play
+- https://pt.wikipedia.org/wiki/Avenue_Securities — Wikipedia
+- https://exame.com/invest/mercados/por-que-itau-itub4-comprou-avenue/ — análisis adquisición
+- https://braziljournal.com/por-que-o-itau-esta-comprando-a-avenue/ — Brazil Journal
+- https://www.seudinheiro.com/2023/empresas/cade-sinal-verde-avenue-itau-rens/ — CADE aprobación
+- https://www.suno.com.br/noticias/itau-itub4-aval-cade-controle-avenue-jvj/ — control Itaú
+- https://www.itausa.com.br/conteudo/itau-unibanco-compra-participacao-estrategica-na-corretora-avenue/ — Itausa
+- https://neofeed.com.br/negocios/itau-compra-35-da-avenue-por-r-500-milhoes-e-pode-assumir-o-controle-da-empresa/ — NeoFeed adquisición
+- https://conteudos.xpi.com.br/acoes/relatorios/itau-itub4-compra-35-da-avenue/ — XP análisis
+- https://rankia.com.br/analise-avenue/ — review Rankia BR
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Avenue es competidor de capa distinta (broker para invertir en USA), no de IA. Pero su éxito muestra el valor del "puente al mercado USA" para retail LATAM. AUREX puede aprovechar ese puente con análisis IA de los activos USA que esos 900k usuarios ya tienen — análisis sin tener que abrir otra cuenta. Pregunta crítica: ¿AUREX debería integrarse vía API con Avenue (largo plazo) o solo posicionarse como complemento independiente? La adquisición Itaú demuestra que para players grandes el camino fue M&A, no construir IA in-house — eso es señal de que IA financiera retail no se construye fácil dentro de un banco.]*
+
+---
+
+## 17. Bitso (México)
+
+**Empresa:** Bitso
+**HQ:** Ciudad de México, México (con presencia regional en Brasil, Argentina, Colombia)
+**Founded:** 2014
+**Founders:** Daniel Vogel (CEO, Stanford BSc CS+Economics + Harvard MBA) + Pablo Gonzalez + Ben Peters
+**URL:** https://bitso.com/
+**App Store + Google Play:** activas en 4+ países
+**LinkedIn CEO:** https://www.linkedin.com/in/vogelito/
+**Usuarios:** 9.000.000+ retail + 2.000+ B2B clients (al 29-abr-2026)
+**Valuation:** USD $2.2B (2021, primer crypto unicornio LATAM)
+**Funding total:** USD $80M+ confirmados públicamente
+**Licencias:** Gibraltar (GFSC), México (CNBV), Argentina (CNV), Brasil
+
+### 1. Posicionamiento
+- "La plataforma cripto líder de LATAM" — el exchange más grande de la región.
+- Mensaje core de Vogel: "crypto útil y accesible" + inclusión financiera para 200M+ unbanked/underbanked latinoamericanos.
+- Diferenciador: regulado en 4 jurisdicciones LATAM + Gibraltar.
+
+### 2. Audiencia objetivo declarada
+- **Retail LATAM** (masivo) — México, Brasil, Argentina, Colombia + 2025 Chile y Perú.
+- **B2B / institucional** — 2.000+ clientes empresariales con uso de Bitso para remesas, payments, treasury (vía Bitso Business).
+- **Government / institucional:** Bitso Alpha Pro usado por instituciones y gobierno.
+- Skew: usuarios entre 25-45 años con foco en remesas y dolarización (USDT/USDC/USD) en mercados con instabilidad cambiaria.
+
+### 3. Modelo de monetización
+- **App retail:** spreads en compra-venta de cripto + fees por transacciones específicas.
+- **Bitso Alpha Pro:** plataforma profesional, spreads más finos, fees menores por volumen.
+- **Bitso Yields:** staking + lending (revenue share).
+- **Bitso Shift:** remesas internacionales (cobra spread + fee).
+- **Bitso Card:** interchange + fees.
+- **Stocks & ETFs USA:** comisión cero vía Alpaca partnership (México) — revenue por spread y fees secundarios.
+- **Bitso Business / API:** B2B con pricing custom por uso.
+- **MXNB:** stablecoin propio en MXN, vía subsidiaria Juno.
+- 130+ cryptos disponibles.
+
+### 4. Canales de marketing activos (verificados)
+- **App Store + Google Play** (rating alto, masivo).
+- **X (Twitter):** Daniel Vogel activo personalmente como vocero (cuenta personal + corporativa).
+- **LinkedIn corporativo + perfil Vogel.**
+- **YouTube + Twitch** (espacios institucionales y educativos).
+- **Blog corporativo:** blog.bitso.com (educativo + comparativas).
+- **PR media masivo:** CoinDesk, Bitdegree, FXEmpire, CoinCodeCap, Bitcoin.com, Bitfocus, LatamRepublic, Stellar Foundation case studies.
+- **Eventos institucionales:** AS/COA (Council of the Americas), conferencias Wharton FinTech.
+- **Awards:** Innovators Under 35 para Vogel.
+- **Bitso Card como vehículo offline:** brand exposure cada vez que se usa.
+
+### 5. Tipo de contenido por canal
+- **Blog Bitso:** educativo, "Best Crypto Exchange in Mexico", "How to Use Bitso", comparativas, regulación.
+- **PR media:** funding rounds, expansiones (Chile/Perú 2025), launches (MXNB stablecoin), audits (CCSS Level II late 2025).
+- **Vogel en X:** opinión sobre regulación cripto LATAM, financial inclusion, milestones.
+- **YouTube:** tutoriales producto, casos de uso (remesas, wallets).
+- **Stellar case studies:** Felix + Bitso para remesas Stellar-based.
+- **Wharton FinTech / AS/COA:** posicionamiento institucional vía thought leadership.
+
+### 6. Tono y voz
+- **Marca:** profesional, internacional, regulatoria-friendly. NO es tono de hype crypto típico (tipo BitMEX/Binance), sino más cercano a fintech regulada.
+- **Vogel (vocero):** mission-driven, foco en inclusión financiera y utilidad real del crypto. Tono "Stanford alum + ex-Quantcast".
+- **Diferenciador comunicacional:** "regulación + escala + inclusión" — narrativa distinta a competidores cripto-puro.
+
+### 7. Cómo se lanzaron
+- **2014:** founded por Vogel + Gonzalez + Peters en México.
+- **2017-2020:** crecimiento gradual con foco México + integración Stellar para remesas (caso Felix Pago + Bitso = remesas USA→MX).
+- **2021:** ronda histórica que llevó a unicorn status ($2.2B valuation).
+- **2022-2024:** expansión a Brasil, Argentina, Colombia.
+- **2025:** Chile + Perú + lanzamiento MXNB (stablecoin) + audit CCSS v9 Level II + Bitso Business growth.
+
+### 8. Qué les funcionó para crecer
+- **Caso de uso tangible "remesas":** USA→MX es un corredor de USD 60B+/año. Bitso + Stellar resuelve fees y velocidad mejor que Western Union.
+- **Regulación temprana en 4 jurisdicciones:** moat estructural difícil de replicar para nuevos players.
+- **Bitso Business (B2B):** segunda palanca de monetización con 2.000+ clients institucionales — confirmado por Vogel públicamente como driver clave de revenue.
+- **Vogel como vocero institucional:** Stanford + Harvard + AS/COA + Wharton ayuda credibilidad con reguladores y institucional.
+- **Bitso Alpha (pro trading) + Bitso (retail):** dos productos para dos audiencias en una marca.
+- **Stocks & ETFs commission-free en México (Alpaca partnership):** expansión a equities tradicional.
+- **MXNB stablecoin:** vehículo propio en MXN reduce dependencia de USDT/USDC y da margen.
+- **Audit CCSS Level II:** segunda capa de credibilidad de seguridad.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Onboarding sencillo y KYC relativamente rápido para retail LATAM.
+- Variedad de productos (130+ cryptos, stocks USA via Alpaca, remesas, card).
+- Bitso Alpha valorado por usuarios pro como interfaz profesional.
+- Spreads competitivos en pares principales (BTC, ETH, USDT).
+- Inclusión financiera real para usuarios bancarizados poco o no bancarizados.
+
+**Contras frecuentes:**
+- Soporte al cliente en horarios pico puede ser lento.
+- Withdrawal limits en algunos países pueden ser restrictivos para volúmenes altos.
+- Spreads en altcoins menos populares más altos que en exchanges globales (Binance, Coinbase).
+- Algunos usuarios reportan fricciones con bancos tradicionales en LATAM al hacer depósitos/retiros en pesos.
+
+**Conclusión reseñas:** producto con sentimiento positivo masivo, especialmente para casos de uso retail (remesas, dolarización, compra-venta de BTC/ETH/USDT). Las quejas son operativas, no de calidad del producto core.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://bitso.com/ — sitio oficial
+- https://blog.bitso.com/ — blog corporativo
+- https://blog.bitso.com/blog/how-to-use-bitso-in-mexico — guía
+- https://blog.bitso.com/blog/best-crypto-exchange-in-mexico-top-platforms-compared-en — comparativa propia
+- https://business.bitso.com/en/blog/cross-border-payments-latin-america — Bitso Business
+- https://www.linkedin.com/in/vogelito/ — Vogel LinkedIn
+- https://www.crunchbase.com/person/daniel-vogel-2 — Crunchbase Vogel
+- https://www.coindesk.com/business/2025/03/26/crypto-exchange-bitso-launches-stablecoin-business-eyeing-latam-cross-border-payments — MXNB stablecoin
+- https://stellar.org/case-studies/felix-bitso — Stellar case study
+- https://www.latamrepublic.com/bitso-the-mexican-startup-leading-the-cryptocurrency-revolution-in-latin-america/ — coverage LATAM
+- https://alpaca.markets/blog/how-bitso-is-empowering-investors-in-mexico-with-commission-free-trading-of-us-stocks/ — Alpaca partnership
+- https://www.bitdegree.org/crypto/bitso-review — review independiente
+- https://coincodecap.com/bitso-review — review independiente
+- https://www.fxempire.com/exchanges/bitso — review FXEmpire
+- https://www.innovatorsunder35.com/the-list/daniel-vogel/ — Vogel award
+- https://medium.com/wharton-fintech/daniel-vogel-co-founder-and-ceo-of-bisto-fundamentally-changing-financial-services-via-crypto-a70aad703b50 — Wharton FinTech
+- https://alejandrocremades.com/daniel-vogel/ — entrevista funding
+- https://ffnews.com/newsarticle/hiring/bitso-strengthens-its-global-executive-team-to-accelerate-expansion-and-technological-leadership-in-latin-america/ — equipo
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Bitso es el competidor LATAM más grande y maduro. Para AUREX, dos enfoques posibles: (a) coexistir como capa de análisis IA por encima de Bitso (los 9M usuarios de Bitso son potenciales usuarios AUREX para análisis IA antes de ejecutar trades en Bitso) o (b) competir directo en señales pero solo crypto (riesgoso, Bitso tiene moat regulatorio enorme). Pregunta crítica: ¿AUREX debería empezar con integración API hacia Bitso (read-only de portfolio) para aprovechar la base instalada o construir audiencia propia desde cero? La capacidad de Bitso de "9M usuarios + 130 cryptos + 4 países" es difícil de igualar en lo cripto, pero AUREX tiene ventaja en análisis IA + multi-asset (stocks USA + globales) que Bitso no profundiza.]*
+
+---
+
+# CIERRE DE PASADA 4 — Síntesis preliminar LATAM
+
+5 competidores documentados:
+
+13. **Cocos Capital (Argentina)** — broker fintech AR más grande, sin IA como diferencial, controversia política reciente del CEO.
+14. **Lemon Cash (Argentina)** — wallet crypto con 5M usuarios, IG 218K + TikTok 64.6K, Lemon Card como ancla de retención, $66M raised.
+15. **Warren Brasil** — wealthtech con 300k clientes, IA (Warren Flow Q1-2024) aplicada a productividad de advisors, no a generar señales para usuarios.
+16. **Avenue (Brasil)** — broker para invertir en USA, 900k cuentas + R$ 20bi AUM, adquirido por Itaú (35% en 2022, 50.1% en proceso).
+17. **Bitso (México)** — 9M usuarios + 2.000 B2B en 4-6 países LATAM, $2.2B valuation, Bitso Business como segunda palanca, MXNB stablecoin propio.
+
+**Insights LATAM transversales (sin esperar análisis estratégico de Escritorio):**
+
+- **Ningún competidor LATAM analizado usa IA de generación de señales como diferencial primario.** Warren Brasil tiene IA pero para productividad interna (Warren Flow). Cocos, Lemon, Avenue, Bitso no tienen IA propia significativa. **Eso confirma el gap que AUREX puede ocupar en LATAM.**
+- **El "vacío del mercado hispanohablante" identificado en Pasadas 1-3 se relativiza:** sí hay competidores grandes en LATAM (Bitso 9M, Lemon 5M, Cocos líder AR, Warren 300k, Avenue 900k cuentas). Pero ninguno cubre IA de señales multi-asset. AUREX tiene posicionamiento ortogonal disponible, no terra incognita.
+- **La distribución institucional importa:** Warren con Citi Ventures, Avenue con Itaú, Bitso con Stellar — los players que escalan en LATAM tienen partnerships institucionales fuertes. AUREX puede pensar en partnerships posteriores (banco regional + AUREX como capa de análisis).
+- **Audiencia AR específica:** Cocos + Lemon cubren los dos arquetipos (broker tradicional regulado vs wallet crypto retail). AUREX puede ser el tercer arquetipo: análisis IA sin custodia, complementario a ambos.
+- **Los social channels de Lemon (IG 218K + TikTok 64.6K) son benchmark concreto** de qué números tiene que pretender AUREX en 12-24 meses para mercado AR específicamente.
+- **Brasil es mercado más grande pero con jugadores sólidos** (Warren, Avenue, XP, Rico, Inter, Nubank Investimentos). México con Bitso es el caso más maduro de LATAM. Argentina tiene mercado más fragmentado y volátil — terreno más fácil para entrar pero más chico.
 
 ---
 
@@ -1465,5 +2016,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 3 cerrada con análisis estratégico de Escritorio para los 5 competidores: Sagehood, WarrenAI, Danelfin, RockFlow, Guavy)*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 4 LATAM acotada agregada con 5 competidores: Cocos, Lemon, Warren Brasil, Avenue, Bitso). Análisis estratégico de Escritorio para Pasada 4 reservado en blanco, esperando que Escritorio los complete.*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*

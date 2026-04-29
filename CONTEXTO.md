@@ -157,8 +157,8 @@ Pregunta central: ¿AUREX se compara con quién y por qué? ¿A quién le quiere
 - Cuando estén todas las pasadas, ambos integran todo en `PLAN_MKT.md` v2.
 - Regla de honestidad: si no hay fuente sólida, marcar "no verificado" en lugar de inventar.
 
-### Hecho — Pasadas 1, 2 y 3 (12 competidores cerrados, todos con análisis estratégico)
-Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes) más análisis estratégico de Escritorio cruzado con AUREX. Pasada 3 cerrada con análisis estratégico el 29-abr-2026. Todo en `RESEARCH_MKT.md`.
+### Hecho — Pasadas 1, 2, 3 y 4 (17 competidores cerrados)
+Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1, 2 y 3 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 4 (LATAM acotada, agregada 29-abr-2026) tiene secciones de análisis estratégico reservadas y vacías, esperando que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
 
 **Pasadas 1 y 2 (históricos):**
 1. **Magnifi** — AI investing assistant (TIFIN, respaldado por J.P. Morgan). Freemium $8.25-14/mes. Creció por backing institucional y podcast con Nicole Lapin. Sin presencia orgánica en redes. Lección: AUREX puede hacer lo que Magnifi no hace — mostrar el producto en acción en redes.
@@ -182,9 +182,23 @@ Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monet
 - Multi-idioma es competencia real: WarrenAI 30, RockFlow 9, AUREX 8. Diferencial vendrá de calidad de producto en ES, PT, HI.
 - Ningún competidor cubre simultáneamente: análisis IA + multi-asset (stocks+crypto) + mobile + multi-idioma + freemium con API B2B. AUREX tiene posicionamiento ortogonal disponible.
 
+**Pasada 4 (LATAM acotada, agregada 29-abr-2026 — análisis estratégico de Escritorio reservado en blanco):**
+13. **Cocos Capital** (Argentina, broker fintech AR más grande, founded feb-2021 por Ariel Sbdar + Nicolás Mindlin) — sin IA como diferencial, regulado CNV. Plans: 1% comm general / 0% comm Cocos Gold y Pro. Score Bolsa24 87/100. Controversia 28-abr-2026: CEO abucheado en Movistar Arena por 12k+ secundarios por su exposición pública con $LIBRA. Lección: deja espacio claro a AUREX como "no broker, análisis IA"; controversia política de Sbdar abre espacio para marca AR neutral.
+14. **Lemon Cash** (Argentina, founded 2019 por Marcelo Cavazzoli) — wallet crypto con 5M usuarios AR+PE. $66M raised total ($20M Series B F-Prime+ParaFi). Lemon Card (VISA prepaid + BTC cashback) disparó crecimiento <10k → 2M usuarios. Social: IG 218K, TikTok 64.6K, X activo. Expansión planificada CO/MX/BR/CL. Lección: demuestra que "useful + español-AR + tono retail" funciona a 5M; benchmark concreto IG 218K + TikTok 64.6K para AUREX 12-24 meses.
+15. **Warren Brasil** (founded 2017 por Tito Gusmão+3 cofounders) — wealthtech con 300k clientes. Fee fijo 0.7-0.9%/año AUM. R$ 300M raised + Citi Ventures. Adquirió Renascença (corretora 50 años). Q1-2024: breakeven + Warren Flow (IA para advisors humanos, no para usuarios). Lección crítica: la IA de Warren es para PRODUCTIVIDAD INTERNA, no señales para usuarios. Gap claro para AUREX: IA que genera señales directas, sin advisor intermedio. Coincidencia de nombre con WarrenAI (Pasada 3) — aclarar en síntesis.
+16. **Avenue (Brasil)** (founded 2018 en Miami por brasileños) — broker para invertir en USD desde Brasil. **Adquirido por Itaú: 35% en 2022 por R$ 493M, control 50.1% en 2 años; operación total ~R$ 1.4 bilhão**. 900k cuentas + R$ 20bi AUM. Lección: éxito del "puente al mercado USA" para retail LATAM; Itaú compró en lugar de construir IA in-house; AUREX puede ser capa de análisis IA sobre los activos USA que esos 900k usuarios ya tienen.
+17. **Bitso (México)** (founded 2014 por Daniel Vogel + Pablo Gonzalez + Ben Peters) — 9M usuarios + 2.000 B2B en 4-6 países LATAM. **$2.2B valuation (2021, primer crypto unicornio LATAM), $80M+ funding total**. Bitso Business como segunda palanca confirmada. MXNB stablecoin propio (peso mexicano). Stocks USA commission-free vía Alpaca. Audit CCSS Level II late 2025. Lección: moat regulatorio enorme (4 jurisdicciones LATAM + Gibraltar) imposible replicar; competir como capa de análisis sobre Bitso vs construir audiencia propia es decisión clave para AUREX.
+
+**Insights LATAM transversales (Pasada 4, sin esperar análisis estratégico de Escritorio):**
+- **Ningún competidor LATAM analizado usa IA de generación de señales como diferencial primario.** Warren Brasil tiene IA pero para productividad de advisors. Cocos, Lemon, Avenue, Bitso no tienen IA propia significativa. **El gap LATAM en IA-señales-multi-asset existe y es ocupable.**
+- **El "vacío del mercado hispanohablante" identificado en Pasadas 1-3 se relativiza:** sí hay players grandes en LATAM (Bitso 9M, Lemon 5M, Avenue 900k cuentas, Warren 300k clientes). Pero ninguno cubre IA + señales + multi-asset. **Posicionamiento ortogonal disponible, no terra incognita.**
+- Distribución institucional importa: Warren+Citi, Avenue+Itaú, Bitso+Stellar — partnerships institucionales son recurrentes en escala LATAM.
+- Cocos + Lemon cubren los dos arquetipos AR (broker tradicional regulado vs wallet crypto retail). AUREX puede ser tercer arquetipo: análisis IA sin custodia, complementario.
+- Brasil tiene el mercado más grande con jugadores sólidos (Warren, Avenue + XP, Rico, Inter, Nubank Investimentos). México con Bitso es el caso más maduro. Argentina tiene mercado más fragmentado y volátil — entrada más fácil pero más chico.
+
 ### Falta
-- **Pasada 4 — A definir con Fernando.** Posible foco: apps no-USA (Europa, LATAM, Asia) para entender enfoques regionales. Brasil, India, México son candidatos lógicos por mercado retail emergente.
-- **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén todas las pasadas. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
+- **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén los análisis estratégicos de Pasada 4 + el cruce final. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
+- **Análisis estratégico de Pasada 4** (5 secciones reservadas en blanco para los 5 competidores LATAM). Pendiente entrega de Escritorio.
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
 
