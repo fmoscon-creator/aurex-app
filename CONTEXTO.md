@@ -157,8 +157,8 @@ Pregunta central: ¿AUREX se compara con quién y por qué? ¿A quién le quiere
 - Cuando estén todas las pasadas, ambos integran todo en `PLAN_MKT.md` v2.
 - Regla de honestidad: si no hay fuente sólida, marcar "no verificado" en lugar de inventar.
 
-### Hecho — Pasadas 1, 2, 3 y 4 (17 competidores cerrados)
-Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1, 2 y 3 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 4 (LATAM acotada, agregada 29-abr-2026) tiene secciones de análisis estratégico reservadas y vacías, esperando que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
+### Hecho — Pasadas 1, 2, 3, 4 y 5 (19 competidores cerrados)
+Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1, 2 y 3 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 4 (LATAM acotada) y Pasada 5 (mini bonus blind spots) tienen secciones de análisis estratégico reservadas y vacías, esperando que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
 
 **Pasadas 1 y 2 (históricos):**
 1. **Magnifi** — AI investing assistant (TIFIN, respaldado por J.P. Morgan). Freemium $8.25-14/mes. Creció por backing institucional y podcast con Nicole Lapin. Sin presencia orgánica en redes. Lección: AUREX puede hacer lo que Magnifi no hace — mostrar el producto en acción en redes.
@@ -196,9 +196,25 @@ Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monet
 - Cocos + Lemon cubren los dos arquetipos AR (broker tradicional regulado vs wallet crypto retail). AUREX puede ser tercer arquetipo: análisis IA sin custodia, complementario.
 - Brasil tiene el mercado más grande con jugadores sólidos (Warren, Avenue + XP, Rico, Inter, Nubank Investimentos). México con Bitso es el caso más maduro. Argentina tiene mercado más fragmentado y volátil — entrada más fácil pero más chico.
 
+**Pasada 5 (mini bonus blind spots, agregada 29-abr-2026 — análisis estratégico de Escritorio reservado en blanco):**
+
+Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots temáticos. De esos, 2 críticos para definir posicionamiento de AUREX y se cubren acá: India (mayor mercado retail en growth) + neo-bancos LATAM con inversión integrada (categoría que captura retail principiante por defecto). Otros 4 blind spots quedan documentados sin investigar (white-label/B2B2C, regulación regional transversal, research B2C content-first como Seeking Alpha/Motley Fool, gaps demográficos) por corresponder a fases distintas del proyecto AUREX.
+
+18. **Smallcase** (India, founded 2015 por Vasanth Kamath + Anugrah Shrivastava + Rohan Gupta) — 3M+ usuarios activos, ~10M registrados. **Marketplace de model portfolios curados por SEBI-registered managers**. $100M+ raised en 7 rondas (Sequoia, Amazon, Premji, HDFC Bank, Blume, Beenext). Annual revenue ₹114 Cr (~$13M USD), $2.5B en transacciones anuales. Tickets desde ₹21 (~$0.25). Integrado con 14+ brokers indios sin competir con ellos (Zerodha, Groww, Upstox, ICICI, HDFC, Angel One, etc.). **Modelo dual:** free smallcases + fee-based smallcases (subscripción mensual/trimestral/anual fijada por cada manager). HBS case study publicado. Lección: marketplace + integración con brokers existentes elimina fricción competitiva. Tickets micro habilitan adquisición masiva. Quejas: subscription fees percibidas como caras en mercados bajistas. India NO es prioridad para AUREX (idioma + SEBI + Smallcase/Groww/Zerodha incumbents); LATAM hispanohablante primero.
+
+19. **Nubank Investimentos** (Brasil + LATAM, founded 2013 por David Vélez + Cristina Junqueira + Edward Wible) — **107M brasileños base (60% de adultos BR), 114M globales**. NYSE: NU desde IPO 2021. Revenue 2024: $11.5B (+58% YoY). Investimentos consolidado en el app desde abril 2024 — brokerage-free + recomendaciones por perfil + Investment Street Mode (privacidad de balances) + Smart Defenses (AI detección de fraude). **IA in-house vía adquisiciones:** Olivia (2021, control financiero personalizado) + Hyperplane (2024, AI Silicon Valley con founders brasileños para datos no estructurados). Vélez declara IA como "próximo paso de inclusión financiera". **Audiencia:** principiantes y small contributions (XP/Inter cubren retail más sofisticado). 66% brasileños esperan que su financial institution les dé recomendaciones de inversión (IPSOS) — Nubank lee el gap y lo cubre con IA. Lección crítica: **distribución incumbente domina LATAM** (107M = CAC efectivo cero); IA financiera retail tiende a M&A (Olivia + Hyperplane); espacio claro para AUREX en señales accionables específicas multi-asset que Nubank no cubre. **Riesgo competitivo real:** Nubank tiene capacidad financiera/técnica para incorporar señales IA específicas como feature interno cuando lo decida — la ventaja temporal de AUREX es real pero acotada.
+
+**Insights blind spots transversales (Pasada 5):**
+- **El gap "IA + señales accionables específicas multi-asset" sigue libre incluso después de cubrir India y Nubank.** Smallcase es marketplace, no genera señales propias. Nubank Investimentos tiene IA pero para recomendaciones generales y seguridad, no señales granulares. **Confirma por quinta vez (Pasadas 1-5) que el espacio existe.**
+- **Modelos marketplace + integración con brokers (Smallcase con 14+ brokers indios) son replicables en LATAM** — AUREX podría integrar con Cocos, Lemon, Avenue, Bitso como capa de análisis sin ser broker.
+- **IA financiera retail tiende a M&A:** Nubank compró Olivia + Hyperplane; Itaú compró Avenue. AUREX bien ejecutado puede ser target de adquisición a 3-5 años — relevante como exit potencial.
+- **India queda fuera del Plan MKT inicial** por idioma + regulación + competidores incumbents. LATAM hispanohablante primero, India eventual fase 2-3.
+- **6 blind spots originales: 2 cubiertos (India + neo-bancos LATAM), 4 documentados sin investigar.** Los 4 restantes (white-label/B2B2C, regulación regional transversal, research B2C content-first, gaps demográficos) son post-síntesis Plan MKT v2.
+
 ### Falta
-- **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén los análisis estratégicos de Pasada 4 + el cruce final. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
+- **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén los análisis estratégicos de Pasadas 4 y 5 + el cruce final. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
 - **Análisis estratégico de Pasada 4** (5 secciones reservadas en blanco para los 5 competidores LATAM). Pendiente entrega de Escritorio.
+- **Análisis estratégico de Pasada 5** (2 secciones reservadas en blanco para Smallcase + Nubank Investimentos). Pendiente entrega de Escritorio.
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
 

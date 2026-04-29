@@ -42,6 +42,10 @@
 16. **Avenue** (Brasil) — broker USA-stocks, 900k cuentas, adquirido por Itaú
 17. **Bitso** (México) — 9M usuarios LATAM, $2.2B valuation, B2B + retail dual
 
+### Pasada 5 — Mini bonus blind spots (HECHA — 29-abr-2026)
+18. **Smallcase** (India) — 3M+ usuarios activos, marketplace de model portfolios SEBI-registered, $100M+ raised
+19. **Nubank Investimentos** (Brasil + LATAM) — 107M brasileños base, IA in-house (Olivia + Hyperplane), recomendaciones para principiantes
+
 ---
 
 ## Plantilla por competidor
@@ -1996,6 +2000,262 @@ El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2
 
 ---
 
+# PASADA 5 — Mini bonus: blind spots críticos para Plan MKT v2 (2 competidores)
+
+> Después de cerrar Pasadas 1-4 detectamos 6 blind spots temáticos. De esos, 2 son críticos para definir posicionamiento de AUREX y se cubren acá: (a) **India** — el mercado retail con el crecimiento más explosivo del mundo, identificado por Stocktwits como #1 en growth social; (b) **Neo-bancos LATAM con inversión integrada** — categoría que captura retail principiante por defecto en LATAM, más relevante que Cocos/Lemon en términos de adquisición real. Los otros 4 blind spots (white-label/B2B2C, regulación regional transversal, research B2C content-first, gaps demográficos) quedan documentados pero no se investigan — corresponden a fases distintas del Plan MKT.
+
+## 18. Smallcase (India)
+
+**Empresa:** Smallcase Technologies Pvt. Ltd.
+**HQ:** Bangalore, India
+**Founded:** julio 2015
+**Founders:** Vasanth Kamath (CEO) + Anugrah Shrivastava + Rohan Gupta
+**URL:** https://www.smallcase.com/
+**App Store + Google Play:** activas en India
+**Empleados:** 253 (jun-2025, +14% YoY)
+**Funding total:** USD ~$100M en 7 rondas, 59 inversores. Series A 2019 lead Sequoia India ($8M); Series C lead Faering Capital ($40M, con Amazon + Premji Invest + Sequoia + Blume + HDFC Bank); Series D ($50M); última ronda $29M en marzo 2025.
+**Annual Revenue:** ₹114 Cr al 31-mar-2025 (~$13M USD)
+**Volumen anual transado:** $2.5B USD
+**Usuarios:** 3M+ activos; 1 Crore+ (10M+) registrados según el sitio oficial
+
+### 1. Posicionamiento
+- "Stock & ETF portfolios by investment experts" (tagline).
+- "India's largest model portfolios platform" (declarado).
+- Mensaje core: invertir en canastas (smallcases) curadas por expertos certificados SEBI, sin tener que armar la estrategia uno mismo. Es el "Spotify de portfolios" — el usuario elige el smallcase, no las acciones individuales.
+
+### 2. Audiencia objetivo declarada
+- Retail indio nuevo en mercados de capitales (target original) + retail intermedio que busca diversificación temática sin armar carteras propias.
+- Skew: jóvenes urbanos indios (millennials + Gen Z), tickets desde ₹21 (~$0.25 USD) en model portfolios.
+- Mercado total addressable masivo: 200M+ adultos indios con potencial de invertir, base subatendida.
+
+### 3. Modelo de monetización
+- **Modelo dual marketplace + plataforma:**
+  - **Free smallcases:** acceso gratuito a temas/estrategias creadas por la comunidad. El usuario maneja él solo.
+  - **Fee-based smallcases:** subscripción mensual/trimestral/anual fijada por cada smallcase manager (research provider SEBI-registered). Smallcase toma comisión por intermediar.
+- Revenue secundario: spreads, fees por integración con brokers, futuras features premium.
+- Pricing portfolio entry: ₹21 (~$0.25 USD) en algunos model portfolios → barrera de entrada extremadamente baja.
+- 500+ ready-made themes y strategies disponibles.
+
+### 4. Canales de marketing activos (verificados)
+- **Sitio web propio + blog smallcase.com/blog + sección "learn".**
+- **App Store + Google Play:** masivos en India.
+- **Integración con 14+ brokers indios:** Zerodha (Kite), Groww, Upstox, ICICI Direct, HDFC Securities, IIFL Securities, Angel One, Motilal Oswal, Axis Direct, Kotak Securities, 5paisa, Alice Blue, Nuvama. Esto convierte a Smallcase en capa de distribución que cada broker integra dentro de su propia app — alcance institucional masivo sin pagar adquisición.
+- **PR media:** Inc42, YourStory, TechCrunch, FinTech Futures, Bloomberg Línea LATAM (cuando habla de fintech global).
+- **Casos de estudio:** Harvard Business School publicó un caso "smallcase: A Disruptive Business Model in India" (validación académica).
+- **NO se identificaron** números específicos de redes sociales en las búsquedas — el motor visible es PR + integración broker + content propio.
+
+### 5. Tipo de contenido por canal
+- **Blog Smallcase:** "What's new on smallcase", lanzamientos de model portfolios temáticos (AI, Exports, Microcaps en 2025), guías "What is a smallcase", explicación de subscription mechanics.
+- **Sección "learn":** content educativo SEO orientado a captar búsquedas de inversores principiantes ("How to invest", "Beginner Guide").
+- **Press releases:** funding rounds (Series A→D), milestones (3M+ users, 1 Crore registered, $2.5B annual transactions).
+- **Integración broker:** smallcases aparecen dentro de Kite (Zerodha), Groww, etc. — el contenido es el producto mismo dentro de plataformas terceras.
+
+### 6. Tono y voz
+- **Marca:** profesional, educativo, accesible. NO es tono de hype ni "get rich quick".
+- **Posicionamiento:** "Investment experts curate, you invest" — autoridad delegada en los SEBI-registered managers. Smallcase es plataforma neutral.
+- **Tono general:** retail-friendly + research-respaldado. Apunta a generar confianza en mercado donde el retail indio es históricamente desconfiado de "tips" no regulados.
+
+### 7. Cómo se lanzaron
+- **Julio 2015:** founded por Vasanth Kamath + Anugrah Shrivastava + Rohan Gupta en Bangalore.
+- **2019:** Series A $8M lead Sequoia India = primer salto de visibilidad.
+- **2021:** Series C $40M con Amazon + Premji Invest = validación institucional masiva.
+- **2022-2024:** crecimiento orgánico + expansión a mutual funds, fixed deposits, integraciones broker.
+- **Marzo 2025:** $29M latest round.
+- **Modelo siempre marketplace:** smallcase nunca quiso ser broker, solo capa de curaduría/research.
+
+### 8. Qué les funcionó para crecer
+- **Modelo marketplace neutral:** smallcase no compite con brokers, los integra. Eso eliminó la fricción competitiva y permitió distribución masiva vía Kite, Groww, Upstox, etc.
+- **Tickets micro (₹21 ~$0.25):** elimina barrera de entrada para retail indio.
+- **SEBI-registered managers:** trust regulatorio + escala — los managers crean los smallcases, smallcase toma su comisión sin tener que producir research propio.
+- **Tema-based discovery:** "rural demand", "electric mobility", "AI", "exports", "microcaps" → narrativa que el usuario entiende sin saber finanzas.
+- **Funding sólido ($100M+ en 7 rondas):** capacidad sostenida de escala.
+- **Validación HBS case study:** prestigio académico → talent acquisition + credibilidad enterprise.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Curación profesional sin tener que armar portfolio uno mismo.
+- Integración fluida con brokers existentes (no obliga a abrir cuenta nueva).
+- Tickets bajos para empezar (~₹21).
+- Diversidad temática (500+ smallcases).
+
+**Contras frecuentes:**
+- **Subscription fees criticadas:** "incluso con pérdidas seguís pagando la fee de subscripción". Algunos usuarios sugieren que la fee debería estar atada a performance.
+- **Costos totales altos** cuando se suma subscripción + costos de rebalanceo + brokerage del broker subyacente — caso reportado de smallcase de Green Energy con varios años sin profit donde el costo total fue significativo.
+- **Withdrawal/transferencia entre brokers:** dependiente de la cuenta broker subyacente, no controlable directamente desde Smallcase.
+- Trustpilot tiene apenas 2 reviews — base de feedback pública limitada.
+
+**Conclusión reseñas:** producto con buena recepción de UX y modelo, pero con tensión en pricing — los usuarios cuestionan pagar fee fija independiente de performance, especialmente en mercados bajistas.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://www.smallcase.com/ — sitio oficial
+- https://www.smallcase.com/blog/whats-new-on-smallcase-fresh-model-portfolios-starting-at-just-rupees-21/ — model portfolios desde ₹21
+- https://www.smallcase.com/learn/what-is-smallcase/ — definición
+- https://www.smallcase.com/learn/how-to-invest-in-smallcase/ — guía
+- https://www.smallcase.com/learn/how-does-smallcase-subscription-work/ — subscription mechanics
+- https://www.smallcase.com/blog/newly-launched-smallcase-model-portfolios/ — AI/Exports/Microcaps
+- https://www.smallcase.com/blog/smallcase-raises-50m-in-series-d-funding/ — Series D $50M
+- https://play.google.com/store/apps/details?id=com.smallcase.android — Google Play
+- https://apps.apple.com/in/app/smallcase-stocks-mfs-fds/id1345309437 — App Store IN
+- https://blume.vc/smallcase — Blume Ventures perfil
+- https://inc42.com/buzz/investment-tech-startup-smallcase-raises-capital-from-sequoia-others/ — Series A
+- https://techcrunch.com/2021/08/18/amazon-backs-indian-wealth-management-service-smallcase-in-40-million-funding/ — Series C $40M Amazon
+- https://www.fintechfutures.com/private-banking/wealth-management-start-up-smallcase-raises-40m-in-series-c-funding — Series C
+- https://yourstory.com/2019/02/investment-platform-smallcase-raises-8-m-series-a--htzhjboxv7 — Series A YourStory
+- https://tracxn.com/d/companies/smallcase/ — Tracxn perfil + funding
+- https://store.hbr.org/product/smallcase-a-disruptive-business-model-in-india/IM025B — HBS case study
+- https://www.trustpilot.com/review/www.smallcase.com — Trustpilot (2 reviews)
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Smallcase es el modelo más distinto de los 18 competidores documentados — marketplace puro de research providers, no produce análisis propio. Para AUREX la pregunta es si en LATAM se puede replicar el modelo "AUREX como plataforma + research providers regionales que crean señales sectoriales en español/portugués". Trust regulatorio (CNV en AR, CVM en BR, CNBV en MX) es el moat de Smallcase en India vía SEBI. India tiene 200M+ adultos invertibles vs LATAM hispanohablante 500M+ — el upside está disponible pero la barrera regulatoria es real. Smallcase también demuestra que tickets micro (~$0.25) habilitan adquisición masiva de retail principiante — relevante para tier FREE de AUREX.]*
+
+---
+
+## 19. Nubank Investimentos (Brasil + LATAM)
+
+**Empresa:** Nu Holdings Ltd. (NYSE: NU) — producto Nubank Investimentos integrado en el app Nubank.
+**HQ:** São Paulo, Brasil + Cidade do México
+**Founded:** 2013
+**Founder/CEO:** David Vélez (Stanford alum, ex-Sequoia)
+**Co-founders:** Cristina Junqueira, Edward Wible
+**URL:** https://nubank.com.br/nu/investimentos
+**App:** Nubank App (iOS + Android), feature integrado
+**Cotización:** NYSE: NU desde IPO 2021
+**Funding pre-IPO:** $4B+ raised
+**Usuarios totales Nu Holdings:** **114M** (Q2-2025); **107M en Brasil = 60% de los adultos brasileños**.
+**Revenue 2024:** $11.5B (+58% YoY)
+**Credit portfolio:** $11.2B (+75% YoY)
+**Posición:** 2-3er digital bank más grande del mundo
+
+### 1. Posicionamiento
+- "Investimentos no app que você já usa" — todos los productos de inversión consolidados dentro del Nubank app desde abril 2024.
+- Mensaje core: para los 107M brasileños que ya tienen Nubank, no hay que ir a otra plataforma para invertir. Onboarding cero, identidad ya verificada, dinero ya en la cuenta.
+- David Vélez (declarado): "AI puede ser el próximo paso en inclusión financiera" — enfocado en personalizar recomendaciones de inversión en escala masiva.
+
+### 2. Audiencia objetivo declarada
+- **Retail brasileño masivo** (107M base): principiantes y small contributions.
+- **Mass affluent / high income** (segmento expandido 2024 con CDBs exclusivos).
+- Audiencia secundaria: México (Nubank México con millones de usuarios), Colombia (Nubank Colombia).
+- **Skew principiante:** comparativas declaran a Nubank Investimentos como "ideal para principiantes y small contributions" vs XP / Inter para perfiles más sofisticados.
+
+### 3. Modelo de monetización
+- **Brokerage-free:** sin comisiones por trade en stocks, fondos, renda fixa básica.
+- **Revenue por:**
+  - **Spreads** en CDBs, fondos, productos estructurados.
+  - **Fees secundarios** en operaciones específicas.
+  - **CDBs exclusivos** para high-income (lanzados 2024) — diferenciación de pricing por segmento.
+  - **Fee management** en algunos fondos propios o de terceros.
+- Modelo bancario clásico: cross-sell sobre la base existente (114M usuarios) → cada feature financiero adicional aumenta lifetime value sin costo de adquisición.
+
+### 4. Canales de marketing activos (verificados)
+- **Distribución desde el app Nubank:** acceso directo a 107M brasileños sin costo de adquisición. Ese es el motor principal — es **distribución, no marketing**.
+- **Sitio nubank.com.br + páginas dedicadas a Investimentos.**
+- **Blog corporativo:** blog.nubank.com.br (educativo + posicionamiento).
+- **Building Nubank** (building.nubank.com): blog técnico/producto en inglés.
+- **PR media masivo internacional:** Fast Company ("most innovative companies 2025"), CrowdfundInsider, Bloomberg Línea, Brazil Journal, Statista, NeoFeed, CNN Brasil.
+- **LinkedIn corporativo + perfil David Vélez** (vocero institucional).
+- **Reportes IPSOS de research propio:** "Nubank x IPSOS — relación con dinero y diferentes generaciones".
+- **Eventos institucionales internacionales** post-IPO.
+- **Rebranding visual:** identidad reconocible (morado distintivo) en LATAM.
+
+### 5. Tipo de contenido por canal
+- **App in-app:** notificaciones de oportunidades de inversión, dashboards consolidados, recomendaciones automáticas por perfil.
+- **Blog Nubank:** "Inteligência artificial — 5 exemplos de como ela já existe na sua vida financeira" — content educativo sobre IA en finanzas para retail.
+- **Building Nubank (técnico):** "With AI, Nubank is pioneering a future of inclusive personalized financial services" — posicionamiento ante developers, talent, institucionales.
+- **Press releases:** lanzamiento Investimentos consolidado abr-2024, adquisiciones IA (Olivia 2021, Hyperplane 2024), CDBs exclusivos high-income.
+- **Reportes IPSOS:** thought leadership sobre comportamiento financiero de brasileños.
+- **PR Vélez:** entrevistas en Bloomberg Línea, Fast Company, Brazil Journal.
+
+### 6. Tono y voz
+- **Marca:** moderna, simple, anti-banco-tradicional. Visual icónico (morado).
+- **Producto:** clean, sin jerga financiera, foco en simplicidad ("invierto sin saber nada").
+- **Vélez (vocero):** mission-driven, foco inclusión financiera + IA democratizadora. Tono Stanford alum + ex-VC.
+- **Tono general:** la voz oficial de la "fintech latinoamericana" — modelo de referencia para resto de LATAM. Diferenciado de bancos tradicionales (Itaú, Bradesco, Santander) y de fintech "young" (Inter Gen Z).
+
+### 7. Cómo se lanzaron
+- **2013:** founded por Vélez + Junqueira + Wible en São Paulo.
+- **2014-2017:** crecimiento orgánico con tarjeta morada como producto ancla.
+- **2018-2021:** expansión a México, Colombia, IPO en NYSE (2021).
+- **2021:** adquisición de **Olivia** (startup IA para control financiero personalizado).
+- **2024:** consolidación de Investimentos dentro del app + lanzamiento de CDBs exclusivos para high-income + adquisición de **Hyperplane** (AI data company de Silicon Valley con founders brasileños).
+- **2025:** Vélez declara IA como "próximo paso de inclusión financiera"; expansión continua de productos investment.
+
+### 8. Qué les funcionó para crecer
+- **Distribución incumbente sin igual en LATAM:** 107M brasileños = costo de adquisición efectivo cercano a cero para Investimentos.
+- **Tarjeta morada como brand exposure offline:** misma lógica que Lemon Card — uso cotidiano de un producto físico genera awareness pasiva.
+- **Anti-banco-tradicional como narrativa:** capturó retail joven cansado de Itaú/Bradesco/Santander.
+- **IPO NYSE 2021:** validación máxima + capital permanente para expansion.
+- **Adquisiciones IA estratégicas (Olivia 2021, Hyperplane 2024):** integración de IA in-house para credit decisioning + fraud detection + investment recommendations + customer interactions.
+- **Investment Street Mode + Smart Defenses:** IA aplicada a UX/seguridad en Investimentos — ocultar balances si Wi-Fi inseguro, predicción de fraude por behavior pattern.
+- **CDBs exclusivos para alta renda:** diferenciación de tier por audiencia, monetización mejorada del segmento alto.
+- **66% brasileños esperan recomendaciones de inversión de su financial institution** (IPSOS) — Nubank lee ese gap y lo está cubriendo con IA.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- App muy bien valorada en general (entre las top fintech apps mundiales por NPS).
+- Onboarding "cero fricción" para invertir si ya sos cliente Nubank.
+- Brokerage-free + UX simple para principiantes.
+- Investment Street Mode (privacidad de balances) muy valorado.
+- Recomendaciones automáticas por perfil ahorran trabajo al usuario que no sabe finanzas.
+
+**Contras frecuentes:**
+- Catálogo de productos investment más limitado vs XP/Rico para usuarios sofisticados que quieren research detallado y opciones avanzadas.
+- Recomendaciones generales, sin análisis profundo o señales accionables específicas.
+- Customer service de inversiones a veces lento en horarios pico.
+- Para usuarios que quieren operar trading activo, plataforma menos potente que Bitso Alpha o XP.
+- Algunos reportes de delays en liquidaciones de operaciones.
+
+**Conclusión reseñas:** Nubank Investimentos es ideal para principiantes y mass-market que valoran simplicidad sobre profundidad. Para retail sofisticado que busca research granular y señales IA específicas, el producto se queda corto — y ahí está el espacio de AUREX.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://nubank.com.br/nu/investimentos — Investimentos
+- https://international.nubank.com.br/company/nubank-consolidates-all-investment-solutions-within-its-app/ — consolidación abril 2024
+- https://building.nubank.com/with-ai-nubank-is-pioneering-a-future-of-inclusive-personalized-financial-services/ — IA inclusiva
+- https://blog.nubank.com.br/inteligencia-artificial-na-vida-financeira/ — blog IA
+- https://international.nubank.com.br/pt-br/companhia/nubank-adquire-hyperplane-para-acelerar-estrategia-de-ia/ — Hyperplane
+- https://braziljournal.com/hyperplane-a-aquisicao-do-nubank-para-levar-ai-a-decisao-de-credito/ — Brazil Journal Hyperplane
+- https://www.bloomberglinea.com.br/startups/nubank-adquire-startup-de-brasileiros-no-vale-do-silicio-para-avancar-em-ia/ — Bloomberg Línea Hyperplane
+- https://www.seudinheiro.com/2024/empresas/corrida-pela-inteligencia-artificial-nubank-vai-as-compras-e-abocanha-empresa-no-vale-do-silicio-miql/ — Seu Dinheiro
+- https://borainvestir.b3.com.br/noticias/inteligencia-artificial-pode-ser-o-proximo-passo-na-inclusao-financeira-diz-fundador-do-nubank/ — Vélez declaración IA
+- https://www.fastcompany.com/91270853/nubank-most-innovative-companies-2025 — Fast Company innovation
+- https://www.crowdfundinsider.com/2024/12/234458-brazils-digital-banking-platform-nubank-reports-steady-consolidation-and-growth-in-2024/ — CrowdfundInsider 2024
+- https://www.businessofapps.com/data/nubank-statistics/ — stats
+- https://en.wikipedia.org/wiki/Nubank — Wikipedia
+- https://www.statista.com/statistics/1440714/brazil-neobank-neobrokerage-popularity-by-brand/ — Statista popularity
+- https://www.startse.com/artigos/nubank-maior-fintech/ — StartSe Nubank fintech mayor
+- https://www.startse.com/artigos/mapa-de-ia-do-nubank-como-a-fintech-usa-a-tecnologia/ — Mapa IA Nubank
+- https://compoundandfire.substack.com/p/nu-holdings-revolutionizing-banking — Nu Holdings deep dive
+- https://international.nubank.com.br/wp-content/uploads/2024/10/NUBANK-x-IPSOS.pdf — Nubank x IPSOS report
+- https://finsidersbrasil.com.br/noticias-sobre-fintechs/resultados-financeiros/inter-nubank-pagbank-stone-e-xp-lucram-r-207-bi-em-2024/ — comparativa lucros
+- https://www.idinheiro.com.br/investimentos/corretoras/nuinvest-ou-rico/ — Nubank vs Rico
+- https://www.nuinvest.com.br/ — NuInvest legacy
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX. Foco sugerido: Nubank Investimentos es el competidor LATAM más serio identificado — 107M brasileños base + IA in-house (Olivia 2021, Hyperplane 2024) + Vélez declarando IA como próximo paso. Pero su IA aplicada al usuario es para recomendaciones generales y seguridad (Smart Defenses), no para señales accionables específicas multi-asset. **Espacio claro para AUREX:** los usuarios de Nubank que quieren análisis IA granular y señales accionables tienen que ir a otro lado. Pregunta crítica: ¿AUREX puede integrarse con Nubank en algún momento como capa de análisis (similar al modelo de Smallcase con brokers indios), o tiene que construir audiencia propia desde cero? Riesgo competitivo real: Nubank tiene capacidad financiera y técnica para incorporar señales IA específicas como feature interno cuando lo decida — la ventaja temporal de AUREX es real pero acotada. Brasil específicamente: la barrera de idioma (portugués) y la regulación CVM hacen que AUREX entre tarde a Brasil; priorizar Argentina y México hispanohablante primero.]*
+
+---
+
+# CIERRE DE PASADA 5 — Síntesis preliminar blind spots
+
+2 competidores documentados:
+
+18. **Smallcase (India)** — 3M+ usuarios activos, ~10M registrados. Modelo marketplace de model portfolios curados por SEBI-registered managers. $100M+ raised (Sequoia, Amazon, Premji). Tickets desde ₹21 (~$0.25). Integrado con 14+ brokers indios — sin competir con ellos. Annual revenue ₹114 Cr (~$13M USD), $2.5B en transacciones anuales.
+19. **Nubank Investimentos (Brasil + LATAM)** — 107M brasileños base (60% de adultos BR), 114M globales. IPO NYSE 2021. IA in-house vía Olivia (2021) + Hyperplane (2024). Vélez declara IA como "próximo paso en inclusión financiera". Recomendaciones automáticas por perfil + Investment Street Mode + Smart Defenses. Producto principiante-friendly, no para retail sofisticado.
+
+**Insights de blind spots cubiertos (sin esperar análisis estratégico de Escritorio):**
+
+- **El gap "IA + señales accionables específicas multi-asset" sigue libre incluso después de cubrir India y Nubank.** Smallcase es marketplace de portfolios, no genera señales propias. Nubank Investimentos tiene IA pero para recomendaciones generales y seguridad, no señales granulares. Confirma por quinta vez (Pasadas 1-5) que el espacio existe.
+- **Modelos marketplace + integración con brokers (Smallcase con 14+ brokers indios) son replicables en LATAM.** AUREX podría a futuro integrar con Cocos, Lemon, Avenue, Bitso como capa de análisis — sin tener que ser broker.
+- **La distribución incumbente domina LATAM:** Nubank 107M brasileños hace que cualquier player nuevo enfrente CAC mucho más alto que él. El moat de Nubank no es producto, es base instalada. AUREX debe pensar en distribución alternativa (multi-idioma, redes sociales, partnerships con brokers regionales más chicos).
+- **IA financiera retail tiende a M&A:** Nubank no construyó su IA in-house desde cero, compró Olivia (2021) e Hyperplane (2024). Itaú compró Avenue. Eso indica que IA retail bien ejecutada es target de adquisición — relevante para AUREX a 3-5 años como exit potencial.
+- **India no es prioridad para AUREX:** mercado masivo (200M+ adultos invertibles) pero idioma + regulación SEBI + competencia incumbent (Smallcase, Groww, Zerodha) hacen que entrar a India sea un proyecto de varios años. LATAM hispanohablante primero, India eventual fase 2 o 3.
+- **6 blind spots originales: 2 cubiertos (India + neo-bancos LATAM), 4 documentados sin investigar.** Los 4 restantes (white-label/B2B2C, regulación regional transversal, research B2C content-first, gaps demográficos) son post-síntesis Plan MKT v2 — cada uno corresponde a una fase distinta del proyecto AUREX, no a definir posicionamiento.
+
+---
+
 # ANÁLISIS ESTRATÉGICO GLOBAL (Escritorio)
 
 *[Reservado — Escritorio escribe acá una vez Code complete los hallazgos]*
@@ -2016,5 +2276,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 4 LATAM acotada agregada con 5 competidores: Cocos, Lemon, Warren Brasil, Avenue, Bitso). Análisis estratégico de Escritorio para Pasada 4 reservado en blanco, esperando que Escritorio los complete.*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 5 mini bonus agregada con 2 competidores blind spot: Smallcase para India, Nubank Investimentos para neo-bancos LATAM con inversión integrada). Análisis estratégico de Escritorio para Pasadas 4 y 5 reservado en blanco, esperando que Escritorio los complete.*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*
