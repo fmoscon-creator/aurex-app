@@ -157,8 +157,8 @@ Pregunta central: ¿AUREX se compara con quién y por qué? ¿A quién le quiere
 - Cuando estén todas las pasadas, ambos integran todo en `PLAN_MKT.md` v2.
 - Regla de honestidad: si no hay fuente sólida, marcar "no verificado" en lugar de inventar.
 
-### Hecho — Pasadas 1, 2 y 3 (12 competidores cerrados)
-Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes). Pasadas 1 y 2 ya tienen análisis estratégico de Escritorio cruzado con AUREX. Pasada 3 tiene secciones de análisis estratégico reservadas y vacías, esperando a que Escritorio las complete. Todo en `RESEARCH_MKT.md`.
+### Hecho — Pasadas 1, 2 y 3 (12 competidores cerrados, todos con análisis estratégico)
+Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes) más análisis estratégico de Escritorio cruzado con AUREX. Pasada 3 cerrada con análisis estratégico el 29-abr-2026. Todo en `RESEARCH_MKT.md`.
 
 **Pasadas 1 y 2 (históricos):**
 1. **Magnifi** — AI investing assistant (TIFIN, respaldado por J.P. Morgan). Freemium $8.25-14/mes. Creció por backing institucional y podcast con Nicole Lapin. Sin presencia orgánica en redes. Lección: AUREX puede hacer lo que Magnifi no hace — mostrar el producto en acción en redes.

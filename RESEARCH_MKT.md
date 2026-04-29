@@ -995,7 +995,13 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: ¿el modelo de varios agentes IA especializados es replicable en AUREX o sería sobre-ingeniería para fase inicial? El precio $9.99/mes idéntico al PRO de AUREX confirma de nuevo el ticket. La limitación a S&P 500 es exactamente el gap que AUREX cubre con 313 activos crypto+stocks globales en 8 idiomas.]*
+Sagehood AI es el competidor más parecido a AUREX en la Pasada 3. Mismo precio ($9.99/mes), mismo posicionamiento retail, mismo timing de lanzamiento. La diferencia clave es el enfoque de "agentes especializados" — en vez de un asistente IA genérico, cada agente cubre un ángulo distinto (fundamentals, noticias, sentiment, riesgo). Eso genera percepción de profundidad sin que el usuario tenga que entender el motor debajo.
+
+Lo más importante que AUREX puede aprender: Sagehood se lanzó en Product Hunt y quedó top 15 anual. Eso es visibilidad masiva sin presupuesto de ads. El launch en Product Hunt está disponible para AUREX y no tiene costo. Hay que planificarlo como evento de lanzamiento, no como afterthought.
+
+La debilidad que AUREX puede explotar: Sagehood solo cubre S&P 500. AUREX tiene 313 activos incluyendo crypto y acciones globales. Esa cobertura multi-asset es diferencial real y hay que comunicarla explícitamente en el posicionamiento contra Sagehood.
+
+El riesgo que comparten: ambos son productos nuevos sin track record de acierto IA verificable a escala. Las reviews ya dicen "cool idea, but not sure the data is accurate." Cuando AUREX conecte Claude API real, la tasa de acierto tiene que medirse y publicarse — ese dato solo vale más que cualquier campaña de marketing.
 
 ---
 
@@ -1088,7 +1094,13 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: WarrenAI no es competidor que se pueda derrotar de frente (60M usuarios, 30 idiomas, 72k activos). Es competidor a flanquear con foco específico: 313 activos cuidadosamente curados y señales propias en lugar de respuestas a prompts; presencia visual fuerte en redes que Investing.com no tiene; mercado hispanohablante donde la marca Investing.com no es percibida como cercana.]*
+WarrenAI no es competidor directo sino benchmark de escala: tiene 60 millones de usuarios base, 72k+ activos, 30 idiomas, y un motor de datos de décadas. AUREX no puede competir con eso frontalmente. Pero puede ganarle en lo que WarrenAI no puede hacer: agilidad, presencia visual en redes sociales, tono cercano y comunidad hispanohablante.
+
+El dato más relevante para AUREX: WarrenAI cobra entre $19.99 y $34.99/mes para acceso a sus features IA. Eso valida que el mercado acepta tickets más altos que $9.99 cuando la herramienta tiene datos y profundidad reales. El ELITE de AUREX a $19.99/mes está correctamente posicionado en el rango inferior de lo que el mercado ya paga por IA financiera seria.
+
+La advertencia operativa: Investing.com tiene reputación de billing agresivo y difícil cancelación. Eso genera fricción y mala percepción. Para AUREX eso es una oportunidad: posicionarse explícitamente como transparente, sin sorpresas, cancelación en un clic. Esa diferencia de experiencia comercial puede ser tan importante como la diferencia de producto.
+
+La brecha geográfica que AUREX puede explotar: WarrenAI tiene 30 idiomas pero su base de usuarios y marketing están centrados en usuarios que ya usan Investing.com, mayormente en inglés. El mercado hispanohablante con 500+ millones de personas sigue siendo territorio donde ninguna herramienta IA de inversión tiene presencia dominante.
 
 ---
 
@@ -1188,7 +1200,13 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: Danelfin es el caso más relevante del Plan MKT v2 para validar la palanca dual (retail PRO + API B2B). Performance pública verificable es lo que les permitió crecer sin paid ads. Pregunta crítica: ¿AUREX puede empezar a publicar acierto/error de sus señales IA desde el día 1 del lanzamiento como Danelfin lo hace con su AI Score? Es factible si se diseña la arquitectura de logging desde ahora.]*
+Danelfin es el modelo de negocio más maduro de la Pasada 3 y el más instructivo para AUREX. En 10 años pasó de startup de analytics a tener API con tres tiers ($70/$199/$599/mes) vendida a instituciones, con €2M de funding, premio Benzinga y track record verificable.
+
+El insight crítico: Danelfin publica su métrica de performance públicamente — "stocks 10/10 outperform S&P en +21.05% annualized alpha". Eso no es marketing, es prueba. Y es el mecanismo de adquisición más eficiente posible: el producto se vende solo con el dato. Cuando AUREX tenga señales reales con Claude API, medir y publicar la tasa de acierto histórica tiene que ser prioridad desde el primer día, no después de acumular usuarios.
+
+El modelo dual (retail + API) de Danelfin está funcionando y generando ingresos. Confirma por tercera vez en el research (después de Stocktwits y Atom Finance) que las suscripciones freemium solas no son suficientes para sostenibilidad. La API institucional de Danelfin es el destino natural de AUREX a mediano plazo.
+
+Danelfin tiene cobertura solo US y Europa, sin crypto en profundidad. AUREX tiene 313 activos incluyendo crypto global. Esa brecha de cobertura es real y comunicable.
 
 ---
 
@@ -1289,7 +1307,13 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: RockFlow es el caso más cercano a AUREX en multi-idioma + multi-país + AI assistant + mobile-first, pero con la diferencia clave de ser broker y de tener tono Gen Z. Pregunta crítica: ¿AUREX adopta tono "fun" para Gen Z o mantiene tono más sobrio para inversor maduro? El branding actual de AUREX (estética seria, premium) se acerca más a Public.com que a RockFlow. Decidir explícito qué segmento priorizar.]*
+RockFlow es el competidor más peligroso de la Pasada 3 para AUREX en términos de timing y recursos. Tiene $20M de funding, está en 9 idiomas, opera en múltiples países, y tiene presencia activa en TikTok e Instagram con tono Gen Z. Es el único competidor de toda la investigación que combina multi-idioma + multi-asset + mobile-first + presencia en redes sociales visuales.
+
+La diferencia estructural con AUREX: RockFlow es broker, ejecuta trades. AUREX no. Eso significa que RockFlow tiene ingresos por trading además de la suscripción, lo que le da una segunda palanca de monetización diferente. También significa más regulación y más fricción de onboarding (KYC, depósito de fondos). AUREX puede adquirir usuarios más rápido porque el onboarding es infinitamente más simple — no hay que depositar nada ni verificar identidad para ver señales IA.
+
+El blog de RockFlow que publica comparativas ("RockFlow vs Magnifi", "best AI investing apps 2026") es una táctica de SEO directa y efectiva. AUREX debería hacer lo mismo desde el lanzamiento: artículos comparativos indexables que capturan búsquedas de usuarios evaluando opciones.
+
+El gap que AUREX puede explotar: RockFlow está centrado en Gen Z con tono de entretenimiento ("Easy Trading with Fun"). Hay un segmento de inversores entre 25-45 años que quiere análisis serio sin la infantilización del tono gamificado. AUREX puede posicionarse en ese espacio: sofisticado pero accesible, sin confetti ni "fun".
 
 ---
 
@@ -1386,7 +1410,13 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ### Análisis estratégico (Escritorio)
 
-*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: Guavy es el caso más nuevo y cercano a la palanca dual de AUREX, pero crypto-only. La pregunta es si AUREX puede salir antes que Guavy con el equivalente multi-asset (crypto+stocks 313 activos) y multi-idioma (8 idiomas) — la ventana de oportunidad existe porque Guavy todavía no cubre stocks ni habla más de un idioma confirmado. El precio retail $6.99/mes de Guavy es una señal: hay margen para AUREX FREE muy generoso o un sub-tier por debajo de los $9.99/mes del PRO si se quiere atacar ese segmento.]*
+Guavy es el caso más interesante de la Pasada 3 como modelo de arquitectura de negocio. Una empresa de 10 años de datos financieros que pivotó a producto retail mobile en oct-2025 con una estrategia dual (app $6.99/mes + API institucional) ejecutada desde el día uno. En 4 meses pasó de app iOS a lanzamiento de API con coverage en Benzinga, Daily Hodl, TradingView, Investing.com, Manila Times.
+
+El aprendizaje más directo: Guavy no construyó audiencia social propia — distribuyó via press releases en medios crypto especializados. Esa distribución fue gratuita para ellos (los medios cubren lanzamientos crypto de forma orgánica) y llegó a audiencias de millones sin ads. AUREX puede replicar esa estrategia en el lanzamiento: un press release bien escrito distribuido en 5-6 medios de fintech hispanohablante y crypto tiene más alcance que meses de posting orgánico.
+
+Guavy va solo por crypto (350+ coins). AUREX tiene crypto + acciones globales. Esa amplitud de cobertura es un diferencial real frente a Guavy para usuarios que no quieren tener dos apps.
+
+El timing es el punto más crítico: Guavy lanzó iOS en oct-2025 y API en ene-2026. AUREX va a lanzar con Apple/Google aprobados mientras Guavy todavía no tiene Android. Hay una ventana de tiempo donde AUREX puede capturar usuarios Android en el nicho de crypto+señales IA antes que Guavy.
 
 ---
 
@@ -1435,5 +1465,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 3 completada con 5 competidores: Sagehood, WarrenAI, Danelfin, RockFlow, Guavy)*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 3 cerrada con análisis estratégico de Escritorio para los 5 competidores: Sagehood, WarrenAI, Danelfin, RockFlow, Guavy)*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*
