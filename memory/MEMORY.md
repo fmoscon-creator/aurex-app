@@ -1,0 +1,6 @@
+- [Roles Code vs Escritorio](roles_code_escritorio.md) — Code soy yo (terminal); Escritorio es Claude Desktop. El user pide opiniones cruzadas.
+- [Comunicación con Fernando](feedback_comunicacion.md) — TODO en español (incluye descriptions de tools, strings de bash, mensajes de commit), sin jerga técnica, análisis integral propio antes de preguntar, no tocar sin autorización expresa, una vez OK avanzar sin pedir SI/NO por cada subtarea, nunca proponer parar la sesión.
+- [Zona horaria + datos operativos](project_operativo.md) — UTC-3 Argentina. Números WhatsApp, Telegram (canal principal), Apple Team ID, env vars Railway, crons del backend, endpoints (incluye `/api/whatsapp/connect-qr`), incidentes activos.
+- [Manuales obligatorios al iniciar](feedback_leer_manuales.md) — los manuales en docs/ son la fuente de verdad. Leerlos ANTES de proponer infraestructura.
+- [Servicios de tercero con autenticación revocable](feedback_servicios_terceros.md) — antes de tocar Evolution API, Apple, Google, RevenueCat, Twilio, etc., 4 preguntas obligatorias.
+- [Fernando NO ejecuta tareas manuales](feedback_fernando_no_ejecuta.md) — en marketing/contenido Fernando solo APRUEBA. Todo lo generan Code y Escritorio con IA + automatización.
