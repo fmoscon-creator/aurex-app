@@ -19,6 +19,48 @@ Antes de responder cualquier pregunta del usuario, hacer esto:
 
 ---
 
+## 0.A. ARRANQUE DE CODE Y MEMORIA PERSISTENTE
+
+> Esta sección describe **cómo abrir Code (la CLI) y dónde vive la memoria persistente** que se carga al inicio de cada sesión. Es procedimiento operativo del usuario, no del asistente.
+
+### Cómo arrancar Code
+
+Siempre desde la home del usuario:
+
+```bash
+cd ~ && claude
+```
+
+NUNCA arrancar Code parado dentro de `Desktop/aurex-app`, `AurexApp`, `Desktop/aurex-backend` ni ninguna otra carpeta de proyecto. La memoria persistente está asociada al directorio desde el que se lanza Code, así que arrancar desde otro lugar deja la sesión sin contexto previo.
+
+### Dónde vive la memoria persistente
+
+Carpeta: `~/.claude/projects/-Users-fernandomoscon/memory/`
+
+Contiene 7 archivos (al 28-abr-2026):
+
+1. `MEMORY.md` — índice (apunta a los otros 6 con una línea de resumen cada uno).
+2. `roles_code_escritorio.md` — diferencias entre Code (terminal) y Escritorio (Claude Desktop), cómo rotular textos cruzados.
+3. `feedback_comunicacion.md` — 5 reglas de tono y trabajo (sin jerga técnica, análisis propio antes de preguntar, no tocar sin autorización con builds en revisión, opiniones cruzadas con Escritorio, nunca proponer parar la sesión).
+4. `feedback_fernando_no_ejecuta.md` — Fernando solo aprueba; todo el contenido lo generan Code y Escritorio con IA + automatización.
+5. `feedback_leer_manuales.md` — leer los manuales de `docs/` antes de proponer infraestructura; verificar antes de afirmar cualquier hecho técnico.
+6. `feedback_servicios_terceros.md` — 4 preguntas obligatorias antes de tocar servicios con autenticación revocable (Evolution API, Apple, Google, RevenueCat, Twilio, Lemon Squeezy, Supabase service_role); nunca aceptar tokens GitHub PAT por chat.
+7. `project_operativo.md` — datos operativos no sensibles (TZ AR, números WhatsApp, Telegram, identificadores Apple, webhook RevenueCat, paths de los 3 repos, crons, endpoints de testeo).
+
+Code carga el `MEMORY.md` (índice) automáticamente al inicio de cada sesión y resuelve los archivos hermanos cuando los necesita. No hace falta pegar nada manualmente.
+
+### Backup
+
+Backup espejo de los 7 archivos en: `~/Desktop/aurex-memory-backup/`
+
+Si la carpeta de memoria activa se pierde (reinstalación de Code, cambio de Mac, error de filesystem), restaurar con:
+
+```bash
+cp ~/Desktop/aurex-memory-backup/*.md ~/.claude/projects/-Users-fernandomoscon/memory/
+```
+
+---
+
 ## 1. IDENTIDAD DEL PROYECTO
 
 | Dato | Valor |

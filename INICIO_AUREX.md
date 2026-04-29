@@ -65,6 +65,16 @@ Tres componentes:
 - **Una cosa a la vez.** No mezclar 5 pedidos en una respuesta.
 - Verificación visual / screenshot antes de reportar OK.
 
+### MEMORIA PERSISTENTE DE CODE (terminal)
+
+Aplica solo a **Code** (Claude Code en CLI), no a Escritorio (extensión Chrome).
+
+- **Procedimiento de arranque:** siempre `cd ~ && claude` desde la home del usuario. NUNCA arrancar parado dentro de `Desktop/aurex-app`, `AurexApp`, `Desktop/aurex-backend` ni ninguna otra carpeta de proyecto.
+- **Ubicación de la memoria:** `~/.claude/projects/-Users-fernandomoscon/memory/` — 7 archivos: `MEMORY.md` (índice) + 6 archivos con reglas de feedback (`feedback_*.md`), roles (`roles_code_escritorio.md`) y datos operativos (`project_operativo.md`).
+- **Carga:** automática al inicio de cada sesión, siempre que Code arranque desde home.
+- **Backup:** `~/Desktop/aurex-memory-backup/` (espejo del set activo).
+- **Restaurar si se pierde:** `cp ~/Desktop/aurex-memory-backup/*.md ~/.claude/projects/-Users-fernandomoscon/memory/`
+
 ### WHATSAPP (sistema operativo en backend Railway)
 
 - Línea emisora AUREX: +54 9 11 3360 2563 (Evolution API self-hosted)
