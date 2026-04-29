@@ -28,11 +28,12 @@
 6. **TradingView**
 7. **Robinhood**
 
-### Pasada 3 — Apps recientes 2024-2025 con AI / análisis automatizado
-*(a identificar via WebSearch específico)*
-- TBD (research pendiente)
-- TBD
-- TBD
+### Pasada 3 — Apps recientes 2024-2025 con AI / análisis automatizado (HECHA — 29-abr-2026)
+8. **Sagehood AI** — agentes IA, US stocks, $9.99/mes
+9. **WarrenAI (Investing.com)** — research assistant 30 idiomas, 72k+ activos
+10. **Danelfin** — AI Score con palanca dual retail + API
+11. **RockFlow** — multi-país, Bobby + TradeGPT, Gen Z mobile
+12. **Guavy** — AI sentiment crypto-only, retail + API
 
 ### Pasada 4 — Si queda tiempo, complementarios
 - Webull
@@ -906,9 +907,511 @@ AUREX = analisis con IA para inversores que quieren entender el mercado antes de
 
 ---
 
-## 8+ Apps recientes 2024-2025
+# PASADA 3 — Apps recientes 2024-2025 con IA / análisis automatizado
 
-*[Pendiente — identificar via WebSearch + research]*
+> Objetivo: identificar competidores que lanzaron o ganaron tracción en 2024-2025 con foco en IA y análisis automatizado para retail, fuera de los 7 históricos. Selección priorizada por relevancia con AUREX (precio, audiencia, modelo, multi-activo, crypto, idiomas).
+
+## 8. Sagehood AI
+
+**Empresa:** Sagehood AI
+**HQ:** San Francisco, California, Estados Unidos
+**Founded:** ~2024 (lanzamiento público en Product Hunt durante 2025)
+**URL:** https://sagehood.ai/
+**LinkedIn:** https://www.linkedin.com/company/sagehood
+
+### 1. Posicionamiento
+- "Your U.S. Stock Portfolio, Supercharged by AI Agents" (tagline en Product Hunt).
+- Plataforma de inversión con varios agentes IA especializados — uno analiza fundamentales, otro breaking news, otro sentiment de stocks/sectores, otro riesgo de portfolio.
+- Mensaje core: en lugar de un solo asistente conversacional, varios agentes IA que cubren distintos ángulos del análisis de mercado.
+
+### 2. Audiencia objetivo declarada
+- Retail investors estadounidenses que ya tienen portfolio activo en stocks US.
+- Skew hacia **DIY investors** que quieren toolkit más sofisticado sin pasar a Bloomberg.
+- Limitación de cobertura: solo S&P 500 al 28-abr-2026, con plan documentado de agregar Nasdaq.
+
+### 3. Modelo de monetización
+- **Freemium:**
+  - Tier free básico.
+  - **Premium $9.99/mes** — punto idéntico al PRO de AUREX.
+  - **14 días de free trial** con acceso completo a Premium, sin compromiso.
+
+### 4. Canales de marketing activos (verificados)
+- **Product Hunt:** lanzamiento principal. Quedó entre los top 15 launches anuales de Product Hunt 2025, 13 de los cuales eran categoría AI.
+- **LinkedIn corporativo.**
+- **Sitio web propio + landing.sagehood.ai** (segunda landing dedicada).
+- **Reviews de terceros:** SaaSworthy, SourceForge, Skywork.ai, Slashdot.
+- **NO se identificaron** presencias sostenidas en Instagram, TikTok o YouTube como canal propio.
+
+### 5. Tipo de contenido por canal
+- **Product Hunt:** demo del producto, agentes IA en acción, screenshots del análisis.
+- **LinkedIn:** updates corporativos, milestones de producto.
+- **Sitio web:** páginas de feature por agente, comparativas, FAQs.
+- **Reviews independientes:** content marketing pasivo (los review sites traen tráfico orgánico).
+
+### 6. Tono y voz
+- Profesional pero accesible. Lenguaje "tools to grow your portfolio with confidence, powered by AI, backed by strategy".
+- No es jerga financiera dura ni gamificación tipo Robinhood. Tono balanceado entre research serio y simplicidad.
+- Foco en transparencia: presentación de los agentes IA como roles definidos, no como caja negra.
+
+### 7. Cómo se lanzaron
+- Lanzamiento por Product Hunt durante 2025 (quedó en top 15 anual).
+- Sin funding pública verificada en las búsquedas — perfil de Crunchbase existe pero sin rondas reportadas.
+- Estrategia de visibilidad: aparecer en review sites de AI tools (SaaSworthy, SourceForge, etc.) y comparativas de "best AI investing apps 2025".
+- Crecimiento principalmente product-led, sin campañas pagas detectadas.
+
+### 8. Qué les funcionó para crecer
+- **Diferenciador del enfoque "agents":** en lugar de un solo asistente IA generalista (Magnifi, WarrenAI), Sagehood vende varios agentes especializados. Genera percepción de mayor profundidad y transparencia.
+- **Pricing alineado con la categoría retail:** $9.99/mes es el punto donde el mercado ya validó disposición a pagar (Atom Finance, Magnifi anual, ahora Sagehood).
+- **Free trial extendido (14 días):** baja barrera de entrada, deja al producto demostrar valor antes del cobro.
+- **Aparición en Product Hunt top 15 del año** = boost de awareness orgánica gratis.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- UI clara y rápida.
+- Insights en tiempo real con presentación visual.
+- Enfoque por agentes percibido como transparente y útil para inversores cotidianos.
+- Diseño intuitivo accesible para non-pros.
+
+**Contras frecuentes:**
+- "Cool idea, but not sure the data is providing value at this point in time" — usuario reporta que sus top 3 holdings no se trackeaban en la app y los activos de mayor confianza IA quedaron debajo del mercado.
+- Cobertura limitada a S&P 500 (excluye Nasdaq y obviamente todo lo no-US).
+- Producto reciente: dataset de reviews aún chico, sentimiento dominante positivo pero con baja N.
+
+**Conclusión reseñas:** producto con buena primera impresión visual y de UX, pero aún sin track record de acierto IA verificable a escala. Riesgo similar al de Magnifi: si los usuarios detectan que la IA no acierta, lo dicen rápido en reviews.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://sagehood.ai/ — sitio oficial
+- https://landing.sagehood.ai/ — landing dedicada
+- https://sagehood.ai/pricing — pricing
+- https://sagehood.ai/about — about
+- https://www.producthunt.com/products/sagehood-ai-investing-insights — Product Hunt
+- https://www.crunchbase.com/organization/sagehood — Crunchbase
+- https://www.linkedin.com/company/sagehood — LinkedIn
+- https://skywork.ai/skypage/en/sagehood-ai-review-features-pricing/1977559129024565248 — review
+- https://www.saasworthy.com/product/sagehood-ai — listado
+- https://slashdot.org/software/p/Sagehood/ — reviews
+- https://buyersprove.com/review/Sagehood.ai/ — reviews
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: ¿el modelo de varios agentes IA especializados es replicable en AUREX o sería sobre-ingeniería para fase inicial? El precio $9.99/mes idéntico al PRO de AUREX confirma de nuevo el ticket. La limitación a S&P 500 es exactamente el gap que AUREX cubre con 313 activos crypto+stocks globales en 8 idiomas.]*
+
+---
+
+## 9. WarrenAI (Investing.com)
+
+**Empresa:** Investing.com (matriz que opera WarrenAI como producto integrado a InvestingPro)
+**Lanzamiento WarrenAI:** 21 de abril de 2025
+**URL:** https://www.investing.com/warrenai
+**Pricing page:** https://www.investing.com/pro/pricing/warrenai
+**Audiencia base de Investing.com:** 60M+ retail investors mensuales (declarado oficialmente)
+
+### 1. Posicionamiento
+- "Personal Financial Research Assistant" (tagline oficial).
+- "Cutting-edge AI-driven financial researcher" (press release de lanzamiento).
+- Mensaje core: SWOT, casos bullish/bearish, screeners avanzados, outlooks de Wall Street — todo en segundos vía conversación con IA, sobre la base de datos completa de Investing.com.
+
+### 2. Audiencia objetivo declarada
+- Retail investors que ya usan Investing.com (60M+ mensuales).
+- **Doble target validado en beta:**
+  - Long-term investors → equity research, fair value models, fundamentals.
+  - Short-term traders → trading strategies, earnings predictions, macro event impact.
+- Multi-idioma desde el día uno: **30 idiomas** (vs AUREX 8) — claro foco internacional.
+
+### 3. Modelo de monetización
+- **No es producto standalone.** Se vende como add-on dentro del paquete InvestingPro.
+- **Pro tier:** 50 prompts/mes con WarrenAI.
+- **Pro+ tier:** 500 prompts/mes con WarrenAI.
+- Pricing exacto de Pro/Pro+ varía por país y promo activa; rondas público típicas $14.99-$24.99/mes según región.
+
+### 4. Canales de marketing activos (verificados)
+- **Investing.com platform:** distribución directa a la base masiva.
+- **Press releases:** Yahoo Finance, FinTech Weekly, Crowdfund Insider, FinanceFeeds, TheFinRate.
+- **Content marketing dentro del propio sitio:** comparativas WarrenAI vs ChatGPT/Claude/Gemini, "WarrenAI picks two leading cybersecurity stocks", "Top 5 crypto stocks WarrenAI says to watch".
+- **InvestingPro support center:** FAQs y artículos de uso.
+- **App móvil de Investing.com:** integración progresiva.
+- **Email marketing** a base existente Pro.
+
+### 5. Tipo de contenido por canal
+- **Investing.com news:** "WarrenAI picks ..." — artículos donde el output del modelo IA se publica como noticia editorial. Genera SEO y demuestra capacidad del producto al mismo tiempo.
+- **Comparativas vs competidores generales (ChatGPT, Claude, Gemini):** posicionamiento como "AI generalista no sirve, AI con datos financieros sí".
+- **Press releases corporativos:** lanzamiento, milestones de adopción, expansión a nuevos idiomas.
+- **NO se identificó** presencia propia diferenciada en Instagram, TikTok ni YouTube — el producto se distribuye dentro del ecosistema Investing.com existente, no como brand standalone.
+
+### 6. Tono y voz
+- **Producto:** profesional, conversacional, sin caricatura. Asume conocimiento financiero medio.
+- **Marketing externo:** institucional, foco en data y escala (72k+ activos, 1200+ métricas, década de histórico).
+- **Tono general:** "Bloomberg accesible vía chat IA". Autoridad por escala de datos, no por estilo.
+
+### 7. Cómo se lanzaron
+- **Beta privado** previo al lanzamiento público de abril 2025, con feedback iterativo de usuarios InvestingPro.
+- **Lanzamiento 21-abr-2025** vía press release coordinado en Yahoo Finance, FinTech Weekly, FinanceFeeds y otros.
+- **Feature embedida** dentro del paquete Pro/Pro+ existente — no producto nuevo standalone, lo cual baja friction de adopción y costo de adquisición efectivamente a cero (los suscriptores existentes ya tenían acceso).
+- **30 idiomas desde el día uno** — implementación masiva en simultáneo con la base global de Investing.com.
+
+### 8. Qué les funcionó para crecer
+- **Distribución pre-existente:** 60M+ usuarios mensuales en Investing.com = playbook de crecimiento sin equivalente para startups standalone.
+- **Cobertura de datos masiva (72k+ activos, 1200+ métricas, 10 años histórico):** diferenciador frente a IA generalistas (ChatGPT, Claude, Gemini) que no tienen acceso licenciado a datos financieros profesionales.
+- **30 idiomas:** elimina barrera para mercados emergentes (India, Brasil, LATAM, Asia).
+- **Modelo de "noticias generadas por la IA propia":** las picks de WarrenAI se publican como artículos editoriales en investing.com, doble función: SEO + producto demo.
+- **Bundling con Pro/Pro+:** monetización inmediata sobre base que ya pagaba.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- "Helps analyze stocks and get additional insights" (Trustpilot Investing.com).
+- Acceso a SWOT y bull/bear cases en segundos.
+- Cobertura masiva (72k+ activos).
+- Integración fluida con la app de Investing.com que los usuarios ya conocen.
+
+**Contras frecuentes:**
+- Reseñas de Investing.com en general (no específicas de WarrenAI) reportan billing aggressive y dificultad para cancelar Pro — son quejas de la matriz, no del módulo IA, pero arrastran percepción.
+- Límites de prompts (50/mes en Pro) generan fricción para usuarios que quieren explorar.
+- Para usuarios sin suscripción Pro previa, el costo total de entrada es alto (Pro completo, no solo IA).
+
+**Conclusión reseñas:** la calidad técnica del producto IA tiene buena recepción, pero la experiencia comercial de Investing.com en general (billing, cancelación) afecta el sentimiento del paquete completo.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://www.investing.com/warrenai — sitio oficial
+- https://www.investing.com/pro/pricing/warrenai — pricing
+- https://pro.investing-support.com/hc/en-us/articles/23230310120081-WarrenAI-FAQ — FAQ oficial
+- https://www.fintechweekly.com/magazine/articles/investing-com-launches-warrenai — press
+- https://www.crowdfundinsider.com/2025/04/238721-investing-com-launches-ai-based-tool-warrenai/ — press
+- https://finance.yahoo.com/news/investing-com-launches-warrenai-cutting-140000399.html — Yahoo Finance
+- https://financefeeds.com/investing-com-launches-warrenai-ai-powered-financial-research-for-retail-investors/ — press
+- https://www.investing.com/academy/investing-pro/warrenai-versus-claude/ — comparativa
+- https://www.investing.com/academy/investing-pro/warrenai-versus-chatgpt/ — comparativa
+- https://www.investing.com/academy/investing-pro/warrenai-versus-gemini/ — comparativa
+- https://www.investing.com/news/investment-ideas/warrenai-picks-two-leading-cybersecurity-stocks-to-buy-now-4565355 — content marketing pick
+- https://www.investing.com/news/stock-market-news/top-5-crypto-stocks-warrenai-says-to-watch-as-2026-begins-volatility-creates-opportunity-93CH-4430735 — content marketing pick
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: WarrenAI no es competidor que se pueda derrotar de frente (60M usuarios, 30 idiomas, 72k activos). Es competidor a flanquear con foco específico: 313 activos cuidadosamente curados y señales propias en lugar de respuestas a prompts; presencia visual fuerte en redes que Investing.com no tiene; mercado hispanohablante donde la marca Investing.com no es percibida como cercana.]*
+
+---
+
+## 10. Danelfin
+
+**Empresa:** Danelfin
+**HQ:** Barcelona, España
+**Founded:** 2016 (plataforma de inversión); lanzada como plataforma IA en 2021
+**Founder/CEO:** Tomás Diago (founder previo de Softonic)
+**Funding:** €2M (lead Nauta Capital)
+**URL:** https://danelfin.com/
+**Pricing:** https://danelfin.com/pricing/annual
+**Award:** Best Financial Research Company en Benzinga Fintech Awards 2023
+
+### 1. Posicionamiento
+- "AI-powered stock and ETF analysis platform" — ranking cuantitativo de stocks vía AI Score 1-10.
+- Mensaje core: democratizar acceso a IA institucional con explicabilidad — el AI Score no es caja negra, viene desglosado por factores.
+- Diferenciador clave: **Explainable AI** (mostrar qué factores contribuyen al score, no solo el score).
+
+### 2. Audiencia objetivo declarada
+- Retail investors que ya entienden lo básico y buscan herramienta cuantitativa que les ahorre tiempo.
+- Inversores que comparan stocks de forma sistemática (DIY semi-pro).
+- **API tier dedicado para institucionales** — quants, fondos, fintechs que quieren integrar el AI Score.
+- Cobertura: stocks US + ETFs (no crypto).
+
+### 3. Modelo de monetización
+- **Freemium con palanca dual (retail + B2B):**
+  - **Free plan limitado.**
+  - **Plus retail: $22/mes ($199/año).**
+  - **API Basic: $70/mes** — acceso programático básico.
+  - **API Expert: $199/mes** — uso intensivo.
+  - **API Elite: $599/mes** — institucional / commercial.
+- La estructura de tres tiers de API confirma que el modelo dual (retail + datos para terceros) ya está activo y funcionando como segunda palanca.
+
+### 4. Canales de marketing activos (verificados)
+- **LinkedIn corporativo.**
+- **Trustpilot:** 40 reviews mayormente positivas — uso como social proof.
+- **Blog propio:** blog.danelfin.com — content marketing, "Danelfin reviews — what our users say" como página dedicada.
+- **Coverage en review sites:** WallStreetZen, TraderHQ, Futurepedia, AICHIEF, TrendEdge, TradingPlatforms.ai, Skywork.
+- **Awards / PR:** Benzinga Fintech Awards 2023 = boost de credibilidad.
+- **NO se identificó** presencia activa propia en Instagram/TikTok como canal estructural. YouTube tiene actividad pero no como canal principal.
+
+### 5. Tipo de contenido por canal
+- **Blog Danelfin:** comparativas de stocks por AI Score, casos de uso, performance histórica del modelo.
+- **LinkedIn:** updates de producto, performance del modelo, milestones.
+- **Trustpilot:** social proof orgánico, respuestas activas a reviews.
+- **Press releases:** funding rounds, partnerships, awards.
+- **Performance pública:** publican métricas verificables del modelo (stocks 10/10 outperform S&P en +21.05% annualized alpha 3 meses) — content que vende producto sin pitch.
+
+### 6. Tono y voz
+- **Producto:** cuantitativo, técnico-friendly, transparente.
+- **Marketing:** "democratizar IA institucional" — autoridad técnica + accesibilidad.
+- **Comunicación de performance:** datos duros, sin sensacionalismo. Diferencia de tono con apps que prometen "moonshots".
+
+### 7. Cómo se lanzaron
+- **2016:** founded.
+- **2021:** lanzamiento como plataforma IA propiamente dicha.
+- **2023:** Award Benzinga + €2M funding (Nauta Capital lead).
+- Crecimiento basado en performance verificable del modelo + content marketing técnico, no en growth hacking ni paid ads visibles.
+- Ventaja temporal: estaban listos antes del boom de IA en finanzas (2021), por eso cuando la categoría explotó (2023-2024) ya tenían producto maduro y track record histórico.
+
+### 8. Qué les funcionó para crecer
+- **Track record cuantificable y publicable:** "+21.05% annualized alpha 3 meses para stocks 10/10" es la métrica más fuerte del documento. Vende sin pitch.
+- **Explainable AI:** desglose de factores del score = trust del usuario, diferencia con apps caja negra.
+- **API tiers como segunda palanca de monetización ($70-$599/mes):** valida que la estrategia dual (retail + B2B datos) ya genera ingresos en este nicho. Coincide con el insight de Stocktwits.
+- **Award de tercero (Benzinga 2023):** PR cycle gratis + autoridad.
+- **Presencia europea:** mercado menos saturado de competidores AI fintech que US, audiencia con ticket promedio mayor en Europa.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados (Trustpilot):**
+- AI Score como concepto claro y accionable.
+- UI limpia.
+- Customer support responsivo, "really good" según un usuario que tuvo problemas con un código promo y los resolvieron con descuento generoso.
+
+**Contras frecuentes:**
+- Códigos promocionales: no hay lugar para ingresarlos al elegir el 14-day free trial; precios del sitio no matchean con los de emails promocionales.
+- Subscription management: usuarios reportan ocasional fricción para gestionar la suscripción.
+- Cobertura solo US (sin crypto, sin acciones europeas/asiáticas en profundidad).
+
+**Conclusión reseñas:** producto con buena percepción técnica y soporte responsivo. Las quejas son operativas (billing/promos), no de calidad del producto IA.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://danelfin.com/ — sitio oficial
+- https://danelfin.com/pricing/annual — pricing
+- https://blog.danelfin.com/danelfin-reviews — reviews página propia
+- https://www.trustpilot.com/review/danelfin.com — Trustpilot
+- https://www.nautacapital.com/news-insights/danelfin-the-ai-powered-stock-analytics-platform-raises-eu2m-to-help-retail-investors-make-better-decisions — funding €2M
+- https://www.wallstreetzen.com/blog/danelfin-review/ — review
+- https://www.glbgpt.com/resource/deep-dive-danelfinis-this-ai-stock-scoring-tool-a-game-changer-or-just-hype — análisis
+- https://trendedgeai.com/reviews/danelfin — review
+- https://aichief.com/ai-business-tools/danelfin/ — review
+- https://www.futurepedia.io/tool/danelfin — listado
+- https://tradingplatforms.ai/danelfin-review — review
+- https://tradersunion.com/reviews/danelfin-com/ — review
+- https://skywork.ai/skypage/en/Danelfin-Review-My-Experience-Using-AI-to-Navigate-the-Stock-Market/1976119723757203456 — review
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: Danelfin es el caso más relevante del Plan MKT v2 para validar la palanca dual (retail PRO + API B2B). Performance pública verificable es lo que les permitió crecer sin paid ads. Pregunta crítica: ¿AUREX puede empezar a publicar acierto/error de sus señales IA desde el día 1 del lanzamiento como Danelfin lo hace con su AI Score? Es factible si se diseña la arquitectura de logging desde ahora.]*
+
+---
+
+## 11. RockFlow
+
+**Empresa:** RockFlow (entidad operadora: Rockalpha Limited, registrada como Financial Service Provider en Nueva Zelanda)
+**HQ:** Singapur
+**Founder/CEO:** Vakee Lai
+**Funding:** $20M total raised, 3 rondas. Angel Round de $10M liderado por BlueRun Ventures. Series A en 27-nov-2025.
+**URL:** https://rockflow.ai/
+**App Store:** https://apps.apple.com/us/app/rockflow-ai-investment/id1599189662
+**Google Play:** https://play.google.com/store/apps/details?id=team.flowai.android
+
+### 1. Posicionamiento
+- "Easy Trading with Fun" (tagline).
+- "AI-Investment App" — multi-asset, mobile-first, multi-país.
+- Mensaje core: trading e inversión con IA con experiencia divertida y accesible para Gen Z global.
+- Producto IA destacado: **Bobby** (asistente IA), con capacidades de **TradeGPT** integradas (daily feed de oportunidades de trading + traducción de news y movimientos en takeaways claros).
+
+### 2. Audiencia objetivo declarada
+- **Gen Z y young investors internacionales.**
+- Mobile-first, fractional-friendly desde $1.
+- Multi-país: presencia en 30+ países y regiones.
+- 9 idiomas (similar a los 8 idiomas de AUREX).
+- Skew hacia mercados emergentes y diáspora asiática-pacífica (HQ Singapur).
+
+### 3. Modelo de monetización
+- **Modelo híbrido broker + AI:**
+  - Trading commission-free básico.
+  - Fractional shares desde $1 (deposito mínimo bajo).
+  - Revenue por spread, fees secundarios, posible PFOF (no detallado públicamente).
+- A diferencia de AUREX, **es broker** — custodia dinero y ejecuta órdenes. No solo análisis.
+- Pricing premium específico de Bobby/TradeGPT: no detallado públicamente como tier separado al 29-abr-2026; el AI assistant viene bundled con la app de trading.
+
+### 4. Canales de marketing activos (verificados)
+- **Instagram:** @rockflowapp
+- **Twitter/X:** @RockFlowApp
+- **TikTok:** @rockflow.ai — coherente con foco Gen Z.
+- **App Store + Google Play:** presencia activa con reviews positivas.
+- **Blog propio:** rockflow.ai/blog — comparativas tipo "Magnifi vs RockFlow", "I Tried AI Investing with $1: My Week Using RockFlow", "5 Best AI Investing Apps of 2026".
+- **Yahoo Finance + press releases** para milestones (TradeGPT launch, funding rounds).
+
+### 5. Tipo de contenido por canal
+- **Blog propio:** SEO content de comparativas con competidores ("RockFlow vs Magnifi"), guías de iniciación, listas tipo "best AI investing apps".
+- **TikTok / Instagram:** content visual orientado Gen Z. Tono "fun", micro-demos del producto, capturas de Bobby explicando earnings.
+- **App Store:** uso activo de reviews como social proof.
+- **Press releases:** Funding ($20M total, $10M angel BlueRun), TradeGPT launch.
+
+### 6. Tono y voz
+- **Producto y marketing:** "fun", divertido, juvenil. Cita textual de review: "TradeGPT was a pleasant surprise — didn't expect it to be this fun!" y "Pretty entertaining, a must-try for Gen Z!".
+- **Branding:** colorido, casual, claramente diferenciado de la estética seria de Magnifi/Public.com/Investing.com.
+- **Tono general:** anti-Wall-Street tradicional, similar al posicionamiento original de Robinhood pero con foco IA y multi-país, no solo US.
+
+### 7. Cómo se lanzaron
+- **2022:** primera funding round (16-may-2022).
+- Crecimiento gradual durante 2022-2024 con foco multi-país y producto.
+- **27-nov-2025:** Series A — capital significativo para escala.
+- Estrategia: lanzar primero en mercados asiáticos (HQ Singapur), expandir a US y resto del mundo gradualmente.
+- TradeGPT presentado como "World's First ChatGPT+Investment Product" (claim de press release, no verificable como hecho objetivo pero sí como posicionamiento).
+
+### 8. Qué les funcionó para crecer
+- **Mobile-first puro:** producto pensado para celular desde el día uno, no port de web.
+- **Fractional desde $1:** elimina barrera de entrada.
+- **Bobby + TradeGPT:** AI summarization de earnings reports (de 20 páginas a bullets en segundos) — feature concreto y demostrable que justifica el "AI investing" en marketing.
+- **Multi-idioma (9):** mismo principio que WarrenAI y AUREX — la barrera de idioma es real para retail global.
+- **Tono Gen Z + TikTok:** canales orgánicos coherentes con audiencia. Diferencial frente a competidores con tono institucional.
+- **Funding sólido ($20M):** aporta capacidad de escala y credibilidad.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- Bobby (AI assistant): summarización de earnings reports valorada como gran ahorro de tiempo.
+- "Copy experienced traders" feature genera confianza para principiantes.
+- Interfaz percibida como "breath of fresh air" entre apps de inversión, sin clutter de charts.
+- Deposit/withdrawal "straightforward" con fees bajos.
+- TradeGPT: "fun", "must-try for Gen Z".
+
+**Contras frecuentes:**
+- Trust score Scamadviser 62% — no es alarmante pero indica awareness limitada en bases de datos anti-fraude. Típico de apps relativamente nuevas y no-US.
+- Operación cross-border (Singapur HQ, NZ regulatoria): puede generar fricción en mercados con regulación local estricta.
+- Cobertura de instrumentos: principalmente US y HK stocks; no es plataforma multi-asset de profundidad institucional.
+
+**Conclusión reseñas:** producto con buen sentimiento de usuarios, especialmente entre jóvenes y principiantes. Diferencial: tono y experiencia, no profundidad analítica.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://rockflow.ai/ — sitio oficial
+- https://rockflow.ai/tradegpt — TradeGPT page
+- https://apps.apple.com/us/app/rockflow-ai-investment/id1599189662 — App Store
+- https://play.google.com/store/apps/details?id=team.flowai.android — Google Play
+- https://www.crunchbase.com/organization/rockflow — Crunchbase
+- https://tracxn.com/d/companies/rockflow/ — Tracxn perfil
+- https://finance.yahoo.com/news/rockflow-unveils-tradegpt-worlds-first-133000004.html — TradeGPT launch
+- https://rockflow.ai/blog/i-tried-ai-investing-with-1 — content propio
+- https://rockflow.ai/blog/magnifi-vs-rockflow-which-ai-investment-app-is-better-for-beginners — comparativa
+- https://rockflow.ai/blog/best-ai-trading-apps-2025 — content propio
+- https://rockflow.ai/blog/ai-investing-app-bobby-review-2025 — Bobby review propio
+- https://www.scamadviser.com/check-website/rockflow.ai — trust check
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: RockFlow es el caso más cercano a AUREX en multi-idioma + multi-país + AI assistant + mobile-first, pero con la diferencia clave de ser broker y de tener tono Gen Z. Pregunta crítica: ¿AUREX adopta tono "fun" para Gen Z o mantiene tono más sobrio para inversor maduro? El branding actual de AUREX (estética seria, premium) se acerca más a Public.com que a RockFlow. Decidir explícito qué segmento priorizar.]*
+
+---
+
+## 12. Guavy
+
+**Empresa:** Guavy Inc.
+**HQ:** Calgary, Alberta, Canadá
+**CEO:** Donna Tilden
+**Founded:** 2015 (la empresa); **app móvil iOS lanzada oct-2025**, anuncio público dic-2025; Android Q1-Q2 2026.
+**URL:** https://www.guavy.com/
+**Blog:** https://blog.guavy.com/
+
+### 1. Posicionamiento
+- "Real-Time Crypto Intelligence for Traders, Developers & Agents" (tagline).
+- "Your New Crypto Compass" (intro post del blog).
+- Mensaje core: AI sentiment + signals que antes eran solo institucionales, ahora accesibles para retail crypto traders en mobile.
+
+### 2. Audiencia objetivo declarada
+- **Doble target explícito:**
+  - **App móvil:** retail crypto traders que buscan señales simples e interpretables (perfil de riesgo + entry/exit points).
+  - **API institucional:** developers, quant teams, exchanges, fintech partners, AI agents.
+- Vertical exclusiva: **crypto** (350+ coins). No incluye stocks ni ETFs.
+- Geografía: global, sin foco regional declarado.
+
+### 3. Modelo de monetización
+- **App móvil (retail):**
+  - Free Basic plan.
+  - **Plus: $6.99/mes** — más barato que cualquier competidor del Plan MKT v2 al 29-abr-2026.
+- **API institucional (B2B):**
+  - **Sandbox:** gratis (Bitcoin only, 5.000 requests/mes) — funnel de adopción para developers.
+  - **Quant Plan: $39/mes** anual — full access a 350+ coins.
+  - **Commercial Plan: $399/mes** anual — apps comerciales y fondos.
+- Modelo dual retail+B2B confirmado, similar a Danelfin pero crypto-only.
+
+### 4. Canales de marketing activos (verificados)
+- **Sitio web propio + blog corporativo (blog.guavy.com).**
+- **Press releases distribuidos masivamente:** Benzinga, Chainwire, The Daily Hodl, PR Newswire, Bitget, CoinPaper, Investing.com, TradingView, Manila Times, Crypto Briefing.
+- **App Store iOS** (rating 5.0 con reviews iniciales).
+- **Email institucional:** hello@guavy.com como contacto comercial.
+- **NO se identificaron** redes sociales propias (Twitter, Instagram, TikTok) con presencia sostenida en las búsquedas — el funnel parece B2B + press, no social retail. Verificar directo en sitio si tienen X/Twitter activo.
+
+### 5. Tipo de contenido por canal
+- **Press releases:** dos olas grandes (lanzamiento app dic-2025; lanzamiento API ene-2026).
+- **Blog propio:** posts de introducción al producto, casos de uso para traders y developers.
+- **Press distribuido en crypto media:** Daily Hodl, Crypto Briefing, Chainwire, Bitget — viraliza dentro del nicho crypto sin tener que construir audiencia propia desde cero.
+- **Sitio para developers (API docs):** content técnico para captar integradores.
+
+### 6. Tono y voz
+- **Producto:** simple, accesible, "interpretable market intelligence". No promete riqueza fácil.
+- **Marketing institucional:** profesional, foco en credibilidad técnica (10 años de experiencia previa procesando data financiera).
+- **Tono general:** sobrio, B2B-leaning, distinto del hype habitual del nicho crypto retail.
+
+### 7. Cómo se lanzaron
+- **2015:** empresa founded para data y análisis financiero.
+- **Octubre 2025:** app iOS sale silenciosamente en App Store.
+- **Diciembre 2025:** lanzamiento público con press release distribuido en cadena (Benzinga, Chainwire, Daily Hodl, etc.).
+- **Enero 2026:** segunda ola de PR con el lanzamiento del API institucional.
+- Estrategia: empresa de data financiera ya existente (10 años) que pivotó a producto retail crypto en mobile.
+
+### 8. Qué les funcionó para crecer
+- **Stack maduro:** 10 años procesando data financiera antes del producto retail = ventaja técnica frente a startups crypto recientes que tienen que construir el motor de sentiment desde cero.
+- **Modelo dual desde el día uno (retail + API):** segunda palanca activa, no como afterthought.
+- **Pricing agresivo retail ($6.99/mes):** subcortar a la competencia crypto signals (la mayoría $9.99-$30/mes).
+- **PR distribution amplia en crypto media:** Daily Hodl, Chainwire, Crypto Briefing, Bitget — alcance al nicho sin construir social orgánico propio.
+- **API sandbox gratis:** funnel de developers que pueden convertirse en evangelistas internos en sus empresas.
+
+### 9. Reseñas App Store y Google Play (resumen)
+
+**Pros mencionados:**
+- App Store rating **5.0** al 29-abr-2026 (N pequeño pero limpio).
+- "AI scoring del sentiment combinado con factores cuantitativos" valorado como diferencial.
+- Coverage 350+ coins con análisis individual.
+- UX simple para identificar coins según perfil de riesgo + entry/exit points.
+
+**Contras frecuentes:**
+- N de reviews aún muy bajo: el rating 5.0 no se sostiene a escala todavía.
+- Solo iOS al 29-abr-2026 — Android pendiente para Q1-Q2 2026.
+- Solo crypto: usuarios que quieren multi-asset (stocks + crypto) tienen que combinar con otra herramienta.
+
+**Conclusión reseñas:** producto con buena recepción inicial pero base de usuarios joven. Caso típico de "early days" — el indicador real será el rating cuando tengan 1000+ reviews.
+
+### 10. Fuentes consultadas (29-abr-2026)
+- https://www.guavy.com/ — sitio oficial
+- https://blog.guavy.com/ — blog corporativo
+- https://blog.guavy.com/posts/introducing-guavy/ — intro post
+- https://blog.guavy.com/posts/guavy-launches-ios-app/ — lanzamiento iOS
+- https://www.benzinga.com/pressreleases/25/12/49534430/guavy-launches-mobile-app-ai-powered-crypto-market-sentiment-and-trading-signals — press
+- https://chainwire.org/2025/12/22/guavy-launches-mobile-app-ai-powered-crypto-market-sentiment-and-trading-signals/ — press
+- https://dailyhodl.com/2025/12/22/guavy-launches-mobile-app-ai-powered-crypto-market-sentiment-and-trading-signals/ — press
+- https://www.prnewswire.com/news-releases/guavy-launches-ios-app-ai-powered-market-sentiment-and-signals-for-cryptocurrency-traders-302644334.html — PRNewswire
+- https://cryptobriefing.com/guavy-launches-ai-native-crypto-api-real-time-market-sentiment-for-trading-apps-funds-ai-agents/ — API press
+- https://www.benzinga.com/pressreleases/26/01/49871381/guavy-launches-ai-native-crypto-api-real-time-market-sentiment-for-trading-apps-funds-ai-agents — API press
+- https://www.investing.com/news/cryptocurrency-news/guavy-launches-ainative-crypto-api-realtime-market-sentiment-for-trading-apps-funds--ai-agents-4444490 — API press
+
+### Análisis estratégico (Escritorio)
+
+*[Reservado — Escritorio agrega análisis estratégico cruzado con AUREX cuando esté listo. Foco sugerido: Guavy es el caso más nuevo y cercano a la palanca dual de AUREX, pero crypto-only. La pregunta es si AUREX puede salir antes que Guavy con el equivalente multi-asset (crypto+stocks 313 activos) y multi-idioma (8 idiomas) — la ventana de oportunidad existe porque Guavy todavía no cubre stocks ni habla más de un idioma confirmado. El precio retail $6.99/mes de Guavy es una señal: hay margen para AUREX FREE muy generoso o un sub-tier por debajo de los $9.99/mes del PRO si se quiere atacar ese segmento.]*
+
+---
+
+# CIERRE DE PASADA 3 — Síntesis preliminar
+
+5 competidores documentados:
+
+8. **Sagehood AI** — agentes IA para US stocks, $9.99/mes idéntico a AUREX, lanzado 2025 vía Product Hunt, solo S&P 500.
+9. **WarrenAI (Investing.com)** — research assistant lanzado 21-abr-2025, 30 idiomas, 72k+ activos, embebido en InvestingPro con 60M usuarios mensuales.
+10. **Danelfin** — Barcelona, AI Score 1-10 con Explainable AI, palanca dual retail $22/mes + API $70-$599/mes, performance pública (+21.05% alpha 3 meses para 10/10).
+11. **RockFlow** — Singapur, Bobby + TradeGPT, mobile-first Gen Z, 9 idiomas, 30+ países, $20M raised, broker (no solo análisis).
+12. **Guavy** — Calgary, AI sentiment crypto-only 350+ coins, $6.99/mes retail + API $39-$399/mes, app iOS lanzada oct-2025.
+
+**Insights inmediatos (sin esperar análisis estratégico de Escritorio):**
+
+- **El precio $9.99/mes para PRO de AUREX queda triple-validado** ahora con Sagehood (idéntico), Magnifi (rango), Atom Finance (idéntico, aunque cerró). $22/mes de Danelfin es un techo posible para un tier ELITE.
+- **La palanca dual retail + API B2B es el patrón estándar emergente:** Stocktwits ya lo demostró histórico, Danelfin ahora con tres tiers de API, Guavy desde el lanzamiento. Sagehood y RockFlow no tienen API pública. **AUREX puede diseñar la suya temprano.**
+- **Multi-idioma es competencia real:** WarrenAI 30, RockFlow 9, AUREX 8. El 8 de AUREX es competitivo pero no diferencial — lo diferencial será la calidad del producto en ES, PT, HI.
+- **El hueco que ningún competidor ataca seriamente:** análisis IA multi-asset (stocks + crypto unificados) en mobile, multi-idioma, freemium con API B2B. Sagehood es solo US stocks; Guavy es solo crypto; RockFlow es broker; Danelfin es solo stocks; WarrenAI necesita suscripción Pro para todo. **AUREX tiene posicionamiento ortogonal disponible.**
+
+---
+
+## Pasada 4 — A definir con Fernando
+
+*[Pendiente OK explícito. Posible foco: apps no-US (Europa, LATAM, Asia) para entender enfoques regionales — Brasil, India, México son candidatos lógicos por mercado retail emergente.]*
 
 ---
 
@@ -932,5 +1435,5 @@ Code + análisis estratégico de Escritorio]*
 
 ---
 
-*RESEARCH_MKT.md — última actualización: 28-abr-2026*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 3 completada con 5 competidores: Sagehood, WarrenAI, Danelfin, RockFlow, Guavy)*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*
