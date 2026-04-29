@@ -65,7 +65,7 @@ cp ~/Desktop/aurex-memory-backup/*.md ~/.claude/projects/-Users-fernandomoscon/m
 
 | Dato | Valor |
 |---|---|
-| Producto | AUREX — plataforma de inversión con IA, 313 activos (crypto + acciones globales) |
+| Producto | AUREX — plataforma de inversión con IA. **350 activos en Mercados** (cripto + stablecoins + acciones de 6 mercados con Argentina, Brasil/LATAM, USA, Europa, Japón, China + ETFs + materias primas + metales + futuros + bonos + divisas). **74 con señales IA propias** del motor AUREX IA. |
 | Founder | Fernando G. Moscon (fmoscon@gmail.com) |
 | Idioma de trabajo | Español (Argentina) — siempre responder en español |
 | Zona horaria operativa | Argentina (UTC-3). Horas mencionadas sin TZ son AR. |

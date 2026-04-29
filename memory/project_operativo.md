@@ -49,6 +49,13 @@ originSessionId: f9879308-2ffe-4c3d-ad7b-0a66d22643ac
 - Apple Server Notifications V2 (versión actual)
 - Verificación de funcionamiento: dashboard de RevenueCat → sección Webhooks (log en vivo)
 
+**Cobertura de la app (verificado el 29-abr-2026 contando `aurex-features.js` y `aurex-backend/activos.json`):**
+- **350 activos** en `activos.json` y visualizables en el tab Mercados con precios en tiempo real.
+- Tipos: cripto (50) + stablecoins (3) + acciones de 6 mercados (USA 94 + Argentina 26 + Brasil/LATAM 24 + Europa 25 + Japón 20 + China/HK 20) + ETFs (40) + materias primas (20) + metales (10) + futuros (20) + bonos (15, incluye AL30/GD30/AL35 ARG) + divisas (5, incluye USDARS).
+- **74 activos** con señales IA propias del motor AUREX IA (según `AUREX-IA-DOC.md` sección 8 y `METADATA-APPSTORE.md`). Es el subconjunto seleccionado de los 350 sobre el que opera el motor IA propio.
+- Discrepancia detectada: CLAUDE.md, INICIO_AUREX.md, RESEARCH_MKT.md y otros docs decían "313 activos" — dato obsoleto/incorrecto, corregido en commit del 29-abr-2026 a 350 (Mercados) / 74 (señales IA).
+- METADATA-APPSTORE.md y la metadata cargada en App Store Connect / Google Play Console usan "74 activos" en la descripción pública. Eso NO se toca mientras Build 17 (Apple) y Build 2 (Google) están en revisión — riesgo de "Metadata Rejected". Se reformula en v1.1 post-aprobación.
+
 **Repos en disco:**
 - PWA: `/Users/fernandomoscon/Desktop/aurex-app` (branch `main`)
 - Nativa: `/Users/fernandomoscon/AurexApp` (branch operativo `dev`, NO main hasta aprobación Apple)

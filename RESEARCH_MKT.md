@@ -532,7 +532,7 @@ Stocktwits es el competidor más interesante del research porque no compite dire
 No en producto, sí en atención. Stocktwits es una red social de traders, no una herramienta de análisis IA. El usuario de Stocktwits quiere opiniones de otros inversores y sentimiento de comunidad. El usuario de AUREX quiere señales cuantitativas sin ruido humano. Son necesidades distintas y complementarias: un usuario puede usar Stocktwits para el pulso social y AUREX para el análisis objetivo. La amenaza real no es que Stocktwits reemplace a AUREX, sino que capture el tiempo del usuario antes de que llegue a AUREX.
 
 **Aprendizaje de monetización — el más importante del documento:**
-El 35-50% del revenue de Stocktwits viene de Data Licensing: vender su Social Sentiment API a Bloomberg, Google, hedge funds y quant funds. No viene de los usuarios Premium. Eso confirma el insight que Code mencionó en el cierre del día: el modelo de monetización dual (usuarios PRO/ELITE + venta de datos/señales agregados) es el camino correcto para AUREX a mediano plazo. AUREX acumula datos de comportamiento de 313 activos en tiempo real. Eso tiene valor para terceros. No es para fase inicial, pero hay que diseñar la arquitectura pensando en esa segunda palanca desde ahora.
+El 35-50% del revenue de Stocktwits viene de Data Licensing: vender su Social Sentiment API a Bloomberg, Google, hedge funds y quant funds. No viene de los usuarios Premium. Eso confirma el insight que Code mencionó en el cierre del día: el modelo de monetización dual (usuarios PRO/ELITE + venta de datos/señales agregados) es el camino correcto para AUREX a mediano plazo. AUREX acumula datos de comportamiento de 350 activos en tiempo real (74 con señales IA propias). Eso tiene valor para terceros. No es para fase inicial, pero hay que diseñar la arquitectura pensando en esa segunda palanca desde ahora.
 
 **Aprendizaje de producto:**
 Las reseñas de Stocktwits revelan el problema más grave de una red social financiera: los bots y el fake engagement destruyen la confianza. Usuarios reportan que el sitio está lleno de bots de IA usados para mostrar fake engagement, y que inversores que advierten contra pumps son baneados. AUREX tiene una ventaja estructural: las señales son cuantitativas, no opiniones. No hay bots que puedan corromper un RSI14 calculado sobre datos reales de Binance. Esa objetividad hay que comunicarla como diferenciador explícito.
@@ -1005,7 +1005,7 @@ Sagehood AI es el competidor más parecido a AUREX en la Pasada 3. Mismo precio 
 
 Lo más importante que AUREX puede aprender: Sagehood se lanzó en Product Hunt y quedó top 15 anual. Eso es visibilidad masiva sin presupuesto de ads. El launch en Product Hunt está disponible para AUREX y no tiene costo. Hay que planificarlo como evento de lanzamiento, no como afterthought.
 
-La debilidad que AUREX puede explotar: Sagehood solo cubre S&P 500. AUREX tiene 313 activos incluyendo crypto y acciones globales. Esa cobertura multi-asset es diferencial real y hay que comunicarla explícitamente en el posicionamiento contra Sagehood.
+La debilidad que AUREX puede explotar: Sagehood solo cubre S&P 500. AUREX tiene 350 activos: cripto + acciones de 6 mercados (USA + Argentina + Brasil/LATAM + Europa + Japón + China) + ETFs + materias primas + metales + futuros + bonos + divisas, con 74 con señales IA propias. Esa cobertura multi-asset y multi-mercado es diferencial real y hay que comunicarla explícitamente en el posicionamiento contra Sagehood.
 
 El riesgo que comparten: ambos son productos nuevos sin track record de acierto IA verificable a escala. Las reviews ya dicen "cool idea, but not sure the data is accurate." Cuando AUREX conecte Claude API real, la tasa de acierto tiene que medirse y publicarse — ese dato solo vale más que cualquier campaña de marketing.
 
@@ -1212,7 +1212,7 @@ El insight crítico: Danelfin publica su métrica de performance públicamente �
 
 El modelo dual (retail + API) de Danelfin está funcionando y generando ingresos. Confirma por tercera vez en el research (después de Stocktwits y Atom Finance) que las suscripciones freemium solas no son suficientes para sostenibilidad. La API institucional de Danelfin es el destino natural de AUREX a mediano plazo.
 
-Danelfin tiene cobertura solo US y Europa, sin crypto en profundidad. AUREX tiene 313 activos incluyendo crypto global. Esa brecha de cobertura es real y comunicable.
+Danelfin cubre principalmente acciones US (no Europa como podría asumirse por su HQ Barcelona) y no toca crypto. AUREX tiene 350 activos incluyendo crypto global, acciones de 6 mercados (USA + Argentina + Brasil/LATAM + Europa + Japón + China), ETFs, materias primas, metales, futuros, bonos y divisas. Esa brecha de cobertura es real y comunicable.
 
 ---
 
@@ -1877,7 +1877,7 @@ Avenue no es competidor directo de AUREX sino referencia de lo que pasa cuando u
 
 El dato más relevante para el posicionamiento de AUREX: Avenue no tiene IA de análisis propia. Su diferencial es acceso a acciones USA en dólares desde Brasil con cuenta regulada. Los usuarios de Avenue que quieren análisis IA tienen que buscarlo en otro lado. AUREX puede ser ese "otro lado" — la herramienta de análisis que los usuarios de Avenue usan para decidir qué comprar antes de ir a Avenue a ejecutarlo.
 
-La adquisición por Itaú confirma que cuando una fintech de inversión llega a escala en Brasil, los bancos tradicionales la compran. Eso es tanto una oportunidad (exit posible) como un riesgo (el banco puede copiar el producto internamente). Para AUREX, la ventaja defensiva es la globalidad del análisis: 313 activos en 8 idiomas es difícil de replicar para un banco que opera bajo regulación local estricta.
+La adquisición por Itaú confirma que cuando una fintech de inversión llega a escala en Brasil, los bancos tradicionales la compran. Eso es tanto una oportunidad (exit posible) como un riesgo (el banco puede copiar el producto internamente). Para AUREX, la ventaja defensiva es la globalidad del análisis: 350 activos cross-asset (cripto + acciones de 6 mercados + ETFs + materias primas + metales + futuros + bonos + divisas) en 8 idiomas es difícil de replicar para un banco que opera bajo regulación local estricta.
 
 ---
 

@@ -46,7 +46,7 @@
 | **Fuente unica** | Backend Railway |
 | **Endpoint** | `GET /api/ia-signals` |
 | **Frecuencia** | Recalcula cada 5 minutos via cron |
-| **Activos** | 313 desde `activos.json` |
+| **Activos** | 350 desde `activos.json` (74 con señales IA propias del motor AUREX IA según `AUREX-IA-DOC.md` sección 8) |
 | **PWA** | Lee de este endpoint. Fallback: calculo local |
 | **Nativa** | Lee de este endpoint. Fallback: motor iaEngine.js local |
 
