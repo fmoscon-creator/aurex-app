@@ -1,5 +1,5 @@
 # CONTEXTO DEL PROYECTO AUREX
-Última actualización: 28 de Abril de 2026
+Última actualización: 29 de Abril de 2026 (~03:15 AR)
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
@@ -13,17 +13,22 @@ Tarea de hoy: [FECHA] - [TAREA]
 
 ---
 
-## ESTADO ACTUAL — 28 ABRIL 2026
+## ESTADO ACTUAL — 29 ABRIL 2026
 
 ### HEAD ACTUAL (PWA aurex-app, branch main)
-Commit: 57f1971
-Fecha: 2026-04-28
-Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats de Claude
+Commit: eb0f089
+Fecha: 2026-04-29
+Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria persistente
 
 ### REPOS RELACIONADOS (3 repos del proyecto)
-- aurex-app (PWA)         main: 57f1971  (este repo, hosting GitHub Pages)
+- aurex-app (PWA)         main: eb0f089  (este repo, hosting GitHub Pages)
 - AurexApp (Nativa)       dev:  2a12b69  (React Native — Build 17 enviado a Apple, NO TOCAR main hasta aprobación)
-- aurex-backend           main: 5f57dde  (Railway)
+- aurex-backend           main: bfd0ecb  (Railway — incluye endpoint /api/whatsapp/connect-qr con secret y soporte de pairing code)
+
+### COMMITS DEL 29 DE ABRIL 2026
+- aurex-app eb0f089 — sección 0.A en CLAUDE.md y subsección en INICIO_AUREX.md: procedimiento de arranque de Code desde home (`cd ~ && claude`) y ubicación de la memoria persistente (`~/.claude/projects/-Users-fernandomoscon/memory/`, 7 archivos: índice + 6 con reglas y datos operativos).
+- aurex-backend ec578af — endpoint nuevo `GET /api/whatsapp/connect-qr` para generar QR de vinculación de Evolution sin que la apikey salga de Railway. Acceso protegido por la env var `WHATSAPP_CONNECT_SECRET` (header `X-Secret` o query `?secret=...`).
+- aurex-backend bfd0ecb — soporte de pairing code en el mismo endpoint: si llega `?number=<numero>` se propaga a Evolution para devolver `pairingCode` en vez de QR. Quedó instalado pero NO funcional con Evolution v1.8.7 (esa versión ignora el parámetro y devuelve QR igual; pairing code requiere Evolution v2).
 
 ### APPLE — Build 17 iOS
 - **Nombre publicado en App Store: AUREX AI** (no "AUREX" — estaba ocupado, "AUREX AI" cumple Guideline 2.3.7)
@@ -59,16 +64,24 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 - Prueba cerrada: 14 días requeridos, llevamos 5 corridos (submit 23-abr 16:20 AR), con 12+ testers activos
 - Link prueba: https://play.google.com/apps/testing/com.aurexapp
 
-### TELEGRAM (canal alternativo de alertas — configurado 28-abr-2026)
+### TELEGRAM (canal principal y permanente de alertas)
+- Decisión tomada el 28-abr-2026 tras incidente WhatsApp: Telegram queda como canal **principal y permanente**, sin remover. WhatsApp pasa a canal **secundario** una vez se reconecte.
 - Bot: @Aurexalertas_bot (id 8740136430, "Aurex Alertas")
 - Token: env var `TELEGRAM_BOT_TOKEN` en Railway aurex-app (existente desde antes)
-- Chat ID admin Fernando: ver env var `ADMIN_TELEGRAM_CHAT_ID` en Railway aurex-app (no se publica el valor en repo público por privacidad)
-- Función: canal redundante de alertas mientras WhatsApp del número AUREX está en revisión por suspensión del 28-abr (24hs). Cuando WhatsApp se restaure, sumarlo como canal adicional sin remover Telegram.
-- Riesgo de baneo: cero (Telegram permisivo con bots)
+- Chat ID admin Fernando: env var `ADMIN_TELEGRAM_CHAT_ID` en Railway aurex-app (no se publica el valor en repo público por privacidad)
+- Reportes automáticos por Telegram al admin:
+  - Reporte diario salud: 8:00 AR (cron `0 11 * * *`).
+  - Reporte diario de proyecto (`dailyProjectStatusReport`): 20:00 AR (cron `0 23 * * *`). Manda 4 mensajes consecutivos: (1) cuerpo principal con stores Apple/Google + SHAs de los 3 repos + incidentes activos + crypto source; (2) link a `CONTEXTO.md`; (3) link a `INICIO_AUREX.md`; (4) `RESEARCH_API_KEY` si está seteada.
+  - Reporte mensual: 18:00 AR del último día hábil (cron `0 21 28-31 * *`).
+- Riesgo de baneo: cero (Telegram permisivo con bots).
 
-### INCIDENTES ACTIVOS (al 28-abr-2026)
-- **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 10 días sin resolución; investigar alternativas post-Apple.
-- **WA-001 ACTIVE** — Evolution API (servicio evo-v1) sin sesión WhatsApp desde 28-abr 15:25 UTC. Causa: instancia "aurex" caída tras redeploys + suspensión del número AUREX por antifraude WhatsApp Business. En revisión por WhatsApp (hasta 24hs). Resolverá automáticamente cuando WhatsApp apruebe.
+### INCIDENTES ACTIVOS (al 29-abr-2026)
+- **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 11 días sin resolución; investigar alternativas post-Apple.
+- **WA-001 ACTIVE** — Evolution API (servicio evo-v1) sin sesión WhatsApp desde 28-abr 15:25 UTC. Estado al 29-abr-2026 ~03:15 AR: el número 2563 ya está VERIFICADO (código por llamada el 28-abr, email + passkey activados como respaldo), pero la sesión sigue sin vincularse. Intentos del 29-abr (5 llamadas a `/instance/connect/aurex` acumuladas):
+  1. QR vía endpoint nuevo `/api/whatsapp/connect-qr` → primer intento devolvió `count: 0` sin QR.
+  2. Segundo intento → QR válido, Fernando lo escaneó. WhatsApp mostró "Iniciando sesión... Mantén WhatsApp Business abierto en ambos dispositivos" pero no completó vinculación; el estado en Evolution pasó a `connecting` y volvió a `close`.
+  3. Pairing code (`?number=5491133602563`) → Evolution v1.8.7 ignora el parámetro y devuelve QR otra vez (la feature requiere Evolution v2). 5 llamadas acumuladas → freno para evitar antifraude WhatsApp.
+  - Decisión: dejar la reconexión para mañana (cooldown post-suspensión se levanta en 4-24 hs) usando QR limpio. Telegram cubre alertas mientras tanto.
 
 ---
 
@@ -79,8 +92,8 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 3. Onboarding: corregir faltas de ortografía detectadas en emulador
 4. Corregir 2 líneas v1.0.0 hardcodeado en nativa (PerfilScreen.js L789 y L851)
    con Platform.OS — sólo cuando Apple/Google aprueben
-5. **Verificación WhatsApp Business +5491133602563 — códigos no llegan**
-   Tras suspensión + restauración del 28-abr-2026, los códigos de verificación NO llegan ni por SMS ni por llamada (audio corrupto). Timers escalados (28 min llamada / 58 min SMS). Verificado exhaustivamente que el 2563 NO está vinculado en ningún sistema Meta (Business Suite, Developers, Apps personales). Ticket de soporte enviado a WhatsApp el 28-abr 20:00 AR (esperando respuesta a fmoscon@gmail.com, suelen tardar 24-48 hs). Mientras tanto, AUREX opera con Telegram como canal de alertas. Pendiente: pedir opinión a Escritorio (puede acceder a las solapas del navegador para diagnóstico cruzado).
+5. **Reconectar sesión WhatsApp del 2563 a Evolution (QR mañana)**
+   El 2563 ya está verificado (código por llamada el 28-abr-2026 noche, email + passkey activados como respaldo). El intento de vinculación del 29-abr ~03:00 AR no completó (ver WA-001 en incidentes). Procedimiento para retomar mañana cuando el cooldown se haya levantado: Code llama a `GET /api/whatsapp/connect-qr` con el secret guardado en `~/secret.txt` (la env var `WHATSAPP_CONNECT_SECRET` ya está cargada en Railway aurex-app), genera el PNG en `~/Downloads`, abre con Preview, Fernando escanea desde WhatsApp Business → Ajustes → Dispositivos vinculados. Si el QR vuelve a fallar, antes de seguir verificar que la instancia "aurex" exista en Evolution. Una vez conectada, activar las alertas Railway por WhatsApp para que corran en paralelo con Telegram (que queda como canal principal). El ticket WhatsApp soporte #1807446727774286 abierto el 28-abr probablemente ya no haga falta (la verificación se resolvió sola); conviene que Escritorio chequee Gmail por si llegó respuesta.
 
 ---
 
@@ -96,6 +109,7 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 2. WhatsApp Alertas — verificar Evolution + env vars
 3. Evolution API — verificar hosting actual
 4. **Configurar volumen persistente en Railway para evo-v1 (Evolution API)** — CRÍTICO. Las sesiones de WhatsApp se borran con cada redeploy del container porque no hay volumen persistente. Esto causó la suspensión del número AUREX el 28-abr-2026 cuando la repetida creación/borrado de instancias disparó el sistema antifraude de WhatsApp Business. Solución: configurar Railway Volume montado en `/evolution_api/instances/` o equivalente, o migrar a PostgreSQL como storage de Evolution API.
+5. **Migrar Evolution API a v2** — pendiente para destrabar pairing code. Evolution v1.8.7 (versión actual en evo-v1) ignora el parámetro `?number=` en `/instance/connect/`. Pairing code (vinculación con código de 8 caracteres en lugar de QR) es feature útil cuando WhatsApp aplica cooldown sobre QR post-suspensión. La v2 tiene API ligeramente distinta; antes de migrar conviene revisar compatibilidad con `sendWhatsAppEvolution`, `sendWhatsAppImage` y los endpoints de `/instance/*` que usa el backend.
 
 ---
 
@@ -122,27 +136,46 @@ Descripcion: docs: agregar CLAUDE.md raíz — manifest del proyecto para chats 
 
 ---
 
-## PLAN MARKETING (paralelo a aprobación Apple/Google)
+## PLAN MARKETING (Plan MKT v2 — paralelo a aprobación Apple/Google)
 
-PDF completo: `~/Downloads/AUREX PLAN MKT.pdf` (extraer texto con `pdftotext` para detalle)
+### Objetivo
+Definir el posicionamiento de AUREX frente a la competencia antes del lanzamiento global. La investigación informa: audiencia objetivo, tono, canales, modelo de monetización óptimo, y qué les funcionó para crecer a los competidores.
+Pregunta central: ¿AUREX se compara con quién y por qué? ¿A quién le quiere sacar clientes?
 
-### Resumen tareas iniciales
-- Abrir cuenta Buffer (gratis: 3 canales + 10 posts en cola)
-- Conectar X / LinkedIn / Instagram / Facebook a Buffer
-- Generar 30 posts/mes con Claude Chat (1 prompt → tabla con fecha, plataforma, copy ES+EN, hashtags)
-- Crear calendario editorial mensual
+### Metodología
+- Code documenta hallazgos crudos por competidor (datos verificados con fuente + fecha).
+- Escritorio agrega análisis estratégico sobre los hallazgos.
+- Cuando estén todas las pasadas, ambos integran todo en `PLAN_MKT.md` v2.
+- Regla de honestidad: si no hay fuente sólida, marcar "no verificado" en lugar de inventar.
 
-### Calendario semanal de contenido
-- Behind the scenes AUREX → Instagram Stories 2x/semana (manual)
-- Video corto análisis 60 seg → TikTok + Reels 2x/semana (vos grabás, Chat hace script)
-- Thread "cómo leer AUREX PULSE™" → X (Twitter) 1x/semana (Chat + Buffer auto)
-- Resumen mercado diario → Telegram (manual o bot)
-- Artículo corto mercado → LinkedIn 1x/semana (Chat, manual)
+### Hecho — Pasadas 1 y 2 (7 competidores cerrados)
+Cada competidor tiene los 10 puntos estándar (posicionamiento, audiencia, monetización, canales, contenido, tono, lanzamiento, crecimiento, reseñas, fuentes) más análisis estratégico de Escritorio cruzado con AUREX. Todo en `RESEARCH_MKT.md`.
 
-### Estado
-- Plan armado en PDF
-- Pendiente: leer páginas 2+ del PDF (poppler ya instalado, comando: `pdftotext "~/Downloads/AUREX PLAN MKT.pdf" -`)
-- Pendiente: revisar/pulir/mejorar plan con Code y Escritorio antes de ejecutar
+1. **Magnifi** — AI investing assistant (TIFIN, respaldado por J.P. Morgan). Freemium $8.25-14/mes. Creció por backing institucional y podcast con Nicole Lapin. Sin presencia orgánica en redes. Lección: AUREX puede hacer lo que Magnifi no hace — mostrar el producto en acción en redes.
+2. **Composer** — Trading algorítmico sin código. $32/mes. Creció por flywheel comunitario (80% del valor lo genera la comunidad con estrategias compartidas). Lección: las señales de AUREX son contenido compartible si se presentan bien visualmente.
+3. **Public.com** — Broker con IA encima. Premium ~$10/mes. El AI research assistant convirtió casi la mitad de las conversaciones en transacción dentro de las 24 hs. Lección: señal IA clara en el momento correcto genera acción inmediata; medirlo desde el día uno.
+4. **Stocktwits** — Red social de traders. 35-50% del revenue viene de Data Licensing (Social Sentiment API a Bloomberg, hedge funds). Lección crítica: AUREX necesita segunda palanca de monetización (datos/señales agregados para terceros) diseñada desde el inicio. YouTube es su primera fuente de tráfico social.
+5. **Atom Finance** — Caso más importante del research: murió haciendo exactamente lo que AUREX planea (research B2C con freemium $9.99/mes). Llegó a 100k usuarios y $10.6M de funding y cerró igual. Lección existencial: con solo suscripciones freemium el unit economics no cierra; la conversión FREE → Premium en research financiero es históricamente baja.
+6. **TradingView** — Benchmark de producto. $3B de valuación, $172M de revenue. Creció por superioridad técnica (HTML5 cuando todos eran Flash) y network effect de comunidad. Lección: el producto tiene que generar word-of-mouth orgánico; las señales IA tienen que acertar en los primeros 7 días para retener.
+7. **Robinhood** — Caso de lanzamiento más relevante. Pre-launch waitlist con "free stock" referrals generó 1M+ usuarios antes del lanzamiento. Lección: programa de referidos con incentivo real (acceso PRO gratis, no solo descuento) es el mecanismo de adquisición más efectivo en fintech retail. El mercado hispanohablante es el equivalente al mercado retail pre-Robinhood: subatendido, con disposición a pagar.
+
+### Falta
+- **Pasada 3 — Apps recientes 2024-2025 con IA / análisis automatizado.** Pendiente OK explícito de Fernando. Objetivo: detectar competidores en early stage que ganan tracción rápido y no están en los 7 históricos.
+- **Pasada 4 — A definir con Fernando.** Posible foco: apps no-USA (Europa, LATAM, Asia) para entender enfoques regionales. Decisión depende de qué arroje la Pasada 3.
+- **Análisis estratégico global.** Sección reservada en `RESEARCH_MKT.md` pero vacía. Escritorio la escribe cuando estén todas las pasadas. Cruza hallazgos y propone posicionamiento concreto: qué nicho atacar, qué precio, qué features priorizar, qué evitar.
+- **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
+- **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
+
+### Insights transversales ya confirmados (no esperan las pasadas faltantes)
+- Precio PRO $9.99/mes validado por 3 competidores (Magnifi, Atom Finance, Public.com).
+- Segunda palanca de monetización (datos agregados para terceros) es necesaria para sostenibilidad — Atom Finance lo demuestra a la inversa.
+- El mercado hispanohablante está subatendido — ninguno de los 7 lo ataca seriamente.
+- YouTube es el canal de mayor tráfico social para herramientas de inversión (Stocktwits lo confirma).
+- Programa de referidos con incentivo real debe diseñarse antes del lanzamiento, no después.
+- Las señales IA son el activo diferencial — cuando se conecte Claude API real, la tasa de acierto debe medirse desde el primer día.
+
+### Endpoint POST /api/research/analysis
+Existe en `aurex-backend/server.js`. Permite que Escritorio escriba análisis estratégico directo al repo aurex-app vía API (con PAT fine-grained con permisos solo a aurex-app). Fernando NO copia/pega manualmente: cuando Escritorio cierra un análisis, hace POST y aparece committeado en GitHub solo.
 
 ---
 
