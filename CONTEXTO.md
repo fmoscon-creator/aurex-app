@@ -217,10 +217,18 @@ Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots 
 - **Plan MKT v2.0-draft** consolidado en archivo nuevo `PLAN_MKT.md` (raíz del repo). Contiene síntesis estratégica corregida + plan táctico ejecutable de 11 canales + cronograma 30 días + KPIs + presupuesto Año 1 (~$130-150/mes recurrente). Cero acción manual de Fernando.
 - Pendiente: cruce con Escritorio para versión v2.1, aprobaciones específicas de Fernando (handles de redes, presupuesto mensual, templates iniciales, disclaimers regulatorios), conexión Claude API real al motor IA, reconexión WhatsApp 30-abr 9:00 AR.
 
+### Hecho — Plan MKT v2.1 + reset visual a Fase A (29-abr-2026 noche)
+- **`PLAN_MKT.md` v2.1** commiteado con devolución conjunta Escritorio + Fernando: premisa global corregida (NO LATAM, app multi-idioma 8 idiomas + 6 mercados), avatar HeyGen specs, programa de referidos definido (1 mes PRO + 1 mes PRO simétrico), workflow de localización ES→7 idiomas vía Claude API, riesgos regulatorios por jurisdicción, cronograma multi-idioma escalonado.
+- **Reformulación profunda del approach de contenido:** Fernando + Code identificaron que tratamos contenido visual con liviandad. Decisión: parar producción de contenidos hasta tener research visual serio + decisión de arquetipo + mini design system + replanteos de avatar y referidos.
+- **`RESEARCH_VISUAL.md` v1 commiteado** — Fase A primera vuelta. Análisis de identidad visual de los 19 competidores + 4 benchmarks externos (Linear, Notion, Apple, Mercado Pago, Nubank Pentagram brandbook). 4 arquetipos visuales detectados, mercados saturados identificados, espacios libres documentados. Decisión preliminar: AUREX en intersección Arquetipos 2+4 (Institutional con polish + Brand-led con sistema propio).
+
 ### Falta
-- **Cruce de Escritorio sobre `PLAN_MKT.md` v2.0-draft** — revisar tono general, mensajes para stores, copy onboarding, temas concretos primeros 30 días blog/newsletter.
-- **`PLAN_MKT.md` v2.1 final** consolidado con feedback Escritorio + aprobaciones Fernando.
-- **Ejecución Mes 1** post-aprobación Apple/Google: setup de cuentas + activación de canales + lanzamiento + medición.
+- **Captura manual por Fernando** para completar Fase A — feeds IG/TikTok de Lemon/RockFlow/Bitso/Robinhood/Nubank + emails onboarding de 3-4 competidores + capturas in-app de Cocos. Lista priorizada en `RESEARCH_VISUAL.md` sección "Captura manual pendiente".
+- **Fase B: decisión final de arquetipo + mini design system AUREX** — debate Code+Escritorio sobre arquetipo definitivo (preliminar: Inst+Brand-led hybrid con mascot ilustrado). Tiempo estimado: 3-5 días.
+- **Replanteo serio puntos 2 (avatar) y 4 (referidos)** del Plan MKT v2.1 con la profundidad que merecen.
+- **Reformulación de los 11 contenidos modelo** una vez identidad de marca consolidada.
+- **Producción técnica + primer ejemplo real de cada formato** (Fase F).
+- **Ejecución Mes 1** post-aprobación Apple/Google.
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
 
