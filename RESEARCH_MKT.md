@@ -2296,25 +2296,24 @@ Para Brasil específicamente: Nubank habla portugués, tiene 107M de usuarios, y
 
 ---
 
-# ANÁLISIS ESTRATÉGICO GLOBAL (Escritorio)
+# ANÁLISIS ESTRATÉGICO GLOBAL + CONCLUSIONES PARA PLAN MKT v2
 
-*[Reservado — Escritorio escribe acá una vez Code complete los hallazgos]*
+**Status al 29-abr-2026:** Escritorio entregó síntesis estratégica global. Code aplicó la revisión cruzada documentada en `feedback_plan_mkt_revision_cruzada.md` (memoria persistente) y consolidó síntesis corregida + plan táctico ejecutable en archivo dedicado: **`PLAN_MKT.md`** (raíz del repo).
 
-## Subsección obligatoria: Canales autónomos vs requieren Fernando
+`PLAN_MKT.md` v2.0-draft incluye:
 
-*[Decisión más importante para el Plan MKT v2: separar qué canales/tareas
-se pueden ejecutar de forma autónoma con IA + automatización (cero acción
-manual de Fernando) vs cuáles requieren su presencia. Si requieren su
-presencia, replantear con alternativa autónoma o sacar del plan.]*
+- **Parte 1 — Síntesis estratégica corregida:** los 7 aprendizajes estructurales con 5 errores de evidencia detectados por Code y corregidos (Sagehood $9.99 no $19.99; WarrenAI rango real $14.99-$24.99 no $34.99; Public.com 50% conversión a 24h no "67% antes de +20%"; Danelfin US no Europa; RockFlow competidor parcial broker+IA no directo). Posicionamiento ajustado con cobertura real verificada (350 activos en Mercados / 74 con señales IA propias / 6 mercados / 12 tipos de activo).
+- **Parte 2 — Plan táctico ejecutable:** 11 canales con plataforma exacta + cadencia + herramienta de generación + herramienta de publicación + reparto Code vs Escritorio + KPI primario + costo mensual + status de automatización. Cero acción manual de Fernando. Canales descartados explícitamente con razón documentada.
+- **Cronograma 30 días post-aprobación Apple/Google.**
+- **KPIs por etapa** (adquisición, engagement, monetización, contenido, producto).
+- **Presupuesto Año 1** estimado: ~$130-150/mes recurrente + press releases puntuales.
+- **Pendientes y next steps:** cruce con Escritorio para v2.1, aprobaciones específicas de Fernando, bloqueadores actuales.
+
+**Subsección "Canales autónomos vs requieren Fernando" resuelta en `PLAN_MKT.md` Parte 2 (sección 2.4 canales descartados explícitamente con razón).**
+
+Para detalles, ver `PLAN_MKT.md` directo.
 
 ---
 
-# CONCLUSIONES PARA PLAN MKT v2
-
-*[Reservado — se completa al final, una vez integrados los hallazgos de
-Code + análisis estratégico de Escritorio]*
-
----
-
-*RESEARCH_MKT.md — última actualización: 29-abr-2026 (Pasada 5 cerrada con análisis estratégico de Escritorio para Smallcase + Nubank Investimentos). 19 competidores con análisis cruzado completo. Pendiente: síntesis estratégica global + `PLAN_MKT.md` v2 + plan táctico de lanzamiento.*
+*RESEARCH_MKT.md — última actualización: 29-abr-2026. 19 competidores con análisis cruzado completo (Pasadas 1-5). Síntesis estratégica global + plan táctico ejecutable consolidados en `PLAN_MKT.md` v2.0-draft (raíz del repo). Pendiente: cruce de Escritorio sobre `PLAN_MKT.md` para versión v2.1 final.*
 *Documento vivo: se actualiza con cada commit a medida que el research avanza.*

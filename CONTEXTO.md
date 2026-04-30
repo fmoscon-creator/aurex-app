@@ -211,10 +211,16 @@ Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots 
 - **India queda fuera del Plan MKT inicial** por idioma + regulación + competidores incumbents. LATAM hispanohablante primero, India eventual fase 2-3.
 - **6 blind spots originales: 2 cubiertos (India + neo-bancos LATAM), 4 documentados sin investigar.** Los 4 restantes (white-label/B2B2C, regulación regional transversal, research B2C content-first, gaps demográficos) son post-síntesis Plan MKT v2.
 
+### Hecho — Plan MKT v2.0-draft (29-abr-2026)
+- **Síntesis estratégica global** entregada por Escritorio el 29-abr-2026.
+- **Revisión cruzada por Code** según `feedback_plan_mkt_revision_cruzada.md`: detectó 5 errores de evidencia + falta de plan táctico ejecutable + ausencia de reparto Code vs Escritorio + canales obvios omitidos (Telegram, WhatsApp, Email, YouTube IA, programa de referidos).
+- **Plan MKT v2.0-draft** consolidado en archivo nuevo `PLAN_MKT.md` (raíz del repo). Contiene síntesis estratégica corregida + plan táctico ejecutable de 11 canales + cronograma 30 días + KPIs + presupuesto Año 1 (~$130-150/mes recurrente). Cero acción manual de Fernando.
+- Pendiente: cruce con Escritorio para versión v2.1, aprobaciones específicas de Fernando (handles de redes, presupuesto mensual, templates iniciales, disclaimers regulatorios), conexión Claude API real al motor IA, reconexión WhatsApp 30-abr 9:00 AR.
+
 ### Falta
-- **Síntesis estratégica global cruzando los 19 competidores** + propuesta de posicionamiento concreto AUREX. La escribe Escritorio. Cuando llegue, Code la revisa según `feedback_plan_mkt_revision_cruzada.md` (no aceptación pasiva): cruzar contra evidencia, bajar genérico a táctico, repartir Code vs Escritorio, garantizar 100% autonomía sin Fernando.
-- **`PLAN_MKT.md` v2** con posicionamiento + mensajes para stores + copy onboarding + canales de adquisición + contenido primeros 30 días. Lo escribimos Code + Escritorio cuando esté la síntesis global.
-- **Plan táctico de lanzamiento.** Acciones concretas autónomas que ejecutan Code y Escritorio. Fernando solo aprueba.
+- **Cruce de Escritorio sobre `PLAN_MKT.md` v2.0-draft** — revisar tono general, mensajes para stores, copy onboarding, temas concretos primeros 30 días blog/newsletter.
+- **`PLAN_MKT.md` v2.1 final** consolidado con feedback Escritorio + aprobaciones Fernando.
+- **Ejecución Mes 1** post-aprobación Apple/Google: setup de cuentas + activación de canales + lanzamiento + medición.
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
 
