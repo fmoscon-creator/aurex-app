@@ -13,7 +13,7 @@
 Cuatro cambios estructurales más capa propia de Code:
 
 1. **CRÍTICO — Premisa global, no LATAM.** AUREX es app **global** con cobertura de 6 mercados (USA, Argentina, Brasil/LATAM, Europa, Japón, China/HK) y los **8 idiomas activos** verificados en código (`aurex-i18n.js`): español, inglés, portugués, chino, hindi, árabe, francés, italiano. LATAM es uno de sus mercados, no su definición. Posicionamiento, tagline, audiencia y tono de canales reescritos.
-2. **Avatar HeyGen — specs definitivas** (sección 2.8 nueva). Avatar prefabricado de HeyGen sin rostro humano real + voz sintética de la librería oficial. Fernando confirma que va a hacerlo una sola vez con esas tres condiciones (no se ve su rostro, voz no es la suya, specs documentadas).
+2. **Presentador de los videos — mascot búho v2 animado** (sección 2.4 reescrita el 30-abr-2026). Reemplaza la decisión inicial v2.1 de avatar HeyGen Pro $24-99/mes por el búho v2 (mascot oficial AUREX) animado con Ruta A (estática + efectos + voz IA, $0/mes) + Ruta B (IA imagen-a-video, tier free para 1-2 videos premium semanales). Cero costo recurrente nuevo. Coherencia total con la marca (oro = AUREX = búho).
 3. **Programa de referidos — incentivo definido** (sección 2.9 nueva). Simétrico: 1 mes de PRO gratis para quien refiere + 1 mes de PRO gratis para quien es referido. Sin costo variable. Confirmado por Fernando.
 4. **Prioridad de mercados para el lanzamiento confirmada por Fernando:** español primero, inglés segundo, portugués tercero (entrada a Brasil). Los otros 5 idiomas (chino, hindi, árabe, francés, italiano) ya están traducidos en código y se activan progresivamente desde Mes 2-3 con press releases regionales y posts traducidos automáticamente.
 
@@ -28,11 +28,11 @@ Cuatro cambios estructurales más capa propia de Code:
 
 ## INTRODUCCIÓN — POR QUÉ ESTE DOCUMENTO
 
-Este documento es el **plan maestro de marketing AUREX** post-research de 19 competidores. La devolución conjunta de Escritorio + Fernando del 29-abr noche identificó que el draft v2.0 había construido todo sobre la premisa equivocada de que AUREX es app latinoamericana. Esto es v2.1 con la premisa global corregida, las specs del avatar HeyGen documentadas, el incentivo de referidos definido, y la capa propia de Code aportando workflow de localización + riesgos regulatorios por mercado + estrategia multi-idioma escalonada.
+Este documento es el **plan maestro de marketing AUREX** post-research de 19 competidores. La devolución conjunta de Escritorio + Fernando del 29-abr noche identificó que el draft v2.0 había construido todo sobre la premisa equivocada de que AUREX es app latinoamericana. Esto es v2.1 con la premisa global corregida, el presentador de los videos definido como el mascot búho v2 animado (decisión 30-abr post-cruce con Escritorio reemplazando avatar HeyGen), el incentivo de referidos definido, y la capa propia de Code aportando workflow de localización + riesgos regulatorios por mercado + estrategia multi-idioma escalonada.
 
 Aplicación literal de las reglas operativas del proyecto:
 
-- **Cero acción manual de Fernando.** Su única intervención es aprobar (regla `feedback_fernando_no_ejecuta.md`). Excepción acordada: una sola sesión de ~15 min para validar avatar HeyGen + voz, una sola vez en la vida del proyecto.
+- **Cero acción manual de Fernando.** Su única intervención es aprobar (regla `feedback_fernando_no_ejecuta.md`). Única excepción acordada: validar el primer video de prueba con búho v2 animado (sección 2.4) antes de habilitar producción autónoma. Una sola validación, después corre solo.
 - **Reparto explícito Code vs Escritorio** para cada tipo de contenido (regla `roles_code_escritorio.md`).
 - **Verificación contra evidencia del research.** Cada afirmación tiene que estar sostenida por uno o más de los 19 competidores documentados (regla `feedback_plan_mkt_revision_cruzada.md`).
 - **Plataformas con automatización real al 29-abr-2026.** Nada de "publicar contenido en redes" sin especificar herramienta concreta.
@@ -233,8 +233,8 @@ Cualquier acción del plan que requiera intervención manual de Fernando más al
 | **Newsletter semanal** (señales destacadas, market wrap) | Escritorio escribe estructura, Code rellena con datos en vivo | Code (SendGrid o Resend API) |
 | **Posts Instagram feed** (carrousel educativo, screenshots del producto) | Code genera plantillas, Escritorio valida copy | Code (Buffer pago / Meta Graph API) |
 | **Stories Instagram** (señales del día, polls) | Code (template auto + datos en vivo) | Code (Buffer pago Business plan) |
-| **Videos TikTok / Reels / YouTube Shorts** (60 seg, demos del producto) | Escritorio escribe guion, Code genera con HeyGen/Pika + avatar IA | Code (TikTok Content Posting API + IG Reels API + YouTube Data API) |
-| **Video YouTube largo** (análisis semanal de mercado, 5-10 min) | Escritorio escribe guion, Code arma con HeyGen avatar + Code edita visual | Code (YouTube Data API) |
+| **Videos TikTok / Reels / YouTube Shorts** (60 seg, demos del producto) | Escritorio escribe guion, Code genera con búho v2 animado (Ruta A diaria + Ruta B premium semanal — sección 2.4) | Code (TikTok Content Posting API + IG Reels API + YouTube Data API) |
+| **Video YouTube largo** (análisis semanal de mercado, 5-10 min) | Escritorio escribe guion, Code arma con búho v2 (Ruta A + B) + edición FFmpeg | Code (YouTube Data API) |
 | **Telegram channel** (canal público @AurexPulse o similar — distinto del bot admin) | Code (cron del backend con resúmenes auto) | Code (Bot API directa) |
 | **WhatsApp difusión** (alertas a usuarios PRO/ELITE opt-in) | Code (cron + plantillas oficiales WhatsApp Business) | Code (Evolution API + Twilio fallback) |
 | **Press releases** (lanzamiento, milestones, funding si llega) | Escritorio escribe, Fernando aprueba versión final | Code distribuye (Chainwire / EIN Presswire / Notiprensa LATAM) |
@@ -357,29 +357,29 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 |---|---|
 | Plataforma | TikTok + IG Reels + YouTube Shorts (mismo video distribuido en las 3) |
 | Cadencia | 2 videos/semana (martes y viernes) — formato: explicación de una señal IA + resultado verificable |
-| Generación | Escritorio escribe guion 60 seg + Code genera video con HeyGen (avatar IA con voz en español neutro/AR) o Pika (animación generativa) |
+| Generación | Escritorio escribe guion 60 seg + Code produce el video con el búho v2 animado siguiendo specs de la sección 2.4 — Ruta A para los 2 videos diarios (estática + efectos + voz IA), Ruta B para 1 video premium por semana (animación IA imagen-a-video). |
 | Publicación | Code: TikTok Content Posting API + IG Reels API (vía Meta Graph) + YouTube Data API |
-| Quién genera | Escritorio (guion) + Code (video IA + upload) |
+| Quién genera | Escritorio (guion) + Code (producción + upload) |
 | Quién publica | Code automático |
 | KPI primario | Views, completion rate (target >50%), click-through al perfil |
-| Costo mensual | HeyGen Plus $30/mes (60 min/mes de video) o HeyGen Pro $99/mes (90 min). Pika individual $35/mes. |
+| Costo mensual | $0/mes recurrente. Producción con tier free de ElevenLabs (voz) + Runway/Pika (Ruta B esporádica). |
 | Status auto | ⚠️ TikTok Content Posting API tiene aprobación manual por TikTok (cuenta business + verificación). Si no se aprueba en tiempo, fallback: upload manual mensual de los 8 videos del mes (Fernando NO interviene, lo hace Code en VM remota o con scheduling tools como Loomly). |
-| Setup pendiente | Crear cuentas, solicitar API keys TikTok, configurar HeyGen con avatar de marca. |
+| Setup pendiente | Crear cuentas, solicitar API keys TikTok, validar primer video real de prueba con Fernando. |
 
 ### Canal 7 — YouTube canal completo (videos largos análisis semanal)
 
 | Campo | Valor |
 |---|---|
 | Plataforma | YouTube canal `@AurexAnalisis` o similar |
-| Cadencia | 1 video largo/semana (5-10 min) — análisis semanal de mercado, edición avatar IA + screenshots producto |
-| Generación | Escritorio escribe guion + Code genera con HeyGen avatar IA + Code edita con FFmpeg (intro/outro, screenshots, transiciones) |
+| Cadencia | 1 video largo/semana (5-10 min) — análisis semanal de mercado, edición con búho v2 (Ruta A + B) + screenshots producto |
+| Generación | Escritorio escribe guion + Code arma el video con búho v2 como presentador (Ruta A para el cuerpo del análisis + Ruta B para intros/outros animados) + Code edita con FFmpeg (logo, screenshots del producto, transiciones, lower-thirds con marca). |
 | Publicación | Code (YouTube Data API v3) |
 | Quién genera | Escritorio (guion) + Code (producción + upload) |
 | Quién publica | Code automático |
 | KPI primario | Suscriptores, watch time, click-through |
-| Costo mensual | Compartido con Canal 6 (HeyGen $30-99/mes) |
+| Costo mensual | $0/mes recurrente. Misma infraestructura que Canal 6 (ElevenLabs free + Runway/Pika tier free). |
 | Status auto | ✓ 100% automatizable. YouTube Data API estable para uploads programáticos. |
-| Setup pendiente | Crear canal, configurar API key, plantilla intro/outro. |
+| Setup pendiente | Crear canal, configurar API key, plantilla intro/outro con búho v2 animado. |
 
 ### Canal 8 — LinkedIn Company Page
 
@@ -441,52 +441,73 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 | Status auto | ⚠️ Pendiente desarrollo. Estimación: 2-3 días de Code para sistema completo (Supabase tabla referrals + endpoint backend + UI in-app + lógica de recompensa automática + email transaccional). |
 | Inspiración | Robinhood pre-launch waitlist con free stock referrals (1M+ usuarios pre-launch). Aplica el principio (incentivo real, no descuento simbólico). |
 
-## 2.4 Specs exactas del avatar HeyGen (resolución del Punto 2 de la devolución conjunta)
+## 2.4 Presentador de los videos: mascot búho v2 animado (decisión 30-abr-2026)
 
-Fernando aceptó crear el avatar una sola vez con tres condiciones:
+Reemplaza la decisión previa de avatar HeyGen Pro $99/mes. Decisión tomada por Fernando + Escritorio + Code el 30-abr-2026 sobre la base del mascot oficial v2 (Geometric premium) ya definido como pieza central de la identidad AUREX.
 
-1. No se ve su rostro o imagen humana real.
-2. La voz NO es la suya — voz sintética de HeyGen.
-3. Code documenta exactamente qué necesita Fernando para generarlo.
+### Por qué se cambió HeyGen por el búho v2 animado
 
-### Decisión técnica de Code
+1. **Coherencia total con la marca.** AUREX = oro en latín. El mascot oficial es un búho dorado facetado. Usar al búho como presentador de los videos refuerza la identidad en cada pieza, en lugar de diluirla con un avatar humano genérico.
+2. **Diferenciación máxima vs competidores.** En el research de 19 competidores solo RockFlow usa mascot en video (Bobby, figura humana cartoon). Ningún competidor de inversión IA usa mascot animal como presentador en video. Espacio diferencial real.
+3. **Cero costo recurrente nuevo.** Restricción inviolable del proyecto reiterada el 30-abr: nada de costos variables mensuales adicionales. HeyGen Pro $99/mes (o $24/mes anual) ya no encaja con esa regla.
 
-**No se usa "Photo Avatar" ni "Custom Avatar" personalizado** (estos requieren video + foto reales de un humano). Se usa uno de los **avatares prefabricados de HeyGen** que vienen incluidos en cualquier plan pago. HeyGen tiene **150+ avatares estándar** ya creados con derechos comerciales, sin rostro ni voz de personas reales identificables — son personajes diseñados por HeyGen específicamente para uso en producción.
+### Las dos rutas técnicas (combinadas)
 
-### Plan HeyGen y costos
+**Ruta A — Estática + efectos de cámara + voz IA. Para los videos diarios (martes y viernes).**
 
 | Concepto | Detalle |
 |---|---|
-| Plan recomendado | **HeyGen Pro: $99/mes** o **$24/mes anual ($288/año)**. |
-| Minutos de video al mes | Pro = 30 min/mes con avatares estándar (suficiente para ~30 videos cortos de 1 min o ~6 videos largos de 5 min). |
-| Si necesita más | HeyGen Scale: $39/mes anual = 90 min/mes. |
-| Idiomas soportados | 175+ idiomas. **Voces sintéticas multi-idioma** disponibles para los 8 idiomas activos de AUREX. |
-| Avatar estándar elegido | Recomendación Code: avatar masculino o femenino joven, look profesional pero no corporativo, estilo "fintech moderno". HeyGen tiene 5-10 avatares que matchean ese perfil. |
-| Voz por idioma | Voz sintética HeyGen, neutral por idioma (ej: español neutro de LATAM Daniel/María; inglés US Joey/Aria; portugués brasilero Camila/Ricardo). |
+| Imagen | PNG del búho v2 sobre fondo navy (#0A1628). El búho NO se mueve, el entorno cambia. |
+| Movimiento | Efectos de cámara sobre la imagen estática: zoom suave (Ken Burns), parallax, transiciones, partículas doradas cuando aparece señal de Alta Convicción. |
+| Voz | ElevenLabs free tier (multi-idioma) o TikTok TTS (gratis). Voz neutra con calidez, ritmo rápido con pausas cortas en datos importantes. |
+| Texto en pantalla | Subtítulos animados grandes con identidad propia (color oro #D4A437 sobre navy). |
+| Edición | Cortes cada 3-4 segundos para compensar la seriedad visual del búho. |
+| Costo | $0/mes. Todo con tiers free. |
+| Apto para | TikTok, IG Reels, YouTube Shorts, IG Stories — el 100% del volumen diario. |
 
-### Lo que necesita Fernando hacer (única acción manual, una vez en la vida)
+**Ruta B — Animación IA imagen-a-video. Para 1-2 videos premium semanales (lanzamientos, hitos, alertas IA destacadas, intros de YouTube canal completo).**
 
-**Tiempo total estimado: 15-30 min, una sola vez.**
+| Concepto | Detalle |
+|---|---|
+| Servicio | Runway Gen-3, Pika o Sora — tier free (50-100 créditos/mes según servicio). |
+| Output | 3-5 segundos de animación real del búho moviéndose: parpadeo, giro de cabeza, movimiento sutil de plumas. |
+| Cómo se usa | Como "stinger" de apertura/cierre o momento clave del video. El resto del video usa Ruta A. |
+| Costo | $0/mes en tier free. Si en algún momento el volumen lo exige, créditos puntuales (~$10-15 puntual). |
+| Riesgo | La IA puede deformar la estética facetada del búho. Mitigación: prompt cuidado y descarte de outputs que no respeten la identidad visual. |
 
-1. **Code crea la cuenta HeyGen** con email `fmoscon@gmail.com` (Fernando solo confirma el email recibido para verificación).
-2. **Code prepara una galería de 5 candidatos** — combinaciones de avatar + voz por idioma con los top 5 que matchean tono AUREX. Cada candidato es un video de 30 seg con script genérico ("Hola, soy AUREX. Esta es la señal del día...") en español. Code los muestra a Fernando vía link directo o capturas.
-3. **Fernando elige uno** (15 min de revisión, sin grabar nada).
-4. **Code configura el avatar elegido + voces correspondientes en los 8 idiomas** y lo guarda como template default en el sistema de generación de videos.
-5. **Code genera el primer video real de prueba** y lo muestra a Fernando para validación final.
-6. **De ahí en adelante:** Code genera todos los videos de marketing automáticamente vía API HeyGen, **sin más intervención de Fernando**.
+### Especificaciones de identidad para los videos
 
-### Lo que Code NO necesita de Fernando
+Estas specs aplican tanto a Ruta A como a Ruta B y son **fijas** — la consistencia es parte de la identidad.
 
-- ❌ NO necesita foto suya.
-- ❌ NO necesita video suyo grabando.
-- ❌ NO necesita audio de su voz.
-- ❌ NO necesita que escriba scripts.
-- ❌ NO necesita que apruebe video por video después del primero.
+| Categoría | Spec |
+|---|---|
+| **Voz por idioma** | Femenina con calidez para español, inglés, portugués, francés, italiano (las voces femeninas sintéticas suenan más naturales en ElevenLabs en este momento). Masculina para árabe e hindi por expectativas culturales de autoridad financiera. |
+| **Acento español** | Neutro latinoamericano. NO argentino marcado, NO español de España. Tiene que funcionar para México, Colombia, Chile y Argentina sin que nadie sienta que no es para él. |
+| **Ritmo** | Rápido. Pausas cortas solo en los datos importantes. Nunca el ritmo lento de locutor de radio. |
+| **Tono comunicacional** | Directo y confiante, nunca condescendiente. El búho sabe lo que dice y lo dice sin rodeos. No es el amigo simpático de Duolingo ni el ejecutivo formal de Bloomberg — es el analista que da la información en 30 segundos sin adornos. Frases cortas, datos primero, contexto después. |
+| **Fondo base** | Navy oscuro #0A1628 fijo para todos los videos. El búho siempre sobre el mismo fondo — el entorno cambia de color, el búho no. |
+| **Colores de fondo por tipo de señal** | Destellos/partículas dorados (#D4A437) cuando aparece Alta Convicción. Verde (#00C896) flash cuando una señal se confirma positiva. Rojo (#FF4D4D) para señales de baja convicción o alertas. |
+| **Tres encuadres fijos** | (1) Plano completo centrado para presentaciones del día — el búho ocupa 60% del frame. (2) Close-up en los ojos para hooks de apertura ("lo que el mercado no te está diciendo hoy"). (3) Split screen con el búho a la izquierda y el dato/gráfico a la derecha para análisis. NO inventar encuadres nuevos en cada video — la consistencia es parte de la identidad. |
+| **Recursos de copy** | Romper la cuarta pared con frases directas al espectador tipo "esto que estás a punto de ver es lo que los brokers no te dicen" — compensa la seriedad visual del búho con calidez en el texto. |
 
-### Riesgo y mitigación
+### Riesgo identificado por Escritorio y mitigación
 
-**Riesgo:** HeyGen avatares estándar son reconocibles por otros usuarios de HeyGen — un competidor podría usar el mismo avatar.
-**Mitigación:** AUREX combina el avatar con **branding visual propio** (intro/outro con logo dorado, lower-third con marca, cierre con tagline) que diferencia visualmente. La identidad de marca es la combinación, no solo el avatar. Si en Año 2 hay presupuesto, considerar avatar custom basado en personaje original ilustrado por diseñador (no humano real, no Fernando).
+**Riesgo:** El búho v2 tiene mirada fija, frontal, seria, estética metálica facetada. En video corto sin movimiento propio puede leerse como distante o intimidante para una audiencia 22-40 acostumbrada a contenido cálido y expresivo en TikTok/Instagram. El riesgo NO es la imagen en sí — es la combinación de imagen seria + voz robótica + edición lenta. Cualquiera por separado se tolera. Los tres juntos matan el engagement.
+
+**Mitigación:** Compensar la seriedad visual con los otros elementos. Voz cálida y con cadencia natural (no TTS robótico). Edición rápida con cortes cada 3-4 segundos. Texto animado con personalidad. Romper la cuarta pared ocasionalmente. El búho puede ser serio si la voz y el copy tienen calidez.
+
+### Benchmarks externos relevantes (fuera del rubro fintech)
+
+- **Duolingo en TikTok (7M seguidores con un búho).** Misma especie, exactamente. Lección: usan al mascot como ancla visual constante sin que el personaje tenga labios sincronizados con voz. En muchos videos el búho está estático o con animación mínima — funcionan por contexto, copy y corte de edición. NO copiar el tono gamificado de Duolingo, sí copiar la lógica del búho como ancla constante.
+- **Mailchimp con Freddie (mono).** El mono aparece en todas las piezas con personalidad consistente sin ser el "presentador" — está en ilustraciones, emails, videos como elemento de identidad, no como locutor. Modelo válido si en algún momento el búho de AUREX no quiere ser presentador principal sino sello de identidad visual.
+- **Headspace.** No es mascot estricto pero es un caso de cómo una figura visual simple y consistente puede dominar todo el contenido de una marca con presupuesto bajo. Lección técnica: simplicidad del personaje facilita animación y consistencia.
+
+### Aprobación de Fernando — única acción manual
+
+A diferencia del avatar HeyGen original que requería sesión de 15-30 min para elegir candidato, esta decisión se reduce a:
+
+1. Una vez que Code y Escritorio produzcan el primer video real de prueba con búho + voz seleccionada (Fase F del Plan), Fernando lo aprueba o pide ajustes.
+2. De ahí en adelante, todos los videos los genera Code automáticamente con las specs documentadas en esta sección, sin más intervención.
 
 ---
 
@@ -536,7 +557,7 @@ Robinhood pre-launch (1M+ usuarios con waitlist + acción gratis). El principio:
 |---|---|
 | **Twitter/X red de pensamiento inversor** (estilo Stocktwits) | Stocktwits tardó 17 años en construir comunidad. AUREX no puede replicar eso desde cero sin presencia humana sostenida. |
 | **Podcast con invitados** (estilo Magnifi + Nicole Lapin) | Requiere coordinación con invitados humanos. Fernando no participa. |
-| **YouTube en cámara con presentador humano** | Requiere presencia de Fernando. Reemplazado por video IA con HeyGen (Canal 6 y 7). |
+| **YouTube en cámara con presentador humano** | Requiere presencia de Fernando. Reemplazado por videos con el búho v2 animado como presentador (Canal 6 y 7, sección 2.4). |
 | **Eventos presenciales** (estilo Cocos en Movistar Arena) | Requiere Fernando + equipo + logística. Fuera del scope autónomo. |
 | **LinkedIn perfil personal** | LinkedIn restringe APIs sobre perfiles personales — no se puede automatizar de forma robusta. Solo Company Page (Canal 8). |
 | **Reddit foros** | Automatización detectada como bot rápidamente, riesgo de baneo. Posible uso manual cuidadoso post-tracción, no en plan inicial. |
@@ -600,7 +621,7 @@ Robinhood pre-launch (1M+ usuarios con waitlist + acción gratis). El principio:
 | Día | Acción | Responsable |
 |---|---|---|
 | -7 a -3 | Code crea cuentas en plataformas: 3 X (`@aurex_global` EN, `@aurex_es`, `@aurex_br`), 1 Instagram Business `@aurex.app`, 1 TikTok `@aurex.app`, 1 YouTube `@AurexApp`, 1 LinkedIn Company "AUREX", 3 Telegram channels (`@AurexPulseEN`, `@AurexPulseES`, `@AurexPulsePT`), 1 Discord server (placeholder, no activo Mes 1). | Code |
-| -7 a -3 | Code crea cuenta HeyGen Pro, prepara galería de 5 candidatos avatar+voz. Fernando elige uno (15-30 min, una vez en la vida). | Code (galería) + Fernando (elegir) |
+| -7 a -3 | Code arma el primer video de prueba con búho v2 animado siguiendo specs de la sección 2.4 (Ruta A + Ruta B + voz seleccionada + encuadre + colores de fondo). Fernando valida el resultado (una vez, después corre solo). | Code (producción) + Fernando (validar) |
 | -2 | Code configura: Buffer Business plan, Resend (email), Twitter API v2 keys, Meta Graph API, YouTube Data API, dominio `mail.aurex.live` con SPF/DKIM. | Code |
 | -1 | Code escribe + activa landing programa de referidos in-app (no público hasta Día 7). Distribuye press release pre-lanzamiento ("AUREX prepares global launch") en EIN Presswire + Chainwire para SEO inicial. | Code (técnico) + Escritorio (release) |
 
@@ -613,8 +634,8 @@ Robinhood pre-launch (1M+ usuarios con waitlist + acción gratis). El principio:
 | Lun | Press release de lanzamiento global distribuido en EIN Presswire (global) + Chainwire (crypto/fintech) + Notiprensa (LATAM). En 3 idiomas: EN, ES, PT. | Escritorio (release) + Code (distribución) |
 | Mar | Primer post en cada cuenta X (EN/ES/PT): señal del día. Primer post Instagram feed (carrousel educativo). Primer post LinkedIn Company. | Code (autónomo, traducción Claude API) |
 | Mié | Activar 3 canales Telegram (EN/ES/PT) con primer post diario. Primer email de bienvenida automático para signups (multi-idioma según preferencia del user). | Code |
-| Jue | Primer Reel/TikTok/YouTube Short con avatar HeyGen IA — script en español (idioma maestro), traducido a EN y PT. | Escritorio (guion ES) + Code (video IA + upload x3 plataformas x3 idiomas = 9 piezas) |
-| Vie | Primer video YouTube largo (5-7 min, análisis semana de mercado). Avatar HeyGen, idioma ES + EN + PT. | Escritorio (guion ES) + Code (3 videos generados + upload) |
+| Jue | Primer Reel/TikTok/YouTube Short con búho v2 animado (sección 2.4) — script en español (idioma maestro), traducido a EN y PT. | Escritorio (guion ES) + Code (video búho v2 + upload x3 plataformas x3 idiomas = 9 piezas) |
+| Vie | Primer video YouTube largo (5-7 min, análisis semana de mercado). Búho v2 animado como presentador (sección 2.4), idioma ES + EN + PT. | Escritorio (guion ES) + Code (3 videos generados + upload) |
 | Sáb-Dom | Cron auto continúa. Code monitorea métricas + ajustes finos. | Code |
 
 #### Semana 2 — Primer newsletter + primer artículo SEO
@@ -651,7 +672,7 @@ Robinhood pre-launch (1M+ usuarios con waitlist + acción gratis). El principio:
 - Posts traducidos automáticamente desde los maestros ES/EN.
 - Press release específico India (vía PRNewswire India) y Asia (vía e27 / TechInAsia).
 - Primer newsletter en chino y hindi.
-- Reels/TikToks con avatar HeyGen + voces en chino y hindi (HeyGen soporta ambos idiomas nativamente).
+- Reels/TikToks con búho v2 animado + voces sintéticas en chino e hindi (ElevenLabs soporta ambos idiomas; según specs sección 2.4: voz masculina para hindi por expectativa cultural de autoridad financiera).
 
 ### Mes 3 — Activación árabe + francés
 
@@ -679,7 +700,7 @@ Con métricas de 6 meses se decide:
 | Categoría | Monto estimado | Notas |
 |---|---|---|
 | Buffer Business plan | $15/mes | Posts IG + LinkedIn + scheduling multi-cuenta x 8 idiomas |
-| HeyGen Pro (anual) | $24/mes ($288/año) | 30 min de video IA/mes con avatar prefabricado + voces multi-idioma para los 8 idiomas |
+| ElevenLabs voz IA + Runway/Pika imagen-a-video | $0/mes | Tiers free para producción de videos con búho v2 (sección 2.4). Ruta A diaria + Ruta B premium semanal — sin costo recurrente. |
 | Resend | $0-20/mes | Hasta 50k emails (multi-idioma con segmentación) |
 | Claude API tokens (workflow localización) | $5-15/mes | Traducción automática ES→7 idiomas para ~100 piezas/mes |
 | Twilio fallback WhatsApp | ~$10/mes | Solo cuando Evolution falla |
@@ -688,11 +709,13 @@ Con métricas de 6 meses se decide:
 | YouTube Data API | $0 | Gratuito (cuotas suficientes para 1 video/semana/idioma) |
 | Wire services press releases | $400-700/release puntual | EIN Presswire global ($300-500), Chainwire crypto ($200), Notiprensa LATAM ($150-250), PRNewswire India/Asia ($300-500), Zawya Oriente Medio ($200-400), regional según mercado activado |
 | Dominios secundarios + SSL | $5/mes | mail.aurex.live, blog hosting backup |
-| **Total mensual recurrente** | **~$60-90/mes** | Reducido vs v2.0 porque HeyGen anual + Claude API son más baratos que estimación inicial |
+| **Total mensual recurrente** | **~$35-65/mes** | Reducido vs v2.1 inicial porque se eliminó HeyGen Pro al adoptar búho v2 animado con tools tier free (decisión 30-abr). |
 | **Press releases año 1 (~6 puntuales)** | ~$2.500-4.000 | Lanzamiento global + lanzamientos regionales por idioma |
-| **Total año 1 todo incluido** | **~$3.500-5.000** | |
+| **Total año 1 todo incluido** | **~$2.300-3.800** | |
 
-**Comparación vs v2.0:** la estimación anterior asumía HeyGen Pro mensual ($99/mes) — corregido a anual ($24/mes equivalente), y el costo del workflow de localización ($5-15/mes) sustituye al costo hipotético de "contratar traductor por idioma" que hubiera sido $200-500/mes/idioma. **Ahorro estimado vs alternativa con traducción humana: ~$1.500-3.500/mes.**
+**Comparación vs v2.1 inicial:** la estimación anterior incluía HeyGen Pro $24/mes anual ($288/año) — eliminado el 30-abr al reemplazar el avatar humano por el búho v2 animado con producción Ruta A + B sobre tools tier free. **Ahorro adicional: ~$288/año.**
+
+**Comparación vs v2.0 original:** v2.0 asumía HeyGen mensual ($99/mes = $1.188/año). v2.2 lleva ese ítem a $0/año. **Ahorro acumulado vs v2.0: ~$1.188/año en costo recurrente de presentador de video.**
 
 Esto excluye costos de desarrollo (tareas de Code, sin costo dinero) y costos de Apple/Google ya pagados.
 
@@ -707,7 +730,7 @@ Una vez aprobada esta v2.1 por Fernando, Escritorio escribe **un primer contenid
 1. **Post X/Twitter** — texto exacto con señal de ejemplo + datos visuales.
 2. **Post Instagram feed** — descripción visual del carrousel + copy del caption.
 3. **Story Instagram** — formato, texto sobre imagen, CTA.
-4. **Reel/TikTok/YouTube Short** — guion 30-60 seg + indicaciones de ritmo y avatar.
+4. **Reel/TikTok/YouTube Short** — guion 30-60 seg + indicaciones de ritmo, encuadre del búho (1 de los 3 fijos de la sección 2.4) y color de fondo según tipo de señal.
 5. **Email de bienvenida** — asunto + cuerpo.
 6. **Email newsletter semanal** — asunto + estructura + cuerpo de un ejemplo.
 7. **Artículo de blog comparativo** — estructura completa + primer párrafo de "AUREX vs Cocos Capital".
@@ -721,21 +744,21 @@ Code traduce automáticamente cada contenido modelo a los otros 7 idiomas con el
 
 1. **Aprobar v2.1** (este documento) → habilita a Escritorio a escribir los contenidos modelo.
 2. **Handles definitivos** para X (3 cuentas Mes 1), Instagram, TikTok, YouTube, LinkedIn Company, Telegram (3 channels Mes 1). Code propone defaults + Fernando confirma o ajusta.
-3. **Sesión única HeyGen** (~15-30 min, una vez en la vida): elegir avatar + voz entre 5 candidatos que Code pre-arma. Documentado en sección 2.4.
-4. **Presupuesto mensual** ~$60-90 fijo + ~$2.500-4.000 año 1 en press releases puntuales.
+3. **Validación del primer video real** con búho v2 animado (Ruta A + B según sección 2.4). Una sola vez. Después corre automático.
+4. **Presupuesto mensual** ~$35-65 fijo + ~$2.500-4.000 año 1 en press releases puntuales.
 5. **Templates iniciales** de cada canal (una vez aprobados los contenidos modelo de Escritorio, corren automáticamente).
 6. **Disclaimers regulatorios** del posicionamiento — ya están en `aurex-i18n.js` validados en los 8 idiomas.
 7. **Decisión de timing del lanzamiento global** post-aprobación Apple Build 17 + Google Play Build 2.
 
-## 3.3 Bloqueadores actuales (al 29-abr-2026)
+## 3.3 Bloqueadores actuales (al 30-abr-2026)
 
 | Bloqueador | Estado | Resolución esperada |
 |---|---|---|
 | Apple Build 17 en revisión | Pendiente desde 24-abr | Apple decide |
 | Google Play Build 2 en prueba cerrada | 14 días requeridos | ~6 mayo 2026 |
-| WhatsApp/Evolution sesión desconectada | Postergado al 30-abr 9:00 AR | Mañana |
+| WhatsApp 2563 cooldown antifraude post-recreación instancia Evolution | 30-abr: instancia recreada limpia, vinculación OK, autoenvío a 2563 funciona, envíos a otros números (incluido admin 1320) caen en PENDING sin entregarse — diagnóstico: cooldown general sobre la 2563 saliente. Acuerdo: 24h reposo total. | 1-may 8:00 AR — verificar si el reporte diario llega por WhatsApp |
+| Volumen persistente Railway para Evolution | DESCARTADO el 30-abr — los logs confirmaron que el container evo-v1 lleva 2 días sin reiniciar, no es problema de volumen. La causa real fue la instancia "aurex" corrupta desde el 28-abr (directorio /evolution/store/messages/aurex no se creó). Ya se recreó la instancia desde cero. | N/A — resuelto |
 | Claude API real conectada al motor IA | Pendiente | Decisión Fernando |
-| Volumen persistente Railway para Evolution | Pendiente | Crítico antes de masificar WhatsApp |
 
 ## 3.4 Lo que NO se decide en este documento (corresponde a fases distintas)
 
@@ -748,5 +771,5 @@ Estos blind spots quedaron documentados en Pasada 5 pero NO entran al Plan MKT v
 
 ---
 
-*PLAN_MKT.md v2.1 (Code, post-cruce con Escritorio + Fernando) — última actualización: 29-abr-2026 noche.*
+*PLAN_MKT.md v2.1 (Code, post-cruce con Escritorio + Fernando) — última actualización: 30-abr-2026, post-decisión mascot búho v2 animado como presentador de videos (sección 2.4 reescrita).*
 *Próximo paso: Escritorio escribe primeros contenidos modelo por tipo de canal (Punto 3 de la devolución conjunta) → Code integra → v2.2 final para aprobación de Fernando.*

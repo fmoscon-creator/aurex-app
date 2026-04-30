@@ -229,6 +229,17 @@ Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots 
 - **152 PNGs por versión generados en `~/Downloads/AUREX_ICONS/`** — iOS (13 tamaños), Android (7), PWA (8), Web/Favicon (5), Marketing (5 canvas con padding). Listos para subir a App Store Connect / Google Play Console / manifest PWA / sitio aurex.live cuando Apple Build 17 + Google Play Build 2 estén aprobados (NO tocar antes — regla inviolable 2).
 - **Documento de identidad del mascot v1.1** generado: `AUREX_MASCOT_BUHO_identidad_y_uso.md` + PDF, con razonamiento del búho, comparación con águila/halcón, separación logo/mascot, 20 aplicaciones específicas, casos de referencia (Mailchimp, Duolingo, Twitch, RockFlow). Subido a Drive en sub-carpeta MASCOT FINAL.
 
+### Hecho — Plan MKT v2.1 sección 2.4 reescrita: búho v2 animado reemplaza avatar HeyGen (30-abr-2026)
+- **Decisión final del presentador de los videos:** búho v2 animado en lugar del avatar humano de HeyGen Pro. Validado por Fernando + Escritorio + Code el 30-abr.
+- **Por qué:** coherencia total con la marca (oro = AUREX = búho); diferenciación máxima vs los 19 competidores (ninguno usa mascot animal en video); cero costo recurrente nuevo (regla inviolable reiterada hoy: nada de costos variables mensuales adicionales).
+- **Ruta A para videos diarios** (TikTok / IG Reels / YouTube Shorts 2x semana): PNG estático del búho sobre fondo navy + efectos de cámara + voz IA tier free de ElevenLabs + cortes cada 3-4s. Costo: $0/mes.
+- **Ruta B para videos premium 1-2 por semana** (lanzamientos, hitos, intros YouTube canal completo): animación IA imagen-a-video con Runway/Pika tier free, 3-5 segundos del búho moviéndose, mezclados con el resto del video Ruta A. Costo: $0/mes en tier free.
+- **Specs de identidad fijas** (sección 2.4 del PLAN_MKT.md): voz femenina cálida en español/inglés/portugués/francés/italiano + masculina en árabe/hindi; acento español neutro latinoamericano; ritmo rápido; tono directo y confiante; fondo base navy #0A1628 fijo; colores por tipo de señal (oro Alta Convicción, verde confirmación, rojo alerta); tres encuadres fijos (plano completo, close-up ojos, split screen búho+gráfico).
+- **Benchmarks externos validados por Escritorio:** Duolingo en TikTok (mascot búho con animación mínima funciona por contexto + copy + edición), Mailchimp con Freddie (mascot como sello de identidad sin ser presentador), Headspace (figura visual simple consistente con presupuesto bajo).
+- **Ahorro:** -$288/año vs v2.1 inicial con HeyGen anual; -$1.188/año vs v2.0 con HeyGen mensual.
+- **Secciones del Plan MKT actualizadas en un solo commit:** 2.4 (reescrita completa), 2.2 (tabla reparto), 2.3.6 (Canal 6 TikTok/Reels), 2.3.7 (Canal 7 YouTube), 2.9 (presupuesto), 3.1 punto 4, 3.2 punto 3, 3.3 bloqueadores, changelog y footer.
+- **Pendiente Fase F:** validación del primer video de prueba con Fernando (única acción manual restante para destrabar producción autónoma de videos).
+
 ### Falta
 - **Captura manual por Fernando** para completar Fase A — feeds IG/TikTok de Lemon/RockFlow/Bitso/Robinhood/Nubank + emails onboarding de 3-4 competidores + capturas in-app de Cocos. Lista priorizada en `RESEARCH_VISUAL.md` sección "Captura manual pendiente".
 - **Fase B: decisión final de arquetipo + mini design system AUREX** — debate Code+Escritorio sobre arquetipo definitivo (preliminar: Inst+Brand-led hybrid con mascot ilustrado). Tiempo estimado: 3-5 días.
