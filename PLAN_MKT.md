@@ -1,18 +1,38 @@
-# PLAN MKT v2 — AUREX
+# PLAN MKT v2.1 — AUREX
 
 **Documento maestro de marketing post-research de 19 competidores.**
-**Versión:** v2.0-draft (Code) — pendiente cruce con Escritorio.
+**Versión:** v2.1 (Code, post-cruce con Escritorio + Fernando del 29-abr-2026 noche).
 **Fecha:** 29-abr-2026
-**Autor draft:** Code (Claude Code CLI), basado en `RESEARCH_MKT.md` (19 competidores en 5 pasadas) + síntesis estratégica de Escritorio del 29-abr-2026.
-**Próximo paso:** Fernando lo cruza con Escritorio para opinión cruzada antes de commit final.
+**Autor v2.1:** Code (Claude Code CLI), incorporando devolución conjunta de Escritorio + Fernando sobre el draft v2.0 + capa propia de revisión cruzada.
+**Próximo paso:** Escritorio escribe primeros contenidos modelo por tipo de canal (Punto 3 de la devolución conjunta) → Code integra → v2.2 final para aprobación de Fernando.
+
+---
+
+## CHANGELOG v2.0 → v2.1
+
+Cuatro cambios estructurales más capa propia de Code:
+
+1. **CRÍTICO — Premisa global, no LATAM.** AUREX es app **global** con cobertura de 6 mercados (USA, Argentina, Brasil/LATAM, Europa, Japón, China/HK) y los **8 idiomas activos** verificados en código (`aurex-i18n.js`): español, inglés, portugués, chino, hindi, árabe, francés, italiano. LATAM es uno de sus mercados, no su definición. Posicionamiento, tagline, audiencia y tono de canales reescritos.
+2. **Avatar HeyGen — specs definitivas** (sección 2.8 nueva). Avatar prefabricado de HeyGen sin rostro humano real + voz sintética de la librería oficial. Fernando confirma que va a hacerlo una sola vez con esas tres condiciones (no se ve su rostro, voz no es la suya, specs documentadas).
+3. **Programa de referidos — incentivo definido** (sección 2.9 nueva). Simétrico: 1 mes de PRO gratis para quien refiere + 1 mes de PRO gratis para quien es referido. Sin costo variable. Confirmado por Fernando.
+4. **Prioridad de mercados para el lanzamiento confirmada por Fernando:** español primero, inglés segundo, portugués tercero (entrada a Brasil). Los otros 5 idiomas (chino, hindi, árabe, francés, italiano) ya están traducidos en código y se activan progresivamente desde Mes 2-3 con press releases regionales y posts traducidos automáticamente.
+
+**Capa propia de Code (cruce con la devolución conjunta):**
+
+- **Workflow de localización ejecutable** sin multiplicar trabajo de Escritorio: Escritorio escribe en español como idioma maestro → Code traduce con Claude API a los 7 restantes → revisión cultural de calidad post-hoc por idioma (sección 2.3 nueva subsección).
+- **Riesgos regulatorios por mercado** (sección 1.6 ampliada): USA SEC, UE MiCA, AR CNV (Asesor Global de Inversiones), BR CVM, China cripto-restringida, India RBI, regulación financiera por jurisdicción que afecta cómo y dónde se pueden emitir señales.
+- **Estrategia de cuentas multi-idioma:** en Mes 1 lanzamos 3 cuentas X/Twitter (inglés global, español, portugués), no 8. Los demás idiomas se suman progresivamente según tracción.
+- **Riesgos por baneo IP en China**: si AUREX bloqueado en China continental (probable), foco diáspora china global vía Hong Kong + Singapur + chinos en USA/EU.
 
 ---
 
 ## INTRODUCCIÓN — POR QUÉ ESTE DOCUMENTO
 
-La síntesis de Escritorio del 29-abr-2026 es sólida en lo estratégico pero queda corta en dos cosas: tiene **5 errores de evidencia** (datos que no están sostenidos por el research que Code documentó) y **no aterriza en plan táctico ejecutable**. Code corrige los errores y completa el plan táctico aplicando las reglas operativas del proyecto:
+Este documento es el **plan maestro de marketing AUREX** post-research de 19 competidores. La devolución conjunta de Escritorio + Fernando del 29-abr noche identificó que el draft v2.0 había construido todo sobre la premisa equivocada de que AUREX es app latinoamericana. Esto es v2.1 con la premisa global corregida, las specs del avatar HeyGen documentadas, el incentivo de referidos definido, y la capa propia de Code aportando workflow de localización + riesgos regulatorios por mercado + estrategia multi-idioma escalonada.
 
-- **Cero acción manual de Fernando.** Su única intervención es aprobar (regla `feedback_fernando_no_ejecuta.md`).
+Aplicación literal de las reglas operativas del proyecto:
+
+- **Cero acción manual de Fernando.** Su única intervención es aprobar (regla `feedback_fernando_no_ejecuta.md`). Excepción acordada: una sola sesión de ~15 min para validar avatar HeyGen + voz, una sola vez en la vida del proyecto.
 - **Reparto explícito Code vs Escritorio** para cada tipo de contenido (regla `roles_code_escritorio.md`).
 - **Verificación contra evidencia del research.** Cada afirmación tiene que estar sostenida por uno o más de los 19 competidores documentados (regla `feedback_plan_mkt_revision_cruzada.md`).
 - **Plataformas con automatización real al 29-abr-2026.** Nada de "publicar contenido en redes" sin especificar herramienta concreta.
@@ -97,29 +117,49 @@ Ese scope no lo menciona ningún competidor en su tagline. Hay que comunicarlo.
 
 **Conclusión:** la ventana existe hoy pero no indefinidamente. **El plan de lanzamiento debe priorizarse, no posponerse por perfeccionismo de producto.**
 
-## 1.3 Audiencia objetivo (sostenida por el research)
+## 1.3 Audiencia objetivo (global, no regional)
 
 El usuario de AUREX es una persona que:
 
-- Tiene entre 22 y 40 años, ya invierte (aunque sea $50 en crypto o $100 en acciones).
+- Tiene entre 22 y 45 años, ya invierte (aunque sea $50 en crypto o $100 en acciones).
 - Usa el celular para todo lo financiero (mobile-first puro).
-- **Habla español o portugués como idioma primario** — los competidores US (Magnifi, Sagehood, WarrenAI, Public, Danelfin) tienen ese usuario en inglés y los competidores LATAM tienen el wallet (Lemon, Bitso) o el broker (Cocos, Avenue) pero **ninguno tiene la capa de análisis IA**.
+- **Habla cualquiera de los 8 idiomas activos en la app:** español, inglés, portugués, chino, hindi, árabe, francés o italiano.
 - No quiere convertirse en analista pero quiere entender el mercado antes de decidir.
 - Está frustrado con el ruido de Twitter/X, los tips de influencers crypto, y los análisis de brokers que son genéricos o llegan tarde.
 
-**Mercado addressable LATAM hispanohablante: ~500M+ personas** + lusohablante Brasil 215M (etapa 2 con producto maduro y compliance específico).
+**Mercado addressable por idioma (TAM combinado 4-5B personas):**
 
-## 1.4 Posicionamiento diferencial concreto (corregido con cobertura real)
+| Idioma | Hablantes (~M) | Mercados objetivo principales | Prioridad lanzamiento |
+|---|---|---|---|
+| Español | 500 | España, Argentina, México, Colombia, Chile, Perú, hispanos USA | **#1** |
+| Inglés | 1.500 | USA, UK, Canadá, Australia, India urbana, Asia financiera | **#2** |
+| Portugués | 280 | Brasil, Portugal, Mozambique, Angola | **#3** |
+| Chino | 1.300 | Hong Kong, Taiwán, Singapur, diáspora China en USA/EU/Canadá *(China continental probablemente bloqueada)* | **Mes 2-3** |
+| Hindi | 600 | India urbana | **Mes 2-3** |
+| Árabe | 470 | EAU, Arabia Saudita, Kuwait, Qatar, Egipto, Marruecos | **Mes 3-4** |
+| Francés | 300 | Francia, Bélgica, Quebec, África francófona, Suiza | **Mes 3-4** |
+| Italiano | 85 | Italia, Suiza italoparlante | **Mes 4-5** |
 
-> AUREX es el primer asistente de análisis IA de mercados en tiempo real diseñado para el inversor latinoamericano. No es un broker. No es un asesor humano. No es una red social de tips. Es la herramienta que va entre el inversor y el broker: **analiza 350 activos globales** — cripto + stablecoins + acciones de 6 mercados (Argentina, Brasil/LATAM, USA, Europa, Japón, China) + ETFs + materias primas + metales + futuros + bonos + divisas — **y entrega señales IA** sobre los **74 más representativos**, sin jerga, sin publicidad, sin agenda, sin conflicto de intereses.
+**El research de los 19 competidores confirma que ningún competidor cubre simultáneamente análisis IA + multi-asset + multi-mercado + 8 idiomas.** WarrenAI tiene 30 idiomas pero datos US-centric, sin acciones LATAM/Asia profundas. RockFlow tiene 9 idiomas pero es broker. Magnifi/Sagehood/Danelfin/Atom/Guavy son monolinguales o casi (en/es). Los players LATAM (Cocos, Lemon, Bitso, Avenue, Warren BR, Nubank) operan en idioma local de cada país sin cobertura global.
+
+## 1.4 Posicionamiento diferencial concreto (global, multi-mercado, multi-idioma)
+
+> AUREX es el primer asistente de análisis IA de mercados en tiempo real con **cobertura cross-mercado y multi-idioma para el inversor global**. No es un broker. No es un asesor humano. No es una red social de tips. Es la herramienta que va entre el inversor y el broker: **analiza 350 activos** — cripto + stablecoins + acciones de **6 mercados** (USA, Argentina, Brasil/LATAM, Europa, Japón, China) + ETFs + materias primas + metales + futuros + bonos + divisas — **y entrega señales IA** sobre los **74 más representativos**, **en 8 idiomas** (español, inglés, portugués, chino, hindi, árabe, francés, italiano), sin jerga, sin publicidad, sin agenda, sin conflicto de intereses.
+
+**Tagline corto en español (para taglines de stores y home):**
+> "AUREX. Mercados globales con señales IA en 8 idiomas. Sin broker. Sin sesgo."
+
+**Tagline corto en inglés:**
+> "AUREX. Global markets with AI signals in 8 languages. No broker. No bias."
 
 **Lo que ningún competidor puede decir a la vez** (verificado contra los 19):
 
 1. **Multi-asset cross-mercado:** cripto + acciones de 6 mercados + ETFs + materias primas + metales + futuros + bonos + divisas — todo en una sola app. Ningún competidor cubre simultáneamente.
-2. **Mercados hispanohablantes nativos:** acciones de Argentina (26) + Brasil/LATAM (24) cubiertas por defecto. WarrenAI tiene 30 idiomas pero datos US-centric.
-3. **Señales IA propias:** motor cuantitativo propio sobre 74 activos seleccionados, no agregador de research ajeno como Smallcase o WarrenAI.
-4. **Sin ejecución de trades:** sin KYC, sin depósito, sin verificación de identidad — onboarding en minutos.
-5. **Precio transparente sin sorpresas:** FREE / PRO $9.99 / ELITE $19.99, sin fees escondidos, cancelación inmediata.
+2. **Multi-idioma activo (8 idiomas, no solo declarados):** texto verificado en `aurex-i18n.js` con disclaimers, UI y mensajes traducidos en los 8. WarrenAI tiene 30 idiomas pero embebido en plataforma cara con billing cuestionado.
+3. **Señales IA propias:** motor cuantitativo propio sobre 74 activos seleccionados, no agregador de research ajeno como Smallcase o WarrenAI. Acierto histórico publicable como diferencial post-conexión Claude API real.
+4. **Sin ejecución de trades:** sin KYC, sin depósito, sin verificación de identidad — onboarding en minutos. Diferencia estructural con Robinhood, Cocos, Lemon, Bitso, Avenue, Warren Brasil, RockFlow.
+5. **Precio transparente sin sorpresas:** FREE / PRO $9.99 / ELITE $19.99, sin fees escondidos, cancelación inmediata. Diferencia explícita contra Composer (clearing fee oculto) y Investing.com (billing agresivo).
+6. **Cobertura geográfica nativa:** 26 acciones argentinas + 24 LATAM/Brasil + 94 USA + 25 Europa + 20 Japón + 20 China = 209 acciones de 6 mercados. Ningún competidor analizado ofrece esa amplitud cross-jurisdiccional.
 
 ## 1.5 Modelo de monetización validado y roadmap de dos palancas
 
@@ -147,13 +187,31 @@ Tres tiers replicando el modelo Danelfin:
 - Modelo de publicidad in-app (destruye confianza como pasó con Robinhood pre-2021).
 - Tips pagos de terceros (destruye credibilidad instantáneamente).
 
-## 1.6 Riesgos identificados (sostenidos por el research)
+## 1.6 Riesgos identificados (sostenidos por el research + jurisdiccionales)
+
+### Riesgos del research
 
 1. **Riesgo Atom Finance:** si AUREX no llega a punto de inflexión en retención antes de que se agoten recursos, la segunda palanca (API institucional) no llega a tiempo. **Mitigación:** métricas de retención desde el mes 1, no solo de adquisición. Ver KPIs sección 2.5.
-2. **Riesgo Nubank:** la ventana de tiempo en LATAM no es indefinida. **Mitigación:** lanzamiento priorizado, no postergado por perfeccionismo de producto.
+2. **Riesgo Nubank:** la ventana de tiempo en Brasil no es indefinida. Nubank está construyendo IA con Olivia (2021) + Hyperplane (2024). **Mitigación:** lanzamiento priorizado, no postergado por perfeccionismo de producto. Brasil es prioridad #3 (no #1) precisamente para tener producto sólido al momento de entrar.
 3. **Riesgo de credibilidad IA:** 5 competidores (Magnifi, Sagehood, WarrenAI, RockFlow, Guavy) tienen reseñas que dicen "la IA no acierta" o "parece respuesta predefinida". **Mitigación:** publicar tasa de acierto histórica desde el primer día post-conexión Claude API real.
-4. **Riesgo regulatorio:** emitir señales financieras puede requerir licencia de "Asesor Global de Inversiones" (AGI) en CNV-AR, equivalentes en otros países. **Mitigación:** disclaimers explícitos "no constituye asesoramiento financiero personalizado", lenguaje cuantitativo objetivo, due diligence regulatorio post-aprobación Apple/Google.
-5. **Riesgo dependencia plataformas externas:** TikTok no soporta full automation, IG Stories requiere Buffer pago, LinkedIn perfil personal no automatiza. **Mitigación:** plan táctico solo incluye plataformas con automatización real verificada (sección 2.3).
+4. **Riesgo dependencia plataformas externas:** TikTok no soporta full automation, IG Stories requiere Buffer pago, LinkedIn perfil personal no automatiza. **Mitigación:** plan táctico solo incluye plataformas con automatización real verificada (sección 2.3).
+
+### Riesgos regulatorios por jurisdicción (capa propia agregada por Code en v2.1)
+
+Dado que AUREX es app global con presencia en 8 idiomas y 6 mercados, la regulación varía por país. Cada jurisdicción tiene reglas distintas sobre **emisión de señales financieras**, **datos cripto**, y **disclaimers obligatorios**:
+
+| Mercado | Riesgo regulatorio principal | Mitigación |
+|---|---|---|
+| **USA SEC** | Emitir "señales financieras" puede ser interpretado como Investment Advice → registro como Investment Adviser RIA. | Disclaimers fuertes (ya implementados en `aurex-i18n.js`), lenguaje "informativo y educativo, no asesoramiento personalizado", evitar lenguaje imperativo ("comprá X"). |
+| **UE — MiCA (Markets in Crypto-Assets, vigente 2024-2025)** | Provisión de datos cripto en UE puede requerir registro CASP. | AUREX no custodia, no ejecuta trades — análisis informativo queda fuera del scope CASP estricto. Validar con asesor legal post-aprobación Apple/Google. |
+| **AR — CNV** | "Asesor Global de Inversiones" (AGI) puede aplicar para emisión de señales con probabilidad. | Disclaimers ya en código. Evaluar registro AGI en Mes 6 si tracción justifica costo. |
+| **BR — CVM + Anbima** | Recomendaciones de inversión requieren analista CVM o disclaimer estructurado. | Disclaimers en `aurex-i18n.js` PT validados. Opción: partnership con analista CVM-registered como Warren Brasil hizo. |
+| **China continental** | Prohibición efectiva de servicios cripto retail desde 2021 + restricciones a apps financieras extranjeras. | App probablemente bloqueada en App Store China. **Foco diáspora china global vía Hong Kong + Singapur + chinos en USA/EU/Canadá.** Idioma chino sigue siendo activo para esa audiencia. |
+| **India — RBI + SEBI** | Restricciones a apps cripto (no banned pero impuestos altos). SEBI regula advice. | Foco análisis acciones (no cripto) en marketing dirigido a India. Hindi activo principalmente para diáspora India global + India urbana stocks. |
+| **Mundo árabe** | Cumplimiento sharia para algunos usuarios + censura de contenido financiero en algunos países. | Posicionamiento neutral, evitar lenguaje "trading" agresivo, foco análisis sin recomendación de "haram" (interés/cripto especulativo) en mensajes orientados a esa audiencia. |
+| **Francia + Italia + UE general** | GDPR para datos personales + AMF (Francia) + CONSOB (Italia) para advice financiero. | Disclaimers GDPR ya estándar. App informativa cae fuera de scope advice estricto si se respeta el lenguaje. |
+
+**Acción concreta:** post-aprobación Apple/Google, due diligence regulatorio por mercado prioritario en Mes 1-3 con asesor legal. **No bloquea el lanzamiento de marketing en español/inglés/portugués que es donde la regulación es mejor entendida.**
 
 ---
 
@@ -194,21 +252,43 @@ Cualquier acción del plan que requiera intervención manual de Fernando más al
 
 ## 2.3 Canales de marketing con plan táctico ejecutable
 
+### 2.3.0 Workflow de localización multi-idioma (capa propia Code v2.1)
+
+Para producir contenido en 8 idiomas sin multiplicar el trabajo de Escritorio:
+
+1. **Escritorio escribe en español** (idioma maestro) cada pieza de contenido (copy, guion, newsletter, blog post).
+2. **Code traduce** el contenido a los otros 7 idiomas usando Claude API con prompt de calidad cultural por idioma:
+   - Inglés: tono "international neutral" (no UK ni US específico).
+   - Portugués: brasilero (no Portugal).
+   - Chino: simplificado (zh-CN), tono profesional financiero.
+   - Hindi: tono accesible, mezcla con anglicismos comunes en finanzas indias.
+   - Árabe: árabe estándar moderno (MSA), tono respetuoso y neutro.
+   - Francés: francés internacional (no quebequense).
+   - Italiano: italiano estándar.
+3. **Validación cultural post-hoc por idioma:**
+   - Inglés y portugués: revisión de Escritorio en línea (puede ajustar si suena robótico).
+   - Otros 5 idiomas: revisión de calidad mediante muestreo (Claude valida contra ejemplos de native speakers + Code monitorea métricas de engagement por idioma; si un idioma tiene engagement anormalmente bajo, contratar nativo para revisión específica).
+4. **Publicación por canal** según prioridad de idiomas (sección 2.6 cronograma).
+
+**Costo marginal de localización vs solo español:** ~$5-15/mes adicional en Claude API tokens para traducción de los volúmenes esperados (≈100 piezas/mes x 7 idiomas).
+
+### 2.3.1 Canales (cada uno con plan táctico exacto)
+
 Cada canal especifica plataforma, herramienta de generación, herramienta de publicación, cadencia, quién genera, quién publica, KPI primario, costo mensual estimado y status de automatización al 29-abr-2026.
 
-### Canal 1 — Telegram Channel público
+### Canal 1 — Telegram Channel público (multi-idioma)
 
 | Campo | Valor |
 |---|---|
-| Plataforma | Telegram (canal público nuevo, ej. `@AurexPulse` — distinto del bot admin `@Aurexalertas_bot` ya existente) |
-| Cadencia | 1 post diario 9:30 AR (resumen del día) + posts ad hoc cuando hay señal de Alta Convicción |
-| Generación | Code (cron del backend Railway con plantilla HTML + datos en vivo del motor IA) |
-| Publicación | Code (Bot API de Telegram, ya está la infra con `TELEGRAM_BOT_TOKEN`) |
-| Quién genera | Code (cero intervención humana) |
-| Quién publica | Code automático |
-| KPI primario | Suscriptores al canal, share rate, click-through al producto |
-| Costo mensual | $0 (Telegram Bot API gratuita, infra Railway ya existe) |
-| Status auto | ✓ 100% automatizable. Listo para activar en cuanto se cree el canal y se agregue al backend. |
+| Plataforma | Telegram — **3 canales públicos en Mes 1**: `@AurexPulseEN` (inglés), `@AurexPulseES` (español), `@AurexPulsePT` (portugués). Los otros 5 idiomas escalan en Mes 2-5 con `@AurexPulseZH`, `@AurexPulseHI`, `@AurexPulseAR`, `@AurexPulseFR`, `@AurexPulseIT`. Distinto del bot admin `@Aurexalertas_bot` ya existente. |
+| Cadencia | 1 post diario por canal (resumen del día financiero, horario por huso) + posts ad hoc cuando hay señal de Alta Convicción IA cross-idioma. |
+| Generación | Code (cron del backend Railway con plantilla HTML + datos en vivo del motor IA, traducción automática vía Claude API workflow 2.3.0). |
+| Publicación | Code (Bot API de Telegram con un único bot que opera múltiples canales). Infraestructura backend ya existe con `TELEGRAM_BOT_TOKEN`. |
+| Quién genera | Code (cero intervención humana). |
+| Quién publica | Code automático. |
+| KPI primario | Suscriptores por canal/idioma, share rate, click-through al producto. |
+| Costo mensual | $0 (Telegram Bot API gratuita, infra Railway ya existe). |
+| Status auto | ✓ 100% automatizable. Listo para activar en cuanto se creen los canales y se agreguen al backend. |
 | Riesgo | Cero — Telegram permisivo con bots. |
 
 ### Canal 2 — WhatsApp Business (alertas opt-in para usuarios PRO/ELITE)
@@ -241,20 +321,20 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 | Status auto | ✓ 100% automatizable. Listo para activar. |
 | Setup pendiente | Crear template HTML, configurar dominio para envío (mailgun.live o similar), registrar SPF/DKIM. |
 
-### Canal 4 — X / Twitter
+### Canal 4 — X / Twitter (3 cuentas en Mes 1, escalando a 8 en Mes 4-5)
 
 | Campo | Valor |
 |---|---|
-| Plataforma | X (cuenta corporativa nueva `@aurex_app` o similar) |
-| Cadencia | 3 posts/día: 9 AR (apertura), 14 AR (mid-day), 19 AR (cierre USA) — siempre con señales del día y datos visuales |
-| Generación | Code (Claude API + plantilla por tipo de post: señal del día, milestone, comparativa, screenshot) |
-| Publicación | Code (Twitter API v2 directa, sin intermediarios) |
-| Quién genera | Code |
-| Quién publica | Code automático |
-| KPI primario | Followers, engagement rate, click-through al producto |
-| Costo mensual | $0 (Free tier Twitter API permite 1.500 posts/mes, suficiente para 3/día) |
+| Plataforma | X — **3 cuentas** en Mes 1: `@aurex_global` (inglés, principal), `@aurex_es` (español), `@aurex_br` (portugués). Otros 5 idiomas se suman entre Mes 2 y Mes 5 según tracción. |
+| Cadencia | 3 posts/día/cuenta — horario adaptado al huso del idioma (EN: 9 ET / 13 GMT / 19 GMT; ES: 9 AR / 14 AR / 19 AR; PT: 9 BRT / 13 BRT / 18 BRT). Todos con señales del día y datos visuales. |
+| Generación | Code (Claude API + plantilla por tipo: señal del día, milestone, comparativa, screenshot). El mismo contenido se traduce automáticamente a los 8 idiomas con el workflow 2.3.0. |
+| Publicación | Code (Twitter API v2 directa por cada cuenta). |
+| Quién genera | Code (autónomo). |
+| Quién publica | Code automático con rotación horaria por cuenta. |
+| KPI primario | Followers por cuenta, engagement rate, click-through al producto. Métrica comparativa entre idiomas para detectar dónde el mensaje resuena más. |
+| Costo mensual | $0 en Mes 1 (Free tier permite 1.500 posts/mes/app, suficiente para 3 cuentas x 90 posts/mes = 270). En Mes 4+ con 8 cuentas y ~720 posts/mes seguimos en Free tier. |
 | Status auto | ✓ 100% automatizable. Listo para activar. |
-| Setup pendiente | Crear cuenta X, obtener API keys (Free tier), template visual auto-generado. |
+| Setup pendiente | Crear 3 cuentas X verificadas, obtener API keys, vincular a un único proyecto Twitter Dev portal con 3 apps. |
 
 ### Canal 5 — Instagram (posts feed + Stories)
 
@@ -361,7 +441,96 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 | Status auto | ⚠️ Pendiente desarrollo. Estimación: 2-3 días de Code para sistema completo (Supabase tabla referrals + endpoint backend + UI in-app + lógica de recompensa automática + email transaccional). |
 | Inspiración | Robinhood pre-launch waitlist con free stock referrals (1M+ usuarios pre-launch). Aplica el principio (incentivo real, no descuento simbólico). |
 
-## 2.4 Canales descartados explícitamente (con razón sostenida por research)
+## 2.4 Specs exactas del avatar HeyGen (resolución del Punto 2 de la devolución conjunta)
+
+Fernando aceptó crear el avatar una sola vez con tres condiciones:
+
+1. No se ve su rostro o imagen humana real.
+2. La voz NO es la suya — voz sintética de HeyGen.
+3. Code documenta exactamente qué necesita Fernando para generarlo.
+
+### Decisión técnica de Code
+
+**No se usa "Photo Avatar" ni "Custom Avatar" personalizado** (estos requieren video + foto reales de un humano). Se usa uno de los **avatares prefabricados de HeyGen** que vienen incluidos en cualquier plan pago. HeyGen tiene **150+ avatares estándar** ya creados con derechos comerciales, sin rostro ni voz de personas reales identificables — son personajes diseñados por HeyGen específicamente para uso en producción.
+
+### Plan HeyGen y costos
+
+| Concepto | Detalle |
+|---|---|
+| Plan recomendado | **HeyGen Pro: $99/mes** o **$24/mes anual ($288/año)**. |
+| Minutos de video al mes | Pro = 30 min/mes con avatares estándar (suficiente para ~30 videos cortos de 1 min o ~6 videos largos de 5 min). |
+| Si necesita más | HeyGen Scale: $39/mes anual = 90 min/mes. |
+| Idiomas soportados | 175+ idiomas. **Voces sintéticas multi-idioma** disponibles para los 8 idiomas activos de AUREX. |
+| Avatar estándar elegido | Recomendación Code: avatar masculino o femenino joven, look profesional pero no corporativo, estilo "fintech moderno". HeyGen tiene 5-10 avatares que matchean ese perfil. |
+| Voz por idioma | Voz sintética HeyGen, neutral por idioma (ej: español neutro de LATAM Daniel/María; inglés US Joey/Aria; portugués brasilero Camila/Ricardo). |
+
+### Lo que necesita Fernando hacer (única acción manual, una vez en la vida)
+
+**Tiempo total estimado: 15-30 min, una sola vez.**
+
+1. **Code crea la cuenta HeyGen** con email `fmoscon@gmail.com` (Fernando solo confirma el email recibido para verificación).
+2. **Code prepara una galería de 5 candidatos** — combinaciones de avatar + voz por idioma con los top 5 que matchean tono AUREX. Cada candidato es un video de 30 seg con script genérico ("Hola, soy AUREX. Esta es la señal del día...") en español. Code los muestra a Fernando vía link directo o capturas.
+3. **Fernando elige uno** (15 min de revisión, sin grabar nada).
+4. **Code configura el avatar elegido + voces correspondientes en los 8 idiomas** y lo guarda como template default en el sistema de generación de videos.
+5. **Code genera el primer video real de prueba** y lo muestra a Fernando para validación final.
+6. **De ahí en adelante:** Code genera todos los videos de marketing automáticamente vía API HeyGen, **sin más intervención de Fernando**.
+
+### Lo que Code NO necesita de Fernando
+
+- ❌ NO necesita foto suya.
+- ❌ NO necesita video suyo grabando.
+- ❌ NO necesita audio de su voz.
+- ❌ NO necesita que escriba scripts.
+- ❌ NO necesita que apruebe video por video después del primero.
+
+### Riesgo y mitigación
+
+**Riesgo:** HeyGen avatares estándar son reconocibles por otros usuarios de HeyGen — un competidor podría usar el mismo avatar.
+**Mitigación:** AUREX combina el avatar con **branding visual propio** (intro/outro con logo dorado, lower-third con marca, cierre con tagline) que diferencia visualmente. La identidad de marca es la combinación, no solo el avatar. Si en Año 2 hay presupuesto, considerar avatar custom basado en personaje original ilustrado por diseñador (no humano real, no Fernando).
+
+---
+
+## 2.5 Programa de referidos — incentivo definido (resolución del Punto 4 de la devolución conjunta)
+
+### Mecanismo
+
+**Incentivo simétrico, simple, sin costo variable.** Confirmado por Fernando.
+
+| Quién | Recibe |
+|---|---|
+| **Quien refiere** | **1 mes de PRO gratis** por cada amigo que se registre con su código + complete onboarding (cuenta activa 7 días) |
+| **Quien es referido** | **1 mes de PRO gratis** al registrarse usando un código de referido válido |
+
+### Reglas operativas
+
+- **Acumulable** sin límite anual: si refiere 12 personas en un año = 12 meses de PRO gratis (efectivamente 1 año de PRO).
+- **No transferible**: solo se aplica al usuario que refiere, no se puede regalar a un tercero.
+- **No retroactivo**: solo aplica desde el activación del programa, no para usuarios existentes pre-lanzamiento (excepto si se invierte como mecanismo waitlist tipo Robinhood — ver sección 2.6 cronograma).
+- **Trigger de activación de la recompensa**: cuando el referido completa su 7° día activo (no solo registro — para evitar abuso con cuentas falsas).
+- **Anti-fraude**: max 50 referidos exitosos por usuario por año (si supera, revisión manual). Detección de patrones (mismo IP, mismo dispositivo, emails secuenciales).
+
+### Implementación técnica (Code construye)
+
+| Componente | Detalle |
+|---|---|
+| Tabla Supabase `referrals` | `referrer_id`, `referred_id`, `code`, `status` (pending/active/expired/fraud), `created_at`, `activated_at`, `reward_granted_at` |
+| Tabla Supabase `referral_codes` | `user_id`, `code` (6-8 chars memorables ej. AURX-3F2K), `created_at`, `uses_count` |
+| Endpoint backend `POST /api/referrals/redeem` | Body: `{ code }`. Valida + asocia + retorna |
+| Endpoint backend `GET /api/referrals/status/{user_id}` | Devuelve referidos activos, pendientes, recompensas obtenidas |
+| Cron del backend (cada 24h) | Verifica usuarios referidos que cumplieron 7 días activos → activa recompensa → otorga 1 mes PRO al referente automáticamente |
+| UI in-app | Banner permanente en tab Perfil: "Invitá amigos y ganá meses de PRO gratis. Tu código: AURX-3F2K. Compartí." con botones de share (X, IG, WhatsApp, Telegram, Copy link) |
+| Email de bienvenida | Si llegó vía referido, mensaje "Tu mes de PRO gratis ya está activo. Usá tu código para invitar más amigos." |
+
+**Tiempo de desarrollo estimado:** 2-3 días de Code (backend + frontend + lógica de validación + email transaccional + cron de activación).
+**Costo:** $0 marginal — es upgrade temporal de plan, no cash transfer.
+
+### Inspiración del research
+
+Robinhood pre-launch (1M+ usuarios con waitlist + acción gratis). El principio: incentivo real (no descuento simbólico), simétrico, simple, viral por diseño.
+
+---
+
+## 2.6 Canales descartados explícitamente (con razón sostenida por research)
 
 | Canal | Razón de descarte |
 |---|---|
@@ -373,7 +542,7 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 | **Reddit foros** | Automatización detectada como bot rápidamente, riesgo de baneo. Posible uso manual cuidadoso post-tracción, no en plan inicial. |
 | **Influencer marketing pago** | Requiere coordinación humana con cada influencer + revisión de contenido + dinero. Fuera del scope autónomo inicial. Considerar para Año 2 con presupuesto. |
 
-## 2.5 KPIs y métricas de éxito
+## 2.7 KPIs y métricas de éxito
 
 ### Métricas de adquisición (semanales)
 
@@ -422,83 +591,141 @@ Cada canal especifica plataforma, herramienta de generación, herramienta de pub
 - **Cobertura de las 74 activos con señal IA emitida en los últimos 30 días:** target >90%.
 - **Latencia desde generación de señal hasta usuario:** <60 segundos.
 
-## 2.6 Cronograma de los primeros 30 días post-aprobación Apple/Google
+## 2.8 Cronograma multi-idioma escalonado (primeros 90 días post-aprobación Apple/Google)
 
-### Semana 1 — Setup + lanzamiento técnico
+**Prioridad de idiomas confirmada por Fernando:** español primero, inglés segundo, portugués tercero como entrada a Brasil. Los otros 5 idiomas (chino, hindi, árabe, francés, italiano) se activan progresivamente desde Mes 2-5.
 
-| Día | Acción | Responsable |
-|---|---|---|
-| Lun | Crear cuentas: X, Instagram Business, TikTok, YouTube, LinkedIn Company, Telegram channel público. Aprobaciones de Fernando para handles. | Code (creación) + Fernando (aprobar handles) |
-| Mar | Configurar API keys + Buffer Business + HeyGen + Resend + dominio mail. Distribuir press release de lanzamiento global (EIN Presswire + Chainwire + Notiprensa). | Code |
-| Mié | Activar canal Telegram público con primer post + email de bienvenida automático para nuevos signups + landing del programa de referidos. | Code |
-| Jue | Primer post X (señal del día). Primer post Instagram feed. Primer Story. | Code |
-| Vie | Primer Reel/TikTok/YouTube Short con video IA. Primer post LinkedIn Company. | Code (video) + Escritorio (guion) |
-| Sáb | Análisis primer ciclo: ajustes de tono y cadencia. | Code |
-| Dom | Day off de publicación (resto cron auto sigue). | — |
-
-### Semana 2 — Cadencia sostenida + primer newsletter
+### Pre-lanzamiento (Semana 0 — antes de aprobación Apple/Google final)
 
 | Día | Acción | Responsable |
 |---|---|---|
-| Lun | Posts X (3), IG feed, Telegram daily, Stories. | Code |
-| Mar | Primer newsletter semanal (recap de la primera semana + señales destacadas). Posts X, IG feed (carrousel educativo). | Escritorio (newsletter) + Code (resto) |
-| Mié | Posts X, IG Stories, Telegram. Primer artículo blog SEO publicado: "AUREX vs Cocos Capital". | Escritorio (blog) + Code (resto) |
-| Jue | Posts X, IG feed, LinkedIn Company. Segundo Reel/TikTok/YouTube Short. | Escritorio (guion) + Code (resto) |
-| Vie | Primer video YouTube largo (5-10 min, análisis semana). | Escritorio (guion) + Code (producción + upload) |
-| Sáb-Dom | Cron auto sigue. Code revisa métricas. | Code |
+| -7 a -3 | Code crea cuentas en plataformas: 3 X (`@aurex_global` EN, `@aurex_es`, `@aurex_br`), 1 Instagram Business `@aurex.app`, 1 TikTok `@aurex.app`, 1 YouTube `@AurexApp`, 1 LinkedIn Company "AUREX", 3 Telegram channels (`@AurexPulseEN`, `@AurexPulseES`, `@AurexPulsePT`), 1 Discord server (placeholder, no activo Mes 1). | Code |
+| -7 a -3 | Code crea cuenta HeyGen Pro, prepara galería de 5 candidatos avatar+voz. Fernando elige uno (15-30 min, una vez en la vida). | Code (galería) + Fernando (elegir) |
+| -2 | Code configura: Buffer Business plan, Resend (email), Twitter API v2 keys, Meta Graph API, YouTube Data API, dominio `mail.aurex.live` con SPF/DKIM. | Code |
+| -1 | Code escribe + activa landing programa de referidos in-app (no público hasta Día 7). Distribuye press release pre-lanzamiento ("AUREX prepares global launch") en EIN Presswire + Chainwire para SEO inicial. | Code (técnico) + Escritorio (release) |
 
-### Semana 3 — Programa de referidos + segunda comparativa
+### Mes 1 — Lanzamiento ES + EN + PT (idiomas prioritarios)
 
-| Día | Acción | Responsable |
-|---|---|---|
-| Lun-Mar | Activación in-app de programa de referidos. Banner promo en email + Telegram + X. | Code |
-| Mié | Segundo artículo blog: "Mejores apps de inversión con IA en español 2026" (incluye AUREX en lugar destacado). | Escritorio (blog) + Code (publicación) |
-| Jue | Newsletter semanal #2 con foco en programa de referidos. | Escritorio + Code |
-| Vie | Segundo video YouTube largo. Reel/TikTok/Short del programa de referidos. | Escritorio + Code |
-
-### Semana 4 — Review + iteración
+#### Semana 1 — Lanzamiento técnico + primer contenido
 
 | Día | Acción | Responsable |
 |---|---|---|
-| Lun | Code presenta dashboard de métricas Mes 1 vs targets. Identifica canales over/under performing. | Code |
-| Mar-Jue | Ajustes de cadencia y tono según data. Lanzamiento de press release Mes 1 milestones (si aplica: 1k users, primer testimonial verificable). | Code (data) + Escritorio (release) |
-| Vie | Tercer video YouTube. Primer episodio formato "Análisis de la señal IA de la semana" (avatar IA). | Escritorio + Code |
-| Sáb-Dom | Plan Mes 2 documentado en `PLAN_MKT.md` v2.1. | Code |
+| Lun | Press release de lanzamiento global distribuido en EIN Presswire (global) + Chainwire (crypto/fintech) + Notiprensa (LATAM). En 3 idiomas: EN, ES, PT. | Escritorio (release) + Code (distribución) |
+| Mar | Primer post en cada cuenta X (EN/ES/PT): señal del día. Primer post Instagram feed (carrousel educativo). Primer post LinkedIn Company. | Code (autónomo, traducción Claude API) |
+| Mié | Activar 3 canales Telegram (EN/ES/PT) con primer post diario. Primer email de bienvenida automático para signups (multi-idioma según preferencia del user). | Code |
+| Jue | Primer Reel/TikTok/YouTube Short con avatar HeyGen IA — script en español (idioma maestro), traducido a EN y PT. | Escritorio (guion ES) + Code (video IA + upload x3 plataformas x3 idiomas = 9 piezas) |
+| Vie | Primer video YouTube largo (5-7 min, análisis semana de mercado). Avatar HeyGen, idioma ES + EN + PT. | Escritorio (guion ES) + Code (3 videos generados + upload) |
+| Sáb-Dom | Cron auto continúa. Code monitorea métricas + ajustes finos. | Code |
 
-## 2.7 Presupuesto mensual estimado (Año 1)
+#### Semana 2 — Primer newsletter + primer artículo SEO
+
+| Día | Acción | Responsable |
+|---|---|---|
+| Mar | Primer newsletter semanal en 3 idiomas (recap de la primera semana + señales destacadas). Distribuido vía Resend. | Escritorio (estructura ES) + Code (datos vivos + traducción + envío) |
+| Mié | Primer artículo blog SEO publicado en aurex.live/blog: "AUREX vs Cocos Capital: cuál usar para invertir desde Argentina" (ES) + "AUREX vs Magnifi: AI investing comparison 2026" (EN). | Escritorio (escribe) + Code (publicación + meta tags) |
+| Jue | Segundo Reel/TikTok/YouTube Short. | Escritorio + Code |
+| Vie | Segundo video YouTube largo. | Escritorio + Code |
+
+#### Semana 3 — Lanzamiento programa de referidos
+
+| Día | Acción | Responsable |
+|---|---|---|
+| Lun-Mar | Activación pública del programa de referidos. Banner permanente in-app. Email push a base existente con código personal pre-generado. Pin permanente en Telegram channels. Posts dedicados X/IG/LinkedIn. | Code |
+| Mié | Tercer artículo blog: "Mejores apps de inversión con IA 2026" (ES + EN + PT). Tabla comparativa con AUREX, Magnifi, Sagehood, Danelfin, RockFlow. | Escritorio + Code |
+| Jue | Newsletter semanal #2 con foco programa de referidos. | Escritorio + Code |
+| Vie | Tercer video YouTube + Reel/TikTok del programa de referidos. | Escritorio + Code |
+
+#### Semana 4 — Review + iteración + setup multi-idioma escalado
+
+| Día | Acción | Responsable |
+|---|---|---|
+| Lun | Code presenta dashboard de métricas Mes 1 vs targets (sección 2.7). Identifica canales over/under performing por idioma. | Code |
+| Mar-Mié | Ajustes de cadencia y tono según data. Si MeS 1 va bien (>500 signups/semana), arrancar press release Mes 1 milestones. | Code (data) + Escritorio (release si aplica) |
+| Jue | Setup cuentas Mes 2: `@aurex_zh` (chino), `@aurex_hi` (hindi), canales Telegram correspondientes. | Code |
+| Vie | Cuarto video YouTube. Primer episodio formato fijo "Análisis de la señal IA de la semana". | Escritorio + Code |
+| Sáb-Dom | Plan Mes 2 documentado. Empieza traducción automática multi-idioma para los 5 idiomas faltantes. | Code |
+
+### Mes 2 — Activación chino + hindi
+
+- Activación cuentas X/Telegram en chino y hindi.
+- Posts traducidos automáticamente desde los maestros ES/EN.
+- Press release específico India (vía PRNewswire India) y Asia (vía e27 / TechInAsia).
+- Primer newsletter en chino y hindi.
+- Reels/TikToks con avatar HeyGen + voces en chino y hindi (HeyGen soporta ambos idiomas nativamente).
+
+### Mes 3 — Activación árabe + francés
+
+- Activación cuentas X/Telegram en árabe y francés.
+- Press release Oriente Medio (vía Zawya, AME Info) y Francia/Europa francófona (vía AFP / La Tribune).
+- Primer artículo blog específico para finanzas islámicas (sharia compliance del análisis IA — sin recomendación cripto especulativo en mensajes árabes).
+
+### Mes 4-5 — Activación italiano + consolidación
+
+- Activación cuenta X/Telegram en italiano.
+- Press release Italia (vía Il Sole 24 Ore press distribution).
+- Review consolidado 8 idiomas: por qué algunos crecen más, qué ajustar.
+
+### Mes 6 — Decisión de fase 2
+
+Con métricas de 6 meses se decide:
+
+- ¿Programa de referidos rinde el K viral esperado? Si sí, escalar incentivo.
+- ¿API institucional ya tiene tracción de developers? Si sí, lanzar Sandbox público + plan de monetización.
+- ¿Cuál idioma rinde mejor (mayor LTV)? Concentrar más recursos en ese idioma.
+- ¿Discord server vale la pena para inglés/global? Decisión sí/no.
+
+## 2.9 Presupuesto mensual estimado (Año 1, plan global multi-idioma)
 
 | Categoría | Monto estimado | Notas |
 |---|---|---|
-| Buffer Business plan | $15/mes | Posts IG + LinkedIn + scheduling multi-cuenta |
-| HeyGen Pro | $99/mes | 90 min de video IA/mes (cubre 8 videos cortos + 4 largos) |
-| Resend | $0-20/mes | Hasta 50k emails |
+| Buffer Business plan | $15/mes | Posts IG + LinkedIn + scheduling multi-cuenta x 8 idiomas |
+| HeyGen Pro (anual) | $24/mes ($288/año) | 30 min de video IA/mes con avatar prefabricado + voces multi-idioma para los 8 idiomas |
+| Resend | $0-20/mes | Hasta 50k emails (multi-idioma con segmentación) |
+| Claude API tokens (workflow localización) | $5-15/mes | Traducción automática ES→7 idiomas para ~100 piezas/mes |
 | Twilio fallback WhatsApp | ~$10/mes | Solo cuando Evolution falla |
-| Wire services press releases | $300-500/mes promedio | Solo en meses con lanzamiento (4-6 releases año 1) |
-| Dominios secundarios + SSL | $5/mes | aurex.email, blog hosting backup |
-| **Total mensual recurrente** | **~$130-150/mes** | Sin contar press releases puntuales |
-| **Total año 1 incluyendo PR** | **~$3.500-4.500** | |
+| Twitter API Free tier | $0 | 1.500 posts/mes/app, suficiente para 8 cuentas |
+| Telegram Bot API | $0 | Gratuito |
+| YouTube Data API | $0 | Gratuito (cuotas suficientes para 1 video/semana/idioma) |
+| Wire services press releases | $400-700/release puntual | EIN Presswire global ($300-500), Chainwire crypto ($200), Notiprensa LATAM ($150-250), PRNewswire India/Asia ($300-500), Zawya Oriente Medio ($200-400), regional según mercado activado |
+| Dominios secundarios + SSL | $5/mes | mail.aurex.live, blog hosting backup |
+| **Total mensual recurrente** | **~$60-90/mes** | Reducido vs v2.0 porque HeyGen anual + Claude API son más baratos que estimación inicial |
+| **Press releases año 1 (~6 puntuales)** | ~$2.500-4.000 | Lanzamiento global + lanzamientos regionales por idioma |
+| **Total año 1 todo incluido** | **~$3.500-5.000** | |
 
-Esto excluye costos de desarrollo (que son tareas de Code, no costo dinero) y costos de Apple/Google ya pagados.
+**Comparación vs v2.0:** la estimación anterior asumía HeyGen Pro mensual ($99/mes) — corregido a anual ($24/mes equivalente), y el costo del workflow de localización ($5-15/mes) sustituye al costo hipotético de "contratar traductor por idioma" que hubiera sido $200-500/mes/idioma. **Ahorro estimado vs alternativa con traducción humana: ~$1.500-3.500/mes.**
+
+Esto excluye costos de desarrollo (tareas de Code, sin costo dinero) y costos de Apple/Google ya pagados.
 
 ---
 
 # PARTE 3 — PENDIENTES Y NEXT STEPS
 
-## 3.1 Pendiente cruce con Escritorio
+## 3.1 Pendiente entrega de Escritorio: primeros contenidos modelo por tipo (Punto 3 de la devolución conjunta)
 
-Según la regla de revisión cruzada (`feedback_plan_mkt_revision_cruzada.md`):
+Una vez aprobada esta v2.1 por Fernando, Escritorio escribe **un primer contenido modelo en español** (idioma maestro) por cada tipo de canal:
 
-- Escritorio revisa este documento y propone ajustes en: **tono general** (Code tiende a técnico, Escritorio puede mejorar la voz de marca), **mensajes específicos** para stores (App Store + Google Play en v1.1 post-aprobación), **copy del onboarding** y **temas concretos para los primeros 30 días de blog/newsletter**.
-- Code consolida feedback de Escritorio en `PLAN_MKT.md` v2.1.
-- Fernando aprueba versión final v2.1.
-- Recién entonces se ejecuta.
+1. **Post X/Twitter** — texto exacto con señal de ejemplo + datos visuales.
+2. **Post Instagram feed** — descripción visual del carrousel + copy del caption.
+3. **Story Instagram** — formato, texto sobre imagen, CTA.
+4. **Reel/TikTok/YouTube Short** — guion 30-60 seg + indicaciones de ritmo y avatar.
+5. **Email de bienvenida** — asunto + cuerpo.
+6. **Email newsletter semanal** — asunto + estructura + cuerpo de un ejemplo.
+7. **Artículo de blog comparativo** — estructura completa + primer párrafo de "AUREX vs Cocos Capital".
+8. **Post LinkedIn Company Page** — tono profesional + tema concreto.
+9. **Mensaje Telegram daily** — formato del resumen diario con ejemplo real.
+10. **Press release de lanzamiento** — versión EN.
 
-## 3.2 Aprobaciones pendientes de Fernando
+Code traduce automáticamente cada contenido modelo a los otros 7 idiomas con el workflow 2.3.0. Los contenidos modelo aprobados quedan como **plantillas-base** del cron del backend para producción autónoma.
 
-1. **Handles definitivos** para X, Instagram, TikTok, YouTube, LinkedIn Company, Telegram channel.
-2. **Presupuesto mensual** ~$130-150 fijo + ~$300-500 en meses con press release.
-3. **Templates iniciales** de cada canal (una vez aprobados, corren automáticamente).
-4. **Disclaimers regulatorios** del posicionamiento ("no constituye asesoramiento financiero personalizado") — coordinar con review legal post-aprobación Apple/Google.
+## 3.2 Aprobaciones pendientes de Fernando (única intervención manual)
+
+1. **Aprobar v2.1** (este documento) → habilita a Escritorio a escribir los contenidos modelo.
+2. **Handles definitivos** para X (3 cuentas Mes 1), Instagram, TikTok, YouTube, LinkedIn Company, Telegram (3 channels Mes 1). Code propone defaults + Fernando confirma o ajusta.
+3. **Sesión única HeyGen** (~15-30 min, una vez en la vida): elegir avatar + voz entre 5 candidatos que Code pre-arma. Documentado en sección 2.4.
+4. **Presupuesto mensual** ~$60-90 fijo + ~$2.500-4.000 año 1 en press releases puntuales.
+5. **Templates iniciales** de cada canal (una vez aprobados los contenidos modelo de Escritorio, corren automáticamente).
+6. **Disclaimers regulatorios** del posicionamiento — ya están en `aurex-i18n.js` validados en los 8 idiomas.
+7. **Decisión de timing del lanzamiento global** post-aprobación Apple Build 17 + Google Play Build 2.
 
 ## 3.3 Bloqueadores actuales (al 29-abr-2026)
 
@@ -521,5 +748,5 @@ Estos blind spots quedaron documentados en Pasada 5 pero NO entran al Plan MKT v
 
 ---
 
-*PLAN_MKT.md v2.0-draft (Code) — última actualización: 29-abr-2026.*
-*Pendiente cruce con Escritorio antes de versión final v2.1.*
+*PLAN_MKT.md v2.1 (Code, post-cruce con Escritorio + Fernando) — última actualización: 29-abr-2026 noche.*
+*Próximo paso: Escritorio escribe primeros contenidos modelo por tipo de canal (Punto 3 de la devolución conjunta) → Code integra → v2.2 final para aprobación de Fernando.*
