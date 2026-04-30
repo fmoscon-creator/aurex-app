@@ -132,9 +132,9 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float):
         f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0];"
         f"[v0][8:v]overlay=(W-w)/2:1380:enable='between(t,0,{t_outro_start:.2f})'[v0b];"
         f"[v0b][2:v]overlay=(W-w)/2:200:enable='between(t,0,{INTRO_SEC:.2f})'[v1];"
-        f"[v1][3:v]overlay=(W-w)/2:280:enable='between(t,{t_btc_start:.2f},{t_btc_end:.2f})'[v2];"
-        f"[v2][4:v]overlay=(W-w)/2:280:enable='between(t,{t_aapl_start:.2f},{t_aapl_end:.2f})'[v3];"
-        f"[v3][5:v]overlay=(W-w)/2:280:enable='between(t,{t_tsla_start:.2f},{t_tsla_end:.2f})'[v4];"
+        f"[v1][3:v]overlay=(W-w)/2:240:enable='between(t,{t_btc_start:.2f},{t_btc_end:.2f})'[v2];"
+        f"[v2][4:v]overlay=(W-w)/2:240:enable='between(t,{t_aapl_start:.2f},{t_aapl_end:.2f})'[v3];"
+        f"[v3][5:v]overlay=(W-w)/2:240:enable='between(t,{t_tsla_start:.2f},{t_tsla_end:.2f})'[v4];"
         f"[v4][6:v]overlay=0:0:enable='between(t,{t_outro_start:.2f},{T:.2f})'[v5];"
         f"[v5][7:v]overlay=(W-w)/2:1720:enable='between(t,0,{t_outro_start:.2f})'[v]"
     )
