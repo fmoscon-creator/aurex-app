@@ -37,10 +37,10 @@ INTRO_SEC = 3.0
 OUTRO_SEC = 2.5
 GUION_DEMO = (
     "Hoy AUREX detectó tres señales de alta convicción. "
-    "Bitcoin: alcista ochenta y cinco por ciento. "
-    "Apple: alcista setenta y dos. "
-    "Tesla: bajista sesenta y ocho. "
-    "Visitanos en aurex punto live."
+    "Bitcoin: con probabilidad alcista del ochenta y cinco por ciento. "
+    "Apple: con probabilidad alcista del setenta y dos por ciento. "
+    "Tesla: con probabilidad bajista del sesenta y ocho por ciento. "
+    "Para acceder a más señales visitanos en aurex punto live."
 )
 
 # Señales del demo (cambian por tipo de video)
