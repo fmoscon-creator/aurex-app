@@ -124,6 +124,10 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
   - `sol.esnoz@gmail.com` (mi mujer) — pass Supabase `AurexTest2026!`
   - `lola.moscon@gmail.com` (mi otra hija) — pass Supabase `AurexTest2026!`
 - Creé `aurextester12@gmail.com` (otra cuenta mía nueva) y le hice opt-in desde un emulador AVD `AUREX_Play` con Google Play Store. Riesgo: emuladores pueden no contar para Google. A las 24-48h sabré si el contador subió de 12 → 13.
+- Sumadas el 1-may-2026 mañana (Supabase + Play Console como testers, pass `AurexTest2026!`):
+  - `silvinamoscon@gmail.com` — UUID `a525929c-ab83-44e2-bcdb-522f0a29c027`.
+  - `martainesalvarez02@gmail.com` — UUID `cc52183b-0a71-4e81-af15-d184853cfa03`.
+  - `mosconmia2010@gmail.com` (cuenta correcta de la persona — el primer mensaje a "miamoscon" tenía letras al revés) — UUID `b72aa3cd-7851-446a-ba19-582a8f91a41a`.
 - Las 3 family solo cuentan si efectivamente hacen opt-in. Faltan las pass reales de Gmail de cada una para loguearlas.
 
 **Plan A (preferido — sin costo, sin riesgo):**

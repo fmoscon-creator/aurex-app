@@ -404,6 +404,9 @@ Folder ID raíz: `1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI`.
 | `sol.esnoz@gmail.com` (mujer) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
 | `lola.moscon@gmail.com` (hija) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
 | `aurextester12@gmail.com` (mía nueva) | Bajo trust + emulador | ✅ creada | ✅ | ✅ tengo | ✅ desde emulador AVD `AUREX_Play` (a verificar 24-48h si suma) |
+| `silvinamoscon@gmail.com` (sumada 1-may mañana) | Family extendida — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
+| `martainesalvarez02@gmail.com` (sumada 1-may mañana) | Family extendida — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
+| `mosconmia2010@gmail.com` (sumada 1-may mañana — primer mensaje fue a "miamoscon" con letras al revés, corregido) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ propagación 5-10 min después del alta en Play Console |
 
 **Plan A (preferido):** Tomás (hijo, ya verificador con `tomasmoscon@gmail.com`, tiene Android pero no vive acá). Cuando venga: en su Android agrega las 3 cuentas family como cuentas Google secundarias → con cada una abre el link de testing → Become a tester → instala AUREX desde Play Store → loguea con `email + AurexTest2026!` y usa 3 min. Resultado: +3 testers reales en device físico con Gmail viejo = 100% que cuenten → pasamos a 15-16 opted-in con margen sólido. Sin costo, sin riesgo.
 
