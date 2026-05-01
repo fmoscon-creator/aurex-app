@@ -300,23 +300,24 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     constelacion.generate_frames(mode, duration, str(frames_dir))
     print(f"[constelación] frames en {frames_dir}")
 
-    # 2b. Frames del búho animado (Plan D — Ruta B integrada).
-    # Si está disponible el PNG transparente del búho, se generan frames con
-    # animación local (glow + partículas + rotación + zoom) durante toda la
-    # duración del video. Los frames se overlayean sobre la constelación con alpha.
-    # Si no, fallback a PNG estático (Ruta A pura).
-    buho_anim_dir = None
-    transparent_buho = ASSETS / f"buho_v2_{mode}_transparent.png"
-    if transparent_buho.exists() and use_anim:
-        buho_anim_dir = work_dir / f"buho_anim_{mode}"
-        # buho_anim_local.py usa BUHO_PATH=buho_v2_dark_transparent.png hardcoded
-        # para modo dark. Para light habría que parametrizar (TODO cuando haya
-        # transparente para light).
-        if mode == "dark":
-            buho_anim_local.generate_frames(duration, str(buho_anim_dir))
-            print(f"[búho animado] frames en {buho_anim_dir}")
-        else:
-            buho_anim_dir = None  # fallback estático para light por ahora
+    # 2b. Búho central de la plantilla.
+    # Si --emotion está dado y existe el MP4 del catálogo emocional (catálogo cerrado
+    # 1-may-2026, ver docs/BUHO_ESTADOS_EMOCIONALES.md), usamos ese MP4 como búho
+    # animado integrado en la plantilla (loopeado durante toda la duración).
+    # Si no, fallback a PNG estático (lo que se usó hasta v13).
+    #
+    # Plan D local (buho_anim_local.py con glow + partículas) FUE DESCARTADO el 1-may
+    # tras feedback de Fernando: el "halo dorado" que generaba alrededor del búho
+    # no es coherente con la marca AUREX (icon oficial es búho dorado plano sobre
+    # navy, sin glow). Si en el futuro se quiere reactivar, usar flag explícito.
+    buho_video_emotion = None
+    if emotion and emotion in EMOTION_TO_FILE:
+        candidate = ASSETS / "buho_animations" / EMOTION_TO_FILE[emotion]
+        if candidate.exists():
+            buho_video_emotion = candidate
+            print(f"[búho] usando video emocional '{emotion}': {candidate.name} (loop sobre plantilla)")
+    if not buho_video_emotion:
+        print("[búho] usando PNG estático (sin emotion definida, ó MP4 no encontrado)")
 
     # 3. Banners
     logo_path = ASSETS / "logo_solo_circulo.png"
@@ -363,19 +364,21 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     print(f"[timings] intro 0-{INTRO_SEC} | BTC {t_btc_start:.2f}-{t_btc_end:.2f} | "
           f"AAPL {t_aapl_start:.2f}-{t_aapl_end:.2f} | TSLA {t_tsla_start:.2f}-{t_tsla_end:.2f} | "
           f"outro {t_outro_start:.2f}-{T:.2f}")
+    # `use_anim` legacy: ya no se usa (Plan D descartado por halo dorado el 1-may).
+    # Lo mantengo en la firma por compatibilidad pero no afecta la composición.
+    _ = use_anim
 
-    # Si tenemos frames del búho animado (Plan D), el input 1 es la secuencia
-    # de PNGs transparentes (1080x1920 cada uno con búho + glow + partículas).
-    # Si no, fallback a PNG estático con scale a 720x720.
-    if buho_anim_dir:
-        buho_input_args = ["-framerate", str(FPS), "-i", str(buho_anim_dir / "%04d.png")]
-        # Los frames del búho ya son 1080x1920 con búho posicionado, overlay en (0,0)
-        buho_filter = "[1:v]format=yuva420p[buho]"
-        buho_overlay = f"[base][buho]overlay=0:0:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
+    # Búho central: MP4 emocional con stream_loop si hay emotion, PNG estático si no.
+    # En ambos casos: scale a 720x720, posición centrada horizontalmente +120 vertical.
+    # Esto replica la integración que tenía v13 (validada por Fernando) — sin halo, sin glow.
+    if buho_video_emotion:
+        buho_input_args = ["-stream_loop", "-1", "-i", str(buho_video_emotion)]
+        # crop=iw:ih-80 saca el watermark de Runway/Kling (80 px del bottom).
+        buho_filter = "[1:v]crop=iw:ih-80:0:0,scale=720:720,setsar=1,setpts=PTS-STARTPTS[buho]"
     else:
         buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
         buho_filter = "[1:v]scale=720:720,setsar=1[buho]"
-        buho_overlay = f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
+    buho_overlay = f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
 
     fc = (
         "[0:v]format=yuv420p[base];"
@@ -409,20 +412,8 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
         "-t", f"{T:.2f}",
         str(out_path),
     ]
-    print(f"[FFmpeg] {'búho animado' if buho_anim_dir else 'búho estático'} -> {out_path.name}")
+    print(f"[FFmpeg] búho={'video emocional ' + emotion if buho_video_emotion else 'PNG estático'} -> {out_path.name}")
     subprocess.run(cmd, check=True)
-
-    # Stinger del búho según estado emocional (Ruta B integrada al inicio del video).
-    if emotion:
-        stinger = find_buho_stinger(role="intro", emotion=emotion)
-        if stinger:
-            print(f"[stinger] aplicando estado '{emotion}' desde {stinger.name}")
-            stingered = work_dir / f"{out_path.stem}_with_stinger.mp4"
-            prepend_stinger(out_path, stinger, stingered, work_dir)
-            stingered.replace(out_path)
-        else:
-            print(f"[stinger] AVISO: no encontré stinger para emotion '{emotion}', sigo sin stinger")
-
     print(f"[OK] {out_path}")
 
 
