@@ -1,111 +1,88 @@
 # BUHO v2 — ESTADOS EMOCIONALES Y CRUCE PLAN ↔ HECHO
 
-> Documento de referencia para cortar la confusión sobre las animaciones del búho.
-> Reconstruido el 1-may-2026 mediodía a partir de los 2 briefs en Drive `04_briefs/`,
-> los 5 videos en Drive `01_videos/buho_animaciones/` y la conversación con Escritorio.
+> Documento de referencia para las animaciones del búho v2. Decisión cerrada
+> el 1-may-2026 mediodía por Fernando + Code + Escritorio.
 >
-> **Antes de generar más videos, leer este documento. Antes de modificar este documento,
-> chequear con Fernando.**
+> **Antes de generar más animaciones, leer este documento. Antes de modificar
+> este documento, chequear con Fernando.**
 
 ---
 
-## 1. Plan ORIGINAL (briefs Code → Escritorio del 30-abr-2026)
+## 1. Catálogo emocional — DECISIÓN CERRADA 1-may-2026
 
-Los 2 briefs en Drive `04_briefs/` (`brief_runway_buho_animaciones.md` y `brief_v2_buho_animaciones_kling_luma.md`) definen **3 variantes TÉCNICAS** (movimientos, no estados emocionales):
+3 estados, todos coherentes con marca AUREX (búho 100% dorado, ojos en almendra estilo icon oficial):
 
-| # | Nombre técnico | Prompt sintetizado | Uso pensado |
+| Estado | Video Drive | Archivo local en repo | Cuándo usarlo |
 |---|---|---|---|
-| **V1** | Parpadeo + leve giro de cabeza | `golden geometric faceted owl on navy background, blinks slowly, subtle head turn left and right, metallic shine reflects, professional cinematic, 5 seconds` | Stinger neutral en videos diarios |
-| **V2** | Movimiento mínimo + brillos metálicos | `golden geometric faceted owl on navy background, very subtle breathing motion, golden particles slowly drift around, metallic reflections shift, premium cinematic` | Loop ambient en intros largas |
-| **V3** | Zoom dramático + apertura de alas | `golden geometric faceted owl on navy background, slow dramatic zoom in, wings slightly opening, intense golden glow emanating from chest, cinematic premium 4k` | Apertura de videos premium / hitos / lanzamientos |
+| **confianza** (CONFIANZA ALTA / CELEBRACIÓN) | `01_videos/buho_animaciones/ALAS DORADAS con OJOS CORREGIDOS.mp4` | `assets/buho_animations/buho_confianza.mp4` | Señales Alta Convicción IA, milestones, lanzamientos, hits |
+| **serio** (NEUTRAL / OBSERVADOR) | `01_videos/buho_animaciones/BUHO SERIO OBSERVADOR ...mp4` | `assets/buho_animations/buho_serio.mp4` | Posts diarios, market wrap, señales IA estándar |
+| **alerta** (ADVERTENCIA / RIESGO) | `01_videos/buho_animaciones/BUHO INTIMIDANTE ...mp4` | `assets/buho_animations/buho_alerta.mp4` | Advertencias regulatorias, riesgo, caídas relevantes |
 
-NO hay "ojos cerrados" ni "serio observador" ni "intimidante" ni "alas grandes blancas" en el plan original.
+Uso desde `compose_video.py`:
 
----
-
-## 2. Lo que efectivamente hizo Escritorio (5 videos en Drive al 1-may-2026)
-
-Carpeta: `01_videos/buho_animaciones/` (folder ID `1F2GSSSn7BfX-46kSKIZGzf3bVR08Rs_Q`)
-
-| # | Archivo | Tamaño | Estado visual | ¿Coincide con plan? |
-|---|---|---|---|---|
-| 1 | `ALAS DORADAS con OJOS CORREGIDOS.mp4` | 1.13 MB | ✓ ojos OK | **Sí — equivale a V3 corregido** |
-| 2 | `BUHO ALAS DORADAS QUE SE ABREN OJOS REDONDOS.mp4` | 4.42 MB | ✗ ojos redondos defectuosos (verificado pixel-por-pixel 1-may) | Era intento de V3, **superado por #1 → DESCARTABLE** |
-| 3 | `BUHO ALAS GRANDES BLANCAS.mp4` | 3.46 MB | a validar | **No estaba en el plan — variante propia de Escritorio** |
-| 4 | `BUHO SERIO OBSERVADOR.mp4` | 2.61 MB | a validar (probable ojos defectuosos) | **No estaba en el plan — variante propia de Escritorio** |
-| 5 | `BUHO INTIMIDANTE.mp4` | 3.08 MB | a validar | **No estaba en el plan — variante propia de Escritorio** |
+```bash
+python3 compose_video.py --mode dark --channel tiktok --emotion confianza --out video.mp4
+python3 compose_video.py --mode dark --channel youtube --emotion serio   --out video.mp4
+python3 compose_video.py --mode dark --channel linkedin --emotion alerta  --out video.mp4
+```
 
 ---
 
-## 3. CRUCE plan ↔ hecho — qué se hizo, qué falta, qué sobra
+## 2. Reglas de marca para regeneraciones
 
-| Plan original | Estado | Notas |
+- Búho **siempre 100% dorado** sobre fondo navy `#0A1428`. NO alas blancas, NO plateado, NO multicolor.
+- Ojos **en almendra/afilados** (estilo del icon oficial). Runway tiende a deformarlos a "ojos redondos tiernos" — siempre verificar pixel-por-pixel antes de aceptar.
+- Estética **facetada premium** (geometric polygonal). NO realista, NO cartoon.
+
+---
+
+## 3. PNG fuente para futuras regeneraciones
+
+Usar **siempre**: `scripts/video_generation/assets/buho_runway_clean/buho_v2_dark_tight_1080.png` (también en Drive `03_assets_brutos/`, file ID `1hfJQ6_HYxpsEQEwlcag1kxigx4w76Bfv`).
+
+- 1080×1080, búho llena 95% del alto y 68% del ancho, padding navy uniforme 2.5%.
+- Resuelve el problema del PNG anterior (búho ocupando solo 45% del frame, Runway interpretaba el margen como espacio para duplicar/achicar).
+
+Versión 9:16 disponible (`buho_v2_dark_9x16_1080x1920.png`) si Runway exige formato vertical, pero el cuadrado funciona mejor en image-to-video.
+
+---
+
+## 4. Plan ORIGINAL (descartado) — solo histórico
+
+Los 2 briefs en Drive `04_briefs/` (del 30-abr-2026) proponían **3 variantes técnicas** (V1 parpadeo, V2 breathing, V3 zoom+alas). Escritorio se desvió a variantes temáticas/emocionales propias durante la ejecución. La decisión del 1-may-2026 adopta el catálogo emocional (3 estados arriba) y descarta el plan técnico V1/V2/V3.
+
+Si en el futuro hace falta una animación neutra técnica (parpadeo o breathing), se genera con prompt simple usando el PNG limpio.
+
+---
+
+## 5. Inventario completo en Drive `01_videos/buho_animaciones/` al 1-may-2026 mediodía
+
+| Archivo Drive | Tamaño | Estado |
 |---|---|---|
-| V1 (parpadeo + leve giro) | ❌ **FALTA** generar | No hay video correspondiente. |
-| V2 (breathing + partículas) | ❌ **FALTA** generar | No hay video correspondiente. |
-| V3 (zoom + apertura alas) | ✓ **HECHO** | `ALAS DORADAS con OJOS CORREGIDOS` (#1 de la lista). |
+| ALAS DORADAS con OJOS CORREGIDOS.mp4 | 1.13 MB | ✅ ACTIVO — estado **confianza** |
+| BUHO SERIO OBSERVADOR ...mp4 | 2.61 MB | ✅ ACTIVO — estado **serio** (typo OBSERAVDOR corregido el 1-may) |
+| BUHO INTIMIDANTE ...mp4 | 3.08 MB | ✅ ACTIVO — estado **alerta** |
+| BUHO ALAS DORADAS QUE SE ABREN OJOS REDONDOS.mp4 | 4.42 MB | ❌ DESCARTADO — movido a `descartados/` (superado por OJOS CORREGIDOS) |
+| BUHO ALAS GRANDES BLANCAS.mp4 | 3.46 MB | ❌ DESCARTADO — movido a `descartados/` (alas blancas rompen marca, icon oficial es 100% dorado) |
 
-| Variantes extras de Escritorio (NO estaban en el plan) | Estado | Decisión pendiente |
-|---|---|---|
-| ALAS GRANDES BLANCAS (#3) | ✓ generado | ¿Se mantiene como estado del catálogo? Si sí, ¿qué situación cubre? |
-| SERIO OBSERVADOR (#4) | ⚠️ generado pero probable ojos defectuosos | Confirmar visualmente. Si tiene "ojos redondos", re-generar con PNG limpio + prompt fix. |
-| INTIMIDANTE (#5) | ✓ generado | ¿Se mantiene como estado del catálogo? Si sí, ¿qué situación cubre? |
-| OJOS CERRADOS | ❌ NO existe | Escritorio dijo "ya existe" pero NO está en Drive. Confusión. |
+Subcarpeta `descartados/` (folder ID `1JEg8pfV75GslX7kFaPkym6Ox5Y5qvf9s`): no borrar, queda como histórico por si en el futuro hace falta alguna referencia.
 
 ---
 
-## 4. Decisión bloqueante (Fernando + Escritorio)
+## 6. Roles claros para próximas iteraciones
 
-Antes de gastar más créditos hay que elegir UN camino:
-
-**Camino A — Volver al plan V1/V2/V3 puro (3 estados):**
-- Quedarse con el #1 (= V3 OK).
-- Generar V1 y V2 desde cero usando el PNG limpio `buho_v2_dark_tight_1080.png` (Drive `03_assets_brutos/`).
-- Descartar #3, #4, #5 (no estaban planeados, complican el catálogo).
-- Resultado: catálogo de 3 estados técnicos, 100% alineado con los briefs.
-
-**Camino B — Adoptar el catálogo emocional de Escritorio (5 estados):**
-- Mantener los 5 videos pero con todos los ojos OK.
-- Verificar/regenerar ojos defectuosos en #4 (SERIO OBSERVADOR) si los tiene.
-- Definir el mapeo "estado emocional → situación de uso" para los 5.
-- Descartar #2 (OJOS REDONDOS).
-- Resultado: catálogo de 5 estados emocionales temáticos, más útil para marketing pero requiere decisión activa de mapeo.
-
-**Camino C — Híbrido:**
-- Mantener los 5 estados emocionales de Escritorio +
-- Agregar V1 y V2 como animaciones técnicas neutras adicionales (uso en intros/loops sin connotación emocional).
-- Total catálogo: 7 piezas. Más flexible pero más complejo.
-
-**Recomendación de Code (no decisión final):** Camino B. Las variantes temáticas de Escritorio son mejores para marketing que parpadeos/breathing genéricos. Si después surge la necesidad de neutros, se generan V1/V2.
+- **Escritorio**: solo genera animaciones nuevas cuando Code le pase un brief específico en `04_briefs/`. NO inventa variantes nuevas (eso fue el origen del desorden previo). Si propone un estado nuevo, lo escribe en `05_feedback/` y se revisa con Fernando + Code.
+- **Code**: arma briefs concretos cuando hace falta una animación nueva, compone los videos finales (animación + voz + banners), publica.
+- **Fernando**: aprueba decisiones bloqueantes (catálogo, presupuesto, copy crítico). NO ejecuta tareas manuales en herramientas.
 
 ---
 
-## 5. Mapeo "estado emocional → situación de uso" (sin definir)
+## 7. Histórico de decisiones
 
-Una vez que Fernando + Escritorio confirmen el camino (A/B/C), bajamos acá la tabla definitiva:
-
-| Estado | Cuándo usarlo | Tipo de contenido AUREX | Animación |
-|---|---|---|---|
-| (a definir) | (a definir) | (a definir) | (a definir) |
-
-**Interpretación inicial de Code para arrancar la conversación si va Camino B/C:**
-- ALAS DORADAS QUE SE ABREN (con ojos OK) → CONFIANZA ALTA — señal de Alta Convicción IA, milestones, lanzamientos.
-- SERIO OBSERVADOR (con ojos OK) → SERIO/NEUTRAL — posts diarios de mercado, market wrap, señales IA estándar.
-- ALAS GRANDES BLANCAS → ¿APERTURA DE MERCADO / momento épico? — a confirmar.
-- INTIMIDANTE → ALERTA — advertencias regulatorias, riesgo, caídas relevantes.
-- (5to estado pendiente de definir si va Camino B/C).
+- **30-abr-2026**: briefs originales pidiendo V1/V2/V3 (técnicas). Escritorio empieza a generar pero se desvía a variantes temáticas durante la ejecución sin documentar.
+- **1-may-2026 madrugada**: Escritorio termina los 5 videos sin alinear con el plan original. Code anterior detecta el desorden, intenta cuadro consolidado, sesión se cierra antes de bajarlo a doc.
+- **1-may-2026 mediodía**: Code reconstruye el cuadro desde la evidencia (briefs + videos + nombres de archivos + verificación pixel-por-pixel de cada frame). Fernando + Escritorio + Code consensuan el catálogo de 3 estados emocionales descartando OJOS REDONDOS y ALAS BLANCAS. Decisión cerrada y commiteada.
 
 ---
 
-## 6. PNG fuente para futuras regeneraciones
-
-`scripts/video_generation/assets/buho_runway_clean/buho_v2_dark_tight_1080.png`
-- 1080×1080, búho llena 95% del alto / 68% del ancho, padding navy uniforme 2.5%.
-- Subido a Drive `03_assets_brutos/` el 1-may-2026 mediodía.
-- **USAR ESTE para todas las regeneraciones**: evita el problema de Runway de duplicar/achicar el búho que tenía el PNG original (búho ocupando solo 45% del frame).
-
----
-
-## 7. Última actualización
-
-- 1-may-2026 mediodía: documento creado por Code. Próxima edición: cuando Fernando confirme camino A/B/C.
+*Próxima edición: solo si Fernando autoriza expandir el catálogo (4to o 5to estado) o cambiar la asignación estado → situación.*

@@ -32,6 +32,7 @@ sys.path.insert(0, str(TEMPLATES))
 
 import constelacion  # type: ignore
 import banners  # type: ignore
+import buho_anim_local  # type: ignore
 
 FPS = 25
 DEFAULT_DURATION = 14.5
@@ -94,6 +95,15 @@ def get_voice_for_channel(channel: str, weekday: Optional[int] = None) -> str:
     fem, masc = voices
     # Martes (1) y jueves (3) → masculina. Resto → femenina.
     return masc if weekday in (1, 3) else fem
+
+
+# Catálogo emocional del búho v2 — decisión cerrada 1-may-2026 (ver docs/BUHO_ESTADOS_EMOCIONALES.md).
+# Cada estado se aplica como stinger al inicio del video según el tipo de contenido.
+EMOTION_TO_FILE = {
+    "confianza": "buho_confianza.mp4",  # CONFIANZA ALTA / CELEBRACIÓN — Alta Convicción IA, milestones, lanzamientos
+    "serio":     "buho_serio.mp4",       # NEUTRAL / OBSERVADOR — posts diarios, market wrap, señales IA estándar
+    "alerta":    "buho_alerta.mp4",      # ADVERTENCIA / RIESGO — advertencias regulatorias, caídas relevantes
+}
 GUION_DEMO = (
     "Hoy AUREX detectó tres señales de alta convicción. "
     "Bitcoin: con probabilidad alcista del ochenta y cinco por ciento. "
@@ -199,18 +209,29 @@ def gen_audio(text: str, work_dir: Path, voice: str = ELEVENLABS_DEFAULT_VOICE) 
     return gen_audio_say(text, work_dir)
 
 
-def find_buho_stinger(role: str = "intro") -> Optional[Path]:
+def find_buho_stinger(role: str = "intro", emotion: Optional[str] = None) -> Optional[Path]:
     """Busca un MP4 del búho animado para usar como stinger del video.
-    role='intro' → prefiere parpadeo o breathing (más sutil para abrir).
-    role='outro' → prefiere zoom (más dramático para cerrar).
+
+    Si `emotion` está dado y coincide con el catálogo cerrado del 1-may-2026
+    (confianza / serio / alerta), prioriza ese archivo. Si no, fallback al
+    comportamiento legacy por `role` (intro/outro con keywords parpadeo/zoom/etc).
+
+    role='intro' → prefiere parpadeo o breathing (legacy, sutil para abrir).
+    role='outro' → prefiere zoom (legacy, dramático para cerrar).
+
     Retorna None si no hay videos del búho animado disponibles (pipeline corre Ruta A pura).
 
-    Los MP4 deben estar en assets/buho_animations/, generados con Kling/Luma/Pika
-    según el brief en AUREX_MEDIA_LIBRARY/04_briefs/.
+    Los MP4 deben estar en assets/buho_animations/.
     """
     anim_dir = ASSETS / "buho_animations"
     if not anim_dir.exists():
         return None
+    # Catálogo emocional cerrado tiene prioridad absoluta.
+    if emotion and emotion in EMOTION_TO_FILE:
+        candidate = anim_dir / EMOTION_TO_FILE[emotion]
+        if candidate.exists():
+            return candidate
+    # Fallback legacy por role.
     if role == "intro":
         priorities = ["parpadeo", "breathing", "anim_01", "anim_02"]
     else:
@@ -265,7 +286,8 @@ def prepend_stinger(main_video: Path, stinger: Path, out_path: Path, work_dir: P
 
 
 def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
-                voice: str = ELEVENLABS_DEFAULT_VOICE, use_stinger: bool = True):
+                voice: str = ELEVENLABS_DEFAULT_VOICE, use_anim: bool = True,
+                emotion: Optional[str] = None):
     work_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Audio
@@ -277,6 +299,24 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     frames_dir = work_dir / f"frames_{mode}"
     constelacion.generate_frames(mode, duration, str(frames_dir))
     print(f"[constelación] frames en {frames_dir}")
+
+    # 2b. Frames del búho animado (Plan D — Ruta B integrada).
+    # Si está disponible el PNG transparente del búho, se generan frames con
+    # animación local (glow + partículas + rotación + zoom) durante toda la
+    # duración del video. Los frames se overlayean sobre la constelación con alpha.
+    # Si no, fallback a PNG estático (Ruta A pura).
+    buho_anim_dir = None
+    transparent_buho = ASSETS / f"buho_v2_{mode}_transparent.png"
+    if transparent_buho.exists() and use_anim:
+        buho_anim_dir = work_dir / f"buho_anim_{mode}"
+        # buho_anim_local.py usa BUHO_PATH=buho_v2_dark_transparent.png hardcoded
+        # para modo dark. Para light habría que parametrizar (TODO cuando haya
+        # transparente para light).
+        if mode == "dark":
+            buho_anim_local.generate_frames(duration, str(buho_anim_dir))
+            print(f"[búho animado] frames en {buho_anim_dir}")
+        else:
+            buho_anim_dir = None  # fallback estático para light por ahora
 
     # 3. Banners
     logo_path = ASSETS / "logo_solo_circulo.png"
@@ -324,10 +364,23 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
           f"AAPL {t_aapl_start:.2f}-{t_aapl_end:.2f} | TSLA {t_tsla_start:.2f}-{t_tsla_end:.2f} | "
           f"outro {t_outro_start:.2f}-{T:.2f}")
 
+    # Si tenemos frames del búho animado (Plan D), el input 1 es la secuencia
+    # de PNGs transparentes (1080x1920 cada uno con búho + glow + partículas).
+    # Si no, fallback a PNG estático con scale a 720x720.
+    if buho_anim_dir:
+        buho_input_args = ["-framerate", str(FPS), "-i", str(buho_anim_dir / "%04d.png")]
+        # Los frames del búho ya son 1080x1920 con búho posicionado, overlay en (0,0)
+        buho_filter = "[1:v]format=yuva420p[buho]"
+        buho_overlay = f"[base][buho]overlay=0:0:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
+    else:
+        buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
+        buho_filter = "[1:v]scale=720:720,setsar=1[buho]"
+        buho_overlay = f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
+
     fc = (
         "[0:v]format=yuv420p[base];"
-        "[1:v]scale=720:720,setsar=1[buho];"
-        f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0];"
+        f"{buho_filter};"
+        f"{buho_overlay};"
         f"[v0][8:v]overlay=(W-w)/2:1380:enable='between(t,0,{t_outro_start:.2f})'[v0b];"
         f"[v0b][2:v]overlay=(W-w)/2:200:enable='between(t,0,{INTRO_SEC:.2f})'[v1];"
         f"[v1][3:v]overlay=(W-w)/2:240:enable='between(t,{t_btc_start:.2f},{t_btc_end:.2f})'[v2];"
@@ -340,7 +393,7 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     cmd = [
         "ffmpeg", "-y",
         "-framerate", str(FPS), "-i", str(frames_dir / "%04d.png"),
-        "-loop", "1", "-framerate", str(FPS), "-i", str(buho_path),
+    ] + buho_input_args + [
         "-loop", "1", "-framerate", str(FPS), "-i", str(b_intro),
         "-loop", "1", "-framerate", str(FPS), "-i", str(b_btc),
         "-loop", "1", "-framerate", str(FPS), "-i", str(b_aapl),
@@ -354,21 +407,22 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
         "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k",
         "-t", f"{T:.2f}",
+        str(out_path),
     ]
-    # 5. Si hay stinger del búho animado disponible (Ruta B), generar el video
-    # principal a un archivo temporal y después concatenar el stinger al inicio.
-    stinger = find_buho_stinger("intro") if use_stinger else None
-    if stinger:
-        main_temp = work_dir / "main_video.mp4"
-        cmd.append(str(main_temp))
-        print(f"[FFmpeg] generando video principal en {main_temp}...")
-        subprocess.run(cmd, check=True)
-        print(f"[stinger] {stinger.name} -> prepend al inicio")
-        prepend_stinger(main_temp, stinger, out_path, work_dir)
-    else:
-        cmd.append(str(out_path))
-        print("[FFmpeg] sin stinger (Ruta A pura) -> generando directo a out")
-        subprocess.run(cmd, check=True)
+    print(f"[FFmpeg] {'búho animado' if buho_anim_dir else 'búho estático'} -> {out_path.name}")
+    subprocess.run(cmd, check=True)
+
+    # Stinger del búho según estado emocional (Ruta B integrada al inicio del video).
+    if emotion:
+        stinger = find_buho_stinger(role="intro", emotion=emotion)
+        if stinger:
+            print(f"[stinger] aplicando estado '{emotion}' desde {stinger.name}")
+            stingered = work_dir / f"{out_path.stem}_with_stinger.mp4"
+            prepend_stinger(out_path, stinger, stingered, work_dir)
+            stingered.replace(out_path)
+        else:
+            print(f"[stinger] AVISO: no encontré stinger para emotion '{emotion}', sigo sin stinger")
+
     print(f"[OK] {out_path}")
 
 
@@ -382,12 +436,18 @@ def main():
                         help="Voz ElevenLabs específica. Si no se especifica, se usa la del canal según el día.")
     parser.add_argument("--channel", choices=list(ELEVENLABS_CHANNEL_VOICES.keys()), default="default",
                         help="Canal de destino. Determina la voz si --voice no está dado (rotación por día).")
-    parser.add_argument("--no-stinger", action="store_true",
-                        help="Desactiva el stinger del búho animado (Ruta B). Por default se usa si hay MP4 disponible en assets/buho_animations/.")
+    parser.add_argument("--no-anim", action="store_true",
+                        help="Desactiva la animación local del búho (Plan D). Usa PNG estático.")
+    parser.add_argument("--emotion", choices=list(EMOTION_TO_FILE.keys()),
+                        help="Estado emocional del búho como stinger inicial. Catálogo cerrado el 1-may-2026: "
+                             "'confianza' (Alta Convicción IA, milestones), 'serio' (posts diarios neutros), "
+                             "'alerta' (advertencias, riesgo). Sin este flag el video no lleva stinger.")
     args = parser.parse_args()
     voice = args.voice if args.voice else get_voice_for_channel(args.channel)
     print(f"[voz] canal={args.channel} -> voz={voice}")
-    build_video(args.mode, Path(args.out), Path(args.work), args.duration, voice, not args.no_stinger)
+    if args.emotion:
+        print(f"[emotion] estado del búho={args.emotion}")
+    build_video(args.mode, Path(args.out), Path(args.work), args.duration, voice, not args.no_anim, args.emotion)
 
 
 if __name__ == "__main__":
