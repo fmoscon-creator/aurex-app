@@ -165,17 +165,24 @@ def gen_audio_elevenlabs(text: str, work_dir: Path, api_key: str, voice: str = E
 
 
 def get_elevenlabs_api_key() -> Optional[str]:
-    """Busca la API key de ElevenLabs en (orden): env var, txt en Descargas."""
+    """Busca la API key de ElevenLabs en (orden): env var, /tmp, txt en Descargas."""
     key = os.environ.get("ELEVENLABS_API_KEY")
     if key:
         return key.strip()
-    txt = Path.home() / "Downloads" / "SECRET ELEVENLABS.txt"
-    if txt.exists():
-        content = txt.read_text().strip()
-        # Aceptar formato directo o "ELEVENLABS_API_KEY=xxx"
-        if "=" in content:
-            return content.split("=", 1)[1].strip()
-        return content
+    # Probar paths alternativos (necesario en macOS donde Downloads puede estar bloqueado para subprocess)
+    candidates = [
+        Path("/tmp/aurex_eleven.txt"),
+        Path.home() / "Downloads" / "SECRET ELEVENLABS.txt",
+    ]
+    for txt in candidates:
+        try:
+            if txt.exists():
+                content = txt.read_text().strip()
+                if "=" in content:
+                    return content.split("=", 1)[1].strip()
+                return content
+        except (PermissionError, OSError):
+            continue
     return None
 
 
@@ -218,18 +225,25 @@ def find_buho_stinger(role: str = "intro") -> Optional[Path]:
 
 def prepend_stinger(main_video: Path, stinger: Path, out_path: Path, work_dir: Path):
     """Concatena un stinger al INICIO del video principal con FFmpeg.
-    Normaliza el stinger a 1080x1920 25fps + agrega track de audio silencioso
-    (la voz del guion arranca cuando termina el stinger).
+
+    Adaptaciones del stinger antes de concatenar:
+    1. Crop bottom 80px (tapa watermark de Kling/Pika tier free).
+    2. Scale a altura 720 manteniendo aspect ratio (mismo tamaño que el búho del video principal).
+    3. Pad a 1080x1920 con navy AUREX (#0A1428) para que se funda con el fondo.
+       El búho del stinger queda en Y=600-1320 (mismas coordenadas que el video principal),
+       garantizando continuidad visual sin "salto" cuando termina el stinger.
+    4. Track de audio silencio si el stinger no tiene (la voz del guion arranca después).
     """
     norm = work_dir / "stinger_norm.mp4"
-    # Normalizar stinger: scale + pad a 1080x1920, audio silencio si no tiene
     subprocess.run([
         "ffmpeg", "-y",
         "-i", str(stinger),
         "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
         "-filter_complex",
-        "[0:v]scale=1080:1920:force_original_aspect_ratio=decrease,"
-        "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,setsar=1,fps=25[v]",
+        "[0:v]crop=iw:ih-80:0:0,"
+        "scale=-2:720,"
+        "pad=1080:1920:(ow-iw)/2:600:0x0A1428,"
+        "setsar=1,fps=25[v]",
         "-map", "[v]", "-map", "1:a",
         "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k",
