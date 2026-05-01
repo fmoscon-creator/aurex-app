@@ -18,10 +18,12 @@ Requisitos:
     - macOS para `say` (prototipo). Para producción, ElevenLabs API key.
 """
 import argparse
+import json
 import os
 import subprocess
 import sys
 from pathlib import Path
+from typing import Optional, Tuple
 
 SCRIPT_DIR = Path(__file__).parent
 TEMPLATES = SCRIPT_DIR / "templates"
@@ -35,6 +37,63 @@ FPS = 25
 DEFAULT_DURATION = 14.5
 INTRO_SEC = 3.0
 OUTRO_SEC = 2.5
+
+# Voces ElevenLabs aprobadas para AUREX (modelo multilingual_v2).
+# Selección final hecha por Fernando el 30-abr-2026 después de probar las 21 voces default.
+# 8 voces aprobadas: 4 femeninas + 4 masculinas. Asignación canal → voz + rotación por día.
+# Specs sección 2.4 del PLAN_MKT: tono directo y confiante, sin condescender.
+ELEVENLABS_VOICES = {
+    # FEMENINAS
+    "matilda": "XrExE9yKIg1WjnnlVkGX",   # Profesional, seria, madura
+    "bella":   "hpp4J3VqNfWAUOO0d1Us",   # Profesional, brillante, cálida
+    "jessica": "cgSgspJ2msm6clMCkdW9",   # Juvenil, jovial, cálida
+    "lily":    "pFZP5JQG7iQjIQuC4Bku",   # Aterciopelada, británica
+    # MASCULINAS
+    "charlie": "IKne3meq5aSn9XLyUdCD",   # Profundo, seguro, energético
+    "brian":   "nPczCjzI2devNBz1zQrb",   # Profundo, resonante, comforting
+    "bill":    "pqHfZKP75CvOlQylNhV4",   # Sabio, maduro, balanceado
+    "chris":   "iP95p4xoKVk53GoZ742B",   # Carismático, down-to-earth
+}
+
+# Asignación de voces por canal. Cada canal tiene 1 femenina + 1 masculina que rotan
+# por día: lunes/miércoles/viernes la femenina, martes/jueves la masculina.
+# Domingo + sábado se repite la femenina (más videos diarios en weekday).
+ELEVENLABS_CHANNEL_VOICES = {
+    "tiktok":    ("jessica", "chris"),    # videos cortos jóvenes
+    "reels":     ("jessica", "chris"),    # IG Reels
+    "shorts":    ("jessica", "chris"),    # YouTube Shorts
+    "youtube":   ("matilda", "brian"),    # YouTube canal largo (análisis 5-10 min)
+    "linkedin":  ("lily",    "bill"),     # LinkedIn Company Page (B2B)
+    "instagram": ("bella",   "charlie"),  # IG feed + Stories
+    "default":   ("matilda", "charlie"),  # cualquier canal no listado
+}
+
+ELEVENLABS_DEFAULT_VOICE = "matilda"
+ELEVENLABS_MODEL = "eleven_multilingual_v2"
+ELEVENLABS_VOICE_SETTINGS = {
+    "stability": 0.5,
+    "similarity_boost": 0.75,
+    "style": 0.3,
+    "use_speaker_boost": True,
+}
+
+
+def get_voice_for_channel(channel: str, weekday: Optional[int] = None) -> str:
+    """Devuelve la voz a usar según canal + día de la semana (rotación).
+    Lunes/miércoles/viernes/sábado/domingo → femenina (4 días/semana).
+    Martes/jueves → masculina (2 días/semana).
+
+    Args:
+        channel: nombre del canal (tiktok, reels, shorts, youtube, linkedin, instagram).
+        weekday: 0=lunes, 6=domingo. Si None, usa hoy.
+    """
+    import datetime
+    if weekday is None:
+        weekday = datetime.datetime.now().weekday()
+    voices = ELEVENLABS_CHANNEL_VOICES.get(channel, ELEVENLABS_CHANNEL_VOICES["default"])
+    fem, masc = voices
+    # Martes (1) y jueves (3) → masculina. Resto → femenina.
+    return masc if weekday in (1, 3) else fem
 GUION_DEMO = (
     "Hoy AUREX detectó tres señales de alta convicción. "
     "Bitcoin: con probabilidad alcista del ochenta y cinco por ciento. "
@@ -51,27 +110,93 @@ SIGNALS_DEMO = [
 ]
 
 
-def gen_audio(text: str, work_dir: Path) -> tuple[Path, float]:
-    """Prototipo: macOS `say` con voz Paulina (es_MX). Reemplazar con ElevenLabs cuando haya cuenta."""
+def _audio_duration(m4a: Path) -> float:
+    out = subprocess.run([
+        "ffprobe", "-v", "error", "-show_entries", "format=duration",
+        "-of", "default=noprint_wrappers=1:nokey=1", str(m4a)
+    ], check=True, capture_output=True, text=True)
+    return float(out.stdout.strip())
+
+
+def gen_audio_say(text: str, work_dir: Path) -> Tuple[Path, float]:
+    """Fallback: macOS `say` con voz Paulina (es_MX). Sólo si ElevenLabs no está disponible."""
     aiff = work_dir / "audio_raw.aiff"
     m4a = work_dir / "audio.m4a"
     subprocess.run(["say", "-v", "Paulina", "-o", str(aiff), "-r", "195", text], check=True)
     subprocess.run([
         "ffmpeg", "-y", "-i", str(aiff), "-c:a", "aac", "-b:a", "192k", str(m4a)
     ], check=True, capture_output=True)
-    # Obtener duración
-    out = subprocess.run([
-        "ffprobe", "-v", "error", "-show_entries", "format=duration",
-        "-of", "default=noprint_wrappers=1:nokey=1", str(m4a)
+    return m4a, _audio_duration(m4a)
+
+
+def gen_audio_elevenlabs(text: str, work_dir: Path, api_key: str, voice: str = ELEVENLABS_DEFAULT_VOICE) -> Tuple[Path, float]:
+    """Voz IA real con ElevenLabs (modelo multilingual_v2).
+    Specs sección 2.4 del PLAN_MKT: tono directo y confiante en español neutro LATAM.
+    Voces aprobadas: matilda (default femenina), charlie (masculina alternativa).
+    Free tier: 10k caracteres/mes.
+    """
+    voice_id = ELEVENLABS_VOICES.get(voice, ELEVENLABS_VOICES[ELEVENLABS_DEFAULT_VOICE])
+    mp3 = work_dir / "audio_eleven.mp3"
+    m4a = work_dir / "audio.m4a"
+    payload = json.dumps({
+        "text": text,
+        "model_id": ELEVENLABS_MODEL,
+        "voice_settings": ELEVENLABS_VOICE_SETTINGS,
+    })
+    r = subprocess.run([
+        "curl", "-s", "--max-time", "120",
+        "-w", "%{http_code}",
+        "-X", "POST",
+        f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}",
+        "-H", f"xi-api-key: {api_key}",
+        "-H", "Content-Type: application/json",
+        "-d", payload,
+        "-o", str(mp3),
     ], check=True, capture_output=True, text=True)
-    return m4a, float(out.stdout.strip())
+    http_code = r.stdout.strip().split()[-1] if r.stdout else ""
+    if not mp3.exists() or mp3.stat().st_size < 1000:
+        # Fallar si la respuesta es muy chica (probablemente JSON de error)
+        body = mp3.read_text(errors="ignore") if mp3.exists() else "(sin response)"
+        raise RuntimeError(f"ElevenLabs HTTP {http_code}: {body[:200]}")
+    subprocess.run([
+        "ffmpeg", "-y", "-i", str(mp3), "-c:a", "aac", "-b:a", "192k", str(m4a)
+    ], check=True, capture_output=True)
+    return m4a, _audio_duration(m4a)
 
 
-def build_video(mode: str, out_path: Path, work_dir: Path, duration: float):
+def get_elevenlabs_api_key() -> Optional[str]:
+    """Busca la API key de ElevenLabs en (orden): env var, txt en Descargas."""
+    key = os.environ.get("ELEVENLABS_API_KEY")
+    if key:
+        return key.strip()
+    txt = Path.home() / "Downloads" / "SECRET ELEVENLABS.txt"
+    if txt.exists():
+        content = txt.read_text().strip()
+        # Aceptar formato directo o "ELEVENLABS_API_KEY=xxx"
+        if "=" in content:
+            return content.split("=", 1)[1].strip()
+        return content
+    return None
+
+
+def gen_audio(text: str, work_dir: Path, voice: str = ELEVENLABS_DEFAULT_VOICE) -> Tuple[Path, float]:
+    """Genera el audio del video. Prefiere ElevenLabs (voz real); fallback a `say` macOS."""
+    api_key = get_elevenlabs_api_key()
+    if api_key:
+        try:
+            print(f"[audio] usando ElevenLabs (voz {voice})")
+            return gen_audio_elevenlabs(text, work_dir, api_key, voice)
+        except Exception as e:
+            print(f"[audio] ElevenLabs falló: {e}. Fallback a macOS say.")
+    print("[audio] usando macOS say Paulina (prototipo)")
+    return gen_audio_say(text, work_dir)
+
+
+def build_video(mode: str, out_path: Path, work_dir: Path, duration: float, voice: str = ELEVENLABS_DEFAULT_VOICE):
     work_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Audio
-    audio_path, audio_dur = gen_audio(GUION_DEMO, work_dir)
+    audio_path, audio_dur = gen_audio(GUION_DEMO, work_dir, voice)
     duration = max(duration, audio_dur)
     print(f"[audio] {audio_path}  duración: {audio_dur:.2f}s")
 
@@ -169,8 +294,14 @@ def main():
     parser.add_argument("--out", type=str, required=True)
     parser.add_argument("--duration", type=float, default=DEFAULT_DURATION)
     parser.add_argument("--work", type=str, default="/tmp/aurex_video_work")
+    parser.add_argument("--voice", choices=list(ELEVENLABS_VOICES.keys()),
+                        help="Voz ElevenLabs específica. Si no se especifica, se usa la del canal según el día.")
+    parser.add_argument("--channel", choices=list(ELEVENLABS_CHANNEL_VOICES.keys()), default="default",
+                        help="Canal de destino. Determina la voz si --voice no está dado (rotación por día).")
     args = parser.parse_args()
-    build_video(args.mode, Path(args.out), Path(args.work), args.duration)
+    voice = args.voice if args.voice else get_voice_for_channel(args.channel)
+    print(f"[voz] canal={args.channel} -> voz={voice}")
+    build_video(args.mode, Path(args.out), Path(args.work), args.duration, voice)
 
 
 if __name__ == "__main__":
