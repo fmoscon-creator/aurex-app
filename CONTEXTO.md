@@ -98,7 +98,25 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 
 **Acceso autónomo confirmado por API directa** (sin requerir CLI auth):
 - Supabase Admin Auth API operativa con `sb_secret_*` desde `SECRET KEY.txt`. Verificado 1-may-2026 creando 2 testers (`silvinamoscon@gmail.com` UUID `a525929c-ab83-44e2-bcdb-522f0a29c027` y `martainesalvarez02@gmail.com` UUID `cc52183b-0a71-4e81-af15-d184853cfa03`, ambos `email_confirmed_at` populado, pass `AurexTest2026!`).
-- Drive automation OAuth ya funcional (token en `/tmp/aurex-oauth-token.json`, refresh_token reutilizable).
+- Drive automation OAuth funcional. **Token persistente movido a `~/.aurex/drive_token.json` el 1-may-2026** (antes vivía en `/tmp/` y se perdía con reboots de macOS — bug corregido en `drive_automation.py`). Refresh_token reutilizable de larga duración.
+
+### Drive `AUREX_MEDIA_LIBRARY` — hub compartido Code + Escritorio (reordenado 1-may-2026 mediodía)
+
+Estructura jerárquica real con folder IDs (corrige la confusión previa donde "01_videos/finales" y "02_audios/elevenlabs" eran nombres LITERALES con barra, no jerarquía):
+
+```
+AUREX_MEDIA_LIBRARY/                          1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI
+├── 01_videos/                                1bvlLRLYbrBBACFGrFny1ssTFCTlSTD1m
+│   ├── finales/                              1Ej68LA0kSoJurvXlRY7FLZ3bUZsttCgw
+│   └── buho_animaciones/                     1F2GSSSn7BfX-46kSKIZGzf3bVR08Rs_Q
+├── 02_audios/                                1eFcdxpoQ0IAnDMzgtE46jNHx5ztSnGay
+│   └── elevenlabs/                           1CVn9RthfrOI83PlPLlseamA25hYlmb77
+├── 03_assets_brutos/                         1gJxrY3sJHW8fMGsOsYRGcp-nM8GxTi8R
+├── 04_briefs/                                1thKiCU2nXoUBj1isWY1e6h6uJPAuue2s
+└── 05_feedback/                              10OJ3DxrtO_FVtqotwFTmuv0JnwnXbm1F
+```
+
+Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver `docs/ESTADO_PROYECTO_01-may-2026.md` sección 8.2.
 
 ### INCIDENTES ACTIVOS (al 1-may-2026)
 - **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 13 días sin resolución; investigar alternativas post-Apple.

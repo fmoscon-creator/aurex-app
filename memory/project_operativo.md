@@ -56,6 +56,27 @@ originSessionId: f9879308-2ffe-4c3d-ad7b-0a66d22643ac
 - Discrepancia detectada: CLAUDE.md, INICIO_AUREX.md, RESEARCH_MKT.md y otros docs decían "313 activos" — dato obsoleto/incorrecto, corregido en commit del 29-abr-2026 a 350 (Mercados) / 74 (señales IA).
 - METADATA-APPSTORE.md y la metadata cargada en App Store Connect / Google Play Console usan "74 activos" en la descripción pública. Eso NO se toca mientras Build 17 (Apple) y Build 2 (Google) están en revisión — riesgo de "Metadata Rejected". Se reformula en v1.1 post-aprobación.
 
+**Drive `AUREX_MEDIA_LIBRARY` — hub compartido Code + Escritorio (reordenado 1-may-2026 mediodía):**
+
+Token OAuth persistente: `~/.aurex/drive_token.json` (antes vivía en `/tmp/` y se perdía con reboots de macOS; corregido en commit con bug fix de `drive_automation.py`). OAuth Client ID JSON: `~/Desktop/aurex-oauth.json`.
+
+Folder IDs:
+- Raíz `AUREX_MEDIA_LIBRARY`: `1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI`
+- `01_videos/`: `1bvlLRLYbrBBACFGrFny1ssTFCTlSTD1m`
+- `01_videos/finales/`: `1Ej68LA0kSoJurvXlRY7FLZ3bUZsttCgw`
+- `01_videos/buho_animaciones/`: `1F2GSSSn7BfX-46kSKIZGzf3bVR08Rs_Q` (5 videos al 1-may)
+- `02_audios/`: `1eFcdxpoQ0IAnDMzgtE46jNHx5ztSnGay`
+- `02_audios/elevenlabs/`: `1CVn9RthfrOI83PlPLlseamA25hYlmb77`
+- `03_assets_brutos/`: `1gJxrY3sJHW8fMGsOsYRGcp-nM8GxTi8R` (incluye PNG limpios búho v2)
+- `04_briefs/`: `1thKiCU2nXoUBj1isWY1e6h6uJPAuue2s` (Google Docs, NO binarios — descargar con `export` mimeType `text/plain`)
+- `05_feedback/`: `10OJ3DxrtO_FVtqotwFTmuv0JnwnXbm1F`
+
+Reglas:
+- Code escribe briefs para Escritorio en `04_briefs/`.
+- Escritorio sube animaciones generadas en Kling/Runway/Luma a `01_videos/buho_animaciones/`.
+- Code consume animaciones desde ahí y compone videos finales en `01_videos/finales/`.
+- Convención antifraude: NO duplicar archivos. Si una versión nueva reemplaza a una vieja, mover la vieja a una subcarpeta `descartados/` (todavía no creada al 1-may; crear bajo demanda).
+
 **Repos en disco:**
 - PWA: `/Users/fernandomoscon/Desktop/aurex-app` (branch `main`)
 - Nativa: `/Users/fernandomoscon/AurexApp` (branch operativo `dev`, NO main hasta aprobación Apple)

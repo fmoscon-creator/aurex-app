@@ -15,7 +15,8 @@ Setup único:
    (proyecto aurex-automation), JSON descargado a ~/Desktop/aurex-oauth.json.
 2. Primera ejecución: `python3 drive_automation.py auth` — abre browser,
    Fernando autoriza con su Gmail una vez, refresh_token queda guardado en
-   /tmp/aurex-oauth-token.json.
+   ~/.aurex/drive_token.json (persistente entre reboots; antes vivía en /tmp
+   y se perdía cuando macOS limpiaba /tmp).
 3. Siguientes ejecuciones: refresh_token se reutiliza automáticamente.
 
 Uso CLI:
@@ -52,7 +53,8 @@ from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload, MediaIoBaseDownload
 
 SCOPES = ["https://www.googleapis.com/auth/drive"]
-TOKEN_PATH = Path("/tmp/aurex-oauth-token.json")
+# Token persistente en ~/.aurex/ (antes vivía en /tmp y se perdía con reboots de macOS).
+TOKEN_PATH = Path.home() / ".aurex" / "drive_token.json"
 
 
 def get_oauth_client_path() -> Path:
@@ -90,11 +92,13 @@ def get_credentials():
         return creds
     if creds and creds.expired and creds.refresh_token:
         creds.refresh(Request())
+        TOKEN_PATH.parent.mkdir(parents=True, exist_ok=True)
         TOKEN_PATH.write_text(creds.to_json())
         return creds
     # No hay token o no se puede refrescar -> flow OAuth interactivo
     flow = InstalledAppFlow.from_client_secrets_file(str(get_oauth_client_path()), SCOPES)
     creds = flow.run_local_server(port=0, prompt="consent", access_type="offline")
+    TOKEN_PATH.parent.mkdir(parents=True, exist_ok=True)
     TOKEN_PATH.write_text(creds.to_json())
     print(f"[oauth] token guardado en {TOKEN_PATH}")
     return creds

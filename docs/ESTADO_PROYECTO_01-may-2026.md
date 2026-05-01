@@ -339,21 +339,54 @@ Convive con el mascot (modelo Mailchimp/Twitch): logo en stores/legal/headers of
 
 **Por qué OAuth y no Service Account:** las SAs no tienen storage propio en cuentas @gmail.com personales sin Google Workspace pago. OAuth funciona con cuenta gratuita.
 
-### 8.2 Carpeta Drive `AUREX_MEDIA_LIBRARY`
+### 8.2 Carpeta Drive `AUREX_MEDIA_LIBRARY` — REORDENADA 1-may-2026 mediodía
 
-Estructura organizativa para Code + Escritorio:
+**Antes:** las 2 carpetas `01_videos/finales` y `02_audios/elevenlabs` tenían la barra como parte LITERAL del nombre (no como jerarquía), lo que confundía la navegación. Reordenado.
+
+**Estructura nueva (jerarquía real con folder IDs):**
 
 ```
-AUREX_MEDIA_LIBRARY/
-├── 01_videos/finales/
-├── 01_videos/buho_animaciones/
-├── 02_audios/elevenlabs/
-├── 03_assets_brutos/
-├── 04_briefs/
-└── 05_feedback/
+AUREX_MEDIA_LIBRARY/                          1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI
+├── 01_videos/                                1bvlLRLYbrBBACFGrFny1ssTFCTlSTD1m
+│   ├── finales/                              1Ej68LA0kSoJurvXlRY7FLZ3bUZsttCgw   (vacía — videos AUREX completos finalizados)
+│   └── buho_animaciones/                     1F2GSSSn7BfX-46kSKIZGzf3bVR08Rs_Q   (5 animaciones IA del búho v2 al 1-may)
+├── 02_audios/                                1eFcdxpoQ0IAnDMzgtE46jNHx5ztSnGay
+│   └── elevenlabs/                           1CVn9RthfrOI83PlPLlseamA25hYlmb77   (vacía — audios voz IA por canal)
+├── 03_assets_brutos/                         1gJxrY3sJHW8fMGsOsYRGcp-nM8GxTi8R   (PNGs/SVGs base — incluye los 2 búho limpios para Runway)
+├── 04_briefs/                                1thKiCU2nXoUBj1isWY1e6h6uJPAuue2s   (briefs Code → Escritorio)
+└── 05_feedback/                              10OJ3DxrtO_FVtqotwFTmuv0JnwnXbm1F   (vacía — devoluciones de revisión)
 ```
 
-Folder ID raíz: `1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI`.
+**Convenciones por subcarpeta:**
+- `01_videos/finales/`: videos AUREX completos listos para publicación (TikTok/Reels/Shorts/YouTube). Code los compone con `compose_video.py` y los sube acá.
+- `01_videos/buho_animaciones/`: animaciones IA cortas del búho (3-5 seg). Escritorio las genera en Runway/Kling/Luma y las sube acá. Code las usa como stinger en los videos finales.
+- `02_audios/elevenlabs/`: audios de voz IA generados por canal (`compose_video.py` los genera y sube).
+- `03_assets_brutos/`: PNGs/SVGs base (búho v2 modo claro/oscuro, banners, logos sin texto). Compartido Code + Escritorio.
+- `04_briefs/`: documentos Markdown que Code escribe para Escritorio (qué generar, dónde dejarlo, especificaciones técnicas). Escritorio NO los modifica, solo lee y ejecuta.
+- `05_feedback/`: notas de revisión visual (Fernando o Code) sobre piezas concretas. Escritorio lee para ajustar próximas iteraciones.
+
+**Inventario al 1-may-2026 mediodía:**
+
+`01_videos/buho_animaciones/` — 5 archivos:
+1. `ALAS DORADAS con OJOS CORREGIDOS.mp4` (1.13 MB) — versión refinada de #2.
+2. `BUHO ALAS DORADAS QUE SE ABREN ...mp4` (4.42 MB) — original con ojos defectuosos (a confirmar si se descarta).
+3. `BUHO ALAS GRANDES BLANCAS ...mp4` (3.46 MB) — estado pendiente de validar.
+4. `BUHO SERIO OBSERVADOR ...mp4` (2.61 MB) — typo "OBSERAVDOR" corregido el 1-may al reorganizar.
+5. `BUHO INTIMIDANTE ...mp4` (3.08 MB) — estado pendiente de validar.
+
+`03_assets_brutos/` — 2 PNGs limpios para Runway image-to-video (subidos 1-may por Code para resolver el problema de Escritorio: PNG original tenía búho ocupando solo 45-64% del frame con margen navy que Runway interpretaba como espacio para duplicar/achicar el sujeto):
+- `buho_v2_dark_tight_1080.png` (1080×1080, búho llena 95% del alto/68% del ancho — RECOMENDADO).
+- `buho_v2_dark_9x16_1080x1920.png` (1080×1920, búho llena 95% del ancho/75% del alto).
+
+`04_briefs/` — 2 Google Docs:
+- `brief_runway_buho_animaciones.md` (descartado por colas largas de Runway free).
+- `brief_v2_buho_animaciones_kling_luma.md` (vigente con Kling/Luma como herramientas principales).
+
+**Pendientes operativos sobre los videos del búho** (a resolver con Escritorio antes de gastar más créditos):
+1. ¿"ALAS DORADAS con OJOS CORREGIDOS" reemplaza al original "ALAS DORADAS QUE SE ABREN"? Si sí, descartar el original.
+2. ¿Cuáles de los 4 videos sin "OJOS CORREGIDOS" tienen los ojos defectuosos y necesitan re-generación?
+3. ¿Cuántos estados emocionales totales se quieren tener en el catálogo final? (Escritorio mencionó "ojos cerrados" como estado existente, pero no hay tal video en Drive — confusión a aclarar).
+4. Mapeo formal "estado emocional → situación de uso → tipo de contenido AUREX" sigue sin existir en doc; cuando los 5 videos estén validados, Code arma `docs/BUHO_ESTADOS_EMOCIONALES.md`.
 
 ### 8.3 ElevenLabs API integrada
 
