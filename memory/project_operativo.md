@@ -16,13 +16,13 @@ originSessionId: f9879308-2ffe-4c3d-ad7b-0a66d22643ac
 **Telegram (canal principal y permanente de alertas — decisión 28-abr-2026, consolidada 29-abr-2026):**
 - Bot: @Aurexalertas_bot ("Aurex Alertas", id 8740136430)
 - Token: env var `TELEGRAM_BOT_TOKEN` en Railway aurex-app
-- Chat ID admin Fernando: `[VALOR-EN-RAILWAY]` (no se publica el valor real en repo publico por privacidad)
-- Env var Railway: `ADMIN_TELEGRAM_CHAT_ID=[VALOR-EN-RAILWAY]` (en servicio aurex-app)
+- Chat ID admin Fernando: `1749518554`
+- Env var Railway: `ADMIN_TELEGRAM_CHAT_ID=1749518554` (en servicio aurex-app)
 - Cero riesgo de baneo (Telegram permisivo con bots)
 - WhatsApp Evolution queda como canal **secundario** una vez se reconecte; Telegram NO se remueve cuando WhatsApp vuelva a estar operativo.
 - Reportes automáticos por Telegram (todos vivos desde commit 09c4c32 del 29-abr-2026):
   - `dailyHealthReport` 8:00 AR (cron `0 11 * * *`): manda por Telegram **y** por WhatsApp Evolution (redundancia). Si WhatsApp falla, Telegram cubre.
-  - `dailyProjectStatusReport` 9:00 AR (cron `0 12 * * *`): solo Telegram. 4 mensajes consecutivos: cuerpo principal (stores + SHAs + incidentes + crypto) + link a CONTEXTO.md + link a INICIO_AUREX.md + RESEARCH_API_KEY si está seteada. Antes corría a las 20:00 AR; cambió a 9:00 para que Fernando arranque el día con info fresca.
+  - `dailyProjectStatusReport` 9:00 AR (cron `0 12 * * *`): **Telegram + WhatsApp Evolution en paralelo (espejo, 4 mensajes en cada canal — verificado 1-may-2026 en server.js:1750-1756)**. Mensajes: cuerpo principal (stores + SHAs + incidentes + crypto) + link a CONTEXTO.md + link a INICIO_AUREX.md + RESEARCH_API_KEY si está seteada. Antes corría a las 20:00 AR; cambió a 9:00 para que Fernando arranque el día con info fresca. Corrección 1-may-2026: la nota anterior decía "solo Telegram" — error de memoria, el código siempre tuvo el espejo WA.
 
 **Apple:**
 - Nombre publicado de la app: **AUREX AI** (no solo "AUREX")
@@ -90,6 +90,6 @@ originSessionId: f9879308-2ffe-4c3d-ad7b-0a66d22643ac
 - `GET /api/whatsapp/status` — estado conexión Evolution (read-only, público)
 - `GET /api/whatsapp/connect-qr` — generar QR de vinculación de Evolution. Endpoint nuevo desde commits ec578af + bfd0ecb (29-abr-2026). Protegido por env var `WHATSAPP_CONNECT_SECRET` (header `X-Secret` o query `?secret=...`); sin secret válido → 403, sin env var → 503. Soporta query `?number=<numero>` para pairing code, pero Evolution v1.8.7 ignora ese parámetro y devuelve QR igual; el pairing code requiere migrar a Evolution v2 (pendiente estructural).
 
-**Incidentes activos (al 29-abr-2026):**
+**Incidentes activos (al 1-may-2026):**
 - **BN-002 ACTIVE** desde 18-abr-2026. Binance bloqueado en Railway región us-east4. MITIGATED via CryptoCompare. Pendiente decidir alternativa post-aprobación Apple.
-- **WA-001 ACTIVE** desde 28-abr-2026 15:25 UTC. Sesión WhatsApp del 2563 sin vincular a Evolution. El intento del 29-abr ~03:00 AR falló por cooldown antifraude WhatsApp post-suspensión (la pantalla del iPhone mostró "Iniciando sesión..." pero los servers de WhatsApp no completaron la vinculación; estado en Evolution `connecting` → `close`). **Reconexión postergada al 30-abr-2026 9:00 AM AR como fecha mínima** (decisión Fernando 29-abr ~09:05 AR; no reintentar antes). La instancia "aurex" SÍ existe en Evolution (verificado en investigación del 29-abr; todas las respuestas de `/api/whatsapp/status` devuelven `instanceName: "aurex"` con `state` válido). El problema es del lado de servers WhatsApp, no del código del backend.
+- **WA-001 RESUELTO 1-may-2026 ~8:00 AR.** El cooldown antifraude general sobre saliente del 2563 se levantó tras 7 días offline (28-abr 15:25 UTC → 1-may ~11:00 UTC). Verificación: el cron `dailyHealthReport` 8:00 AR llegó al WhatsApp admin 1320 desde el bot AUREX 2563 (envío externo confirmado, no solo autoenvío). Canal WA recuperado como redundancia de Telegram. Reportes 8:00 + 9:00 AR ambos funcionando dual-canal.

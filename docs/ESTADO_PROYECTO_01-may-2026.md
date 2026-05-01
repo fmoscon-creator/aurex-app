@@ -34,9 +34,9 @@ Self-hosted Evolution v1.8.7. URL: `https://evo-v1-production.up.railway.app`. I
 
 Instancia "aurex" recreada hoy desde cero (la anterior estaba corrupta desde 28-abr — ver sección 8).
 
-### 1.4 WhatsApp 2563 — STATUS CRÍTICO
+### 1.4 WhatsApp 2563 — STATUS RESUELTO 1-may-2026 ~8:00 AR
 
-**Estado:** vinculada al backend (state: open) pero en **cooldown antifraude general** sobre envíos salientes.
+**Estado al cierre 1-may-2026:** **operativa**. Vinculada al backend (state: open) y cooldown antifraude general **levantado** después de 7 días offline (28-abr 15:25 UTC → 1-may ~11:00 UTC). Verificación: el cron `dailyHealthReport` de las 8:00 AR llegó al WhatsApp admin 1320 desde el bot AUREX 2563. Canal WA recuperado como redundancia de Telegram para los 2 reportes diarios.
 
 **Situación al cierre de hoy:**
 - Línea desconectada desde 28-abr 12:25 AR (47h de offline al inicio de la sesión).
@@ -380,12 +380,40 @@ Folder ID raíz: `1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI`.
 
 | # | Incidente | Estado | Resolución esperada |
 |---|---|---|---|
-| 1 | Apple Build 17 en revisión | Pendiente desde 24-abr | Apple decide (~7-10 días típicos) |
-| 2 | Google Play Build 2 en prueba cerrada | Faltan días para 14 | ~6 may 2026 |
-| 3 | WhatsApp 2563 cooldown antifraude | 24h reposo total | 1-may 8 AM verificación |
-| 4 | BN-002 Binance Railway | MITIGATED via CryptoCompare | Decidir alternativa post-Apple |
-| 5 | Volumen Railway Evolution | DESCARTADO 30-abr | N/A (no era el problema) |
-| 6 | Claude API real al motor IA | Decisión técnica de Fernando | Sin fecha |
+| 1 | **🔴 CRÍTICO — Google Play Closed Testing al límite** | 12/12 opted-in (sin margen). 3-4 son cuentas mías de bajo trust → Google PUEDE descartar y rechazar producción. | Plan A (Tomás Android, 5 días) → Plan B (servicio pago $25-80 con riesgo de ban) |
+| 2 | Apple Build 17 en revisión | Pendiente desde 24-abr | Apple decide (~7-10 días típicos) |
+| 3 | Google Play Build 2 — completar 14 días prueba cerrada | Día 7 de 14 al 1-may. Vence ~7-may. | Si bajo de 12 cualquier día → reset a 0. |
+| 4 | ~~WhatsApp 2563 cooldown antifraude~~ **RESUELTO 1-may 8:00 AR** | Reporte llegó por WA 1320 desde 2563 | — |
+| 5 | BN-002 Binance Railway | MITIGATED via CryptoCompare | Decidir alternativa post-Apple |
+| 6 | Volumen Railway Evolution | DESCARTADO 30-abr | N/A (no era el problema) |
+| 7 | Claude API real al motor IA | Decisión técnica de Fernando | Sin fecha |
+
+### 9.1 — CRÍTICO Google Play Closed Testing (detalle agregado 1-may 03:00 AR)
+
+**Riesgo:** la regla 2026 de Google evalúa el "trust weight" del Gmail de cada tester (antigüedad, historial, IP/dispositivo de creación). Mis cuentas creadas para testing (`aurextester1`, `aurextest2`, `app.aurex`, `aurextester12`) tienen trust bajo. Si las descarta al revisar producción → quedan ~9 testers reales → no llego al mínimo de 12 → rechazo. Razón #1 de rechazo en 2026: "Insufficient testing engagement".
+
+**Lo que NO saca a un tester de los 12:** que desinstale la app. Solo los saca clickear "Opt out" en `https://play.google.com/apps/testing/com.aurexapp`.
+
+**Lo que SÍ resetea la racha de 14 días:** que el contador baje de 12 por UN solo día.
+
+**Acciones del 1-may madrugada (en marcha):**
+
+| Cuenta | Tipo | Supabase | Cargada en verificadores Play | Pass Gmail | Opt-in real |
+|---|---|---|---|---|---|
+| `mosconmia@gmail.com` (hija) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
+| `sol.esnoz@gmail.com` (mujer) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
+| `lola.moscon@gmail.com` (hija) | Family — Gmail viejo, alto trust | ✅ creada | ✅ | ❌ pendiente | ⏳ |
+| `aurextester12@gmail.com` (mía nueva) | Bajo trust + emulador | ✅ creada | ✅ | ✅ tengo | ✅ desde emulador AVD `AUREX_Play` (a verificar 24-48h si suma) |
+
+**Plan A (preferido):** Tomás (hijo, ya verificador con `tomasmoscon@gmail.com`, tiene Android pero no vive acá). Cuando venga: en su Android agrega las 3 cuentas family como cuentas Google secundarias → con cada una abre el link de testing → Become a tester → instala AUREX desde Play Store → loguea con `email + AurexTest2026!` y usa 3 min. Resultado: +3 testers reales en device físico con Gmail viejo = 100% que cuenten → pasamos a 15-16 opted-in con margen sólido. Sin costo, sin riesgo.
+
+**Plan B (solo si A falla en 5 días):** servicio profesional pago (PrimeTestLab / TestersCommunity / 12testers14days.pro) — $25-80 USD por 12 testers reales × 14 días. Code investiga + compara reviews + llena form. Fernando paga + acepta TOS. **Riesgo grave:** Google puede detectar paid testers y banear cuenta dev permanentemente (reportes públicos en Reddit). Aplicar las 4 preguntas obligatorias de servicios de terceros antes de contratar.
+
+**Pendiente operativo mañana 2-may:**
+1. Pedir pass reales de Gmail a esposa + hijas (o que cada una opt-in en su iPhone vía Chrome — tienen iPhone, así que igual la app no se instala desde Play Store en iPhone — termina siendo emulador o el celu de Tomás).
+2. Verificar Play Console si contador subió 12 → 13 (= aurextester12 desde emulador contó).
+3. Mantener emulador AVD `AUREX_Play` prendido en background (relanzable con `/opt/homebrew/share/android-commandlinetools/emulator/emulator -avd AUREX_Play -gpu swiftshader_indirect`).
+4. Coordinar visita Tomás (Plan A).
 
 ---
 

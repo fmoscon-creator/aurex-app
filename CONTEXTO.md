@@ -71,8 +71,8 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 - Token: env var `TELEGRAM_BOT_TOKEN` en Railway aurex-app (existente desde antes)
 - Chat ID admin Fernando: env var `ADMIN_TELEGRAM_CHAT_ID` en Railway aurex-app (no se publica el valor en repo público por privacidad)
 - Reportes automáticos por Telegram al admin:
-  - Reporte diario salud (`dailyHealthReport`): 8:00 AR (cron `0 11 * * *`). Desde commit 09c4c32 se manda también por Telegram en paralelo al envío por WhatsApp Evolution (redundancia).
-  - Reporte diario de proyecto (`dailyProjectStatusReport`): 9:00 AR (cron `0 12 * * *`). Cambio de horario aplicado en commit 09c4c32 (antes corría a las 20:00). Manda 4 mensajes consecutivos: (1) cuerpo principal con stores Apple/Google + SHAs de los 3 repos + incidentes activos + crypto source; (2) link a `CONTEXTO.md`; (3) link a `INICIO_AUREX.md`; (4) `RESEARCH_API_KEY` si está seteada.
+  - Reporte diario salud (`dailyHealthReport`): 8:00 AR (cron `0 11 * * *`). Manda en paralelo a **Telegram + WhatsApp Evolution** (línea admin 1320). Desde el 1-may-2026 8:00 AR confirmado funcionando por WA tras 7 días en cooldown.
+  - Reporte diario de proyecto (`dailyProjectStatusReport`): 9:00 AR (cron `0 12 * * *`). Manda en paralelo a **Telegram + WhatsApp Evolution** (4 mensajes en cada canal, espejo — verificado en `aurex-backend/server.js:1750-1756`): (1) cuerpo principal con stores Apple/Google + SHAs de los 3 repos + incidentes activos + crypto source; (2) link a `CONTEXTO.md`; (3) link a `INICIO_AUREX.md`; (4) `RESEARCH_API_KEY` si está seteada.
   - Reporte mensual: 18:00 AR del último día hábil (cron `0 21 28-31 * *`).
 - Riesgo de baneo: cero (Telegram permisivo con bots).
 
@@ -100,13 +100,9 @@ Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria p
 - Supabase Admin Auth API operativa con `sb_secret_*` desde `SECRET KEY.txt`. Verificado 1-may-2026 creando 2 testers (`silvinamoscon@gmail.com` UUID `a525929c-ab83-44e2-bcdb-522f0a29c027` y `martainesalvarez02@gmail.com` UUID `cc52183b-0a71-4e81-af15-d184853cfa03`, ambos `email_confirmed_at` populado, pass `AurexTest2026!`).
 - Drive automation OAuth ya funcional (token en `/tmp/aurex-oauth-token.json`, refresh_token reutilizable).
 
-### INCIDENTES ACTIVOS (al 29-abr-2026)
-- **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 11 días sin resolución; investigar alternativas post-Apple.
-- **WA-001 ACTIVE** — Evolution API (servicio evo-v1) sin sesión WhatsApp desde 28-abr 15:25 UTC. Estado al 29-abr-2026 ~03:15 AR: el número 2563 ya está VERIFICADO (código por llamada el 28-abr, email + passkey activados como respaldo), pero la sesión sigue sin vincularse. Intentos del 29-abr (5 llamadas a `/instance/connect/aurex` acumuladas):
-  1. QR vía endpoint nuevo `/api/whatsapp/connect-qr` → primer intento devolvió `count: 0` sin QR.
-  2. Segundo intento → QR válido, Fernando lo escaneó. WhatsApp mostró "Iniciando sesión... Mantén WhatsApp Business abierto en ambos dispositivos" pero no completó vinculación; el estado en Evolution pasó a `connecting` y volvió a `close`.
-  3. Pairing code (`?number=5491133602563`) → Evolution v1.8.7 ignora el parámetro y devuelve QR otra vez (la feature requiere Evolution v2). 5 llamadas acumuladas → freno para evitar antifraude WhatsApp.
-  - Decisión: dejar la reconexión para mañana (cooldown post-suspensión se levanta en 4-24 hs) usando QR limpio. Telegram cubre alertas mientras tanto.
+### INCIDENTES ACTIVOS (al 1-may-2026)
+- **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 13 días sin resolución; investigar alternativas post-Apple.
+- **WA-001 RESUELTO 1-may-2026 ~8:00 AR.** El cooldown antifraude general sobre la línea WhatsApp 2563 saliente se levantó después de 7 días offline (28-abr 15:25 UTC → 1-may ~11:00 UTC). Verificación: el cron `dailyHealthReport` de las 8:00 AR llegó al WhatsApp admin 1320 desde el bot AUREX 2563. La línea ahora envía a destinos externos (no solo a sí misma). Recuperación completa de canal WA como redundancia de Telegram. Reportes diarios 8:00 + 9:00 AR ambos funcionando dual-canal.
 
 ---
 
