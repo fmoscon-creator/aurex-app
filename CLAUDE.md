@@ -37,15 +37,17 @@ NUNCA arrancar Code parado dentro de `Desktop/aurex-app`, `AurexApp`, `Desktop/a
 
 Carpeta: `~/.claude/projects/-Users-fernandomoscon/memory/`
 
-Contiene 7 archivos (al 28-abr-2026):
+Contiene 9 archivos (al 1-may-2026):
 
-1. `MEMORY.md` — índice (apunta a los otros 6 con una línea de resumen cada uno).
+1. `MEMORY.md` — índice (apunta a los otros 8 con una línea de resumen cada uno).
 2. `roles_code_escritorio.md` — diferencias entre Code (terminal) y Escritorio (Claude Desktop), cómo rotular textos cruzados.
-3. `feedback_comunicacion.md` — 5 reglas de tono y trabajo (sin jerga técnica, análisis propio antes de preguntar, no tocar sin autorización con builds en revisión, opiniones cruzadas con Escritorio, nunca proponer parar la sesión).
+3. `feedback_comunicacion.md` — reglas de tono y trabajo (sin jerga técnica, análisis propio antes de preguntar, no tocar sin autorización con builds en revisión, opiniones cruzadas con Escritorio, nunca proponer parar la sesión, todo en español, respuestas cortas, acuerdos no se rompen, análisis pixel-por-pixel de visuales, carpeta de trabajo `Desktop/CODE/`).
 4. `feedback_fernando_no_ejecuta.md` — Fernando solo aprueba; todo el contenido lo generan Code y Escritorio con IA + automatización.
 5. `feedback_leer_manuales.md` — leer los manuales de `docs/` antes de proponer infraestructura; verificar antes de afirmar cualquier hecho técnico.
 6. `feedback_servicios_terceros.md` — 4 preguntas obligatorias antes de tocar servicios con autenticación revocable (Evolution API, Apple, Google, RevenueCat, Twilio, Lemon Squeezy, Supabase service_role); nunca aceptar tokens GitHub PAT por chat.
 7. `project_operativo.md` — datos operativos no sensibles (TZ AR, números WhatsApp, Telegram, identificadores Apple, webhook RevenueCat, paths de los 3 repos, crons, endpoints de testeo).
+8. `feedback_plan_mkt_revision_cruzada.md` — al recibir síntesis o plan táctico de Escritorio, no aceptar pasivo: cruzar contra evidencia, bajar genérico a táctico, repartir Code vs Escritorio, garantizar 100% autonomía sin Fernando.
+9. `feedback_autonomia.md` — preferir tokens permanentes + allowlist + archivos en disco antes que pedirle a Fernando ejecutar comandos interactivos o aprobar OK/YES. Patrón establecido: secrets en `~/Downloads/SECRET <SERVICIO>.txt`. CLIs instalados (gh, railway, supabase) con denies específicas en settings.json para acciones destructivas.
 
 Code carga el `MEMORY.md` (índice) automáticamente al inicio de cada sesión y resuelve los archivos hermanos cuando los necesita. No hace falta pegar nada manualmente.
 

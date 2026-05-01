@@ -4,3 +4,5 @@
 - [Manuales obligatorios al iniciar](feedback_leer_manuales.md) — los manuales en docs/ son la fuente de verdad. Leerlos ANTES de proponer infraestructura.
 - [Servicios de tercero con autenticación revocable](feedback_servicios_terceros.md) — antes de tocar Evolution API, Apple, Google, RevenueCat, Twilio, etc., 4 preguntas obligatorias.
 - [Fernando NO ejecuta tareas manuales](feedback_fernando_no_ejecuta.md) — en marketing/contenido Fernando solo APRUEBA. Todo lo generan Code y Escritorio con IA + automatización.
+- [Plan MKT v2 — revisión cruzada de Escritorio](feedback_plan_mkt_revision_cruzada.md) — cuando llegue la síntesis o el plan táctico de Escritorio, no aceptar pasivo: cruzar contra evidencia, bajar genérico a táctico, repartir Code vs Escritorio, garantizar 100% autonomía sin Fernando.
+- [Autonomía operativa](feedback_autonomia.md) — preferir tokens permanentes + allowlist + archivos en disco antes que pedirle a Fernando ejecutar comandos o aprobar OK/YES.
