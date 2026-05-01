@@ -4,10 +4,11 @@ Plantillas reutilizables para producir videos cortos (TikTok, Instagram Reels,
 YouTube Shorts) y largos (YouTube canal completo) usando el mascot búho v2 como
 presentador y el efecto de constelación dorada del onboarding como fondo de marca.
 
-Decisión de diseño en `PLAN_MKT.md` sección 2.4 (Ruta A + Ruta B). Esta carpeta
-implementa **Ruta A**: producción 100% local con tools gratis (Pillow, FFmpeg,
-voz IA tier free). Ruta B (animación IA del búho con Runway/Pika) requiere
-cuentas externas.
+Decisión de diseño en `PLAN_MKT.md` sección 2.4 (Ruta A + Ruta B):
+- **Ruta A** (siempre activa): producción 100% local con Pillow + FFmpeg + voz ElevenLabs (free tier 10k chars/mes). Búho v2 estático con efectos de cámara. Para los videos diarios.
+- **Ruta B** (opcional, si hay assets): si la carpeta `assets/buho_animations/` tiene MP4 del búho animado (generados con Kling AI / Luma Dream Machine / Pika por Escritorio), uno se inserta automáticamente como **stinger del intro** del video. Para videos premium 1-2 por semana.
+
+Voces aprobadas y rotación canal→voz: ver `docs/VOCES_CANALES_AUREX.md`.
 
 ## Estructura
 
@@ -21,7 +22,9 @@ scripts/video_generation/
 └── assets/
     ├── logo_solo_circulo.png   ← logo AUREX sin texto "AUREX" debajo
     ├── buho_v2_dark.png        ← mascot v2 sobre fondo navy (#0A1428)
-    └── buho_v2_light.png       ← mascot v2 sobre fondo cream (#F4F4F6)
+    ├── buho_v2_light.png       ← mascot v2 sobre fondo cream (#F4F4F6)
+    └── buho_animations/        ← MP4 del búho animado (Ruta B)
+        └── .gitkeep            (los MP4 se descargan localmente, no se commitean)
 ```
 
 ## Uso rápido
@@ -31,11 +34,15 @@ scripts/video_generation/
 brew install ffmpeg
 pip3 install Pillow
 
-# Generar video modo oscuro
-python3 compose_video.py --mode dark --out ~/Downloads/AUREX_VIDEO_dark.mp4
+# Modo automático (rotación voz por canal según el día de la semana):
+python3 compose_video.py --mode dark --channel tiktok --out ~/Downloads/video.mp4
+python3 compose_video.py --mode dark --channel youtube --out ~/Downloads/video.mp4
 
-# Generar video modo claro
-python3 compose_video.py --mode light --out ~/Downloads/AUREX_VIDEO_light.mp4
+# Forzar voz específica (ignora rotación):
+python3 compose_video.py --mode dark --voice matilda --out ~/Downloads/video.mp4
+
+# Desactivar stinger del búho animado (Ruta A pura, ignora MP4 en buho_animations/):
+python3 compose_video.py --mode dark --no-stinger --out ~/Downloads/video.mp4
 ```
 
 ## Lo que produce cada video

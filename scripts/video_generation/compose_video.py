@@ -192,7 +192,66 @@ def gen_audio(text: str, work_dir: Path, voice: str = ELEVENLABS_DEFAULT_VOICE) 
     return gen_audio_say(text, work_dir)
 
 
-def build_video(mode: str, out_path: Path, work_dir: Path, duration: float, voice: str = ELEVENLABS_DEFAULT_VOICE):
+def find_buho_stinger(role: str = "intro") -> Optional[Path]:
+    """Busca un MP4 del búho animado para usar como stinger del video.
+    role='intro' → prefiere parpadeo o breathing (más sutil para abrir).
+    role='outro' → prefiere zoom (más dramático para cerrar).
+    Retorna None si no hay videos del búho animado disponibles (pipeline corre Ruta A pura).
+
+    Los MP4 deben estar en assets/buho_animations/, generados con Kling/Luma/Pika
+    según el brief en AUREX_MEDIA_LIBRARY/04_briefs/.
+    """
+    anim_dir = ASSETS / "buho_animations"
+    if not anim_dir.exists():
+        return None
+    if role == "intro":
+        priorities = ["parpadeo", "breathing", "anim_01", "anim_02"]
+    else:
+        priorities = ["zoom", "anim_03"]
+    for keyword in priorities:
+        matches = sorted(anim_dir.glob(f"*{keyword}*.mp4"))
+        if matches:
+            return matches[0]
+    matches = sorted(anim_dir.glob("*.mp4"))
+    return matches[0] if matches else None
+
+
+def prepend_stinger(main_video: Path, stinger: Path, out_path: Path, work_dir: Path):
+    """Concatena un stinger al INICIO del video principal con FFmpeg.
+    Normaliza el stinger a 1080x1920 25fps + agrega track de audio silencioso
+    (la voz del guion arranca cuando termina el stinger).
+    """
+    norm = work_dir / "stinger_norm.mp4"
+    # Normalizar stinger: scale + pad a 1080x1920, audio silencio si no tiene
+    subprocess.run([
+        "ffmpeg", "-y",
+        "-i", str(stinger),
+        "-f", "lavfi", "-i", "anullsrc=channel_layout=stereo:sample_rate=44100",
+        "-filter_complex",
+        "[0:v]scale=1080:1920:force_original_aspect_ratio=decrease,"
+        "pad=1080:1920:(ow-iw)/2:(oh-ih)/2:black,setsar=1,fps=25[v]",
+        "-map", "[v]", "-map", "1:a",
+        "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-b:a", "192k",
+        "-shortest",
+        str(norm)
+    ], check=True, capture_output=True)
+    # Concat list
+    concat_list = work_dir / "concat_list.txt"
+    concat_list.write_text(f"file '{norm}'\nfile '{main_video}'\n")
+    # Concatenar (re-encode necesario porque codecs/parámetros pueden diferir mínimamente)
+    subprocess.run([
+        "ffmpeg", "-y",
+        "-f", "concat", "-safe", "0",
+        "-i", str(concat_list),
+        "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
+        "-c:a", "aac", "-b:a", "192k",
+        str(out_path)
+    ], check=True, capture_output=True)
+
+
+def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
+                voice: str = ELEVENLABS_DEFAULT_VOICE, use_stinger: bool = True):
     work_dir.mkdir(parents=True, exist_ok=True)
 
     # 1. Audio
@@ -281,10 +340,21 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float, voic
         "-c:v", "libx264", "-preset", "fast", "-crf", "20", "-pix_fmt", "yuv420p",
         "-c:a", "aac", "-b:a", "192k",
         "-t", f"{T:.2f}",
-        str(out_path)
     ]
-    print(f"[FFmpeg] {' '.join(cmd[:6])} ...")
-    subprocess.run(cmd, check=True)
+    # 5. Si hay stinger del búho animado disponible (Ruta B), generar el video
+    # principal a un archivo temporal y después concatenar el stinger al inicio.
+    stinger = find_buho_stinger("intro") if use_stinger else None
+    if stinger:
+        main_temp = work_dir / "main_video.mp4"
+        cmd.append(str(main_temp))
+        print(f"[FFmpeg] generando video principal en {main_temp}...")
+        subprocess.run(cmd, check=True)
+        print(f"[stinger] {stinger.name} -> prepend al inicio")
+        prepend_stinger(main_temp, stinger, out_path, work_dir)
+    else:
+        cmd.append(str(out_path))
+        print("[FFmpeg] sin stinger (Ruta A pura) -> generando directo a out")
+        subprocess.run(cmd, check=True)
     print(f"[OK] {out_path}")
 
 
@@ -298,10 +368,12 @@ def main():
                         help="Voz ElevenLabs específica. Si no se especifica, se usa la del canal según el día.")
     parser.add_argument("--channel", choices=list(ELEVENLABS_CHANNEL_VOICES.keys()), default="default",
                         help="Canal de destino. Determina la voz si --voice no está dado (rotación por día).")
+    parser.add_argument("--no-stinger", action="store_true",
+                        help="Desactiva el stinger del búho animado (Ruta B). Por default se usa si hay MP4 disponible en assets/buho_animations/.")
     args = parser.parse_args()
     voice = args.voice if args.voice else get_voice_for_channel(args.channel)
     print(f"[voz] canal={args.channel} -> voz={voice}")
-    build_video(args.mode, Path(args.out), Path(args.work), args.duration, voice)
+    build_video(args.mode, Path(args.out), Path(args.work), args.duration, voice, not args.no_stinger)
 
 
 if __name__ == "__main__":
