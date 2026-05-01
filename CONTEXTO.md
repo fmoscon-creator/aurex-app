@@ -240,15 +240,87 @@ Decisión de hacer Pasada 5 mini: tras cerrar Pasada 4 detectamos 6 blind spots 
 - **Secciones del Plan MKT actualizadas en un solo commit:** 2.4 (reescrita completa), 2.2 (tabla reparto), 2.3.6 (Canal 6 TikTok/Reels), 2.3.7 (Canal 7 YouTube), 2.9 (presupuesto), 3.1 punto 4, 3.2 punto 3, 3.3 bloqueadores, changelog y footer.
 - **Pendiente Fase F:** validación del primer video de prueba con Fernando (única acción manual restante para destrabar producción autónoma de videos).
 
+### Hecho — Sesión completa 30-abr/1-may-2026 (jornada larga, ~10h)
+
+**WhatsApp 2563 — diagnóstico y reseteo completo de Evolution.**
+
+- WA-001 estaba ACTIVE desde el 28-abr 12:25 AR (línea desconectada hace ~47h al inicio del día). Hipótesis original Code: Evolution sin volumen persistente en Railway. DESCARTADA — los logs mostraron que el container `evo-v1` llevaba 2 días sin reiniciar, no era falta de volumen.
+- Causa real identificada: la instancia "aurex" en Evolution v1.8.7 quedó corrupta el 28-abr (logs mostraron "Token already exists" 3 veces + ENOENT en `/evolution/store/messages/aurex` — el directorio físico nunca se creó). Las 5 llamadas de pairing code de ese día probablemente dispararon el estado degradado.
+- **Recreación limpia de la instancia:** Code llamó `DELETE /instance/delete/aurex` + `POST /instance/create` con `qrcode: true`. Fernando escaneó QR final desde iPhone (eSIM Claro 2563). Vinculación quedó como "AUREX Backend" en Google Chrome. Estado conectó OK (`state: open`).
+- **Pruebas de envío:** autoenvío 2563 → 2563 SÍ llegó (libsignal y Baileys funcionan). Envíos a 1320 (admin Fernando) y a número externo +54 9 11 6764 3307 NO llegaron — quedaron `PENDING` indefinidamente.
+- **Diagnóstico final consensuado con Escritorio:** cooldown antifraude general de WhatsApp sobre la línea 2563 saliente. La línea acepta vinculación, encripta para sí misma, pero WhatsApp retiene los mensajes salientes a otros números. Causa probable: 5 reescaneos del 28-abr disparando el flag antifraude.
+- **Acuerdo:** 24h de reposo total sobre la 2563. NO hacer más pruebas hoy. Esperar mañana 1-may 8:00 AR para verificar si los reportes diarios llegan por WhatsApp (cron `dailyHealthReport` ya es dual-channel Telegram + WhatsApp).
+- **Status actual:** WhatsApp 2563 en cooldown silencioso. Telegram funciona perfecto como canal principal de reportes. La instancia recreada está estable, no se va a romper sola — cuando WhatsApp libere el cooldown empezará a entregar normal.
+
+**Plan MKT v2.1 — sección 2.4 reescrita (búho animado reemplaza HeyGen).**
+
+Bloque ya documentado arriba. Resumen del impacto: -$288 a -$1.188/año vs versiones anteriores, decisión definitiva commiteada al PLAN_MKT.md.
+
+**Pipeline de generación de videos completo en `scripts/video_generation/`.**
+
+- `templates/constelacion.py`: genera frames de fondo animado (110 estrellas + líneas finas dorado, modo oscuro o claro). Replica del onboarding `index.html:553-587`.
+- `templates/banners.py`: 5 banners reusables — intro, signal (rediseñado a premium con fondo opaco + bevel + glow + barra de progreso), outro, URL inferior, AUREX-debajo-del-búho.
+- `compose_video.py`: orquestador. Voz ElevenLabs (multilingual_v2) integrada. Fallback a `say` macOS si no hay API key. Timings dinámicos según duración del audio.
+- `assets/`: logo limpio sin marca + búho v2 modo oscuro y claro + carpeta `buho_animations/` para Ruta B (vacía hasta que Escritorio genere V1+V2+V3 limpias mañana).
+- Stinger Ruta B integrado: si hay MP4 del búho animado en `buho_animations/`, se inserta automáticamente al inicio del video con normalización (cropear watermark Kling, scale a misma altura del búho del video principal, padding navy AUREX para que se funda).
+
+**Sistema de voces ElevenLabs aprobado y commiteado.**
+
+- 8 voces aprobadas tras probar las 21 default del free tier: Matilda, Bella, Jessica, Lily (femeninas) + Charlie, Brian, Bill, Chris (masculinas).
+- Voces Voice Library (Valeria, Siena, Catalina, etc., nativas LATAM) descartadas: requieren plan Creator $22/mes que rompe la regla cero costo.
+- Asignación canal → voz con rotación por día implementada en `compose_video.py`. Ej: TikTok lunes/miércoles/viernes/sábado/domingo Jessica, martes/jueves Chris.
+- Documento `docs/VOCES_CANALES_AUREX.md` cerrado como referencia + `.docx` y `.pdf` en Descargas.
+- Catálogo audiovisual en `~/Downloads/AUREX_CATALOGO_VOCES/`: 8 videos (uno por voz) con la misma estructura para comparar.
+
+**Drive automation — OAuth Desktop credentials con cuenta gratuita.**
+
+- Antes Fernando intermediaba subiendo manualmente videos a Drive. Hoy se confirmó que era cuello de botella (Escritorio descargó V1 de Kling y V1 de Runway a Descargas, no aclaró cuál subir, Fernando subió la de Runway corrupta por error).
+- Service Account inicial NO sirvió (las SA no tienen storage propio en cuentas @gmail.com personales sin Workspace pago).
+- Solución implementada: OAuth Client ID Desktop app + flow interactivo una vez. Token refresh_token guardado en `/tmp/aurex-oauth-token.json`, se reutiliza automáticamente.
+- Script `scripts/video_generation/drive_automation.py` con comandos `ping`, `auth`, `list`, `upload`, `download`. Code ya puede subir/descargar de Drive directo sin pasar por Descargas ni Fernando.
+- Carpeta `AUREX_MEDIA_LIBRARY` en Drive con estructura: `01_videos/finales`, `01_videos/buho_animaciones`, `02_audios/elevenlabs`, `03_assets_brutos`, `04_briefs`, `05_feedback`.
+
+**Ruta B (búho animado) — primer intento descartado.**
+
+- Brief inicial pasado a Escritorio para generar 3 variantes con Runway. Cola de tier free: 50-60 min, descartada como inviable. La V1 de Runway tuvo un giro 360° no pedido.
+- Brief v2 con Plan B Kling AI (6 generaciones/día gratis) + Plan C Luma Dream Machine (30/mes). Subido a Drive `04_briefs/`.
+- V1 de Kling generada hoy (45 créditos): visualmente OK pero el INPUT que Escritorio le dio a Kling fue un screenshot del viewer de Drive con el chrome del browser visible. La V1 quedó con la barra "AUREX_FINAL_v2_modo_oscuro.p... Archivo Ver Insertar Compartir" embedded en el frame inicial. **Descartada.**
+- V1 de Runway: mismo problema, mismo input contaminado.
+- **URL del PNG puro publicada para uso futuro:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/scripts/video_generation/assets/buho_v2_dark.png` — directa de GitHub, sin chrome, sin auth. Escritorio la usa mañana para regenerar V1+V2+V3 limpias.
+
+**OAuth Drive setup completo (Fernando hizo, Code automatizó).**
+
+- Proyecto Google Cloud `aurex-automation` creado.
+- API Drive habilitada.
+- OAuth Client ID Desktop creado, JSON en `~/Desktop/aurex-oauth.json`.
+- Test user `fmoscon@gmail.com` agregado a la consent screen.
+- Flow OAuth ejecutado, token guardado en `/tmp/aurex-oauth-token.json`.
+- Verificado: ping, list (5 carpetas en AUREX_MEDIA_LIBRARY), upload (archivo dummy a 03_assets_brutos), download (V1 corrupta de Kling traída a `assets/buho_animations/`, después borrada). Todo funcionando.
+
+**Sonido del búho — discusión iniciada.**
+
+- Fernando propuso firma sonora del búho al final de los videos (idea tipo "tudum" Netflix).
+- Acuerdo Code + Escritorio: sí, pero con tono sintético propio (NO realismo "ulú-ulú"), procesado con reverb dorado para matchear estética metálica, solo en videos premium (no en todos para no fatigar), volumen bajo, últimos 1-2 segundos.
+- Implementación pendiente: generar 4 candidatos sintéticos con FFmpeg, Fernando elige, integrar como flag `--owl-sound` en `compose_video.py`.
+- Orden acordado con Escritorio: primero terminar V1+V2+V3 visuales, después agregar sonido.
+
 ### Falta
+
+**Inmediato (mañana 1-may-2026):**
+- **8:00 AR — verificar reportes WhatsApp.** El cron `dailyHealthReport` se dispara automático. Si llega por WhatsApp 1320 → cooldown 2563 levantado, retomamos uso normal. Si NO llega → sigue cooldown, 24h más de espera.
+- **9:00 AR — verificar reporte de status del proyecto.** Llega por Telegram (este reporte) usando este CONTEXTO.md como input.
+- **Cuando renueven los créditos de Kling (UTC+8 hora de Beijing, mañana temprano AR)** — Escritorio regenera V1+V2+V3 desde cero con la URL del PNG puro de GitHub (NO screenshot del viewer). Cuando suba a Drive, Code descarga con `drive_automation.py download <id> <local_path>`, verifica el primer frame de cada una (no debe haber chrome de browser), integra al pipeline.
+- **Code regenera v13** con V1 limpia + V2/V3 mezcladas. Verifica pixel-por-pixel antes de mostrar a Fernando.
+- **Implementar firma sonora del búho** (orden definido con Escritorio: después de V1+V2+V3): Code genera 4 candidatos sintéticos con FFmpeg, Fernando elige, se integra como flag `--owl-sound`. Solo en videos premium.
+
+**Plan MKT pendiente (aún del 29-abr y posteriores):**
 - **Captura manual por Fernando** para completar Fase A — feeds IG/TikTok de Lemon/RockFlow/Bitso/Robinhood/Nubank + emails onboarding de 3-4 competidores + capturas in-app de Cocos. Lista priorizada en `RESEARCH_VISUAL.md` sección "Captura manual pendiente".
 - **Fase B: decisión final de arquetipo + mini design system AUREX** — debate Code+Escritorio sobre arquetipo definitivo (preliminar: Inst+Brand-led hybrid con mascot ilustrado). Tiempo estimado: 3-5 días.
-- **Replanteo serio puntos 2 (avatar) y 4 (referidos)** del Plan MKT v2.1 con la profundidad que merecen.
-- **Reformulación de los 11 contenidos modelo** una vez identidad de marca consolidada.
-- **Producción técnica + primer ejemplo real de cada formato** (Fase F).
-- **Ejecución Mes 1** post-aprobación Apple/Google.
+- **Reformulación de los 11 contenidos modelo** una vez identidad de marca consolidada (parcialmente avanzado: la sección 2.4 ya está cerrada con búho v2 + voces).
 - **Síntesis final → `PLAN_MKT.md` v2.** Documento que integra todo. Incluye posicionamiento, mensajes para stores, copy del onboarding, primeros canales de adquisición, contenido para los primeros 30 días.
 - **Plan táctico de lanzamiento.** Una vez definido posicionamiento: acciones concretas que ejecutan Code y Escritorio. Fernando solo aprueba (regla dura: nada que él tenga que grabar, escribir ni publicar manualmente).
+- **Setup cron del backend** para producir videos automáticos diarios en horarios definidos en el Plan MKT (TikTok/Reels/Shorts martes y viernes según sección 2.3.6).
+- **Ejecución Mes 1** post-aprobación Apple/Google.
 
 ### Insights transversales ya confirmados (no esperan las pasadas faltantes)
 - Precio PRO $9.99/mes validado por 3 competidores (Magnifi, Atom Finance, Public.com).
