@@ -113,21 +113,17 @@ def banner_signal(out, ticker, pct, direction_label, mode="dark"):
     card_full.paste(card, (PAD, PAD))
     final = Image.alpha_composite(final, card_full)
 
-    # 4. Borde principal dorado más grueso (6 px) — premium y visible sobre el fondo.
+    # 4. Borde principal dorado bien grueso (10 px) — UN borde sólido,
+    # no las "2 líneas finitas" que generaba el bevel interno (Fernando 1-may).
     border = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ImageDraw.Draw(border).rounded_rectangle(
-        [PAD, PAD, W - PAD, H - PAD], radius=22, outline=GOLD, width=6)
+        [PAD, PAD, W - PAD, H - PAD], radius=22, outline=GOLD, width=10)
     final = Image.alpha_composite(final, border)
 
-    # 5. Bevel: luz arriba-izquierda + sombra abajo-derecha
-    bevel = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    bvd = ImageDraw.Draw(bevel)
-    bvd.line([(PAD + 6, PAD + 4), (W - PAD - 6, PAD + 4)], fill=GOLD_LIGHT, width=2)
-    bvd.line([(PAD + 4, PAD + 6), (PAD + 4, H - PAD - 6)], fill=GOLD_LIGHT, width=2)
-    bvd.line([(PAD + 6, H - PAD - 4), (W - PAD - 6, H - PAD - 4)], fill=GOLD_DARK, width=2)
-    bvd.line([(W - PAD - 4, PAD + 6), (W - PAD - 4, H - PAD - 6)], fill=GOLD_DARK, width=2)
-    bevel = bevel.filter(ImageFilter.GaussianBlur(radius=0.5))
-    final = Image.alpha_composite(final, bevel)
+    # 5. Bevel ELIMINADO el 1-may-2026: generaba 2 líneas finitas internas
+    # que Fernando rechazó. Si en el futuro se quiere efecto bevel, hacer un
+    # solo highlight dorado claro suave en el borde superior, no líneas en
+    # los 4 lados.
 
     # 6. Esquinas decorativas en L
     corners = Image.new("RGBA", (W, H), (0, 0, 0, 0))

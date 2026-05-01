@@ -373,11 +373,18 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     # Esto replica la integración que tenía v13 (validada por Fernando) — sin halo, sin glow.
     if buho_video_emotion:
         buho_input_args = ["-stream_loop", "-1", "-i", str(buho_video_emotion)]
-        # crop=iw:ih-80 saca el watermark de Runway/Kling (80 px del bottom).
-        # colorkey saca el fondo navy del MP4 (#0A1428) para que el búho con alas
-        # extendidas viva sobre la constelación sin caja recortada visible.
-        # similarity 0.30 cubre las variaciones tonales del navy comprimido del MP4.
-        buho_filter = ("[1:v]crop=iw:ih-80:0:0,scale=720:720,setsar=1,setpts=PTS-STARTPTS,"
+        # Pipeline:
+        # 1. crop=iw:ih-80 saca el watermark de Runway/Kling (80 px del bottom).
+        # 2. pad agrega 80px navy en cada lado y compensa el crop arriba+abajo
+        #    para que las alas extendidas (que en el MP4 fuente 960x960 tocan
+        #    los bordes laterales) tengan aire — sin esto, scale 720 deja las
+        #    puntas exactamente en el borde y se ven cortadas.
+        # 3. scale 720:720 al tamaño esperado por el overlay.
+        # 4. colorkey saca el fondo navy del MP4 (#0A1428) para que el búho con
+        #    alas viva sobre la constelación sin caja recortada visible.
+        buho_filter = ("[1:v]crop=iw:ih-80:0:0,"
+                       "pad=iw+160:ih+160:80:80:0x0A1428,"
+                       "scale=720:720,setsar=1,setpts=PTS-STARTPTS,"
                        "colorkey=color=0x0A1428:similarity=0.30:blend=0.10[buho]")
     else:
         buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
