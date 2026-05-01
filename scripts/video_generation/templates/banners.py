@@ -25,7 +25,8 @@ W = 1080  # ancho canvas video AUREX
 
 # Paletas
 GOLD = (212, 164, 55, 255)
-GOLD_DARK = (140, 100, 28, 255)
+GOLD_LIGHT = (255, 215, 130, 255)
+GOLD_DARK = (110, 75, 18, 255)
 WHITE = (255, 255, 255, 255)
 NAVY_DARK = (10, 20, 40, 230)
 CREAM = (244, 244, 246, 230)
@@ -55,102 +56,127 @@ def banner_intro(out, logo_path, subtitle, mode="dark"):
 
 
 def banner_signal(out, ticker, pct, direction_label, mode="dark"):
-    """Banner de señal moderno: glassmorphism + doble borde + esquinas decorativas + barra de progreso.
+    """Banner de señal premium: fondo opaco diferenciado + bevel + glow + drop shadow.
 
-    Composición:
-    - Glow exterior dorado (sombra suave gaussiana).
-    - Fondo con gradiente vertical sutil (navy oscuro arriba a navy claro abajo).
-    - Doble borde dorado: exterior 2 px (oro claro) + interior 1 px (oro oscuro) con gap de 6 px.
-    - Esquinas decorativas en L en las 4 esquinas (líneas dorado).
-    - Ticker, label "PROBABILIDAD ALCISTA/BAJISTA" y % grande con flecha.
-    - Barra de progreso al pie proporcional al %.
+    Composición por capas (alpha_composite para mantener opacidad correcta):
+    1. Drop shadow oscuro abajo-derecha (gaussiana radius 10).
+    2. Glow exterior dorado (gaussiana radius 14).
+    3. Card OPACO con gradiente vertical de tono cálido oscuro (dark) o cream (light)
+       — distinto al navy de la constelación para no confundirse con el fondo.
+    4. Borde principal dorado 3 px.
+    5. Bevel: línea clara (#FFD782) arriba+izquierda interior, oscura (#6E4B12)
+       abajo+derecha — efecto de luz desde arriba-izquierda.
+    6. Esquinas decorativas en L (cuatro esquinas, dorado claro).
+    7. Contenido: ticker + PROBABILIDAD ALCISTA/BAJISTA + % grande + flecha + barra.
 
     Canvas 1000x360. Se overlayea en ((W-1000)/2, 240) sobre el video.
     """
     W, H = 1000, 360
-    img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    PAD = 20
+    inner_w, inner_h = W - 2 * PAD, H - 2 * PAD
+    final = Image.new("RGBA", (W, H), (0, 0, 0, 0))
 
-    # 1. Glow exterior dorado
+    # 1. Drop shadow
+    shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(shadow).rounded_rectangle(
+        [PAD + 8, PAD + 8, W - PAD + 8, H - PAD + 8], radius=22, fill=(0, 0, 0, 160))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=10))
+    final = Image.alpha_composite(final, shadow)
+
+    # 2. Glow dorado exterior
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
-    glow_draw = ImageDraw.Draw(glow)
-    glow_draw.rounded_rectangle([20, 20, W - 20, H - 20], radius=28, fill=(212, 164, 55, 60))
-    glow = glow.filter(ImageFilter.GaussianBlur(radius=12))
-    img.paste(glow, (0, 0), glow)
+    ImageDraw.Draw(glow).rounded_rectangle(
+        [PAD - 8, PAD - 8, W - PAD + 8, H - PAD + 8], radius=26, fill=(212, 164, 55, 80))
+    glow = glow.filter(ImageFilter.GaussianBlur(radius=14))
+    final = Image.alpha_composite(final, glow)
 
-    # 2. Gradiente vertical en el fondo
+    # 3. Card opaco con gradiente
     if mode == "dark":
-        c_top = (8, 16, 36, 240)
-        c_bot = (16, 30, 56, 240)
+        c_top = (10, 8, 6)
+        c_bot = (32, 26, 16)
     else:
-        c_top = (250, 250, 252, 240)
-        c_bot = (235, 235, 240, 240)
-    bg = Image.new("RGBA", (W - 40, H - 40), c_top)
-    bg_draw = ImageDraw.Draw(bg)
-    for y in range(H - 40):
-        ratio = y / (H - 40)
+        c_top = (255, 252, 245)
+        c_bot = (235, 228, 210)
+    card = Image.new("RGBA", (inner_w, inner_h), (0, 0, 0, 0))
+    cdraw = ImageDraw.Draw(card)
+    for y in range(inner_h):
+        ratio = y / inner_h
         r = int(c_top[0] + (c_bot[0] - c_top[0]) * ratio)
         g = int(c_top[1] + (c_bot[1] - c_top[1]) * ratio)
         b = int(c_top[2] + (c_bot[2] - c_top[2]) * ratio)
-        a = int(c_top[3] + (c_bot[3] - c_top[3]) * ratio)
-        bg_draw.line([(0, y), (W - 40, y)], fill=(r, g, b, a))
-    mask = Image.new("L", (W - 40, H - 40), 0)
-    ImageDraw.Draw(mask).rounded_rectangle([0, 0, W - 40, H - 40], radius=24, fill=255)
-    img.paste(bg, (20, 20), mask)
+        cdraw.line([(0, y), (inner_w, y)], fill=(r, g, b, 255))
+    cmask = Image.new("L", (inner_w, inner_h), 0)
+    ImageDraw.Draw(cmask).rounded_rectangle([0, 0, inner_w, inner_h], radius=22, fill=255)
+    card.putalpha(cmask)
+    card_full = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    card_full.paste(card, (PAD, PAD))
+    final = Image.alpha_composite(final, card_full)
 
-    # 3. Doble borde dorado
-    draw = ImageDraw.Draw(img)
-    draw.rounded_rectangle([20, 20, W - 20, H - 20], radius=24, outline=GOLD, width=2)
-    draw.rounded_rectangle([28, 28, W - 28, H - 28], radius=18, outline=GOLD_DARK, width=1)
+    # 4. Borde principal dorado
+    border = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    ImageDraw.Draw(border).rounded_rectangle(
+        [PAD, PAD, W - PAD, H - PAD], radius=22, outline=GOLD, width=3)
+    final = Image.alpha_composite(final, border)
 
-    # 4. Esquinas decorativas en L
-    corner_len = 30
+    # 5. Bevel: luz arriba-izquierda + sombra abajo-derecha
+    bevel = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    bvd = ImageDraw.Draw(bevel)
+    bvd.line([(PAD + 6, PAD + 4), (W - PAD - 6, PAD + 4)], fill=GOLD_LIGHT, width=2)
+    bvd.line([(PAD + 4, PAD + 6), (PAD + 4, H - PAD - 6)], fill=GOLD_LIGHT, width=2)
+    bvd.line([(PAD + 6, H - PAD - 4), (W - PAD - 6, H - PAD - 4)], fill=GOLD_DARK, width=2)
+    bvd.line([(W - PAD - 4, PAD + 6), (W - PAD - 4, H - PAD - 6)], fill=GOLD_DARK, width=2)
+    bevel = bevel.filter(ImageFilter.GaussianBlur(radius=0.5))
+    final = Image.alpha_composite(final, bevel)
+
+    # 6. Esquinas decorativas en L
+    corners = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    cd = ImageDraw.Draw(corners)
+    cl = 30
     cw = 3
-    # TL, TR, BL, BR
-    draw.line([(40, 50), (40, 50 + corner_len)], fill=GOLD, width=cw)
-    draw.line([(40, 50), (40 + corner_len, 50)], fill=GOLD, width=cw)
-    draw.line([(W - 40, 50), (W - 40, 50 + corner_len)], fill=GOLD, width=cw)
-    draw.line([(W - 40, 50), (W - 40 - corner_len, 50)], fill=GOLD, width=cw)
-    draw.line([(40, H - 80), (40, H - 80 - corner_len)], fill=GOLD, width=cw)
-    draw.line([(40, H - 80), (40 + corner_len, H - 80)], fill=GOLD, width=cw)
-    draw.line([(W - 40, H - 80), (W - 40, H - 80 - corner_len)], fill=GOLD, width=cw)
-    draw.line([(W - 40, H - 80), (W - 40 - corner_len, H - 80)], fill=GOLD, width=cw)
+    cd.line([(40, 50), (40, 50 + cl)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(40, 50), (40 + cl, 50)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(W - 40, 50), (W - 40, 50 + cl)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(W - 40, 50), (W - 40 - cl, 50)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(40, H - 80), (40, H - 80 - cl)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(40, H - 80), (40 + cl, H - 80)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(W - 40, H - 80), (W - 40, H - 80 - cl)], fill=GOLD_LIGHT, width=cw)
+    cd.line([(W - 40, H - 80), (W - 40 - cl, H - 80)], fill=GOLD_LIGHT, width=cw)
+    final = Image.alpha_composite(final, corners)
 
-    # 5. Contenido textual
+    # 7. Contenido
     direction_color = GREEN if direction_label == "ALCISTA" else RED
-    text_main = WHITE if mode == "dark" else BLACK_TEXT
+    text_main = WHITE if mode == "dark" else (20, 20, 25, 255)
+    content = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    td = ImageDraw.Draw(content)
     f_ticker = ImageFont.truetype(FONT_BOLD, 92)
     f_label = ImageFont.truetype(FONT_BOLD, 38)
     f_pct = ImageFont.truetype(FONT_BOLD, 100)
-    draw.text((75, 65), ticker, font=f_ticker, fill=text_main)
+    td.text((75, 65), ticker, font=f_ticker, fill=text_main)
     label = f"PROBABILIDAD {direction_label}"
-    draw.text((75, 175), label, font=f_label, fill=direction_color)
+    td.text((75, 175), label, font=f_label, fill=direction_color)
     pct_text = f"{pct}%"
     bbox = f_pct.getbbox(pct_text)
     pct_x = W - 75 - (bbox[2] - bbox[0])
-    draw.text((pct_x, 75), pct_text, font=f_pct, fill=direction_color)
-
-    # 6. Flecha
+    td.text((pct_x, 75), pct_text, font=f_pct, fill=direction_color)
     arrow_y = 195
     arrow_x = pct_x + (bbox[2] - bbox[0]) // 2 - 30
     if direction_label == "ALCISTA":
-        draw.polygon([(arrow_x, arrow_y + 25), (arrow_x + 30, arrow_y - 25), (arrow_x + 60, arrow_y + 25)],
-                     fill=direction_color)
+        td.polygon([(arrow_x, arrow_y + 25), (arrow_x + 30, arrow_y - 25), (arrow_x + 60, arrow_y + 25)],
+                   fill=direction_color)
     else:
-        draw.polygon([(arrow_x, arrow_y - 25), (arrow_x + 30, arrow_y + 25), (arrow_x + 60, arrow_y - 25)],
-                     fill=direction_color)
-
-    # 7. Barra de progreso al pie
+        td.polygon([(arrow_x, arrow_y - 25), (arrow_x + 30, arrow_y + 25), (arrow_x + 60, arrow_y - 25)],
+                   fill=direction_color)
     bar_y = H - 65
-    bar_x_start = 75
-    bar_x_end = W - 75
+    bar_x_start, bar_x_end = 75, W - 75
     bar_w = bar_x_end - bar_x_start
-    bar_h = 8
-    track_color = (60, 70, 90, 200) if mode == "dark" else (200, 200, 210, 200)
-    draw.rounded_rectangle([bar_x_start, bar_y, bar_x_end, bar_y + bar_h], radius=4, fill=track_color)
+    bar_h = 10
+    track_color = (40, 35, 25, 255) if mode == "dark" else (210, 205, 195, 255)
+    td.rounded_rectangle([bar_x_start, bar_y, bar_x_end, bar_y + bar_h], radius=5, fill=track_color)
     fill_w = int(bar_w * (pct / 100))
-    draw.rounded_rectangle([bar_x_start, bar_y, bar_x_start + fill_w, bar_y + bar_h], radius=4, fill=direction_color)
+    td.rounded_rectangle([bar_x_start, bar_y, bar_x_start + fill_w, bar_y + bar_h], radius=5, fill=direction_color)
+    final = Image.alpha_composite(final, content)
 
-    img.save(out)
+    final.save(out)
 
 
 def banner_outro(out, logo_path, mode="dark"):
