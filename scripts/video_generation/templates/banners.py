@@ -76,24 +76,25 @@ def banner_signal(out, ticker, pct, direction_label, mode="dark"):
     inner_w, inner_h = W - 2 * PAD, H - 2 * PAD
     final = Image.new("RGBA", (W, H), (0, 0, 0, 0))
 
-    # 1. Drop shadow
+    # 1. Drop shadow más pronunciada (radius 18, alpha 220) — separa visualmente del fondo navy.
     shadow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ImageDraw.Draw(shadow).rounded_rectangle(
-        [PAD + 8, PAD + 8, W - PAD + 8, H - PAD + 8], radius=22, fill=(0, 0, 0, 160))
-    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=10))
+        [PAD + 12, PAD + 12, W - PAD + 12, H - PAD + 12], radius=22, fill=(0, 0, 0, 220))
+    shadow = shadow.filter(ImageFilter.GaussianBlur(radius=18))
     final = Image.alpha_composite(final, shadow)
 
-    # 2. Glow dorado exterior
+    # 2. Glow dorado exterior más intenso.
     glow = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ImageDraw.Draw(glow).rounded_rectangle(
-        [PAD - 8, PAD - 8, W - PAD + 8, H - PAD + 8], radius=26, fill=(212, 164, 55, 80))
-    glow = glow.filter(ImageFilter.GaussianBlur(radius=14))
+        [PAD - 10, PAD - 10, W - PAD + 10, H - PAD + 10], radius=28, fill=(212, 164, 55, 110))
+    glow = glow.filter(ImageFilter.GaussianBlur(radius=18))
     final = Image.alpha_composite(final, glow)
 
-    # 3. Card opaco con gradiente
+    # 3. Card opaco con gradiente — tonos cálidos más diferenciados del navy del fondo.
+    # Antes (10,8,6 → 32,26,16) se confundía con el navy #0A1428. Subimos saturación cálida.
     if mode == "dark":
-        c_top = (10, 8, 6)
-        c_bot = (32, 26, 16)
+        c_top = (28, 20, 12)
+        c_bot = (52, 38, 22)
     else:
         c_top = (255, 252, 245)
         c_bot = (235, 228, 210)
@@ -112,10 +113,10 @@ def banner_signal(out, ticker, pct, direction_label, mode="dark"):
     card_full.paste(card, (PAD, PAD))
     final = Image.alpha_composite(final, card_full)
 
-    # 4. Borde principal dorado
+    # 4. Borde principal dorado más grueso (6 px) — premium y visible sobre el fondo.
     border = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     ImageDraw.Draw(border).rounded_rectangle(
-        [PAD, PAD, W - PAD, H - PAD], radius=22, outline=GOLD, width=3)
+        [PAD, PAD, W - PAD, H - PAD], radius=22, outline=GOLD, width=6)
     final = Image.alpha_composite(final, border)
 
     # 5. Bevel: luz arriba-izquierda + sombra abajo-derecha

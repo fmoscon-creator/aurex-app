@@ -374,7 +374,11 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     if buho_video_emotion:
         buho_input_args = ["-stream_loop", "-1", "-i", str(buho_video_emotion)]
         # crop=iw:ih-80 saca el watermark de Runway/Kling (80 px del bottom).
-        buho_filter = "[1:v]crop=iw:ih-80:0:0,scale=720:720,setsar=1,setpts=PTS-STARTPTS[buho]"
+        # colorkey saca el fondo navy del MP4 (#0A1428) para que el búho con alas
+        # extendidas viva sobre la constelación sin caja recortada visible.
+        # similarity 0.30 cubre las variaciones tonales del navy comprimido del MP4.
+        buho_filter = ("[1:v]crop=iw:ih-80:0:0,scale=720:720,setsar=1,setpts=PTS-STARTPTS,"
+                       "colorkey=color=0x0A1428:similarity=0.30:blend=0.10[buho]")
     else:
         buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
         buho_filter = "[1:v]scale=720:720,setsar=1[buho]"
