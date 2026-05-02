@@ -53,10 +53,12 @@ Real-time global markets tracker. 350 assets, 24 variables, 7 markets, 8 languag
 Para: YouTube About, LinkedIn About, Facebook Page About.
 
 ```
-AUREX is the global markets terminal that tracks 350 selected assets across 9 instrument types and 7 markets in real time, in 8 languages. The system cross-references 24 variables — technical indicators, macroeconomic data, geopolitics and market sentiment — to deliver statistical probabilities for the individual market follower. Not a broker. Not advice. Not a buy/sell platform. A market tracking and analytics terminal. aurex.live
+AUREX is the global markets terminal that tracks 350 selected assets across 9 instrument types and 7 markets in real time, in 8 languages. The system cross-references 24 variables — technical indicators, macroeconomic data, geopolitics and market sentiment — to give the individual market follower a data-driven view of global markets. Not a broker. Not advice. Not a buy/sell platform. A market tracking and analytics terminal. aurex.live
 ```
 
-**Char count:** 432 / 500
+**Char count:** 439 / 500
+
+**Cambio v1 → v2 (sugerencia Escritorio aplicada):** `"to deliver statistical probabilities for the individual market follower"` → `"to give the individual market follower a data-driven view of global markets"`. Razón: "statistical probabilities" puede ser interpretado por revisores de plataforma como señales de trading encubiertas. "Data-driven view" mantiene el significado, elimina ambigüedad regulatoria y es más claro para usuario no financiero.
 
 ### Tagline — 120 caracteres máximo
 
@@ -91,10 +93,12 @@ Tracker de mercados globales en tiempo real. 350 activos, 24 variables, 7 mercad
 ### Bio larga — 500 caracteres máximo
 
 ```
-AUREX es el terminal de seguimiento de mercados globales que rastrea 350 activos seleccionados de 9 tipos de instrumentos en 7 mercados, en tiempo real y en 8 idiomas. El sistema cruza 24 variables — indicadores técnicos, datos macroeconómicos, geopolítica y sentimiento de mercado — para entregar probabilidades estadísticas al seguidor de mercados individual. No es un broker. No es asesoramiento. No es plataforma de compra/venta. Es un terminal de seguimiento y análisis de mercados. aurex.live
+AUREX es el terminal de seguimiento de mercados globales que rastrea 350 activos seleccionados de 9 tipos de instrumentos en 7 mercados, en tiempo real y en 8 idiomas. El sistema cruza 24 variables — indicadores técnicos, datos macroeconómicos, geopolítica y sentimiento de mercado — para dar al seguidor de mercados individual una visión basada en datos del mercado global. No es broker. No es asesoramiento. No es plataforma de compra/venta. Terminal de seguimiento y análisis. aurex.live
 ```
 
-**Char count:** 489 / 500
+**Char count:** 490 / 500
+
+**Cambio v1 → v2 (sugerencia Escritorio aplicada):** `"para entregar probabilidades estadísticas al seguidor de mercados individual"` → `"para dar al seguidor de mercados individual una visión basada en datos del mercado global"`. Razón: misma que en EN — `probabilidades estadísticas` puede leerse como señales de trading encubiertas, `visión basada en datos` es más seguro y equivalente en significado.
 
 ### Tagline — 120 caracteres máximo
 
@@ -175,14 +179,20 @@ Cada bio traducida pasa validación de char count + chequeo de lenguaje prohibid
 
 ---
 
-## OUTPUT DEL BLOQUE 1 — APROBACIÓN PENDIENTE
+## NOTAS PARA EL BLOQUE 8 — contingencias documentadas durante la revisión
 
-**Fernando aprueba:** versiones EN + ES + categorías Business + disclaimer.
-
-**Escritorio revisa:** narrativa, tono, coherencia con documento estratégico, riesgos regulatorios no contemplados.
-
-**Code traduce automáticamente a los 6 idiomas restantes** tras aprobación final.
+**Instagram Business — categoría:** Meta a veces NO muestra `Data Analytics Service` como opción directa en el formulario de signup Business. Si esa opción no aparece en el momento real de apertura, **fallback en este orden**: `Software` → `App` → `Tech & Electronics`. Evitar `Financial Service` siempre. Documentado por Escritorio en revisión narrativa Bloque 1.
 
 ---
 
-*BIOS_PUBLICAS_AUREX.md — Bloque 1 cerrado. Próximo: Bloque 2 (disponibilidad real de nombres en las plataformas).*
+## OUTPUT DEL BLOQUE 1 — APROBACIÓN
+
+✅ **Escritorio aprobó** (revisión narrativa 2-may-2026): lenguaje limpio, disclaimer en tres capas inteligente, categorías sin Financial Services correctas. Una sugerencia aplicada: "statistical probabilities" → "data-driven view" (EN + ES). Una contingencia documentada para Bloque 8 (categoría Instagram fallback).
+
+⏳ **Pendiente aprobación final Fernando** sobre versión v2 (con cambio aplicado).
+
+📌 **Tras aprobación Fernando:** Code traduce automáticamente a los 6 idiomas restantes (PT, ZH, FR, IT, HI, AR) con Claude API workflow 2.3 del Plan MKT v3.0.
+
+---
+
+*BIOS_PUBLICAS_AUREX.md v2 — Bloque 1 cerrado tras revisión cruzada Escritorio. Próximo: Bloque 2 (disponibilidad real de nombres en las plataformas).*
