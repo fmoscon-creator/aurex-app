@@ -179,9 +179,14 @@ Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver
   - `facundo.fernandezrl@gmail.com` — UUID `ee61363c-5add-4f8a-8845-680505c8455b`.
   - `soypurpura@gmail.com` — UUID `3fe30ab3-c6d3-459f-a4b0-b21b8bc1c985`.
 
-**Total testers nuevos en Supabase Auth en 1+2 may-2026: 10.** Mañana 3-may debería verse el impacto en el contador opted-in de Google Play Console (asumiendo que los testers reales hicieron opt-in desde el link de testing en sus dispositivos).
+**Total testers nuevos creados en Supabase Auth en 1+2 may-2026: 10.** Esto es solo INVITACIÓN, no equivale a testers activos. Cada persona invitada tiene que: abrir el link de testing en su dispositivo Android, aceptar "Become a tester", descargar AUREX desde Play Store, y abrir la app al menos una vez. Solo cuando todo eso sucede, Play Console suma esa persona al contador opted-in.
 
-**Estado al 2-may-2026 noche: día 8 de 14 de Prueba Cerrada Google Play, al límite de 12 testers opted-in. Vence ~9-may-2026.**
+**El ÚNICO indicador real del estado del testing** es lo que Play Console muestra en su panel:
+1. Días transcurridos (cuenta automática desde el submit de la prueba cerrada)
+2. Cantidad de testers opted-in (los que efectivamente activaron el link)
+3. Descargas activas de la app
+
+**Estado al 2-may-2026 noche: día 8 de 14 de Prueba Cerrada Google Play, al límite de 12 testers opted-in. Vence ~9-may-2026.** Cualquier predicción sobre cómo va a evolucionar ese contador requiere mirar Play Console directamente — no hay forma de inferirlo desde los inserts de Supabase.
 - Las 3 family solo cuentan si efectivamente hacen opt-in. Faltan las pass reales de Gmail de cada una para loguearlas.
 
 **Plan A (preferido — sin costo, sin riesgo):**
