@@ -1,5 +1,5 @@
 # CONTEXTO DEL PROYECTO AUREX
-Última actualización: 1 de Mayo de 2026 (~11:00 AR)
+Última actualización: 2 de Mayo de 2026 (~18:30 AR — cierre sesión)
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
@@ -13,23 +13,51 @@ Tarea de hoy: [FECHA] - [TAREA]
 
 ---
 
-## ESTADO ACTUAL — 29 ABRIL 2026
+## ESTADO ACTUAL — 2 MAY 2026 (cierre de sesión nocturna)
 
 ### HEAD ACTUAL (PWA aurex-app, branch main)
-Commit: eb0f089
-Fecha: 2026-04-29
-Descripcion: docs: agregar arranque de Code desde home y ubicación de memoria persistente
+Commit: b781290
+Fecha: 2026-05-02
+Descripcion: Bloque 2 v3 Paso CERO — re-chequeo correcto Telegram (aurex TAKEN por Aurelio, aurex_global TAKEN)
 
 ### REPOS RELACIONADOS (3 repos del proyecto)
-- aurex-app (PWA)         main: eb0f089  (este repo, hosting GitHub Pages)
-- AurexApp (Nativa)       dev:  2a12b69  (React Native — Build 17 enviado a Apple, NO TOCAR main hasta aprobación)
-- aurex-backend           main: bfd0ecb  (Railway — incluye endpoint /api/whatsapp/connect-qr con secret y soporte de pairing code)
+- aurex-app (PWA)         main: b781290  (Plan MKT v3.0 + Bloques 1 y 2 del Paso CERO documentados, traducciones 6 idiomas)
+- AurexApp (Nativa)       dev:  072e492  (Build 17 enviado a Apple, NO TOCAR main hasta aprobación)
+- aurex-backend           main: f87fc6d  (Railway — fix TG-001 polling: false aplicado, deploy SUCCESS)
 
-### COMMITS DEL 29 DE ABRIL 2026
-- aurex-app eb0f089 — sección 0.A en CLAUDE.md y subsección en INICIO_AUREX.md: procedimiento de arranque de Code desde home (`cd ~ && claude`) y ubicación de la memoria persistente (`~/.claude/projects/-Users-fernandomoscon/memory/`, 7 archivos: índice + 6 con reglas y datos operativos).
-- aurex-backend ec578af — endpoint nuevo `GET /api/whatsapp/connect-qr` para generar QR de vinculación de Evolution sin que la apikey salga de Railway. Acceso protegido por la env var `WHATSAPP_CONNECT_SECRET` (header `X-Secret` o query `?secret=...`).
-- aurex-backend bfd0ecb — soporte de pairing code en el mismo endpoint: si llega `?number=<numero>` se propaga a Evolution para devolver `pairingCode` en vez de QR. Quedó instalado pero NO funcional con Evolution v1.8.7 (esa versión ignora el parámetro y devuelve QR igual; pairing code requiere Evolution v2).
-- aurex-backend 09c4c32 — `dailyHealthReport` ahora manda también por Telegram (en paralelo a WhatsApp Evolution). `dailyProjectStatusReport` cambió de 20:00 AR (`0 23 * * *`) a 9:00 AR (`0 12 * * *`); también se actualizaron el título del reporte ("Reporte 9:00 hs AR") y el mensaje de error del catch para coherencia.
+### COMMITS DEL 2 DE MAYO 2026
+- aurex-backend `f87fc6d` — **fix TG-001**: `polling: true → false` en bot Telegram. Causa raíz era ETELEGRAM 409 Conflict durante restarts Railway entre container viejo y nuevo. Verificación post-deploy OK (test endpoint + daily-status/test ambos funcionando, los 5 mensajes llegaron al chat 1749518554 a las 18:17 AR). Bot mantiene capacidad de enviar; deja de recibir comandos `/start` y `/alertas` (no usados productivamente).
+- aurex-app `5dece74` — CONTEXTO marcar TG-001 RESUELTO con causa raíz + fix.
+- aurex-app `e86959b` — **PLAN_MKT v3.0** alineado con AUREX_DEFINICION_ESTRATEGICA.md (terminal de mercados globales, idioma prioritario EN, pilares Puntos 5/6/8, 30 piezas re-usables, ELITE como "Próxima versión", piezas #19 AUREX vs Bloomberg + #20 pre-market futuros).
+- aurex-app `ac0be58` — header de aviso en METADATA-APPSTORE.md por desfase con Build 17 real (detectado por Escritorio).
+- aurex-app `ee1b523` — INICIO_AUREX.md actualizado a 16 archivos (agregado AUREX_DEFINICION_ESTRATEGICA.md como fuente de verdad estratégica).
+- aurex-app `fe7da6f` (revertido `9ede1e0`) — primer intento PASO_CERO_CUENTAS.md borrado por contener bios que violaban Build 17 + sin chequeo previo de disponibilidad + costos pagos no autorizados.
+- aurex-app `ef05d14` y `5fac759` — **Bloque 1 Paso CERO** v1 y v2: bios públicas alineadas a Build 17 + documento estratégico + sugerencia Escritorio aplicada (statistical probabilities → data-driven view).
+- aurex-app `f393965`, `8d75cad`, `b781290` — **Bloque 2 Paso CERO**: chequeo disponibilidad nombres en 5 plataformas, estrategia Display Name=AUREX vs handle escalonado (aporte Escritorio), traducciones bios a PT/ZH/FR/IT/HI/AR, re-chequeo correcto Telegram tras detectar bug metodológico (aurex tomado por usuario "Aurelio").
+
+### PLAN MKT v3.0 — Estado al 2-may-2026
+
+- **v3.0 documentado** en `PLAN_MKT.md` (commit `e86959b`).
+- **Revisión cruzada Escritorio**: 7 observaciones A-G + 5 mejoras narrativas + 1 pieza nueva #31 retención FREE→PRO. Aprobadas todas pendientes de aplicar al v3.1.
+- **Cambio crítico de método**: descartado v3.1 teórico, decisión de hacer **Paso CERO real (apertura de cuentas)** primero, y construir el plan táctico final sobre infraestructura real.
+
+### PASO CERO — Estado al 2-may-2026
+
+Método de 3 fases aprobado por Fernando + Escritorio:
+- **Fase A (8 bloques de análisis previo)**: Bloque 1 ✅ + Bloque 2 ✅ cerrados. Bloques 3, 4, 5, 6, 7, 8 PENDIENTES.
+- **Fase B**: pase consolidado a Escritorio para revisión cruzada.
+- **Fase C**: guía detallada de apertura + ejecución de Fernando con asistencia de Escritorio.
+
+**Bloques completados:**
+- **Bloque 1 — Bios públicas** (`docs/BIOS_PUBLICAS_AUREX.md` v2): aprobado por Fernando + Escritorio. Lenguaje seguro alineado a Build 17 ("Real-time market data tracker", categoría Utilidades). Disclaimer en 3 capas. Categorías Business sin "Financial Services" en ninguna plataforma.
+- **Bloque 1 extendido — Traducciones** (`docs/BIOS_TRADUCIDAS_6_IDIOMAS.md`): PT/ZH/FR/IT/HI/AR. PT/FR/IT aprobados por Escritorio. ZH/HI/AR pasan a validación post-publicación por engagement.
+- **Bloque 2 — Disponibilidad nombres** (`docs/BLOQUE_2_DISPONIBILIDAD_NOMBRES.md` v3): patrón único definido. **Display Name AUREX** en todas las plataformas. **Handle técnico**: `aurex` confirmado TAKEN en YouTube + Telegram (cuenta personal "Aurelio"); fallback `aurex_ai` confirmado FREE. Twitter/IG/TikTok pendientes verificación en formulario en vivo durante Fase C.
+
+**Datos para Bloque 3 (email + identidad — ya casi resuelto en chat, falta formalizar):**
+- Email principal único: `app.aurex@gmail.com` (password gestionado solo por Fernando, NO por chat NO en repo).
+- Email recovery: `aurextester12@gmail.com` (cuenta AUREX existente, aisla del grafo Google de fmoscon@gmail.com).
+- Teléfono recovery: `+54 9 11 3360 2563` principal / `+54 11 6789-1320` respaldo.
+- 2FA: Google Authenticator en iPhone Fernando.
 
 ### APPLE — Build 17 iOS
 - **Nombre publicado en App Store: AUREX AI** (no "AUREX" — estaba ocupado, "AUREX AI" cumple Guideline 2.3.7)
