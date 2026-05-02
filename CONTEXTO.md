@@ -142,6 +142,8 @@ Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver
 
 2. **Nativa `AurexApp/src/lib/assets.js`: sincronizar el array `europa` de 19 → 25 acciones.** La nativa tiene la versión vieja con 19 europeas. Faltan: EADSF (Airbus), IDEXY (Inditex), ALIZF (Allianz), BAYZF (Bayer), HNNMY (H&M), INGA (ING Group). Tarea Code post-aprobación Apple Build 17: 1 commit en branch `dev` (NO `main`) sincronizando `assets.js`. Cuando se prepare el siguiente build nativo post-aprobación, va con las 25 ya cargadas.
 
+3. **Backend `aurex-backend/server.js` función `_calcPulseScore`: agregar Macro_FED y Geopolítica al Pulse CRIPTO.** Hoy líneas 860-863 tienen `if(cat !== 'CRIPTO')` que excluye Macro_FED (peso 12) y Geopolítica (peso 4) del Pulse cripto. Sin comentario que justifique la exclusión en el código. Decisión técnica a corregir porque desde 2022 BTC tiene correlación >0.6 con NASDAQ y reacciona fuerte a decisiones FED y tensión geopolítica. Nota: en el motor IA por activo (`_calcIAScore`) la variable `sc.macro` SÍ se aplica a cripto vía inicialización en `server.js:715`, así que cripto a nivel de señal individual ya considera Macro FED. La inconsistencia es solo en el Pulse global cripto. Tarea Code post-aprobación stores: cambio de 1 línea (eliminar el `!==` o aplicar a todas las categorías).
+
 
 
 ### ⚠️ CRÍTICO — GOOGLE PLAY CLOSED TESTING AL LÍMITE (agregado 1-may-2026 03:00 AR)
