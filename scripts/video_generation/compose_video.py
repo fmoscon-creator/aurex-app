@@ -401,7 +401,7 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     else:
         buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
         buho_filter = "[1:v]scale=720:720,setsar=1[buho]"
-    buho_overlay = f"[base][buho]overlay=(W-w)/2:(H-h)/2+120:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
+    buho_overlay = f"[base][buho]overlay=(W-w)/2:(H-h)/2-30:enable='between(t,0,{t_outro_start:.2f})':shortest=1[v0]"
 
     fc = (
         "[0:v]format=yuv420p[base];"
