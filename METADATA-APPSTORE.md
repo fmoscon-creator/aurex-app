@@ -1,5 +1,43 @@
 # AUREX — METADATA APP STORE
-Actualizado: 4 de Abril 2026
+
+> ⚠️ **AVISO IMPORTANTE — ARCHIVO PARCIALMENTE DESACTUALIZADO (al 2-may-2026)**
+>
+> Este archivo refleja la metadata original del 4-abr-2026. **El Build 17 enviado a Apple
+> el 24-abr-2026 cambió campos clave que NO están reflejados en el cuerpo de este
+> documento.** Los datos REALES cargados en App Store Connect y Google Play Console
+> al 2-may-2026 son los siguientes:
+>
+> | Campo | Valor anterior (este archivo) | Valor REAL en Build 17 (24-abr) |
+> |---|---|---|
+> | Nombre publicado App Store | AUREX | **AUREX AI** (AUREX estaba ocupado, "AI" cumple Guideline 2.3.7) |
+> | Nombre del icono iPhone | AUREX | AUREX (sin cambio — diferencia legítima vs nombre publicado) |
+> | Subtítulo | Señales IA para inversores | **Real-time market data tracker** (intencional: alinea con Utilidades, sin lenguaje financiero) |
+> | Categoría primaria | Finanzas | **Utilidades** (cambiada para evitar rechazos previos por lenguaje financiero) |
+> | Categoría secundaria | Productividad | Productividad (sin cambio) |
+> | Bundle ID iOS | com.aurex.app | **com.fernandomoscon.aurex** |
+> | Apple App ID | (no especificado) | 6761672161 |
+> | Team ID | (no especificado) | TX7C2F79U9 |
+> | Build | (no especificado) | 17 (Marketing Version 1.0) |
+> | Submit | (no especificado) | 24-abr-2026 5:24 AM AR |
+> | ID envío | (no especificado) | e0e7fb35-11a4-4c1d-854c-60a80c4799e6 |
+> | Idiomas localización | (no especificado) | EN (principal), ES, FR, IT, HI, AR, PT, ZH (8 total) |
+> | Descripción larga | menciona "74 activos financieros" | **350 activos** es el dato real al 2-may-2026, pero la descripción cargada en stores SIGUE diciendo "74" hasta próxima actualización post-aprobación |
+> | Webhook ASC → RevenueCat | (no especificado) | https://api.revenuecat.com/v1/incoming-webhooks/apple-server-to-server-notification/WICtYZubpcHyBpPfLnZMoagjatQAyjPD |
+>
+> **Regla inviolable mientras Build 17 está en revisión:** NO se toca la metadata cargada
+> en App Store Connect ni Google Play Console. Cualquier actualización del cuerpo de
+> este archivo del repo es solo housekeeping documental.
+>
+> **Pendiente post-aprobación Apple/Google:** reescribir este archivo desde cero con la
+> metadata real cargada y futura (subtítulo, categoría, descripciones actualizadas con
+> 350 activos en lugar de 74, etc.) para que sirva como fuente de verdad confiable.
+>
+> **Para Plan MKT v3.0 y todo copy:** respetar la metadata REAL del Build 17 (Utilidades,
+> "Real-time market data tracker", AUREX AI), NO la metadata vieja de este archivo.
+
+---
+
+## METADATA ORIGINAL (4-abr-2026 — referencia histórica)
 
 ---
 
