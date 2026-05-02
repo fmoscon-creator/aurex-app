@@ -1,10 +1,28 @@
-# PLAN MKT v2.1 — AUREX
+# PLAN MKT v2.2 — AUREX
 
-**Documento maestro de marketing post-research de 19 competidores.**
-**Versión:** v2.1 (Code, post-cruce con Escritorio + Fernando del 29-abr-2026 noche).
-**Fecha:** 29-abr-2026
-**Autor v2.1:** Code (Claude Code CLI), incorporando devolución conjunta de Escritorio + Fernando sobre el draft v2.0 + capa propia de revisión cruzada.
-**Próximo paso:** Escritorio escribe primeros contenidos modelo por tipo de canal (Punto 3 de la devolución conjunta) → Code integra → v2.2 final para aprobación de Fernando.
+**Documento maestro de marketing post-research de 19 competidores + cruce integral con features reales de la app.**
+**Versión:** v2.2 (Code, 2-may-2026).
+**Fecha:** 2-may-2026
+**Autor v2.2:** Code (Claude Code CLI), construido sobre v2.1 cruzando con `docs/AUREX_FEATURES_PARA_MKT.md` (inventario integral de features de la app que el v2.1 había dejado afuera).
+**Próximo paso:** Escritorio revisa v2.2 con capa estratégica + narrativa + tono → integra feedback → queda v2.3 final para aprobación de Fernando.
+
+---
+
+## CHANGELOG v2.1 → v2.2 (2-may-2026)
+
+Tras detectar que el Plan MKT v2.1 se construyó solo "de afuera hacia adentro" (research de competidores → diferenciación), Code armó el inventario integral `docs/AUREX_FEATURES_PARA_MKT.md` de TODO lo que la app tiene como dato/herramienta publicable. El v2.2 cruza el v2.1 con ese inventario.
+
+**Los 7 cambios del v2.2:**
+
+1. **Posicionamiento ampliado.** Antes: "AUREX = señales IA". Ahora: "AUREX = 6 capas integradas: señales IA (74) + AUREX Pulse (5 categorías) + Portfolio personal + Watchlist + Alertas + Mercados (350 activos / 6 plazas / 8 idiomas)". Refleja la realidad de la app, no solo el diferencial competitivo.
+2. **Reformulación de los 11 canales** con plan táctico específico mapeado a las **18 piezas re-usables** del nuevo cuadro (sección 2.5 nueva). Cada pieza se publica en 2+ canales — reduce trabajo, aumenta consistencia.
+3. **Fases de activación reordenadas por facilidad** (sección 2.5.1): Fase 1 (esta semana) Telegram + WhatsApp + Twitter + Email + IG Stories — comparten plantilla 1080×1080. Fase 2 (sem 2-3) TikTok/Reels/Shorts con video v27. Fase 3 (mes 2) YouTube canal largo + LinkedIn. Fase 4 (mes 3+) Press releases + Blog SEO + Programa referidos.
+4. **Calendario diario Mes 1 por canal** (sección 2.5.2). Plan táctico: lunes Pulse + 1 señal IA destacada / martes Banner Eventos + comparación / miércoles Top movers / jueves AUREX vs broker / viernes señal alta convicción / sábado Watchlist destacada / domingo análisis semanal.
+5. **18 piezas de contenido como plantillas re-usables** (sección 2.5.3). Cada pieza tiene template fijo y se publica en >1 canal. Eliminan el ciclo de "crear desde cero" para cada post.
+6. **KPIs ampliados** (sección 2.6 actualizada). Antes: solo "señales compartidas". Ahora: opted-in por canal + engagement por tipo de pieza + conversión FREE→PRO por origen.
+7. **12 plantillas / instrumentos básicos** documentados con estado actual (sección 2.5.4). 2 listas (card 1080×360 + video v27), 10 a crear.
+
+El presupuesto Año 1 NO cambia (sigue ~$2.300-3.800 USD). Las decisiones del v2.1 sobre posicionamiento global, búho v2 como mascot, programa de referidos simétrico 1+1, voces aprobadas y workflow de localización ES → 7 idiomas SE MANTIENEN.
 
 ---
 
@@ -721,7 +739,137 @@ Esto excluye costos de desarrollo (tareas de Code, sin costo dinero) y costos de
 
 ---
 
-# PARTE 3 — PENDIENTES Y NEXT STEPS
+# PARTE 2.5 — CRUCE CON FEATURES DE LA APP (v2.2 — 2-may-2026)
+
+> Esta parte cruza el plan táctico v2.1 con `docs/AUREX_FEATURES_PARA_MKT.md`. Es la corrección de método del v2.1 (que solo se construyó "de afuera hacia adentro").
+
+## 2.5.1 Fases de activación de los 11 canales — orden y estado real
+
+Observación clave del 2-may-2026 (revisión cruzada Escritorio): **solo WhatsApp 2563 está realmente operativo al día de hoy.** El resto de los canales son "infraestructura definida" pero todavía no creados. El v2.2 los marca explícitamente para que el plan sea ejecutable desde día 1 sin sorpresas.
+
+| # | Canal | Fase | Estado real al 2-may-2026 | Bloqueador para activar |
+|---|---|---|---|---|
+| 2 | **WhatsApp Business 2563** | **FASE 1** (lista) | ✅ **ACTIVA** — línea reconectada 1-may 8 AM, Evolution API operativa, cron `dailyHealthReport` enviando | Plantilla oficial WhatsApp Business pre-aprobada |
+| 1 | **Telegram canal público** (@AurexPulseEN/ES/PT) | **FASE 1** | ⚠️ Bot @Aurexalertas_bot ✅ activo. Canales públicos ❌ **PENDIENTE DE CREAR** | Aprobación handles + creación canales |
+| 4 | **Twitter/X** (3 cuentas EN/ES/PT) | **FASE 1** | ❌ **PENDIENTE** — cuentas no creadas, API access no | Aprobar handles + crear cuentas + aplicar API |
+| 3 | **Email / Newsletter** | **FASE 1** | ❌ **PENDIENTE** — cuenta Resend no creada, plantilla MJML no | Cuenta Resend + plantilla |
+| 5b | **Instagram Stories** | **FASE 1** | ❌ **PENDIENTE** — cuenta IG no creada | Crear cuenta + Buffer Business |
+| 5 | **Instagram feed** (carrouseles) | **FASE 2** | ❌ **PENDIENTE** — comparte cuenta IG con Stories | Idem #5b + plantillas 1080×1080 |
+| 6 | **TikTok / IG Reels / YT Shorts** | **FASE 2** | ⚠️ Plantilla video v27 ✅ validada. Cuentas TikTok + canal YT ❌ **PENDIENTES** | Cuentas + API access TikTok Content Posting + IG Graph + YouTube Data |
+| 7 | **YouTube canal largo** | **FASE 3** | ❌ **PENDIENTE** — canal no creado, plantilla horizontal 1920×1080 no | Crear canal + plantilla horizontal v27 |
+| 8 | **LinkedIn Company Page** | **FASE 3** | ❌ **PENDIENTE** — página no creada | Crear página + Buffer Business |
+| 9 | **Press releases** (Chainwire / EIN / Notiprensa LATAM) | **FASE 4** | ❌ **PENDIENTE** — sin wire contratado | Contratar wire según mercado + redactar press base |
+| 10 | **Blog SEO** (`aurex.live/blog`) | **FASE 4** | ❌ **PENDIENTE** — ruta `/blog` no existe, plantilla HTML no | Habilitar ruta GitHub Pages + plantilla |
+| 11 | **Programa de referidos** | **FASE 4** | ❌ **PENDIENTE** — backend no construido (tabla Supabase + endpoint API + UI in-app) | Tarea backend separada post-aprobación Apple/Google |
+
+**Significado de fases:**
+
+- **FASE 1 (esta semana — semana del 5-may al 11-may-2026):** los 5 canales que comparten plantilla 1080×1080. Activación más simple. Code arma 1 plantilla común y los 5 canales empiezan a publicar el contenido del cron diario.
+- **FASE 2 (semana 2-3 — del 12-may al 25-may):** TikTok / IG Reels / YT Shorts con video v27 (validado) + Instagram feed con plantillas carrousel. Requiere cuentas de redes creadas + API access.
+- **FASE 3 (mes 2 — junio 2026):** YouTube canal largo + LinkedIn Company Page. Plantilla horizontal nueva + capacidad de copy editorial profesional.
+- **FASE 4 (mes 3+ — julio 2026 en adelante):** Press releases en wires + blog SEO + programa de referidos. Más caros, más complejos, post-validación de tracción inicial.
+
+**Decisión Code:** **NO arrancar Fases 2/3/4 hasta tener Fase 1 funcionando con métricas reales** (al menos 1 semana de publicación + datos de engagement). Eso permite ajustar las plantillas siguientes con evidencia, no con suposiciones.
+
+---
+
+## 2.5.2 Calendario diario Mes 1 (Fase 1 — los 5 canales con plantilla 1080×1080)
+
+Plan ejecutable día por día durante el primer mes, una vez activados los 5 canales de Fase 1. Code lo dispara desde el cron del backend Railway sin intervención de Fernando.
+
+| Día | Pieza principal del día | Pieza secundaria | Canales activos donde se publica |
+|---|---|---|---|
+| **Lunes** | AUREX Pulse del día (gauge + categoría + frase) | 1 señal IA destacada | Telegram + WhatsApp + Twitter + Email opcional + IG Stories |
+| **Martes** | Banner Eventos (próximo FOMC/CPI/earnings con countdown) | Top 3 cripto del día | Telegram + WhatsApp + Twitter + IG Stories |
+| **Miércoles** | Top movers del día (5 ↑ + 5 ↓) | AUREX Pulse update | Telegram + WhatsApp + Twitter + IG Stories |
+| **Jueves** | Educativo: cómo leer una señal IA | 1 señal IA destacada | Telegram + Twitter + Email educativo + IG Stories |
+| **Viernes** | Señal Alta Convicción IA (si la hay) o Top semanal | Mercados globales abren/cierran semana | Telegram + WhatsApp + Twitter + IG Stories |
+| **Sábado** | Watchlist destacada (las 10 + vistas en AUREX) | AUREX Pulse semanal | Telegram + Twitter |
+| **Domingo** | Análisis semanal: cómo se movieron las 74 señales | Resumen Pulse semana | Telegram + Twitter + Email newsletter (semanal) + IG Stories |
+
+**Cadencias resultantes por canal en Fase 1:**
+
+- **Telegram canal público**: 7 posts/semana (1 por día) + alertas urgentes ad hoc.
+- **WhatsApp difusión**: 5 posts/semana (lun/mar/mié/vie/dom) — máx 1 por día por usuario opted-in para evitar antifraude.
+- **Twitter/X**: 7 posts/semana mínimo (1 por día) + retweets internos en los 3 idiomas.
+- **Email**: 1 newsletter semanal (domingo) + 1 educativo quincenal (jueves alterno).
+- **IG Stories**: 1-2 Stories por día = 7-14 Stories/semana.
+
+---
+
+## 2.5.3 Las 18 piezas re-usables del catálogo de contenido v2.2
+
+Cada pieza tiene plantilla fija y se publica en 2+ canales. Esto evita el ciclo "crear desde cero por canal" que infló el v2.1.
+
+| # | Pieza | Plantilla / formato | Canales destino | Quién genera | Estado plantilla |
+|---|---|---|---|---|---|
+| 1 | Señal IA del día (top 1-3 Alta Convicción) | Card 1080×1080 + texto + 5 motivos | TG / WA / Twitter / Email / IG feed / IG Stories | Code (cron) | ⚠️ Card 1080×360 ✅ listo, 1080×1080 a crear |
+| 2 | AUREX Pulse del día | Imagen gauge SVG → PNG 1080×1080 + frase contextual | TG / Twitter / IG feed / Stories / blog | Code (cron) + Escritorio (copy) | ❌ A crear |
+| 3 | Banner Eventos próximo (FOMC/CPI/earnings) | PNG 1080×1080 con countdown | TG / WA / Twitter / Email | Code (cron lee calendario) | ❌ A crear |
+| 4 | Mercados globales abren/cierran | Imagen vertical 1080×1920 (Stories) con horarios locales | IG Stories / Twitter | Code (cron) | ❌ A crear |
+| 5 | Top movers del día | Carrousel IG 5 slides 1080×1080 | IG feed / TG / Twitter / blog | Code | ❌ A crear |
+| 6 | Análisis semanal de cartera personalizado | Email HTML por usuario PRO/ELITE | Email / WhatsApp ELITE | Code (datos) + Escritorio (estructura) | ❌ A crear (template MJML) |
+| 7 | Comparación temporalidades (1 activo en 1d/1m/1a) | Carrousel IG con sparklines | IG feed / LinkedIn / blog | Code (visual) + Escritorio (copy) | ❌ A crear |
+| 8 | Listado completo 74 señales | Tabla HTML en blog + link de bio | Blog SEO / link in bio / Twitter | Code | ❌ A crear (ruta blog) |
+| 9 | Watchlist destacada del día | Card 1080×1080 con top 10 más vistos | TG / Twitter / IG | Code (analytics + cron) | ❌ A crear |
+| 10 | Educativo: cómo leer una señal IA | Video v27 vertical + carrousel IG + post blog | TikTok / Reels / Shorts / IG feed / blog | Escritorio (guion) + Code (video) | ✅ Video v27 listo, carrousel IG a crear |
+| 11 | Demo simulador de escenarios | Video vertical corto + Stories | Reels / Shorts / IG Stories | Escritorio (guion) + Code (video) | ⚠️ Plantilla video lista, guion a escribir |
+| 12 | Hook multi-idioma (8 idiomas) | Banner + copy traducido | LinkedIn / Press / blog | Code traduce con Claude API | ✅ Sistema traducción operativo, copy maestro a escribir |
+| 13 | Demo conversor multi-fiat (incluye blue AR) | Video vertical Stories | Reels / IG Stories | Code (auto del cron) | ❌ A crear |
+| 14 | Análisis post-evento FED/CPI | TG urgente + thread Twitter + post blog | TG urgente / Twitter / blog | Code (datos) + Escritorio (copy) | ❌ A crear |
+| 15 | Comparación AUREX vs broker | Post LinkedIn largo + post blog SEO + press | Blog / LinkedIn / Press | Escritorio (copy) + Code (datos) | ❌ A crear (post-Fase 3) |
+| 16 | Programa de referidos comunicación | Email post-onboarding + banner in-app + Twitter | Email / in-app / Twitter | Code (backend + auto) | ❌ A crear (post-Fase 4) |
+| 17 | Casos de uso por perfil regional | Post blog SEO multi-idioma + LinkedIn | Blog / LinkedIn | Escritorio | ❌ A crear (post-Fase 3) |
+| 18 | Track record público (AUREX dijo X, pasó Y) | Tweet + post LinkedIn + entrada blog | Twitter / LinkedIn / blog / Press | Code (logging desde día 1) | ❌ A crear (requiere logging desde día 1 — empieza al activar Fase 1) |
+
+**Conclusión:** **6 piezas (1, 2, 3, 9, 10, 12) cubren el grueso de Fase 1**. Activarlas con sus plantillas resuelve los 5 canales de Fase 1 con redundancia. Las otras 12 piezas son progresivas hasta Fase 4.
+
+---
+
+## 2.5.4 Plantillas / instrumentos básicos a crear (12 totales)
+
+| # | Plantilla | Uso | Estado al 2-may-2026 | Necesaria para Fase |
+|---|---|---|---|---|
+| 1 | Card señal PNG 1080×360 | Banners en videos verticales | ✅ Listo (`banners.banner_signal()`) | 2 |
+| 2 | Card señal PNG 1080×1080 (cuadrado redes) | TG / WA / Twitter / IG / Email | ❌ A crear (variante de #1) | **1 — PRIORIDAD MÁXIMA** |
+| 3 | Card AUREX Pulse PNG 1080×1080 | Pulse del día en redes | ❌ A crear (gauge SVG → PNG) | **1** |
+| 4 | Card Top Movers PNG 1080×1350 carrousel | IG feed | ❌ A crear | 1-2 |
+| 5 | Card Mercado Abre/Cierra PNG 1080×1920 (Stories) | IG Stories / Twitter | ❌ A crear | 1 |
+| 6 | Card Evento Crítico PNG 1080×1080 con countdown | Próximo FOMC/CPI/earnings | ❌ A crear | **1** |
+| 7 | Card señal PNG 1200×627 (LinkedIn) | LinkedIn Company Page | ❌ A crear | 3 |
+| 8 | Video vertical 1080×1920 con búho animado + voz IA | TikTok / Reels / Shorts | ✅ Listo (v27 validado) | 2 |
+| 9 | Video horizontal 1920×1080 con búho + voz IA | YouTube canal largo | ❌ A crear (variante horizontal v27) | 3 |
+| 10 | Template MJML newsletter | Email semanal | ❌ A crear | 1-2 |
+| 11 | Plantilla blog HTML (`aurex.live/blog`) | Blog SEO comparativas | ❌ Falta ruta + plantilla | 4 |
+| 12 | Plantilla press release `.docx` | Distribución a wires | ❌ A crear | 4 |
+
+**Plan inmediato Fase 1:** Code arma plantillas #2, #3, #5, #6, #10 esta semana. Eso desbloquea los 5 canales de Fase 1.
+
+---
+
+## 2.5.5 KPIs actualizados v2.2
+
+Antes (v2.1): única métrica era "señales compartidas". Insuficiente para medir impacto real.
+
+**KPIs v2.2 segmentados:**
+
+| Categoría | KPI | Meta Mes 1 | Meta Mes 3 | Meta Mes 6 |
+|---|---|---|---|---|
+| **Adquisición** | Suscriptores Telegram canal público (3 idiomas) | 500 (todos los canales) | 5.000 | 25.000 |
+| **Adquisición** | Opt-in WhatsApp difusión | 100 | 1.000 | 5.000 |
+| **Adquisición** | Followers IG (feed + Stories) | 200 | 2.000 | 15.000 |
+| **Adquisición** | Followers Twitter (3 cuentas) | 300 | 3.000 | 20.000 |
+| **Adquisición** | Suscriptores newsletter | 200 | 2.500 | 12.000 |
+| **Engagement** | CTR Telegram a app | 5% | 8% | 12% |
+| **Engagement** | Open rate newsletter | 35% | 40% | 45% |
+| **Engagement** | Share rate de señales (botón compartir IA) | 2% del total | 5% | 8% |
+| **Conversión** | FREE → PRO mensual | 1% | 3% | 5% |
+| **Conversión** | Conversión por canal de origen | UTM tracking activado | Top 3 canales identificados | Top 1 canal con ROI claro |
+| **Producto** | Track record público (señales acertadas / total) | Iniciar logging | Publicar primer mes | Publicar trimestre |
+
+**Tracking implementado vía:** UTM en todos los links + Supabase tabla `mkt_attribution` (Code construye en Fase 1) + analytics Telegram/Twitter/IG nativos.
+
+---
 
 ## 3.1 Pendiente entrega de Escritorio: primeros contenidos modelo por tipo (Punto 3 de la devolución conjunta)
 
@@ -771,5 +919,5 @@ Estos blind spots quedaron documentados en Pasada 5 pero NO entran al Plan MKT v
 
 ---
 
-*PLAN_MKT.md v2.1 (Code, post-cruce con Escritorio + Fernando) — última actualización: 30-abr-2026, post-decisión mascot búho v2 animado como presentador de videos (sección 2.4 reescrita).*
+*PLAN_MKT.md v2.2 (Code, 2-may-2026) — cruce con `docs/AUREX_FEATURES_PARA_MKT.md` aplicado. Las decisiones del v2.1 sobre posicionamiento global, búho v2 animado, programa de referidos 1+1, voces aprobadas, workflow de localización ES → 7 idiomas, presupuesto Año 1 ~$2.300-3.800 USD se MANTIENEN. El v2.2 agrega: posicionamiento ampliado a 6 capas, fases de activación con estado real de cada canal, calendario diario Mes 1, 18 piezas re-usables, 12 plantillas con prioridad por fase, KPIs segmentados. Próximo paso: revisión cruzada de Escritorio (capa estratégica + narrativa + tono) → v2.3 final para aprobación de Fernando.*
 *Próximo paso: Escritorio escribe primeros contenidos modelo por tipo de canal (Punto 3 de la devolución conjunta) → Code integra → v2.2 final para aprobación de Fernando.*
