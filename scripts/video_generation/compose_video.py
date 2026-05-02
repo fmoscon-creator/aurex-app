@@ -310,14 +310,25 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     # tras feedback de Fernando: el "halo dorado" que generaba alrededor del búho
     # no es coherente con la marca AUREX (icon oficial es búho dorado plano sobre
     # navy, sin glow). Si en el futuro se quiere reactivar, usar flag explícito.
+    # Preferencia de fuente para el búho central:
+    # 1. .mov ProRes 4444 con alpha real (procesado con rembg) en buho_animations_alpha/
+    # 2. .mp4 original con colorkey en buho_animations/  (legacy fallback)
+    # 3. PNG estático buho_v2_<mode>.png (sin emotion ó si no encuentro nada)
     buho_video_emotion = None
+    buho_alpha_mov = None
     if emotion and emotion in EMOTION_TO_FILE:
-        candidate = ASSETS / "buho_animations" / EMOTION_TO_FILE[emotion]
-        if candidate.exists():
-            buho_video_emotion = candidate
-            print(f"[búho] usando video emocional '{emotion}': {candidate.name} (loop sobre plantilla)")
-    if not buho_video_emotion:
-        print("[búho] usando PNG estático (sin emotion definida, ó MP4 no encontrado)")
+        emotion_name = Path(EMOTION_TO_FILE[emotion]).stem  # 'buho_confianza'
+        alpha_candidate = ASSETS / "buho_animations_alpha" / f"{emotion_name}.mov"
+        if alpha_candidate.exists():
+            buho_alpha_mov = alpha_candidate
+            print(f"[búho] usando MOV con alpha real '{emotion}': {alpha_candidate.name} (rembg + ProRes 4444)")
+        else:
+            mp4_candidate = ASSETS / "buho_animations" / EMOTION_TO_FILE[emotion]
+            if mp4_candidate.exists():
+                buho_video_emotion = mp4_candidate
+                print(f"[búho] usando MP4 (colorkey legacy) '{emotion}': {mp4_candidate.name}")
+    if not buho_alpha_mov and not buho_video_emotion:
+        print("[búho] usando PNG estático (sin emotion definida, ó archivos no encontrados)")
 
     # 3. Banners
     logo_path = ASSETS / "logo_solo_circulo.png"
@@ -371,21 +382,22 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
     # Búho central: MP4 emocional con stream_loop si hay emotion, PNG estático si no.
     # En ambos casos: scale a 720x720, posición centrada horizontalmente +120 vertical.
     # Esto replica la integración que tenía v13 (validada por Fernando) — sin halo, sin glow.
-    if buho_video_emotion:
+    if buho_alpha_mov:
+        # MOV ProRes 4444 con alpha real procesado con rembg. Sin colorkey, sin
+        # padding artificial: el alpha es pixel-perfect, las alas extendidas se
+        # ven completas sobre la constelación sin caja ni sombras negras.
+        buho_input_args = ["-stream_loop", "-1", "-i", str(buho_alpha_mov)]
+        buho_filter = "[1:v]scale=720:720,setsar=1,setpts=PTS-STARTPTS[buho]"
+    elif buho_video_emotion:
+        # MP4 directo del catálogo emocional (MP4 v4 aprobado por Fernando 2-may-2026).
+        # Fondo del MP4 es gris #1A1A1A (no navy AUREX), por eso colorkey al gris
+        # para transparentar el rectángulo sin tocar las plumas doradas/amarillas
+        # del búho. SIN rembg, SIN padding artificial: el MP4 fuente ya tiene búho
+        # pequeño con mucho margen lateral propio, no necesita más.
         buho_input_args = ["-stream_loop", "-1", "-i", str(buho_video_emotion)]
-        # Pipeline:
-        # 1. crop=iw:ih-80 saca el watermark de Runway/Kling (80 px del bottom).
-        # 2. pad agrega 80px navy en cada lado y compensa el crop arriba+abajo
-        #    para que las alas extendidas (que en el MP4 fuente 960x960 tocan
-        #    los bordes laterales) tengan aire — sin esto, scale 720 deja las
-        #    puntas exactamente en el borde y se ven cortadas.
-        # 3. scale 720:720 al tamaño esperado por el overlay.
-        # 4. colorkey saca el fondo navy del MP4 (#0A1428) para que el búho con
-        #    alas viva sobre la constelación sin caja recortada visible.
-        buho_filter = ("[1:v]crop=iw:ih-80:0:0,"
-                       "pad=iw+160:ih+160:80:80:0x0A1428,"
+        buho_filter = ("[1:v]crop=iw:ih-120:0:0,"
                        "scale=720:720,setsar=1,setpts=PTS-STARTPTS,"
-                       "colorkey=color=0x0A1428:similarity=0.30:blend=0.10[buho]")
+                       "colorkey=color=0x1A1A1A:similarity=0.20:blend=0.05[buho]")
     else:
         buho_input_args = ["-loop", "1", "-framerate", str(FPS), "-i", str(buho_path)]
         buho_filter = "[1:v]scale=720:720,setsar=1[buho]"
@@ -423,7 +435,13 @@ def build_video(mode: str, out_path: Path, work_dir: Path, duration: float,
         "-t", f"{T:.2f}",
         str(out_path),
     ]
-    print(f"[FFmpeg] búho={'video emocional ' + emotion if buho_video_emotion else 'PNG estático'} -> {out_path.name}")
+    if buho_alpha_mov:
+        buho_label = f"MOV alpha rembg {emotion}"
+    elif buho_video_emotion:
+        buho_label = f"MP4 colorkey {emotion}"
+    else:
+        buho_label = "PNG estático"
+    print(f"[FFmpeg] búho={buho_label} -> {out_path.name}")
     subprocess.run(cmd, check=True)
     print(f"[OK] {out_path}")
 
