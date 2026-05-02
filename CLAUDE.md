@@ -249,6 +249,17 @@ Antes de proponer arquitectura, alertas, monitoreo, deploys o tocar infra, leer 
 - API personal ELITE
 
 ### PLAN MKT (paralelo a aprobación):
+
+> **MÉTODO OBLIGATORIO PARA PLAN MKT (lección aprendida 2-may-2026):**
+> El Plan MKT se construye cruzando DOS enfoques, no uno solo:
+> 1. "De afuera hacia adentro": research de competidores → cómo nos diferenciamos ← YA HECHO en Plan MKT v2.1
+> 2. "De adentro hacia afuera": qué tiene mi app → cómo lo cuento ← FALTÓ en v2.1, corregido en AUREX_FEATURES_PARA_MKT.md
+>
+> **Antes de tocar el Plan MKT o proponer estrategia de contenido:** leer OBLIGATORIAMENTE
+> `docs/AUREX_FEATURES_PARA_MKT.md` + los 5 docs de la app (AUREX-IA-DOC.md, AUREX-MERCADOS-DOC.md,
+> AUREX-PORTFOLIO-DOC.md, AI_SIGNALS_DESIGN.md, METADATA-APPSTORE.md).
+> Sin leer esos 6 archivos, cualquier análisis de marketing es incompleto.
+
 - PDF completo: `/Users/fernandomoscon/Downloads/AUREX PLAN MKT.pdf` (extraer texto con `pdftotext`)
 - Buffer (gratis) para X / LinkedIn / Instagram / Facebook (3 canales + 10 posts en cola gratis)
 - 30 posts/mes generados con Claude Chat → tabla → copy a Buffer
@@ -298,5 +309,5 @@ Tags estables conocidos (al 18-abr-2026):
 
 ---
 
-*CLAUDE.md — última actualización manual: 28-abr-2026*
+*CLAUDE.md — última actualización manual: 3-may-2026*
 *Datos dinámicos (fechas, SHAs, incidentes activos) en `DAILY_STATUS.md` (autogenerado por cron del backend).*

@@ -4,7 +4,7 @@
 >
 > 1. Leé COMPLETO este archivo.
 > 2. Procesá la PARTE 1 (instrucciones de comportamiento).
-> 3. Leé los 14 archivos linkeados en la PARTE 2, en el orden indicado, ANTES de responder al usuario.
+> 3. Leé los 15 archivos linkeados en la PARTE 2, en el orden indicado, ANTES de responder al usuario.
 > 4. Recién entonces respondé.
 
 ---
@@ -136,6 +136,14 @@ https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/METADATA-APPSTO
 ### 14. BUGFIX_HISTORIAL.md — historial de bugs y soluciones
 https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/BUGFIX_HISTORIAL.md
 
+### 15. AUREX_FEATURES_PARA_MKT.md — inventario integral de features para marketing
+https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/docs/AUREX_FEATURES_PARA_MKT.md
+
+> **Obligatorio leer antes de cualquier tarea relacionada con Plan MKT, contenido, canales o plantillas.**
+> Cubre: inventario completo de features por tab (6 tabs, 350 activos, Pulse, banners, conversor, alertas, portfolio),
+> 18 tipos de contenido publicable con mapeo canal → responsable, y 12 plantillas a crear con estado actual.
+> Si no leés este archivo antes de hablar de marketing, tu análisis está incompleto.
+
 ---
 
 ## CÓMO USAR ESTE ARCHIVO (referencia para Fernando)
@@ -150,5 +158,5 @@ El asistente lee este archivo, procesa las instrucciones, lee los 14 archivos en
 
 ---
 
-*INICIO_AUREX.md — última actualización manual: 28-abr-2026*
+*INICIO_AUREX.md — última actualización manual: 3-may-2026*
 *Datos dinámicos (fechas, días transcurridos, SHAs frescos) en archivo 3 (DAILY_STATUS.md, autogenerado por cron del backend).*
