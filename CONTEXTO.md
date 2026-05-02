@@ -120,11 +120,8 @@ Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver
 
 ### INCIDENTES ACTIVOS (al 2-may-2026)
 
-- **TG-001 NUEVO 2-may-2026.** Telegram con problemas de entrega de los reportes diarios:
-  1. Reporte `dailyHealthReport` 8:00 AR → llegó a Telegram con **10 minutos de retraso (8:10 AR)**. WhatsApp 1320 lo recibió OK en horario.
-  2. Reporte `dailyProjectStatusReport` 9:00 AR → **NO LLEGÓ a Telegram**. WhatsApp 1320 lo recibió OK en horario.
-
-  Causa raíz a diagnosticar (post-aprobación stores — no urgente). Hipótesis preliminares: rate limit Telegram, error silencioso en `bot.sendMessage` de la sección Telegram del cron `dailyProjectStatusReport`, env var `ADMIN_TELEGRAM_CHAT_ID` no leída en runtime, o saturación servers Telegram. WhatsApp 1320 cumple como redundancia — ningún reporte se perdió. Ningún cambio técnico antes de aprobación Apple/Google.
+- **TG-001 RESUELTO 2-may-2026 18:25 AR.** Causa raíz: `bot = new TelegramBot(TOKEN, { polling: true })` en `aurex-backend/server.js:17`. Durante restarts Railway, el polling del container viejo y el nuevo peleaban por `getUpdates` generando `ETELEGRAM 409 Conflict` que dejaba al bot en estado degradado y bloqueaba `sendMessage` del cron de las 9:00 AR cuando ese restart caía cerca del horario.
+  Fix aplicado: `polling: false` (commit `f87fc6d`, deploy Railway SUCCESS 21:25 UTC). Verificación post-fix: `POST /api/test-telegram` y `POST /api/daily-status/test` ambos OK, los 5 mensajes llegaron al chat 1749518554 a las 18:17 AR. Logs Railway sin más errores 409. El bot mantiene capacidad de ENVIAR (alertas, daily, project status); deja de RECIBIR comandos `/start` y `/alertas` (no estaban en uso productivo). WhatsApp Evolution no tocado. Cero impacto en revisión Apple/Google.
 
 
 - **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 13 días sin resolución; investigar alternativas post-Apple.
