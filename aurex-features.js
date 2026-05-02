@@ -627,6 +627,104 @@ renderTab(_activeTab||'cripto');setInterval(function(){ if(_activeTab==='cripto'
 var swReg=null;
 function initPushNotifications(){if(!('serviceWorker' in navigator))return;navigator.serviceWorker.register('/aurex-app/service-worker.js').then(function(r){swReg=r;if(Notification.permission==='granted')updateNotifButton(true);}).catch(function(){});}
 function requestPushPermission(){if(!('Notification' in window)){alert('Agrega Aurex a pantalla de inicio desde Safari.');return;}if(Notification.permission==='granted'){showTestNotification();return;}Notification.requestPermission().then(function(p){if(p==='granted'){updateNotifButton(true);showTestNotification();}}).catch(function(){});}
+// ════════════════════════════════════════════════════════════════════
+// ELITE TOOLS — API personal + Acceso beta (Fase 4 v2.2 — branch feature/elite-build)
+// Gating: solo visible si user.plan === 'PRO' o 'ELITE'.
+// Endpoints backend: /api/v1/keys/{generate,list,revoke} y /api/v1/beta/{status,toggle}
+// NO mergear esta branch a main hasta post-aprobación Apple Build 17 + Google Play 2.
+// ════════════════════════════════════════════════════════════════════
+var ELITE_API_BASE = 'https://aurex-app-production.up.railway.app/api/v1';
+
+async function _eliteFetch(path, opts) {
+  opts = opts || {};
+  var sb = (typeof getSB === 'function' ? getSB() : null);
+  if (!sb) return null;
+  var session = (await sb.auth.getSession()).data.session;
+  if (!session) return null;
+  var headers = Object.assign({ 'Authorization': 'Bearer ' + session.access_token, 'Content-Type': 'application/json' }, opts.headers || {});
+  var res = await fetch(ELITE_API_BASE + path, { method: opts.method || 'GET', headers: headers, body: opts.body ? JSON.stringify(opts.body) : undefined });
+  if (!res.ok) { console.error('[ELITE]', path, res.status); return null; }
+  return res.json();
+}
+
+window.eliteShowHideBlock = async function() {
+  var block = document.getElementById('pac-elite');
+  if (!block) return;
+  var sb = (typeof getSB === 'function' ? getSB() : null);
+  if (!sb) { block.style.display = 'none'; return; }
+  var session = (await sb.auth.getSession()).data.session;
+  if (!session) { block.style.display = 'none'; return; }
+  var { data: usr } = await sb.from('usuarios').select('plan,beta_access').eq('id', session.user.id).single();
+  var plan = (usr && usr.plan) || 'FREE';
+  if (plan === 'PRO' || plan === 'ELITE') {
+    block.style.display = '';
+    eliteLoadKeys();
+    var tog = document.getElementById('elite-beta-toggle');
+    if (tog) tog.checked = !!(usr && usr.beta_access);
+  } else {
+    block.style.display = 'none';
+  }
+};
+
+window.eliteLoadKeys = async function() {
+  var data = await _eliteFetch('/keys/list');
+  var listEl = document.getElementById('elite-keys-list');
+  var emptyEl = document.getElementById('elite-keys-empty');
+  if (!listEl) return;
+  listEl.innerHTML = '';
+  var keys = (data && data.keys) || [];
+  var activeKeys = keys.filter(function(k){ return !k.revoked_at; });
+  if (activeKeys.length === 0) { emptyEl.style.display = ''; return; }
+  emptyEl.style.display = 'none';
+  activeKeys.forEach(function(k){
+    var lastUsed = k.last_used_at ? new Date(k.last_used_at).toLocaleDateString() : 'nunca';
+    var row = document.createElement('div');
+    row.className = 'elite-key-row';
+    row.innerHTML =
+      '<div class="elite-key-info">' +
+        '<div class="elite-key-prefix">' + k.key_prefix + '</div>' +
+        '<div class="elite-key-meta">' + (k.name || 'Sin nombre') + ' &middot; ' + k.plan_at_creation + ' &middot; usada: ' + lastUsed + '</div>' +
+      '</div>' +
+      '<button class="elite-key-revoke" onclick="eliteRevokeKey(\'' + k.id + '\')">Revocar</button>';
+    listEl.appendChild(row);
+  });
+};
+
+window.eliteGenerateKey = async function() {
+  var name = prompt('Nombre para identificar la API key (ej: "Mi terminal"):', 'Default key');
+  if (name === null) return;
+  var data = await _eliteFetch('/keys/generate', { method: 'POST', body: { name: name || 'Default key' } });
+  if (!data || !data.key) { alert('Error al generar la key. Probá de nuevo.'); return; }
+  var valEl = document.getElementById('elite-key-value');
+  if (valEl) valEl.textContent = data.key;
+  var bannerEl = document.getElementById('elite-key-just-created');
+  if (bannerEl) bannerEl.style.display = '';
+  eliteLoadKeys();
+};
+
+window.eliteRevokeKey = async function(id) {
+  if (!confirm('¿Revocar esta API key? La aplicación que la use va a dejar de funcionar.')) return;
+  await _eliteFetch('/keys/revoke', { method: 'POST', body: { id: id } });
+  eliteLoadKeys();
+};
+
+window.eliteCopyKey = function() {
+  var val = document.getElementById('elite-key-value').textContent;
+  navigator.clipboard.writeText(val).then(function(){ alert('Key copiada al portapapeles'); });
+};
+
+window.eliteToggleBeta = async function(enable) {
+  await _eliteFetch('/beta/toggle', { method: 'POST', body: { enable: !!enable } });
+};
+
+(function _hookEliteOnPerfil(){
+  var prev = window.renderPerfil;
+  if (typeof prev === 'function') {
+    window.renderPerfil = function() { prev.apply(this, arguments); setTimeout(window.eliteShowHideBlock, 200); };
+  }
+  setTimeout(function(){ if (typeof window.eliteShowHideBlock === 'function') window.eliteShowHideBlock(); }, 1500);
+})();
+
 function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'Recibirás alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
 function showAlertNotification(s,p,o){if(swReg&&Notification.permission==='granted')swReg.showNotification('ALERTA - '+s,{body:'$'+p.toLocaleString('en')+' obj:$'+o.toLocaleString('en'),icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-'+s,renotify:true});}
 function updateNotifButton(on){var b=document.getElementById('notif-btn');if(!b)return;b.style.background=on?'#16A34A':'var(--gold)';b.textContent=on?'Activas':'Activar';}
