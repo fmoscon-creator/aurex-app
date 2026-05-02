@@ -4,7 +4,7 @@
 >
 > 1. Leé COMPLETO este archivo.
 > 2. Procesá la PARTE 1 (instrucciones de comportamiento).
-> 3. Leé los 15 archivos linkeados en la PARTE 2, en el orden indicado, ANTES de responder al usuario.
+> 3. Leé los 16 archivos linkeados en la PARTE 2, en el orden indicado, ANTES de responder al usuario.
 > 4. Recién entonces respondé.
 
 ---
@@ -144,6 +144,15 @@ https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/docs/AUREX_FEAT
 > 18 tipos de contenido publicable con mapeo canal → responsable, y 12 plantillas a crear con estado actual.
 > Si no leés este archivo antes de hablar de marketing, tu análisis está incompleto.
 
+### 16. AUREX_DEFINICION_ESTRATEGICA.md — fuente de verdad estratégica del proyecto
+https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/docs/AUREX_DEFINICION_ESTRATEGICA.md
+
+> **Documento base aprobado por Fernando el 2-may-2026.** Es la fuente de verdad de TODO lo que el proyecto AUREX comunica.
+> Cubre los 9 puntos centrales: qué es AUREX, qué cubre (350 activos / 9 tipos / 7 mercados), las 24 variables del motor (10 IA + 14 Pulse),
+> accesibilidad (8 idiomas), alertas y herramientas (15 tipos), visión global en tiempo real (3 banners), planes y acceso (FREE/PRO/ELITE/PWA),
+> Portfolio inteligente, posicionamiento (mercado prioritario habla inglesa) y hoja de ruta.
+> Todo Plan MKT, copy, pieza de contenido o decisión de comunicación se construye sobre este documento. Si lo contradecís, estás mal.
+
 ---
 
 ## CÓMO USAR ESTE ARCHIVO (referencia para Fernando)
@@ -158,5 +167,5 @@ El asistente lee este archivo, procesa las instrucciones, lee los 14 archivos en
 
 ---
 
-*INICIO_AUREX.md — última actualización manual: 3-may-2026*
+*INICIO_AUREX.md — última actualización manual: 2-may-2026 (agregado archivo #16 AUREX_DEFINICION_ESTRATEGICA.md como fuente de verdad estratégica)*
 *Datos dinámicos (fechas, días transcurridos, SHAs frescos) en archivo 3 (DAILY_STATUS.md, autogenerado por cron del backend).*
