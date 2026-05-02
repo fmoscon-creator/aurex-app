@@ -87,14 +87,57 @@ Razones fundadas:
 
 ---
 
-## OUTPUT DEL BLOQUE 2
+## ESTRATEGIA "DISPLAY NAME vs HANDLE TÉCNICO" (aporte Escritorio + Fernando)
 
-✅ **Decisión técnica clara:** patrón único final a usar es **`aurex_ai`** como primera opción y **`aurexai`** como fallback dentro del mismo patrón AUREX AI. Ambos sirven en TODAS las plataformas (X, IG, TikTok, YT, Telegram).
+**Distinción crítica que Code NO había planteado en el primer cierre:**
 
-⏳ **Pendiente confirmación en vivo de Instagram, TikTok y Twitter** cuando Fernando ejecute el formulario de signup en el Paso CERO.
+En las plataformas sociales hay DOS niveles de identidad distintos:
 
-📌 **Si las tres variantes AUREX AI están tomadas en IG o X**, fallback inmediato a `aurex_ia` (patrón AUREX IA) que también está confirmado FREE en YT y TG.
+1. **Display Name (nombre visible)** — lo que el usuario lee como "marca". Ejemplo: en un tweet aparece arriba en grande `AUREX`.
+2. **Handle técnico** — la dirección @ con la que se referencia a la cuenta. Ejemplo: `@aurex_ai` aparece debajo del Display Name, más chico.
+
+El usuario percibe la marca por el **Display Name**, no por el handle. Bloomberg no se llama "Bloomberg Data Inc" en sus tweets — el Display Name dice "Bloomberg" aunque su handle sea `@business`.
+
+### Implicación para AUREX
+
+**Display Name único en todas las plataformas: `AUREX`** (sin sufijo, sin "AI", sin "APP"). El usuario percibe "AUREX" en cada plataforma. Coherencia de marca total.
+
+**Handle técnico: estrategia escalonada según disponibilidad real en el formulario.** Como YouTube ya tiene `@aurex` ocupado, ahí va `@aurex_ai`. En el resto, vale la pena probar `@aurex` primero en el formulario antes de resignar a `@aurex_ai`.
+
+### Excepción importante: Twitter/X
+
+En **Twitter/X el handle SÍ es muy visible** (aparece debajo del Display Name en todos los posts y todos pueden mencionarte como `@aurex` o `@aurex_ai`). Por eso vale la pena verificar `@aurex` en el formulario de Twitter en vivo antes de aceptar `@aurex_ai`. Si `@aurex` está libre en X, ese es el handle ideal.
+
+En el resto de plataformas (IG, TikTok, YouTube, Telegram) el handle es menos visible — lo que se ve es el Display Name + foto + contenido.
+
+### Estrategia de signup en vivo (para Fase C — Paso CERO real)
+
+| Plataforma | Display Name a usar | Handle a probar (orden) |
+|---|---|---|
+| Twitter/X | `AUREX` | 1) `aurex` (verificar en vivo) → 2) `aurex_ai` → 3) `aurexai` |
+| Instagram | `AUREX` | 1) `aurex` (verificar en vivo) → 2) `aurex.ai` → 3) `aurex_ai` → 4) `aurexai` |
+| TikTok | `AUREX` | 1) `aurex` (verificar en vivo) → 2) `aurex.ai` → 3) `aurex_ai` |
+| YouTube | `AUREX` | `aurex_ai` directo (`aurex` ya CONFIRMADO TAKEN) → fallback `aurexai` |
+| Telegram | `AUREX Pulse` (channel) | 1) `aurex` (verificar) → 2) `aurex_ai` → 3) `aurexai` → 4) `AurexPulse` |
+| LinkedIn Company | `AUREX` | URL slug 1) `aurex` → 2) `aurex-ai` → 3) `aurex-app` |
 
 ---
 
-*BLOQUE_2_DISPONIBILIDAD_NOMBRES.md — Bloque 2 cerrado. Próximo: Bloque 3 (email + identidad operativa) ya casi resuelto en chat con Fernando — solo queda formalizarlo en archivo tras aprobación de Bloque 2.*
+## OUTPUT DEL BLOQUE 2 — VERSIÓN FINAL
+
+✅ **Display Name único: `AUREX`** en todas las plataformas. Coherencia de marca total — el usuario percibe "AUREX" en cada canal.
+
+✅ **Handle técnico:** estrategia escalonada según disponibilidad. Confirmaciones técnicas:
+- Twitter/X: pendiente verificación en vivo de `@aurex` (probar primero antes de aceptar `@aurex_ai`).
+- Instagram: pendiente verificación en vivo de `@aurex`.
+- TikTok: pendiente verificación en vivo de `@aurex`.
+- YouTube: `@aurex` CONFIRMADO TAKEN → directo a `aurex_ai`.
+- Telegram: `@aurex` LIBRE técnicamente, verificar en formulario real.
+
+✅ **El handle final por canal queda definido durante el Paso CERO real** (Fase C del método), no acá.
+
+📌 **Regla operativa para el formulario en vivo:** siempre probar `aurex` primero, escalando a `aurex_ai` solo si está tomado. Display Name siempre `AUREX` sin sufijo.
+
+---
+
+*BLOQUE_2_DISPONIBILIDAD_NOMBRES.md v2 — Bloque 2 cerrado tras aporte de Escritorio sobre distinción Display Name vs Handle. Próximo: Bloque 3 (email + identidad operativa) y traducción de bios a 6 idiomas en paralelo.*
