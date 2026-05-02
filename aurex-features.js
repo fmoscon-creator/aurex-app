@@ -717,12 +717,49 @@ window.eliteToggleBeta = async function(enable) {
   await _eliteFetch('/beta/toggle', { method: 'POST', body: { enable: !!enable } });
 };
 
+// ── Tawk.to chat en vivo (gated a plan ELITE) ──
+// Property: 69f6500fb4a1331c31f071b4 / Widget: 1jnl2hffu (cuenta Tawk.to free)
+// Cuando el user es ELITE, inyectamos el snippet dinámicamente y le pasamos
+// email/nombre al agente para identificación. Si no es ELITE, no se carga nada.
+window.eliteLoadTawkIfElite = async function() {
+  if (window._tawkLoaded) return;
+  var sb = (typeof getSB === 'function' ? getSB() : null);
+  if (!sb) return;
+  var session = (await sb.auth.getSession()).data.session;
+  if (!session) return;
+  var { data: usr } = await sb.from('usuarios').select('plan').eq('id', session.user.id).single();
+  var plan = (usr && usr.plan) || 'FREE';
+  if (plan !== 'ELITE') return;
+
+  window._tawkLoaded = true;
+  window.Tawk_API = window.Tawk_API || {};
+  window.Tawk_LoadStart = new Date();
+  var s1 = document.createElement('script');
+  s1.async = true;
+  s1.src = 'https://embed.tawk.to/69f6500fb4a1331c31f071b4/1jnl2hffu';
+  s1.charset = 'UTF-8';
+  s1.setAttribute('crossorigin', '*');
+  s1.onload = function() {
+    try {
+      var meta = session.user.user_metadata || {};
+      var name = meta.full_name || meta.name || (session.user.email || '').split('@')[0];
+      if (window.Tawk_API && window.Tawk_API.setAttributes) {
+        window.Tawk_API.setAttributes({ email: session.user.email, name: name }, function(){});
+      }
+    } catch(e) { console.warn('[TAWK] setAttributes fallo:', e.message); }
+  };
+  document.body.appendChild(s1);
+};
+
 (function _hookEliteOnPerfil(){
   var prev = window.renderPerfil;
   if (typeof prev === 'function') {
     window.renderPerfil = function() { prev.apply(this, arguments); setTimeout(window.eliteShowHideBlock, 200); };
   }
-  setTimeout(function(){ if (typeof window.eliteShowHideBlock === 'function') window.eliteShowHideBlock(); }, 1500);
+  setTimeout(function(){
+    if (typeof window.eliteShowHideBlock === 'function') window.eliteShowHideBlock();
+    if (typeof window.eliteLoadTawkIfElite === 'function') window.eliteLoadTawkIfElite();
+  }, 1500);
 })();
 
 function showTestNotification(){if(swReg&&Notification.permission==='granted')swReg.showNotification('Aurex - Alertas Activas',{body:'Recibirás alertas de precio.',icon:'https://fmoscon-creator.github.io/aurex-app/icon-192.png',tag:'aurex-test'});}
