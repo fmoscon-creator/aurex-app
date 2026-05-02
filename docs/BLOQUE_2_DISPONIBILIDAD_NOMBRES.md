@@ -4,11 +4,23 @@
 
 ---
 
-## TABLA DE RESULTADOS
+## CORRECCIÓN METODOLÓGICA (2-may-2026)
+
+El primer chequeo Telegram tenía un bug: usaba grep `"If you have Telegram"` para detectar cuentas existentes. Esa frase aparece SOLO en canales públicos. **NO detectaba cuentas personales** (que sí existen como handle ocupado y bloquean el alta de un canal con ese mismo nombre).
+
+**Método correcto**: detectar el div `tgme_page_title` en el HTML que devuelve Telegram. Ese div aparece SIEMPRE que el handle está tomado, sea cuenta personal o canal público.
+
+Resultado del re-chequeo Telegram con método correcto:
+
+- **`aurex` está TAKEN** — cuenta personal de un usuario llamado **"Aurelio"** (no canal, pero bloquea el handle).
+- **`aurex_global` está TAKEN** — display name "Aurex Global" (no es nuestro proyecto).
+- Todas las demás variantes con sufijo (`aurex_ai`, `aurexai`, `aurex_app`, `aurexapp`, `aurex_ia`, `aurexia`, `AurexPulse`, `AurexAI`, `AurexApp`, `AurexIA`) confirmadas FREE.
+
+## TABLA DE RESULTADOS (CORREGIDA)
 
 | Patrón | Variante | YouTube | Telegram | Instagram | TikTok | Twitter/X |
 |---|---|:---:|:---:|:---:|:---:|:---:|
-| **1) AUREX** | `aurex` | ❌ TAKEN | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
+| **1) AUREX** | `aurex` | ❌ TAKEN | ❌ TAKEN (Aurelio) | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
 | **2) AUREX AI** | `aurex_ai` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
 | **2) AUREX AI** | `aurexai` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
 | **2) AUREX AI** | `aurex.ai` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
@@ -18,6 +30,7 @@
 | **4) AUREX IA** | `aurex_ia` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
 | **4) AUREX IA** | `aurexia` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
 | **4) AUREX IA** | `aurex.ia` | ✅ FREE | ✅ FREE | ⚠️ AMBIG | ✅ FREE | ⚠️ AMBIG |
+| Bonus | `AurexPulse` | (sin chequear) | ✅ FREE | (sin chequear) | (sin chequear) | (sin chequear) |
 
 **Leyenda:**
 - ✅ **FREE** — disponibilidad confirmada técnicamente (HTTP 404 limpio o ausencia de marcadores de cuenta existente).
@@ -28,12 +41,13 @@
 
 ## INTERPRETACIÓN
 
-### Datos confirmados técnicamente
+### Datos confirmados técnicamente (post-corrección metodológica)
 
-1. **`aurex` (patrón 1) está TAKEN en YouTube.** Eso DESCARTA el patrón AUREX limpio para uso global multicanal.
-2. **`aurexapp` (sin separador) está TAKEN en YouTube.** Esa variante específica también descartada.
-3. **YouTube y Telegram fueron los únicos chequeos confiables**: 404 limpio en YT y grep de "If you have Telegram" en TG.
+1. **`aurex` (patrón 1) está TAKEN en YouTube Y en Telegram.** Confirmado doble — handle limpio descartado para uso global multicanal a nivel handle técnico (aunque sigue válido como Display Name).
+2. **`aurexapp` (sin separador) está TAKEN en YouTube.** Esa variante específica descartada.
+3. **YouTube y Telegram son los únicos chequeos técnicamente confiables al 100%** una vez aplicado el método correcto (HTTP 404 limpio en YT + detección `tgme_page_title` en TG).
 4. **Instagram, TikTok y Twitter/X devuelven HTML genérico para usuarios inexistentes**, lo que hace imposible distinguir FREE vs TAKEN sin login o intento de signup. Hay que confirmar en el formulario en vivo.
+5. **Twitter/X específicamente**: nitter.net (proxy alternativo) no devolvió data confiable + API pública requiere auth. La única forma de saber si `@aurex` está libre en X es probar en el formulario de signup real.
 
 ### Datos pendientes de confirmación (Instagram, TikTok, Twitter)
 
