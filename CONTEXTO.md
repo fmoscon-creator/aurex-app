@@ -118,7 +118,15 @@ AUREX_MEDIA_LIBRARY/                          1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI
 
 Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver `docs/ESTADO_PROYECTO_01-may-2026.md` sección 8.2.
 
-### INCIDENTES ACTIVOS (al 1-may-2026)
+### INCIDENTES ACTIVOS (al 2-may-2026)
+
+- **TG-001 NUEVO 2-may-2026.** Telegram con problemas de entrega de los reportes diarios:
+  1. Reporte `dailyHealthReport` 8:00 AR → llegó a Telegram con **10 minutos de retraso (8:10 AR)**. WhatsApp 1320 lo recibió OK en horario.
+  2. Reporte `dailyProjectStatusReport` 9:00 AR → **NO LLEGÓ a Telegram**. WhatsApp 1320 lo recibió OK en horario.
+
+  Causa raíz a diagnosticar (post-aprobación stores — no urgente). Hipótesis preliminares: rate limit Telegram, error silencioso en `bot.sendMessage` de la sección Telegram del cron `dailyProjectStatusReport`, env var `ADMIN_TELEGRAM_CHAT_ID` no leída en runtime, o saturación servers Telegram. WhatsApp 1320 cumple como redundancia — ningún reporte se perdió. Ningún cambio técnico antes de aprobación Apple/Google.
+
+
 - **BN-002 ACTIVE** — Binance bloqueado en Railway región us-east4 desde 18-abr-2026 18:30 UTC. MITIGATED via CryptoCompare (fallback funcionando). Datos críticos llegando OK. 13 días sin resolución; investigar alternativas post-Apple.
 - **WA-001 RESUELTO 1-may-2026 ~8:00 AR.** El cooldown antifraude general sobre la línea WhatsApp 2563 saliente se levantó después de 7 días offline (28-abr 15:25 UTC → 1-may ~11:00 UTC). Verificación: el cron `dailyHealthReport` de las 8:00 AR llegó al WhatsApp admin 1320 desde el bot AUREX 2563. La línea ahora envía a destinos externos (no solo a sí misma). Recuperación completa de canal WA como redundancia de Telegram. Reportes diarios 8:00 + 9:00 AR ambos funcionando dual-canal.
 

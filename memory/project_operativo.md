@@ -111,6 +111,10 @@ Reglas:
 - `GET /api/whatsapp/status` — estado conexión Evolution (read-only, público)
 - `GET /api/whatsapp/connect-qr` — generar QR de vinculación de Evolution. Endpoint nuevo desde commits ec578af + bfd0ecb (29-abr-2026). Protegido por env var `WHATSAPP_CONNECT_SECRET` (header `X-Secret` o query `?secret=...`); sin secret válido → 403, sin env var → 503. Soporta query `?number=<numero>` para pairing code, pero Evolution v1.8.7 ignora ese parámetro y devuelve QR igual; el pairing code requiere migrar a Evolution v2 (pendiente estructural).
 
-**Incidentes activos (al 1-may-2026):**
+**Incidentes activos (al 2-may-2026):**
 - **BN-002 ACTIVE** desde 18-abr-2026. Binance bloqueado en Railway región us-east4. MITIGATED via CryptoCompare. Pendiente decidir alternativa post-aprobación Apple.
 - **WA-001 RESUELTO 1-may-2026 ~8:00 AR.** El cooldown antifraude general sobre saliente del 2563 se levantó tras 7 días offline (28-abr 15:25 UTC → 1-may ~11:00 UTC). Verificación: el cron `dailyHealthReport` 8:00 AR llegó al WhatsApp admin 1320 desde el bot AUREX 2563 (envío externo confirmado, no solo autoenvío). Canal WA recuperado como redundancia de Telegram. Reportes 8:00 + 9:00 AR ambos funcionando dual-canal.
+- **TG-001 NUEVO 2-may-2026.** Problemas de entrega Telegram en reportes diarios:
+  1. `dailyHealthReport` 8:00 AR llegó con **10 min de retraso (8:10 AR)** a Telegram. WhatsApp OK en horario.
+  2. `dailyProjectStatusReport` 9:00 AR **NO LLEGÓ a Telegram** (sí a WhatsApp 1320 OK).
+  Causa raíz a diagnosticar post-aprobación stores. Hipótesis: rate limit Telegram, error silencioso `bot.sendMessage` en sección Telegram del cron 9 AM, env var `ADMIN_TELEGRAM_CHAT_ID` no leída en runtime, o saturación servers Telegram. WhatsApp 1320 cumple como redundancia — ningún reporte se perdió. NO tocar código backend hasta aprobación Apple Build 17 + Google Play Build 2.
