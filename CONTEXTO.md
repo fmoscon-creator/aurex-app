@@ -166,10 +166,22 @@ Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver
   - `sol.esnoz@gmail.com` (mi mujer) — pass Supabase `AurexTest2026!`
   - `lola.moscon@gmail.com` (mi otra hija) — pass Supabase `AurexTest2026!`
 - Creé `aurextester12@gmail.com` (otra cuenta mía nueva) y le hice opt-in desde un emulador AVD `AUREX_Play` con Google Play Store. Riesgo: emuladores pueden no contar para Google. A las 24-48h sabré si el contador subió de 12 → 13.
-- Sumadas el 1-may-2026 mañana (Supabase + Play Console como testers, pass `AurexTest2026!`):
+- Sumadas el 1-may-2026 (Supabase + Play Console como testers, pass `AurexTest2026!`):
   - `silvinamoscon@gmail.com` — UUID `a525929c-ab83-44e2-bcdb-522f0a29c027`.
   - `martainesalvarez02@gmail.com` — UUID `cc52183b-0a71-4e81-af15-d184853cfa03`.
   - `mosconmia2010@gmail.com` (cuenta correcta de la persona — el primer mensaje a "miamoscon" tenía letras al revés) — UUID `b72aa3cd-7851-446a-ba19-582a8f91a41a`.
+- Sumadas el 2-may-2026 (Supabase, pass `AurexTest2026!` — Fernando carga en Play Console):
+  - `kellerlucasignacio@gmail.com` — UUID `e27d8681-5f54-4297-a8d0-26acf5eb6fc7`.
+  - `lucaskellerok@gmail.com` — UUID `67564a68-f9db-405d-af9e-2fc59e048cc4`.
+  - `gusroma355@gmail.com` — UUID `4a56d591-e992-49b3-8ca6-70ea8aa919be`.
+  - `vilogonzalo@gmail.com` — UUID `902cb0d9-f244-4662-a22e-06d5c7807759`.
+  - `romanogustavoseba@gmail.com` — UUID `7f512474-e8bb-4fe2-ae19-5eeb7fce75c9`.
+  - `facundo.fernandezrl@gmail.com` — UUID `ee61363c-5add-4f8a-8845-680505c8455b`.
+  - `soypurpura@gmail.com` — UUID `3fe30ab3-c6d3-459f-a4b0-b21b8bc1c985`.
+
+**Total testers nuevos en Supabase Auth en 1+2 may-2026: 10.** Mañana 3-may debería verse el impacto en el contador opted-in de Google Play Console (asumiendo que los testers reales hicieron opt-in desde el link de testing en sus dispositivos).
+
+**Estado al 2-may-2026 noche: día 8 de 14 de Prueba Cerrada Google Play, al límite de 12 testers opted-in. Vence ~9-may-2026.**
 - Las 3 family solo cuentan si efectivamente hacen opt-in. Faltan las pass reales de Gmail de cada una para loguearlas.
 
 **Plan A (preferido — sin costo, sin riesgo):**
