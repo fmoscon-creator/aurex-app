@@ -126,6 +126,16 @@ Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver
 
 ## PENDIENTES INMEDIATOS
 
+### Sincronizaciones técnicas post-aprobación stores (anotadas 2-may-2026)
+
+**No tocar hasta que Apple Build 17 y Google Play Build 2 estén aprobados.** Cero urgencia operativa, cero riesgo si se posterga, alto riesgo si se hace mientras hay builds en revisión.
+
+1. **Backend `aurex-backend/activos.json`: agregar las 25 acciones europeas para que tengan señal IA.** Hoy la PWA (`aurex-v3.js` líneas 123-132) y `aurex-features.js` muestran 25 europeas (ADRs cotizando en NYSE/Nasdaq: ASML, SAP, NVS, NSRGY, RHHBY, VWAGY, SIEGY, SHEL, BP, GSK, UL, RIO, BHP, AZN, HSBC, STM, EADSF, IDEXY, LVMUY, SAN, BBVA, ALIZF, BAYZF, HNNMY, INGA), pero el backend `activos.json` tiene 0 acciones europeas. La cartera Europa de la PWA muestra precios de Yahoo pero NO genera señales IA propias. Tarea Code: 1 commit en `activos.json` agregando los 25 con `tipo:"Accion"` y `ySymbol` correspondiente. Después el cron `calcularSenalesIA` las procesa automáticamente cada 5 min.
+
+2. **Nativa `AurexApp/src/lib/assets.js`: sincronizar el array `europa` de 19 → 25 acciones.** La nativa tiene la versión vieja con 19 europeas. Faltan: EADSF (Airbus), IDEXY (Inditex), ALIZF (Allianz), BAYZF (Bayer), HNNMY (H&M), INGA (ING Group). Tarea Code post-aprobación Apple Build 17: 1 commit en branch `dev` (NO `main`) sincronizando `assets.js`. Cuando se prepare el siguiente build nativo post-aprobación, va con las 25 ya cargadas.
+
+
+
 ### ⚠️ CRÍTICO — GOOGLE PLAY CLOSED TESTING AL LÍMITE (agregado 1-may-2026 03:00 AR)
 
 **Estado:** 12 verificadores opted-in / 14 días consecutivos requeridos. Día 7 de 14 corriendo. Sin margen.
