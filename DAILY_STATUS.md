@@ -1,6 +1,39 @@
 # DAILY_STATUS — AUREX
 
-**Última actualización manual:** 3 de Mayo de 2026 ~03:30 AR (cierre de sesión nocturna).
+**Última actualización manual:** 4 de Mayo de 2026 (Google Play Console verificado por Escritorio).
+
+---
+
+## ACTUALIZACIÓN 4-MAY-2026 — ESTADO GOOGLE PLAY VERIFICADO
+
+### Lo confirmado hoy
+- **Closed Testing día 9 de 14** (faltan 5 días, vencimiento ~9-may).
+- Verificación desarrolladores Android: CUMPLIDA.
+- Programa 15% inscripto: SÍ.
+- Cuenta de Pagos / Billing configurada: SÍ.
+- Listing 8 idiomas + feature graphic: PUBLICADOS automáticamente sin revisión humana.
+- Publicación administrada: DESACTIVADA.
+
+### Riesgo CRÍTICO al 4-may-2026
+- Si cualquiera de los 12 testers hace **opt-out** antes del 9-may, el contador de 14 días **SE RESETEA A CERO**.
+- **Acción Fernando**: monitorear que ningún tester abandone hasta el 9-may. Si alguno avisa que va a desinstalar, evaluar agregar 1-2 testers buffer ANTES que el actual haga opt-out.
+
+### Próximo paso Google Play
+- ~9-may: se habilita botón "Solicitar acceso a producción".
+- Fernando completa formulario con preguntas sobre la prueba cerrada → Google revisa → aprueba.
+
+### Estado WhatsApp 2563 al 4-may-2026
+- Línea sigue en watch period crítico tras incidente WA-002 del 3-may.
+- Cooldown de verificación post-unlock: ~6-7 hs según último intento. Decisión Fernando: intento próximo a definir entre HOY 22:00 AR y mañana 8:30 AR.
+- env `WA_EVOLUTION_PAUSED=true` activa indefinidamente. Telegram cubre 100%.
+
+### Plan Build 18 iOS / Build 3 Android al 4-may
+- 11 items inventariados (`docs/PLAN_BUILD_18_iOS_BUILD_3_ANDROID.md` commit `02151df`).
+- Versiones próximas: iOS Build 18 / MARKETING_VERSION 1.0 + Android versionCode 3 / versionName 1.0.2.
+- Decisión arquitectónica final: **Opción A** (Build 18 con bugs solo, Build 19/4 con push después).
+- Pendiente OK Fernando para arrancar items en branch `dev`.
+
+---
 
 > Archivo de bitácora viva con pendientes para mañana. NO confundir con el reporte automático que genera `dailyProjectStatusReport()` cada día a las 9:00 AR (ese se genera en runtime con datos vivos de stores, repos e incidentes).
 

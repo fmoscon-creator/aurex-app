@@ -1,5 +1,5 @@
 # CONTEXTO DEL PROYECTO AUREX
-Última actualización: 3 de Mayo de 2026 (~03:30 AR — cierre sesión nocturna)
+Última actualización: 4 de Mayo de 2026 (estado Google Play Console verificado por Escritorio)
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
@@ -92,14 +92,46 @@ Método de 3 fases aprobado por Fernando + Escritorio:
 - Provisioning Distribution: ~/Downloads/AUREX_App_Store_Distribution.mobileprovision (5-abr)
 - Casos Apple previos: cerrados automáticamente al enviar Build 17 (los anteriores eran sobre builds reemplazados)
 
-### GOOGLE PLAY — Android Build 2
-- **Nombre publicado en Play Store: AUREX**
-- Estado: Prueba cerrada activa
-- Build: 2 (versionName "1.0.1", versionCode 2)
-- Bundle: com.aurexapp
-- Categoría: Herramientas (cambiada desde Finanzas)
-- Prueba cerrada: 14 días requeridos, llevamos 5 corridos (submit 23-abr 16:20 AR), con 12+ testers activos
-- Link prueba: https://play.google.com/apps/testing/com.aurexapp
+### GOOGLE PLAY — Android Build 2 (estado al 4-may-2026 verificado por Escritorio en Play Console)
+
+**Cuenta desarrollador:**
+- Nombre: AUREX App (cuenta personal Fernando Moscon)
+- Developer ID: 7150208556536701506
+- Email operativo: fmoscon@gmail.com
+- Verificación desarrolladores Android: ✅ CUMPLIDA
+- Programa cargos del 15% inscripto: ✅ confirmado en Registro Actividad 3-may 04:15
+- Cuenta de Pagos / Billing Google Payments: ✅ configurada 3-may 03:39 (Santander AR USD •••• 3568)
+
+**App: AUREX — Bundle `com.aurexapp`**
+
+**Tracks activos:**
+- **Producción**: INACTIVA — nunca publicada. Pendiente completar Closed Testing 14 días.
+- **Prueba interna (Internal Testing)**: Build 15 — versionCode 1 — desde 23-abr 1:46 AM. Track auxiliar viejo, no requerido para producción.
+- **Prueba cerrada Alpha (Closed Testing)**: Build 2 — versionCode 2 — versionName "1.0.1" — **DÍA 9 DE 14** con 12 verificadores. Faltan 5 días para cumplir requisito. Vencimiento estimado **~9-may-2026**.
+
+**Requisitos para producción al 4-may-2026:**
+1. ✅ Publicar versión de prueba cerrada (Build 2 activo).
+2. ✅ Mínimo 12 verificadores opt-in (12 testers aceptaron).
+3. ⏳ 14 días consecutivos con 12 testers — DÍA 9 de 14 — faltan 5 días.
+
+**Botón "Solicitar acceso a producción"**: se habilita automáticamente al completar los 14 días.
+
+⚠️ **RIESGO CRÍTICO**: si cualquiera de los 12 testers hace **opt-out** antes del ~9-may, el contador de 14 días **se resetea a cero**. Ningún tester debe ser removido ni hacer opt-out hasta el 9-may.
+
+**Ficha Play Store / Listing:**
+- ✅ PUBLICADO: los 18 cambios enviados el 3-may 05:10 fueron procesados automáticamente por Google sin revisión humana y están activos en la tienda.
+- 8 idiomas cargados: EN, ES, PT, FR, IT, ZH, HI, AR (todos enviados 3-may).
+- Descripción ES verificada visible en Play Store.
+- Feature Graphic enviado (puede estar todavía procesándose en vista web pública).
+- Última actualización visible en ficha pública: 23-abr 2026 (fecha del Build 2, no del listing).
+- Publicación administrada: DESACTIVADA — los cambios futuros se publican automáticamente al aprobarse.
+
+**Link Closed Testing**: https://play.google.com/apps/testing/com.aurexapp
+
+**Próximos pasos Google Play:**
+1. ~9-may: se completan los 14 días → se habilita "Solicitar acceso a producción".
+2. Post 9-may: Fernando completa formulario de solicitud con preguntas sobre la prueba cerrada → Google revisa y aprueba → AUREX disponible en Play Store al público general.
+3. Cuando aprueben producción: promote Build 3 (que se compilará con fixes en Build 18 paralelo iOS) desde Internal Testing a Producción.
 
 ### TELEGRAM (canal principal y permanente de alertas)
 - Decisión tomada el 28-abr-2026 tras incidente WhatsApp: Telegram queda como canal **principal y permanente**, sin remover. WhatsApp pasa a canal **secundario** una vez se reconecte.
