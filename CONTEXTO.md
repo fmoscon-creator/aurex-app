@@ -1,5 +1,5 @@
 # CONTEXTO DEL PROYECTO AUREX
-Última actualización: 2 de Mayo de 2026 (~18:30 AR — cierre sesión)
+Última actualización: 3 de Mayo de 2026 (~03:30 AR — cierre sesión nocturna)
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
@@ -13,17 +13,25 @@ Tarea de hoy: [FECHA] - [TAREA]
 
 ---
 
-## ESTADO ACTUAL — 2 MAY 2026 (cierre de sesión nocturna)
+## ESTADO ACTUAL — 3 MAY 2026 (cierre de sesión nocturna ~03:30 AR)
 
 ### HEAD ACTUAL (PWA aurex-app, branch main)
-Commit: b781290
-Fecha: 2026-05-02
-Descripcion: Bloque 2 v3 Paso CERO — re-chequeo correcto Telegram (aurex TAKEN por Aurelio, aurex_global TAKEN)
+Commit: eb57380
+Fecha: 2026-05-03
+Descripcion: Google Play descripciones — 6 idiomas restantes (PT, ZH, FR, IT, HI, AR) traducidos desde EN/ES aprobados
 
 ### REPOS RELACIONADOS (3 repos del proyecto)
-- aurex-app (PWA)         main: b781290  (Plan MKT v3.0 + Bloques 1 y 2 del Paso CERO documentados, traducciones 6 idiomas)
+- aurex-app (PWA)         main: eb57380  (Plan MKT v3.0 + Bloques 1, 2, 3, 4 del Paso CERO documentados, traducciones 8 idiomas Google Play, descripciones cargadas en Play Console)
 - AurexApp (Nativa)       dev:  072e492  (Build 17 enviado a Apple, NO TOCAR main hasta aprobación)
 - aurex-backend           main: f87fc6d  (Railway — fix TG-001 polling: false aplicado, deploy SUCCESS)
+
+### COMMITS DEL 3 DE MAYO 2026
+
+- aurex-app `baaa4a8` — **Bloque 3 Paso CERO** email + identidad operativa formalizado: app.aurex@gmail.com único, recovery aurextester12 (aisla grafo Google), teléfonos 2563+1320, Authenticator + Llave de Acceso instaladas.
+- aurex-app `ae97b91` + `cab2c6b` + `64e23e1` — **Bloque 4 Paso CERO**: assets visuales por plataforma. Inventario Drive AUREX_MEDIA_LIBRARY + 13 assets a generar (8 fotos perfil + 4 banners + Stories). Corrección crítica: foto perfil va con APP ICON (no búho); banners van con logo-aurex.png limpio. Búho v2 queda solo para CONTENIDO videos. NUNCA usar AurexHero/logo@3x.png externamente (tiene "INVEST AI" prohibido). Jerarquía 3 elementos visuales documentada en memoria persistente. Agregado WhatsApp Business como asset #13.
+- aurex-app `f393965` + `8d75cad` + `b781290` — Bloque 2 Paso CERO completado en 3 iteraciones: chequeo disponibilidad nombres en 5 plataformas → estrategia Display Name=AUREX vs handle escalonado (aporte Escritorio) → re-chequeo correcto Telegram (aurex TAKEN por usuario "Aurelio").
+- aurex-app `48b25f9` + `053a72b` + `4db3a51` + `eb57380` — **Descripciones Google Play en 8 idiomas**. EN+ES aprobadas + traducciones a PT/ZH/FR/IT/HI/AR. Lenguaje seguro alineado a Build 17 (sin AI signals, sin investing). Reemplazan textos viejos con "investment portfolio", "buy/sell signals" que violaban reglas. Precios ELITE confirmados ($19.99/mes, $179.99/año) tras verificar productos cargados en Apple Connect.
+- aurex-app `9f8d31e` — `docs/TESTERS_GOOGLE_PLAY.md`: bitácora completa de 16-17 testers (8 confirmados Android + 4 pendientes + 5 emulador). Incluye 2 nuevos del 3-may (yoconfioenvos, francoduarte1998).
 
 ### COMMITS DEL 2 DE MAYO 2026
 - aurex-backend `f87fc6d` — **fix TG-001**: `polling: true → false` en bot Telegram. Causa raíz era ETELEGRAM 409 Conflict durante restarts Railway entre container viejo y nuevo. Verificación post-deploy OK (test endpoint + daily-status/test ambos funcionando, los 5 mensajes llegaron al chat 1749518554 a las 18:17 AR). Bot mantiene capacidad de enviar; deja de recibir comandos `/start` y `/alertas` (no usados productivamente).

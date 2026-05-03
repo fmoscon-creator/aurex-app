@@ -1,131 +1,173 @@
 # DAILY_STATUS — AUREX
 
-**Última actualización manual:** 2 de Mayo de 2026 ~18:30 AR (cierre de sesión nocturna).
+**Última actualización manual:** 3 de Mayo de 2026 ~03:30 AR (cierre de sesión nocturna).
 
-> Archivo de bitácora viva con pendientes para mañana y siguientes. NO confundir con el reporte automático que genera `dailyProjectStatusReport()` cada día a las 9:00 AR (ese se genera en runtime con datos vivos de stores, repos e incidentes — leer `aurex-backend/server.js:1737` para detalle).
+> Archivo de bitácora viva con pendientes para mañana. NO confundir con el reporte automático que genera `dailyProjectStatusReport()` cada día a las 9:00 AR (ese se genera en runtime con datos vivos de stores, repos e incidentes).
 
 ---
 
-## CIERRE DE SESIÓN — 2 de Mayo de 2026
+## CIERRE DE SESIÓN — 3 de Mayo de 2026
 
 ### Lo que se resolvió HOY
 
-1. **TG-001 RESUELTO** (incidente Telegram que abrió ayer). Causa raíz: `polling: true` peleando con polling fantasma post-restart Railway. Fix `polling: false` aplicado en `aurex-backend` commit `f87fc6d`, deploy SUCCESS, verificación post-fix OK con los 5 mensajes llegando al chat 1749518554 a las 18:17 AR. **El test real es mañana 9:00 AR**: si el reporte llega normal por Telegram + WhatsApp como siempre, TG-001 queda definitivamente cerrado.
+1. **Paso CERO — Bloque 3 cerrado** (`docs/BLOQUE_3_EMAIL_IDENTIDAD.md` commit `baaa4a8`).
+    - Email único: `app.aurex@gmail.com` con Google Authenticator + Llave de Acceso (Passkey) instaladas.
+    - Recovery aislante: `aurextester12@gmail.com` (no enlaza con grafo Google personal).
+    - Teléfonos: 2563 principal, 1320 respaldo.
 
-2. **PLAN_MKT v3.0 publicado** (commit `e86959b`) alineado con `AUREX_DEFINICION_ESTRATEGICA.md` (los 9 puntos aprobados por Fernando el 2-may).
+2. **Paso CERO — Bloque 4 cerrado en 3 iteraciones** (`docs/BLOQUE_4_ASSETS_VISUALES.md` commits `ae97b91` + `cab2c6b` + `64e23e1`).
+    - Inventario Drive AUREX_MEDIA_LIBRARY validado.
+    - 13 assets a generar (8 fotos perfil + 4 banners + 1 Stories).
+    - **Jerarquía visual documentada** (memoria persistente `project_assets_visuales.md`):
+        - APP ICON → foto de perfil de redes (coherencia con stores).
+        - LOGO CON MARCA (`logo-aurex.png` limpio sin "INVEST AI") → banners y covers.
+        - BÚHO V2 → solo CONTENIDO (videos, ilustraciones).
+        - AurexHero/logo@3x.png → NUNCA externamente (viola Build 17).
+    - WhatsApp Business agregado como asset #13.
 
-3. **Revisión cruzada Escritorio del v3.0** completada: 7 observaciones A-G + mejoras narrativas + pieza nueva #31 (retención FREE→PRO) + observación G crítica sobre horarios (que Escritorio NO había pensado, levantada por Fernando). **Decisión clave**: pausar la pulida teórica del v3.1 y avanzar con el **Paso CERO real (apertura de cuentas)** primero.
+3. **Drive externo "AUREX LOGO CON MARCA" descubierto y documentado** — folder ID `1c2l24H49jElD4ZPSsPYzxGMxiu84qLXT`, set completo de 39 archivos profesionales del logo en todas las dimensiones de stores y redes (iOS, Android, PWA, Web Favicon, Marketing).
 
-4. **Paso CERO — Bloque 1 cerrado y aprobado** (`docs/BIOS_PUBLICAS_AUREX.md` v2, commit `5fac759`).
-    - Bios EN + ES alineadas con Build 17 (lenguaje seguro: "tracker", sin "AI signals", sin "investing").
-    - Sugerencia Escritorio aplicada: `statistical probabilities` → `data-driven view` (elimina ambigüedad regulatoria).
-    - Disclaimer en 3 capas: `Not a broker. Not advice. Not a buy/sell platform.`
-    - Categorías Business sin "Financial Services" en ninguna plataforma.
+4. **Descripciones Google Play en 8 idiomas armadas y CARGADAS en Play Console** (`docs/GOOGLE_PLAY_DESCRIPCIONES.md` commits `48b25f9` + `053a72b` + `4db3a51` + `eb57380`).
+    - EN, ES, PT, FR, IT aprobadas por Fernando + Escritorio.
+    - ZH, HI, AR cargadas (validación post-publicación según Plan MKT v3.0 workflow 2.3).
+    - Reemplazan listing viejo que tenía "investment portfolio", "buy/sell signals", "INTELIGENCIA FINANCIERA" — todo lenguaje prohibido por Build 17 metadata segura.
+    - Lenguaje 100% alineado: tracker, terminal, real-time, data-driven view, Not a broker, Not advice.
+    - Char counts dentro de límites en los 8 idiomas.
 
-5. **Bloque 1 extendido — Traducciones a 6 idiomas** (`docs/BIOS_TRADUCIDAS_6_IDIOMAS.md`, commit `8d75cad`).
-    - PT brasilero, ZH simplificado, FR internacional, IT estándar, HI con anglicismos comunes en finanzas indias, AR estándar moderno (MSA).
-    - **Aprobadas por Escritorio**: PT, FR, IT.
-    - **Pasan a validación post-publicación por engagement**: ZH, HI, AR.
+5. **Feature graphic Google Play generado** (`~/Downloads/AUREX_feature_graphic_1024x500.png`).
+    - Composición: logo AUREX + tagline "Real-time global markets tracker." + datos clave + fondo navy.
+    - Reemplaza el feature graphic viejo con "INTELIGENCIA FINANCIERA EN TIEMPO REAL".
+    - Subido a Play Console en EN (aplica a todos los idiomas).
 
-6. **Paso CERO — Bloque 2 cerrado y aprobado** (`docs/BLOQUE_2_DISPONIBILIDAD_NOMBRES.md` v3, commit `b781290`).
-    - **Display Name único en todas las plataformas: `AUREX`** (sin sufijo).
-    - **Handle técnico — estrategia escalonada**: probar `aurex` primero en formulario en vivo, fallback `aurex_ai` confirmado FREE en YouTube + Telegram.
-    - Hallazgo crítico tras corrección metodológica: **`aurex` está TAKEN en Telegram** (cuenta personal de un usuario "Aurelio"). Bug previo del chequeo (grep "If you have Telegram" solo capturaba canales). Método correcto: detectar div `tgme_page_title`.
-    - Twitter/IG/TikTok: pendiente verificación en formulario en vivo durante Fase C.
+6. **Listing Google Play enviado a revisión** ✅ con 13 cambios (8 idiomas × descripción breve + completa, feature graphic, screenshots EN, "quita canal de comentarios" Closed Testing — los últimos 2 con confirmación pendiente Fernando).
 
-7. **Memoria persistente actualizada**: nuevo archivo `feedback_credenciales.md` (regla: nunca pedir/aceptar passwords por chat ni en archivos del repo). Backup espejo OK.
+7. **Apple Banking confirmado activo** (`~/Downloads/SECRET_BANKING_AUREX.txt`):
+    - Cuenta Santander Argentina USD activa.
+    - Acuerdos comerciales ACTIVOS (apps gratuitas + apps de pago, vigencia abr 2026 → abr 2027).
+    - 4 productos in-app cargados pendientes de revisión con Build 17:
+        - PRO Mensual `com.fernandomoscon.aurex.pro.monthly`
+        - PRO Anual `com.fernandomoscon.aurex.pro.annual`
+        - ELITE Mensual `com.fernandomoscon.aurex.elite.monthly2`
+        - ELITE Anual `com.fernandomoscon.aurex.elite.annual`
+    - Group ID: 22018005
 
-8. **Aprobación de Fernando + Escritorio del método del Paso CERO**: 3 fases (A análisis previo en 8 bloques → B revisión cruzada → C guía de ejecución sobre infraestructura real). Bloques 1 y 2 cerrados, faltan 6 más antes de la guía detallada.
+8. **Google Payments Merchant cargado y EN REVISIÓN**.
+    - Cuenta Santander AR USD •••• 3568 (misma que Apple).
+    - Resumen bancario subido.
+    - CUIT/CUIL: 20234475577.
+    - Wise descartada — Google AR exige cuenta CBU local en USD (igual restricción que Apple).
+    - Esperar 2-7 días hábiles + posible depósito de prueba.
+
+9. **Programa cargos del servicio del 15% INSCRIPTO** ✅ (vs 30% estándar). Aplica al primer USD 1M/año de ingresos. Ahorro máximo USD 150k/año.
+
+10. **2 testers nuevos creados en Supabase**: `yoconfioenvos@gmail.com` + `francoduarte1998@gmail.com` (UUIDs registrados en `docs/TESTERS_GOOGLE_PLAY.md`).
+
+11. **TESTERS_GOOGLE_PLAY.md publicado** (commit `9f8d31e`): bitácora completa con 16-17 testers (8 confirmados Android + 4 pendientes + 5 emulador). 12 contabilizados por Play Console.
+
+12. **Memoria persistente actualizada**:
+    - `project_assets_visuales.md` — jerarquía 3 elementos visuales.
+    - `feedback_credenciales.md` — passwords nunca por chat ni en repo.
+    - `feedback_mensajes_cortos.md` — preguntas numeradas y agrupadas al final, sin texto intercalado.
+    - `project_operativo.md` — Banking Apple + Google + programa 15% inscripto.
 
 ---
 
-## PENDIENTES PARA MAÑANA 3 DE MAYO 2026
+## PENDIENTES PARA MAÑANA 4 DE MAYO 2026 Y SIGUIENTES
 
-### 1. CRÍTICO — verificar reporte Telegram 9:00 AR (test real TG-001)
+### 1. Confirmaciones críticas pendientes Fernando (HOY ya envió a revisión Google Play)
 
-**Esperado:** mañana 3-may a las 9:00 AR debe llegar el reporte `dailyProjectStatusReport` por **Telegram** + **WhatsApp 1320** simultáneamente, sin intervención manual.
+- **"Quita el canal de comentarios" del Closed Testing Alpha** — ¿intencional o accidente al navegar? Si fue accidente y Google aprueba, los testers no pueden reportar feedback. Confirmar/cancelar antes que Google apruebe.
+- **"Cambiar Capturas de pantalla de teléfono" en EN** — ¿se subieron screenshots nuevos o no? Confirmar.
 
-**Si llega por ambos canales:** TG-001 confirmado definitivamente cerrado. Anotar en CONTEXTO.md.
+### 2. Esperando aprobaciones Google + Apple
 
-**Si NO llega por Telegram:** abrir investigación profunda. Revisar logs Railway (`railway logs --service aurex-app`) específicamente entre 11:55-12:05 UTC. Posibles causas alternativas (no relacionadas a polling): cambio en `buildDailyStatus()`, env var perdida, restart Railway en ventana del cron.
+| Item | Plazo esperado | Tipo de aviso |
+|---|---|---|
+| **Google Payments — verificación cuenta merchant** | 2-7 días hábiles | Email + posible depósito de prueba |
+| **Google Play — listing nuevo** (descripciones + feature graphic + cambios cierre testing) | 24-48 hs | Email + estado en Play Console |
+| **Apple Build 17** | Apple decide | Email |
+| **Closed Testing día 9 de 14** | ~9-may-2026 vencimiento | Esperar |
 
-### 2. Bloque 2 — verificación final pendiente (NO bloquea Bloque 3)
+### 3. Cuando Google apruebe merchant + listing → arrancar con productos in-app
 
-- Confirmar en formulario de signup en vivo (cuando Fernando ejecute Fase C) si `@aurex` está libre en Twitter/X, Instagram, TikTok. Si SÍ está libre en alguna, usarlo en esa plataforma. Si no, fallback `aurex_ai`.
-- LinkedIn Company Page: chequear URL slug `linkedin.com/company/aurex` en el formulario.
+Crear los **4 productos in-app** en Google Play Console con IDs **exactos** del código nativa (sino las compras no funcionan):
+- `com.fernandomoscon.aurex.pro.monthly` — $9.99 USD/mes
+- `com.fernandomoscon.aurex.pro.annual` — $89.99 USD/año
+- `com.fernandomoscon.aurex.elite.monthly2` (con el "2" al final)
+- `com.fernandomoscon.aurex.elite.annual` — $179.99 USD/año
 
-### 3. Bloques 3, 4, 5, 6, 7, 8 del Paso CERO — pendientes ejecución
+### 4. Bloques 5, 6, 7, 8 del Paso CERO — pendientes de cerrar
 
-| # | Bloque | Output esperado | Estimado |
-|---|---|---|---|
-| 3 | Email + identidad operativa | Formalizar en archivo lo ya acordado en chat (email único `app.aurex@gmail.com`, recovery `aurextester12@gmail.com`, teléfonos, Authenticator). Ya está ~80% resuelto | 30 min Code |
-| 4 | Assets visuales por plataforma | Listar dimensiones específicas por canal (Twitter 400×400 + 1500×500, IG 320×320, YouTube 800×800 + 2560×1440, LinkedIn 300×300 + 1128×191, TikTok 200×200), revisar qué assets están en Drive AUREX_MEDIA_LIBRARY y cuáles faltan, formato PNG/JPG | 1-2 hs Code |
-| 5 | Riesgos de apertura + mitigaciones | Warm-up de cuentas nuevas, línea 2563 ya en WhatsApp Business, geolocalización IP argentina, recovery email enlazando accounts | 1 hs Code + revisión Escritorio |
-| 6 | Disclaimer regulatorio en bios | Ya integrado en Bloque 1, formalizar coherencia | 15 min Code |
-| 7 | Costos cero confirmados hasta approval stores | Lista exhaustiva de servicios | 30 min Code |
-| 8 | Orden de apertura por dependencias técnicas | Twitter primero (define patrón en vivo), Facebook Page antes que Instagram Business, etc. | 30 min Code |
+| # | Bloque | Estimado |
+|---|---|---|
+| 5 | Riesgos de apertura + mitigaciones (warm-up cuentas nuevas, geolocalización IP) | 1 hs Code |
+| 6 | Disclaimer regulatorio en bios (formalizar coherencia, ya integrado en Bloque 1) | 15 min |
+| 7 | Costos cero confirmados hasta approval stores (Buffer pago descartado, lista exhaustiva) | 30 min |
+| 8 | Orden de apertura por dependencias técnicas (Twitter primero, etc.) | 30 min |
 
-**Tras los 6 bloques:** consolidación + pase a Escritorio (Fase B) + escritura de guía detallada (Fase C) → ejecución de Fernando con asistencia Escritorio en línea (~3-4 horas).
+### 5. Plan MKT v3.0 → v3.1 (en standby hasta cerrar Paso CERO + apertura cuentas reales)
 
-### 4. Plan MKT v3.0 — observaciones A-G de Escritorio + #31 + #32
-
-Pendientes de aplicar al PLAN_MKT.md como v3.1 una vez completado el Paso CERO real:
-- A: pieza #19 AUREX vs Bloomberg — versión blog Mes 1 Semana 2, versión LinkedIn carrousel + IG Fase 3.
-- B: programa referidos unificado a "7 días activo" en sección 2.6 y Canal 11.
-- C: cascada de fallback ampliada para viernes sin Alta Convicción IA (8 niveles según las features de la app).
-- D: criterios numéricos de salida Fase 1 → Fase 2 (4 condiciones).
-- E: estructura `signal_history` Supabase definida con campos.
+Pendientes de aplicar al PLAN_MKT.md:
+- A: pieza #19 AUREX vs Bloomberg — versión blog Mes 1, versión LinkedIn Fase 3.
+- B: programa referidos unificado a "7 días activo".
+- C: cascada fallback ampliada (8 niveles) para viernes sin Alta Convicción IA.
+- D: criterios numéricos salida Fase 1 → Fase 2.
+- E: estructura `signal_history` Supabase para track record.
 - F: política PWA aurex.live como destino único si stores demoran >2 semanas.
-- G (Fernando): localización temporal por cuenta de idioma (RECHAZAR doble publicación de Escritorio); UNA cuenta por canal con publicación EN+ES en mismo post.
+- G (TUYA): localización temporal por cuenta de idioma (NO doble publicación).
 - #31: pieza nueva retención FREE→PRO por comportamiento.
-- #32: waitlist pre-lanzamiento `aurex.live/waitlist` estilo Robinhood.
+- #32: waitlist pre-lanzamiento estilo Robinhood.
 
-### 5. CRÍTICO — Google Play Closed Testing al límite
+### 6. Verificación TG-001 (test continuo)
 
-- **Día 8 de 14 al 2-may-2026.**
-- Vencimiento prueba cerrada: ~9 mayo 2026.
-- 12 testers activos (mínimo Google requiere 12).
-- **Decisión pendiente para mañana:** evaluar si se agregan 1-2 testers extra como buffer antes del vencimiento. Si los 12 actuales se mantienen activos hasta el día 14, suficiente. Si alguno desinstala, riesgo de no cumplir requerimiento.
+- Ayer 3-may 9:00 AR el reporte llegó por Telegram + WhatsApp tras fix.
+- Mañana 4-may 9:00 AR: confirmar que el reporte llega normal otra vez.
+- Si llega 3 días seguidos sin error, marcar TG-001 definitivamente cerrado en CONTEXTO.
 
-### 6. Apple Build 17 — sin novedades
+### 7. Apple Build 17 y Google Play Build 2
 
-- **Día 9 en revisión** (submit 24-abr-2026 5:24 AM AR).
-- Apple decide. Sin acción técnica de nuestra parte mientras esté en revisión.
+- Apple Build 17: día 10 al 4-may. Apple decide.
+- Google Play Build 2 closed testing: día 10 de 14 al 4-may. Vence ~9-may. Decisión: si los 12 testers se mantienen activos, OK; si alguno desinstala, evaluar agregar buffer.
 
-### 7. 5 pendientes técnicos post-aprobación stores (anotados antes)
+### 8. v1.1 (post-aprobación Apple/Google)
 
-1. Backend `activos.json`: agregar las 25 acciones europeas para que tengan señal IA propia.
-2. Nativa `AurexApp/src/lib/assets.js`: sincronizar 19 → 25 europeas.
-3. ✓ RESUELTO Macro/Geo Pulse CRIPTO (commits `af8e412` backend / `7df526d` PWA / `072e492` nativa).
-4. Push notifications reales VAPID/FCM/APNS (1 semana Code, post-aprobación stores).
-5. Features ELITE construidas en branch `feature/elite-build` (mergear post-aprobación) — API personal + chat Tawk.to + acceso beta toggle + dashboard UI.
+- Backend `activos.json`: agregar 25 acciones europeas con señal IA.
+- Nativa `AurexApp/src/lib/assets.js`: sincronizar 19 → 25 europeas.
+- Push notifications reales VAPID/FCM/APNS (1 semana Code).
+- Merge `feature/elite-build` con API personal v1 + chat Tawk.to + acceso beta toggle + dashboard UI.
+- Splash screen interno: regenerar AurexHero sin "INVEST AI" (queda interno pero limpio).
+- Eliminar `Platform.OS` hardcodeadas v1.0.0 en `PerfilScreen.js` (líneas 789 y 851).
+
+### 9. v2.0 (futuro)
+
+- Store centralizado de precios (PRIORITARIO).
+- Editar activo Portfolio.
+- Selector monedas Valor Total.
+- API eventos real.
+- Análisis técnico avanzado.
+- Social / comunidad.
+- API personal ELITE pública (tier institucional según Plan MKT v3.0).
+
+### 10. Estructurales
+
+- BN-002 ACTIVE — Binance bloqueado en Railway desde 18-abr-2026. MITIGATED via CryptoCompare. Evaluar región Railway alternativa o proxy post-aprobación stores.
+- Evolution API self-hosted: hosting actual estable, evaluar migración a Evolution v2 para soporte pairing code (pendiente estructural).
 
 ---
 
-## CRONS Y AUTOMATIZACIONES VIVOS
+## CRONS Y AUTOMATIZACIONES VIVOS (sin cambios respecto a 2-may)
 
 | Cron | Schedule UTC | Schedule AR | Estado |
 |---|---|---|---|
-| `dailyHealthReport` (8:00 AR) | `0 11 * * *` | 8:00 | Telegram + WhatsApp 1320 — verificado 1-may + 2-may |
-| `dailyProjectStatusReport` (9:00 AR) | `0 12 * * *` | 9:00 | Telegram + WhatsApp 1320 — **mañana 3-may es el test post-fix TG-001** |
+| `dailyHealthReport` | `0 11 * * *` | 8:00 | Telegram + WhatsApp 1320 |
+| `dailyProjectStatusReport` | `0 12 * * *` | 9:00 | Telegram + WhatsApp 1320 (verificado post-fix TG-001) |
 | `monthlyHealthReport` | `0 21 28-31 * *` | 18:00 fin de mes | Operativo |
-| `healthCheck` (cada 5 min) | `*/5 * * * *` | continuo | Operativo |
-| `calcularSenalesIA` (cada 5 min) | `*/5 * * * *` | continuo | 350 activos |
-| `calcularPulse` (cada 5 min) | `*/5 * * * *` | continuo | Operativo |
-| `refreshCryptoCache` (cada 2 min) | `*/2 * * * *` | continuo | Fallback CryptoCompare via BN-002 mitigación |
-| `checkAlertas` (cada 30 seg) | `*/30 * * * * *` | continuo | Operativo |
+| `healthCheck` | `*/5 * * * *` | continuo | Operativo |
+| `calcularSenalesIA` | `*/5 * * * *` | continuo | 350 activos |
+| `calcularPulse` | `*/5 * * * *` | continuo | Operativo |
+| `refreshCryptoCache` | `*/2 * * * *` | continuo | Fallback CryptoCompare via BN-002 |
+| `checkAlertas` | `*/30 * * * * *` | continuo | Operativo |
 
 ---
 
-## REGLAS VIGENTES
-
-- **NO TOCAR código nativo (AurexApp/main)** mientras Build 17 está en revisión Apple. Branch `dev` y branch `feature/elite-build` SI se pueden tocar.
-- **NO TOCAR metadata App Store / Google Play Console** mientras builds están en revisión.
-- **PWA (aurex-app) y backend (aurex-backend) son INDEPENDIENTES** — modificarlos NO afecta revisión Apple/Google.
-- **NUNCA `railway up`** (rompe deploy Nixpacks). Siempre push a GitHub main.
-- **NUNCA passwords ni tokens en chat ni en archivos del repo** (regla nueva 2-may, ver `feedback_credenciales.md` en memoria persistente).
-- **Antes de planear marketing teórico**: hacer Paso CERO real primero. Decisión 2-may.
-
----
-
-*DAILY_STATUS.md — generado por Code el 2-may-2026 al cierre de sesión. Mañana al iniciar nueva sesión, leer este archivo + CONTEXTO.md para reanudar con todo el contexto.*
+*DAILY_STATUS.md — generado por Code el 3-may-2026 al cierre de sesión nocturna ~03:30 AR. Mañana 4-may al iniciar nueva sesión, leer este archivo + CONTEXTO.md para reanudar con todo el contexto.*
