@@ -4,6 +4,44 @@
 
 ---
 
+## ACTUALIZACIÓN 4-MAY-2026 (jornada de Build 3 Android arrancada)
+
+### Items Build 3 completados HOY
+
+| Item | Commit | Estado |
+|---|---|---|
+| Item 2 — Bug logout al minimizar | `fffd113` | ✅ |
+| Item 3 — v1.0.0 hardcoded eliminado | `29abf29` | ✅ |
+| Item 10 — Sacar f7+f8 ELITE del array | `29abf29` | ✅ |
+| Item 4 — Tildes i18n aceptar_terminos | `f9a1029` | ✅ (parte editable) |
+| Item 11 — Nota "push coming soon" en Alertas | `33c0fb5` | ✅ |
+| Item 5 — Splash AurexHero sin "INVEST AI" | `31b8ca4` | ✅ |
+
+**Total: 6 de 11 items cerrados en ~2 hs Code reales.**
+
+### Resguardo del 4-may-2026 antes de arrancar
+
+- Tag dev: **`backup-pre-build3-4may`** apuntando a SHA `072e492362f428824c3c4249cd6b5acabc8c9213`
+- Main intacto: commit `1b319b5836176a3faa039c385c409a5d2422cc36` (binario Build 2 Closed Testing + Build 17 revisión Apple)
+
+### Items pendientes Build 3
+
+- **Item 1** — Android safe area (header + footer cortados): pendiente arrancar (~2 hs Code).
+- **Item 4** — Imágenes onboarding (slide1-4 reemplazo de textos): esperando opinión Escritorio sobre aproximación.
+- **Item 6** — Push real iOS APNS + Android FCM: lunes 5-may. **Firebase setup 100% completo HOY** ✅ (proyecto `aurex-app`, ID `aurex-app-8d985`, plan Spark gratuito).
+- **Item 7** — PWA web push: después de Build 3.
+- Cambios versión: `versionCode 2→3 + versionName "1.0.1"→"1.0.2"`.
+- Compilar AAB Build 3 + Internal Testing track.
+
+### ⚠️ ALERTA detectada hoy (verificar antes lunes)
+
+**Posible discrepancia bundle iOS Firebase**: Fernando reportó que app iOS Firebase está registrada con bundle `com.aurexapp`. El bundle iOS REAL en `ios/AurexApp.xcodeproj/project.pbxproj` es `com.fernandomoscon.aurex`. Si Firebase iOS está con bundle equivocado, `GoogleService-Info.plist` NO funcionará para push porque el bundle no coincide. **Acción**: Fernando verifica antes del lunes en Firebase Console → Settings → Apps → iOS, y reconfigura si hace falta antes que Code arranque item 6.
+
+### DEADLINE crítico
+**9-may-2026**: solicitar acceso a producción Google Play (cumplido día 14 de 14 Closed Testing).
+
+---
+
 ## ACTUALIZACIÓN 4-MAY-2026 — ESTADO GOOGLE PLAY VERIFICADO
 
 ### Lo confirmado hoy

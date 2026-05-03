@@ -133,6 +133,35 @@ Método de 3 fases aprobado por Fernando + Escritorio:
 2. Post 9-may: Fernando completa formulario de solicitud con preguntas sobre la prueba cerrada → Google revisa y aprueba → AUREX disponible en Play Store al público general.
 3. Cuando aprueben producción: promote Build 3 (que se compilará con fixes en Build 18 paralelo iOS) desde Internal Testing a Producción.
 
+### FIREBASE — push notifications setup completo (4-may-2026)
+
+**Proyecto Firebase:**
+- Nombre: `aurex-app`
+- ID: `aurex-app-8d985`
+- Plan: Spark (gratuito, sin costo)
+- Setup completado por Fernando + Escritorio el 4-may-2026
+- 2 apps registradas (Android + iOS)
+
+**App Android registrada en Firebase:**
+- Package: `com.aurexapp`
+- Sobrenombre: AUREX
+- Config: `google-services.json`
+- Destino en repo: `android/app/google-services.json` (NO commiteable, clave privada)
+
+**App iOS registrada en Firebase:**
+- Bundle ID en Firebase: `com.aurexapp` ⚠️ (requiere verificación — el bundle iOS REAL en el código es `com.fernandomoscon.aurex` según `ios/AurexApp.xcodeproj/project.pbxproj`. Si Firebase está con `com.aurexapp` el GoogleService-Info.plist NO funcionará para push porque el bundle no coincide. Posible typo de Fernando al escribir o reconfigurar Firebase iOS antes del lunes)
+- Sobrenombre: AUREX AI
+- App Store ID: 6761672161
+- Config: `GoogleService-Info.plist`
+- Destino en repo: `ios/AurexApp/GoogleService-Info.plist` (NO commiteable, clave privada)
+
+**Archivos NO van a GitHub** (son claves privadas). Fernando los tiene en:
+- Drive carpeta FIREBASE_AUREX (ID `16GY4to89jhuc72FitgqqTW8n8taKZeLZ`)
+- `~/Downloads/google-services.json`
+- `~/Downloads/GoogleService-Info.plist`
+
+**Plan**: lunes 5-may Code pone los archivos en sus destinos locales antes de implementar push FCM (item 6 Build 3).
+
 ### TELEGRAM (canal principal y permanente de alertas)
 - Decisión tomada el 28-abr-2026 tras incidente WhatsApp: Telegram queda como canal **principal y permanente**, sin remover. WhatsApp pasa a canal **secundario** una vez se reconecte.
 - Bot: @Aurexalertas_bot (id 8740136430, "Aurex Alertas")
