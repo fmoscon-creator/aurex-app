@@ -22,9 +22,13 @@ Plataforma de inversión con IA. **350 activos en Mercados** (cripto + stablecoi
 Planes: FREE / PRO ($9.99/mes) / ELITE ($19.99/mes).
 
 Tres componentes:
-- PWA web — aurex.live (GitHub Pages, repo aurex-app)
-- App nativa iOS + Android — React Native (repo AurexApp)
-- Backend — Node + Express en Railway (repo aurex-backend)
+- **PWA web** — aurex.live (GitHub Pages) — repo `aurex-app` — `https://github.com/fmoscon-creator/aurex-app` 🌐 **PÚBLICO**
+- **App nativa iOS + Android** — React Native — repo `AurexApp` — `https://github.com/fmoscon-creator/AurexApp` 🔒 **PRIVADO**
+- **Backend** — Node + Express en Railway — repo `aurex-backend` — `https://github.com/fmoscon-creator/aurex-backend` 🌐 **PÚBLICO**
+
+**Acceso de Escritorio (Claude Desktop) a los repos:**
+- Repos PÚBLICOS (aurex-app + aurex-backend): Escritorio accede directo vía `https://raw.githubusercontent.com/fmoscon-creator/[repo]/main/[path]` sin login.
+- Repo PRIVADO (AurexApp): Escritorio NO puede acceder (es IA, no tiene cuenta GitHub). Si necesita ver código de la nativa, Fernando le pega el contenido relevante en el chat.
 
 ### STATUS ACTUAL (al 28-abr-2026)
 

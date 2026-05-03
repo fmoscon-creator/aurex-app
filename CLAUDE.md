@@ -125,13 +125,15 @@ cp ~/Desktop/aurex-memory-backup/*.md ~/.claude/projects/-Users-fernandomoscon/m
 
 ## 3. LOS TRES REPOS
 
-| Repo | Path local | Branch operativo | Deploy |
-|---|---|---|---|
-| **aurex-app** (PWA) | `/Users/fernandomoscon/Desktop/aurex-app` | `main` | GitHub Pages → aurex.live |
-| **AurexApp** (Nativa) | `/Users/fernandomoscon/AurexApp` | `dev` (NO tocar `main` hasta aprobación Apple) | Xcode → App Store + Android Studio → Play Store |
-| **aurex-backend** | `/Users/fernandomoscon/Desktop/aurex-backend` | `main` | Push a main → Railway auto-deploy |
+| Repo | URL GitHub | Visibilidad | Path local | Branch operativo | Deploy |
+|---|---|---|---|---|---|
+| **aurex-app** (PWA) | `https://github.com/fmoscon-creator/aurex-app` | 🌐 PÚBLICO | `/Users/fernandomoscon/Desktop/aurex-app` | `main` | GitHub Pages → aurex.live |
+| **AurexApp** (Nativa) | `https://github.com/fmoscon-creator/AurexApp` | 🔒 PRIVADO | `/Users/fernandomoscon/AurexApp` | `dev` (NO tocar `main` hasta aprobación Apple) | Xcode → App Store + Android Studio → Play Store |
+| **aurex-backend** | `https://github.com/fmoscon-creator/aurex-backend` | 🌐 PÚBLICO | `/Users/fernandomoscon/Desktop/aurex-backend` | `main` | Push a main → Railway auto-deploy |
 
-GitHub: todos los repos bajo `github.com/fmoscon-creator/`
+**Acceso de Escritorio (Claude Desktop) a los repos:**
+- **Repos PÚBLICOS** (aurex-app + aurex-backend): acceso directo vía `https://raw.githubusercontent.com/fmoscon-creator/[repo]/main/[path]` sin login.
+- **Repo PRIVADO** (AurexApp): Escritorio **NO puede acceder** (es IA, no tiene cuenta GitHub, no es persona). Si Escritorio necesita ver código nativo, Fernando le pega el contenido relevante en el chat.
 
 ---
 
