@@ -1,50 +1,90 @@
 # PLAN DETALLADO — Build 18 iOS + Build 3 Android
 
-**Generado por Code el 3-may-2026 a pedido de Fernando.** Plan completo archivo por archivo, con cambios concretos, vocabulario aclarado, riesgos y rol de cada parte. **NO se ejecuta nada hasta OK explícito de Fernando.**
+**Generado por Code el 4-may-2026.** Plan completo con dos secciones SIMÉTRICAS (iOS y Android), cada una con mismo nivel de detalle. Documento de memoria persistente para que si se cierran chats no se pierda nada.
+
+**NO se ejecuta nada hasta OK explícito de Fernando.**
 
 ---
 
-## 1. VOCABULARIO CLAVE (para evitar confusión)
+## ÍNDICE
 
-| Término | Significado | Cómo se materializa |
+- [SECCIÓN 1 — Vocabulario y conceptos compartidos](#seccion-1)
+- [SECCIÓN 2 — Estado actual verificable](#seccion-2)
+- [SECCIÓN 3 — Cambios compartidos en branch `dev` (afectan ambos builds)](#seccion-3)
+- [SECCIÓN 4 — BUILD 18 iOS (TestFlight Internal Testing) — detalle completo](#seccion-4)
+- [SECCIÓN 5 — BUILD 3 ANDROID (Internal Testing track Google Play) — detalle completo](#seccion-5)
+- [SECCIÓN 6 — Cronograma paralelo iOS + Android](#seccion-6)
+- [SECCIÓN 7 — Memoria persistente y referencias cruzadas](#seccion-7)
+- [SECCIÓN 8 — Pregunta de aprobación](#seccion-8)
+
+---
+
+<a id="seccion-1"></a>
+## 1. VOCABULARIO Y CONCEPTOS COMPARTIDOS
+
+### Definiciones clave
+
+| Término | Significado iOS | Equivalente Android |
 |---|---|---|
-| **Build (iOS)** | Número incremental del binario iOS | Campo `CURRENT_PROJECT_VERSION` en `ios/AurexApp.xcodeproj/project.pbxproj`. Hoy = 17, próximo = 18 |
-| **Marketing Version (iOS)** | Versión "comercial" visible al usuario en App Store | Campo `MARKETING_VERSION`. Hoy = 1.0. Lo dejamos en 1.0 (no es feature release, es bugfix) |
-| **versionCode (Android)** | Número incremental del binario Android | Campo en `android/app/build.gradle`. Hoy = 2, próximo = 3 |
-| **versionName (Android)** | Versión "comercial" visible | Hoy = "1.0.1". Cambiamos a "1.0.2" (bugfix release) |
-| **TestFlight Internal Testing (Apple)** | Canal interno Apple para distribuir builds a max 100 testers SIN review Apple | Subimos Build 18 ahí, Fernando instala en iPhone y valida sin que Apple se entere |
-| **TestFlight External Testing (Apple)** | Canal de testing público hasta 10k testers — requiere Beta App Review | NO usamos esto (limitamos a Internal) |
-| **Track Internal Testing (Google Play)** | Canal interno Google Play para max 100 testers SIN review Google | Subimos Build 3 ahí, separado del Closed Testing donde está Build 2 |
-| **Track Closed Testing (Google Play)** | Canal cerrado donde está Build 2 actualmente con 12 testers | NO LO TOCAMOS — sigue funcionando con Build 2 mientras Internal Testing tiene Build 3 |
-| **Track Production (Google Play)** | Canal de producción al público general | Subimos ahí cuando Build 2 apruebe Closed Testing y Build 3 esté validado |
+| **Build** | `CURRENT_PROJECT_VERSION` (número incremental binario) | `versionCode` (número incremental binario) |
+| **Marketing Version** | `MARKETING_VERSION` (visible al usuario) | `versionName` (visible al usuario) |
+| **Track interno de testing** | TestFlight Internal Testing (max 100 testers, sin review Apple) | Internal Testing track Google Play (max 100 testers, sin review Google) |
+| **Track de testing público** | TestFlight External Testing (requiere Beta App Review) | Open Testing track Google Play (requiere review) |
+| **Track de producción** | App Store production (requiere review Apple) | Production track Google Play (requiere review Google) |
+| **Branch operativo** | `dev` (nunca `main` mientras hay revisión activa) | `dev` (mismo branch — el repo AurexApp es uno solo, comparte branches con Android) |
+
+### Dos cosas IDÉNTICAS para ambas plataformas
+
+1. **Mismo repo `AurexApp`** — el código nativa es React Native, el mismo `App.js`, `src/screens/*`, `src/lib/*` se compila para iOS y Android.
+2. **Mismo branch `dev`** — los cambios de código se hacen UNA sola vez en `dev` y benefician a ambos binarios.
+
+### Dos cosas DIFERENTES por plataforma
+
+1. **Configuración nativa específica** (carpetas `ios/` y `android/`).
+2. **Toolchain de build**: Xcode para iOS, Gradle para Android.
 
 ---
 
+<a id="seccion-2"></a>
 ## 2. ESTADO ACTUAL VERIFICABLE
+
+### iOS
 
 ```
 $ grep "CURRENT_PROJECT_VERSION\|MARKETING_VERSION" ios/AurexApp.xcodeproj/project.pbxproj
 CURRENT_PROJECT_VERSION = 17;
 MARKETING_VERSION = 1.0;
+```
 
+- **Build actual**: 17 (Marketing 1.0).
+- **Estado**: en revisión App Store Connect día 11 (al 4-may).
+- **Branch del binario enviado**: `main`, commit `1b319b5`.
+
+### Android
+
+```
 $ grep "versionCode\|versionName" android/app/build.gradle
 versionCode 2
 versionName "1.0.1"
 ```
 
-**Apple Build 17**: en revisión App Store Connect, día 10. Branch `main`, commit `1b319b5`.
-
-**Google Play Build 2**: Closed Testing track activo, día 10 de 14. Mismo binario que Apple Build 17.
+- **Build actual en Closed Testing Alpha**: versionCode 2, versionName "1.0.1".
+- **Build residual en Internal Testing (track auxiliar viejo)**: versionCode 1 (Build 15 según numeración interna Play Console, lanzado 23-abr 1:46 AM).
+- **Estado**: Closed Testing día 9 de 14 al 4-may, vencimiento ~9-may.
+- **Riesgo crítico**: si tester hace opt-out, contador 14 días se resetea.
 
 ---
 
-## 3. INVENTARIO DETALLADO — qué se cambia archivo por archivo
+<a id="seccion-3"></a>
+## 3. CAMBIOS COMPARTIDOS EN BRANCH `dev` (afectan AMBOS builds)
 
-### Item 2 — Bug logout al minimizar la app (iOS + Android)
+Estos cambios se hacen UNA sola vez en `dev` y benefician a iOS Y Android simultáneamente.
 
-**Archivo a modificar**: `App.js` (raíz `/Users/fernandomoscon/AurexApp/App.js`)
+### Item 2 — Bug logout al minimizar (iOS + Android)
 
-**Cambio exacto**: agregar imports + listener `AppState` + dispatch `refreshSession`.
+**Archivo**: `App.js` (raíz del proyecto AurexApp).
+
+**Cambio exacto**: agregar listener `AppState` que dispare `refreshSession` al volver a foreground.
 
 **Código nuevo (aprox)**:
 ```javascript
@@ -52,79 +92,59 @@ import { AppState } from 'react-native';
 import { useEffect } from 'react';
 import { supabase } from './src/lib/supabase';
 
-// Dentro del componente App:
+// dentro del componente App:
 useEffect(() => {
   const subscription = AppState.addEventListener('change', (nextAppState) => {
     if (nextAppState === 'active') {
-      supabase.auth.refreshSession().catch(() => { /* silent */ });
+      supabase.auth.refreshSession().catch(() => {});
     }
   });
   return () => subscription.remove();
 }, []);
 ```
 
-**Por qué soluciona el bug**: cuando la app vuelve a foreground, fuerza renovación de token. Si el token expiró durante el background, refresh recupera sesión sin signOut.
+**Por qué soluciona**: cuando la app vuelve a foreground, se fuerza renovación de token JWT. Si expiró durante background, refresh recupera la sesión sin signOut automático.
 
-**Tiempo estimado**: 1 hora Code + testing en simulator iOS + emulator Android.
+**Tiempo**: 1 hr Code + testing en simulator iOS y emulator Android.
 
 ---
 
-### Item 3 — Eliminar `Platform.OS` hardcoded v1.0.0
+### Item 3 — Eliminar `v1.0.0` hardcoded en PerfilScreen
 
-**Archivo a modificar**: `src/screens/PerfilScreen.js`
+**Archivo**: `src/screens/PerfilScreen.js` línea 789.
 
-**Líneas exactas**: 789 y 851 (verificadas con `grep`).
+**Línea actual**: `<Text style={...}>AUREX v1.0.0 ⭐</Text>`
 
-**Línea 789 actual**: `<Text style={{ fontSize: 13, fontWeight: '700', color: C.text }}>AUREX v1.0.0 ⭐</Text>`
+**Cambio**: leer versión real desde `react-native-device-info` o `package.json`.
 
-**Cambio**: leer la versión real desde `package.json` o `react-native-device-info` en lugar de hardcodear "v1.0.0".
-
-**Código nuevo (aprox)**:
+**Código nuevo**:
 ```javascript
 import DeviceInfo from 'react-native-device-info';
 // ...
-<Text style={{ fontSize: 13, fontWeight: '700', color: C.text }}>
-  AUREX v{DeviceInfo.getVersion()} ⭐
-</Text>
+<Text style={...}>AUREX v{DeviceInfo.getVersion()} ⭐</Text>
 ```
 
-**Por qué importa**: cuando subimos a Build 18 con marketing version 1.0.2, debe decir "v1.0.2" no "v1.0.0".
+**Por qué importa**: en iOS Build 18 va a mostrar "v1.0" (MARKETING_VERSION) y en Android Build 3 va a mostrar "v1.0.2" (versionName). Hardcoded "1.0.0" queda fuera de sync.
 
-**Tiempo estimado**: 15 minutos Code (incluye verificar si `react-native-device-info` está instalado o hay que agregarlo).
-
----
-
-### Item 4 — Faltas de ortografía en onboarding
-
-**Archivo a modificar**: `src/screens/OnboardingScreen.js`
-
-**Acción Code**: leer todo el archivo, identificar errores ortográficos en strings (español + inglés + 6 idiomas si aplican). Corregir.
-
-**Pendiente**: Fernando (o testers) reportaron faltas pero no me las pasaste exactas. Si las tenés identificadas, mandámelas. Sino las busco yo en la lectura.
-
-**Tiempo estimado**: 30 minutos Code (lectura + correcciones, si son <10 errores).
+**Tiempo**: 15 min Code (verificar si DeviceInfo ya está instalado).
 
 ---
 
-### Item 5 — Splash screen interno regenerar sin "INVEST AI"
+### Item 4 — Faltas ortografía en onboarding
 
-**Archivos a modificar**:
-- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo.png`
-- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@2x.png`
-- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@3x.png`
-- (verificar si hay equivalente Android en `android/app/src/main/res/drawable*/`)
+**Archivo**: `src/screens/OnboardingScreen.js`.
 
-**Cambio**: regenerar 3 PNG con el símbolo AUREX + texto "AUREX" PERO **SIN tagline "INVEST AI"** que viola Build 17 metadata segura.
+**Cambio**: leer todo el archivo, identificar errores ortográficos en strings (8 idiomas).
 
-**Acción Code**: usar los logos del Drive externo "AUREX LOGO CON MARCA" (folder ID `1c2l24H49jElD4ZPSsPYzxGMxiu84qLXT` que ya tenemos identificado, set completo profesional sin "INVEST AI") en las 3 dimensiones requeridas (1x, 2x, 3x del original).
+**Pendiente**: si tenés las faltas exactas identificadas, mandalas. Sino las busca Code en lectura.
 
-**Tiempo estimado**: 1-2 horas Code (descargar + redimensionar + reemplazar + verificar visualmente en simulator).
+**Tiempo**: 30 min Code.
 
 ---
 
-### Item 10 — Sacar `plan_elite_f7` y `plan_elite_f8` del array UI
+### Item 10 — Sacar f7 + f8 de plan ELITE
 
-**Archivo a modificar**: `src/screens/PerfilScreen.js` línea 412
+**Archivo**: `src/screens/PerfilScreen.js` línea 412.
 
 **Código actual**:
 ```javascript
@@ -136,34 +156,52 @@ import DeviceInfo from 'react-native-device-info';
 {[t('plan_elite_f1'), t('plan_elite_f2'), t('plan_elite_f3'), t('plan_elite_f4'), t('plan_elite_f5'), t('plan_elite_f6')].map((f, i) => (
 ```
 
-**Cambio adicional opcional** (no bloqueante): dejar las traducciones `plan_elite_f7` y `plan_elite_f8` en `src/lib/i18n.js` para reusarlas en v1.2 cuando implementemos chat + UI keys nativo. **NO borrar las keys** — solo no usarlas en el array.
+**Por qué**: chat en vivo (f7) y API personal (f8) no están implementados en nativa. Apple/Google pueden rechazar por "cobrar features no funcionando" (Guideline 3.1.1).
 
-**Por qué es crítico**: Apple Guideline 3.1.1 requiere que features pagas estén implementadas. Sin chat + API en nativa, mostrarlas como features ELITE de $19.99/mes activa riesgo de rechazo.
+**Decisión consciente**: NO borrar las traducciones de i18n.js — quedan ahí para reusar en v1.2 cuando se implemente nativo.
 
-**Tiempo estimado**: 5 minutos Code.
+**Tiempo**: 5 min.
 
 ---
 
-### Item 1 — Bug Android safe area (header + footer cortados)
+### Item 11 — Nota "Push notifications coming soon" en pantalla alertas
 
-**Archivos a modificar** (mucho más extenso que los anteriores):
+**Archivo**: `src/screens/AlertasScreen.js`.
+
+**Cambio**: agregar nota visible al pie:
+- ES: `Las alertas se reciben con la app abierta. Notificaciones push (alertas con app cerrada) próximamente.`
+- EN: `Alerts are received with the app open. Push notifications (alerts with app closed) coming soon.`
+- Traducir a 6 idiomas más en `src/lib/i18n.js`.
+
+**Por qué**: las descripciones de Play Store / App Store ya prometen "15 tipos de alertas configurables". Sin push, los reviewers podrían observar discrepancia. Esta nota transparenta y elimina riesgo.
+
+**Tiempo**: 30 min Code.
+
+---
+
+### Item 1 — Bug Android safe area (también beneficia iOS sin romper nada)
+
+**Archivos a tocar (ambos builds)**:
 
 #### A. `package.json` (raíz)
-- Agregar dependencia: `"react-native-safe-area-context": "^4.x"` (versión compatible con tu React Native).
-- Ejecutar `npm install` (o `yarn install` si usás yarn).
+- Agregar dependencia `"react-native-safe-area-context": "^4.x"`.
+- Ejecutar `npm install`.
 
 #### B. `App.js` (raíz)
-- Agregar import: `import { SafeAreaProvider } from 'react-native-safe-area-context';`
-- Agregar import: `import { StatusBar } from 'react-native';`
-- Envolver el JSX root con `<SafeAreaProvider>` afuera de todo.
-- Configurar `<StatusBar translucent backgroundColor="transparent" barStyle="light-content" />` (o color navy según tema).
+- Agregar imports:
+```javascript
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from 'react-native';
+```
+- Envolver root con `<SafeAreaProvider>`.
+- Agregar `<StatusBar translucent backgroundColor="transparent" barStyle="light-content" />`.
 
-#### C. Todas las screens que usan SafeAreaView (7 archivos confirmados)
-Cambiar import en cada uno:
+#### C. 7 archivos `src/screens/*.js` con `SafeAreaView` actual
+Cambiar imports en cada uno:
 
 | Archivo | Cambio |
 |---|---|
-| `src/screens/PerfilScreen.js` | De `import { SafeAreaView } from 'react-native'` a `import { SafeAreaView } from 'react-native-safe-area-context'` |
+| `src/screens/PerfilScreen.js` | `import { SafeAreaView } from 'react-native'` → `from 'react-native-safe-area-context'` |
 | `src/screens/PortfolioScreen.js` | Idem |
 | `src/screens/WatchlistScreen.js` | Idem |
 | `src/screens/SubscriptionScreen.js` | Idem |
@@ -171,146 +209,284 @@ Cambiar import en cada uno:
 | `src/screens/AlertasScreen.js` | Idem |
 | `src/screens/IAScreen.js` | Idem |
 
-#### D. `android/app/src/main/AndroidManifest.xml`
-- Verificar que NO tenga `android:windowFullscreen="true"` (ya verificado, no lo tiene).
-- No requiere cambios adicionales.
-
-#### E. iOS build settings
-- iOS no requiere cambios para safe area (ya funciona bien con SafeAreaView de react-native nativo).
-
-**Tiempo estimado**: 1-2 días Code (incluye instalar dependencia + cambios en 9 archivos + testing visual real en emulador AVD Android local + verificar que iOS sigue funcionando OK).
+**Tiempo**: 1-2 días Code + testing emulator AVD Android (visual) + testing simulator iOS (no rompe).
 
 ---
 
-### CAMBIOS DE VERSIÓN para Build 18 / Build 3
+<a id="seccion-4"></a>
+## 4. BUILD 18 iOS — DETALLE COMPLETO
 
-#### iOS — `ios/AurexApp.xcodeproj/project.pbxproj`
-- `CURRENT_PROJECT_VERSION = 17` → `18`
-- `MARKETING_VERSION = 1.0` → puede mantenerse en `1.0` o subir a `1.0.1` (decisión: bugfix release, mantenemos 1.0 con build 18 — la marketing version solo cambia con feature releases significativas)
+### Cambios específicos iOS
 
-#### Android — `android/app/build.gradle`
-- `versionCode 2` → `3`
-- `versionName "1.0.1"` → `"1.0.2"` (mantener el patrón semantic versioning para bugfix)
+#### Item 5 (parte iOS) — Splash screen sin "INVEST AI"
 
----
+**Archivos iOS específicos a modificar**:
+- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo.png`
+- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@2x.png`
+- `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@3x.png`
 
-## 4. PLAN EJECUTIVO iOS — Build 18 → TestFlight Internal
+**Cambio**: reemplazar 3 PNG por versiones del logo limpio (símbolo + texto AUREX, **sin "INVEST AI"**).
+
+**Fuente**: usar `logo-aurex.png` del repo aurex-app (raíz) o el set del Drive externo `AUREX LOGO CON MARCA` (folder `1c2l24H49jElD4ZPSsPYzxGMxiu84qLXT`) que ya tiene logos limpios.
+
+**Tiempo**: 1-2 hs (descargar + redimensionar 1x, 2x, 3x + reemplazar + verificar visualmente en simulator).
+
+#### Cambio de versión iOS
+
+**Archivo**: `ios/AurexApp.xcodeproj/project.pbxproj`.
+
+**Líneas a cambiar**:
+- `CURRENT_PROJECT_VERSION = 17` → `CURRENT_PROJECT_VERSION = 18`.
+- `MARKETING_VERSION = 1.0` → **se mantiene en 1.0** (bugfix release, no feature release).
+
+**Tiempo**: 2 min.
+
+### Plan ejecutivo iOS — Build 18 → TestFlight Internal Testing
 
 | # | Acción | Quién | Tiempo |
 |---|---|---|---|
-| 1 | Confirmar branch `dev` de AurexApp activo (`git checkout dev`) | Code | 1 min |
-| 2 | Implementar items 2, 3, 4, 5, 10 en sucesión + commit cada uno | Code | ~3-4 hs |
-| 3 | Implementar item 1 (Android safe area — sirve también para iOS, no rompe nada) | Code | 1-2 días |
-| 4 | Incrementar `CURRENT_PROJECT_VERSION` de 17 a 18 en project.pbxproj | Code | 2 min |
-| 5 | Probar build local en simulator iOS (validar visualmente todos los fixes) | Code | 30 min |
-| 6 | Abrir Xcode, seleccionar "Generic iOS Device" (o "Any iOS Device") | Code (con Xcode local Fernando) | 5 min |
-| 7 | Product → Archive (compila Build 18 firmado) | Xcode | 5-10 min compilación |
-| 8 | En Xcode Organizer → Distribute App → App Store Connect → Upload | Xcode | 5 min upload |
-| 9 | App Store Connect → TestFlight → Internal Testing → activar Build 18 para grupo de testers internos | Code (vía Xcode helper o Fernando vía web) | 2 min |
-| 10 | Fernando recibe notificación TestFlight en iPhone | Apple | inmediato |
-| 11 | Fernando instala Build 18 vía TestFlight app | Fernando | 5 min |
-| 12 | Fernando valida los 6 fixes en device real (Bug 1, Bug 2, version, ortografía, splash, ELITE features) | Fernando | 15-30 min |
-| 13 | Si OK: Build 18 queda esperando en TestFlight, NO Submit for Review | — | — |
-| 14 | Cuando Apple apruebe Build 17: App Store Connect → Submit for Review usando Build 18 | Fernando con OK Code | 10 min |
+| 1 | Confirmar branch `dev` activo: `git -C ~/AurexApp checkout dev` | Code | 30 seg |
+| 2 | Implementar items 2, 3, 4, 5, 10, 11 (compartidos + iOS splash) en `dev` | Code | ~3-4 hs |
+| 3 | Implementar item 1 (Android safe area, beneficia iOS sin romper nada) | Code | 1-2 días |
+| 4 | Editar `ios/AurexApp.xcodeproj/project.pbxproj`: subir CURRENT_PROJECT_VERSION 17→18 | Code | 2 min |
+| 5 | Probar build local en iOS Simulator (Xcode → Run) | Code | 30 min |
+| 6 | Verificar visualmente todos los items en simulator | Code | 15 min |
+| 7 | Abrir Xcode + seleccionar "Generic iOS Device" o "Any iOS Device (arm64)" | Code | 1 min |
+| 8 | Product → Archive (compila Build 18 firmado con provisioning) | Xcode local | 5-10 min compilación |
+| 9 | Xcode Organizer → Distribute App → App Store Connect → Upload | Xcode local | 5 min upload |
+| 10 | App Store Connect → TestFlight → Internal Testing → activar Build 18 para grupo de testers internos | Web Apple | 2 min |
+| 11 | Fernando recibe notificación TestFlight en iPhone | Apple | inmediato |
+| 12 | Fernando instala Build 18 vía TestFlight app | Fernando | 5 min |
+| 13 | Fernando valida los 7 items en device real | Fernando | 30 min |
+| 14 | Build 18 queda esperando, NO Submit for Review | — | — |
+| 15 | Cuando Apple apruebe Build 17: App Store Connect → Submit for Review usando Build 18 | Fernando con OK Code | 10 min |
 
----
+### Comandos exactos iOS
 
-## 5. PLAN EJECUTIVO Android — Build 3 → Internal Testing track
+```bash
+# 1. Asegurar branch dev
+cd ~/AurexApp
+git checkout dev
+git pull
 
-| # | Acción | Quién | Tiempo |
-|---|---|---|---|
-| 1 | Confirmar branch `dev` activo + cambios items 2, 3, 4, 5, 10, 1 ya commiteados | Code | 1 min |
-| 2 | Incrementar `versionCode` de 2 a 3 + `versionName` de "1.0.1" a "1.0.2" en `android/app/build.gradle` | Code | 2 min |
-| 3 | Probar build local en emulador AVD Android (Code abre Android Studio + corre emulador del Mac Fernando) | Code | 30 min |
-| 4 | Validar visualmente Bug 1 (header + footer NO cortados) | Code | 5 min |
-| 5 | Compilar AAB release: `cd android && ./gradlew bundleRelease` | Code (Bash en Mac Fernando) | 10-15 min compilación |
-| 6 | Output: `android/app/build/outputs/bundle/release/app-release.aab` | — | — |
-| 7 | Google Play Console → AurexApp → Probar y distribuir → Internal Testing → Crear nueva versión → upload AAB | Code (con autorización Fernando para abrir Play Console) o Fernando | 5 min |
-| 8 | Agregar email Fernando + 1-2 testers Android al Internal Testing list | Fernando | 2 min |
-| 9 | Activar release en Internal Testing (queda activo inmediatamente, sin review Google) | Code | 1 min |
-| 10 | Testers reciben link → tap → "Become a tester" → app actualiza vía Play Store | Testers Android | 5 min |
-| 11 | Validan en device real | Testers | 15-30 min |
-| 12 | Si OK: Build 3 queda en Internal Testing track, **separado del Closed Testing** donde sigue Build 2 | — | — |
-| 13 | Cuando Build 2 apruebe Closed Testing y vaya a Producción: Promote Build 3 a Producción | Fernando con OK Code | 10 min |
+# 2. Instalar dependencias si hay nuevas
+npm install
+cd ios && pod install && cd ..
 
----
+# 3. Limpiar build cache antes de archive
+cd ios
+xcodebuild clean -workspace AurexApp.xcworkspace -scheme AurexApp -configuration Release
 
-## 6. ROL DE CADA PARTE
+# 4. Build para simulator (testing local Code)
+cd ~/AurexApp
+npx react-native run-ios
 
-### Code (yo)
-- Ejecuta todos los cambios de código en branch `dev`.
-- Compila Build 18 (Xcode archive desde Mac Fernando) y Build 3 (Gradle bundle).
-- Prueba localmente en simulator iOS + emulador AVD Android Mac.
-- Sube binarios a TestFlight Internal y Internal Testing track Google Play.
-- Documenta todo en `docs/` con commits trazables.
+# 5. Archive para TestFlight (manual desde Xcode)
+# Abrir Xcode → AurexApp.xcworkspace → seleccionar "Any iOS Device (arm64)" → Product → Archive
+# (Code NO puede hacer archive desde CLI sin certificados activos en Xcode UI)
+```
 
-### Fernando
-- Aprueba este plan (paso pendiente AHORA).
-- Recibe notificación TestFlight en iPhone → instala Build 18 → valida 6 fixes.
-- Decide si suma 1-2 testers Android al Internal Testing track (sugerencia: dale acceso a kellerlucasignacio@gmail.com o gusroma355@gmail.com que ya están confirmados activos).
-- Cuando Apple apruebe Build 17: autoriza Submit for Review con Build 18.
-- Cuando Google apruebe Build 2 a Producción: autoriza promote Build 3 a Producción.
-
-### Escritorio
-- Sin rol técnico (no tiene acceso filesystem ni emulador).
-- Puede aportar revisión narrativa o estratégica si se le pide.
-
----
-
-## 7. ESTIMACIÓN REALISTA DE TIEMPO
-
-| Fase | Tiempo |
-|---|---|
-| Código de los items 2, 3, 4, 5, 10 | ~3-4 hs Code (1 jornada) |
-| Código del item 1 (Android safe area) | 1-2 días Code |
-| Compilar Build 18 + Build 3 + uploads | ~1-2 hs |
-| Validación local Code (simulator iOS + emulador AVD) | ~1 hr |
-| Validación Fernando en TestFlight + testers Android Internal Testing | depende disponibilidad Fernando + testers |
-| **Total para tener Build 18 + Build 3 listos en sus tracks de testing** | **3-4 días desde OK** |
-
-**Push notifications NO entran en este Build 18** — ese trabajo (1 semana real) va en Build 19 / Build 4 después de validar este primero.
-
----
-
-## 8. RIESGOS
+### Riesgos específicos iOS
 
 | Riesgo | Probabilidad | Mitigación |
 |---|---|---|
-| Tocar `main` por error → invalida Build 17 en revisión | Baja | Disciplina absoluta — `git branch` antes de cada commit. Code verifica visualmente antes de toda operación |
-| Build 18 con bugs nuevos no detectados localmente | Media | Testing local Code + validación tuya en TestFlight + 1-2 testers Android antes de submit producción |
-| `react-native-safe-area-context` rompe iOS al cambiar imports | Baja | Testing en simulator iOS DESPUÉS de cada cambio de import |
-| Compilación Build 18 falla en Xcode (signing, certificates) | Media | Si pasa, Code te avisa y guiamos juntos. Provisioning ya está OK (~/Downloads/AUREX_App_Store_Distribution.mobileprovision) |
-| Compilación Build 3 falla en Gradle (Android signing key) | Baja | El keystore Android ya está configurado en proyecto, ya generamos Build 2 sin problema |
-| Apple rechaza Build 17 mientras estamos preparando Build 18 | Media | NO afecta el trabajo en `dev`. Cuando rechacen, se ajusta lo que pidan + se sube Build 18 que ya tiene los fixes adicionales |
-| Push notifications no entran en este Build 18 | N/A | DECISIÓN consciente — push va en Build 19/4 separado |
+| Provisioning profile expirado | Baja | Provisioning ya en `~/Downloads/AUREX_App_Store_Distribution.mobileprovision` (5-abr). Verificar expiración |
+| Cocoapods desactualizados | Media | `cd ios && pod update` antes de archive |
+| Apple rechaza Build 17 mientras hacemos Build 18 | Media | Build 18 ya tiene fixes adicionales — si rechazan, ajustamos lo que pidan + usamos Build 18 directo |
 
 ---
 
-## 9. PUNTO DE NO RETORNO
+<a id="seccion-5"></a>
+## 5. BUILD 3 ANDROID — DETALLE COMPLETO
 
-**Yo (Code) NO ejecuto ningún paso hasta tu OK explícito.**
+### Cambios específicos Android
 
-Pasos no-destructivos (puedo hacer si autorizas):
-- Items 2, 3, 4, 5, 10 en `dev` (pequeños fixes, fácil revertir).
-- Item 1 en `dev`.
-- Compilar Build 18 / Build 3 (genera archivos pero no sube nada).
+#### Item 5 (parte Android) — Splash screen sin "INVEST AI"
 
-**Pasos destructivos** (requieren OK explícito tuyo en cada uno):
-- Subir Build 18 a TestFlight Internal (cambia visible para vos como tester).
-- Subir Build 3 a Internal Testing track Google Play (cambia visible para vos + testers que sumes).
-- Submit Build 18 a App Store Production (NO hasta aprobación Build 17).
-- Promote Build 3 a Producción (NO hasta aprobación Build 2 closed testing).
+**Verificación pendiente**: el AurexHero está en `ios/AurexApp/Images.xcassets/`. **El equivalente en Android puede o no existir** según cómo se configuró React Native Bootsplash.
+
+**Acción Code al arrancar**: chequear `android/app/src/main/res/drawable*/` y `android/app/src/main/res/mipmap*/` por archivos relacionados con Hero/Splash. Si existen, reemplazar por versiones limpias.
+
+**Tiempo**: 1 hr Code (depende de qué encuentre).
+
+#### Cambio de versión Android
+
+**Archivo**: `android/app/build.gradle`.
+
+**Líneas a cambiar**:
+- `versionCode 2` → `versionCode 3`.
+- `versionName "1.0.1"` → `versionName "1.0.2"` (semantic versioning bugfix release).
+
+**Tiempo**: 2 min.
+
+#### Verificación AndroidManifest.xml
+
+**Archivo**: `android/app/src/main/AndroidManifest.xml`.
+
+**Estado verificado**: NO tiene `android:windowFullscreen="true"`. NO requiere cambios. Solo `singleTask` + `adjustResize` que están bien.
+
+### Plan ejecutivo Android — Build 3 → Internal Testing track Google Play
+
+| # | Acción | Quién | Tiempo |
+|---|---|---|---|
+| 1 | Confirmar branch `dev` activo (mismo branch que iOS) | Code | 30 seg |
+| 2 | Items compartidos (2, 3, 4, 10, 11) ya implementados en paralelo con iOS | — | (ya hecho en SECCIÓN 3) |
+| 3 | Item 1 (Android safe area) ya implementado en paralelo con iOS | — | (ya hecho en SECCIÓN 3) |
+| 4 | Verificar/reemplazar splash Android (Item 5 parte Android) | Code | 1 hr |
+| 5 | Editar `android/app/build.gradle`: versionCode 2→3, versionName "1.0.1"→"1.0.2" | Code | 2 min |
+| 6 | Probar build local en Android Emulator AVD (Code abre Android Studio + corre AVD del Mac Fernando) | Code | 30 min |
+| 7 | **Verificar visualmente Bug 1 en emulator: header NO cortado, footer NO cortado** | Code | 5 min |
+| 8 | Verificar visualmente todos los demás items en emulator | Code | 10 min |
+| 9 | Compilar AAB release: `cd android && ./gradlew bundleRelease` | Code (Bash en Mac Fernando) | 10-15 min compilación |
+| 10 | Output: `android/app/build/outputs/bundle/release/app-release.aab` | — | — |
+| 11 | Google Play Console → AurexApp → Probar y distribuir → Internal Testing → Crear nueva versión → upload AAB | Code (con autorización Fernando) o Fernando | 5 min |
+| 12 | Agregar email Fernando + 1-2 testers Android al Internal Testing list (sugerencia: kellerlucasignacio@gmail.com o gusroma355@gmail.com) | Fernando | 2 min |
+| 13 | Activar release en Internal Testing — queda activo inmediatamente, sin review Google | Code | 1 min |
+| 14 | Testers reciben link de Internal Testing → tap → "Become a tester" → app actualiza vía Play Store | Testers Android | 5 min |
+| 15 | Validan en device real | Testers | 15-30 min |
+| 16 | Build 3 queda en Internal Testing track, **separado del Closed Testing Alpha** donde sigue Build 2 | — | — |
+| 17 | Cuando Build 2 apruebe Closed Testing y vaya a Producción: Promote Build 3 desde Internal Testing a Producción | Fernando con OK Code | 10 min |
+
+### Comandos exactos Android
+
+```bash
+# 1. Asegurar branch dev (mismo que iOS)
+cd ~/AurexApp
+git checkout dev
+
+# 2. Instalar dependencias si hay nuevas
+npm install
+
+# 3. Limpiar build cache antes de bundle
+cd android
+./gradlew clean
+
+# 4. Build para emulator (testing local Code)
+cd ~/AurexApp
+npx react-native run-android  # arranca AVD si Android Studio está abierto
+
+# 5. Generar AAB para Internal Testing
+cd ~/AurexApp/android
+./gradlew bundleRelease
+
+# 6. Output esperado
+ls -la app/build/outputs/bundle/release/app-release.aab
+```
+
+### Riesgos específicos Android
+
+| Riesgo | Probabilidad | Mitigación |
+|---|---|---|
+| Keystore Android perdido o cambiado | Baja | Ya configurado, ya generamos Build 2 sin problema |
+| `./gradlew bundleRelease` falla por dependencias | Media | `./gradlew clean` antes; si persiste, revisar logs |
+| Signing config en `build.gradle` no encuentra keystore | Baja | Verificable con `cat android/app/build.gradle | grep storeFile` |
+| Internal Testing track NO acepta el AAB (formato/firmado) | Baja | Si pasa, Code investiga error específico de Google Play Console |
+| Tester en Closed Testing hace opt-out → resetea contador 14 días | Media | NO TOCAR el Closed Testing — solo subir a Internal Testing track separado |
 
 ---
 
-## 10. PREGUNTA DE APROBACIÓN
+<a id="seccion-6"></a>
+## 6. CRONOGRAMA PARALELO iOS + ANDROID
 
-Cuando hayas leído todo, decime:
+Como ambos builds salen del MISMO branch `dev` y comparten 90% del código, se trabajan EN PARALELO, no secuencial.
 
-1. ¿Aprobás arrancar items 2, 3, 4, 5, 10 + item 1 en branch `dev`? (No-destructivo, fácil revertir).
-2. ¿Algún ítem que querés modificar, agregar o sacar?
-3. ¿Tenés identificadas las faltas de ortografía exactas del onboarding o las identifico yo en la lectura?
+### Día 1 (jornada Code)
+- Implementar items compartidos 2, 3, 4, 10, 11 en `dev`.
+- Commit + push cada item por separado (trazabilidad).
+- ~3-4 hs total.
+
+### Día 2-3 (jornada Code)
+- Implementar item 1 (Android safe area — beneficia ambos).
+- Testing local en simulator iOS + emulator Android AVD.
+- ~1-2 días.
+
+### Día 3-4 (jornada Code + Fernando)
+- Implementar item 5 splash (iOS + Android).
+- Cambiar versiones (`CURRENT_PROJECT_VERSION 18` + `versionCode 3` + `versionName 1.0.2`).
+- Compilar Build 18 iOS (Xcode archive) Y Build 3 Android (Gradle bundle).
+- Subir Build 18 a TestFlight Internal Testing.
+- Subir Build 3 a Internal Testing track Google Play.
+
+### Día 4-5 (validación Fernando + testers)
+- Fernando instala Build 18 en iPhone via TestFlight, valida 7 items.
+- 1-2 testers Android instalan Build 3 via Internal Testing track, validan 7 items.
+
+### Cuando Apple apruebe Build 17 (variable, ~10-14 días post-submit)
+- Submit Build 18 a App Store production.
+
+### Cuando Google apruebe Closed Testing Build 2 (~9-may + completar formulario)
+- Promote Build 3 desde Internal Testing a Production.
+
+**Total Code: 3-5 días.**
+**Total + validación + uploads: 4-6 días.**
 
 ---
 
-*PLAN_BUILD_18_iOS_BUILD_3_ANDROID.md — generado por Code el 3-may-2026 a pedido de Fernando. Pendiente aprobación.*
+<a id="seccion-7"></a>
+## 7. MEMORIA PERSISTENTE Y REFERENCIAS CRUZADAS
+
+### Para que NO se pierda nada si se cierran chats
+
+Este documento + estos archivos quedan como referencia permanente:
+
+| Archivo | Qué contiene |
+|---|---|
+| `docs/PLAN_BUILD_18_iOS_BUILD_3_ANDROID.md` (este archivo) | Plan completo simétrico iOS + Android |
+| `CONTEXTO.md` sección "GOOGLE PLAY — Android Build 2" | Estado verificado al 4-may (programa 15%, billing, Closed Testing día 9 de 14, riesgo opt-out) |
+| `DAILY_STATUS.md` | Bitácora viva con pendientes para los próximos días |
+| `docs/BLOQUE_*.md` (1 a 9) | Paso CERO Fase A completa — bios, nombres, identidad, assets, riesgos, disclaimer, costos, orden, contenido warm-up |
+| `~/Downloads/SECRET_BANKING_AUREX.txt` | Datos sensibles banking (NO commiteado) |
+
+### Memoria persistente Code (`~/.claude/projects/-Users-fernandomoscon/memory/`)
+
+| Memoria | Regla |
+|---|---|
+| `feedback_credenciales.md` | Passwords nunca por chat ni en repo |
+| `feedback_mensajes_cortos.md` | Análisis arriba, preguntas TODAS al final numeradas |
+| `project_assets_visuales.md` | Jerarquía 3 elementos (App Icon perfiles / Logo con marca banners / Búho v2 contenido) |
+| `project_whatsapp_business.md` | NUNCA reactivar `sendWhatsAppEvolution()` — Telegram cubre 100% |
+| `project_operativo.md` | Banking Apple + Google + programa 15% + datos operativos |
+
+### Cuando arranque otra sesión Code (terminal nueva)
+
+Code lee automáticamente:
+1. `MEMORY.md` (índice).
+2. Memorias relevantes según contexto.
+3. `CONTEXTO.md` y `DAILY_STATUS.md` cuando lo pidas.
+
+**Si te confundís en otra sesión:** simplemente decí "leé `docs/PLAN_BUILD_18_iOS_BUILD_3_ANDROID.md` para retomar Build 18 + 3" y este documento le da TODO lo necesario para continuar sin perder contexto.
+
+---
+
+<a id="seccion-8"></a>
+## 8. PREGUNTA DE APROBACIÓN
+
+### Lo que NO ejecuto sin tu OK
+
+Yo (Code) NO arranco ningún paso hasta autorización explícita.
+
+### Pasos no-destructivos (con tu OK arranco)
+
+1. Items 2, 3, 4, 10, 11 en `dev` (cambios pequeños, fácil revertir).
+2. Item 1 Android safe area en `dev`.
+3. Item 5 splash iOS + verificar Android.
+4. Cambios de versión.
+5. Compilar Build 18 / Build 3 localmente (genera archivos pero no sube).
+
+### Pasos destructivos (cada uno requiere OK adicional)
+
+1. Subir Build 18 a TestFlight Internal Testing.
+2. Subir Build 3 a Internal Testing track Google Play.
+3. Submit Build 18 a App Store Production (NO hasta aprobación Build 17).
+4. Promote Build 3 a Production (NO hasta aprobación Build 2 closed testing).
+
+### Preguntas para vos antes que arranque
+
+1. ¿**Aprobás arrancar items 2, 3, 4, 5, 10, 11 + item 1** en branch `dev` AurexApp en paralelo iOS + Android?
+2. ¿**Tenés identificadas las faltas de ortografía exactas** del onboarding o las busca Code en lectura?
+3. ¿Algún ítem que quieras **modificar, agregar o sacar** antes que arranque?
+4. ¿Cuándo querés que **arranque a programar** — hoy mismo, mañana 5-may, o después de la decisión sobre WhatsApp 2563 (esta noche 22:00 AR)?
+
+---
+
+*PLAN_BUILD_18_iOS_BUILD_3_ANDROID.md v2 — generado por Code el 4-may-2026 con estructura simétrica iOS + Android. Pendiente aprobación Fernando antes de ejecutar cualquier item.*
