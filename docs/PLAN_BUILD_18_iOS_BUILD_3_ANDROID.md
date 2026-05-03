@@ -75,6 +75,70 @@ versionName "1.0.1"
 
 ---
 
+<a id="cuadro-maestro"></a>
+## CUADRO MAESTRO — TODOS LOS CAMBIOS DETALLADOS (vista de un golpe)
+
+### Tabla A — Items 1 a 11 con archivo + línea exacta + cambio concreto
+
+| # | Item | Archivo | Línea | Cambio exacto | iOS | Android | Tiempo |
+|---|---|---|---|---|---|---|---|
+| **1** | **Bug Android safe area (header + footer cortados)** | `package.json` | dependencies | Agregar `"react-native-safe-area-context": "^4.x"` + `npm install` | benefit | ✅ FIX | 1-2 días |
+| 1 | Idem | `App.js` raíz | top + JSX root | `import { SafeAreaProvider } from 'react-native-safe-area-context';` + envolver root + `<StatusBar translucent backgroundColor="transparent" barStyle="light-content" />` | benefit | ✅ FIX | (incluido en 1-2 días) |
+| 1 | Idem | `src/screens/PerfilScreen.js` | import top | Cambiar `import { SafeAreaView } from 'react-native'` → `from 'react-native-safe-area-context'` | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/PortfolioScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/WatchlistScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/SubscriptionScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/MercadosScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/AlertasScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| 1 | Idem | `src/screens/IAScreen.js` | import top | Idem | benefit | ✅ FIX | — |
+| **2** | **Bug logout al minimizar** | `App.js` raíz | top imports + dentro componente App | Agregar `import { AppState } from 'react-native';` + `import { useEffect } from 'react';` + `import { supabase } from './src/lib/supabase';` + `useEffect()` con listener `AppState.addEventListener('change', ...)` que dispare `supabase.auth.refreshSession()` cuando `nextAppState === 'active'` | ✅ FIX | ✅ FIX | 1 hora |
+| **3** | **Eliminar v1.0.0 hardcoded** | `src/screens/PerfilScreen.js` | 789 | Cambiar `<Text>AUREX v1.0.0 ⭐</Text>` → `<Text>AUREX v{DeviceInfo.getVersion()} ⭐</Text>` | ✅ FIX | ✅ FIX | 15 min |
+| 3 | Idem (verificar `react-native-device-info` en package.json) | `package.json` | dependencies | Agregar si no existe `"react-native-device-info"` + import en PerfilScreen.js | ✅ | ✅ | (incluido) |
+| **4** | **Faltas ortografía onboarding** | `src/screens/OnboardingScreen.js` | TBD | Code lee y corrige errores ortográficos en strings ES/EN/PT/FR/IT/ZH/HI/AR. Si Fernando pasa lista exacta: directo. Sino Code identifica leyendo | ✅ | ✅ | 30 min |
+| **5** | **Splash sin "INVEST AI"** | `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo.png` | binario | Reemplazar PNG por logo limpio (sin tagline "INVEST AI"). Source: `~/Desktop/aurex-app/logo-aurex.png` redimensionado | ✅ FIX | n/a | 30 min |
+| 5 | Idem | `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@2x.png` | binario | Idem (escalado 2x) | ✅ FIX | n/a | (incluido) |
+| 5 | Idem | `ios/AurexApp/Images.xcassets/AurexHero.imageset/logo@3x.png` | binario | Idem (escalado 3x) | ✅ FIX | n/a | (incluido) |
+| 5 | Idem (Android equivalente — verificar al arrancar) | `android/app/src/main/res/drawable*/` o `mipmap*/` | TBD | Si existe splash equivalente con "INVEST AI", reemplazar. Si no existe, no se hace nada | n/a | ✅ FIX (si aplica) | 30 min |
+| **10** | **Sacar f7 + f8 del array ELITE UI** | `src/screens/PerfilScreen.js` | 412 | Cambiar array de 8 a 6 features: `[t('plan_elite_f1'), t('plan_elite_f2'), t('plan_elite_f3'), t('plan_elite_f4'), t('plan_elite_f5'), t('plan_elite_f6')]` (sacar f7 y f8). Las traducciones en i18n.js se dejan para reusar en v1.2 | ✅ FIX | ✅ FIX | 5 min |
+| **11** | **Nota "Push notifications coming soon"** | `src/screens/AlertasScreen.js` | TBD (al pie de pantalla) | Agregar componente `<Text>` con copy: ES `Las alertas se reciben con la app abierta. Notificaciones push (alertas con app cerrada) próximamente.` + EN equivalente. Variable `t('alertas_push_coming_soon')` | ✅ FIX | ✅ FIX | 20 min |
+| 11 | Idem (8 idiomas) | `src/lib/i18n.js` | nuevo bloque | Agregar key `alertas_push_coming_soon` con 8 idiomas (ES, EN, PT, ZH, FR, IT, HI, AR) | ✅ FIX | ✅ FIX | 10 min |
+
+### Tabla B — Cambios de versión por plataforma
+
+| Plataforma | Archivo | Cambio iOS | Cambio Android | Tiempo |
+|---|---|---|---|---|
+| **iOS** | `ios/AurexApp.xcodeproj/project.pbxproj` | `CURRENT_PROJECT_VERSION = 17` → **`18`** | n/a | 1 min |
+| iOS | Idem | `MARKETING_VERSION = 1.0` → **`1.0`** (sin cambio, es bugfix) | n/a | — |
+| **Android** | `android/app/build.gradle` | n/a | `versionCode 2` → **`3`** | 1 min |
+| Android | Idem | n/a | `versionName "1.0.1"` → **`"1.0.2"`** | — |
+
+### Tabla C — Comandos de compilación por plataforma
+
+| Plataforma | Paso | Comando exacto |
+|---|---|---|
+| **iOS** | Limpiar cache | `cd ~/AurexApp && cd ios && pod install && cd ..` |
+| iOS | Test simulator | `npx react-native run-ios` (Code abre simulator local) |
+| iOS | Compilar Build 18 | Manual desde Xcode UI: abrir `AurexApp.xcworkspace` → seleccionar "Any iOS Device (arm64)" → Product → Archive |
+| iOS | Subir a TestFlight | Xcode Organizer → Distribute App → App Store Connect → Upload |
+| iOS | Activar TestFlight | App Store Connect → TestFlight → Internal Testing → activar Build 18 |
+| **Android** | Limpiar cache | `cd ~/AurexApp/android && ./gradlew clean` |
+| Android | Test emulator | `npx react-native run-android` (Code abre AVD local) |
+| Android | Compilar Build 3 | `cd ~/AurexApp/android && ./gradlew bundleRelease` |
+| Android | Output AAB | `~/AurexApp/android/app/build/outputs/bundle/release/app-release.aab` |
+| Android | Subir a Internal Testing | Google Play Console → AurexApp → Probar y distribuir → Internal Testing → Crear nueva versión → upload AAB |
+| Android | Activar Internal Testing | Google Play Console → activar release (queda activo inmediatamente, sin review Google) |
+
+### Tabla D — Resumen de archivos tocados (cuántos por plataforma)
+
+| Categoría | Cantidad archivos modificados | Plataforma |
+|---|---|---|
+| Compartidos React Native (`App.js`, 7 screens, i18n.js, package.json, AlertasScreen.js, PerfilScreen.js, OnboardingScreen.js) | ~12 archivos | iOS + Android (mismo cambio sirve a ambos) |
+| Específicos iOS (`project.pbxproj`, 3 PNGs splash) | 4 archivos | Solo iOS |
+| Específicos Android (`build.gradle`, splash drawable si aplica) | 1-2 archivos | Solo Android |
+| **TOTAL** | **~17-18 archivos** | — |
+
+---
+
 <a id="seccion-3"></a>
 ## 3. CAMBIOS COMPARTIDOS EN BRANCH `dev` (afectan AMBOS builds)
 
