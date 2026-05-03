@@ -81,7 +81,7 @@ PLANS
 
 — FREE: 5 Portfolio assets, 3 daily AI signals, real-time markets, basic Pulse.
 — PRO ($9.99/month, $89.99/year): unlimited AI signals, unlimited Portfolio, all alerts, 30-day history.
-— ELITE plan coming soon.
+— ELITE ($19.99/month, $179.99/year): everything in PRO plus advanced AUREX Pulse, advanced technical analysis (RSI, MACD), early beta access and live chat support. SMS/WhatsApp/Telegram alerts coming soon.
 
 WHAT AUREX IS NOT
 
@@ -155,7 +155,7 @@ PLANES
 
 — FREE: 5 activos en Portfolio, 3 señales IA diarias, mercados en tiempo real, Pulse básico.
 — PRO ($9,99/mes, $89,99/año): señales IA ilimitadas, Portfolio ilimitado, todas las alertas, historial 30 días.
-— Plan ELITE próximamente.
+— ELITE ($19,99/mes, $179,99/año): todo lo de PRO más AUREX Pulse completo, análisis técnico avanzado (RSI, MACD), acceso anticipado a beta y soporte por chat en vivo. Alertas SMS/WhatsApp/Telegram próximamente.
 
 LO QUE AUREX NO ES
 
