@@ -159,11 +159,12 @@ Especificaciones oficiales actualizadas al 2026.
 | 10 | Facebook Page | Logo | 170×170 | `icon-1024.png` (App Icon) | ❌ generar (resize) |
 | 11 | Facebook Page | Cover | 820×312 | `logo-aurex.png` + composición navy | ❌ generar (composición) |
 | 12 | Telegram Channel | Foto del canal | 512×512 | `icon-1024.png` (App Icon) | ❌ generar (resize) |
+| 13 | **WhatsApp Business** (línea 2563 ya operativa) | **Foto perfil 500×500** | `icon-1024.png` (App Icon) | ❌ generar (resize) — aporte Escritorio 3-may-2026 |
 
-**Total: 12 assets a generar.**
+**Total: 13 assets a generar.**
 
 **Distribución por asset base:**
-- **7 fotos de perfil** generadas desde `icon-1024.png` (resize a 7 dimensiones distintas, una de ellas convertida a JPG sin alpha para TikTok). **Mismo símbolo que el ícono de la app en stores → coherencia 100%.**
+- **8 fotos de perfil** generadas desde `icon-1024.png` (resize a 8 dimensiones distintas, una de ellas convertida a JPG sin alpha para TikTok, una WhatsApp Business 500×500). **Mismo símbolo que el ícono de la app en stores → coherencia 100%.**
 - **4 banners** compuestos desde `logo-aurex.png` + tagline + fondo navy en distintas proporciones (Twitter 1500×500, YouTube 2560×1440, LinkedIn 1128×191, Facebook 820×312).
 - **1 asset Stories ya existe** (búho vertical 9:16) — único caso donde el búho aparece como imagen primaria, porque Stories es CONTENIDO, no foto de perfil.
 
