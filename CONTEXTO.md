@@ -154,7 +154,41 @@ AUREX_MEDIA_LIBRARY/                          1FZ_LRmNEwoeZdcayDBNi2Ve52vtvpCxI
 
 Convenciones por subcarpeta y detalle de inventario al 1-may-2026 mediodía: ver `docs/ESTADO_PROYECTO_01-may-2026.md` sección 8.2.
 
-### INCIDENTES ACTIVOS (al 2-may-2026)
+### INCIDENTES ACTIVOS (al 3-may-2026)
+
+- **WA-002 ACTIVE 3-may-2026 11:30 AR.** Línea 2563 entró en watch period crítico de WhatsApp Business tras 2 bloqueos consecutivos en 5 días.
+
+  **Cronología real (no la que asumimos antes):**
+  1. 28-abr 15:25 UTC: bloqueo WA-001 inicial — recreación de instancia "aurex" + auto-envíos validación detectados como spam por anti-fraud.
+  2. 1-may ~8:00 AR: cooldown WA-001 se levantó. Reportes 8 + 9 AM llegaron OK. **WhatsApp puso la cuenta en período de observación silencioso (no nos alertó).**
+  3. 1-may noche → 2-may madrugada: cuenta re-bloqueada silenciosamente por WhatsApp anti-fraud detectando envíos Business via Web. NO recibimos alerta.
+  4. 2-may + 3-may mañana: cron `dailyProjectStatusReport` y `dailyHealthReport` fallando con "first byte timeout" en Evolution sin que detectáramos que era bloqueo (lo atribuimos a Evolution timeout).
+  5. 3-may 11:30 AR: al intentar vincular dispositivo Web nuevo (post Volume + redeploy), WhatsApp mostró pantalla "Cuenta en revisión".
+  6. 3-may ~11:50 AR: WhatsApp restableció cuenta tras solicitud automática (24 hs estimadas, terminó en ~20 min).
+  7. 3-may 11:38 AR (parallel): al intentar verificación post-unlock, SMS no llegó + Llave de Acceso no válida + cooldown 7 hs SMS / 3 hs llamada activado.
+
+  **Causa raíz REAL (no era Volume / Evolution v1 / red):**
+  La línea 2563 es **WhatsApp BUSINESS**. WhatsApp Business exige por TOS que envíos comerciales automatizados pasen por **Cloud API oficial con templates aprobados**. Envíos automatizados via WhatsApp Web (que es lo que hace Evolution) son **violación explícita de TOS Business**. Anti-fraud detecta el patrón y bloquea cíclicamente. Cada bloqueo deja la cuenta más sensible. Eventualmente perdemos la cuenta permanentemente si seguimos.
+
+  **Decisión arquitectónica 3-may-2026 (Opción A):** PAUSAR todos los envíos por la línea 2563 al menos 2-4 semanas. Telegram cubre 100% de las alertas operativas críticas.
+
+  **Implementación técnica:**
+  - aurex-backend commit `113e687`: guard al inicio de `sendWhatsAppEvolution()` y `sendWhatsAppImage()` que skipea envío si env var `WA_EVOLUTION_PAUSED === 'true'`.
+  - Railway env `WA_EVOLUTION_PAUSED=true` aplicado en servicio aurex-app.
+  - Crons del backend siguen ejecutándose y mandando por Telegram normal. WhatsApp envío silenciosamente saltado con log `[WA-002 PAUSE]`.
+  - Volume creado hoy (5GB en evo-v1) queda montado y operativo, listo para cuando se decida reactivar.
+
+  **Condiciones para reactivar (todas deben cumplirse):**
+  1. Mínimo 2 semanas sin tocar la línea 2563.
+  2. Cuenta saliendo definitivamente del watch period (verificar abriendo WhatsApp en iPhone después del plazo).
+  3. Decisión arquitectónica final: ¿seguir con Evolution Web (riesgo cíclico) vs convertir 2563 a Personal vs migrar a otro número personal vs migrar a Cloud API con costos variables vs Telegram-only para siempre?
+
+  **Para reactivar cuando se cumplan las condiciones:**
+  ```
+  railway variables --service aurex-app --set WA_EVOLUTION_PAUSED=false
+  ```
+
+  **Lección estructural aprendida (registrada en memoria persistente `project_whatsapp_business.md`):** WhatsApp Business + Evolution Web + envíos automatizados = bloqueo cíclico inevitable, aunque NO se manden mensajes a externos. El acto mismo de tener un dispositivo Web vinculado a una cuenta Business + recrear instancias + intentar vincular post-bloqueo dispara anti-fraud independientemente del contenido o volumen de envíos.
 
 - **TG-001 RESUELTO 2-may-2026 18:25 AR.** Causa raíz: `bot = new TelegramBot(TOKEN, { polling: true })` en `aurex-backend/server.js:17`. Durante restarts Railway, el polling del container viejo y el nuevo peleaban por `getUpdates` generando `ETELEGRAM 409 Conflict` que dejaba al bot en estado degradado y bloqueaba `sendMessage` del cron de las 9:00 AR cuando ese restart caía cerca del horario.
   Fix aplicado: `polling: false` (commit `f87fc6d`, deploy Railway SUCCESS 21:25 UTC). Verificación post-fix: `POST /api/test-telegram` y `POST /api/daily-status/test` ambos OK, los 5 mensajes llegaron al chat 1749518554 a las 18:17 AR. Logs Railway sin más errores 409. El bot mantiene capacidad de ENVIAR (alertas, daily, project status); deja de RECIBIR comandos `/start` y `/alertas` (no estaban en uso productivo). WhatsApp Evolution no tocado. Cero impacto en revisión Apple/Google.
