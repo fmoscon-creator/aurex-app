@@ -137,6 +137,14 @@ En el resto de plataformas (IG, TikTok, YouTube, Telegram) el handle es menos vi
 
 ---
 
+## ACTUALIZACIÓN POST-FASE B (3-may-2026 tras revisión Escritorio)
+
+**Fernando verificó visualmente en Telegram** que `@aurex` está tomado por una cuenta personal externa de un usuario llamado "Aurelio" (foto de perfil real, persona que NO tiene relación con AUREX). **Handle no recuperable** — es de otra persona, no de Fernando.
+
+**Decisión definitiva para Telegram channel:** **`@aurex_ai`** como handle único confirmado (no escalonado, no probar `@aurex` primero).
+
+Para las demás plataformas (Twitter, Instagram, TikTok, LinkedIn, YouTube) sigue valiendo intentar `aurex` primero en formulario de signup en vivo y escalar a `aurex_ai` solo si está tomado.
+
 ## OUTPUT DEL BLOQUE 2 — VERSIÓN FINAL
 
 ✅ **Display Name único: `AUREX`** en todas las plataformas. Coherencia de marca total — el usuario percibe "AUREX" en cada canal.

@@ -11,7 +11,33 @@
 - Bloque 6 — disclaimer regulatorio integrado.
 - Bloque 7 — costos $6.25/mes fijo, sin variables.
 
-**TIMING DE EJECUCIÓN — Fase C arranca DESPUÉS de aprobación Apple Build 17 + Google Play Build 2 (estimado: 12-15 may 2026, no antes).**
+**TIMING DE EJECUCIÓN (revisado post-Fase B):**
+
+**Sub-fase C0 — RESERVA DE HANDLES (puede arrancar ANTES de aprobación stores).**
+**Sub-fase C1 — APERTURA + WARM-UP COMPLETO arranca DESPUÉS de aprobación Apple Build 17 + Google Play Build 2.**
+
+### Sub-fase C0 — Reserva de handles (cualquier momento, urgente)
+
+Aporte de Escritorio en revisión Fase B: el riesgo de perder handles (caso confirmado `@aurex` Telegram tomado por externo) es **mayor** que el riesgo de Apple/Google detectar actividad comercial pre-lanzamiento.
+
+**Acción:** crear las 7 cuentas con bio mínima + foto perfil + cero posts (cuentas "dormidas" sin actividad publicada). Reservás los handles antes que se los lleve otro.
+
+| Plataforma | Handle a reservar | Acción C0 |
+|---|---|---|
+| Telegram channel | `@aurex_ai` (confirmado handle único definitivo, ver Bloque 2 actualizado) | Crear, foto, descripción, cero posts |
+| YouTube | probar `@aurex` → `@aurex_ai` | Crear canal, foto, sin videos publicados |
+| Twitter/X | probar `@aurex` → `@aurex_ai` | Crear cuenta + foto + bio + cero tweets |
+| Instagram Business | probar `@aurex` → `@aurex_ai` | Crear cuenta + foto + bio + cero posts |
+| TikTok Business | probar `@aurex` → `@aurex_ai` | Crear cuenta + foto + bio + cero videos |
+| LinkedIn Company | probar URL slug `aurex` → `aurex-ai` | Crear page + logo + cero posts |
+| Facebook Page | nombre `AUREX` (vinculada a IG) | Crear page + logo + cero posts |
+
+**¿Por qué es seguro hacerlo antes de aprobación stores?**
+Apple/Google leen "actividad comercial" como **publicación de contenido externo + tráfico generado**. Una cuenta vacía sin publicaciones es invisible para sus radars. Solo aparece como "marca registrando presencia" — práctica estándar de cualquier app pre-lanzamiento.
+
+**Tiempo Fernando:** 30-60 min total (cuentas básicas, sin postear nada).
+
+### Sub-fase C1 — Apertura completa + warm-up (post-aprobación stores)
 
 ---
 
