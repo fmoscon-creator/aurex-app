@@ -2,7 +2,7 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> Última actualización: 8 de mayo de 2026, 23:30 AR
+> Última actualización: 9 de mayo de 2026, 00:30 AR (cierre del día 8-may)
 
 ---
 
@@ -79,9 +79,9 @@
 | Categoría primaria | Utilidades |
 | Idiomas localizados | EN, ES, FR, IT, HI, AR, PT, ZH (8) |
 | Subtítulo | "Real-time market data tracker" |
-| **Build actual TestFlight** | **23** (subido 8-may-2026) |
-| Build en App Store Review | 17 (submit 24-abr-2026, en queue Apple) |
-| Próximo step | Build 24 con i18n + bugfixes |
+| **Build actual TestFlight** | **24** (subido 8-may-2026 23:30, validado en device — i18n inglés OK) |
+| Build en App Store Review | 17 (submit 24-abr-2026, en queue Apple — Case 20000111960192 Expedited Review abierto 7-may) |
+| Próximo step | Build 25 iOS con bug fix tilde verde teléfono (PerfilScreen) cuando aprueben actuales |
 
 ### Android (Google Play)
 | Campo | Valor |
@@ -202,10 +202,17 @@
 
 ## 11. PENDIENTES POST-PRODUCCIÓN
 
-### Inmediatos (Code va a hacer)
-- **Build 24 iOS**: bump pbxproj 23 → 24, archive + export + Transporter
-- Esperar emails Google Play (24-48 hs ficha + 7 días Producción)
-- Esperar emails Apple TestFlight Build 23 + App Store review
+### Inmediatos (esperando respuestas externas)
+- Esperar emails Google Play (24-48 hs ficha + 7 días Producción) sobre Build 17 Android
+- Esperar emails Apple sobre Build 17 App Store Review (15 días en queue) + Case 20000111960192 Expedited
+- Build 24 iOS YA en TestFlight, validado en device
+
+### Bug pendiente (no bloquea Producción)
+- **PerfilScreen — tilde verde teléfono no aparece** (descubierto 8-may 23:50 AR):
+  - Síntoma 1: tilde verde NO aparece en campo teléfono Mi Cuenta (sí Nombre/Email)
+  - Síntoma 2: card "Usuario" del Perfil NO muestra el teléfono entre email y Plan FREE
+  - Funcionalidad NO afectada (alertas Telegram + push iOS funcionan OK)
+  - Aplicar en: Build 25 iOS + Build 18 Android (cuando aprueben actuales)
 
 ### v1.1 (post-aprobación Apple+Google)
 - Store centralizado de precios (PRIORITARIO)
