@@ -1,5 +1,64 @@
 # CONTEXTO DEL PROYECTO AUREX
-Última actualización: 4 de Mayo de 2026 (estado Google Play Console verificado por Escritorio)
+Última actualización: 12 de Mayo de 2026 (cierre sprint cripto/stocks backend + status Build 17 Apple Forum)
+
+---
+
+## ESTADO ACTUAL — 12 MAY 2026 (cierre sprint nocturno ~01:00 AR)
+
+### Producción al 12-may
+
+| Plataforma | Versión | Estado |
+|---|---|---|
+| Android | v1.0.17 (versionCode 17) | Publicado en Google Play producción |
+| iOS | v1.0 build 24 (CURRENT_PROJECT_VERSION 24) | En TestFlight |
+| Backend Railway | HEAD `e69392d` | Deployado en producción |
+
+### Status crítico Apple — Build 17 iOS en queue 18 días
+
+Submission ID `e0e7fb35-11a4-4c1d-854c-60a80c4799e6` (24-abr) sigue "Pendiente de revisión".
+
+**11-may 15:04 AR — RESPUESTA APPLE EN FORUM** (https://developer.apple.com/forums/thread/826030?answerId=887477022):
+> "Thank you for your post. We're investigating and will contact you in App Store Connect to provide further assistance."
+
+Resolution Center vacío al 11-may noche, sin mensaje aún. Primera respuesta REAL de Apple staff vs cases boilerplate previos. Hito: approach del foro funcionó donde Expedited + Case 20000111960192 fallaron.
+
+**Acción inmediata**: ninguna. Si 48-72h sin novedades (hasta 13-14 may), reabrir thread foro citando answerId 887477022.
+
+**RESTRICCIÓN OPERATIVA**: mientras Apple no resuelva Build 17, todo Build iOS nuevo va exclusivamente a TestFlight (no a App Store production). Tenerlo testeado para enviar inmediato cuando lleguen comentarios o ajustes solicitados.
+
+### Sprint backend cripto/stocks 11-12 may — CERRADO (9 commits)
+
+HEAD aurex-backend main: `e69392d`. Cascadas externas reestructuradas:
+
+| Tipo | Fuente activa | Cobertura | Cache |
+|---|---|---|---|
+| Cripto (53 AUREX) | Binance.US 49 + OKX 2 + Kraken 1 + CG 1 | 53/53 (100%) | cryptoCache refresh cada 2 min |
+| Stocks (297 AUREX) | Yahoo Finance singular | 297/297 (100%) | priceCache TTL 5 min build-up natural |
+
+Commits clave:
+- `4c85701` Binance.US primaria + Twelve Data fallback + check 404 devices
+- `eb15866` cascada fallback en cadena (hasPrimarySource + missing)
+- `796b17c` KRAKEN_MAP legacy XMR/ZEC/ETC/XLM
+- `d63ae4e` COINGECKO_IDS 29→57 + endpoint debug/sources binance.us
+- `d888507`+`b9dabca` cron refreshStockCache TD batch fue revertido (rate limit 8 credits/min plan free)
+- `e69392d` reemplazo: priceCache stocks TTL 60s→5 min (build-up natural)
+
+CryptoCompare bloqueada hasta 1-jun por rate limit mensual (17.669/11.000 consumidas). Resto del sistema 🟢.
+
+### Próxima iteración — Build 25 (a planear)
+
+Bumpea ambos platforms:
+- Android: versionCode 17→18 (v1.0.17→v1.0.18) → Google Play normal
+- iOS: CURRENT_PROJECT_VERSION 24→25 (v1.0 build 25) → SOLO TestFlight mientras Apple resuelva Build 17
+
+Scope frontend propuesto (3 puntos pendientes):
+1. **Fix orden signup → POST /devices** (30 min)
+2. **Multi-device wiring** (2-3 h): migrar de `usuarios.fcm_token` single a tabla `usuarios_devices` 1:N
+3. **JWT auth en /api/users/:id/devices** (1.5 h)
+
+Backend YA listo desde sprint (no requiere cambios más). Resta solo el frontend.
+
+---
 
 ## INICIO RAPIDO
 Pega esto al abrir nueva conversacion con Claude:
