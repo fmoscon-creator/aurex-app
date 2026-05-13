@@ -8,14 +8,26 @@
 
 ## 0. PRIMERA INSTRUCCIÓN AL ABRIR EL CHAT
 
-Antes de responder cualquier pregunta del usuario, hacer esto:
+Antes de responder cualquier pregunta del usuario, hacer esto **EN ORDEN**:
 
-1. Leer este archivo completo.
-2. Leer `DAILY_STATUS.md` (autogenerado por cron del backend — contiene fecha actual, días transcurridos esperando Apple/Google, últimos SHA de los 3 repos, incidentes activos). Si NO existe todavía, calcular esos datos a mano con `git log -1` y `date`.
-3. Leer `CONTEXTO.md` (estado vivo del proyecto).
-4. Si la pregunta del usuario toca un sistema documentado (alertas WhatsApp, infraestructura, deploys, base de datos), leer el manual correspondiente (ver Sección 5) ANTES de proponer arquitectura.
-5. Responder siempre en español, sin jerga técnica innecesaria.
-6. NO tocar código sin autorización expresa.
+1. **CHEQUEO BRIEF (NUEVO 13-may-2026, OBLIGATORIO PRIMER PASO)**:
+   ```bash
+   date
+   git -C /Users/fernandomoscon/Desktop/aurex-app log -1 --format='%cd %s' -- briefs/BRIEF_AUREX_LATEST.md
+   ```
+   Comparar fecha actual vs último commit del brief:
+   - **< 24 hs**: OK, seguir al paso 2.
+   - **24-48 hs**: ALERTAR a Fernando: "El brief tiene X horas sin actualizar. ¿Lo actualizo antes de avanzar?". NO responder otra cosa hasta que confirme.
+   - **> 48 hs**: ACTUALIZAR el brief automáticamente con hitos faltantes desde memoria del proyecto (ver `~/.claude/projects/-Users-fernandomoscon/memory/`). Después commit + push y avisar a Fernando con SHA.
+
+   **Razón**: el brief es la fuente de verdad que Escritorio (Claude Desktop con Chrome integration) lee al arrancar. Si no está al día, Escritorio no puede ayudar de verdad — opina sobre estado viejo.
+
+2. Leer este archivo completo (CLAUDE.md).
+3. Leer `DAILY_STATUS.md` (autogenerado por cron del backend — contiene fecha actual, días transcurridos esperando Apple/Google, últimos SHA de los 3 repos, incidentes activos). Si NO existe todavía, calcular esos datos a mano con `git log -1` y `date`.
+4. Leer `CONTEXTO.md` (estado vivo del proyecto).
+5. Si la pregunta del usuario toca un sistema documentado (alertas WhatsApp, infraestructura, deploys, base de datos), leer el manual correspondiente (ver Sección 5) ANTES de proponer arquitectura.
+6. Responder siempre en español, sin jerga técnica innecesaria.
+7. NO tocar código sin autorización expresa.
 
 ---
 
