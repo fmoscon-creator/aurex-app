@@ -266,11 +266,12 @@
 - Cron refreshStockCache batch revertido (commit b9dabca) por consumir 50 credits en 1 ejecución (límite 8/min plan free)
 - Stocks ahora via Yahoo Finance singular + priceCache TTL 5 min
 
-### X / Twitter — XAGEA-751927 RESUELTO 13-may
+### X / Twitter — XAGEA-751927 RESUELTO 13-may + perfil VALIDADO por Escritorio
 - Cuenta @AUREX872336 bloqueada por edad inválida 12-may (Escritorio cargó 1/1/2026 sin OK Fernando)
 - Email X 13-may PM: "We've verified that you met the minimum age requirement"
 - Handle cambiado a @aurex_live
 - Cuenta Profesional Empresa activada con categoría "Aplicación móvil"
+- **Validación visual Escritorio 13-may PM via Chrome**: 100% OK los 10 ítems revisados (handle, Display Name AUREX, foto, banner, bio con 🌐 + disclaimer, categoría visible, Global, link aurex.live, cuenta pública, fecha unión 12-may)
 - Restricción operativa nueva: **Escritorio NO ejecuta acciones en plataformas externas sin OK explícito Fernando** (memoria `feedback_escritorio_no_actua_solo.md`)
 
 ---
@@ -390,7 +391,7 @@
 ## 14. PRIMER OBJETIVO ESCRITORIO HOY (13-may PM)
 
 1. Confirmar que entendiste este brief actualizado
-2. Validar visualmente el perfil X completo: https://x.com/aurex_live (10 ítems: handle @aurex_live, Display Name AUREX, foto, banner, bio con 🌐, categoría Aplicación móvil visible, Global, link aurex.live, cuenta pública, fecha 12-may)
+2. ~~Validar visualmente el perfil X~~ ✅ COMPLETADO 13-may PM (10/10 ítems OK via Chrome)
 3. Estar listo para opinar sobre el Plan Social Media v2 cuando Code lo rehaga
 4. Estar listo para validar visualmente la PWA aurex.live cuando Code la actualice con push + Telegram + "Cómo usar"
 
