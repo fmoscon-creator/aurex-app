@@ -14,6 +14,7 @@
 ### 🟠 P1 — Técnicos críticos (Code)
 2. **Fix Bug Logout iOS/Android** (App.js: refreshSession antes de Login). 30 min. Va en Build 25 iOS + Build 18 Android. NO toca Build 17.
 3. **Gating cliente plan en PerfilScreen nativo** (espejo del fix PWA c86d6bb+ef7d7a1). 1 hora. Va junto con #2.
+3.bis. **Fix APIs edge-to-edge obsoletas Android 15** — Google Play marcó "acción recomendada" en Build 17 v1.0.17. APIs deprecated: `Window.getStatusBarColor/setStatusBarColor/setNavigationBarColor`, `LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES/DEFAULT`. Origen React Native StatusBarModule + Material BottomSheet. Solución: migrar a `WindowCompat.setDecorFitsSystemWindows(false)` + `WindowInsetsControllerCompat` para colores. Posible bump RN a 0.76+. 2-4 hs Code. Va en Build 18 Android junto con #2 y #3.
 4. **Actualizar PWA con 3 funciones faltantes** (push FCM + Telegram real + Cómo usar AUREX). 3-4 hs.
 
 ### 🟡 P2 — Sistema pagos completo (no urgente)
