@@ -2,9 +2,48 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> **Última actualización: 14 de mayo de 2026, 02:13 AR (cierre sesión)**
+> **Última actualización: 14 de mayo de 2026, 13:30 AR (sprint integral planes — Bloque 4+1 cerrados)**
 >
 > Versión histórica anterior: `briefs/archive/BRIEF_AUREX_2026-05-09.md`
+
+## 💳 PLANES DE SUSCRIPCIÓN — verificado por Escritorio 14-may-2026
+
+### Android — Google Play Console (4 Published activos)
+
+| Plan | Product ID | Base Plan ID | RC ID | Precio | Descripción Play (interna, user NO la ve) |
+|------|-----------|--------------|-------|--------|-------------------------------------------|
+| PRO Mensual | `com.fernandomoscon.aurex.pro.monthly` | `monthly-pro` | `prodb781a5d7c5` | $9.99/mes | "Full access to all AUREX PRO features." |
+| PRO Anual | `com.fernandomoscon.aurex.pro.annual` | `annual-pro` | `prod2f5320ea41` | $89.99/año | ⚠️ vacía |
+| ELITE Mensual | `com.fernandomoscon.aurex.elite.monthly2` | `monthly-elite` | `prod9367a39498` | $19.99/mes | "Premium AUREX AI signals. Monthly." |
+| ELITE Anual | `com.fernandomoscon.aurex.elite.annual` | `annual-elite` | `prodd153861198` | $179.99/año | "Premium AUREX AI signals. Annual, save 25%." |
+
+Creados 6-may-2026. Beneficios en Play Console: ninguno en los 4 planes.
+
+### iOS — App Store Connect (4 Pending Review junto a Build 17)
+
+Grupo: **AUREX PLANES** — Group ID `22018005`.
+
+| Plan | Product ID | Apple ID | RC ID | Nivel | Precio | Descripción visible (en-US) |
+|------|-----------|----------|-------|-------|--------|------------------------------|
+| PRO Mensual | `com.fernandomoscon.aurex.pro.monthly` | `6761736879` | `prodcd14c3e521` | 1 | $9.99/mes | "Full access to all AUREX PRO features." |
+| PRO Anual | `com.fernandomoscon.aurex.pro.annual` | `6761794509` | _Could not check_ | 2 | $89.99/año | "Full AUREX AI signals. Annual, save 25%." |
+| ELITE Mensual | `com.fernandomoscon.aurex.elite.monthly2` | `6761796966` | _Could not check_ | 3 | $19.99/mes | "Premium AUREX AI signals. Monthly." |
+| ELITE Anual | `com.fernandomoscon.aurex.elite.annual` | `6761798180` | _Could not check_ | 4 | $179.99/año | "Premium AUREX AI signals. Annual, save 25%." |
+
+"Could not check" = RevenueCat no puede validar productos iOS hasta que Apple apruebe Build 17. Se autocompleta al aprobar.
+
+### RevenueCat
+
+Proyecto AUREX — ID `228caf37`. Offering `aurex_default` ("AUREX PLANS") — 4 packages activos. NO almacena descripciones/features (solo IDs técnicos). Entitlements: `pro` + `elite`.
+
+### Alertas operativas planes (NO bloquean lanzamiento)
+
+1. **Beneficios vacíos Play Console 4 planes Android** — completar con 2-3 puntos reales por plan (mejora UX post-compra). Acción Fernando/Escritorio en Play Console, no requiere build.
+2. **Descripción vacía PRO Anual Android** — agregar "Full access to all AUREX PRO features. Annual subscription, save 25%". Acción Fernando/Escritorio en Play Console.
+3. **IDs RC iOS incompletos** — se autocompletan al aprobar Build 17.
+4. **Verificar precio ELITE Anual iOS = $179.99** — accordion ASC no expandible; verificar al aprobar Build 17.
+
+> Source-of-truth ampliado: `AurexApp/docs/SUSCRIPCIONES.md` + memoria Code `project_planes_suscripcion_14may.md`.
 
 ## 📋 PENDIENTES TOTALES al 14-may 02:13 AR
 
