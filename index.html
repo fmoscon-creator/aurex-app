@@ -2382,6 +2382,16 @@ display:flex;align-items:center;justify-content:space-between}
       <div id="plan-badge-header-wrapper" style="margin-top:8px;padding:3px 12px;border-radius:20px;border:1px solid rgba(139,148,158,0.3);background:rgba(139,148,158,0.12);display:inline-block">
         <span id="plan-badge-header" style="font-size:10px;font-weight:700;color:#8B949E;letter-spacing:0.5px" data-i18n="plan_free_badge">PLAN FREE</span>
       </div>
+      <!-- Build 18 Bloque 3: banner upsell PWA (visible solo para FREE/PRO, oculto para ELITE) -->
+      <a id="upsell-banner" href="#pac-b2" style="display:none;margin-top:14px;padding:12px;border-radius:12px;
+        text-decoration:none;align-items:center;gap:10px;cursor:pointer">
+        <div id="upsell-icon" style="width:36px;height:36px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:18px"></div>
+        <div style="flex:1;text-align:left">
+          <div id="upsell-title" style="font-size:13px;font-weight:800"></div>
+          <div id="upsell-sub" style="font-size:11px;margin-top:2px;color:var(--textSec)"></div>
+        </div>
+        <span id="upsell-arrow" style="font-size:18px;font-weight:700"></span>
+      </a>
     </div>
   </div>
 </div>
@@ -4215,6 +4225,32 @@ document.addEventListener("DOMContentLoaded", function(){
     } else {
       // FREE: mostrar todos
       allUpgradeBtns.forEach(function(b){ b.style.display = ''; });
+    }
+
+    // 4. Build 18 Bloque 3: banner upsell persistente (visible solo FREE/PRO)
+    var banner = document.getElementById('upsell-banner');
+    if (banner) {
+      if (p === 'ELITE') {
+        banner.style.display = 'none';
+      } else {
+        var isFree = (p === 'FREE');
+        var targetColor = isFree ? '#A78BFA' : '#c9a84c';
+        banner.style.display = 'flex';
+        banner.style.background = (isFree ? 'rgba(167,139,250,0.15)' : 'rgba(201,168,76,0.15)');
+        banner.style.border = '1px solid ' + (isFree ? 'rgba(167,139,250,0.4)' : 'rgba(201,168,76,0.4)');
+        banner.style.color = targetColor;
+        document.getElementById('upsell-icon').style.background = targetColor;
+        document.getElementById('upsell-icon').textContent = isFree ? '⚡' : '👑';
+        document.getElementById('upsell-title').style.color = targetColor;
+        document.getElementById('upsell-title').textContent = isFree
+          ? 'Pasate a PRO — $9,99/mes'
+          : 'Pasate a ELITE — $19,99/mes';
+        document.getElementById('upsell-sub').textContent = isFree
+          ? 'Activos ilimitados · 14 tipos de alertas · Telegram en tiempo real'
+          : 'AUREX Pulse completo · RSI/MACD · Alertas geopolíticas GDELT';
+        document.getElementById('upsell-arrow').style.color = targetColor;
+        document.getElementById('upsell-arrow').textContent = '›';
+      }
     }
 
     console.log('[AurexGating] UI aplicada para plan:', p);
