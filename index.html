@@ -2379,8 +2379,8 @@ display:flex;align-items:center;justify-content:space-between}
       <div id="auth-celular-txt"
         style="font-size:12px;color:#c9a84c;background:rgba(201,168,76,0.12);
         border-radius:20px;padding:3px 14px;display:inline-block"></div>
-      <div style="margin-top:8px;padding:3px 12px;border-radius:20px;border:1px solid rgba(139,148,158,0.3);background:rgba(139,148,158,0.12);display:inline-block">
-        <span style="font-size:10px;font-weight:700;color:#8B949E;letter-spacing:0.5px" data-i18n="plan_free_badge">PLAN FREE</span>
+      <div id="plan-badge-header-wrapper" style="margin-top:8px;padding:3px 12px;border-radius:20px;border:1px solid rgba(139,148,158,0.3);background:rgba(139,148,158,0.12);display:inline-block">
+        <span id="plan-badge-header" style="font-size:10px;font-weight:700;color:#8B949E;letter-spacing:0.5px" data-i18n="plan_free_badge">PLAN FREE</span>
       </div>
     </div>
   </div>
@@ -2390,12 +2390,12 @@ display:flex;align-items:center;justify-content:space-between}
     <span data-i18n-html="b2_plan_actual">&#11088; Plan actual</span><span class="pac-chevron">&#9660;</span>
   </div>
   <div class="pac-cuerpo">
-    <div style="background:var(--card);border-radius:8px;padding:12px 14px;margin-bottom:12px">
+    <div id="plan-actual-card" style="background:var(--card);border-radius:8px;padding:12px 14px;margin-bottom:12px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-        <span style="font-size:15px;font-weight:700;color:var(--textSec)">FREE</span>
-        <span style="font-size:12px;color:var(--textSec)" data-i18n="plan_gratuito">Plan gratuito</span>
+        <span id="plan-actual-nombre" style="font-size:15px;font-weight:700;color:var(--textSec)">FREE</span>
+        <span id="plan-actual-subtitle" style="font-size:12px;color:var(--textSec)" data-i18n="plan_gratuito">Plan gratuito</span>
       </div>
-      <div style="font-size:12px;color:var(--textSec)" data-i18n="plan_free_desc">
+      <div id="plan-actual-desc" style="font-size:12px;color:var(--textSec)" data-i18n="plan_free_desc">
         5 activos • 3 señales IA/día • AUREX Pulse básico
       </div>
     </div>
@@ -4172,22 +4172,73 @@ document.addEventListener("DOMContentLoaded", function(){
   };
 
   // Aplica reglas visuales del plan actual a la UI
+  // Conecta con elementos REALES del HTML preexistente:
+  //   #plan-badge-header / #plan-badge-header-wrapper (badge del header del usuario, linea 2382-2384)
+  //   #plan-actual-nombre / #plan-actual-subtitle / #plan-actual-desc / #plan-actual-card (bloque Plan actual, linea 2393-2401)
+  //   #btn-pro-monthly / #btn-pro-annual / #btn-elite-monthly / #btn-elite-annual (botones upgrade modal planes)
   window.applyPlanGating = function(){
     var p = window.aurexPlan.plan;
-    var planBadges = document.querySelectorAll('[data-plan-badge]');
-    planBadges.forEach(function(el){ el.textContent = p; el.className = 'plan-badge plan-badge-' + p.toLowerCase(); });
-    // Si esta en PRO/ELITE, ocultar botones de upgrade en el modal de planes
-    var upgradeBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual, #btn-elite-monthly, #btn-elite-annual');
-    if (p === 'ELITE') {
-      upgradeBtns.forEach(function(b){ b.style.display = 'none'; });
-    } else if (p === 'PRO') {
-      var eliteBtns = document.querySelectorAll('#btn-elite-monthly, #btn-elite-annual');
-      var proBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual');
-      proBtns.forEach(function(b){ b.style.display = 'none'; });
-      eliteBtns.forEach(function(b){ b.style.display = ''; });
-    } else {
-      upgradeBtns.forEach(function(b){ b.style.display = ''; });
+
+    // Estilos por plan (color del badge y bordes)
+    var STYLES = {
+      FREE:  { color: '#8B949E', bg: 'rgba(139,148,158,0.12)', border: 'rgba(139,148,158,0.3)' },
+      PRO:   { color: '#A78BFA', bg: 'rgba(167,139,250,0.15)', border: '#A78BFA' },
+      ELITE: { color: '#c9a84c', bg: 'rgba(201,168,76,0.15)', border: '#c9a84c' },
+    };
+    var s = STYLES[p] || STYLES.FREE;
+
+    // Textos por plan (subtitle + descripcion del bloque "Plan actual")
+    var SUBTITLE = { FREE: 'Plan gratuito', PRO: 'Plan PRO — Inversor activo', ELITE: 'Plan ELITE — Inversor profesional' };
+    var DESC = {
+      FREE:  '5 activos • 3 señales IA/día • AUREX Pulse básico',
+      PRO:   'Activos ilimitados • Señales IA ilimitadas • AUREX Pulse + Termómetro Riesgo • 14 tipos de alertas + Telegram',
+      ELITE: 'Todo PRO • Análisis técnico avanzado (RSI/MACD) • Alertas geopolíticas GDELT • API personal • 10 alertas WhatsApp/día',
+    };
+
+    // 1. Badge del header del usuario (linea 2383)
+    var badge = document.getElementById('plan-badge-header');
+    var badgeWrap = document.getElementById('plan-badge-header-wrapper');
+    if (badge) {
+      badge.textContent = 'PLAN ' + p;
+      badge.removeAttribute('data-i18n'); // evitar override por sistema i18n al cambiar idioma
+      badge.style.color = s.color;
     }
+    if (badgeWrap) {
+      badgeWrap.style.background = s.bg;
+      badgeWrap.style.borderColor = s.border;
+    }
+
+    // 2. Bloque "Plan actual" expandible (lineas 2393-2400)
+    var nombreEl = document.getElementById('plan-actual-nombre');
+    var subtitleEl = document.getElementById('plan-actual-subtitle');
+    var descEl = document.getElementById('plan-actual-desc');
+    if (nombreEl) {
+      nombreEl.textContent = p;
+      nombreEl.style.color = (p === 'FREE') ? 'var(--textSec)' : s.color;
+    }
+    if (subtitleEl) {
+      subtitleEl.textContent = SUBTITLE[p] || SUBTITLE.FREE;
+      subtitleEl.removeAttribute('data-i18n');
+    }
+    if (descEl) {
+      descEl.textContent = DESC[p] || DESC.FREE;
+      descEl.removeAttribute('data-i18n');
+    }
+
+    // 3. Botones upgrade en modal de planes — ocultar segun plan actual
+    var allUpgradeBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual, #btn-elite-monthly, #btn-elite-annual');
+    if (p === 'ELITE') {
+      // Si ya es ELITE, ocultar TODOS los botones de upgrade
+      allUpgradeBtns.forEach(function(b){ b.style.display = 'none'; });
+    } else if (p === 'PRO') {
+      // Si es PRO, ocultar botones PRO (ya lo tiene), mostrar ELITE
+      document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual').forEach(function(b){ b.style.display = 'none'; });
+      document.querySelectorAll('#btn-elite-monthly, #btn-elite-annual').forEach(function(b){ b.style.display = ''; });
+    } else {
+      // FREE: mostrar todos
+      allUpgradeBtns.forEach(function(b){ b.style.display = ''; });
+    }
+
     console.log('[AurexGating] UI aplicada para plan:', p);
   };
 
