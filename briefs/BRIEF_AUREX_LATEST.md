@@ -2,9 +2,15 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> **Última actualización: 13 de mayo de 2026, 19:50 AR**
+> **Última actualización: 14 de mayo de 2026, 04:00 AR**
 >
 > Versión histórica anterior: `briefs/archive/BRIEF_AUREX_2026-05-09.md`
+
+## ⚠️ INCIDENTE 14-may PayPal Webhook — leer ANTES de configurar cualquier ID externo
+
+El 13-may PM Escritorio dijo "PAYPAL_WEBHOOK_ID = 5F3394217M487802M ✅ configurado" pero ese webhook NO existía en la cuenta PayPal Live de las credenciales (API devolvió `INVALID_RESOURCE_ID`, listado de webhooks vacío). Causa probable: Escritorio configuró en otra app PayPal o en Sandbox. Fernando hizo pago test USD 9,99, webhook nunca se disparó, Supabase quedó en FREE. Code creó el webhook correcto via `POST /v1/notifications/webhooks` con credenciales ya cargadas en Railway. **Webhook ID válido al 14-may**: `6ED54169YF496764B`.
+
+**Regla nueva (memoria `feedback_validar_ids_externos.md`)**: Code DEBE validar IDs externos (webhook, app, subscription, plan) contra la API del servicio ANTES de declararlos OK. Si Escritorio entrega un ID, Code hace GET a la API antes de cargar en infra. Si la API devuelve error, NO cargar y crear el recurso via API directo.
 
 ---
 
