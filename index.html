@@ -3113,13 +3113,13 @@ display:flex;align-items:center;justify-content:space-between}
             </div>
           </div>
         </div>
-        <button id="btn-pro-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-64Y46051CU7251058NHMGG4Y')"
+        <button id="btn-pro-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-64Y46051CU7251058NHMGG4Y&return_url=' + encodeURIComponent('https://aurex.live/?paypal=success'))"
           style="width:100%;background:linear-gradient(135deg,#7C3AED,#A78BFA);
           border:none;border-radius:10px;color:var(--text);
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
           <span data-i18n-html="pro_mensual_btn">&#128640; PRO Mensual — $9,99/mes</span>
         </button>
-        <button id="btn-pro-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3FG40467BU710103WNHMGJSA')"
+        <button id="btn-pro-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-3FG40467BU710103WNHMGJSA&return_url=' + encodeURIComponent('https://aurex.live/?paypal=success'))"
           style="width:100%;background:rgba(167,139,250,0.15);
           border:1.5px solid #A78BFA;border-radius:10px;color:#A78BFA;
           font-size:14px;font-weight:700;padding:13px;cursor:pointer;margin-top:8px">
@@ -3195,13 +3195,13 @@ display:flex;align-items:center;justify-content:space-between}
             </div>
           </div>
         </div>
-        <button id="btn-elite-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-9T718444CV910321WNHMGOWY')"
+        <button id="btn-elite-monthly" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-9T718444CV910321WNHMGOWY&return_url=' + encodeURIComponent('https://aurex.live/?paypal=success'))"
           style="width:100%;background:linear-gradient(135deg,#8B6208,#c9a84c);
           border:none;border-radius:10px;color:var(--chipTextActive);
           font-size:15px;font-weight:700;padding:14px;cursor:pointer">
           <span data-i18n-html="elite_mensual_btn">&#128081; ELITE Mensual — $19,99/mes</span>
         </button>
-        <button id="btn-elite-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1WB81912S68516031NHMGRPY')"
+        <button id="btn-elite-annual" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1WB81912S68516031NHMGRPY&return_url=' + encodeURIComponent('https://aurex.live/?paypal=success'))"
           style="width:100%;background:rgba(201,168,76,0.15);
           border:1.5px solid #c9a84c;border-radius:10px;color:#c9a84c;
           font-size:14px;font-weight:700;padding:13px;cursor:pointer;margin-top:8px">
@@ -4133,6 +4133,134 @@ document.addEventListener("DOMContentLoaded", function(){
     </div>
   </div>
 </div>
+
+<!-- ============================================================
+     AUREX Plan Gating — sincroniza plan FREE/PRO/ELITE con backend
+     Funciona junto con backend /webhook/paypal que actualiza usuarios.plan al recibir pagos
+     ============================================================ -->
+<script>
+(function(){
+  var BACKEND_URL = 'https://aurex-app-production.up.railway.app';
+  var PLAN_LIMITS_CLIENT = {
+    FREE: { portfolioMax: 5, watchlistMax: 10, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura'] },
+    PRO:  { portfolioMax: Infinity, watchlistMax: Infinity, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura','alta_conviccion_ia','cambio_senal','senal_portfolio','cambio_zona_pulse','por_categoria','termometro_riesgo','fed_fomc','cpi_pbi','earnings'] },
+    ELITE:{ portfolioMax: Infinity, watchlistMax: Infinity, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura','alta_conviccion_ia','cambio_senal','senal_portfolio','cambio_zona_pulse','por_categoria','termometro_riesgo','fed_fomc','cpi_pbi','earnings','geopolitica_gdelt'] },
+  };
+
+  window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: null };
+
+  // Lee plan del usuario logueado desde backend Supabase. Si no esta logueado o falla, queda FREE.
+  window.loadUserPlan = async function(){
+    try {
+      var u = window._currentUser;
+      if (!u || !u.id) { window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() }; return 'FREE'; }
+      var r = await fetch(BACKEND_URL + '/api/usuario/' + u.id);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      var d = await r.json();
+      var p = (d.plan || 'FREE').toUpperCase();
+      if (!PLAN_LIMITS_CLIENT[p]) p = 'FREE';
+      window.aurexPlan = { plan: p, limits: PLAN_LIMITS_CLIENT[p], loadedAt: Date.now() };
+      try { localStorage.setItem('aurex_plan', p); } catch(e){}
+      console.log('[AurexGating] Plan cargado:', p);
+      window.applyPlanGating();
+      return p;
+    } catch(e) {
+      console.error('[AurexGating] error loadUserPlan:', e.message);
+      window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() };
+      return 'FREE';
+    }
+  };
+
+  // Aplica reglas visuales del plan actual a la UI
+  window.applyPlanGating = function(){
+    var p = window.aurexPlan.plan;
+    var planBadges = document.querySelectorAll('[data-plan-badge]');
+    planBadges.forEach(function(el){ el.textContent = p; el.className = 'plan-badge plan-badge-' + p.toLowerCase(); });
+    // Si esta en PRO/ELITE, ocultar botones de upgrade en el modal de planes
+    var upgradeBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual, #btn-elite-monthly, #btn-elite-annual');
+    if (p === 'ELITE') {
+      upgradeBtns.forEach(function(b){ b.style.display = 'none'; });
+    } else if (p === 'PRO') {
+      var eliteBtns = document.querySelectorAll('#btn-elite-monthly, #btn-elite-annual');
+      var proBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual');
+      proBtns.forEach(function(b){ b.style.display = 'none'; });
+      eliteBtns.forEach(function(b){ b.style.display = ''; });
+    } else {
+      upgradeBtns.forEach(function(b){ b.style.display = ''; });
+    }
+    console.log('[AurexGating] UI aplicada para plan:', p);
+  };
+
+  // Valida si una accion esta permitida en el plan actual. Devuelve {ok, message?}
+  window.checkPlanLimit = function(action, currentCount){
+    var L = window.aurexPlan.limits || PLAN_LIMITS_CLIENT.FREE;
+    var P = window.aurexPlan.plan || 'FREE';
+    if (action === 'add_portfolio') {
+      if (L.portfolioMax === Infinity) return { ok: true };
+      if (currentCount >= L.portfolioMax) return { ok: false, plan: P, limit: L.portfolioMax, message: 'Tu plan ' + P + ' permite hasta ' + L.portfolioMax + ' activos en Portfolio. Pasate a PRO o ELITE para sumar mas.' };
+      return { ok: true };
+    }
+    if (action === 'add_alert') {
+      var tipo = (currentCount || '').toLowerCase();
+      if (L.alertTypes.indexOf(tipo) === -1) return { ok: false, plan: P, tipo_alerta: tipo, message: 'Tu plan ' + P + ' no incluye alertas tipo "' + tipo + '". Pasate a PRO o ELITE para activarlas.' };
+      return { ok: true };
+    }
+    return { ok: true };
+  };
+
+  // Muestra un paywall simple cuando se intenta una accion bloqueada
+  window.showPaywall = function(reason){
+    var msg = reason && reason.message ? reason.message : 'Esta funcion requiere PRO o ELITE.';
+    if (typeof abrirModalPlanes === 'function') {
+      alert(msg + '\n\nVamos a abrir los planes para que veas las opciones.');
+      try { abrirModalPlanes(); } catch(e){}
+    } else {
+      alert(msg + '\n\nAbri el modal de Planes para suscribirte.');
+    }
+  };
+
+  // Detecta retorno desde PayPal (cuando vuelve con ?paypal=success o referrer paypal.com)
+  function detectarRetornoPayPal(){
+    var q = new URLSearchParams(window.location.search);
+    var paypalFlag = q.get('paypal') === 'success' || q.get('subscription_id') || q.get('ba_token');
+    var referrerIsPayPal = document.referrer && /paypal\.com/.test(document.referrer);
+    if (paypalFlag || referrerIsPayPal) {
+      console.log('[AurexGating] Retorno desde PayPal detectado. Re-leyendo plan en 8 seg para dar tiempo al webhook...');
+      var notif = document.createElement('div');
+      notif.style.cssText = 'position:fixed;top:20px;right:20px;background:#10b981;color:#fff;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:600;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.2)';
+      notif.textContent = '✓ Procesando tu suscripcion en PayPal... esto tarda unos segundos';
+      document.body.appendChild(notif);
+      setTimeout(function(){
+        window.loadUserPlan().then(function(p){
+          notif.textContent = '✓ Tu plan ahora es: ' + p + ' — ¡bienvenido!';
+          setTimeout(function(){ notif.remove(); }, 5000);
+        });
+      }, 8000);
+      // Limpiar URL para evitar re-trigger en refresh
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+  }
+
+  // Carga inicial al login del usuario
+  document.addEventListener('DOMContentLoaded', function(){
+    detectarRetornoPayPal();
+    var intentos = 0;
+    var interval = setInterval(function(){
+      if (window._currentUser && window._currentUser.id) {
+        clearInterval(interval);
+        window.loadUserPlan();
+      } else if (++intentos > 30) {
+        clearInterval(interval);
+        // Sin usuario logueado: plan = FREE
+        window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() };
+        window.applyPlanGating();
+      }
+    }, 500);
+  });
+})();
+</script>
 
 </body>
 </html>
