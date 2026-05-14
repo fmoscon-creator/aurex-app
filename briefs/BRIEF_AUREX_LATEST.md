@@ -9,7 +9,7 @@
 ## 📋 PENDIENTES TOTALES al 14-may 02:13 AR
 
 ### 🔴 P0 — Tracking diario
-1. **Apple Build 17** — chequear diario 9 AM AR. Si al 14-15 may sin novedad, reabrir thread foro citando answerId 887477022.
+1. **Apple Build 17 — reply al thread foro 826030** mañana **viernes 15-may 09:00 AM AR**. NO abrir caso nuevo (ya hay 3 frentes activos: submission + Caso Expedited 20000111960192 + thread foro). Solo agregar reply al thread original citando `answerId 887477022`. Texto: *"Following up on @apple-staff's reply 2 days ago — still no contact in App Store Connect. Build 17 day 21 in queue. Could you confirm timeline?"*
 
 ### 🟠 P1 — Técnicos críticos (Code)
 2. **Fix Bug Logout iOS/Android** (App.js: refreshSession antes de Login). 30 min. Va en Build 25 iOS + Build 18 Android. NO toca Build 17.
