@@ -30,6 +30,13 @@
 ### ⚠️ Limpieza pendiente
 - Fila usuarios.fmoscon@gmail.com = PRO (test) → volver a FREE cuando arranquen usuarios reales.
 
+### 📋 Checklist pre-release recurrente (warnings de stores en cada upload)
+- **Android — ofuscación**: `minifyEnabled true` + `shrinkResources true` + ProGuard rules para RN/Firebase/Supabase/RevenueCat. Sin esto, Google marca "app no ofuscada". 1-2 hs Code en Build 18.
+- **iOS — AuthKey .p8 APNS**: subir `AuthKey_XXXXXXXXXX.p8` a Firebase Console (Cloud Messaging → Apple) o ASC. El .p8 se descarga UNA sola vez al crearlo en Apple Developer → Keys → APNS. Sin esto, Apple marca warning sobre push. 15 min en Build 25.
+- Otros: ProGuard rules RevenueCat, versionCode/versionName, Bundle ID, permisos, iconos en todas las densidades.
+
+**Regla**: Code corre este checklist como pre-release verification antes de generar AAB/archive. Si falla algún ítem, frenar y resolver.
+
 ### ✅ HECHO al 14-may (cierre sesión)
 - Sistema PayPal end-to-end completo (webhook 6ED54169YF496764B, gating backend, gating PWA, return URLs)
 - Sistema RevenueCat end-to-end completo (webhook con Bearer secret, dashboard configurado, 3 tests validados)
