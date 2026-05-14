@@ -2,9 +2,39 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> **Última actualización: 14 de mayo de 2026, 04:00 AR**
+> **Última actualización: 14 de mayo de 2026, 02:13 AR (cierre sesión)**
 >
 > Versión histórica anterior: `briefs/archive/BRIEF_AUREX_2026-05-09.md`
+
+## 📋 PENDIENTES TOTALES al 14-may 02:13 AR
+
+### 🔴 P0 — Tracking diario
+1. **Apple Build 17** — chequear diario 9 AM AR. Si al 14-15 may sin novedad, reabrir thread foro citando answerId 887477022.
+
+### 🟠 P1 — Técnicos críticos (Code)
+2. **Fix Bug Logout iOS/Android** (App.js: refreshSession antes de Login). 30 min. Va en Build 25 iOS + Build 18 Android. NO toca Build 17.
+3. **Gating cliente plan en PerfilScreen nativo** (espejo del fix PWA c86d6bb+ef7d7a1). 1 hora. Va junto con #2.
+4. **Actualizar PWA con 3 funciones faltantes** (push FCM + Telegram real + Cómo usar AUREX). 3-4 hs.
+
+### 🟡 P2 — Sistema pagos completo (no urgente)
+5. Conteo diario WhatsApp/Telegram por plan en cron checkAlertas. 2 hs. Cuando haya usuarios reales.
+6. Test end-to-end nuevo webhook PayPal con suscripción real o PayPal Webhook Simulator. 5 min.
+
+### 🟢 P3 — Marketing
+7. **Decisiones del Plan MKT v3** (4 decisiones sección 20 del documento). 15 min Fernando. Bloqueante para MKT.
+8. Construir landing aurex.live/inicio (10 bloques, 8 idiomas, HTML vanilla). 6-8 hs Code. Espera #7.
+9. Generar primeros 14 posts Fase 1 semana 1. 1-2 hs Code. Espera landing #8.
+10. Setup n8n self-hosted Railway + APIs nativas. 2-3 hs Code.
+
+### ⚠️ Limpieza pendiente
+- Fila usuarios.fmoscon@gmail.com = PRO (test) → volver a FREE cuando arranquen usuarios reales.
+
+### ✅ HECHO al 14-may (cierre sesión)
+- Sistema PayPal end-to-end completo (webhook 6ED54169YF496764B, gating backend, gating PWA, return URLs)
+- Sistema RevenueCat end-to-end completo (webhook con Bearer secret, dashboard configurado, 3 tests validados)
+- 6 redes operativas (Telegram, IG, LinkedIn, YouTube, TikTok, X validada por Escritorio)
+- PWA muestra PLAN PRO correctamente para fmoscon@gmail.com
+- Memoria + brief actualizados con lecciones de la jornada
 
 ## ⚠️ INCIDENTE 14-may PayPal Webhook — leer ANTES de configurar cualquier ID externo
 
