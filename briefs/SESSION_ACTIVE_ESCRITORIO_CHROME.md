@@ -1,45 +1,60 @@
-SESSION ACTIVE — Escritorio (Claude Desktop + Chrome)
+# SESSION ACTIVE — Escritorio (Claude Desktop + Chrome)
+
 URL fija: https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/SESSION_ACTIVE_ESCRITORIO_CHROME.md
-Escritorio lee esta URL al inicio de cada sesión Y cada vez que el contexto se compacte.
-CODE actualiza este archivo con commit cada vez que Escritorio lo pide o al cerrar sesión.
-Última actualización
-14-may-2026 — ~10:30 AM AR
-Qué estábamos haciendo en este momento exacto
-Build 18 Android: análisis de código completo terminado. Cruce CODE vs Escritorio cerrado. Scope consolidado acordado entre CODE y Escritorio. CODE listo para arrancar implementación por ítem 1.
-Errores de Escritorio reconocidos en esta sesión
 
-RevenueCat Android SÍ tiene rama else if en App.js líneas 44-46 con key goog_HfiemofhuhAKeWYfNZfLGrlyIDp. Escritorio leyó solo el snippet inicial y no vio la rama completa.
-versionCode en build.gradle está en 17 (no en 1 como dijo Escritorio). Escritorio confundió bloques del gradle.
+Ultima actualizacion: 14-may-2026 ~20:00 AR
 
-Scope Build 18 Android consolidado (CODE + Escritorio)
-P0 — 4.3 hs Code:
+## ESTADO CRITICO ACTUAL
 
-Eliminar signInWithPassword hardcoded con credenciales fmoscon@gmail.com en PerfilScreen.js L141
-USER_ID dinámico via supabase.auth.getUser() en PortfolioScreen + AlertasScreen + pasar JWT en header Authorization de cada fetch a Railway
-Cargar plan real del usuario en PerfilScreen L41 via useEffect + setState
-Logout correcto: refreshSession + signOut + AsyncStorage.clear + navegar a LoginScreen (PerfilScreen L136-138)
-Componente PlanLimitModal.js reutilizable nuevo
-Manejar 403 en PortfolioScreen.insertItem() mostrando PlanLimitModal
-AlertCreateModal valida tipo_alerta contra plan antes de POST + handle 403
-SubscriptionScreen lee plan actual al iniciar (no mostrar "Quiero PRO" si ya sos PRO)
-Bump versionCode 17 a 18 y versionName 1.0.17 a 1.0.18
+Build 19 FINAL en compilacion por CODE. Reemplaza Build 18 completo. NO subir nada a Play Console hasta que Fernando haga smoke test en Samsung real.
 
-P1 — 5 hs Code:
-10. useFocusEffect refresca plan al volver a screen
-11. AppState listener refresca plan al volver de background
-12. Ocultar toggles alertas no permitidas + lock icon
-13. MisAlertasScreen filtra por plan actual
-14. APIs edge-to-edge Android 15: WindowCompat + WindowInsetsControllerCompat nativo
-15. Activar ProGuard + reglas RevenueCat + test device físico
-Total Build 18: 9 hs Code en 2 jornadas.
-Build 25 iOS: mismos P0 ítems 1-8 (sin Android-only) = 3.5 hs Code.
-Próximo paso inmediato
-CODE arranca ítem 1: eliminar credenciales hardcodeadas PerfilScreen.js L141.
-Estado dashboards al 14-may AM
-Apple Build 17: Pendiente de revisión día 21. Foro 826030: respuesta Apple staff hace 2 días, sin novedad nueva. Reply agendado 15-may 9 AM AR.
-Google Play: Build 17 producción activo. 21 instalaciones totales.
-Railway: online. RevenueCat webhook AUREX Backend activo y validado.
-Regla de uso
-Escritorio actualiza este archivo cada 20-30 intercambios o ante cualquier análisis largo.
-Fernando puede pedir "guardá el estado" en cualquier momento y Escritorio genera el texto nuevo para que CODE commitee.
-Si el contexto de Escritorio se compacta: leer esta URL + BRIEF_AUREX_LATEST.md = recuperación completa en menos de 2 minutos.
+## QUE HICIMOS HOY
+
+Bug P0 signup resuelto: SignupScreen nueva con auth.signUp + POST /api/usuario Capa 1 try/catch + Capa 2 auto-heal en usePlan con guards session y email. Supabase confirmado: cero triggers, endpoint POST idempotente verificado en server.js L1375.
+
+Gating corregido segun lo publicado en Play Console y PWA Perfil (verificado por Escritorio con login real fmoscon@gmail.com):
+
+- V1 Pulse Ver variables: FREE redirige, PRO ve 14 variables con pesos, ELITE ve todo mas analisis profundo e historial
+- V2/V5 Panel IA: tiering 3 niveles, textos del copy publicado
+- V3 Banner Mercados: eliminado
+- V4 Banner Perfil: queda
+- Z1 watchlistMax FREE: 1 confirmado
+- Bug contadores Alertas: activeCount y denominadores corregidos para descontar bloqueados por plan
+- PlanLimitModal: agregada X de cerrar arriba + texto "Ahora no" con mejor contraste
+
+Smoke test emulador parcial completado: D1 background 90s pasa, D2 force-stop pasa, D3 pendiente Samsung real, cross-link validado por codigo.
+
+## PENDIENTE DECISION URGENTE
+
+Bug modal Agregar Activo: teclado decimal-pad tapa boton Guardar en Samsung. CODE tiene fix listo (ScrollView wrapper + returnKeyType + Keyboard.dismiss). Fernando debe decidir si va en este build o en Build 20. Es severidad equivalente al bug signup: usuario nuevo se registra OK pero no puede agregar su primer activo.
+
+## PENDIENTE SMOKE TEST EN SAMSUNG REAL
+
+- Signup email nuevo de cero
+- Login tester existente
+- Persistencia sesion D3 cold reboot
+- Panel IA expandido FREE PRO ELITE
+- Pulse Ver variables FREE PRO ELITE
+- Modal Agregar Activo teclado y boton Guardar
+- Banner Perfil visible, Mercados ausente
+
+## PENDIENTE POST BUILD FINAL
+
+- Trigger SQL Supabase defensa 3
+- Fix Logout iOS y Android App.js
+- Fix PerfilScreen gating plan nativo
+- Regenerar imagenes onboarding slide 4
+- Reply thread Apple Forum manana 15-may 9 AM AR (Escritorio lo publica)
+
+## CARPETA BRIEFS
+
+Path local: /Users/fernandomoscon/Desktop/aurex-app/briefs/
+
+Archivos:
+- BRIEF_AUREX_LATEST.md (29KB)
+- SESSION_ACTIVE_ESCRITORIO_CHROME.md (3KB) — este archivo
+- archive/
+
+## REGLA DE USO
+
+Si el contexto de Escritorio se compacta: leer SESSION_ACTIVE + BRIEF_AUREX_LATEST = recuperacion completa en 2 minutos.
