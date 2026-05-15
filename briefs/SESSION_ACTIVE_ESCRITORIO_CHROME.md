@@ -2,86 +2,115 @@
 
 URL fija: https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/SESSION_ACTIVE_ESCRITORIO_CHROME.md
 
-Ultima actualizacion: 14-may-2026 ~21:40 AR — Build 20 compilado (bump 19→20 porque Play Console no acepta versionCode repetido). SESION ABIERTA.
+Ultima actualizacion: 15-may-2026 ~01:20 AR — Build 21 publicado en Prueba Interna desde 14-may 22:35. Sesion abierta. Bug compra IAP P0 sin resolver.
 
-## ESTADO CRITICO ACTUAL
+---
 
-Build 20 COMPILADO Y EN BACKUP. NO subido a Play Console todavia. Fernando hace smoke test en Samsung real primero.
+## ESTADO REAL (sin invento)
 
-## PATHS DEL BUILD 19 FINAL v2
+### Versiones canonicas
+- **Build 17 (v1.0.17)** = PRODUCCION publica Play Store. Es lo que descarga cualquier usuario. Tambien lo que recibe el tester aurextester12 al instalar/actualizar via Play Store.
+- **Build 21 (v1.0.21)** = PRUEBA INTERNA Play Console, publicado 14-may 22:35 AR. Disponible para verificadores internos. 1 codigo de version.
+- Builds 18 / 19 / 20: solo backup local, no subidos a Play Console.
 
-- AAB para Play Console: /Users/fernandomoscon/AurexApp/android/app/build/outputs/bundle/release/app-release.aab (77 MB)
-- APK para Samsung real: /Users/fernandomoscon/AurexApp/android/app/build/outputs/apk/release/app-release.apk (95 MB)
-- Backup AAB: ~/AurexApp/backups/aab/aurex-build20-FINAL-20260514_2139.aab
-- versionCode 20 / versionName 1.0.20 / ProGuard activo
-- Nota: bump 19→20 fue solo numerico porque Play Console rechaza versionCode 19 (ya estaba usado en un draft abierto previo). Contenido del AAB idéntico a Build 19 FINAL v2.
+### Samsung fisico
+- ID: R5CR92ADDNW
+- Instalado: v1.0.21 via `adb install -r` por USB (sideload, NO desde Play Store)
+- Cuenta Play Store: aurextester12@gmail.com (license tester confirmado)
 
-## QUE INCLUYE EL AAB FINAL v2
+### Por que sideload
+Play Store sirve v1.0.17 al tester aurextester12 aunque la cuenta ve la app como BETA. La propagacion Internal Testing → Play Store no entrega v1.0.21 a esa cuenta. Por eso Fernando instala por cable.
 
-Sprint completo del dia 14-may. 7 fixes acumulados en esta ronda + todo lo de rondas anteriores Build 19:
+---
 
-Ronda final (post-tabla Escritorio):
-1. V1 Pulse Ver variables tiering 3 niveles (FREE redirige, PRO ve 14 vars con pesos, ELITE ve mas analisis profundo y placeholder historico)
-2. V3 UpsellBanner sacado de Mercados (saturaba precios)
-3. V2/V5 textos banners IA ajustados al copy publicado: "Razonamiento detallado en senales IA Disponible en ELITE" para FREE, "Analisis tecnico avanzado RSI MACD Disponible en ELITE" para PRO
-4. Contador alertas descuenta toggles bloqueados por plan (antes mostraba 15 ON aunque GDELT estuviera con candado para PRO)
-5. Mensaje PlanLimitModal dinamico: GDELT es ELITE-only entonces texto especifico, resto es PRO o ELITE
-6. PlanLimitModal: X de cerrar arriba a la derecha + texto "Ahora no" blanco subrayado para mejor contraste
-7. Modal Agregar Activo: Keyboard import + ScrollView wrapper con keyboardShouldPersistTaps + returnKeyType en inputs + Keyboard.dismiss antes de saveAsset (era P0 oculto, usuario nuevo no podia agregar primer activo)
+## QUE YA ESTA HECHO
 
-Acumulado de rondas anteriores Build 19 (ya estaba en disco):
-- SignupScreen nueva + auth.signUp + POST /api/usuario Capa 1 try/catch + Capa 2 auto-heal en usePlan con guards session y email
-- 11 evaluadores backend alertas no-precio (apertura, alta_conviccion_ia, cambio_senal, senal_portfolio, cambio_zona_pulse, por_categoria, termometro_riesgo, fed_fomc, cpi_pbi, earnings, geopolitica_gdelt)
-- watchlistMax FREE = 1 alineado con copy publicada
-- UpsellBanner Perfil (queda, V4 confirmado por Escritorio)
-- WatchlistScreen: bug seguridad USER_ID hardcoded corregido a dinamico
-- Bloque 4 sincerar copy: 5 promesas falsas eliminadas de i18n.js (Export Excel, SMS, Chat live, API personal, historial 30 dias IA)
-- Bloque 3 PWA: banner upsell aurex.live
+- AAB Build 21 compilado y subido a Prueba Interna Play Console (14-may 22:35).
+- License Testing lista "AUREX Testers" ACTIVADA por Escritorio (X1, 14-may 03:54). Lista incluye aurextester12@gmail.com + aurextest2 + aurextester1.
+- RevenueCat offering aurex_default: 4 productos Android linkeados (X2, 14-may 22:48). Toast confirmado.
+- Logcat Samsung 15-may 01:02:58 confirma que RevenueCat retrieva ProductDetails OK para los 4 productos (incluyendo elite.monthly2 con precio USD 19,99, base plan monthly-elite, offer token valido).
 
-## SMOKE TEST EN EMULADOR HECHO
+---
 
-- Login tester PRO entra a app: OK
-- Perfil badge PRO violeta + banner upsell ELITE dorado: OK
-- Pulse Ver variables como PRO abre modal con 14 vars: OK
-- Banner upsell Mercados eliminado: OK
-- Banner IA tier PRO con texto "Analisis tecnico avanzado RSI MACD Disponible en ELITE": OK
-- Tap candado GDELT abre PlanLimitModal con texto especifico ELITE-only: OK
-- Watchlist crear 2da como PRO sin bloqueo: OK (tiene 3 watchlists)
-- App a background 90 segundos y vuelve sin pedir login: OK
-- Force-stop desde task manager y reabre sin pedir login: OK
-- Cross-link Signup Login validado por codigo (App.js L205-211 con props onGoToSignup onGoToLogin): OK
-- Cold reboot emulator: pendiente, validar en Samsung real
+## BUG P0 ABIERTO — COMPRA IAP
 
-## PENDIENTE SMOKE TEST EN SAMSUNG REAL (Fernando hace)
+Sintoma: en Samsung Build 21 sideload USB, tocar PRO Mensual o ELITE Mensual (o anuales) → POP "Error / The Product is not available for Purchase". Reproducible 100% en los 4 planes.
 
-Critico antes de subir a Play Console:
-- Signup email nuevo de cero completo (sin testers preexistentes)
-- Modal Agregar Activo: completar cantidad + precio + tap Guardar con teclado abierto. ANTES el teclado tapaba el boton, AHORA debe quedar accesible via ScrollView.
-- Pulse Ver variables FREE PRO ELITE (3 planes)
-- Panel IA expandido FREE PRO ELITE
-- PlanLimitModal: ver X y "Ahora no" legible
-- Persistencia sesion D3 cold reboot del telefono
-- Banner Perfil visible, Mercados ausente
+Logcat: RevenueCat hace `Requesting products` y RECIBE `ProductDetails` correcto. NO se ve BillingClient.launchBillingFlow ni response code de Google Play. El error sale antes de iniciar el flow de billing real.
 
-## PENDIENTE POST BUILD FINAL (cuando este aprobado)
+Hipotesis a validar (en orden de probabilidad):
 
-- Trigger SQL Supabase como defensa 3 (POST /api/usuario es Capa 1+2 OK, Capa 3 seria redundancia adicional)
-- Fix Logout iOS y Android App.js (no validado hoy, esta como pendiente desde sesion anterior)
-- Fix PerfilScreen gating plan nativo
-- Regenerar imagenes onboarding slide 4 (PNG actual tiene copy vieja con 5 promesas falsas)
-- Reply thread Apple Forum manana 15-may 9 AM AR (Escritorio publica)
+### Hipotesis 1 — Productos en Play Console Inactivos o sin base plan/oferta activa
+Accion Escritorio via Chrome:
+Path: Play Console → AUREX → Monetizar → Productos → **Suscripciones**
+
+Para cada uno de los 4 productos, reportar:
+- Estado del producto: Activo / Inactivo
+- Base plan: existe, esta Activo
+- Ofertas: existe al menos una, esta Activa
+- Region/pais: incluye Argentina o esta restringido
+
+IDs a verificar:
+- `com.fernandomoscon.aurex.pro.monthly`
+- `com.fernandomoscon.aurex.pro.annual`
+- `com.fernandomoscon.aurex.elite.monthly2`
+- `com.fernandomoscon.aurex.elite.annual`
+
+### Hipotesis 2 — Cuenta tester no esta en la track Internal Testing
+Path: Play Console → Prueba → Prueba Interna → Verificadores
+Confirmar que `aurextester12@gmail.com` figura en la lista de testers del TRACK (la lista que autoriza recibir la beta es DISTINTA de la lista de License Testing que autoriza compras a $0).
+
+---
+
+## QUE NO SE PUEDE TESTEAR EN ESTA SESION
+
+Razon: la cuenta aurextester12 recibe v1.0.17 via Play Store aunque ve la app como BETA → propagacion Internal Testing → Play Store fallando para esa cuenta. Sin esa propagacion solo se testea sideload USB, y la sideload tiene su propio set de incertidumbres en compras IAP.
+
+Lo NO validado desde Play Store:
+- SignupScreen + flow auth nuevo (Capa 1+2 self-heal)
+- Onboarding 2 botones
+- Gating UI plan actualizado (Pulse Ver variables tiering, banners IA, contador alertas, PlanLimitModal)
+- Modal Agregar Activo con ScrollView
+- Fix RevenueCat post X2 en flujo real Play Store
+
+Para destrabar la propagacion: ver Hipotesis 2 mas arriba + considerar limpiar cache Play Store del telefono + reinstalar desde link de tester.
+
+---
+
+## REGLAS QUE NO ROMPER (lecciones de este chat)
+
+1. NO proponer subir el AAB Build 21 a Play Console — YA esta en Prueba Interna desde 14-may 22:35.
+2. Build 17 es PRODUCCION, no Internal Testing. Internal Testing es Build 21.
+3. License Testing y la lista de testers de la track Internal Testing son LISTAS DISTINTAS en Play Console.
+4. NO afirmar diagnostico unico (ej. "es el sideload") sin antes verificar estado productos + lista testers track.
+
+---
+
+## QUE NECESITAMOS DE ESCRITORIO
+
+1. Reporte de Hipotesis 1 (estado 4 productos Suscripciones en Play Console)
+2. Reporte de Hipotesis 2 (aurextester12 en track Internal Testing)
+3. Si Hipotesis 1 muestra producto Inactivo / sin base plan / sin oferta → activar y avisar.
+
+Con eso decidimos si:
+- Causa A producto Inactivo → activar y retry
+- Causa B cuenta no en track → fix lista tester
+- Causa C otra cosa → debug nuevo con datos concretos
+
+---
+
+## QUE NO HACER
+
+Fernando NO autoriza compilar Build 22 hasta cerrar el bug P0 de compra IAP. Los 5 fixes de codigo identificados (Modal Agregar Activo sticky, contador alertas absoluto, AlertCreateModal mapeo tipos, SubscriptionScreen e.message real, UpsellBanner Portfolio) quedan en cola hasta resolver IAP.
+
+---
 
 ## CARPETA BRIEFS
 
 Path local: /Users/fernandomoscon/Desktop/aurex-app/briefs/
 
-Archivos:
-- BRIEF_AUREX_LATEST.md (29 KB)
+- BRIEF_BUILD21_ESTADO_15MAY.md (NUEVO — fuente de verdad operativa Build 21)
+- BRIEF_AUREX_LATEST.md (general)
 - SESSION_ACTIVE_ESCRITORIO_CHROME.md (este archivo)
-- archive/ (versiones historicas)
 
-## REGLA DE USO
-
-Si el contexto de Escritorio se compacta: leer SESSION_ACTIVE + BRIEF_AUREX_LATEST = recuperacion completa en 2 minutos.
-
-SESION SIGUE ABIERTA. Fernando aclaro que seguimos trabajando.
+SESION ABIERTA.
