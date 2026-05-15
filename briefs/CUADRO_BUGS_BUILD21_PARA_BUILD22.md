@@ -20,6 +20,329 @@ Cuenta tester: aurextester12@gmail.com (License Tester activo)
 
 ---
 
+## DETALLE TECNICO POR BUG (#2 a #7)
+
+### Bug #2 — Modal Agregar Activo: boton Guardar oculto bajo teclado
+
+**Que esta mal exactamente:**
+La estructura actual del modal de Agregar Activo en PortfolioScreen es:
+
+```jsx
+<Modal>
+  <View style={modalContainer}>
+    <Text>Agregar Activo</Text>
+    <ScrollView keyboardShouldPersistTaps="handled">
+      <TextInput placeholder="Cantidad" />
+      <TextInput placeholder="Precio" />
+      <TouchableOpacity onPress={saveAsset}>  ← BOTON ADENTRO DEL SCROLLVIEW
+        <Text>Guardar</Text>
+      </TouchableOpacity>
+    </ScrollView>
+  </View>
+</Modal>
+```
+
+Cuando el usuario hace tap en el TextInput "Cantidad" o "Precio", el teclado virtual del Samsung ocupa ~45% de la pantalla. El ScrollView intenta auto-desplazarse para mantener el TextInput visible, pero el boton Guardar (que esta MAS abajo en el flujo del ScrollView) queda fuera del area visible Y por debajo del teclado. El usuario solo ve los inputs y NO puede llegar al boton. El fix Build 21 (agregar `keyboardShouldPersistTaps="handled"` + `Keyboard.dismiss()` antes de saveAsset) NO resuelve esto porque el problema es de POSICIONAMIENTO, no de propagacion de eventos: el boton sigue debajo del teclado.
+
+**Como se ajusta:**
+Refactorizar el modal a layout flex con dos zonas claramente separadas — la zona de inputs scrolleable arriba y el boton FIJO abajo, FUERA del ScrollView:
+
+```jsx
+<Modal>
+  <View style={{ flex: 1, backgroundColor: modalBg }}>
+    {/* Zona 1: header titulo (flex-shrink: 0) */}
+    <View style={headerStyle}>
+      <Text>Agregar Activo</Text>
+    </View>
+
+    {/* Zona 2: ScrollView con inputs (flex: 1, ocupa el espacio restante) */}
+    <ScrollView
+      style={{ flex: 1 }}
+      contentContainerStyle={{ padding: 16, paddingBottom: 24 }}
+      keyboardShouldPersistTaps="handled"
+    >
+      <TextInput placeholder="Cantidad" returnKeyType="next" />
+      <TextInput placeholder="Precio" returnKeyType="done" onSubmitEditing={Keyboard.dismiss} />
+      {/* Cualquier otro campo aca */}
+    </ScrollView>
+
+    {/* Zona 3: boton STICKY fijo abajo (flex-shrink: 0, NO en ScrollView) */}
+    <View style={{
+      paddingHorizontal: 16,
+      paddingTop: 12,
+      paddingBottom: Platform.OS === 'ios' ? 32 : 16,  // safe area
+      borderTopWidth: 1,
+      borderTopColor: borderColor,
+      backgroundColor: modalBg,
+    }}>
+      <TouchableOpacity
+        style={btnGuardar}
+        onPress={() => { Keyboard.dismiss(); saveAsset(); }}
+      >
+        <Text>Guardar</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+</Modal>
+```
+
+Clave: el ScrollView esta SOLO para los inputs, y el boton vive en un View hermano FUERA del ScrollView. Al abrirse el teclado, el boton se mantiene visible arriba del teclado porque esta posicionado al final del contenedor flex del modal y RN lo respeta como sticky natural.
+
+**Validacion en Samsung:**
+Modal abre, tap Cantidad (teclado aparece), escribir numero, tap Precio (teclado sigue), escribir numero. El boton "Guardar" tiene que quedar visible y tocable EN TODO MOMENTO arriba del teclado.
+
+---
+
+### Bug #3 — Contador secciones Alertas: denominador descontando bloqueados
+
+**Que esta mal exactamente:**
+En `AlertasScreen.js` cada seccion tiene un header con un contador "X/Y" donde:
+- X = alertas activas en esa seccion para el plan actual
+- Y = total de alertas configurables en esa seccion
+
+Codigo actual L582 (aprox):
+```javascript
+const totalInSec = sec.items.filter(i => isAlertAllowed(i.id)).length;
+const activeInSec = sec.items.filter(i => toggles[i.id] && isAlertAllowed(i.id)).length;
+```
+
+`isAlertAllowed(i.id)` devuelve false para items que el plan actual NO permite. Por ejemplo, si el plan es PRO y una alerta requiere ELITE, esa alerta se descuenta de AMBOS numerador y denominador.
+
+Ejemplo concreto en una seccion con 5 alertas total donde 1 requiere ELITE y el usuario es PRO con 4 activas: el codigo actual muestra **4/4** (denominador = 5 items filtrado por isAlertAllowed = 4 permitidos para PRO), cuando Fernando quiere ver **4/5** (denominador = total absoluto del catalogo).
+
+La logica de Fernando: el usuario debe ver el TOTAL del catalogo, no el total filtrado por su plan. Asi sabe que hay 1 alerta que NO esta usando porque su plan no la permite, lo cual es informacion de upsell util.
+
+**Como se ajusta:**
+Cambiar UNICAMENTE el denominador para que NO filtre. El numerador SI sigue filtrando para no contar como "activa" una alerta que el plan ni siquiera deja usar:
+
+```javascript
+// L582 actual:
+const totalInSec = sec.items.filter(i => isAlertAllowed(i.id)).length;
+
+// Cambiar a:
+const totalInSec = sec.items.length;  // total ABSOLUTO del catalogo
+
+// activeInSec NO se toca:
+const activeInSec = sec.items.filter(i => toggles[i.id] && isAlertAllowed(i.id)).length;
+```
+
+**Cuidado:**
+El header global de la pantalla (L409 aprox) tambien tiene un contador `X/Y` pero ahi el comportamiento puede ser distinto — confirmar con Fernando si quiere mismo criterio (denominador absoluto) o mantener el de plan filtrado. Si es lo mismo, aplicar el cambio tambien en L409.
+
+**Validacion en Samsung:**
+Login como PRO. Abrir Alertas. Mirar contadores por seccion: deben mostrar denominador completo incluyendo alertas con candado por plan.
+
+---
+
+### Bug #4 — AlertCreateModal: rebote falso "Pasate a ELITE"
+
+**Que esta mal exactamente:**
+Cuando el usuario abre AlertCreateModal desde la campana de un activo (Portfolio o Watchlist) y elige crear "Alerta de Precio" (precio objetivo) o "Alerta de Porcentaje" (variacion), el modal arma el body del POST con `tipo: 'precio'` o `tipo: 'porcentaje'`.
+
+Backend en `server.js` (probable) tiene un mapping PLAN_LIMITS asi:
+```javascript
+PLAN_LIMITS = {
+  FREE: { tipos: ['precio_objetivo', 'variacion_brusca'] },
+  PRO:  { tipos: ['precio_objetivo', 'variacion_brusca', 'apertura', 'cambio_senal', ...] },
+  ELITE: { tipos: ['*'] }
+}
+```
+
+Backend evaluador: `if (!planConfig.tipos.includes(body.tipo)) return 403 plan_limit_reached`. Como `'precio'` NO esta en ninguna lista, devuelve 403 con mensaje "ELITE-only" o "PRO o ELITE". El frontend interpreta el 403 y muestra PlanLimitModal con "Pasate a ELITE", incluso cuando el usuario es PRO y deberia poder crear esa alerta.
+
+Es un mismatch de naming: el frontend usa nombres cortos ("precio", "porcentaje") pero el backend espera los nombres canonicos del schema ("precio_objetivo", "variacion_brusca").
+
+**Como se ajusta:**
+Localizar el callsite que arma el body del POST a `/api/alertas`. Buscar con grep:
+
+```bash
+grep -rnE "tipo:.*['\"]precio['\"]|tipo:.*['\"]porcentaje['\"]" src/
+```
+
+En cada llamada agregar un mapping defensivo antes del POST. Una opcion es crear una funcion helper en `lib/alertas.js`:
+
+```javascript
+// lib/alertas.js
+export const mapTipoAlerta = (tipoUI) => {
+  const map = {
+    'precio': 'precio_objetivo',
+    'porcentaje': 'variacion_brusca',
+  };
+  return map[tipoUI] || tipoUI;  // si ya es canonico, pasa de largo
+};
+```
+
+Y en el callsite:
+```javascript
+import { mapTipoAlerta } from '../lib/alertas';
+
+// Antes del POST:
+const body = {
+  ...formData,
+  tipo: mapTipoAlerta(formData.tipo),  // 'precio' -> 'precio_objetivo'
+};
+await fetch(`${BACKEND}/api/alertas`, { method: 'POST', body: JSON.stringify(body), ... });
+```
+
+Alternativamente, si solo hay un lugar que arma el POST, hacer el mapping inline ahi mismo.
+
+**Validacion previa antes de codear:**
+Confirmar en el backend (`server.js`) los nombres EXACTOS del schema. Grep en `aurex-backend`:
+```bash
+grep -nE "PLAN_LIMITS|tipos:|tipo ==" server.js
+```
+
+**Validacion en Samsung:**
+Login como PRO. Abrir Portfolio o Watchlist. Tap campana de un activo. Crear "Alerta de Precio" con un valor objetivo. Backend debe aceptar con 200 OK, alerta debe aparecer en MisAlertas, sin POP "Pasate a ELITE".
+
+---
+
+### Bug #5 — IA tap candado RSI/MACD: POP error + pantalla "Elige tu plan FREE $" mal renderizada
+
+**Que esta mal exactamente:**
+Al estar en IAScreen como FREE o PRO, hacer tap en un activo expande las "Razones" de la senal. Dentro de las razones hay una seccion "Analisis Tecnico" con candados (icono lock) en items RSI, MACD u otros indicadores tecnicos. Al hacer tap en uno de esos candados se dispara DOS cosas:
+
+1. Un Alert.alert con texto generico "Error" (sin detalle, similar al de SubscriptionScreen — probable que sea el mismo Alert.alert reutilizado).
+2. Detras del Alert, en background, se renderiza una pantalla con titulo "Elige tu plan FREE $" mal formateada (precios en posiciones raras, layout cortado, falta info). Es el mismo bug visual que aparecia en el emulador antes de los fixes de Build 21.
+
+Causa hipotetica: el handler del tap del candado tiene un try/catch que en el catch dispara un Alert (de ahi el POP "Error"). Y antes/despues del catch hace navigation.navigate('Subscription') con algun prop o sin prop necesario. La SubscriptionScreen recibe un state corrupto y rendera incompleta.
+
+**Como se ajusta:**
+Paso 1 — diagnosticar. Capturar logcat fresh con la app abierta y tocar el candado. Buscar:
+```bash
+adb logcat -d | grep -iE "ReactNativeJS|console.error|aurex.*candado|aurex.*lock|IAScreen|navigate.*Subscription"
+```
+
+Encontrar el `console.error` (si existe) o el handler completo en `IAScreen.js`. Grep:
+```bash
+grep -nE "candado|locked|onPressLock|Analisis Tecnico|RSI|MACD" /Users/fernandomoscon/AurexApp/src/screens/IAScreen.js
+```
+
+Paso 2 — ajustar segun lo que se encuentre. Dos escenarios:
+
+**Escenario A — handler navega a Subscription:**
+```javascript
+// Actual (hipotetico):
+onPress={() => {
+  navigation.navigate('Subscription');  // sin props
+}}
+
+// Ajuste:
+onPress={() => {
+  navigation.navigate('Subscription', { from: 'ia_analisis_tecnico' });  // con context
+}}
+```
+
+Y en SubscriptionScreen leer ese prop para mostrar la pantalla correctamente sin renderer corrupto.
+
+**Escenario B — handler intenta mostrar PlanLimitModal pero falla:**
+```javascript
+// Actual (hipotetico):
+onPress={() => {
+  if (plan !== 'ELITE') {
+    setShowPlanLimitModal(true);  // pero el modal no esta importado/renderizado correctamente aca
+  }
+}}
+
+// Ajuste:
+// Asegurar que <PlanLimitModal visible={showPlanLimitModal} plan={plan} message={...} ... /> este renderizado en IAScreen al final del JSX.
+```
+
+Paso 3 — eliminar el Alert.alert generico del handler si no es necesario; reemplazar por el modal de plan correcto.
+
+**Validacion en Samsung:**
+Login FREE o PRO. Ir a AI. Tap en un activo. Expand razones. Tap candado RSI o MACD. Resultado esperado: aparece PlanLimitModal limpio con texto "Esta funcion requiere ELITE / Pasate a ELITE" y boton de upgrade. NO debe aparecer Alert "Error". NO debe aparecer pantalla "Elige tu plan" deformada.
+
+---
+
+### Bug #6 — SubscriptionScreen: Alert "Error" sin e.message real
+
+**Que esta mal exactamente:**
+Codigo actual en `SubscriptionScreen.js` L78:
+```javascript
+} catch (e) {
+  if (!e.userCancelled) Alert.alert(t('error'), e.message);
+}
+```
+
+Cuando `purchasePackage()` falla con un error donde `e.message` viene `undefined`, `null` o string vacio (puede pasar segun version de SDK o tipo de error), el Alert se muestra como:
+- Titulo: "Error"
+- Mensaje: (vacio)
+
+El usuario ve un cartel inutil. Tambien, en el logcat NO aparece el objeto error completo porque no hay `console.error`, asi que para debug futuro queda imposible saber que paso.
+
+**Como se ajusta:**
+Reemplazar L78 por:
+```javascript
+} catch (e) {
+  console.error('[SUB] purchase failed:', e);  // dispara log en logcat con objeto error completo
+  if (!e.userCancelled) {
+    Alert.alert(
+      'Error',
+      e.message || e.toString() || 'No se pudo procesar la compra. Intentalo de nuevo o contactanos.'
+    );
+  }
+}
+```
+
+Cambios:
+1. `console.error` con el objeto completo: en logcat aparece como `unknown:ReactNative: console.error: [SUB] purchase failed: {code: ..., message: ..., underlyingErrorMessage: ...}`. Critico para debug.
+2. Fallback explicito en el Alert con 3 niveles: `e.message` → `e.toString()` → texto generico amigable.
+3. Titulo cambia de `t('error')` a `'Error'` (mas directo, no depende de i18n).
+
+Aplicar el MISMO patron en `handleRestore` (L92 aprox) que tambien tiene el problema.
+
+**Validacion en Samsung:**
+Forzar un error (por ejemplo intentar comprar cuando NO hay conexion). El Alert debe mostrar mensaje informativo o fallback amigable. El logcat debe tener una linea `console.error` con el objeto error completo.
+
+---
+
+### Bug #7 — UpsellBanner faltante en PortfolioScreen
+
+**Que esta mal exactamente:**
+PortfolioScreen muestra "Valor Total" del portfolio del usuario (suma de cantidad x precio actual de todos los activos). Para usuarios FREE y PRO no hay ningun banner promocional o llamado a upgrade en esa pantalla. En Build 21 se intento agregar a MercadosScreen pero se saco porque saturaba la vista de precios. La pantalla logica para tener el banner es Portfolio porque es donde el usuario ve su valor invertido y es ideal para sugerir upgrade ("Sumate a PRO para ver señales IA en estos activos").
+
+**Como se ajusta:**
+Paso 1 — verificar que `UpsellBanner` existe en `src/components/UpsellBanner.js` y soporta prop `compact`. Grep:
+```bash
+grep -nE "export.*UpsellBanner|compact" /Users/fernandomoscon/AurexApp/src/components/UpsellBanner.js
+```
+
+Paso 2 — en `PortfolioScreen.js`, ubicar el componente que renderea "Valor Total". Buscar con grep:
+```bash
+grep -nE "Valor Total|valor_total|valorTotal|currentPlan" /Users/fernandomoscon/AurexApp/src/screens/PortfolioScreen.js
+```
+
+Paso 3 — importar y agregar el banner JUSTO despues del bloque de Valor Total:
+```jsx
+import UpsellBanner from '../components/UpsellBanner';
+
+// ... dentro del render, despues del Valor Total:
+<View style={st.valorTotalContainer}>
+  <Text style={st.label}>Valor Total</Text>
+  <Text style={st.value}>{formatCurrency(valorTotal)}</Text>
+</View>
+
+{/* NUEVO en Build 22 */}
+{(currentPlan === 'FREE' || currentPlan === 'PRO') && (
+  <UpsellBanner compact />
+)}
+```
+
+Solo mostrar el banner si el plan es FREE o PRO. Si es ELITE no se muestra (ya es el plan top).
+
+**Cuidado:**
+Confirmar con Fernando + Escritorio:
+- Texto del banner para Portfolio (puede ser diferente del que se usaba en Mercados antes).
+- Si tiene que ser dismissible (con X para cerrar) o permanente.
+
+**Validacion en Samsung:**
+Login FREE → ver banner UpsellBanner debajo de Valor Total con tono dorado (upgrade a PRO).
+Login PRO → ver banner UpsellBanner debajo de Valor Total con tono violeta (upgrade a ELITE).
+Login ELITE → NO ver banner.
+
+---
+
 ## CONTEXTO ADICIONAL
 
 ### Lo que YA esta en Build 21 (validado por Fernando en Samsung):
