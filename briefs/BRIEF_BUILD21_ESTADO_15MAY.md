@@ -162,6 +162,16 @@ NO es bug del codigo. NO es bug de Play Console productos (los 4 base plans esta
 - ELITE Mensual — base plan "monthly-elite": Activo, 174 paises, sin ofertas separadas
 - ELITE Anual — base plan "annual-elite": Activo, 174 paises, sin ofertas separadas
 
+## 8.A — ESTADO TICKET REVENUECAT (15-may 02:50 AR)
+
+Ticket consolidado armado por Code + Escritorio. Texto final en `briefs/TICKET_REVENUECAT_FINAL_15MAY.md`. Datos clave:
+- RC App ID: `app8be7db09a7`
+- Project ID: `proj228caf37`
+- 11 hipotesis descartadas listadas
+- 4 screenshots adjuntos: Offerings + App config + Play Console Suscripciones + License Testing
+
+Pendiente: Fernando confirma a Escritorio para submit del ticket en el formulario RC. SLA estimado: 1-3 dias habiles.
+
 ## 9. UNICO CAMINO PARA RESOLVER — DESTRABAR PROPAGACION INTERNAL TESTING → PLAY STORE
 
 La solucion estructural es que aurextester12 reciba v1.0.21 desde Play Store (firma App Signing Key correcta). Hoy Play Store le sirve v1.0.17 (Produccion) aunque la cuenta es Beta tester.

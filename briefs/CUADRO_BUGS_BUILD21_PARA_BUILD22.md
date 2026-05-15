@@ -368,8 +368,8 @@ Login ELITE → NO ver banner.
 
 ## DEPENDENCIAS BUILD 22
 
-- Bug #1 (compra IAP) NO requiere cambio de codigo, solo investigacion externa (RC support + esperar propagacion). NO bloquea compilacion Build 22.
-- Bugs #2-7 son cambios de codigo independientes y se pueden agrupar en un solo Build 22 si Escritorio + Fernando aprueban.
+- Bug #1 (compra IAP) NO requiere cambio de codigo, solo investigacion externa. Ticket consolidado a RevenueCat support listo para enviar 15-may 02:50 AR (ver `briefs/TICKET_REVENUECAT_FINAL_15MAY.md`). Datos clave: RC App ID app8be7db09a7, Project ID proj228caf37, 11 hipotesis descartadas, 4 screenshots adjuntos. SLA RC: 1-3 dias habiles.
+- Bugs #2-7 son cambios de codigo independientes y se pueden agrupar en un solo Build 22 si Escritorio + Fernando aprueban. NO dependen del fix IAP.
 
 ## REGLA OPERATIVA
 
