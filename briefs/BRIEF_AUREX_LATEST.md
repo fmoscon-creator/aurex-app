@@ -2,8 +2,25 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> **Última actualización: 14 de mayo de 2026, 13:30 AR (sprint integral planes — Bloque 4+1 cerrados)**
->
+> **Última actualización: 14 de mayo de 2026, 21:00 AR — Build 19 FINAL v2 compilado en backup. SESIÓN SIGUE ABIERTA.**
+
+## 🟢 Build 19 FINAL v2 — listo en disco, NO subido a Play Console
+
+- **AAB**: `/Users/fernandomoscon/AurexApp/android/app/build/outputs/bundle/release/app-release.aab` (77 MB)
+- **APK Samsung real**: `/Users/fernandomoscon/AurexApp/android/app/build/outputs/apk/release/app-release.apk` (95 MB)
+- **Backup**: `~/AurexApp/backups/aab/aurex-build19-FINAL-v2-20260514_2056.aab`
+- **versionCode** 19 / **versionName** 1.0.19 / ProGuard activo
+
+### Fixes acumulados en este AAB
+
+**Ronda final (post-tabla Escritorio 14-may PM)**: V1 Pulse tiering 3 niveles · V3 banner Mercados out · V2/V5 textos banners IA con copy publicado · contador alertas descuenta plan · PlanLimitModal mensaje dinámico GDELT=ELITE-only · PlanLimitModal X + "Ahora no" visible · Modal Agregar Activo Keyboard + ScrollView + returnKeyType (cierra bug P0 teclado tapa Guardar).
+
+**Rondas anteriores Build 19**: SignupScreen + Capa 1 POST + Capa 2 auto-heal usePlan · 11 evaluadores backend alertas no-precio · watchlistMax FREE=1 · UpsellBanner Perfil · fix seguridad WatchlistScreen USER_ID · Bloque 4 sincerar copy 5 promesas falsas · Bloque 3 PWA banner upsell.
+
+**Smoke test emulador**: 10 items PASS, cold reboot pendiente en Samsung real.
+
+**Próximo paso**: Fernando hace smoke test en Samsung real → si OK, sube AAB a Play Console Internal Testing.
+
 > Versión histórica anterior: `briefs/archive/BRIEF_AUREX_2026-05-09.md`
 
 ## 💳 PLANES DE SUSCRIPCIÓN — verificado por Escritorio 14-may-2026
@@ -38,12 +55,27 @@ Proyecto AUREX — ID `228caf37`. Offering `aurex_default` ("AUREX PLANS") — 4
 
 ### Alertas operativas planes (NO bloquean lanzamiento)
 
-1. **Beneficios vacíos Play Console 4 planes Android** — completar con 2-3 puntos reales por plan (mejora UX post-compra). Acción Fernando/Escritorio en Play Console, no requiere build.
-2. **Descripción vacía PRO Anual Android** — agregar "Full access to all AUREX PRO features. Annual subscription, save 25%". Acción Fernando/Escritorio en Play Console.
+1. ~~**Beneficios vacíos Play Console**~~ ✅ Cerrado Escritorio 14-may PM. 3 beneficios por plan:
+   - PRO Mensual/Anual: Real-time alerts 350+ assets · AUREX Pulse · Watchlist & portfolio (Anual: + Save 25%)
+   - ELITE Mensual/Anual: AI signals confidence · Full Pulse + RSI/MACD · Unlimited alerts (Anual: + Save 25%)
+2. ~~**Descripción vacía PRO Anual Android**~~ ✅ Cerrado Escritorio 14-may PM.
 3. **IDs RC iOS incompletos** — se autocompletan al aprobar Build 17.
 4. **Verificar precio ELITE Anual iOS = $179.99** — accordion ASC no expandible; verificar al aprobar Build 17.
 
 > Source-of-truth ampliado: `AurexApp/docs/SUSCRIPCIONES.md` + memoria Code `project_planes_suscripcion_14may.md`.
+
+## 🚨 BUG P0 14-may PM — Android sin flujo SignUp (PRODUCCIÓN BLOQUEADA para nuevos)
+
+**Síntoma**: Usuarios que bajan la app del Play Store + intentan registrarse → "Invalid login credentials". Reportado por Fernando 14-may con 2 usuarios reales bloqueados.
+
+**Causa**: `OnboardingScreen.js` L150-160 — los 3 botones del slide 4 ("Empezar gratis", "Crear cuenta gratis", "Ya tengo cuenta") todos llaman al mismo `onFinish` → LoginScreen. `LoginScreen.js` L23-69 SOLO hace `signInWithPassword` (no signUp). Solo testers entran (cuentas pre-creadas en Supabase Dashboard).
+
+**Plan fix propuesto (decisión Fernando pendiente)**:
+- Opción 1 (~1 hr): en LoginScreen.signIn, si falla con "Invalid credentials", llamar signUp automático. UI sin cambios.
+- Opción 2 (~3 hr): separar LoginScreen / SignupScreen + wirear 3 botones slide 4 según semántica.
+- Opción 3 (v2.0): magic-link.
+
+Detalle: memoria `project_bug_signup_android_14may.md`.
 
 ## 📋 PENDIENTES TOTALES al 14-may 02:13 AR
 
