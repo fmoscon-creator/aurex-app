@@ -454,11 +454,112 @@ Escritorio dio OK condicional 15-may ~03:30 AR:
 
 | Tier | Bugs incluidos | Estado |
 |------|----------------|--------|
-| Tier A (ya listos) | #2, #3, #4, #6 | LISTOS para implementar tras OK Fernando |
-| Tier B (pre-test/confirmacion) | #5 (test logcat) + #7 (texto banner) | Pendiente input Fernando |
-| Tier C (externo) | #1 | Esperar respuesta RC |
+| Tier A (en implementacion) | #2, #3, #4, #6 | **OK Fernando 15-may ~04:40 AR — ARRANCAR YA** |
+| Tier B (closed) | #5 AUTO-RESUELTO en Build 21 (S2 lo confirma) + #7 texto APROBADO | **CERRADO** — incluir #7 en Build 22 con textos aprobados |
+| Tier C (externo) | #1 → nueva fase: compra PROCESADA en Play Store sandbox pero entitlement NO sincroniza en app ni en RC | **EN INVESTIGACION** — Escritorio chequea entitlements en RC dashboard |
 
-Build 22 se compilara cuando Tier A + Tier B esten resueltos. Tier C NO bloquea Build 22.
+---
+
+## ACTUALIZACION 15-may ~04:40 AR — BUG #1 NUEVA FASE
+
+Fernando probo compra PRO Mensual en Samsung:
+1. Tap PRO Mensual en SubscriptionScreen → abre Play Store nativo OK (S2 confirma)
+2. Tap "Suscribirse" → biometrica → pop "Tu plan fue activado"
+3. Pero al ir a Perfil sigue mostrando **FREE**.
+
+Escritorio verifico en RC dashboard en vivo:
+- Customer `$RCAnonymousID:583810b271f44bc1a2ff8336cbccce66`, SANDBOX DATA, AR, User Since 2026-05-15 4:43 UTC
+- Entitlements: **"No current entitlements"**
+- Total Spent: USD 0
+- La compra NO llego a RC
+
+Diagnostico actual: `launchBillingFlow` funciona (propagacion 48h se resolvio sola). La compra fue procesada por Google Play sandbox (License Tester, sin cargo). RC NO recibio entitlement.
+
+### Hipotesis Code sobre handler post-compra
+
+Codigo handler en `SubscriptionScreen.js` L69-82:
+
+```javascript
+const handlePurchase = async (pkg) => {
+  try {
+    setPurchasing(true);
+    const { customerInfo } = await Purchases.purchasePackage(pkg);
+    if (customerInfo.entitlements.active['pro'] || customerInfo.entitlements.active['elite']) {
+      Alert.alert(t('listo'), t('plan_activado'));
+      navigation.goBack();
+    }
+  } catch (e) {
+    if (!e.userCancelled) Alert.alert(t('error'), e.message);
+  } finally {
+    setPurchasing(false);
+  }
+};
+```
+
+Problemas detectados:
+1. El if hardcodea entitlement IDs literales `'pro'` y `'elite'`. Si en RC dashboard estan con otro ID (mayuscula, prefijo, etc.) el if NUNCA matchea.
+2. NO hay rama else: si el if falla, el codigo termina silenciosamente sin feedback al usuario.
+3. NO actualiza `currentPlan` local ni notifica al resto de la app (PerfilScreen, AppContext).
+4. NO hace `Purchases.getCustomerInfo()` post-compra explicito para forzar sync con servidor RC.
+5. La misma logica esta en `PerfilScreen.js` L438 y L480 (`customerInfo.entitlements.active['pro']` y `['elite']`). Si los IDs en RC no matchean, TODA la app no reflecta el plan.
+
+### Accion para Escritorio (1 chequeo RC dashboard)
+
+RC dashboard → **Project Settings → Entitlements** → reportar:
+- ¿Existen entitlements en el proyecto?
+- ¿Con que IDs exactos? (case-sensitive, underscores, prefijos)
+- ¿Tienen productos attached?
+  - Los 2 PRO (pro.monthly + pro.annual) deben estar attached a un entitlement.
+  - Los 2 ELITE (elite.monthly2 + elite.annual) idem.
+- Si NO existen → crearlos como `pro` y `elite` (minuscula exacta) + attach productos.
+
+### Bug #8 NUEVO para Build 22 — Post-purchase sync
+
+Independientemente de la causa server-side, el handler de purchase necesita mejorar:
+
+```javascript
+const handlePurchase = async (pkg) => {
+  try {
+    setPurchasing(true);
+    const { customerInfo } = await Purchases.purchasePackage(pkg);
+
+    // Logging detallado para debug
+    console.log('[SUB] customerInfo completo:', JSON.stringify(customerInfo, null, 2));
+    console.log('[SUB] active entitlements keys:', Object.keys(customerInfo.entitlements.active));
+
+    const hasPro = !!customerInfo.entitlements.active['pro'];
+    const hasElite = !!customerInfo.entitlements.active['elite'];
+
+    if (hasPro || hasElite) {
+      const newPlan = hasElite ? 'ELITE' : 'PRO';
+      setCurrentPlan(newPlan);  // actualiza UI local
+      // TODO: notificar AppContext o forzar refresh PerfilScreen via navigation params o event emitter
+      Alert.alert(t('listo'), t('plan_activado'));
+      navigation.goBack();
+    } else {
+      // Compra exitosa pero entitlement NO se otorgo (config RC incompleta)
+      console.error('[SUB] purchase OK pero sin entitlement activo. Keys:', Object.keys(customerInfo.entitlements.active));
+      Alert.alert(
+        'Compra procesada',
+        'La compra se completo pero la activacion del plan demora unos minutos. Si no se activa, contactanos.'
+      );
+    }
+  } catch (e) {
+    console.error('[SUB] purchase failed:', e);
+    if (!e.userCancelled) Alert.alert('Error', e.message || e.toString() || 'Error desconocido');
+  } finally {
+    setPurchasing(false);
+  }
+};
+```
+
+Cambios:
+- `console.log` del customerInfo completo (debug visible en logcat — critico para diagnosticar)
+- `console.log` de las keys de entitlements (para confirmar nombres reales que RC retorna)
+- Rama else explicita con Alert informativo si el entitlement no se otorgo
+- `setCurrentPlan(newPlan)` para actualizar UI local
+
+Mismo patron debe aplicarse en `handleRestore` (L84-99) y en los 2 callsites de `PerfilScreen.js` (L438, L480).
 
 ---
 
