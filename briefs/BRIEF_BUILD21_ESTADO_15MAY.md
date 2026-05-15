@@ -164,13 +164,15 @@ NO es bug del codigo. NO es bug de Play Console productos (los 4 base plans esta
 
 ## 8.A — ESTADO TICKET REVENUECAT (15-may 02:50 AR)
 
-Ticket consolidado armado por Code + Escritorio. Texto final en `briefs/TICKET_REVENUECAT_FINAL_15MAY.md`. Datos clave:
+**ENVIADO 15-may ~03:00 AR** via formulario "Get help" del RC dashboard. Confirmacion en pantalla: "Your message has been sent. We'll get back to you as soon as possible."
+
+Texto final en `briefs/TICKET_REVENUECAT_FINAL_15MAY.md`. Datos clave:
 - RC App ID: `app8be7db09a7`
 - Project ID: `proj228caf37`
 - 11 hipotesis descartadas listadas
-- 4 screenshots adjuntos: Offerings + App config + Play Console Suscripciones + License Testing
+- 5 screenshots adjuntos: Offerings + App config + Play Console Suscripciones + License Testing + 1 extra agregada por Escritorio
 
-Pendiente: Fernando confirma a Escritorio para submit del ticket en el formulario RC. SLA estimado: 1-3 dias habiles.
+Respuesta esperada: hasta 2 dias habiles en `fmoscon@gmail.com`.
 
 ## 9. UNICO CAMINO PARA RESOLVER — DESTRABAR PROPAGACION INTERNAL TESTING → PLAY STORE
 

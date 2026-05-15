@@ -1,8 +1,9 @@
 # TICKET REVENUECAT — Version FINAL consolidada por Escritorio
 
 Fecha: 15-may-2026 ~02:50 AR
-Estado: listo para enviar via formulario "Get help" de RC dashboard
-Consolidacion: Escritorio integro el draft de Code + datos extras (RC App ID, Project ID) + 4 screenshots.
+Estado: **ENVIADO** ~03:00 AR via formulario "Get help" de RC dashboard. Confirmacion en pantalla: "Your message has been sent. We'll get back to you as soon as possible."
+Respuesta esperada: hasta 2 dias habiles en `fmoscon@gmail.com`.
+Consolidacion: Escritorio integro el draft de Code + datos extras (RC App ID, Project ID) + 5 screenshots.
 
 ---
 
@@ -11,11 +12,12 @@ Consolidacion: Escritorio integro el draft de Code + datos extras (RC App ID, Pr
 - **RC App ID**: `app8be7db09a7`
 - **Project ID**: `proj228caf37`
 - **License Testing badge confirmada**: "RESPOND_NORMALLY" (default — significa que la cuenta tester recibe responses como un usuario normal, sin override de licencia)
-- **4 screenshots adjuntos al ticket**:
+- **5 screenshots adjuntos al ticket**:
   1. RC Offerings — `aurex_default` activo con 4 packages + product IDs Android
   2. RC App config — `com.aurexapp` + "File saved Valid credentials" + RTDN "Connected to Google"
   3. Play Console Suscripciones — los 4 productos activos
   4. Play Console License Testing — "AUREX Testers" checkbox ON, 4 usuarios, RESPOND_NORMALLY
+  5. (5ta captura agregada por Escritorio en momento del envio)
 
 ---
 
@@ -144,10 +146,11 @@ Texto final = consolidacion de ambos.
 
 ## QUE SIGUE
 
-1. Fernando confirma a Escritorio que proceda con el envio en el formulario RC.
-2. Escritorio pega texto + adjunta 4 screenshots + Submit Request.
-3. RC support responde en 1-3 dias habiles (SLA estandar).
+1. ~~Fernando confirma a Escritorio que proceda con el envio en el formulario RC.~~ **HECHO 15-may ~03:00 AR**
+2. ~~Escritorio pega texto + adjunta screenshots + Submit Request.~~ **HECHO con 5 screenshots adjuntas.**
+3. **Pendiente**: respuesta de RC support en `fmoscon@gmail.com`. SLA hasta 2 dias habiles.
 4. Mientras tanto: NO compilar Build 22 dependiente del fix IAP. Bugs #2-#7 del cuadro pueden avanzarse independientes (no requieren fix IAP).
+5. Cuando RC responda, evaluar accion segun lo que digan (server-side logs, propagacion, bug RC, config faltante, etc.).
 
 ---
 
