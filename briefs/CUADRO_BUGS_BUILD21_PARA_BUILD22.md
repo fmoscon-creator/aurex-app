@@ -374,9 +374,91 @@ Login ELITE → NO ver banner.
 ## REGLA OPERATIVA
 
 NO compilar Build 22 sin:
-1. OK explicito de Escritorio sobre el cuadro.
-2. OK de Fernando sobre el scope.
-3. Mockup `.md` previo en `Desktop/CODE/AurexApp/mockups/` para bugs #2 y #7 (cambios visuales).
+1. OK explicito de Escritorio sobre el cuadro. **DADO 15-may ~03:30 AR con condiciones (ver Seccion abajo).**
+2. OK de Fernando sobre el scope. **PENDIENTE.**
+3. Mockup `.md` previo en `Desktop/CODE/AurexApp/mockups/` para bugs #2 y #7 (cambios visuales). **PENDIENTE.**
+
+---
+
+## FEEDBACK DE ESCRITORIO + ACUERDOS BUILD 22 (15-may ~03:30 AR)
+
+Escritorio leyo el cuadro completo desde GitHub raw y dio OK general con observaciones por bug. Resumen:
+
+### Bug #1 — Acuerdo total
+NO tocar codigo. Esperar respuesta RC. Observacion: el `bulkAcquire` skipped DOS VECES en logcat es el dato mas raro y ya esta en el ticket enviado.
+
+### Bug #2 — Acuerdo en el fix
+Patron flex 3 zonas correcto. Observacion adicional de Escritorio: el `Platform.OS === 'ios' ? 32 : 16` para paddingBottom es correcto. Considerar wrap del Modal en `KeyboardAvoidingView` con `behavior="padding"` en iOS y `behavior="height"` en Android para que el boton quede correctamente posicionado cuando el teclado sube, especialmente si el Modal tiene `position: absolute`. Para Android (Samsung, prioridad), el fix flex puro alcanza. Verificar tambien si existe un segundo modal "Editar Activo" con el mismo problema. **Verificacion Code 15-may 03:35 AR**: no se encontro modal "Editar Activo" en PortfolioScreen.js (solo el modal de Agregar). NO se necesita fix adicional para Editar.
+
+### Bug #3 — Acuerdo + extension
+Aplicar mismo criterio (denominador absoluto) tanto en headers de seccion (L582) como en el header global de la pantalla (L409). Logica de upsell consistente para ambos. NO consultar a Fernando, es decision tecnica coherente con la intencion expresada.
+
+### Bug #4 — Diferencia importante + condicion previa
+Escritorio detecto inconsistencia interna en el cuadro original (decia `'umbral'` en un lugar y `'variacion_brusca'` en otro). Pidio verificar nombres exactos en `server.js` antes de implementar el helper.
+
+**Verificacion Code 15-may 03:35 AR contra `aurex-backend/server.js`:**
+
+PLAN_LIMITS canonico (L1538-1560):
+```javascript
+PLAN_LIMITS = {
+  FREE:  { alertTypes: ['umbral', 'precio_objetivo', 'variacion_brusca', 'max_min', 'apertura'] },
+  PRO:   { alertTypes: [...FREE, 'alta_conviccion_ia', 'cambio_senal', 'senal_portfolio', 'cambio_zona_pulse', 'por_categoria', 'termometro_riesgo', 'fed_fomc', 'cpi_pbi', 'earnings'] },
+  ELITE: { alertTypes: [...PRO, 'geopolitica_gdelt'] }
+}
+```
+
+Adicional L736 (validacion runtime de alertas de precio para evaluacion, NO para creacion):
+```javascript
+const TIPOS_ALERTA_PRECIO = ['umbral', 'precio_objetivo', 'variacion_brusca', 'max_min', 'precio'];
+```
+
+**Conclusion del mapping:**
+- `'precio'` (UI) → `'precio_objetivo'` (canonico) — **CORRECTO**. Esta en FREE/PRO/ELITE.
+- `'porcentaje'` (UI) → `'variacion_brusca'` (canonico) — **CORRECTO**. Esta en FREE/PRO/ELITE.
+
+Nota: el backend acepta `'precio'` en TIPOS_ALERTA_PRECIO (para EVALUAR alertas existentes) pero NO en PLAN_LIMITS.alertTypes (para CREAR alertas). Por eso el POST falla mientras que las alertas viejas con `tipo: 'precio'` que ya existen en DB siguen evaluandose.
+
+Bug #4 **LISTO para implementar** con mapping confirmado.
+
+### Bug #5 — Acuerdo + test previo a codear
+Logcat fresh primero, despues codear. Escritorio agrega hipotesis concreta: probable que `navigation.navigate('Subscription')` se llame sin los props/params necesarios y SubscriptionScreen renderee con valores undefined (de ahi el "Elige tu plan FREE $" deformado). Antes de tocar codigo, Fernando deberia capturar screenshot de lo que se ve atras del Alert para confirmar si es SubscriptionScreen o PlanLimitModal.
+
+### Bug #6 — Acuerdo + extension importante
+console.error en SubscriptionScreen confirmado. Escritorio agrega: hacer grep global de TODOS los `catch (e)` en `src/screens/` y arreglar los que solo tengan `Alert.alert` sin `console.error`. **Verificacion Code 15-may 03:35 AR**: 18+ bloques `catch (e)` en src/screens/. Los siguientes screens tienen catch con Alert sin console.error o sin logging util:
+- `SubscriptionScreen.js` L62, L77, L94 (loadOfferings, handlePurchase, handleRestore)
+- `LoginScreen.js` L37, L64
+- `SignupScreen.js` L86, L109
+- `PerfilScreen.js` L111, L198, L246, L268
+
+Recomendacion ampliada para Build 22: aplicar el patron `console.error('[Screen] action failed:', e); Alert.alert('Error', e.message || e.toString() || fallback)` en TODOS estos puntos. Tiempo estimado adicional: 15 min.
+
+### Bug #7 — Acuerdo + texto sugerido
+Banner debajo de Valor Total, NO dismissible. Texto sugerido por Escritorio:
+- Plan FREE: "Activa señales IA para estos activos — disponible en PRO"
+- Plan PRO: "Activa analisis tecnico avanzado en tu portfolio — disponible en ELITE"
+
+Mas relevante que un banner generico de upgrade. Decision final del texto: Fernando.
+
+---
+
+## OK ESCRITORIO + CONDICIONES PARA BUILD 22
+
+Escritorio dio OK condicional 15-may ~03:30 AR:
+1. **CODE puede proceder ya sin mas verificacion**: bugs #2, #3, #6.
+2. **Listo tras verificar server.js (HECHO por Code 03:35 AR)**: bug #4.
+3. **Pendiente test Fernando**: bug #5 — capturar screenshot atras del Alert + nuevo logcat al tocar candado.
+4. **Pendiente confirmacion Fernando**: bug #7 — texto del banner FREE y PRO.
+5. **NO tocar**: bug #1 — esperar respuesta RC support.
+
+## SCOPE PROPUESTO BUILD 22
+
+| Tier | Bugs incluidos | Estado |
+|------|----------------|--------|
+| Tier A (ya listos) | #2, #3, #4, #6 | LISTOS para implementar tras OK Fernando |
+| Tier B (pre-test/confirmacion) | #5 (test logcat) + #7 (texto banner) | Pendiente input Fernando |
+| Tier C (externo) | #1 | Esperar respuesta RC |
+
+Build 22 se compilara cuando Tier A + Tier B esten resueltos. Tier C NO bloquea Build 22.
 
 ---
 
