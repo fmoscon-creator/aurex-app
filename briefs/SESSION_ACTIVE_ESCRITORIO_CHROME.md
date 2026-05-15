@@ -2,18 +2,19 @@
 
 URL fija: https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/SESSION_ACTIVE_ESCRITORIO_CHROME.md
 
-Ultima actualizacion: 14-may-2026 ~21:00 AR — SESION ABIERTA SEGUIMOS TRABAJANDO
+Ultima actualizacion: 14-may-2026 ~21:40 AR — Build 20 compilado (bump 19→20 porque Play Console no acepta versionCode repetido). SESION ABIERTA.
 
 ## ESTADO CRITICO ACTUAL
 
-Build 19 FINAL v2 COMPILADO Y EN BACKUP. NO subido a Play Console todavia. Fernando hace smoke test en Samsung real primero.
+Build 20 COMPILADO Y EN BACKUP. NO subido a Play Console todavia. Fernando hace smoke test en Samsung real primero.
 
 ## PATHS DEL BUILD 19 FINAL v2
 
 - AAB para Play Console: /Users/fernandomoscon/AurexApp/android/app/build/outputs/bundle/release/app-release.aab (77 MB)
 - APK para Samsung real: /Users/fernandomoscon/AurexApp/android/app/build/outputs/apk/release/app-release.apk (95 MB)
-- Backup AAB: ~/AurexApp/backups/aab/aurex-build19-FINAL-v2-20260514_2056.aab
-- versionCode 19 / versionName 1.0.19 / ProGuard activo
+- Backup AAB: ~/AurexApp/backups/aab/aurex-build20-FINAL-20260514_2139.aab
+- versionCode 20 / versionName 1.0.20 / ProGuard activo
+- Nota: bump 19→20 fue solo numerico porque Play Console rechaza versionCode 19 (ya estaba usado en un draft abierto previo). Contenido del AAB idéntico a Build 19 FINAL v2.
 
 ## QUE INCLUYE EL AAB FINAL v2
 

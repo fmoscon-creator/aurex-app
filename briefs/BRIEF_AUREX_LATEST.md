@@ -2,14 +2,15 @@
 
 > **Para Escritorio (Claude Desktop con Chrome integration):**
 > Este archivo está siempre disponible en URL fija pública. Code lo actualiza con cada hito mayor.
-> **Última actualización: 14 de mayo de 2026, 21:00 AR — Build 19 FINAL v2 compilado en backup. SESIÓN SIGUE ABIERTA.**
+> **Última actualización: 14 de mayo de 2026, 21:40 AR — Build 20 compilado (bump 19→20 por Play Console draft). SESIÓN SIGUE ABIERTA.**
 
-## 🟢 Build 19 FINAL v2 — listo en disco, NO subido a Play Console
+## 🟢 Build 20 — listo en disco, NO subido a Play Console
 
 - **AAB**: `/Users/fernandomoscon/AurexApp/android/app/build/outputs/bundle/release/app-release.aab` (77 MB)
 - **APK Samsung real**: `/Users/fernandomoscon/AurexApp/android/app/build/outputs/apk/release/app-release.apk` (95 MB)
-- **Backup**: `~/AurexApp/backups/aab/aurex-build19-FINAL-v2-20260514_2056.aab`
-- **versionCode** 19 / **versionName** 1.0.19 / ProGuard activo
+- **Backup**: `~/AurexApp/backups/aab/aurex-build20-FINAL-20260514_2139.aab`
+- **versionCode** 20 / **versionName** 1.0.20 / ProGuard activo
+- Nota: bump 19→20 fue solo numérico (Play Console rechaza versionCode 19 ya usado en draft abierto). Contenido idéntico al Build 19 FINAL v2.
 
 ### Fixes acumulados en este AAB
 
