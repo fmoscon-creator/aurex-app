@@ -170,6 +170,7 @@ if (data?.session) {
 **Notas**:
 - Import nuevo si no está: `import Purchases from 'react-native-purchases';`.
 - Va DESPUÉS del POST a `/api/usuario` para garantizar que la fila Supabase existe antes de que RC mande webhook.
+- **⚠️ Race condition documentada (review Escritorio, no bloqueante)**: si un usuario nuevo se registra y compra INMEDIATAMENTE después (segundos), RC puede emitir el primer evento con UID anónimo antes de que `Purchases.logIn(uid)` complete. IAP-1 (boot) cierra esta ventana en sesiones posteriores pero no en el momento exacto del registro. IAP-5 (backend alerta Telegram) actúa como red de seguridad: detecta el caso y permite rescate manual. Si Tier 1 falla recurrentemente para usuarios nuevos, Plan B-1 (webhook directo Google Play) resuelve definitivamente.
 
 ---
 
