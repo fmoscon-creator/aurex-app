@@ -20,7 +20,7 @@ Este plan Tier 1 ataca **estos 2 problemas raíz específicamente**.
 
 ---
 
-## 1. RESUMEN DE LOS 5 CAMBIOS
+## 1. RESUMEN DE LOS 6 CAMBIOS
 
 | ID | Archivo | Cambio | Tipo |
 |---|---|---|---|
@@ -330,8 +330,8 @@ versionName "1.0.34"
    - **Si no llega → NO avanzar al frontend. Investigar primero** (env var `ADMIN_TELEGRAM_CHAT_ID` activa? Bot corriendo? Railway deploy OK?).
 3. **Frontend RN** (IAP-1, IAP-2, IAP-3, IAP-4, IAP-6) — en un solo commit con bump 34.
 4. **Compilar AAB Build 34**.
-4. **Subir a Play Console Internal Testing** (no a Producción todavía).
-5. **Validación end-to-end con compra real**:
+5. **Subir a Play Console Internal Testing** (no a Producción todavía).
+6. **Validación end-to-end con compra real**:
    - Crear cuenta nueva en Samsung (tester con tarjeta real, NO License Tester).
    - Hacer login en la app → RC debería ver el UID Supabase ya.
    - Intentar comprar PRO mensual.
@@ -339,8 +339,8 @@ versionName "1.0.34"
      - Dashboard RevenueCat (Customer Lists → buscar UID Supabase).
      - Supabase tabla `usuarios.plan` (debería decir PRO).
      - PerfilScreen en la app (mostrar PRO).
-6. **Si OK end-to-end**: promover Build 34 a Producción Play Store (reemplaza Build 33).
-7. **Si NO OK**: revisar Railway logs + Dashboard RC → escalar a Plan B.
+7. **Si OK end-to-end**: promover Build 34 a Producción Play Store (reemplaza Build 33).
+8. **Si NO OK**: revisar Railway logs + Dashboard RC → escalar a Plan B.
 
 ---
 
@@ -379,7 +379,7 @@ Cosas a chequear ANTES de implementar (Code lo hace solo con grep, sin tocar có
 ## 8. SIGUIENTE PASO
 
 **ESTE PLAN ESTÁ EN STAND-BY hasta que:**
-1. Escritorio termine la auditoría de 12 superficies App Store Connect (Fase 1 INFORME v2).
+1. Auditoría 12 superficies App Store Connect: COMPLETADA por Escritorio (16-may, ver INFORME v3 §3-Bis).
 2. Fernando apruebe el plan de Apple Y el plan IAP (este).
 3. Se decida el orden: IAP primero, Apple primero, o ambos paralelos.
 

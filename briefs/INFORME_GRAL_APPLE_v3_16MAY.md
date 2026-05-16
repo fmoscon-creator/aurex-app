@@ -320,4 +320,4 @@ Apple Developer Team ID: TX7C2F79U9
 
 ---
 
-**Fin INFORME v2. Pendiente: Escritorio inicia auditoría 12 superficies App Store Connect.**
+**Fin INFORME v3. Auditoría 12 superficies: COMPLETADA por Escritorio (ver §3-Bis).**
