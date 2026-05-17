@@ -113,7 +113,11 @@
     "plan_elite_period": "or $179.99 / year",
     "plan_elite_desc": "Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.",
     "disclaimer_aria": "Legal notice and what AUREX is not",
-    "disclaimer_label": "Legal"
+    "disclaimer_label": "Legal",
+    "plan_cta_free": "Start free",
+    "plan_cta_pro": "Subscribe to PRO",
+    "plan_cta_elite": "Reserve ELITE",
+    "buy_sub": "Choose where to activate your plan:"
   },
   "es": {
     "nav_features": "Características",
@@ -223,7 +227,11 @@
     "plan_elite_period": "o $179.99 / año",
     "plan_elite_desc": "Todo lo de PRO, más: acceso API personal, chat en vivo, RSI/MACD avanzados, alertas Telegram. Próximamente.",
     "disclaimer_aria": "Aviso legal y qué NO es AUREX",
-    "disclaimer_label": "Legal"
+    "disclaimer_label": "Legal",
+    "plan_cta_free": "Empezar gratis",
+    "plan_cta_pro": "Suscribirme a PRO",
+    "plan_cta_elite": "Reservar ELITE",
+    "buy_sub": "Elegí dónde activar tu plan:"
   },
   "pt": {
     "nav_features": "Recursos",
