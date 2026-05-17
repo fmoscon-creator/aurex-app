@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 17-may-2026 ~14:30 AR
-> **Última actualización significativa:** primer commit del brief maestro consolidado, reemplaza el `BRIEF_AUREX_LATEST.md` que quedó desactualizado al 15-may.
+> **Última actualización:** 17-may-2026 ~15:00 AR
+> **Última actualización significativa:** agregadas §2.6 "Estrategia secuencial iOS Build 17 → 25 → Producción" + §2.7 "Contenido pendiente Build 25 iOS (paridad Android + IAP)" + §4.5.b cruce IAP/iOS Build 25. Tabla §1 ahora incluye fila iOS Build 25.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -21,7 +21,8 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS** | 🟡 Re-submission EN COLA Apple Review | Esperar respuesta Apple | Respuesta Apple Review |
+| 🍎 **Apple Build 17 iOS** | 🟡 Re-submission EN COLA Apple Review (solo marca AUREX LIVE) | Esperar respuesta Apple — NO distribuir aunque apruebe (Manual Release OFF) | Respuesta Apple Review |
+| 🍎 **iOS Build 25 (futuro)** | ⏸ NO compilado — pre-requisitos sin cumplir | Paridad Android 1.0.33 + IAP funcionando + marca aprobada en Build 17 | IAP funcionando en Android + marca aprobada |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (20 instalaciones, 177 países) | Mantener mientras se prepara Build 36 | — |
 | 🤖 **Android Build 35 Internal Testing** | 🟡 Subido hace ~23h, FALLÓ test IAP | No promover. Build 36 va a superponer | Respuesta RC #76809 |
 | 🚨 **IAP / RevenueCat ticket #76809** | 🚨 P0 abierto, ESPERANDO respuesta RC | Esperar RC o arrancar Plan B-1 si >72h | Respuesta RC support |
@@ -81,6 +82,76 @@
 | Apple objeta OTRA cosa | Media | Sin garantía, monitorear |
 | Apple tarda >72h | Media | Expedited Review Request preparado |
 | iOS Build 25 cuando llegue su turno: 19+ días queue | Alta | Monitorear, pedir Expedited si >72h |
+
+---
+
+## 2.6 ESTRATEGIA SECUENCIAL iOS — Build 17 → Build 25 → Producción
+
+### Estado actual de la estrategia
+
+Build 17 NO fue compilado para ir a producción tal como está. Fue submitted, rechazado por la marca "AUREX AI", y re-submitted con la marca cambiada a "AUREX LIVE". **El único motivo del re-submit fue validar la marca con Apple.** Build 17 NO tiene features modernas (push, telegram, persistencia sesión, candados completos, "Cómo usar AUREX", etc.).
+
+**Decisión estratégica vigente (Fernando + Escritorio + Code):**
+- Marcamos **Manual Release OFF** en el re-submit. Si Apple aprueba, **NO publicamos automáticamente**.
+- Build 17 queda como **referencia "approved-no-distribuido"** — sirve solo para confirmar que la marca está aprobada y sin observaciones pendientes.
+- Recién con esa confirmación, compilamos **Build 25 iOS** con TODOS los fixes (lista §2.7).
+- Build 25 va primero a **TestFlight Internal Testing** para validación nuestra (Fernando en iPhone real).
+- Si TestFlight OK → Submit a Apple Review como versión nueva 1.0.25.
+- Si Apple aprueba Build 25 → **ESE es el que va a producción** (no Build 17).
+- Build 17 queda archivado "approved-no-distribuido".
+
+### Flujo completo paso por paso
+
+| Paso | Quién | Acción | Pre-requisito |
+|---|---|---|---|
+| 1 | Apple | Responder re-submission Build 17 (marca AUREX LIVE) | — |
+| 2 | Fernando + Escritorio | Si Apple APRUEBA → confirmar que NO hay otras observaciones | Apple respondió |
+| 3 | Fernando + Escritorio | Si Apple RECHAZA otra vez → analizar nuevo motivo + iterar metadata | Apple respondió |
+| 4 | Code + Fernando | Solo si marca aprobada Y sin observaciones extra → compilar Build 25 iOS con todo §2.7 | Paso 2 OK + IAP funcionando en Android producción (§3 + §4) |
+| 5 | Fernando | Subir Build 25 a TestFlight Internal Testing | Build 25 compilado |
+| 6 | Fernando | Validar Build 25 en iPhone real (Fernando) — todos los items §2.7 | TestFlight subido |
+| 7 | Fernando | Si TestFlight OK → Submit Build 25 a Apple Review como versión 1.0.25 | Paso 6 OK |
+| 8 | Apple | Revisar Build 25 (típico 19+ días por historial) | — |
+| 9 | Fernando | Si Apple aprueba Build 25 → **Manual Release → publicar a producción** | Apple respondió OK |
+
+### Por qué esta secuencia y no compilar Build 25 ahora directamente
+
+- Mandar Build 25 con tantos cambios sin tener la marca pre-aprobada → riesgo de rechazo doble (marca + alguna feature nueva).
+- Mandar Build 25 sin IAP funcionando → desperdiciar slot de review (19+ días) por algo que después no se puede vender.
+- Esta secuencia **separa el riesgo "marca" del riesgo "features"** — primero validamos marca con un build mínimo (17), después subimos el build con todo (25).
+
+---
+
+## 2.7 CONTENIDO PENDIENTE Build 25 iOS (paridad Android 1.0.33 + IAP)
+
+> Lo que sigue es la **lista de qué tiene que tener Build 25 iOS antes de subir a TestFlight.**
+> Hoy NO profundizamos en cada item — cuando llegue el momento, Code + Escritorio cruzan cada uno con el código real de Android v1.0.33 producción para garantizar paridad exacta.
+
+### Pre-requisito ABSOLUTO antes de compilar Build 25 iOS
+
+🚨 **IAP funcionando en Android producción (Build 36 con fix RC o Plan B aplicado).** Sin esto, Build 25 iOS no se compila — desperdiciaríamos el slot Apple Review por un build con cobro roto.
+
+### Items pendientes Build 25 iOS
+
+| Categoría | Detalle |
+|---|---|
+| **Marca / metadata** | AUREX LIVE consistente en todas las superficies App Store Connect (debe estar ya hecho cuando Apple apruebe Build 17). Limpiar `src/lib/i18n.js` L145 + L257 ("AUREX AI" / "AUREX IA"). Cambiar `ios/AurexApp/Info.plist` `CFBundleDisplayName = AUREX → AUREX LIVE`. |
+| **Persistencia sesión** | Evitar deslogueo del dispositivo. Paridad Android: cold reboot, force-stop 90s, background 90s, vuelve sin pedir login. |
+| **Push notifications iOS** | APNS wired y funcionando. Build 18 iOS intentó esto y falló por RNSVG vtable — pendiente resolver Podfile + pod install. |
+| **Telegram alerts** | Wiring real de alertas operativas vía Telegram (paridad Android backend). |
+| **Restricciones features por plan** | FREE / PRO / ELITE — tier limits aplicados en Portfolio, Mercados, Watchlist, IA, Alertas. Funcionamiento real, no decorativo. |
+| **Candados visibles** | Lock icons + mensajes "Disponible en PRO/ELITE" en features bloqueadas. PlanLimitModal con copy específico (PRO vs ELITE) según el feature tocado. |
+| **Tab Perfil "Cómo usar AUREX"** | Tutorial in-app dentro del tab Perfil. Paridad Android. |
+| **Signup nativo** | Flujo SignupScreen funcionando + auth.signUp + POST /api/usuario Capa 1 (try/catch optimistic) + Capa 2 self-heal en usePlan. Bug P0 signup ya resuelto en Android Build 21. |
+| **Onboarding 2 botones** | Slide 4 con "Crear cuenta gratis" → SignupScreen + "Ya tengo cuenta" → LoginScreen. Antes eran 3 botones cableados todos a Login. |
+| **Bugs UI corregidos** | Bug H Modal Agregar Activo (teclado tapaba botón Guardar) + Bug I doble tap + cualquier bug acumulado en Android Build 33 que aplique también a iOS. |
+| 🚨 **IAP funcionando** (PRO/ELITE Apple in-App Purchase) | **CRÍTICO** — cobro de planes vía Apple IAP + RevenueCat. Sin esto Build 25 no sale a producción. Depende de que Tier 1 IAP esté validado en Android + Plan B si RC nunca responde. Ver §4. |
+| **Bump versiones** | `ios/AurexApp.xcodeproj/project.pbxproj`: `CURRENT_PROJECT_VERSION 24 → 25` y `MARKETING_VERSION 1.0 → 1.0.25`. |
+| **Podfile + pod install** | `cd ios && pod install` validar que compile (Build 18 había problemas con RNSVG vtable — pendiente resolver). |
+
+### Profundización pendiente
+
+Cuando llegue el momento de compilar Build 25 iOS (después de Apple aprobar Build 17 + IAP funcionando en Android), **Code + Escritorio cruzan cada item de la tabla anterior contra el código real Android v1.0.33 producción** (`~/AurexApp/` branch `dev`, commit `c990612`) para garantizar paridad exacta — no asumir que algo funciona "como en Android" sin validarlo en el código.
 
 ---
 
@@ -181,6 +252,10 @@ Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nue
 | IAP-6 | `~/AurexApp/src/screens/PerfilScreen.js` (deleteAccount) | `Purchases.logOut()` antes de borrar cuenta |
 
 **Orden obligatorio (Escritorio):** IAP-5 backend PRIMERO → validar webhook con evento test → si OK frontend.
+
+### 4.5.b Impacto del IAP sobre iOS Build 25
+
+🚨 **Cruz crítica con §2.7:** el bug IAP afecta tanto Android como iOS. Aunque el ticket RC #76809 es por Android, **la causa raíz probable (combo RC SDK + Billing v8 + targetSdk 36 + Issue #3039)** puede repetirse en iOS o tener un equivalente Apple IAP no detectado. Por eso la decisión estratégica vigente es: **NO compilar Build 25 iOS hasta tener IAP funcionando confirmado en Android producción.** Una vez confirmado en Android (Build 36 con fix RC o Plan B), se valida en paralelo el flow iOS en TestFlight antes de mandar a Apple Review.
 
 ### 4.6 Plan B si RC no responde o no resuelve
 
