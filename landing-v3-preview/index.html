@@ -65,14 +65,15 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
 .hdr-logo svg{width:42px;height:42px;flex-shrink:0}
 .hdr-logo .word{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--gold);letter-spacing:1.5px;flex-shrink:0}
 .hdr-nav{display:flex;align-items:center;gap:28px;position:relative}
-.hdr-nav-item{font-size:13px;color:var(--text-sec);font-weight:500;letter-spacing:.3px;cursor:pointer;padding:6px 0;position:relative}
-.hdr-nav-item:hover{color:var(--gold)}
+.hdr-nav-item{font-size:13px;color:var(--text-sec);font-weight:500;letter-spacing:.3px;cursor:pointer;padding:7px 12px;position:relative;border:1px solid rgba(212,160,23,0.32);border-radius:8px;transition:border-color .2s,color .2s,background .2s}
+.hdr-nav-item:hover{color:var(--gold);border-color:rgba(212,160,23,0.6);background:rgba(212,160,23,0.06)}
 .dropdown{position:absolute;top:100%;left:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:8px;min-width:200px;box-shadow:0 12px 30px rgba(0,0,0,.5);display:none;margin-top:8px}
 .hdr-nav-item:hover .dropdown,.dropdown:hover{display:block}
 .dropdown a{display:flex;align-items:center;gap:10px;padding:9px 12px;font-size:13px;color:var(--text);border-radius:6px;font-weight:500}
 .dropdown a:hover{background:rgba(212,160,23,0.08);color:var(--gold-bright)}
 .hdr-cta{display:flex;align-items:center;gap:14px}
-.lang-sel{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:11px;letter-spacing:.5px;cursor:pointer;font-family:var(--mono);text-transform:uppercase}
+.lang-sel{background:transparent;border:1px solid rgba(212,160,23,0.32);color:var(--text);padding:7px 10px;border-radius:8px;font-size:11px;letter-spacing:.5px;cursor:pointer;font-family:var(--mono);text-transform:uppercase;transition:border-color .2s}
+.lang-sel:hover{border-color:rgba(212,160,23,0.6)}
 .lang-sel option{background:#0D0800;color:var(--text)}
 .btn{display:inline-block;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;letter-spacing:.3px;transition:all .2s;cursor:pointer;border:none;font-family:var(--serif);text-align:center}
 .btn-gold{background:var(--gold);color:#000}
