@@ -172,10 +172,11 @@ Apple Developer Team ID: TX7C2F79U9
 
 **Build 33 NO tiene IAP Tier 1 implementado.** Por eso el bug crítico §3 (IAP "product not available for purchase") sigue presente. La compra de PRO/ELITE NO funciona en producción Android al día de hoy.
 
-**Estado real Builds Android al 17-may:**
-- Build 33 = **PRODUCCIÓN Play Store**
-- Build 34 = **PRUEBA INTERNA** (ya subido)
-- Build 35 = próximo a compilar si llega solución RC (Tier 1 IAP)
+**Estado real Builds Android al 17-may (corregido 13:20 AR):**
+- Build 33 / v1.0.33 = **PUBLICADO Play Store producción** (único build subido a Google Play)
+- Build 34 / v1.0.34 = **próximo a compilar** — debería incluir: fix crash ScreenFragment (MainActivity.kt), ajuste toolbar Samsung S24 (Descargas cortado), Tier 1 IAP cuando RC responda
+
+> Nota: cualquier referencia previa a "Build 34 ya en prueba interna" o "Build 35" en briefs anteriores fue confusión de versionado — los builds 34/35 mencionados en pruebas eran compilaciones locales de test, nunca subidos a Play Console.
 
 **Estado actual del plan IAP Tier 1:** PAUSADO esperando respuesta RC support al ticket #76809 (ver §3).
 
@@ -288,7 +289,7 @@ Plan archivo-por-archivo en: `~/Desktop/aurex-app/briefs/PLAN_IAP_TIER1_BUILD34_
 ### 3.8 Acción al arrancar próxima sesión
 
 1. ¿RC respondió ticket #76809? → check inbox `fmoscon@gmail.com` + dashboard RC.
-   - Si respondió **con solución concreta**: aplicar fix → **Build 35** (no 34, 34 ya está en prueba interna) → Internal Testing → compra real Samsung con cuenta `app.aurex@gmail.com` + tarjeta real (refund inmediato Play Console 48h) → si OK promover a Producción.
+   - Si respondió **con solución concreta**: aplicar fix → **Build 34** (próximo a compilar) → Internal Testing → compra real Samsung con cuenta `app.aurex@gmail.com` + tarjeta real (refund inmediato Play Console 48h) → si OK promover a Producción.
    - Si respondió **pidiendo más info**: armar respuesta con Escritorio.
    - Si **sin respuesta y pasaron >72h hábiles**: arrancar Plan B-1.
 
@@ -516,7 +517,7 @@ Backup: `~/Desktop/aurex-memory-backup/` (espejo manual).
 
 ### Paso 1 — Frente IAP (más urgente, comercial bloqueado)
 
-- Si RC respondió **con solución concreta**: aplicar → **Build 35** (34 ya está en prueba interna) → Internal Testing → compra real con `app.aurex@gmail.com` + tarjeta real → si OK promover Producción.
+- Si RC respondió **con solución concreta**: aplicar → **Build 34** (próximo a compilar) → Internal Testing → compra real con `app.aurex@gmail.com` + tarjeta real → si OK promover Producción.
 - Si RC respondió **pidiendo info adicional**: armar respuesta cruzada Code + Escritorio.
 - Si **>72h hábiles sin respuesta RC**: arrancar Plan B-1 (webhook directo Google Play).
 
