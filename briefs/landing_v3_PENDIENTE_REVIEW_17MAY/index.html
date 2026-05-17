@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080400">
+<meta name="description" content="AUREX — The global markets terminal. AI signals across 350 assets in 8 languages.">
+<title>AUREX — The Global Markets Terminal</title>
+
+<!-- Open Graph for social previews -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aurex.live/">
+<meta property="og:title" content="AUREX — The Global Markets Terminal">
+<meta property="og:description" content="AI signals across 350 assets — crypto, stocks, ETFs, futures, commodities, bonds and forex — in 8 languages.">
+<meta property="og:image" content="https://aurex.live/assets/landing/og_image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080400;
+  --bg-soft:#0D0800;
+  --bg-card:#100A02;
+  --bg-darker:#040200;
+  --gold:#D4A017;
+  --gold-bright:#F5C842;
+  --gold-intense:#FFE082;
+  --gold-dim:#8B6910;
+  --gold-fade:#5A4010;
+  --border:rgba(212,160,23,0.18);
+  --border-strong:rgba(212,160,23,0.45);
+  --text:#F5F0E8;
+  --text-sec:#A0958A;
+  --text-dim:#6A5A48;
+  --green:#00C896;
+  --red:#FF4D6D;
+  --serif:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+}
+html,body{background:var(--bg);color:var(--text);font-family:var(--serif);line-height:1.55;-webkit-font-smoothing:antialiased;font-weight:400;overflow-x:hidden}
+a{color:var(--gold);text-decoration:none;transition:color .2s}
+a:hover{color:var(--gold-bright)}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
+
+/* === CANVAS CONSTELACION (Zona B, sutil) === */
+#constellation{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0}
+body.zone-b-active #constellation{opacity:1;transition:opacity 1.5s}
+
+/* === HEADER STICKY GLASSMORPHISM === */
+header.site{position:sticky;top:0;z-index:100;background:rgba(8,4,0,0);backdrop-filter:blur(0);border-bottom:1px solid transparent;transition:all .3s}
+header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:16px 0;gap:20px}
+.hdr-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.hdr-logo svg{width:42px;height:42px}
+.hdr-logo .word{font-family:var(--serif);font-weight:800;font-size:22px;color:var(--gold);letter-spacing:1.5px}
+.hdr-nav{display:flex;align-items:center;gap:28px;position:relative}
+.hdr-nav-item{font-size:13px;color:var(--text-sec);font-weight:500;letter-spacing:.3px;cursor:pointer;padding:6px 0;position:relative}
+.hdr-nav-item:hover{color:var(--gold)}
+.dropdown{position:absolute;top:100%;left:0;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:8px;min-width:200px;box-shadow:0 12px 30px rgba(0,0,0,.5);display:none;margin-top:8px}
+.hdr-nav-item:hover .dropdown,.dropdown:hover{display:block}
+.dropdown a{display:flex;align-items:center;gap:10px;padding:9px 12px;font-size:13px;color:var(--text);border-radius:6px;font-weight:500}
+.dropdown a:hover{background:rgba(212,160,23,0.08);color:var(--gold-bright)}
+.hdr-cta{display:flex;align-items:center;gap:14px}
+.lang-sel{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:11px;letter-spacing:.5px;cursor:pointer;font-family:var(--mono);text-transform:uppercase}
+.lang-sel option{background:#0D0800;color:var(--text)}
+.btn{display:inline-block;padding:11px 20px;border-radius:9px;font-size:13px;font-weight:600;letter-spacing:.3px;transition:all .2s;cursor:pointer;border:none;font-family:var(--serif);text-align:center}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:var(--gold-bright);color:#000;transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,160,23,0.35)}
+.btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-ghost:hover{background:var(--gold);color:#000}
+@media(max-width:880px){.hdr-nav{display:none}}
+
+/* === HERO === */
+section.hero{padding:96px 0 80px;background:radial-gradient(ellipse 1200px 700px at 70% 30%,#1A0D00 0%,var(--bg) 70%);position:relative;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+@media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px;text-align:center}}
+.hero-text h1{font-family:var(--serif);font-weight:800;font-size:clamp(38px,5.5vw,68px);line-height:1.04;letter-spacing:-1.5px;color:var(--gold);margin-bottom:24px}
+.hero-text p.sub{font-size:clamp(15px,1.4vw,18px);color:var(--text-sec);max-width:540px;margin-bottom:34px;line-height:1.6}
+@media(max-width:980px){.hero-text p.sub{margin-left:auto;margin-right:auto}}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
+@media(max-width:980px){.hero-ctas{justify-content:center}}
+.hero-ctas .btn{padding:13px 22px}
+.badge-store{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;background:#000;border:1px solid rgba(245,200,66,.4);border-radius:9px;color:#fff;font-size:13px;font-weight:600;transition:all .2s}
+.badge-store:hover{border-color:var(--gold-bright);color:var(--gold-bright);transform:translateY(-1px)}
+.badge-store .lbl-sm{font-size:9px;display:block;color:var(--text-sec);font-weight:400;letter-spacing:.5px}
+.badge-store .lbl-lg{font-size:15px;font-weight:700;color:#fff}
+.badge-store:hover .lbl-lg{color:var(--gold-bright)}
+.hero-mockup{display:flex;justify-content:center;position:relative}
+.iphone-frame{width:320px;max-width:100%;aspect-ratio:9/19.5;background:#000;border-radius:42px;padding:8px;border:2px solid #2A2018;box-shadow:0 30px 80px rgba(212,160,23,0.15),0 0 0 1px rgba(212,160,23,0.2);position:relative}
+.iphone-frame::before{content:"";position:absolute;top:14px;left:50%;transform:translateX(-50%);width:90px;height:25px;background:#000;border-radius:14px;z-index:2}
+.iphone-frame img{width:100%;height:100%;object-fit:cover;border-radius:34px}
+.live-badge{position:absolute;top:24px;right:-12px;background:rgba(0,200,150,0.15);border:1px solid var(--green);color:var(--green);padding:6px 12px;border-radius:20px;font-size:11px;font-weight:600;font-family:var(--mono);letter-spacing:.5px;display:flex;align-items:center;gap:6px;backdrop-filter:blur(8px);z-index:3}
+.live-badge::before{content:"";width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* === TICKER === */
+.ticker-wrap{background:var(--bg-soft);border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;height:46px;position:relative}
+.ticker{display:flex;gap:40px;white-space:nowrap;animation:scroll-ticker 120s linear infinite;height:100%;align-items:center;will-change:transform}
+.ticker:hover{animation-play-state:paused}
+.ticker span{font-family:var(--mono);font-size:13px;color:var(--text-sec);letter-spacing:.4px}
+.ticker span.dot{color:var(--gold);font-weight:700}
+.ticker span.hl{color:var(--gold-bright);font-weight:600}
+@keyframes scroll-ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* === SECTIONS === */
+section.blk{padding:90px 0;position:relative}
+section.blk h2{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:700;color:var(--text);margin-bottom:18px;letter-spacing:-.6px;line-height:1.15}
+section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-width:780px;line-height:1.6}
+.center{text-align:center}
+.center .sub{margin-left:auto;margin-right:auto}
+.section-label{display:inline-block;font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;padding:4px 12px;background:rgba(212,160,23,0.08);border:1px solid var(--border);border-radius:20px}
+
+/* === B3 between you === */
+.b3-bullets{margin-top:30px;display:grid;grid-template-columns:1fr;gap:14px;max-width:780px}
+.b3-bullets li{padding:18px 24px;background:var(--bg-soft);border-left:3px solid var(--gold);border-radius:8px;font-size:15.5px;color:var(--text);list-style:none}
+
+/* === B4 coverage grid (counter) === */
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:36px;max-width:1100px;margin-left:auto;margin-right:auto}
+.cov-cell{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:28px 18px;text-align:center;transition:all .3s}
+.cov-cell:hover{border-color:var(--gold-bright);transform:translateY(-3px);box-shadow:0 12px 30px rgba(212,160,23,0.1)}
+.cov-num{font-family:var(--mono);font-size:42px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px;letter-spacing:-1px}
+.cov-lbl{font-size:13px;color:var(--text-sec);letter-spacing:.5px;text-transform:uppercase;font-weight:500}
+.b4-sub{font-size:13.5px;color:var(--text-dim);text-align:center;margin-top:30px;max-width:680px;margin-left:auto;margin-right:auto;font-style:italic}
+
+/* === B4.5 carousel === */
+.carousel{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:30px 0 40px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
+.carousel::-webkit-scrollbar{height:6px}
+.carousel::-webkit-scrollbar-track{background:var(--bg-soft)}
+.carousel::-webkit-scrollbar-thumb{background:var(--gold-dim);border-radius:3px}
+.car-slide{flex:0 0 auto;scroll-snap-align:center;width:280px;text-align:center}
+.car-slide .iphone-frame{width:260px;margin:0 auto 16px}
+.car-slide .car-label{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.4px;line-height:1.5;max-width:240px;margin:0 auto;text-align:center}
+
+/* === B5 motor 24 variables === */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+@media(max-width:880px){.cols{grid-template-columns:1fr}}
+.col-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:30px;transition:all .3s}
+.col-card:hover{border-color:var(--gold)}
+.col-card h3{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:18px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
+.col-card p{font-size:14.5px;color:var(--text-sec);line-height:1.75;margin-bottom:20px}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.chip{padding:7px 12px;background:rgba(212,160,23,0.05);border:1px solid var(--border);border-radius:18px;font-family:var(--mono);font-size:11.5px;color:var(--text);transition:all .25s;cursor:default;letter-spacing:.2px}
+.chip:hover{background:rgba(212,160,23,0.15);border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
+.chip-special{background:rgba(212,160,23,0.12);border-color:var(--gold);color:var(--gold-bright);font-weight:600}
+.highlight-card{margin-top:32px;padding:26px 30px;background:linear-gradient(135deg,#1A0D00 0%,#0D0800 100%);border:1px solid var(--gold);border-radius:16px;font-size:15px;color:var(--text);position:relative;overflow:hidden}
+.highlight-card::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
+
+/* === B5.5 how it works === */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:36px;counter-reset:step}
+@media(max-width:880px){.how-grid{grid-template-columns:1fr}}
+.how-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:30px;position:relative}
+.how-card::before{counter-increment:step;content:counter(step);position:absolute;top:18px;right:24px;font-family:var(--mono);font-size:46px;font-weight:700;color:var(--gold);opacity:.18;line-height:1}
+.how-card h3{font-size:18px;color:var(--gold);margin-bottom:12px;font-weight:600}
+.how-card p{font-size:14.5px;color:var(--text-sec);line-height:1.6}
+
+/* === B6 banners === */
+.bann-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:34px}
+@media(max-width:980px){.bann-grid{grid-template-columns:1fr}}
+.bann-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s;position:relative;overflow:hidden}
+.bann-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.bann-icon{width:42px;height:42px;background:rgba(212,160,23,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--gold);font-size:20px}
+.bann-card h3{font-size:18px;color:var(--text);margin-bottom:12px;font-weight:600}
+.bann-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
+.bann-data{margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.5px;padding-top:14px;border-top:1px dashed var(--border)}
+.b6-close{text-align:center;margin-top:40px;font-size:17px;color:var(--gold-bright);font-style:italic;font-weight:500}
+
+/* === B7 portfolio === */
+.b7-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;margin-top:30px}
+@media(max-width:980px){.b7-grid{grid-template-columns:1fr;gap:40px}}
+.b7-feats{display:flex;flex-direction:column;gap:14px;margin-top:24px}
+.b7-feat{padding:18px 22px;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;font-size:14.5px;color:var(--text);display:flex;align-items:center;gap:14px}
+.b7-feat::before{content:"●";color:var(--gold-bright);font-size:18px}
+.b7-mockup{display:flex;justify-content:center}
+.b7-mockup .iphone-frame{width:300px}
+
+/* === B8 alerts === */
+.alert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
+@media(max-width:880px){.alert-grid{grid-template-columns:1fr}}
+.alert-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .25s}
+.alert-card:hover{border-color:var(--gold)}
+.alert-card .a-num{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:10px}
+.alert-card h3{font-size:18px;color:var(--text);margin-bottom:12px;font-weight:600}
+.alert-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
+.alert-note{margin-top:26px;padding:18px 24px;background:rgba(212,160,23,0.05);border-left:3px solid var(--gold);border-radius:6px;font-size:13.5px;color:var(--text-sec);font-style:italic}
+
+/* === B8.5 more you can do === */
+.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+@media(max-width:980px){.more-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.more-grid{grid-template-columns:1fr}}
+.more-item{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all .3s}
+.more-item:hover{border-color:var(--gold);transform:translateY(-3px)}
+.more-item img{width:100%;max-width:200px;margin:0 auto 14px;border-radius:10px;display:block;aspect-ratio:9/19.5;object-fit:cover}
+.more-item p{font-family:var(--mono);font-size:11.5px;color:var(--gold);line-height:1.5;letter-spacing:.2px}
+
+/* === B9 languages === */
+.lang-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:38px;max-width:780px;margin-left:auto;margin-right:auto}
+.lang-pill{padding:14px 22px;background:var(--bg-soft);border:1px solid var(--border);border-radius:30px;font-size:13px;color:var(--text);font-weight:500;letter-spacing:.5px;display:inline-flex;align-items:center;gap:10px;transition:all .25s;cursor:default;font-family:var(--mono)}
+.lang-pill:hover{border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
+.lang-pill .flag{font-size:18px}
+.b9-close{text-align:center;margin-top:38px;font-size:18px;color:var(--gold-bright);font-weight:500;letter-spacing:.3px}
+
+/* === B10 plans === */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:42px;max-width:1100px;margin-left:auto;margin-right:auto}
+@media(max-width:980px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--bg-soft);border:1px solid var(--border);border-radius:18px;padding:34px 28px;text-align:center;position:relative;transition:all .3s}
+.plan:hover{transform:translateY(-4px)}
+.plan.featured{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,160,23,0.08) 0%,var(--bg-soft) 100%);box-shadow:0 20px 50px rgba(212,160,23,0.12)}
+.plan-name{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:2.5px;text-transform:uppercase;margin-bottom:16px;font-weight:700}
+.plan-price{font-family:var(--serif);font-size:34px;color:var(--text);font-weight:700;margin-bottom:6px;letter-spacing:-.5px}
+.plan-price .small{font-size:14px;color:var(--text-sec);font-weight:400}
+.plan-period{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:.5px;text-transform:uppercase;margin-bottom:22px}
+.plan-desc{font-size:14px;color:var(--text-sec);line-height:1.6;text-align:left;min-height:120px}
+.plan-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:#000;font-size:10px;letter-spacing:1.2px;text-transform:uppercase;padding:5px 10px;border-radius:5px;font-weight:700;font-family:var(--mono)}
+.plan-badge-soon{background:var(--bg-darker);color:var(--gold);border:1px solid var(--gold)}
+
+/* === B10.5 benchmark === */
+.bench-wrap{margin-top:38px;overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
+.bench-table{width:100%;border-collapse:collapse;min-width:780px;background:var(--bg-soft);font-size:13.5px}
+.bench-table th,.bench-table td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}
+.bench-table thead th{background:var(--bg-darker);font-family:var(--mono);font-size:11px;color:var(--text-sec);letter-spacing:.8px;text-transform:uppercase;font-weight:600;border-bottom:2px solid var(--border)}
+.bench-table thead th.aurex{background:linear-gradient(180deg,#1A0D00,#100A02);color:var(--gold-bright);border-bottom-color:var(--gold)}
+.bench-table tbody tr:hover{background:rgba(212,160,23,0.03)}
+.bench-table tbody td.aurex{background:rgba(212,160,23,0.06);color:var(--gold-bright);font-weight:600;border-left:2px solid var(--gold);border-right:2px solid var(--gold)}
+.bench-table tbody td.feature{font-weight:500;color:var(--text)}
+.bench-table tbody tr:last-child td{border-bottom:none}
+.bench-check{color:var(--gold-bright);font-weight:700}
+.bench-no{color:var(--text-dim)}
+.bench-warn{color:var(--text-sec);font-style:italic;font-size:12.5px}
+.bench-price-aurex{font-family:var(--mono);font-size:18px;color:var(--gold-bright);font-weight:700}
+.bench-price{font-family:var(--mono);font-size:14px;color:var(--text-sec)}
+.bench-footer{margin-top:24px;text-align:center;font-size:14.5px;color:var(--text);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6}
+.bench-footer strong{color:var(--gold-bright)}
+
+/* === B11 we don't trade === */
+.what-not{margin-top:28px;padding:36px 38px;border:1px solid var(--gold);border-radius:18px;background:var(--bg-soft);max-width:900px;margin-left:auto;margin-right:auto}
+.what-not h3{font-family:var(--serif);font-size:24px;color:var(--gold-bright);font-weight:700;margin-bottom:24px;text-align:center;letter-spacing:-.3px}
+.what-not ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:680px){.what-not ul{grid-template-columns:1fr}}
+.what-not li{font-size:14.5px;color:var(--text);display:flex;align-items:flex-start;gap:12px;line-height:1.5}
+.what-not li::before{content:"✕";color:var(--red);font-weight:700;font-size:17px;flex-shrink:0;margin-top:1px}
+.disclaimer-text{margin-top:28px;padding-top:24px;border-top:1px dashed var(--border);font-size:12.5px;color:var(--text-dim);line-height:1.7;text-align:left}
+
+/* === B11.5 metrics === */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
+@media(max-width:880px){.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+.metric{text-align:center;padding:28px 18px;background:var(--bg-soft);border:1px solid var(--border);border-radius:14px}
+.metric-num{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--gold-bright);line-height:1;margin-bottom:10px;letter-spacing:-1px}
+.metric-lbl{font-family:var(--mono);font-size:11px;color:var(--text-sec);letter-spacing:1.2px;text-transform:uppercase}
+
+/* === FOOTER === */
+footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid var(--border);margin-top:60px}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:36px;margin-bottom:42px}
+@media(max-width:880px){.foot-grid{grid-template-columns:1fr 1fr;gap:30px}}
+.foot-col h4{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:14px;font-weight:700}
+.foot-col a{display:block;font-size:13.5px;color:var(--text-sec);padding:4px 0;font-weight:500}
+.foot-col a:hover{color:var(--gold)}
+.foot-channels{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.foot-channels a{width:36px;height:36px;border-radius:50%;background:var(--bg-soft);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:14px;padding:0;transition:all .25s}
+.foot-channels a:hover{background:var(--gold);color:#000;transform:translateY(-2px)}
+.foot-brand{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.foot-brand svg{width:36px;height:36px}
+.foot-brand .word{font-weight:800;font-size:20px;color:var(--gold);letter-spacing:1.5px}
+.foot-tag{font-size:13px;color:var(--text-sec);line-height:1.5;max-width:280px}
+.foot-bottom{padding-top:24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.foot-copy{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:.8px}
+.foot-bottom a{font-family:var(--mono);font-size:11px;color:var(--text-dim);letter-spacing:.5px;text-transform:uppercase}
+.foot-bottom a:hover{color:var(--gold)}
+
+/* === SCROLL REVEAL === */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+
+/* === NEWSLETTER MICRO-MODAL === */
+.btn-early{background:transparent;color:var(--gold);border:1px solid var(--gold);padding:9px 16px;border-radius:9px;font-size:12.5px;font-weight:600;letter-spacing:.3px;cursor:pointer;font-family:var(--serif);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-early:hover{background:var(--gold);color:#000;transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,160,23,.3)}
+.btn-early .arr{transition:transform .2s}
+.btn-early:hover .arr{transform:translateX(3px)}
+@media(max-width:680px){.btn-early{padding:8px 12px;font-size:11.5px}}
+
+.nl-overlay{position:fixed;inset:0;background:rgba(4,2,0,.78);backdrop-filter:blur(8px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;animation:nlFade .25s ease}
+.nl-overlay.active{display:flex}
+@keyframes nlFade{from{opacity:0}to{opacity:1}}
+.nl-modal{background:var(--bg-card);border:1px solid var(--border-strong);border-radius:18px;padding:38px 34px;max-width:440px;width:100%;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(212,160,23,.08);animation:nlSlide .35s cubic-bezier(.2,.8,.3,1)}
+@keyframes nlSlide{from{opacity:0;transform:translateY(-20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
+.nl-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer;line-height:1;padding:6px;transition:color .2s}
+.nl-close:hover{color:var(--gold)}
+.nl-modal h3{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-bright);margin-bottom:10px;letter-spacing:-.3px}
+.nl-modal p.nl-sub{font-size:13.5px;color:var(--text-sec);margin-bottom:22px;line-height:1.55}
+.nl-form{display:flex;flex-direction:column;gap:12px}
+.nl-form input[type=email]{background:var(--bg-darker);border:1px solid var(--border);color:var(--text);padding:13px 15px;border-radius:9px;font-size:14px;font-family:var(--serif);transition:border .2s;outline:none}
+.nl-form input[type=email]:focus{border-color:var(--gold)}
+.nl-form button[type=submit]{background:var(--gold);color:#000;border:none;padding:13px;border-radius:9px;font-size:13.5px;font-weight:700;letter-spacing:.4px;cursor:pointer;font-family:var(--serif);transition:all .2s}
+.nl-form button[type=submit]:hover{background:var(--gold-bright);transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,160,23,.35)}
+.nl-form button[type=submit]:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.nl-footer{margin-top:14px;font-size:11.5px;color:var(--text-dim);text-align:center;letter-spacing:.3px}
+.nl-msg{padding:11px 14px;border-radius:9px;font-size:13px;margin-top:4px;display:none}
+.nl-msg.active{display:block}
+.nl-msg.success{background:rgba(0,200,150,.1);border:1px solid var(--green);color:var(--green)}
+.nl-msg.error{background:rgba(255,77,109,.1);border:1px solid var(--red);color:var(--red)}
+
+/* === LIVE QUOTES TABLERO TACTICAL (reemplaza B11.5 anterior) === */
+.lq-board{background:#0d0d12;border:1px solid rgba(212,160,23,.28);border-radius:16px;padding:0;overflow:hidden;font-family:var(--mono);margin-top:36px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(212,160,23,.08)}
+.lq-header{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid rgba(212,160,23,.18);background:linear-gradient(180deg,rgba(212,160,23,.05),transparent)}
+.lq-title{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase}
+.lq-status{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--text-sec)}
+.lq-dot{width:7px;height:7px;border-radius:50%;background:#00ff88;box-shadow:0 0 8px #00ff88;animation:lqPulse 1.5s infinite}
+@keyframes lqPulse{0%,100%{opacity:1}50%{opacity:.35}}
+.lq-clock{font-family:var(--mono);color:#00ff88;letter-spacing:.5px;min-width:60px}
+.lq-section{padding:18px 22px;border-bottom:1px solid rgba(212,160,23,.1)}
+.lq-section:last-child{border-bottom:none}
+.lq-section-label{font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:12px;opacity:.85}
+.lq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px}
+@media(max-width:680px){.lq-grid{grid-template-columns:1fr;gap:8px}}
+.lq-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;padding:4px 0}
+.lq-sym{color:#e8e8ec;font-weight:600;letter-spacing:.3px;flex-shrink:0}
+.lq-vals{display:flex;align-items:baseline;gap:14px;font-variant-numeric:tabular-nums}
+.lq-price{color:#c8c8d0;font-size:12.5px;min-width:84px;text-align:right}
+.lq-pct{font-weight:600;min-width:58px;text-align:right;font-size:12.5px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end}
+.lq-pct.pos{color:#00ff88}
+.lq-pct.neg{color:#ff4444}
+.lq-pct .arrow{font-size:9px;line-height:1}
+.lq-foot{padding:11px 22px;background:rgba(212,160,23,.04);font-size:10.5px;color:var(--text-dim);text-align:center;letter-spacing:.4px;line-height:1.5}
+.lq-foot strong{color:var(--gold);letter-spacing:1px}
+.lq-section-title{text-align:center;margin-bottom:8px}
+.lq-section-title .section-label{display:inline-block}
+
+html{scroll-behavior:smooth}
+</style>
+</head>
+<body>
+
+<!-- Canvas constelación (Zona B fija) -->
+<canvas id="constellation"></canvas>
+
+<!-- ===== BLOQUE 1: HEADER STICKY ===== -->
+<header class="site" id="hdr">
+  <div class="wrap hdr">
+    <a class="hdr-logo" href="/">
+      <svg viewBox="0 0 300 300" fill="none">
+        <defs>
+          <linearGradient id="hg" x1="20%" y1="0%" x2="80%" y2="100%">
+            <stop offset="0%" stop-color="#F7D060"/>
+            <stop offset="50%" stop-color="#D4A017"/>
+            <stop offset="100%" stop-color="#8B6208"/>
+          </linearGradient>
+          <linearGradient id="hc" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#F0C030"/>
+            <stop offset="100%" stop-color="#9A7010"/>
+          </linearGradient>
+        </defs>
+        <circle cx="150" cy="150" r="118" fill="none" stroke="url(#hc)" stroke-width="3.5"/>
+        <circle cx="150" cy="150" r="100" fill="none" stroke="url(#hc)" stroke-width="1.5"/>
+        <circle cx="150" cy="150" r="94" fill="none" stroke="url(#hc)" stroke-width="1" opacity="0.8"/>
+        <line x1="150" y1="78" x2="108" y2="168" stroke="url(#hg)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="150" y1="78" x2="192" y2="168" stroke="url(#hg)" stroke-width="11" stroke-linecap="round"/>
+        <line x1="104" y1="123" x2="196" y2="123" stroke="url(#hg)" stroke-width="11" stroke-linecap="round"/>
+        <polyline points="115,186 150,164 185,186" fill="none" stroke="url(#hg)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="150" cy="164" r="5" fill="#F7D060"/>
+      </svg>
+      <span class="word">AUREX</span>
+    </a>
+    <nav class="hdr-nav">
+      <div class="hdr-nav-item">Channels ▾
+        <div class="dropdown">
+          <a href="https://t.me/aurex_ai" target="_blank">Telegram <span style="margin-left:auto;color:var(--text-dim);font-size:11px">@aurex_ai</span></a>
+          <a href="https://x.com/aurex_live" target="_blank">X / Twitter <span style="margin-left:auto;color:var(--text-dim);font-size:11px">@aurex_live</span></a>
+          <a href="https://instagram.com/aurex_live" target="_blank">Instagram <span style="margin-left:auto;color:var(--text-dim);font-size:11px">@aurex_live</span></a>
+          <a href="https://tiktok.com/@aurex_live" target="_blank">TikTok <span style="margin-left:auto;color:var(--text-dim);font-size:11px">@aurex_live</span></a>
+          <a href="https://youtube.com/@aurex-fintech" target="_blank">YouTube <span style="margin-left:auto;color:var(--text-dim);font-size:11px">@aurex-fintech</span></a>
+          <a href="https://linkedin.com/company/aurex-fintech" target="_blank">LinkedIn <span style="margin-left:auto;color:var(--text-dim);font-size:11px">/aurex-fintech</span></a>
+        </div>
+      </div>
+    </nav>
+    <div class="hdr-cta">
+      <select class="lang-sel" id="lang-sel">
+        <option value="en">🇺🇸 EN</option>
+        <option value="es">🇪🇸 ES</option>
+        <option value="pt">🇧🇷 PT</option>
+        <option value="zh">🇨🇳 ZH</option>
+        <option value="fr">🇫🇷 FR</option>
+        <option value="it">🇮🇹 IT</option>
+        <option value="hi">🇮🇳 HI</option>
+        <option value="ar">🇸🇦 AR</option>
+      </select>
+      <button class="btn-early" type="button" id="nl-open">Get early access <span class="arr">→</span></button>
+      <a class="btn btn-gold" href="#plans">Get the app</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== BLOQUE 2: HERO ===== -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-text reveal">
+      <span class="section-label">v.2026 · LIVE TERMINAL</span>
+      <h1>The global markets terminal.</h1>
+      <p class="sub">AI signals across 350 assets — crypto, stocks, ETFs, futures, commodities, bonds and forex — in 8 languages. Real-time data from 7 global markets, in your pocket.</p>
+      <div class="hero-ctas">
+        <a class="badge-store" href="#" target="_blank">
+          <span style="font-size:20px"></span>
+          <span><span class="lbl-sm">Download on the</span><span class="lbl-lg">App Store</span></span>
+        </a>
+        <a class="badge-store" href="https://play.google.com/store/apps/details?id=com.aurexapp" target="_blank">
+          <span style="font-size:20px">▶</span>
+          <span><span class="lbl-sm">GET IT ON</span><span class="lbl-lg">Google Play</span></span>
+        </a>
+        <a class="btn btn-ghost" href="/app/">Open Web App</a>
+      </div>
+    </div>
+    <div class="hero-mockup reveal reveal-delay-2">
+      <div class="iphone-frame">
+        <span class="live-badge">Live data</span>
+        <img src="assets/captures/markets_en.jpg" alt="AUREX Markets + Pulse">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 2.5: TICKER ===== -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span class="hl">350 assets monitored</span><span class="dot">·</span>
+    <span>8 languages</span><span class="dot">·</span>
+    <span class="hl">7 global stock markets</span><span class="dot">·</span>
+    <span>24 AI variables per signal</span><span class="dot">·</span>
+    <span class="hl">iOS · Android · Web</span><span class="dot">·</span>
+    <span>Real-time data, 24/7</span><span class="dot">·</span>
+    <span>Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
+    <span class="hl">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
+    <span>Free plan available — no credit card required</span><span class="dot">·</span>
+    <!-- duplicado para loop infinito -->
+    <span class="hl">350 assets monitored</span><span class="dot">·</span>
+    <span>8 languages</span><span class="dot">·</span>
+    <span class="hl">7 global stock markets</span><span class="dot">·</span>
+    <span>24 AI variables per signal</span><span class="dot">·</span>
+    <span class="hl">iOS · Android · Web</span><span class="dot">·</span>
+    <span>Real-time data, 24/7</span><span class="dot">·</span>
+    <span>Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
+    <span class="hl">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
+    <span>Free plan available — no credit card required</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- ===== ZONA B comienza acá: constelación activa ===== -->
+<div id="zone-b-marker"></div>
+
+<!-- ===== BLOQUE 3: BETWEEN YOU AND YOUR BROKER ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Positioning</span>
+      <h2>Between you and your broker.</h2>
+      <p class="sub">AUREX is the market-tracking terminal that sits between you and your broker. It doesn't execute trades. It doesn't manage your money. It gives you the full picture — technical data, macro signals, geopolitical events and global sentiment — so every decision you make is an informed one.</p>
+    </div>
+    <ul class="b3-bullets">
+      <li class="reveal reveal-delay-1">350 assets selected across 9 instrument types</li>
+      <li class="reveal reveal-delay-2">7 global stock markets: USA, Argentina, Brazil, Spain, Europe, Japan and China</li>
+      <li class="reveal reveal-delay-3">Available on iOS, Android and browser. No setup required.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 4: COBERTURA 350 ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Coverage</span>
+      <h2>350 assets. 9 instrument types. One terminal.</h2>
+    </div>
+    <div class="cov-grid">
+      <div class="cov-cell reveal"><div class="cov-num" data-count="198">0</div><div class="cov-lbl">Stocks</div></div>
+      <div class="cov-cell reveal reveal-delay-1"><div class="cov-num" data-count="50">0</div><div class="cov-lbl">Crypto</div></div>
+      <div class="cov-cell reveal reveal-delay-2"><div class="cov-num" data-count="40">0</div><div class="cov-lbl">ETFs</div></div>
+      <div class="cov-cell reveal reveal-delay-3"><div class="cov-num" data-count="20">0</div><div class="cov-lbl">Futures</div></div>
+      <div class="cov-cell reveal"><div class="cov-num" data-count="14">0</div><div class="cov-lbl">Bonds</div></div>
+      <div class="cov-cell reveal reveal-delay-1"><div class="cov-num" data-count="12">0</div><div class="cov-lbl">Commodities</div></div>
+      <div class="cov-cell reveal reveal-delay-2"><div class="cov-num" data-count="8">0</div><div class="cov-lbl">Metals</div></div>
+      <div class="cov-cell reveal reveal-delay-3"><div class="cov-num" data-count="5">0</div><div class="cov-lbl">Forex</div></div>
+      <div class="cov-cell reveal"><div class="cov-num" data-count="3">0</div><div class="cov-lbl">Stablecoins</div></div>
+    </div>
+    <p class="b4-sub">375 assets visible in real time in the Markets tab. More added with every release — 350 is the current selection, not the ceiling.</p>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 4.5: CARRUSEL ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="center reveal">
+      <span class="section-label">Product</span>
+      <h2 style="text-align:center">See it in action.</h2>
+    </div>
+    <div class="carousel">
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/markets_en.jpg"></div><p class="car-label">Global markets · 11 exchanges · Real-time</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/ai_signals_en.jpg"></div><p class="car-label">AI signals · 24 variables · 5 reasons explained</p></div>
+      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/portfolio_en.jpg"></div><p class="car-label">Your portfolio · AI risk score in real time</p></div>
+      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/watchlist_en.jpg"></div><p class="car-label">Multiple watchlists · Compare instantly</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/alerts_en.jpg"></div><p class="car-label">15 alert types · Set your own rules</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/comparator_en.jpg"></div><p class="car-label">Compare 3 assets · 10 AI variables side by side</p></div>
+      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/pulse_modal_en.jpg"></div><p class="car-label">Market sentiment · 14 macro sources</p></div>
+      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/markets_stocks_en.jpg"></div><p class="car-label">7 global stock markets · One terminal</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/language_modal.jpg"></div><p class="car-label">8 languages · From day one</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/risk_thermometer_en.jpg"></div><p class="car-label">AI explains why each signal exists</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 5: MOTOR 24 VARIABLES ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Engine</span>
+      <h2>24 variables. Every signal explained.</h2>
+      <p class="sub">Most apps give you a score. AUREX shows you the math.</p>
+    </div>
+    <div class="cols">
+      <div class="col-card reveal">
+        <h3>AI Engine · 10 variables</h3>
+        <p>Each signal is the result of 10 independent quantitative variables computed per asset, in real time.</p>
+        <div class="chip-grid">
+          <span class="chip">24h trend</span><span class="chip">RSI 14</span><span class="chip">Relative volume</span><span class="chip">Volatility</span>
+          <span class="chip">BTC/SPY corr</span><span class="chip">Gold/Oil corr</span><span class="chip chip-special">FED Macro</span>
+          <span class="chip">Earnings</span><span class="chip">MACD 12/26</span><span class="chip">Support/Resistance 30d</span>
+        </div>
+      </div>
+      <div class="col-card reveal reveal-delay-1">
+        <h3>AUREX Pulse · 14 variables</h3>
+        <p>Pulse reads the global market context in real time, cross-referencing 14 macro sources.</p>
+        <div class="chip-grid">
+          <span class="chip">BTC price</span><span class="chip">BTC dominance</span><span class="chip">ETH</span><span class="chip">VIX</span>
+          <span class="chip">S&amp;P 500</span><span class="chip">ES futures</span><span class="chip">NQ futures</span><span class="chip">YM futures</span>
+          <span class="chip">RTY futures</span><span class="chip">Gold</span><span class="chip">Silver</span><span class="chip">Oil</span><span class="chip">Copper</span>
+          <span class="chip chip-special">GDELT Geopolitics</span>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-card reveal reveal-delay-2">
+      <strong style="color:var(--gold-bright)">FED macro data feeds into every individual signal — not just a global gauge.</strong> GDELT geopolitical events cross-reference directly against each asset's signal. <em style="color:var(--text-sec)">No retail competitor does this.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 5.5: HOW IT WORKS ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Onboarding</span>
+      <h2 style="text-align:center">How it works.</h2>
+    </div>
+    <div class="how-grid">
+      <div class="how-card reveal" style="text-align:left"><h3>Download AUREX</h3><p>3 seconds. iOS, Android or web. Free, no credit card required.</p></div>
+      <div class="how-card reveal reveal-delay-1" style="text-align:left"><h3>Pick your assets</h3><p>Add any of the 350 assets to your portfolio or watchlist. 9 instrument types, 7 global markets.</p></div>
+      <div class="how-card reveal reveal-delay-2" style="text-align:left"><h3>Get signals in real time</h3><p>The AI engine analyzes 24 variables and delivers signals with statistical probability, in 8 languages.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 6: 3 BANNERS ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Real-time</span>
+      <h2 style="text-align:center">The full market picture. Always visible.</h2>
+    </div>
+    <div class="bann-grid">
+      <div class="bann-card reveal" style="text-align:left">
+        <div class="bann-icon">◉</div>
+        <h3>Markets</h3>
+        <p>11 global exchanges — see open, closed and pre/post-market status in real time. Choose which markets to display and in what order.</p>
+        <div class="bann-data">NYSE · NSDQ · LSE · MERVAL · B3 · NIKKEI · SSE · TSX · BMV · BVL · ASX</div>
+      </div>
+      <div class="bann-card reveal reveal-delay-1" style="text-align:left">
+        <div class="bann-icon">⟁</div>
+        <h3>Futures</h3>
+        <p>16 instruments across 6 categories. Know where the market is heading before it opens.</p>
+        <div class="bann-data">ES · NQ · YM · RTY · GC · SI · CL · HG · NG · ZB · ZN · DX · 6E · 6J · BTC · ETH</div>
+      </div>
+      <div class="bann-card reveal reveal-delay-2" style="text-align:left">
+        <div class="bann-icon">⌖</div>
+        <h3>Critical Events</h3>
+        <p>A live scrolling ticker of high and medium-impact economic events — FOMC, CPI, payrolls, geopolitical developments — active right now.</p>
+        <div class="bann-data">FED · CPI · NFP · GDELT · EARNINGS</div>
+      </div>
+    </div>
+    <p class="b6-close">The global market state. One screen. No app switching.</p>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 7: PORTFOLIO ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="b7-grid">
+      <div class="reveal">
+        <span class="section-label">Portfolio</span>
+        <h2>Your holdings. With the full AI engine on top.</h2>
+        <p class="sub">AUREX Portfolio is a tracking layer, not a trading account. No money moves. No brokerage connection required. Add any of the 350 assets and immediately get the full signal context on your personal mix.</p>
+        <div class="b7-feats">
+          <div class="b7-feat">AI Risk Thermometer — real-time risk score across your entire portfolio</div>
+          <div class="b7-feat">AI Dots — individual signal visible directly on each holding</div>
+          <div class="b7-feat">PnL across 5 periods: daily, weekly, monthly, quarterly, annual</div>
+          <div class="b7-feat">Multi-currency converter built in. Cloud sync across devices.</div>
+        </div>
+      </div>
+      <div class="b7-mockup reveal reveal-delay-1">
+        <div class="iphone-frame">
+          <img src="assets/captures/portfolio_en.jpg" alt="AUREX Portfolio">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 8: 15 ALERTAS ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Alerts</span>
+      <h2>15 alert types. You set the rules.</h2>
+    </div>
+    <div class="alert-grid">
+      <div class="alert-card reveal"><div class="a-num">04 TYPES</div><h3>AI Alerts</h3><p>Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p></div>
+      <div class="alert-card reveal reveal-delay-1"><div class="a-num">03 TYPES</div><h3>Pulse Alerts</h3><p>Market zone change, alert by asset category, global Risk Thermometer.</p></div>
+      <div class="alert-card reveal reveal-delay-2"><div class="a-num">03 TYPES</div><h3>Price Alerts</h3><p>Target price reached, sharp price move, new 52-week high or low.</p></div>
+      <div class="alert-card reveal reveal-delay-3"><div class="a-num">05 TYPES</div><h3>Event Alerts</h3><p>FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p></div>
+    </div>
+    <div class="alert-note">Alerts are delivered in-app. Push notifications with app closed, SMS and Telegram delivery — coming in the next version.</div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 8.5: MORE YOU CAN DO ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">More features</span>
+      <h2 style="text-align:center">More you can do with AUREX.</h2>
+    </div>
+    <div class="more-grid">
+      <div class="more-item reveal"><img src="assets/captures/share_signal_en.jpg" alt="Share signal"><p>Share any signal via Telegram, Mail or WhatsApp link</p></div>
+      <div class="more-item reveal reveal-delay-1"><img src="assets/captures/new_list_en.jpg" alt="New list"><p>Create custom watchlists with color labels</p></div>
+      <div class="more-item reveal reveal-delay-2"><img src="assets/captures/price_alert_en.jpg" alt="Price alert"><p>Set price alerts in seconds — above, below, or %</p></div>
+      <div class="more-item reveal reveal-delay-3"><img src="assets/captures/add_asset_en.jpg" alt="Add asset"><p>Add any of the 350 assets to your portfolio</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 9: 8 IDIOMAS ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Languages</span>
+      <h2 style="text-align:center">8 languages. From day one.</h2>
+      <p class="sub">AUREX runs natively in English, Spanish, Portuguese, Chinese, French, Italian, Hindi and Arabic. Every signal, every disclaimer, every data point — in your language.</p>
+    </div>
+    <div class="lang-grid">
+      <span class="lang-pill reveal"><span class="flag">🇺🇸</span> EN</span>
+      <span class="lang-pill reveal reveal-delay-1"><span class="flag">🇪🇸</span> ES</span>
+      <span class="lang-pill reveal reveal-delay-1"><span class="flag">🇧🇷</span> PT</span>
+      <span class="lang-pill reveal reveal-delay-2"><span class="flag">🇨🇳</span> ZH</span>
+      <span class="lang-pill reveal reveal-delay-2"><span class="flag">🇫🇷</span> FR</span>
+      <span class="lang-pill reveal reveal-delay-3"><span class="flag">🇮🇹</span> IT</span>
+      <span class="lang-pill reveal reveal-delay-3"><span class="flag">🇮🇳</span> HI</span>
+      <span class="lang-pill reveal reveal-delay-3"><span class="flag">🇸🇦</span> AR</span>
+    </div>
+    <p class="b9-close">One terminal. 8 languages. 4.2 billion speakers covered.</p>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 10: PLANES ===== -->
+<section class="blk center" id="plans">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Pricing</span>
+      <h2 style="text-align:center">Start free. Upgrade when you're ready.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan reveal">
+        <div class="plan-name">FREE</div>
+        <div class="plan-price">$0</div>
+        <div class="plan-period">Forever</div>
+        <p class="plan-desc">Up to 5 assets in Portfolio. 3 AI signals per day. Real-time markets. Basic AUREX Pulse. No credit card required.</p>
+      </div>
+      <div class="plan featured reveal reveal-delay-1">
+        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-name">PRO</div>
+        <div class="plan-price">$9.99<span class="small"> /mo</span></div>
+        <div class="plan-period">or $89.99 / year</div>
+        <p class="plan-desc">Unlimited AI signals. Unlimited Portfolio. All 15 alert types active. 30-day signal history. All filters and tools. Export to Excel/PDF. Priority support.</p>
+      </div>
+      <div class="plan reveal reveal-delay-2">
+        <div class="plan-badge plan-badge-soon">NEXT VERSION</div>
+        <div class="plan-name">ELITE</div>
+        <div class="plan-price">$19.99<span class="small"> /mo</span></div>
+        <div class="plan-period">or $179.99 / year</div>
+        <p class="plan-desc">Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 10.5: HOW WE COMPARE ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="section-label">Benchmark</span>
+      <h2>How we compare.</h2>
+      <p class="sub">AUREX vs the most consolidated platforms for the individual investor.</p>
+    </div>
+    <div class="bench-wrap reveal reveal-delay-1">
+      <table class="bench-table">
+        <thead>
+          <tr>
+            <th>Feature</th>
+            <th class="aurex">AUREX</th>
+            <th>TradingView</th>
+            <th>Investing.com</th>
+            <th>Seeking Alpha</th>
+            <th>Bloomberg Terminal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature">Free plan</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span> Basic</td><td><span class="bench-no">—</span></td></tr>
+          <tr><td class="feature">Paid tier base</td><td class="aurex"><span class="bench-price-aurex">$9.99/mo</span></td><td class="bench-price">$12.95/mo</td><td class="bench-price">$25–50/mo</td><td class="bench-price">$25/mo</td><td class="bench-price">$2,000/mo</td></tr>
+          <tr><td class="feature">9 instrument types</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-warn">US focus</span></td><td><span class="bench-check">✓</span></td></tr>
+          <tr><td class="feature">7 stock markets covered</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span> wider</td><td><span class="bench-check">✓</span> wider</td><td><span class="bench-warn">US</span></td><td><span class="bench-check">✓</span></td></tr>
+          <tr><td class="feature">24 explainable AI variables/signal</td><td class="aurex"><span class="bench-check">✓</span> UNIQUE</td><td><span class="bench-no">—</span></td><td>ProPicks AI</td><td>Quant Ratings</td><td><span class="bench-warn">≠ Institutional</span></td></tr>
+          <tr><td class="feature">FED Macro + GDELT per signal</td><td class="aurex"><span class="bench-check">✓</span> UNIQUE retail</td><td><span class="bench-no">—</span></td><td><span class="bench-no">—</span></td><td><span class="bench-no">—</span></td><td><span class="bench-check">✓</span></td></tr>
+          <tr><td class="feature">Native multi-language</td><td class="aurex"><span class="bench-check">✓</span> 8 langs</td><td><span class="bench-warn">English</span></td><td><span class="bench-check">✓</span> 30+ langs</td><td><span class="bench-warn">English</span></td><td><span class="bench-warn">English</span></td></tr>
+          <tr><td class="feature">iOS + Android + Web</td><td class="aurex"><span class="bench-check">✓</span> all</td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-warn">Web focus</span></td><td><span class="bench-warn">Desktop only</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="bench-footer reveal reveal-delay-2">
+      <strong>Cross-asset coverage, explainable AI, and macro/geopolitical context — in one terminal, at retail pricing.</strong>
+      <br>
+      <em style="color:var(--text-sec)">Each competitor excels in one dimension. AUREX integrates them.</em>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 11: WE DON'T TRADE ===== -->
+<section class="blk">
+  <div class="wrap">
+    <div class="what-not reveal">
+      <h3>We analyze. We don't trade.</h3>
+      <ul>
+        <li>We are not a broker</li>
+        <li>We don't execute trades or transactions</li>
+        <li>We don't manage your money</li>
+        <li>We don't give financial advice</li>
+        <li>We don't recommend buy or sell actions</li>
+        <li>We are not a crypto-only app</li>
+        <li>We don't replace your broker — we complement it</li>
+      </ul>
+      <p class="disclaimer-text">AUREX is a data visualization and analytics platform for informational and educational purposes only. It does not provide investment advice, execute transactions, or manage assets of any kind. All analysis is statistical in nature and does not guarantee future results. Always consult a qualified financial professional before making investment decisions. © 2026 AUREX — Fernando Moscón.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 11.5: LIVE QUOTES TABLERO TACTICAL ===== -->
+<section class="blk center">
+  <div class="wrap">
+    <div class="reveal lq-section-title">
+      <span class="section-label">Live market pulse</span>
+      <h2 style="text-align:center">The same data the engine reads.</h2>
+      <p class="sect-sub">Real-time crypto prices from CoinGecko. Equities, commodities and macro futures refreshed periodically — the live tape that feeds every AUREX signal.</p>
+    </div>
+
+    <div class="lq-board reveal">
+      <div class="lq-header">
+        <div class="lq-title">Market Pulse · Global</div>
+        <div class="lq-status">
+          <span class="lq-dot"></span>
+          <span>LIVE</span>
+          <span class="lq-clock" id="lq-clock">--:--:--</span>
+        </div>
+      </div>
+
+      <div class="lq-section">
+        <div class="lq-section-label">Magnificent 7 · Equities</div>
+        <div class="lq-grid" id="lq-stocks">
+          <div class="lq-row" data-sym="AAPL"><span class="lq-sym">AAPL</span><div class="lq-vals"><span class="lq-price">$189.34</span><span class="lq-pct pos"><span class="arrow">▲</span>+1.2%</span></div></div>
+          <div class="lq-row" data-sym="NVDA"><span class="lq-sym">NVDA</span><div class="lq-vals"><span class="lq-price">$875.20</span><span class="lq-pct pos"><span class="arrow">▲</span>+3.1%</span></div></div>
+          <div class="lq-row" data-sym="MSFT"><span class="lq-sym">MSFT</span><div class="lq-vals"><span class="lq-price">$420.10</span><span class="lq-pct neg"><span class="arrow">▼</span>-0.4%</span></div></div>
+          <div class="lq-row" data-sym="GOOGL"><span class="lq-sym">GOOGL</span><div class="lq-vals"><span class="lq-price">$171.50</span><span class="lq-pct pos"><span class="arrow">▲</span>+0.8%</span></div></div>
+          <div class="lq-row" data-sym="META"><span class="lq-sym">META</span><div class="lq-vals"><span class="lq-price">$512.80</span><span class="lq-pct pos"><span class="arrow">▲</span>+2.2%</span></div></div>
+          <div class="lq-row" data-sym="AMZN"><span class="lq-sym">AMZN</span><div class="lq-vals"><span class="lq-price">$185.40</span><span class="lq-pct pos"><span class="arrow">▲</span>+0.5%</span></div></div>
+          <div class="lq-row" data-sym="TSLA"><span class="lq-sym">TSLA</span><div class="lq-vals"><span class="lq-price">$165.20</span><span class="lq-pct neg"><span class="arrow">▼</span>-1.8%</span></div></div>
+        </div>
+      </div>
+
+      <div class="lq-section">
+        <div class="lq-section-label">Crypto Top 5 · Live</div>
+        <div class="lq-grid" id="lq-crypto">
+          <div class="lq-row" data-sym="bitcoin"><span class="lq-sym">BTC</span><div class="lq-vals"><span class="lq-price">$94,200</span><span class="lq-pct pos"><span class="arrow">▲</span>+1.8%</span></div></div>
+          <div class="lq-row" data-sym="ethereum"><span class="lq-sym">ETH</span><div class="lq-vals"><span class="lq-price">$3,240</span><span class="lq-pct pos"><span class="arrow">▲</span>+2.1%</span></div></div>
+          <div class="lq-row" data-sym="solana"><span class="lq-sym">SOL</span><div class="lq-vals"><span class="lq-price">$162.50</span><span class="lq-pct neg"><span class="arrow">▼</span>-0.3%</span></div></div>
+          <div class="lq-row" data-sym="binancecoin"><span class="lq-sym">BNB</span><div class="lq-vals"><span class="lq-price">$608.00</span><span class="lq-pct pos"><span class="arrow">▲</span>+0.9%</span></div></div>
+          <div class="lq-row" data-sym="ripple"><span class="lq-sym">XRP</span><div class="lq-vals"><span class="lq-price">$0.52</span><span class="lq-pct pos"><span class="arrow">▲</span>+1.2%</span></div></div>
+        </div>
+      </div>
+
+      <div class="lq-section">
+        <div class="lq-section-label">Commodities + Macro Futures</div>
+        <div class="lq-grid" id="lq-macro">
+          <div class="lq-row" data-sym="GOLD"><span class="lq-sym">GOLD</span><div class="lq-vals"><span class="lq-price">$3,320</span><span class="lq-pct pos"><span class="arrow">▲</span>+0.6%</span></div></div>
+          <div class="lq-row" data-sym="BRENT"><span class="lq-sym">BRENT</span><div class="lq-vals"><span class="lq-price">$73.40</span><span class="lq-pct neg"><span class="arrow">▼</span>-0.9%</span></div></div>
+          <div class="lq-row" data-sym="SP500"><span class="lq-sym">SP500 FUT</span><div class="lq-vals"><span class="lq-price">5,780</span><span class="lq-pct pos"><span class="arrow">▲</span>+0.4%</span></div></div>
+          <div class="lq-row" data-sym="VIX"><span class="lq-sym">VIX</span><div class="lq-vals"><span class="lq-price">18.2</span><span class="lq-pct neg"><span class="arrow">▼</span>-1.1%</span></div></div>
+        </div>
+      </div>
+
+      <div class="lq-foot">
+        <strong>SOURCES</strong> · Crypto: CoinGecko API (~60 s refresh) · Equities, commodities & futures: indicative, refreshed periodically · For demonstration on aurex.live — full real-time tape in the AUREX app.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== BLOQUE 12: FOOTER ===== -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="foot-brand">
+          <svg viewBox="0 0 300 300" fill="none">
+            <defs>
+              <linearGradient id="fg" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F7D060"/><stop offset="50%" stop-color="#D4A017"/><stop offset="100%" stop-color="#8B6208"/></linearGradient>
+            </defs>
+            <circle cx="150" cy="150" r="118" fill="none" stroke="url(#fg)" stroke-width="3.5"/>
+            <line x1="150" y1="78" x2="108" y2="168" stroke="url(#fg)" stroke-width="11" stroke-linecap="round"/>
+            <line x1="150" y1="78" x2="192" y2="168" stroke="url(#fg)" stroke-width="11" stroke-linecap="round"/>
+            <line x1="104" y1="123" x2="196" y2="123" stroke="url(#fg)" stroke-width="11" stroke-linecap="round"/>
+          </svg>
+          <span class="word">AUREX</span>
+        </div>
+        <p class="foot-tag">The global markets terminal. AI signals across 350 assets in 8 languages.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="/app/">Web App</a>
+        <a href="#">iOS App Store</a>
+        <a href="https://play.google.com/store/apps/details?id=com.aurexapp">Google Play</a>
+        <a href="#plans">Pricing</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="mailto:app.aurex@gmail.com">Contact</a>
+        <a href="/app/privacy.html">Privacy Policy</a>
+        <a href="#">Terms</a>
+        <a href="https://github.com/fmoscon-creator/aurex-app">Open source</a>
+      </div>
+      <div class="foot-col">
+        <h4>Channels</h4>
+        <div class="foot-channels">
+          <a href="https://t.me/aurex_ai" target="_blank" title="Telegram @aurex_ai">TG</a>
+          <a href="https://x.com/aurex_live" target="_blank" title="X @aurex_live">X</a>
+          <a href="https://instagram.com/aurex_live" target="_blank" title="Instagram @aurex_live">IG</a>
+          <a href="https://tiktok.com/@aurex_live" target="_blank" title="TikTok @aurex_live">TT</a>
+          <a href="https://youtube.com/@aurex-fintech" target="_blank" title="YouTube @aurex-fintech">YT</a>
+          <a href="https://linkedin.com/company/aurex-fintech" target="_blank" title="LinkedIn">in</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <div class="foot-copy">© 2026 AUREX · FERNANDO MOSCÓN</div>
+      <div>
+        <a href="/app/privacy.html">PRIVACY</a> &nbsp; <a href="#">TERMS</a> &nbsp; <a href="#">LEGAL</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== NEWSLETTER MICRO-MODAL ===== -->
+<div class="nl-overlay" id="nl-overlay" role="dialog" aria-modal="true" aria-labelledby="nl-title" aria-hidden="true">
+  <div class="nl-modal">
+    <button class="nl-close" id="nl-close" type="button" aria-label="Close">×</button>
+    <h3 id="nl-title">Get early access</h3>
+    <p class="nl-sub">Monthly market reports + new feature drops, straight from the AUREX team.</p>
+    <form class="nl-form" id="nl-form" action="https://formspree.io/f/xpqnajgp" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+      <input type="hidden" name="_subject" value="New AUREX newsletter signup">
+      <input type="hidden" name="source" value="aurex.live · landing v3 · header">
+      <button type="submit" id="nl-submit">Notify me</button>
+      <div class="nl-msg" id="nl-msg"></div>
+    </form>
+    <div class="nl-footer">Be first to know. No spam.</div>
+  </div>
+</div>
+
+<script>
+(function(){
+  // === HEADER SCROLL GLASSMORPHISM ===
+  const hdr = document.getElementById('hdr');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    hdr.classList.toggle('scrolled', y > 30);
+    // activar zona-b cuando el marker entra al viewport
+    const marker = document.getElementById('zone-b-marker');
+    if(marker){
+      const rect = marker.getBoundingClientRect();
+      document.body.classList.toggle('zone-b-active', rect.top < window.innerHeight);
+    }
+    lastScroll = y;
+  }, {passive:true});
+
+  // === SCROLL REVEAL ===
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('visible');
+        io.unobserve(e.target);
+      }
+    });
+  }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+  reveals.forEach(el => io.observe(el));
+
+  // === COUNTER ANIMATION ===
+  const counters = document.querySelectorAll('[data-count]');
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1400;
+        const start = performance.now();
+        const animate = (now) => {
+          const t = Math.min(1, (now - start) / duration);
+          const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
+          el.textContent = Math.floor(target * eased);
+          if(t < 1) requestAnimationFrame(animate);
+          else el.textContent = target;
+        };
+        requestAnimationFrame(animate);
+        counterIO.unobserve(el);
+      }
+    });
+  }, {threshold:0.4});
+  counters.forEach(c => counterIO.observe(c));
+
+  // === CONSTELLATION CANVAS (Zona B, sutil) ===
+  const canvas = document.getElementById('constellation');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let W = 0, H = 0;
+  const STAR_COUNT = window.innerWidth > 768 ? 50 : 30;
+  const LINK_DIST = 130;
+
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    stars = Array.from({length: STAR_COUNT}, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 1.3 + 0.5,
+      vx: (Math.random() - 0.5) * 0.15,
+      vy: (Math.random() - 0.5) * 0.15,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.005 + Math.random() * 0.015
+    }));
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  let lastFrame = 0;
+  function draw(now){
+    if(!document.body.classList.contains('zone-b-active')){
+      requestAnimationFrame(draw);
+      return;
+    }
+    if(now - lastFrame < 40){ // ~25fps
+      requestAnimationFrame(draw);
+      return;
+    }
+    lastFrame = now;
+    ctx.clearRect(0, 0, W, H);
+
+    // dibujar líneas primero (más sutiles)
+    for(let i=0; i<stars.length; i++){
+      for(let j=i+1; j<stars.length; j++){
+        const dx = stars[i].x - stars[j].x;
+        const dy = stars[i].y - stars[j].y;
+        const d = Math.sqrt(dx*dx + dy*dy);
+        if(d < LINK_DIST){
+          const alpha = (1 - d/LINK_DIST) * 0.12; // muy bajo
+          ctx.strokeStyle = `rgba(212,160,23,${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(stars[i].x, stars[i].y);
+          ctx.lineTo(stars[j].x, stars[j].y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    // dibujar estrellas (titilación sutil, sin halos grandes)
+    stars.forEach(s => {
+      s.x += s.vx;
+      s.y += s.vy;
+      if(s.x < 0 || s.x > W) s.vx *= -1;
+      if(s.y < 0 || s.y > H) s.vy *= -1;
+      s.phase += s.speed;
+      const flicker = 0.35 + 0.3 * Math.sin(s.phase); // entre 0.05 y 0.65
+      ctx.fillStyle = `rgba(245,200,66,${flicker})`;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
+
+  // === LANG SELECTOR (placeholder hasta cargar i18n completo) ===
+  const sel = document.getElementById('lang-sel');
+  sel.addEventListener('change', (e) => {
+    const lang = e.target.value;
+    // cambiar capturas EN ↔ ES
+    document.querySelectorAll('img[src*="_en.jpg"]').forEach(img => {
+      if(lang === 'es') img.src = img.src.replace('_en.jpg', '_es.jpg');
+    });
+    document.querySelectorAll('img[src*="_es.jpg"]').forEach(img => {
+      if(lang === 'en') img.src = img.src.replace('_es.jpg', '_en.jpg');
+    });
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    try{ localStorage.setItem('aurex_landing_lang', lang); }catch(e){}
+  });
+
+  // === NEWSLETTER MICRO-MODAL ===
+  const nlOpen = document.getElementById('nl-open');
+  const nlOverlay = document.getElementById('nl-overlay');
+  const nlClose = document.getElementById('nl-close');
+  const nlForm = document.getElementById('nl-form');
+  const nlSubmit = document.getElementById('nl-submit');
+  const nlMsg = document.getElementById('nl-msg');
+
+  function openModal(){
+    nlOverlay.classList.add('active');
+    nlOverlay.setAttribute('aria-hidden', 'false');
+    setTimeout(() => { nlForm.querySelector('input[type=email]').focus(); }, 200);
+  }
+  function closeModal(){
+    nlOverlay.classList.remove('active');
+    nlOverlay.setAttribute('aria-hidden', 'true');
+    nlMsg.classList.remove('active','success','error');
+    nlMsg.textContent = '';
+  }
+  if(nlOpen) nlOpen.addEventListener('click', openModal);
+  if(nlClose) nlClose.addEventListener('click', closeModal);
+  if(nlOverlay) nlOverlay.addEventListener('click', (e) => { if(e.target === nlOverlay) closeModal(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && nlOverlay.classList.contains('active')) closeModal(); });
+
+  if(nlForm){
+    nlForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(nlForm);
+      nlSubmit.disabled = true;
+      nlSubmit.textContent = 'Sending...';
+      nlMsg.classList.remove('active','success','error');
+      try {
+        const res = await fetch(nlForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if(res.ok){
+          nlMsg.textContent = '✓ You\'re on the list. Check your inbox.';
+          nlMsg.classList.add('active','success');
+          nlForm.reset();
+          setTimeout(closeModal, 2400);
+        } else {
+          const json = await res.json().catch(() => ({}));
+          nlMsg.textContent = (json.errors && json.errors[0] && json.errors[0].message) || 'Something went wrong. Please try again.';
+          nlMsg.classList.add('active','error');
+        }
+      } catch(err){
+        nlMsg.textContent = 'Network error. Please try again.';
+        nlMsg.classList.add('active','error');
+      } finally {
+        nlSubmit.disabled = false;
+        nlSubmit.textContent = 'Notify me';
+      }
+    });
+  }
+
+  // === LIVE QUOTES TABLERO TACTICAL ===
+  const lqClock = document.getElementById('lq-clock');
+  function tickClock(){
+    if(!lqClock) return;
+    const d = new Date();
+    const hh = String(d.getUTCHours()).padStart(2,'0');
+    const mm = String(d.getUTCMinutes()).padStart(2,'0');
+    const ss = String(d.getUTCSeconds()).padStart(2,'0');
+    lqClock.textContent = `${hh}:${mm}:${ss} UTC`;
+  }
+  tickClock();
+  setInterval(tickClock, 1000);
+
+  // CoinGecko live crypto (free, no API key) — refresh cada 60s
+  const cryptoIds = ['bitcoin','ethereum','solana','binancecoin','ripple'];
+  const cryptoMap = {
+    bitcoin:  {sym:'BTC', fmt:(p) => '$' + Math.round(p).toLocaleString('en-US')},
+    ethereum: {sym:'ETH', fmt:(p) => '$' + Math.round(p).toLocaleString('en-US')},
+    solana:   {sym:'SOL', fmt:(p) => '$' + p.toFixed(2)},
+    binancecoin:{sym:'BNB', fmt:(p) => '$' + p.toFixed(2)},
+    ripple:   {sym:'XRP', fmt:(p) => '$' + p.toFixed(4)}
+  };
+
+  async function fetchCrypto(){
+    try {
+      const url = `https://api.coingecko.com/api/v3/simple/price?ids=${cryptoIds.join(',')}&vs_currencies=usd&include_24hr_change=true`;
+      const res = await fetch(url);
+      if(!res.ok) return;
+      const data = await res.json();
+      cryptoIds.forEach(id => {
+        if(!data[id]) return;
+        const price = data[id].usd;
+        const chg = data[id].usd_24h_change;
+        const row = document.querySelector(`#lq-crypto .lq-row[data-sym="${id}"]`);
+        if(!row) return;
+        const priceEl = row.querySelector('.lq-price');
+        const pctEl = row.querySelector('.lq-pct');
+        const arrowEl = pctEl.querySelector('.arrow');
+        priceEl.textContent = cryptoMap[id].fmt(price);
+        const pos = chg >= 0;
+        pctEl.className = 'lq-pct ' + (pos ? 'pos' : 'neg');
+        arrowEl.textContent = pos ? '▲' : '▼';
+        pctEl.innerHTML = `<span class="arrow">${pos ? '▲' : '▼'}</span>${pos ? '+' : ''}${chg.toFixed(1)}%`;
+      });
+    } catch(err){ /* silent — keep hardcoded values */ }
+  }
+  // Solo arranca el fetch cuando el bloque está visible (perf)
+  const lqBoard = document.querySelector('.lq-board');
+  if(lqBoard && 'IntersectionObserver' in window){
+    const lqIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(e.isIntersecting){
+          fetchCrypto();
+          setInterval(fetchCrypto, 60000);
+          lqIO.unobserve(e.target);
+        }
+      });
+    }, {threshold:0.2});
+    lqIO.observe(lqBoard);
+  }
+})();
+</script>
+</body>
+</html>
