@@ -108,8 +108,8 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
 .hdr-drawer.active{transform:translateX(0)}
 .hdr-drawer-close{position:absolute;top:18px;right:18px;width:42px;height:42px;background:transparent;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--gold);font-size:22px;display:flex;align-items:center;justify-content:center;line-height:1;transition:border-color .2s,background .2s}
 .hdr-drawer-close:hover{border-color:rgba(212,160,23,0.6);background:rgba(212,160,23,0.06)}
-.hdr-drawer-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:15px;font-weight:500;color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.02);transition:border-color .2s,background .2s,color .2s;cursor:pointer;font-family:inherit;width:100%;text-align:left}
-.hdr-drawer-item:hover,.hdr-drawer-item:active{border-color:var(--gold);background:rgba(212,160,23,0.08);color:var(--gold-bright)}
+.hdr-drawer-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:15px;font-weight:500;color:var(--text);text-decoration:none;border:1px solid rgba(212,160,23,0.4);border-radius:10px;background:rgba(212,160,23,0.05);transition:border-color .2s,background .2s,color .2s;cursor:pointer;font-family:inherit;width:100%;text-align:left}
+.hdr-drawer-item:hover,.hdr-drawer-item:active{border-color:var(--gold);background:rgba(212,160,23,0.12);color:var(--gold-bright)}
 .hdr-drawer-section{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
 .hdr-drawer-section-label{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding:0 4px}
 .hdr-drawer-channels{display:flex;flex-direction:column;gap:6px}
@@ -304,20 +304,25 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .plan-badge-soon{background:var(--bg-darker);color:var(--gold);border:1px solid var(--gold)}
 
 /* === B10.5 benchmark === */
-.bench-wrap{margin-top:38px;overflow-x:auto;border-radius:14px;border:1px solid var(--border)}
-.bench-table{width:100%;border-collapse:collapse;min-width:780px;background:var(--bg-soft);font-size:13.5px}
-.bench-table th,.bench-table td{padding:14px 16px;text-align:left;border-bottom:1px solid var(--border)}
-.bench-table thead th{background:var(--bg-darker);font-family:var(--mono);font-size:11px;color:var(--text-sec);letter-spacing:.8px;text-transform:uppercase;font-weight:600;border-bottom:2px solid var(--border)}
-.bench-table thead th.aurex{background:linear-gradient(180deg,#1A0D00,#100A02);color:var(--gold-bright);border-bottom-color:var(--gold)}
-.bench-table tbody tr:hover{background:rgba(212,160,23,0.03)}
-.bench-table tbody td.aurex{background:rgba(212,160,23,0.06);color:var(--gold-bright);font-weight:600;border-left:2px solid var(--gold);border-right:2px solid var(--gold)}
-.bench-table tbody td.feature{font-weight:500;color:var(--text)}
+.bench-wrap{margin-top:38px;overflow-x:auto;border-radius:14px;border:1px solid rgba(212,160,23,0.45);background:var(--bg-soft);box-shadow:0 8px 30px rgba(0,0,0,0.4)}
+.bench-table{width:100%;border-collapse:collapse;min-width:880px;background:transparent;font-size:13.5px}
+.bench-table th,.bench-table td{padding:16px 18px;text-align:center;border-bottom:1px solid rgba(212,160,23,0.18);vertical-align:middle}
+.bench-table th:first-child,.bench-table td:first-child{text-align:left}
+.bench-table thead th{background:#0D0800;font-family:var(--mono);font-size:11px;color:var(--text);letter-spacing:1px;text-transform:uppercase;font-weight:700;border-bottom:2px solid rgba(212,160,23,0.45);padding:18px 14px}
+.bench-table thead th.aurex{background:linear-gradient(180deg,#2A1500,#1A0D00);color:var(--gold-bright);border-bottom-color:var(--gold);font-size:13px}
+.bench-table thead th .comp-logo{display:inline-flex;align-items:center;gap:7px;justify-content:center}
+.bench-table thead th .comp-logo svg{width:18px;height:18px;flex-shrink:0;color:var(--text-sec)}
+.bench-table thead th.aurex .comp-logo svg{color:var(--gold-bright);width:20px;height:20px}
+.bench-table tbody tr:hover{background:rgba(212,160,23,0.04)}
+.bench-table tbody td.aurex{background:rgba(212,160,23,0.08);color:var(--gold-bright);font-weight:600;border-left:2px solid var(--gold);border-right:2px solid var(--gold)}
+.bench-table tbody td.feature{font-weight:600;color:var(--text);font-size:13.5px}
 .bench-table tbody tr:last-child td{border-bottom:none}
-.bench-check{color:var(--gold-bright);font-weight:700}
-.bench-no{color:var(--text-dim)}
-.bench-warn{color:var(--text-sec);font-style:italic;font-size:12.5px}
-.bench-price-aurex{font-family:var(--mono);font-size:18px;color:var(--gold-bright);font-weight:700}
-.bench-price{font-family:var(--mono);font-size:14px;color:var(--text-sec)}
+.bench-check{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:rgba(0,255,150,0.14);color:#26d97f;border:1.5px solid rgba(38,217,127,0.5);border-radius:50%;font-weight:800;font-size:14px;line-height:1}
+.bench-table td.aurex .bench-check{background:rgba(212,160,23,0.16);color:var(--gold-bright);border-color:var(--gold)}
+.bench-no{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;background:rgba(255,77,109,0.14);color:#ff6b85;border:1.5px solid rgba(255,77,109,0.5);border-radius:50%;font-weight:800;font-size:13px;line-height:1}
+.bench-warn{display:inline-block;padding:4px 10px;background:rgba(255,180,50,0.10);color:#ffb432;border:1px solid rgba(255,180,50,0.4);border-radius:99px;font-size:11.5px;font-weight:600;font-style:normal}
+.bench-price-aurex{font-family:var(--mono);font-size:18px;color:var(--gold-bright);font-weight:800}
+.bench-price{font-family:var(--mono);font-size:14px;color:var(--text-sec);font-weight:600}
 .bench-footer{margin-top:24px;text-align:center;font-size:14.5px;color:var(--text);max-width:720px;margin-left:auto;margin-right:auto;line-height:1.6}
 .bench-footer strong{color:var(--gold-bright)}
 
@@ -418,6 +423,13 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 .lq-section-title .section-label{display:inline-block}
 
 html{scroll-behavior:smooth}
+
+/* === BALANZA DISCLAIMER LEGAL FAB === */
+.legal-fab{position:fixed;bottom:22px;right:22px;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold-bright),var(--gold));border:2px solid #000;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:26px;text-decoration:none;color:#000;z-index:90;box-shadow:0 8px 24px rgba(0,0,0,0.5),0 0 0 4px rgba(212,160,23,0.15);transition:transform .2s ease,box-shadow .2s ease;line-height:1}
+.legal-fab:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 12px 28px rgba(0,0,0,0.55),0 0 0 6px rgba(212,160,23,0.22)}
+.legal-fab::after{content:attr(data-tooltip);position:absolute;right:calc(100% + 12px);top:50%;transform:translateY(-50%);background:#0A0500;color:var(--gold-bright);padding:7px 12px;border-radius:8px;border:1px solid rgba(212,160,23,0.5);font-size:11.5px;font-family:var(--mono);letter-spacing:.4px;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease}
+.legal-fab:hover::after{opacity:1}
+@media(max-width:480px){.legal-fab{width:50px;height:50px;font-size:23px;bottom:16px;right:16px}.legal-fab::after{display:none}}
 </style>
 </head>
 <body>
@@ -972,23 +984,94 @@ html{scroll-behavior:smooth}
       <table class="bench-table">
         <thead>
           <tr>
-            <th>Feature</th>
-            <th class="aurex">AUREX</th>
-            <th>TradingView</th>
-            <th>Investing.com</th>
-            <th>Seeking Alpha</th>
-            <th>Bloomberg Terminal</th>
+            <th>Característica</th>
+            <th class="aurex"><span class="comp-logo">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l3 3 5-6"/></svg>
+              AUREX
+            </span></th>
+            <th><span class="comp-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21h18v-2H3v2zm2-4h2v-7H5v7zm4 0h2V8H9v9zm4 0h2V5h-2v12zm4 0h2v-9h-2v9z"/></svg>
+              TradingView
+            </span></th>
+            <th><span class="comp-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21 5l-9 9-3-3-6 6 1.5 1.5L9 13l3 3L22.5 6.5 21 5z"/></svg>
+              Investing.com
+            </span></th>
+            <th><span class="comp-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4 5.6v5.5c0 5.1 3.4 9.8 8 10.9 4.6-1.1 8-5.8 8-10.9V5.6L12 2z"/></svg>
+              Seeking Alpha
+            </span></th>
+            <th><span class="comp-logo">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 3h18v18H3V3zm2.5 2.5v13h13v-13h-13zM8 8h4.5c1.4 0 2.5 1.1 2.5 2.5 0 .8-.4 1.5-1 2 .9.4 1.5 1.4 1.5 2.5 0 1.7-1.3 3-3 3H8V8zm2 2v2h2c.6 0 1-.4 1-1s-.4-1-1-1h-2zm0 4v2h2.5c.6 0 1-.4 1-1s-.4-1-1-1H10z"/></svg>
+              Bloomberg
+            </span></th>
           </tr>
         </thead>
         <tbody>
-          <tr><td class="feature">Free plan</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span> Basic</td><td><span class="bench-no">—</span></td></tr>
-          <tr><td class="feature">Paid tier base</td><td class="aurex"><span class="bench-price-aurex">$9.99/mo</span></td><td class="bench-price">$12.95/mo</td><td class="bench-price">$25–50/mo</td><td class="bench-price">$25/mo</td><td class="bench-price">$2,000/mo</td></tr>
-          <tr><td class="feature">9 instrument types</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-warn">US focus</span></td><td><span class="bench-check">✓</span></td></tr>
-          <tr><td class="feature">7 stock markets covered</td><td class="aurex"><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span> wider</td><td><span class="bench-check">✓</span> wider</td><td><span class="bench-warn">US</span></td><td><span class="bench-check">✓</span></td></tr>
-          <tr><td class="feature">24 explainable AI variables/signal</td><td class="aurex"><span class="bench-check">✓</span> UNIQUE</td><td><span class="bench-no">—</span></td><td>ProPicks AI</td><td>Quant Ratings</td><td><span class="bench-warn">≠ Institutional</span></td></tr>
-          <tr><td class="feature">FED Macro + GDELT per signal</td><td class="aurex"><span class="bench-check">✓</span> UNIQUE retail</td><td><span class="bench-no">—</span></td><td><span class="bench-no">—</span></td><td><span class="bench-no">—</span></td><td><span class="bench-check">✓</span></td></tr>
-          <tr><td class="feature">Native multi-language</td><td class="aurex"><span class="bench-check">✓</span> 8 langs</td><td><span class="bench-warn">English</span></td><td><span class="bench-check">✓</span> 30+ langs</td><td><span class="bench-warn">English</span></td><td><span class="bench-warn">English</span></td></tr>
-          <tr><td class="feature">iOS + Android + Web</td><td class="aurex"><span class="bench-check">✓</span> all</td><td><span class="bench-check">✓</span></td><td><span class="bench-check">✓</span></td><td><span class="bench-warn">Web focus</span></td><td><span class="bench-warn">Desktop only</span></td></tr>
+          <tr>
+            <td class="feature">Plan gratuito</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-warn">Básico</span></td>
+            <td><span class="bench-no">✕</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Precio plan pago</td>
+            <td class="aurex"><span class="bench-price-aurex">$9.99/mes</span></td>
+            <td><span class="bench-price">$12.95/mes</span></td>
+            <td><span class="bench-price">$25–50/mes</span></td>
+            <td><span class="bench-price">$25/mes</span></td>
+            <td><span class="bench-price">$2.000/mes</span></td>
+          </tr>
+          <tr>
+            <td class="feature">9 tipos de instrumentos</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-warn">Solo US</span></td>
+            <td><span class="bench-check">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature">7 mercados bursátiles</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-warn">Solo US</span></td>
+            <td><span class="bench-check">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature">24 variables IA explicadas por señal</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-warn">ProPicks AI</span></td>
+            <td><span class="bench-warn">Quant Ratings</span></td>
+            <td><span class="bench-warn">Institucional</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Datos FED + GDELT por señal</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-check">✓</span></td>
+          </tr>
+          <tr>
+            <td class="feature">Multi-idioma nativo</td>
+            <td class="aurex"><span class="bench-check">✓</span> 8 idiomas</td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-check">✓</span> 30+</td>
+            <td><span class="bench-no">✕</span></td>
+            <td><span class="bench-no">✕</span></td>
+          </tr>
+          <tr>
+            <td class="feature">iOS + Android + Web</td>
+            <td class="aurex"><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-check">✓</span></td>
+            <td><span class="bench-warn">Solo Web</span></td>
+            <td><span class="bench-warn">Solo Desktop</span></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -1011,29 +1094,29 @@ html{scroll-behavior:smooth}
       <div class="plan reveal">
         <div class="plan-name">FREE</div>
         <div class="plan-price">$0</div>
-        <div class="plan-period">Forever</div>
-        <p class="plan-desc">Up to 5 assets in Portfolio. 3 AI signals per day. Real-time markets. Basic AUREX Pulse. No credit card required.</p>
+        <div class="plan-period" data-i18n="plan_free_period">Forever</div>
+        <p class="plan-desc" data-i18n="plan_free_desc">Up to 5 assets in Portfolio. 3 AI signals per day. Real-time markets. Basic AUREX Pulse. No credit card required.</p>
       </div>
       <div class="plan featured reveal reveal-delay-1">
-        <div class="plan-badge">MOST POPULAR</div>
+        <div class="plan-badge" data-i18n="plan_badge_popular">MOST POPULAR</div>
         <div class="plan-name">PRO</div>
-        <div class="plan-price">$9.99<span class="small"> /mo</span></div>
-        <div class="plan-period">or $89.99 / year</div>
-        <p class="plan-desc">Unlimited AI signals. Unlimited Portfolio. All 15 alert types active. 30-day signal history. All filters and tools. Export to Excel/PDF. Priority support.</p>
+        <div class="plan-price">$9.99<span class="small" data-i18n="plan_per_mo"> /mo</span></div>
+        <div class="plan-period" data-i18n="plan_pro_period">or $89.99 / year</div>
+        <p class="plan-desc" data-i18n="plan_pro_desc">Unlimited AI signals. Unlimited Portfolio. All 15 alert types active. 30-day signal history. All filters and tools. Export to Excel/PDF. Priority support.</p>
       </div>
       <div class="plan reveal reveal-delay-2">
-        <div class="plan-badge plan-badge-soon">NEXT VERSION</div>
+        <div class="plan-badge plan-badge-soon" data-i18n="plan_badge_soon">NEXT VERSION</div>
         <div class="plan-name">ELITE</div>
-        <div class="plan-price">$19.99<span class="small"> /mo</span></div>
-        <div class="plan-period">or $179.99 / year</div>
-        <p class="plan-desc">Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.</p>
+        <div class="plan-price">$19.99<span class="small" data-i18n="plan_per_mo"> /mo</span></div>
+        <div class="plan-period" data-i18n="plan_elite_period">or $179.99 / year</div>
+        <p class="plan-desc" data-i18n="plan_elite_desc">Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ===== BLOQUE 11: WE DON'T TRADE ===== -->
-<section class="blk">
+<section class="blk" id="we-dont-trade">
   <div class="wrap">
     <div class="what-not reveal">
       <h3>We analyze. We don't trade.</h3>
@@ -1164,6 +1247,9 @@ html{scroll-behavior:smooth}
     </div>
   </div>
 </footer>
+
+<!-- ===== BALANZA DISCLAIMER LEGAL FAB ===== -->
+<a class="legal-fab" href="#we-dont-trade" data-tooltip="Aviso legal · Qué NO somos" data-i18n-aria="disclaimer_aria" aria-label="Aviso legal y qué NO es AUREX">⚖️</a>
 
 <!-- ===== NEWSLETTER MICRO-MODAL ===== -->
 <div class="nl-overlay" id="nl-overlay" role="dialog" aria-modal="true" aria-labelledby="nl-title" aria-hidden="true">
@@ -1352,8 +1438,9 @@ html{scroll-behavior:smooth}
     if (sel && sel.value !== lang) sel.value = lang;
   }
 
-  // Cargar JSON i18n (ruta relativa al index.html)
-  fetch('assets/i18n.json')
+  // Cargar JSON i18n (ruta relativa al index.html) — cache:no-store para que Chrome
+  // no se quede con versión vieja del JSON cuando renombramos cosas en cada deploy
+  fetch('assets/i18n.json?v=' + Date.now(), { cache: 'no-store' })
     .then(r => r.json())
     .then(data => {
       i18nData = data;

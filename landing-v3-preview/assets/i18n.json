@@ -102,7 +102,18 @@
     "b27_f12_t": "Set alerts in seconds",
     "b27_f12_d": "Configurable price alerts: above X, below Y, or % change. Instant push notification on mobile when triggered.",
     "b27_f13_t": "Add assets to portfolio",
-    "b27_f13_d": "Add any of the 350 assets to your portfolio in 3 taps. Quantity, entry price, currency. Automatic PnL across 5 periods."
+    "b27_f13_d": "Add any of the 350 assets to your portfolio in 3 taps. Quantity, entry price, currency. Automatic PnL across 5 periods.",
+    "plan_per_mo": " /month",
+    "plan_badge_popular": "MOST POPULAR",
+    "plan_badge_soon": "NEXT VERSION",
+    "plan_free_period": "Forever",
+    "plan_free_desc": "Up to 5 assets in Portfolio. 3 AI signals per day. Real-time markets. Basic AUREX Pulse. No credit card required.",
+    "plan_pro_period": "or $89.99 / year",
+    "plan_pro_desc": "Unlimited AI signals. Unlimited Portfolio. All 15 alert types active. 30-day signal history. All filters and tools. Export to Excel/PDF. Priority support.",
+    "plan_elite_period": "or $179.99 / year",
+    "plan_elite_desc": "Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.",
+    "disclaimer_aria": "Legal notice and what AUREX is not",
+    "disclaimer_label": "Legal"
   },
   "es": {
     "nav_features": "Características",
@@ -201,7 +212,18 @@
     "b27_f12_t": "Agregar alertas en segundos",
     "b27_f12_d": "Alertas de precio configurables: por encima de X, por debajo de Y, o cambio de %. Recibís push instantáneo en mobile cuando se cumple.",
     "b27_f13_t": "Agregar activos al portfolio",
-    "b27_f13_d": "Sumá cualquiera de los 350 activos a tu portfolio en 3 toques. Cantidad, precio de entrada, moneda. PnL automático en 5 períodos."
+    "b27_f13_d": "Sumá cualquiera de los 350 activos a tu portfolio en 3 toques. Cantidad, precio de entrada, moneda. PnL automático en 5 períodos.",
+    "plan_per_mo": " /mes",
+    "plan_badge_popular": "MÁS POPULAR",
+    "plan_badge_soon": "PRÓXIMA VERSIÓN",
+    "plan_free_period": "Para siempre",
+    "plan_free_desc": "Hasta 5 activos en Portfolio. 3 señales IA por día. Mercados en tiempo real. AUREX Pulse básico. Sin tarjeta de crédito.",
+    "plan_pro_period": "o $89.99 / año",
+    "plan_pro_desc": "Señales IA ilimitadas. Portfolio ilimitado. Los 15 tipos de alerta activos. Historial 30 días. Todos los filtros y herramientas. Exportar Excel/PDF. Soporte prioritario.",
+    "plan_elite_period": "o $179.99 / año",
+    "plan_elite_desc": "Todo lo de PRO, más: acceso API personal, chat en vivo, RSI/MACD avanzados, alertas Telegram. Próximamente.",
+    "disclaimer_aria": "Aviso legal y qué NO es AUREX",
+    "disclaimer_label": "Legal"
   },
   "pt": {
     "nav_features": "Recursos",
