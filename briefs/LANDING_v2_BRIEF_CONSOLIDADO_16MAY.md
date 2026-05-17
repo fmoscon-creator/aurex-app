@@ -441,3 +441,65 @@ Re-estimo con todos los items consolidados:
 ---
 
 **Fin v2 del brief.** Próxima versión solo si surge algo nuevo durante ejecución.
+
+---
+
+# ADDENDUM — Decisiones cerradas tras respuesta Escritorio + Fernando (16-may noche, post v2)
+
+## D-1 — WhatsApp ELIMINADO de landing v2 y de plan MKT inmediato
+
+**Decisión Fernando + Escritorio:** la línea 2563 está bloqueada (cooldown exponencial hasta 8-jul-2026 mínimo), la línea 7675 2222 es personal y no se publica, Telegram cubre el mismo rol gratis y estable. WhatsApp Cloud API oficial Meta solo se evalúa cuando MRR justifique el costo.
+
+**Impacto en landing v2:**
+- Dropdown "Channels" del nav: 6 canales (no 7). WhatsApp queda fuera.
+- Footer: WhatsApp queda fuera.
+- Resto del brief v2 sin cambios.
+
+**Impacto en PLAN_MKT v3.0:**
+- Sec 2.5.1 Canal 2 "WhatsApp Business" pasa de **FASE 1** a **FASE FUTURA — post-MRR**.
+- Cron y código de `sendWhatsAppEvolution()` ya está pausado (memoria `project_whatsapp_business.md`).
+
+## D-2 — APORTE E: alternativa Code chips animados (45 min) — APROBADA
+
+Decisión Escritorio: SVG complejo es 3 hs para algo que el usuario ve 5 segundos. Chips animados comunican lo mismo con menos riesgo. En v3 con datos de engagement se reevalúa.
+
+## D-3 — Capturas iPhone: usar `app/img/onboarding/*.jpg` existentes como punto de partida
+
+Decisión Escritorio: Code revisa las 6 existentes y reporta cuáles necesitan recaptura específica. No recapturar todo de cero.
+
+**Análisis Code de las 6 capturas existentes (post-revisión visual cada una):**
+
+| # | Archivo | Calidad | Decisión v2 |
+|---|---|---|---|
+| 1 | `pulse.jpg` (Tab Mercados + Eventos + Pulse) | ✅ EXCELENTE | **Usar** — perfecta para slide "Pulse / Mercados" |
+| 2 | `ia.jpg` (Tab Señales IA con 6 activos) | ✅ EXCELENTE | **Usar** — perfecta para slide "AI Signals" |
+| 3 | `portfolio.jpg` (Portfolio con Termómetro Riesgo) | ✅ EXCELENTE | **Usar** — perfecta para slide "Portfolio" |
+| 4 | `watchlist.jpg` (Watchlist con 4 listas + 6 activos) | ✅ MUY BUENA | **Usar** — perfecta para slide "Watchlist / Alerts" |
+| 5 | `comparador.jpg` (Comparador BTC vs GOOGL vs AMZN) | ⚠️ overlay raro de Watchlist transparente atrás | **Recapturar** Build 33 — el overlay arruina la limpieza visual |
+| 6 | `alertas.jpg` (Tab Alertas) | ❌ **NO USABLE** — mockup viejo con "Alertas WhatsApp instantáneas" (decisión D-1 acaba de eliminar WhatsApp) + badges internos "MVP" / "0/4" | **Recapturar OBLIGATORIO** Build 33 |
+| 7 | (no existe captura del Selector de idiomas) | — | **Capturar nueva** Build 33 |
+
+**Resumen acción:** 4 capturas existentes usables (pulse, ia, portfolio, watchlist) + **3 capturas a tomar de Samsung Build 33**: alertas (sin WhatsApp), comparador (sin overlay), selector idiomas.
+
+**Coordinación con Fernando:** cuando estés con el Samsung enchutado al Mac, te paso los 3 comandos adb específicos (1 por captura) — toma 2 minutos total. Si querés, lo posponemos: Code arranca v2 con las 4 capturas existentes + placeholders en los 3 slots de captura nueva, y al final del codeo Code te avisa cuando estés listo para tomar las 3 capturas.
+
+## D-4 — OK general al brief v2 — APROBADO con condición
+
+Condición de Escritorio: **Code manda screenshot Playwright de landing v2 completa ANTES del commit final + push**. Sin ese screenshot revisado por Escritorio + Fernando, no se publica.
+
+**Flujo de ejecución:**
+1. Code arma toda la landing v2 en local.
+2. Code corre Playwright + saca screenshot completo.
+3. Code pasa screenshot a Fernando + Escritorio.
+4. Si OK → commit + push → deploy live.
+5. Si hay ajustes → ronda v2.1 hasta OK final.
+
+## D-5 — Próximo paso inmediato Code
+
+Arrancar bloque por bloque la landing v2 según estimación B-4 (11-14 hs distribuidas en 2-3 ventanas). Reportar avance al cierre de cada ventana sin esperar OK intermedio (autonomía aprobada por Fernando OK 2 del CONSOLIDADO v2).
+
+**Hito de pausa antes de publicar:** screenshot Playwright a Escritorio + Fernando.
+
+---
+
+**Fin addendum.** Próximo update solo si surge ajuste mayor durante ejecución.

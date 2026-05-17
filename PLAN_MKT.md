@@ -346,7 +346,7 @@ Decisión 30-abr-2026 mantenida. Reemplaza HeyGen Pro $99/mes ($24/mes anual) po
 
 | # | Canal | Fase | Estado real al 2-may-2026 | Bloqueador |
 |---|---|---|---|---|
-| 2 | **WhatsApp Business 2563** | **FASE 1** | ✅ **ACTIVA** — línea reconectada 1-may, Evolution API operativa | Plantilla oficial WhatsApp Business pre-aprobada |
+| 2 | **WhatsApp Business 2563** | ~~FASE 1~~ → **FASE FUTURA (post-MRR)** | ❌ **MOVIDO A FUTURO 16-may-2026** — línea 2563 en cooldown exponencial WhatsApp anti-fraude hasta 8-jul-2026 mínimo (decisión Fernando 8-may post WA-001+WA-002). Línea alternativa 2222 es personal (no se publica). Envíos automatizados via Evolution Web son estructuralmente inviables según TOS Business. Telegram cubre 100% del rol opt-in alertas. Se reactivará solo cuando MRR justifique costo WhatsApp Cloud API oficial Meta con templates aprobados. | WhatsApp Cloud API oficial + presupuesto + volumen PRO/ELITE |
 | 1 | **Telegram canal público** (`@AurexPulse` 3 idiomas) | **FASE 1** | ⚠️ Bot `@Aurexalertas_bot` ✅ activo. Canales públicos ❌ a crear | Aprobación handles |
 | 4 | **Twitter/X** (3 cuentas EN/ES/PT) | **FASE 1** | ❌ pendientes — cuentas no creadas, API access no | Aprobar handles + crear + aplicar API |
 | 3 | **Email / Newsletter** | **FASE 1** | ❌ pendiente — Resend no creado, plantilla MJML no | Cuenta Resend + plantilla |
