@@ -80,7 +80,7 @@ Features PRO: + Ask Seeking Alpha (AI research assistant), PRO Quant Portfolio r
 | Paid tier pro                      | $19.99/mo SOON   | $59.95/mo      | (varía)        | $200/mo PRO    | —             |
 | 9 instrument types in 1 terminal   | ✅               | ✅             | ✅             | ⚠️ US focus    | ✅            |
 | 7 stock markets cubiertos          | ✅ 7 mercados    | ✅ amplio      | ✅ amplio      | ⚠️ US          | ✅ amplio     |
-| 24 explainable AI variables/signal | ✅ ÚNICO         | ❌ (manual)    | ProPicks AI    | Quant Ratings  | ✅            |
+| 24 explainable AI variables/signal | ✅ ÚNICO         | ❌ (manual)    | ProPicks AI    | Quant Ratings  | ≠ Institutional |
 | FED Macro + GDELT per signal       | ✅ ÚNICO retail  | ❌             | ❌             | ❌             | ✅            |
 | Native multi-language              | ✅ 8 idiomas    | English        | 30+ idiomas    | English        | English       |
 | iOS + Android + Web                | ✅ todos         | ✅             | ✅             | Web focus      | Desktop only  |
@@ -91,7 +91,7 @@ Features PRO: + Ask Seeking Alpha (AI research assistant), PRO Quant Portfolio r
 - **AUREX vs TradingView:** AUREX 23% más barato + tiene FED/GDELT que TV no tiene. TV gana en charts pro y comunidad. AUREX gana en señales IA explicadas.
 - **AUREX vs Investing.com:** Investing tiene 30+ idiomas pero ProPicks es black box. AUREX da las 24 variables visibles. Mismo target retail multi-idioma.
 - **AUREX vs Seeking Alpha:** Seeking Alpha enfoca US stocks. AUREX cubre 7 mercados + 9 instrumentos. AUREX es 60% más barato en Premium ($9.99 vs $25).
-- **AUREX vs Bloomberg:** AUREX entrega 24 variables + FED + GDELT por $9.99/mo cuando Bloomberg cobra $24,000/año. Bloomberg es para terminales institucionales; AUREX trae 70% de esa profundidad a un usuario individual.
+- **AUREX vs Bloomberg:** son productos para audiencias distintas, no comparables 1:1. Bloomberg ofrece datos institucionales con un workflow profesional ($24,000/año). AUREX ofrece análisis cross-asset con motor IA explicado a inversores individuales ($9.99/mo). Bloomberg NO presenta señales por activo con 5 razones IA al estilo AUREX; opera con un modelo distinto de delivery de información (terminales con scripts BBLP). Por eso la celda "24 variables/signal" para Bloomberg figura como **"≠ Institutional"** y no como ✅ — son arquitecturas distintas, no reemplazables.
 
 ---
 
