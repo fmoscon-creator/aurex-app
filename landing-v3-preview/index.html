@@ -1032,7 +1032,9 @@ html{scroll-behavior:smooth}
   // === LANG SELECTOR + i18n COMPLETO 8 IDIOMAS ===
   let i18nData = null;
   const SUPPORTED_CAPTURE_LANGS = ['en', 'es']; // capturas reales disponibles; resto usa 'en' como fallback
-  const RTL_LANGS = ['ar'];
+  // RTL desactivado: invertir el layout (logo, cards) rompe el diseño visual.
+  // El texto AR queda alineado LTR como los otros idiomas. Si en el futuro se hace
+  // un rediseño RTL dedicado, se reactiva.
 
   function applyTranslations(lang) {
     if (!i18nData || !i18nData[lang]) return;
@@ -1066,7 +1068,7 @@ html{scroll-behavior:smooth}
     applyTranslations(lang);
     switchCaptures(lang);
     document.documentElement.setAttribute('lang', lang);
-    document.documentElement.setAttribute('dir', RTL_LANGS.includes(lang) ? 'rtl' : 'ltr');
+    document.documentElement.setAttribute('dir', 'ltr');
     try { localStorage.setItem('aurex_landing_lang', lang); } catch (e) {}
     const sel = document.getElementById('lang-sel');
     if (sel && sel.value !== lang) sel.value = lang;
