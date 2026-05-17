@@ -1,6 +1,6 @@
 # AUREX — METADATA APP STORE
 
-> ⚠️ **AVISO IMPORTANTE — ARCHIVO PARCIALMENTE DESACTUALIZADO (al 2-may-2026)**
+> ⚠️ **AVISO IMPORTANTE — ARCHIVO PARCIALMENTE DESACTUALIZADO (al 16-may-2026)**
 >
 > Este archivo refleja la metadata original del 4-abr-2026. **El Build 17 enviado a Apple
 > el 24-abr-2026 cambió campos clave que NO están reflejados en el cuerpo de este
@@ -23,6 +23,10 @@
 > | Idiomas localización | (no especificado) | EN (principal), ES, FR, IT, HI, AR, PT, ZH (8 total) |
 > | Descripción larga | menciona "74 activos financieros" | **350 activos** es el dato real al 2-may-2026, pero la descripción cargada en stores SIGUE diciendo "74" hasta próxima actualización post-aprobación |
 > | Webhook ASC → RevenueCat | (no especificado) | https://api.revenuecat.com/v1/incoming-webhooks/apple-server-to-server-notification/WICtYZubpcHyBpPfLnZMoagjatQAyjPD |
+> | Cuenta revisor Apple | demo@aurex.live / AurexDemo2025! | app.aurex@gmail.com / AurexTest2026! |
+>
+> **Actualizaciones recientes:**
+> - 16-may-2026: Corregida cuenta del revisor Apple (demo@aurex.live → app.aurex@gmail.com / AurexTest2026!) — verificado por Escritorio directo en App Store Connect.
 >
 > **Regla inviolable mientras Build 17 está en revisión:** NO se toca la metadata cargada
 > en App Store Connect ni Google Play Console. Cualquier actualización del cuerpo de
@@ -114,8 +118,8 @@ finance,crypto,signals,trading,portfolio,stocks,market,AI,investing,bitcoin
 ## NOTAS PARA LOS REVISORES DE APPLE
 
 Cuenta demo para revisión:
-- Email: demo@aurex.live
-- Password: AurexDemo2025!
+- Email: app.aurex@gmail.com
+- Password: AurexTest2026!
 - Esta cuenta tiene activos precargados en Portfolio (XRP, DOGE, YPF, BTC), datos reales en Mercados y señales IA activas.
 
 Descripción de la app para el revisor:
@@ -162,8 +166,8 @@ Notas adicionales:
 | Copyright | 2026 Fernando Moscon |
 | URL Soporte | fmoscon@gmail.com |
 | URL Privacidad | https://fmoscon-creator.github.io/aurex-app/privacy.html |
-| Email revisor Apple | demo@aurex.live |
-| Password revisor Apple | AurexDemo2025! |
+| Email revisor Apple | app.aurex@gmail.com |
+| Password revisor Apple | AurexTest2026! |
 
 ---
 
