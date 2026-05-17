@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 17-may-2026 ~15:00 AR
-> **Última actualización significativa:** agregadas §2.6 "Estrategia secuencial iOS Build 17 → 25 → Producción" + §2.7 "Contenido pendiente Build 25 iOS (paridad Android + IAP)" + §4.5.b cruce IAP/iOS Build 25. Tabla §1 ahora incluye fila iOS Build 25.
+> **Última actualización:** 17-may-2026 ~15:35 AR
+> **Última actualización significativa:** §5 Landing v3 — nuevo flujo de revisión en navegador real (`https://aurex.live/landing-v3-preview/`) reemplaza los PNG fullpage. §12 Política — regla nueva: actualizar brief maestro cada 3h máximo en sesiones largas.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -286,18 +286,31 @@ Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nue
 - **2 PNG Playwright** generados (desktop 1440×900 + mobile 390×844).
 - **Snapshot PENDIENTE REVIEW** commiteado (`a74e981`) en `briefs/landing_v3_PENDIENTE_REVIEW_17MAY/`.
 
-### 5.2 Pendientes Landing v3
+### 5.2 NUEVO flujo de revisión — preview en navegador real (decidido 17-may 15:30 AR)
 
-1. **Fernando** abre los 2 PNG en `~/Dropbox/AUREX/LANDING/v3/preview/landing_v3_*_v2.png` → OK o lista de ajustes.
-2. Si OK Fernando → raw URLs a Escritorio para revisión cruzada.
-3. Si doble OK → Code deploy:
+Los PNG fullpage Playwright son ilegibles para Fernando (un chorizo vertical). Nuevo método de trabajo entre los 3 (Fernando + Code + Escritorio):
+
+- Code sube la landing v3 completa a `~/Desktop/aurex-app/landing-v3-preview/` (path discreta, con `<meta name="robots" content="noindex,nofollow">`).
+- GitHub Pages la sirve en: `https://aurex.live/landing-v3-preview/`
+- **Fernando** la ve en Safari Mac + iPhone real (responsive nativo).
+- **Escritorio** la ve en Chrome propio para revisión UX/copy/visual.
+- **Code** puede correr Playwright contra la URL pública si necesita screenshots específicos.
+- Ciclo: detección de cambio → Fernando lo dice → Code edita local + commit + push → GitHub Pages re-deploya 1-3 min → todos refrescan y ven el cambio.
+
+### 5.3 Pendientes Landing v3
+
+1. **Code:** crear carpeta `landing-v3-preview/` con HTML + assets + meta noindex → commit + push → verificar HTTP 200 de la URL.
+2. **Fernando:** entra a `https://aurex.live/landing-v3-preview/` en Safari + iPhone → da OK o lista de cambios.
+3. **Escritorio:** entra a la misma URL en Chrome → revisión cruzada UX/copy/visual.
+4. Loop de iteración hasta doble OK Fernando + Escritorio.
+5. Cuando doble OK → Code deploy a producción:
    - Generar OG image 1200×630 con Canvas skill (mix v2 Stellar + v3 Tactical, ya elegido).
    - Bajar 3 logos restantes Google Drive (1/4 bajado).
-   - Mover HTML + assets de `~/Desktop/CODE/landing_v3/` a root del repo aurex-app.
+   - Mover HTML + assets de `landing-v3-preview/` al root del repo (reemplaza index.html actual fase 0).
    - Verificar links internos.
-   - Commit + push → GitHub Pages auto-deploy a aurex.live.
+   - Commit + push → GitHub Pages auto-deploy a aurex.live oficial.
    - Test funcional: submit form newsletter con email de prueba → confirmar notificación a `app.aurex@gmail.com`.
-4. Si Fernando pide ajustes → iteración local + nuevo Playwright + loop hasta OK.
+6. `landing-v3-preview/` queda como referencia histórica post-deploy.
 
 ### 5.3 Decisiones de diseño cerradas
 
@@ -487,8 +500,13 @@ Este brief maestro cumple en cada actualización:
 - ✅ Aparece tema nuevo (bug, oportunidad, decisión) → agregar en sección correspondiente.
 - ✅ Cambia estado de un frente (ej Apple responde, RC responde, Fernando da OK landing) → actualizar §1 + sección específica.
 - ✅ Se ejecuta un hito (deploy, compilación, fix) → actualizar §1 + sección específica + mover briefs absorbidos a `archive/`.
+- ✅ **Pasaron 3 horas desde el último commit del brief maestro** Y hubo cambios relevantes en la sesión → actualizar con hitos acumulados (regla `feedback_brief_maestro_actualizar_3h`).
 - ❌ Commit menor de código que no cambia estado de un frente → NO actualizar.
 - ❌ Cada hora "por las dudas" → NO actualizar.
+
+### Política de frecuencia en sesiones largas (>3h)
+
+Code mide tiempo desde el último commit del brief maestro. Si pasaron **>3h en una sesión activa con cambios relevantes**, actualiza el brief con los hitos acumulados, commit + push, reporta en 1 línea, y retoma el trabajo. Esto evita perder contexto si el chat se corta o si sesiones de 10-12h llegan al cierre sin haber consolidado.
 
 ### Mensaje de commit cuando se actualiza
 
