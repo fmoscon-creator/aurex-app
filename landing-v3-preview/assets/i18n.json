@@ -6,7 +6,7 @@
     "notes": "Strings de landing v3 AUREX. Capturas EN/ES disponibles; otros 6 idiomas usan capturas EN como fallback."
   },
   "en": {
-    "nav_features": "AI Engine",
+    "nav_features": "Features",
     "nav_markets": "Markets",
     "nav_pricing": "Pricing",
     "nav_how": "How it works",
@@ -76,7 +76,7 @@
     "lq_h2": "The same data the engine reads."
   },
   "es": {
-    "nav_features": "Motor IA",
+    "nav_features": "Características",
     "nav_markets": "Mercados",
     "nav_pricing": "Planes",
     "nav_how": "Cómo funciona",
@@ -146,7 +146,7 @@
     "lq_h2": "Los mismos datos que lee el motor."
   },
   "pt": {
-    "nav_features": "Motor IA",
+    "nav_features": "Recursos",
     "nav_markets": "Mercados",
     "nav_pricing": "Planos",
     "nav_how": "Como funciona",
@@ -216,7 +216,7 @@
     "lq_h2": "Os mesmos dados que o motor lê."
   },
   "zh": {
-    "nav_features": "AI引擎",
+    "nav_features": "功能",
     "nav_markets": "市场",
     "nav_pricing": "套餐",
     "nav_how": "工作原理",
@@ -286,7 +286,7 @@
     "lq_h2": "引擎读取的相同数据。"
   },
   "fr": {
-    "nav_features": "Moteur IA",
+    "nav_features": "Fonctionnalités",
     "nav_markets": "Marchés",
     "nav_pricing": "Tarifs",
     "nav_how": "Fonctionnement",
@@ -356,7 +356,7 @@
     "lq_h2": "Les mêmes données que lit le moteur."
   },
   "it": {
-    "nav_features": "Motore IA",
+    "nav_features": "Funzioni",
     "nav_markets": "Mercati",
     "nav_pricing": "Prezzi",
     "nav_how": "Come funziona",
@@ -426,7 +426,7 @@
     "lq_h2": "Gli stessi dati che legge il motore."
   },
   "hi": {
-    "nav_features": "AI इंजन",
+    "nav_features": "विशेषताएँ",
     "nav_markets": "बाज़ार",
     "nav_pricing": "मूल्य",
     "nav_how": "कैसे काम करता है",
@@ -496,7 +496,7 @@
     "lq_h2": "वही डेटा जो इंजन पढ़ता है।"
   },
   "ar": {
-    "nav_features": "محرك AI",
+    "nav_features": "الميزات",
     "nav_markets": "الأسواق",
     "nav_pricing": "الأسعار",
     "nav_how": "كيف يعمل",
