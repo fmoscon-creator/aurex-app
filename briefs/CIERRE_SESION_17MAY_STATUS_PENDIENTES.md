@@ -172,7 +172,10 @@ Apple Developer Team ID: TX7C2F79U9
 
 **Build 33 NO tiene IAP Tier 1 implementado.** Por eso el bug crítico §3 (IAP "product not available for purchase") sigue presente. La compra de PRO/ELITE NO funciona en producción Android al día de hoy.
 
-**Plan original:** compilar Build 34 con IAP Tier 1 implementado + validar en Internal Testing + promover a Producción.
+**Estado real Builds Android al 17-may:**
+- Build 33 = **PRODUCCIÓN Play Store**
+- Build 34 = **PRUEBA INTERNA** (ya subido)
+- Build 35 = próximo a compilar si llega solución RC (Tier 1 IAP)
 
 **Estado actual del plan IAP Tier 1:** PAUSADO esperando respuesta RC support al ticket #76809 (ver §3).
 
@@ -285,7 +288,7 @@ Plan archivo-por-archivo en: `~/Desktop/aurex-app/briefs/PLAN_IAP_TIER1_BUILD34_
 ### 3.8 Acción al arrancar próxima sesión
 
 1. ¿RC respondió ticket #76809? → check inbox `fmoscon@gmail.com` + dashboard RC.
-   - Si respondió **con solución concreta**: aplicar fix → Build 34 → Internal Testing → compra real Samsung con cuenta `app.aurex@gmail.com` + tarjeta real (refund inmediato Play Console 48h) → si OK promover a Producción.
+   - Si respondió **con solución concreta**: aplicar fix → **Build 35** (no 34, 34 ya está en prueba interna) → Internal Testing → compra real Samsung con cuenta `app.aurex@gmail.com` + tarjeta real (refund inmediato Play Console 48h) → si OK promover a Producción.
    - Si respondió **pidiendo más info**: armar respuesta con Escritorio.
    - Si **sin respuesta y pasaron >72h hábiles**: arrancar Plan B-1.
 
@@ -513,7 +516,7 @@ Backup: `~/Desktop/aurex-memory-backup/` (espejo manual).
 
 ### Paso 1 — Frente IAP (más urgente, comercial bloqueado)
 
-- Si RC respondió **con solución concreta**: aplicar → Build 34 → Internal Testing → compra real con `app.aurex@gmail.com` + tarjeta real → si OK promover Producción.
+- Si RC respondió **con solución concreta**: aplicar → **Build 35** (34 ya está en prueba interna) → Internal Testing → compra real con `app.aurex@gmail.com` + tarjeta real → si OK promover Producción.
 - Si RC respondió **pidiendo info adicional**: armar respuesta cruzada Code + Escritorio.
 - Si **>72h hábiles sin respuesta RC**: arrancar Plan B-1 (webhook directo Google Play).
 
