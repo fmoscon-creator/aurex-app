@@ -181,3 +181,161 @@ Si las 4 son SÍ, arranco renames + integración al codeo de la landing v2.
 ---
 
 **Fin v1 del brief de mapeo.** Esperando OK antes de tocar archivos.
+
+---
+
+# ADDENDUM v2 — Respuestas Escritorio incorporadas (17-may-2026 madrugada)
+
+Escritorio leyó el brief v1 y respondió a las 4 decisiones. Los cambios quedan cerrados acá:
+
+## Decisión 1 — Hero NO usa Portfolio, usa Markets+Pulse (2373/2374)
+
+**Razón Escritorio:** Portfolio (2371/2372) muestra Termómetro de Riesgo "Bajista 91%" en rojo brillante. **Primer impacto visual en negativo es mal mensaje** para alguien que recién entra a la landing.
+
+**Decisión cerrada:** Hero mockup iPhone usa **`2373/2374 — Markets + Pulse`** (gauge AUREX PULSE 43 Neutral + Banner Futuros + lista activos cripto). Comunica amplitud y datos globales sin negativo.
+
+Portfolio queda perfecto en el bloque 7 (Portfolio inteligente dedicado), donde el termómetro tiene contexto explicado.
+
+## Decisión 2 — Carrusel = 10 slides (no 8)
+
+**Razón Escritorio:** Fernando dijo "usar todas". Agregar 2 capturas que aportan diferenciación real:
+
+**Carrusel "See it in action" FINAL — 10 slides:**
+
+| # | Captura | Label EN |
+|---|---|---|
+| 1 | `2373/2374 — Markets + Pulse` | "Global markets · 11 exchanges · Real-time" |
+| 2 | `2377/2378 — AI Signals` | "AI signals · 24 variables · 5 reasons explained" |
+| 3 | `2371/2372 — Portfolio` | "Your portfolio · AI risk score in real time" |
+| 4 | `2375/2376 — Watchlist` | "Multiple watchlists · Compare assets instantly" |
+| 5 | `2379/2380 — Alerts` | "15 alert types · Set your own rules" |
+| 6 | **`2394/2395 — Comparator` ⭐ NUEVO** | "Compare 3 assets · 10 AI variables side by side" |
+| 7 | `2390/2391 — AUREX Pulse 14X modal` | "Market sentiment · 14 macro sources" |
+| 8 | **`2404/2405 — Markets Stocks 7 países` ⭐ NUEVO** | "7 global stock markets · One terminal" |
+| 9 | `2383 — Language modal` | "8 languages · From day one" |
+| 10 | `2392/2393 — Risk Thermometer modal` | "AI explains why each signal exists" |
+
+**Justificación 2 nuevos en carrusel:**
+- **2394/2395 Comparator** → feature UNIQUE que ningún competidor tiene (3 activos lado a lado con 10 variables IA en cada uno).
+- **2404/2405 Markets+7países** → prueba visual directa del claim "7 mercados globales" del PLAN_MKT v3.0.
+
+## Decisión 3 — Sección "More you can do with AUREX" SÍ entra en v2
+
+**Razón Escritorio:** Fernando quiere usar todas las 39 capturas. Agregar sección compacta con 4 pares específicos que muestran diferenciación.
+
+**Ubicación:** entre Bloque 8 (Alertas) y Bloque 9 (8 idiomas). **Es el nuevo Bloque 8.5.**
+
+**Layout:** grid de 3 columnas en desktop, 2 en mobile. Capturas más pequeñas que el carrusel principal (sin frame iPhone, con thumb 280×600).
+
+**4 pares de capturas incluidos:**
+
+| Captura | Mini-label EN |
+|---|---|
+| `2396/2397 — Share signal` | "Share any signal via Telegram, Mail or WhatsApp link" |
+| `2398/2399 — New list modal` | "Create custom watchlists with color labels" |
+| `2400/2401 — Create price alert` | "Set price alerts in seconds — above, below, or %" |
+| `2402/2403 — Add asset` | "Add any of the 350 assets to your portfolio" |
+
+**Heading sección:** `"More you can do with AUREX"`
+
+**Capturas EXCLUIDAS de la landing (decisión Escritorio):**
+- `2381/2382 — Profile menu` → es pantalla interna de ayuda, no comunica value a un usuario nuevo.
+- `2406/2407 — Cómo usar AUREX / How to use AUREX` → es ayuda interna, no para landing pública.
+
+Esas 4 capturas (2 pares) quedan en disco como reserva, no van a `app/img/landing-captures/`.
+
+## Decisión 4 — Sistema de renombrado y carpeta nueva: OK
+
+Convención **`pantalla_idioma.jpg`** en **`app/img/landing-captures/`** confirmada. Separación de `onboarding/` vs `landing-captures/` aprobada (evita conflictos futuros).
+
+---
+
+## Sistema de renombrado FINAL — qué archivo va a qué nombre
+
+Las **35 capturas usadas en la landing** (de las 39 originales — descartamos 4: 2 pares Profile + 2 pares Help) se renombran así:
+
+| Original | Renombrado | Bloque destino |
+|---|---|---|
+| IMG_2371 | `portfolio_es.jpg` | Bloque 7 + Carrusel slide 3 |
+| IMG_2372 | `portfolio_en.jpg` | idem |
+| IMG_2373 | `markets_en.jpg` | Hero + Carrusel slide 1 |
+| IMG_2374 | `markets_es.jpg` | idem |
+| IMG_2375 | `watchlist_es.jpg` | Carrusel slide 4 |
+| IMG_2376 | `watchlist_en.jpg` | idem |
+| IMG_2377 | `ai_signals_en.jpg` | Carrusel slide 2 |
+| IMG_2378 | `ai_signals_es.jpg` | idem |
+| IMG_2379 | `alerts_es.jpg` | Bloque 8 + Carrusel slide 5 |
+| IMG_2380 | `alerts_en.jpg` | idem |
+| IMG_2383 | `language_modal.jpg` | Bloque 9 + Carrusel slide 9 (única, no tiene par) |
+| IMG_2384 | `legal_notice_en.jpg` | Bloque 11 (apoyo) |
+| IMG_2385 | `legal_notice_es.jpg` | idem |
+| IMG_2386 | `plan_elite_es.jpg` | Bloque 10 (card ELITE) |
+| IMG_2387 | `plan_elite_en.jpg` | idem |
+| IMG_2388 | `plan_pro_en.jpg` | Bloque 10 (card PRO) |
+| IMG_2389 | `plan_pro_es.jpg` | idem |
+| IMG_2390 | `pulse_modal_es.jpg` | Bloque 5 (apoyo) + Carrusel slide 7 |
+| IMG_2391 | `pulse_modal_en.jpg` | idem |
+| IMG_2392 | `risk_thermometer_en.jpg` | Bloque 7 (apoyo) + Carrusel slide 10 |
+| IMG_2393 | `risk_thermometer_es.jpg` | idem |
+| IMG_2394 | `comparator_es.jpg` | Carrusel slide 6 ⭐ |
+| IMG_2395 | `comparator_en.jpg` | idem |
+| IMG_2396 | `share_signal_en.jpg` | Bloque 8.5 "More you can do" |
+| IMG_2397 | `share_signal_es.jpg` | idem |
+| IMG_2398 | `new_list_es.jpg` | Bloque 8.5 |
+| IMG_2399 | `new_list_en.jpg` | idem |
+| IMG_2400 | `price_alert_en.jpg` | Bloque 8.5 |
+| IMG_2401 | `price_alert_es.jpg` | idem |
+| IMG_2402 | `add_asset_es.jpg` | Bloque 8.5 |
+| IMG_2403 | `add_asset_en.jpg` | idem |
+| IMG_2404 | `markets_stocks_en.jpg` | Bloque 6 + Carrusel slide 8 ⭐ |
+| IMG_2405 | `markets_stocks_es.jpg` | idem |
+
+**Capturas excluidas (NO se renombran ni mueven al repo):**
+- IMG_2381 (Profile menu EN)
+- IMG_2382 (Perfil menu ES)
+- IMG_2406 (Cómo usar AUREX ES)
+- IMG_2407 (How to use AUREX EN)
+
+Estas 4 quedan en `~/Desktop/CODE/landing_captures_v2/originales/` como reserva, no van al repo.
+
+---
+
+## Estructura de bloques FINAL del landing v3 — 18 bloques
+
+| # | Bloque | Cambios respecto al brief v2 anterior |
+|---|---|---|
+| 1 | Header sticky | Sin cambios |
+| 2 | Hero | **Hero mockup ahora con captura 2373/2374 Markets+Pulse (NO Portfolio)** |
+| 2.5 | Ticker rolling | Sin cambios |
+| 3 | "Between you and your broker" | Sin cambios |
+| 4 | Cobertura 350 activos | Sin cambios |
+| **4.5** | **Carrusel screenshots = 10 slides** | **+2 slides nuevos (Comparator + Markets 7 países)** |
+| 5 | Motor 24 variables | Sin cambios |
+| 5.5 | "How it works" 3 pasos | Sin cambios |
+| 6 | 3 Banners en tiempo real | Sin cambios |
+| 7 | Portfolio inteligente | Sin cambios |
+| 8 | 15 alertas | Sin cambios |
+| **8.5** | **"More you can do with AUREX"** | **NUEVO — grid 4 pares (Share/New list/Price alert/Add asset)** |
+| 9 | 8 idiomas | Sin cambios |
+| 10 | Planes y precios | Sin cambios |
+| 10.5 | "How we compare" tabla | **Tabla benchmark v2 actualizada** (ver `BENCHMARK_v2_COMPETIDORES_REALES_17MAY.md`) |
+| 11 | "We don't trade" + Disclaimer | Sin cambios |
+| 11.5 | Métricas Live | Sin cambios |
+| 12 | Footer | Sin cambios |
+
+**18 bloques totales** (vs 17 anteriores + el nuevo 8.5).
+
+---
+
+## Estado para arrancar codeo
+
+- ✅ Logo oficial localizado y validado (`assets/logo/aurex_logo_transparent.svg`).
+- ✅ 35 capturas seleccionadas y mapeadas a bloques.
+- ✅ Estética visual: mix v2 Stellar (estrellas SUTILES) + v3 Tactical (números 350/24/8 destacados, tickers de precios).
+- ✅ Benchmark tabla actualizada con competidores reales.
+- ✅ Decisión sec 8.5 "More you can do" tomada.
+- ⏳ Próximo paso: renombrar 35 archivos + mover a `app/img/landing-captures/` + arrancar construcción landing v3.
+
+**Espero OK Fernando para arrancar codeo o si tiene algún último input antes.**
+
+**Fin Addendum v2.**
