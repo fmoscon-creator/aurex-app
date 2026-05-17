@@ -80,7 +80,49 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
 .btn-gold:hover{background:var(--gold-bright);color:#000;transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,160,23,0.35)}
 .btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
 .btn-ghost:hover{background:var(--gold);color:#000}
-@media(max-width:880px){.hdr-nav{display:none}}
+/* === HAMBURGER MOBILE === */
+.hdr-burger{display:none;background:transparent;border:1px solid rgba(212,160,23,0.32);border-radius:8px;width:42px;height:42px;cursor:pointer;padding:0;position:relative;flex-shrink:0;transition:border-color .2s,background .2s}
+.hdr-burger:hover{border-color:rgba(212,160,23,0.6);background:rgba(212,160,23,0.06)}
+.hdr-burger span{position:absolute;left:10px;right:10px;height:2px;background:var(--gold);border-radius:2px;transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s}
+.hdr-burger span:nth-child(1){top:13px}
+.hdr-burger span:nth-child(2){top:20px}
+.hdr-burger span:nth-child(3){top:27px}
+.hdr-burger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hdr-burger.active span:nth-child(2){opacity:0}
+.hdr-burger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* === DRAWER MOBILE (overlay full-screen) === */
+.hdr-drawer-overlay{position:fixed;inset:0;background:rgba(8,4,0,.85);backdrop-filter:blur(14px);z-index:99;opacity:0;visibility:hidden;transition:opacity .3s,visibility .3s}
+.hdr-drawer-overlay.active{opacity:1;visibility:visible}
+.hdr-drawer{position:fixed;top:0;right:0;bottom:0;width:min(380px,85vw);background:var(--bg-card);border-left:1px solid var(--border);z-index:100;transform:translateX(100%);transition:transform .35s cubic-bezier(.32,.72,0,1);overflow-y:auto;display:flex;flex-direction:column;padding:80px 24px 28px;gap:10px}
+.hdr-drawer.active{transform:translateX(0)}
+.hdr-drawer-close{position:absolute;top:18px;right:18px;width:42px;height:42px;background:transparent;border:1px solid var(--border);border-radius:8px;cursor:pointer;color:var(--gold);font-size:22px;display:flex;align-items:center;justify-content:center;line-height:1;transition:border-color .2s,background .2s}
+.hdr-drawer-close:hover{border-color:rgba(212,160,23,0.6);background:rgba(212,160,23,0.06)}
+.hdr-drawer-item{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;font-size:15px;font-weight:500;color:var(--text);text-decoration:none;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,0.02);transition:border-color .2s,background .2s,color .2s;cursor:pointer;font-family:inherit;width:100%;text-align:left}
+.hdr-drawer-item:hover,.hdr-drawer-item:active{border-color:var(--gold);background:rgba(212,160,23,0.08);color:var(--gold-bright)}
+.hdr-drawer-section{margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+.hdr-drawer-section-label{font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;padding:0 4px}
+.hdr-drawer-channels{display:flex;flex-direction:column;gap:6px}
+.hdr-drawer-channel{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;font-size:13.5px;color:var(--text);text-decoration:none;border-radius:8px;background:rgba(255,255,255,0.02);transition:background .2s}
+.hdr-drawer-channel:hover{background:rgba(212,160,23,0.08);color:var(--gold)}
+.hdr-drawer-channel-handle{color:var(--text-dim);font-size:11px;font-family:var(--mono)}
+.hdr-drawer-cta{margin-top:10px;display:block;padding:14px 16px;text-align:center;background:var(--gold);color:#000;border-radius:10px;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:.3px;transition:transform .2s,box-shadow .2s}
+.hdr-drawer-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px -4px rgba(212,160,23,.5)}
+.hdr-drawer-cta.ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.hdr-drawer-cta.ghost:hover{background:var(--gold);color:#000}
+.hdr-drawer-lang{display:flex;align-items:center;gap:8px;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12px}
+.hdr-drawer-lang select{flex:1;background:transparent;border:none;color:var(--text);font-family:inherit;font-size:12px;letter-spacing:.5px;cursor:pointer;text-transform:uppercase;outline:none}
+.hdr-drawer-lang select option{background:#0D0800;color:var(--text)}
+
+@media(max-width:880px){
+  .hdr{padding:12px 0;gap:10px}
+  .hdr-nav{display:none}
+  .hdr-cta .lang-sel,.hdr-cta .btn-early,.hdr-cta .btn-gold{display:none}
+  .hdr-burger{display:block}
+}
+@media(min-width:881px){
+  .hdr-drawer-overlay,.hdr-drawer,.hdr-burger{display:none !important}
+}
 
 /* === HERO === */
 section.hero{padding:96px 0 80px;background:radial-gradient(ellipse 1200px 700px at 70% 30%,#1A0D00 0%,var(--bg) 70%);position:relative;overflow:hidden}
@@ -403,9 +445,53 @@ html{scroll-behavior:smooth}
       </select>
       <button class="btn-early" type="button" id="nl-open"><span data-i18n="cta_early">Get early access</span> <span class="arr">→</span></button>
       <a class="btn btn-gold" href="#plans" data-i18n="cta_app">Get the app</a>
+      <button class="hdr-burger" type="button" id="hdr-burger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </div>
 </header>
+
+<!-- ===== DRAWER MOBILE ===== -->
+<div class="hdr-drawer-overlay" id="hdr-drawer-overlay" aria-hidden="true"></div>
+<aside class="hdr-drawer" id="hdr-drawer" aria-hidden="true" aria-label="Mobile menu">
+  <button class="hdr-drawer-close" type="button" id="hdr-drawer-close" aria-label="Close menu">×</button>
+
+  <a class="hdr-drawer-item" href="#features" data-drawer-close data-i18n="nav_features">Features</a>
+  <a class="hdr-drawer-item" href="#markets" data-drawer-close data-i18n="nav_markets">Markets</a>
+  <a class="hdr-drawer-item" href="#plans" data-drawer-close data-i18n="nav_pricing">Pricing</a>
+  <a class="hdr-drawer-item" href="#how-it-works" data-drawer-close data-i18n="nav_how">How it works</a>
+
+  <div class="hdr-drawer-section">
+    <div class="hdr-drawer-section-label" data-i18n="nav_channels">Channels</div>
+    <div class="hdr-drawer-channels">
+      <a class="hdr-drawer-channel" href="https://t.me/aurex_ai" target="_blank" rel="noopener">Telegram <span class="hdr-drawer-channel-handle">@aurex_ai</span></a>
+      <a class="hdr-drawer-channel" href="https://x.com/aurex_live" target="_blank" rel="noopener">X / Twitter <span class="hdr-drawer-channel-handle">@aurex_live</span></a>
+      <a class="hdr-drawer-channel" href="https://instagram.com/aurex_live" target="_blank" rel="noopener">Instagram <span class="hdr-drawer-channel-handle">@aurex_live</span></a>
+      <a class="hdr-drawer-channel" href="https://tiktok.com/@aurex_live" target="_blank" rel="noopener">TikTok <span class="hdr-drawer-channel-handle">@aurex_live</span></a>
+      <a class="hdr-drawer-channel" href="https://youtube.com/@aurex-fintech" target="_blank" rel="noopener">YouTube <span class="hdr-drawer-channel-handle">@aurex-fintech</span></a>
+      <a class="hdr-drawer-channel" href="https://linkedin.com/company/aurex-fintech" target="_blank" rel="noopener">LinkedIn <span class="hdr-drawer-channel-handle">/aurex-fintech</span></a>
+    </div>
+  </div>
+
+  <div class="hdr-drawer-section">
+    <div class="hdr-drawer-lang">
+      <span>🌐</span>
+      <select id="lang-sel-drawer" aria-label="Language">
+        <option value="en">🇺🇸 EN — English</option>
+        <option value="es">🇪🇸 ES — Español</option>
+        <option value="pt">🇧🇷 PT — Português</option>
+        <option value="zh">🇨🇳 ZH — 中文</option>
+        <option value="fr">🇫🇷 FR — Français</option>
+        <option value="it">🇮🇹 IT — Italiano</option>
+        <option value="hi">🇮🇳 HI — हिन्दी</option>
+        <option value="ar">🇸🇦 AR — العربية</option>
+      </select>
+    </div>
+    <button class="hdr-drawer-cta ghost" type="button" id="nl-open-drawer" data-drawer-close style="margin-top:10px"><span data-i18n="cta_early">Get early access</span></button>
+    <a class="hdr-drawer-cta" href="#plans" data-drawer-close data-i18n="cta_app">Get the app</a>
+  </div>
+</aside>
 
 <!-- ===== BLOQUE 2: HERO ===== -->
 <section class="hero">
@@ -1088,11 +1174,70 @@ html{scroll-behavior:smooth}
     })
     .catch(err => console.warn('i18n.json load failed:', err));
 
-  // Listener del selector
+  // Listener del selector (header + drawer)
   const langSel = document.getElementById('lang-sel');
-  if (langSel) {
-    langSel.addEventListener('change', (e) => setLang(e.target.value));
+  const langSelDrawer = document.getElementById('lang-sel-drawer');
+  function syncSelectors(lang) {
+    if (langSel && langSel.value !== lang) langSel.value = lang;
+    if (langSelDrawer && langSelDrawer.value !== lang) langSelDrawer.value = lang;
   }
+  if (langSel) {
+    langSel.addEventListener('change', (e) => { setLang(e.target.value); syncSelectors(e.target.value); });
+  }
+  if (langSelDrawer) {
+    langSelDrawer.addEventListener('change', (e) => { setLang(e.target.value); syncSelectors(e.target.value); });
+  }
+
+  // === HAMBURGER DRAWER MOBILE ===
+  const burger = document.getElementById('hdr-burger');
+  const drawer = document.getElementById('hdr-drawer');
+  const drawerOverlay = document.getElementById('hdr-drawer-overlay');
+  const drawerClose = document.getElementById('hdr-drawer-close');
+
+  function openDrawer() {
+    if (!drawer) return;
+    drawer.classList.add('active');
+    drawerOverlay.classList.add('active');
+    burger.classList.add('active');
+    drawer.setAttribute('aria-hidden', 'false');
+    drawerOverlay.setAttribute('aria-hidden', 'false');
+    burger.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    if (!drawer) return;
+    drawer.classList.remove('active');
+    drawerOverlay.classList.remove('active');
+    burger.classList.remove('active');
+    drawer.setAttribute('aria-hidden', 'true');
+    drawerOverlay.setAttribute('aria-hidden', 'true');
+    burger.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+  }
+  if (burger) burger.addEventListener('click', () => {
+    drawer.classList.contains('active') ? closeDrawer() : openDrawer();
+  });
+  if (drawerClose) drawerClose.addEventListener('click', closeDrawer);
+  if (drawerOverlay) drawerOverlay.addEventListener('click', closeDrawer);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && drawer && drawer.classList.contains('active')) closeDrawer();
+  });
+  // Cerrar drawer al click en cualquier item con data-drawer-close
+  document.querySelectorAll('[data-drawer-close]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      // si el item es el btn-early del drawer, abrir newsletter modal después de cerrar
+      if (el.id === 'nl-open-drawer') {
+        closeDrawer();
+        setTimeout(() => {
+          const nlOpenBtn = document.getElementById('nl-open');
+          if (nlOpenBtn) nlOpenBtn.click();
+        }, 300);
+        e.preventDefault();
+        return;
+      }
+      closeDrawer();
+    });
+  });
 
   // === NEWSLETTER MICRO-MODAL ===
   const nlOpen = document.getElementById('nl-open');
