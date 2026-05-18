@@ -221,10 +221,19 @@ App AUREX v1.0.35 (Internal Testing) → Login `fmoscon@gmail.com` → Subscript
 ### 4.2 Estado del ticket
 
 - **Ticket RC #76809** enviado 16-may PM.
-- **Contenido:** stack técnico completo + flujo reproducible + 5 causas conocidas RC descartadas + referencia Issue #3039 RC (acknowledged sin fix público).
+- **Contenido inicial:** stack técnico completo + flujo reproducible + 5 causas conocidas RC descartadas + referencia Issue #3039 RC (acknowledged sin fix público).
 - **6 screenshots adjuntos** (ZIP 9 MB compressed): productos Play Console, customer not found en RC dashboard, popup error Samsung Z Flip 3, Build 35 activo Internal Testing.
-- **Estado:** ESPERANDO respuesta RC support. SLA típico 24-72h hábiles.
+- **SLA típico:** 24-72h hábiles.
 - **Confirmado por Fernando 17-may 13:30 AR:** sin novedades, RC no respondió aún.
+
+#### 4.2.b Historial de comunicación con Alejandra (RC support)
+
+| Mail | Fecha | Quién | Contenido enviado | Respuesta |
+|---|---|---|---|---|
+| **Inicial** | 16-may PM | Fernando | Stack técnico + 5 causas descartadas + 6 screenshots + ref Issue #3039 | Alejandra 18-may: confirma license testers + pide 3 cosas (debug logs, snippets código, código paywall custom) |
+| **Mail 1 follow-up** | 18-may | Fernando (con Code) | Logs RC verbose tag RevenueCat capturados con adb logcat 18-may 15:13-15:17 en Samsung R5CR92ADDNW + 3 snippets código texto plano (App.js Purchases.setLogLevel/configure + SubscriptionScreen.js loadOfferings + handlePurchase con Alert "Error IAP debug"). Confirmado: setLogLevel YA estaba activo, no se compiló build nuevo. | Esperando |
+| **Mail 2 follow-up** | 18-may | Fernando (con Escritorio) | Confirmación visual desde Play Console: los 4 productos (PRO/ELITE mensual/anual) con base plans ACTIVOS (no draft, no inactive), 174 países, actualizados 5-14 may. Pide confirmar si Issue #3039 ya tiene workaround interno RC. | Esperando |
+| **Mail 3 (pendiente)** | Si RC no aporta fix concreto | Fernando (con Code) | Pedir: (a) workaround interno NO publicado para Issue #3039, (b) simulación en lab interno RC con cuenta app8be7db09a7 + nuestros productos. | — |
 
 ### 4.3 Las 5 causas conocidas RC — TODAS DESCARTADAS
 
