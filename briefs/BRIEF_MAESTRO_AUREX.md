@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 17-may-2026 ~23:30 AR
-> **Última actualización significativa:** §5 Landing v3 — JORNADA INTENSA de iteración del header + secciones. 23 sub-puntos cerrados en commits c9d... → 27226ae. Cards/dropdowns/modales/carousel/OG/planes/benchmark/canales todos rediseñados con feedback Fernando + reglas nuevas aprendidas (validar pixel-perfect, no abrir pantallas, i18n a 8 idiomas siempre, cambios aplican web+iphone, no inventar logos).
+> **Última actualización:** 18-may-2026 ~03:00 AR
+> **Última actualización significativa:** §5 Landing v3 — sesión 18-may madrugada cerró 7-B (Cobertura cards + iconos + pills IA/alertas + 350+), i18n masivo 91 textos hardcoded EN cableados + 65 keys preexistentes faltantes en PT/ZH/FR/IT/HI/AR (998 traducciones totales agregadas, 8 idiomas ahora con 270 keys cada uno), 7-F popup Newsletter rediseñado (logo + título "NEWSLETTER AUREX" + brand dorado), tipografía Boldonse aplicada a títulos (Fernando re-evalúa mañana 18-may, le parece informal en grandes). 6 reglas nuevas en memoria.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -320,32 +320,40 @@ Todo el header rediseñado iterativamente con Fernando. Items cerrados:
 | 7-CC Canales logos en COLORES OFICIALES de cada marca | ✅ |
 | 7-D Cómo Funciona: **accordion 6 tabs** con contenido REAL extraído de `~/AurexApp/src/components/ComoUsarAurexBlock.js` + 24 claves cu_* en 8 idiomas | ✅ |
 
-### 5.4 Pendientes Landing v3 — siguen abiertos
+### 5.4 Sesión 18-may madrugada — sub-puntos cerrados
+
+| Item | Cerrado | Commit |
+|---|---|---|
+| 7-B Markets/Coverage: bordes gradient dorados + iconos por instrumento + 2 pills "Señales IA con %" + "Alertas push y Telegram" + 350→350+ + i18n 8 idiomas | ✅ | `55c8854` + fix contraste `81b4f3e` |
+| 7-G Tipografía: comparativa 7 opciones generada → elegido Boldonse + IBM Plex Mono. Carpeta `~/Dropbox/AUREX/TIPOGRAFIA/` creada con .ttf + specimen.png + decision.md | ✅ | (no commit en repo, archivos en Dropbox) |
+| **AUDITORÍA i18n estructural completa** — auditor v3 con BeautifulSoup detectó 91 textos hardcoded EN sin `data-i18n`. **608 traducciones nuevas** en 8 idiomas (Ticker, Bloque 3, Carrusel 4.5, Motor 5, 3 Banners 6, Portfolio 7, 15 Alertas 8, 8 Idiomas 9, Benchmark 10.5, "We don't trade" 11, Live Quotes 11.5, Footer, Modal compra) + 22 keys aria/alt + handler `data-i18n-alt` y `data-i18n-tooltip` agregado al JS | ✅ | `75eb60c` |
+| **Fix 65 keys preexistentes faltantes** en PT/ZH/FR/IT/HI/AR (Características b27_* + interior planes plan_*) — Fernando detectó que IT no traducía esas zonas. 390 traducciones nuevas, 8 idiomas ahora con 270 keys idénticas | ✅ | `f38297a` |
+| 7-F Newsletter popup rediseñado — icono ✉️ card dorada arriba + divider + input email contraste alto + botón flecha animada + check verde footer + logo AUREX + título "NEWSLETTER AUREX" en 8 idiomas + brand dorado al pie | ✅ | `41a1c4c` → `3e991d1` → `fb5f156` |
+| **Tipografía Boldonse aplicada a títulos** (h1 hero, h2 sección, h3 cards/banners/alerts, plan-price, modales). Manrope se mantiene en body/CTAs. IBM Plex Mono en nav/labels. **Fernando re-evalúa mañana** — le parece informal en títulos grandes (le gusta en chicos) | 🟡 | `870674d` |
+
+### 5.5 Pendientes Landing v3 — siguen abiertos
 
 | # | Punto |
 |---|---|
-| 7-B | Markets/Coverage — mejorar bordes 9 cards + frase Alertas Push/Telegram + IA con % predicción |
-| 7-C | Pricing — rediseño YA HECHO (se absorbió en 7-U). Marcar como cerrado en próximo cycle |
-| 7-F | Get Early Access popup newsletter — mejorar diseño (Suscripción Newsletter) |
-| 7-G | Tipografía: 6 versiones del header para elegir |
-| 7-I | OG v2.2 medium como fondo de zonas (ya hecho como OG image — pendiente decisión si usarlo TAMBIÉN como fondo de hero o popup) |
+| 7-I | OG v2.2 medium como fondo de zonas (decisión Fernando: depende del refactor arquitectural compacta — espera) |
+| Boldonse en títulos grandes | Re-evaluar 18-may con mente fría. Opciones: a) revertir h1/h2 a Manrope y dejar Boldonse solo h3, b) otra display, c) volver todo Manrope |
+| "9 tipos de instrumentos" b4_h2 | Fernando no entiende qué son — definir copy más claro o enumerar visualmente |
 
-### 5.5 REFACTOR MAYOR pendiente (decisión Fernando 17-may 19:00)
+### 5.6 REFACTOR MAYOR — DECISIÓN BLOQUEANTE para próxima sesión
 
-**Landing compacta + click-to-expand, no scroll infinito.** El concepto vigente: cards/sectores abren modal o vista expandida en vez de scroll largo. Memoria: `feedback_landing_compact_click_to_expand`. Tarea grande agendada para después de cerrar ajustes puntuales actuales del header/secciones.
+**Landing compacta + click-to-expand, no scroll infinito.** Concepto vigente desde 17-may 19:00, REFORZADO por Fernando 18-may 02:30 AR: "ya nos lo dijo 3 veces y Code no respondió concretamente". TODA otra decisión visual (incluido 7-I OG fondo zonas + tipografía Boldonse en grandes) DEPENDE de cómo quede esta arquitectura. **MAÑANA arranca por este tema.** Memoria: `feedback_landing_compact_click_to_expand`.
 
-### 5.6 Reglas de trabajo aprendidas hoy (guardadas en memoria)
+### 5.7 Reglas de trabajo aprendidas (guardadas en memoria — siguen vigentes)
 
-8 reglas nuevas guardadas que aplican forever:
+**17-may** (8 reglas): `validar_pixel_x_pixel_antes_de_pasar`, `i18n_cambios_aplican_8_idiomas`, `cambios_siempre_web_y_iphone`, `landing_compact_click_to_expand`, `siempre_espanol_referencia_ES`, `no_abrir_pantallas_a_fernando`, `validar_yo_antes_de_pasar_a_fernando`, `nunca_inventar_iterar_version_a_version`.
 
-1. `feedback_validar_pixel_x_pixel_antes_de_pasar` — matemática + curl/grep + headless ANTES de avisar "listo".
-2. `feedback_i18n_cambios_aplican_8_idiomas` — EN+ES no alcanza, siempre los 8.
-3. `feedback_cambios_siempre_web_y_iphone` — toda mejora visual aplica a los 2 contextos.
-4. `feedback_landing_compact_click_to_expand` — concepto madre, refactor pendiente.
-5. `feedback_siempre_espanol_referencia_ES` — Code escribe TODO en español + glosario EN→ES.
-6. `feedback_no_abrir_pantallas_a_fernando` — Playwright headless only.
-7. `feedback_validar_yo_antes_de_pasar_a_fernando` — Code es QA primero.
-8. `feedback_nunca_inventar_iterar_version_a_version` — editar código real, no rediseñar desde cero.
+**18-may madrugada** (6 reglas nuevas):
+1. `feedback_avisar_previo_mejoras_visuales` — mejoras laterales no pedidas → preguntar 1 línea + OK antes de aplicar.
+2. `feedback_si_esta_mal_se_arregla` — bugs/inconsistencias detectadas → arreglar sin preguntar.
+3. `feedback_nombres_no_traducen` — FREE/PRO/ELITE/AUREX + plataformas oficiales JAMÁS traducen.
+4. `feedback_cache_busting_landing` — cuando Fernando no ve cambios → URL con `?v=XXX` nuevo. Test del rojo h2 como diagnóstico definitivo.
+5. `feedback_validar_integramente_cada_paso` — **CRÍTICA**. Fernando NUNCA debe ser quien detecte un bug. Code cruza HTML+JSON+JS+8 idiomas+breakpoints ANTES de decir OK. Diff EN vs cada idioma = 0.
+6. (refuerzo) `feedback_no_abrir_pantallas_a_fernando` actualizada: PROHIBIDO usar `browser_*` MCP de Playwright — abre ventana visible aunque parezca headless.
 
 ### 5.7 Pre-requisitos para deploy a producción aurex.live
 
