@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 17-may-2026 ~15:35 AR
-> **Última actualización significativa:** §5 Landing v3 — nuevo flujo de revisión en navegador real (`https://aurex.live/landing-v3-preview/`) reemplaza los PNG fullpage. §12 Política — regla nueva: actualizar brief maestro cada 3h máximo en sesiones largas.
+> **Última actualización:** 17-may-2026 ~23:30 AR
+> **Última actualización significativa:** §5 Landing v3 — JORNADA INTENSA de iteración del header + secciones. 23 sub-puntos cerrados en commits c9d... → 27226ae. Cards/dropdowns/modales/carousel/OG/planes/benchmark/canales todos rediseñados con feedback Fernando + reglas nuevas aprendidas (validar pixel-perfect, no abrir pantallas, i18n a 8 idiomas siempre, cambios aplican web+iphone, no inventar logos).
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -286,31 +286,76 @@ Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nue
 - **2 PNG Playwright** generados (desktop 1440×900 + mobile 390×844).
 - **Snapshot PENDIENTE REVIEW** commiteado (`a74e981`) en `briefs/landing_v3_PENDIENTE_REVIEW_17MAY/`.
 
-### 5.2 NUEVO flujo de revisión — preview en navegador real (decidido 17-may 15:30 AR)
+### 5.2 Flujo de revisión — preview en navegador real (vigente desde 17-may 15:30 AR)
 
-Los PNG fullpage Playwright son ilegibles para Fernando (un chorizo vertical). Nuevo método de trabajo entre los 3 (Fernando + Code + Escritorio):
+URL preview live: `https://aurex.live/landing-v3-preview/` (con `?v=N` para bust cache cuando hace falta refrescar OG en WhatsApp/Telegram).
 
-- Code sube la landing v3 completa a `~/Desktop/aurex-app/landing-v3-preview/` (path discreta, con `<meta name="robots" content="noindex,nofollow">`).
-- GitHub Pages la sirve en: `https://aurex.live/landing-v3-preview/`
-- **Fernando** la ve en Safari Mac + iPhone real (responsive nativo).
-- **Escritorio** la ve en Chrome propio para revisión UX/copy/visual.
-- **Code** puede correr Playwright contra la URL pública si necesita screenshots específicos.
-- Ciclo: detección de cambio → Fernando lo dice → Code edita local + commit + push → GitHub Pages re-deploya 1-3 min → todos refrescan y ven el cambio.
+### 5.3 Trabajo HEADER cerrado 17-may sesión nocturna (23 sub-puntos)
 
-### 5.3 Pendientes Landing v3
+Todo el header rediseñado iterativamente con Fernando. Items cerrados:
 
-1. **Code:** crear carpeta `landing-v3-preview/` con HTML + assets + meta noindex → commit + push → verificar HTTP 200 de la URL.
-2. **Fernando:** entra a `https://aurex.live/landing-v3-preview/` en Safari + iPhone → da OK o lista de cambios.
-3. **Escritorio:** entra a la misma URL en Chrome → revisión cruzada UX/copy/visual.
-4. Loop de iteración hasta doble OK Fernando + Escritorio.
-5. Cuando doble OK → Code deploy a producción:
-   - Generar OG image 1200×630 con Canvas skill (mix v2 Stellar + v3 Tactical, ya elegido).
-   - Bajar 3 logos restantes Google Drive (1/4 bajado).
-   - Mover HTML + assets de `landing-v3-preview/` al root del repo (reemplaza index.html actual fase 0).
-   - Verificar links internos.
-   - Commit + push → GitHub Pages auto-deploy a aurex.live oficial.
-   - Test funcional: submit form newsletter con email de prueba → confirmar notificación a `app.aurex@gmail.com`.
-6. `landing-v3-preview/` queda como referencia histórica post-deploy.
+| Item | Cerrado |
+|---|---|
+| 7-A "Features" destino correcto (bloque "Características" nuevo con 13 cards + capturas reales) | ✅ |
+| 7-E Canales dropdown bug + logos OFICIALES de cada red | ✅ |
+| 7-H BUG i18n 8 idiomas funcionando (con `cache: 'no-store'` fix Chrome) | ✅ |
+| 7-J Borde dorado items nav | ✅ |
+| 7-K Mobile: lang selector visible en header (no solo drawer) | ✅ |
+| 7-L Desktop achicado: lang + Descargar app visibles | ✅ |
+| 7-M Hamburguesa rectangular 62x48 + borde dorado + separación | ✅ |
+| 7-N Mobile: eliminado espacio negro grande entre header y hero | ✅ |
+| 7-O Renombrado "Acceso anticipado" → "Suscripción Newsletter" 8 idiomas | ✅ |
+| 7-P Logo separado del borde izquierdo (safe-area-inset) | ✅ |
+| 7-R Línea horizontal dorada al final del header | ✅ |
+| 7-S Tabla benchmark: logos REALES con colores oficiales (AUREX/TradingView/Investing/Seeking Alpha/Bloomberg) + tildes ✓ verdes + X rojas + sin scroll desktop | ✅ |
+| 7-T Drawer contraste igualado a web | ✅ |
+| 7-U Planes: cards con colores REALES app Perfil (FREE gris / PRO violeta / ELITE dorado) + features list vertical + modal compra con logos Apple/Google/AUREX reales + **carousel horizontal swipeable en mobile** con 3 puntitos | ✅ |
+| 7-V Balanza disclaimer ⚖️ en header (arriba visible, no FAB abajo) | ✅ |
+| 7-W OG image preview link: logo 160px + disco oscuro radial detrás + meta tags acortados + cache bust con `?v=N` | ✅ |
+| 7-X Card destacado "POR QUÉ SOMOS MEJORES" en hero + item Benchmark en hamburguesa | ✅ |
+| 7-Y Hero label "TERMINAL GLOBAL EN VIVO" (8 idiomas) | ✅ |
+| 7-Z 3 cards descarga: logos Apple+Google Play oficiales + texto i18n 8 idiomas | ✅ |
+| 7-AA Hero sub: 350+, acciones primero, FED+geopolítica, push+Telegram, "a tu alcance" (8 idiomas) | ✅ |
+| 7-BB Nav items altura 36px fijo desktop / 44px mobile | ✅ |
+| 7-CC Canales logos en COLORES OFICIALES de cada marca | ✅ |
+| 7-D Cómo Funciona: **accordion 6 tabs** con contenido REAL extraído de `~/AurexApp/src/components/ComoUsarAurexBlock.js` + 24 claves cu_* en 8 idiomas | ✅ |
+
+### 5.4 Pendientes Landing v3 — siguen abiertos
+
+| # | Punto |
+|---|---|
+| 7-B | Markets/Coverage — mejorar bordes 9 cards + frase Alertas Push/Telegram + IA con % predicción |
+| 7-C | Pricing — rediseño YA HECHO (se absorbió en 7-U). Marcar como cerrado en próximo cycle |
+| 7-F | Get Early Access popup newsletter — mejorar diseño (Suscripción Newsletter) |
+| 7-G | Tipografía: 6 versiones del header para elegir |
+| 7-I | OG v2.2 medium como fondo de zonas (ya hecho como OG image — pendiente decisión si usarlo TAMBIÉN como fondo de hero o popup) |
+
+### 5.5 REFACTOR MAYOR pendiente (decisión Fernando 17-may 19:00)
+
+**Landing compacta + click-to-expand, no scroll infinito.** El concepto vigente: cards/sectores abren modal o vista expandida en vez de scroll largo. Memoria: `feedback_landing_compact_click_to_expand`. Tarea grande agendada para después de cerrar ajustes puntuales actuales del header/secciones.
+
+### 5.6 Reglas de trabajo aprendidas hoy (guardadas en memoria)
+
+8 reglas nuevas guardadas que aplican forever:
+
+1. `feedback_validar_pixel_x_pixel_antes_de_pasar` — matemática + curl/grep + headless ANTES de avisar "listo".
+2. `feedback_i18n_cambios_aplican_8_idiomas` — EN+ES no alcanza, siempre los 8.
+3. `feedback_cambios_siempre_web_y_iphone` — toda mejora visual aplica a los 2 contextos.
+4. `feedback_landing_compact_click_to_expand` — concepto madre, refactor pendiente.
+5. `feedback_siempre_espanol_referencia_ES` — Code escribe TODO en español + glosario EN→ES.
+6. `feedback_no_abrir_pantallas_a_fernando` — Playwright headless only.
+7. `feedback_validar_yo_antes_de_pasar_a_fernando` — Code es QA primero.
+8. `feedback_nunca_inventar_iterar_version_a_version` — editar código real, no rediseñar desde cero.
+
+### 5.7 Pre-requisitos para deploy a producción aurex.live
+
+Cuando todo Landing v3 esté OK doble (Fernando + Escritorio):
+- Generar OG image final (ya hecha v4 con logo 160px + disco contraste).
+- Verificar links internos.
+- Mover archivos de `landing-v3-preview/` al root del repo aurex-app (reemplaza index.html actual fase 0).
+- Commit + push → GitHub Pages auto-deploy a aurex.live oficial.
+- Test funcional: submit form newsletter `xpqnajgp` → confirmar notificación a `app.aurex@gmail.com`.
+- `landing-v3-preview/` queda como referencia histórica.
 
 ### 5.3 Decisiones de diseño cerradas
 
