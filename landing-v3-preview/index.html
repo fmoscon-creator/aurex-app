@@ -11,19 +11,19 @@
 <!-- Open Graph for social previews -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://aurex.live/landing-v3-preview/">
-<meta property="og:title" content="AUREX — La Terminal Global de los Mercados">
-<meta property="og:description" content="Señales IA sobre 350+ activos — acciones, cripto, ETFs, futuros, materias primas, bonos y forex — con datos macro FED y geopolítica. Alertas push y por Telegram, en 8 idiomas.">
+<meta property="og:title" content="AUREX — Terminal Global de Mercados">
+<meta property="og:description" content="Señales IA sobre 350+ activos en 8 idiomas. Datos macro FED, geopolítica y alertas Telegram.">
 <meta property="og:image" content="https://aurex.live/landing-v3-preview/assets/landing/og_image.png">
 <meta property="og:image:secure_url" content="https://aurex.live/landing-v3-preview/assets/landing/og_image.png">
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="AUREX — La Terminal Global de los Mercados">
+<meta property="og:image:alt" content="AUREX Terminal Global de Mercados">
 <meta property="og:site_name" content="AUREX">
 <meta property="og:locale" content="es_AR">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="AUREX — La Terminal Global de los Mercados">
-<meta name="twitter:description" content="Señales IA sobre 350+ activos con datos macro FED y geopolítica. Alertas push y por Telegram, 8 idiomas.">
+<meta name="twitter:title" content="AUREX — Terminal Global de Mercados">
+<meta name="twitter:description" content="Señales IA sobre 350+ activos en 8 idiomas. FED Macro + Telegram alerts.">
 <meta name="twitter:image" content="https://aurex.live/landing-v3-preview/assets/landing/og_image.png">
 
 <!-- Fonts -->
@@ -134,19 +134,27 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
 .hdr-drawer-lang select option{background:#0D0800;color:var(--text)}
 
 @media(max-width:880px){
-  .hdr{padding:12px 0;gap:10px}
+  .hdr{padding:10px 0;gap:8px}
   .hdr-nav{display:none}
   /* Ocultamos solo "Acceso anticipado" — el lang-sel + Descargar app quedan visibles per pedido Fernando 7-K/7-L */
+  .hdr-cta{gap:8px}
   .hdr-cta .btn-early{display:none}
-  .hdr-cta .lang-sel{padding:7px 8px;font-size:10.5px}
-  .hdr-cta .btn-gold{padding:9px 14px;font-size:12px}
-  .hdr-burger{display:block}
+  /* TODOS los items del header (lang-sel + legal-btn + btn-gold + hamburguesa) misma altura 44px */
+  .hdr-cta .lang-sel{height:44px;padding:0 10px;font-size:11px;box-sizing:border-box;display:inline-flex;align-items:center}
+  .hdr-cta .btn-gold{height:44px;padding:0 14px;font-size:12px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center}
+  .hdr-cta .legal-btn{width:44px;height:44px;font-size:21px;box-sizing:border-box}
+  .hdr-burger{display:block;width:54px;height:44px;box-sizing:border-box}
+  .hdr-burger span{left:11px;right:11px;top:14px}
+  .hdr-burger span:nth-child(2){top:21px}
+  .hdr-burger span:nth-child(3){top:28px}
 }
 @media(max-width:480px){
-  .hdr-cta .btn-gold{padding:8px 10px;font-size:11.5px}
-  .hdr-cta .lang-sel{padding:6px 6px;font-size:10px}
-  .hdr-burger{width:56px;height:46px}
-  .hdr-burger span{left:12px;right:12px}
+  .hdr-cta{gap:6px}
+  .hdr-cta .btn-gold{padding:0 10px;font-size:11.5px}
+  .hdr-cta .lang-sel{padding:0 7px;font-size:10.5px}
+  .hdr-cta .legal-btn{width:42px;height:42px}
+  .hdr-cta .lang-sel,.hdr-cta .btn-gold{height:42px}
+  .hdr-burger{width:50px;height:42px}
 }
 @media(min-width:881px){
   .hdr-drawer-overlay,.hdr-drawer,.hdr-burger{display:none !important}
@@ -156,6 +164,22 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
 section.hero{padding:96px 0 80px;background:radial-gradient(ellipse 1200px 700px at 70% 30%,#1A0D00 0%,var(--bg) 70%);position:relative;overflow:hidden}
 @media(max-width:880px){section.hero{padding:28px 0 56px}}
 @media(max-width:480px){section.hero{padding:20px 0 48px}}
+
+/* === BLOQUE 5.5 CÓMO FUNCIONA — accordion 6 tabs === */
+.how-accordion{display:flex;flex-direction:column;gap:10px;max-width:780px;margin:36px auto 0}
+.how-tab{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .25s,background .25s}
+.how-tab[open]{border-color:rgba(212,160,23,0.5);background:rgba(212,160,23,0.04)}
+.how-tab summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:16px 20px;font-family:var(--serif);font-size:15px;font-weight:700;color:var(--text);transition:background .2s;user-select:none}
+.how-tab summary::-webkit-details-marker{display:none}
+.how-tab summary:hover{background:rgba(212,160,23,0.06)}
+.how-tab[open] summary{color:var(--gold-bright);border-bottom:1px solid rgba(212,160,23,0.25)}
+.how-tab-icon{font-size:22px;line-height:1;flex-shrink:0}
+.how-tab-name{flex:1;text-align:left;letter-spacing:.3px}
+.how-tab-arrow{font-size:12px;color:var(--gold);transition:transform .25s}
+.how-tab[open] .how-tab-arrow{transform:rotate(180deg)}
+.how-tab-items{list-style:none;padding:14px 20px 18px;margin:0;display:flex;flex-direction:column;gap:11px}
+.how-tab-items li{display:flex;align-items:flex-start;gap:11px;font-size:13.5px;color:rgba(245,240,232,0.88);line-height:1.55}
+.how-emoji{font-size:16px;flex-shrink:0;margin-top:1px;line-height:1.4}
 
 /* === BLOQUE 2.7 CARACTERÍSTICAS — grid 3x3 con capturas === */
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
@@ -184,12 +208,11 @@ section.hero{padding:96px 0 80px;background:radial-gradient(ellipse 1200px 700px
 .badge-store .lbl-lg{font-size:15px;font-weight:700;color:#fff}
 
 /* === 7-X.a Hero labels lado a lado (TERMINAL + POR QUE SOMOS MEJORES) === */
-.hero-labels{display:inline-flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;justify-content:center;align-items:stretch;width:auto}
+.hero-labels{display:inline-flex;flex-wrap:wrap;gap:10px;margin-bottom:18px;justify-content:center;align-items:center;width:auto}
 .hero-text .hero-labels{margin-left:auto;margin-right:auto}
-.hero-text.left-align .hero-labels{margin-left:0;margin-right:auto}
-/* Ambos labels mismo formato/altura para que se vean simétricos */
-.section-label,.section-label-cta{display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:20px;font-weight:700;line-height:1.2;text-decoration:none;border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
-.section-label-cta{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#000;border-color:var(--gold-bright);cursor:pointer}
+/* Ambos labels MISMO HEIGHT exacto (28px) — forzado con flex+box-sizing */
+.section-label,.section-label-cta{display:inline-flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;letter-spacing:1.8px;text-transform:uppercase;padding:0 14px;height:28px;line-height:1;border-radius:99px;font-weight:700;text-decoration:none;border:1px solid var(--border);box-sizing:border-box;transition:transform .2s,box-shadow .2s;margin:0;vertical-align:middle}
+.section-label-cta{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#000;border-color:var(--gold-bright);cursor:pointer;font-weight:800}
 .section-label-cta:hover{transform:translateY(-1px);box-shadow:0 6px 16px rgba(212,160,23,0.45);color:#000}
 @media(max-width:480px){.hero-labels{flex-direction:column;align-items:center}.section-label,.section-label-cta{font-size:10.5px;width:100%;max-width:280px}}
 /* Hero text centrado (per pedido Fernando) */
@@ -360,10 +383,11 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .plan-features-list li::before{content:"✓";color:#bfb4a8;font-weight:800;flex-shrink:0;margin-top:0;font-size:13px;line-height:1.4}
 .plan-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:linear-gradient(180deg,var(--gold-bright),var(--gold));color:#000;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:6px 14px;border-radius:99px;font-weight:800;font-family:var(--mono);white-space:nowrap;box-shadow:0 4px 12px rgba(212,160,23,0.4)}
 .plan-badge-soon{background:#1A0D00;color:var(--gold);border:1px solid var(--gold);box-shadow:none}
-.plan-cta{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 22px;background:var(--gold);color:#000;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;letter-spacing:.3px;transition:all .2s;border:none;font-family:var(--serif);cursor:pointer}
+.plan-cta{margin-top:auto;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;background:var(--gold);color:#000;border-radius:12px;font-weight:700;font-size:13.5px;text-decoration:none;letter-spacing:.3px;transition:all .2s;border:none;font-family:var(--serif);cursor:pointer;width:100%;box-sizing:border-box}
 .plan-cta:hover{background:var(--gold-bright);transform:translateY(-1px);box-shadow:0 8px 20px rgba(212,160,23,0.45)}
-.plan-cta.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold)}
-.plan-cta.ghost:hover{background:var(--gold);color:#000}
+/* CTA FREE = gris neutro (matching color del plan FREE) */
+.plan:not(.featured):not(.elite) .plan-cta{background:#3a342d;color:#e8e0d5;border:1.5px solid rgba(155,144,138,0.55)}
+.plan:not(.featured):not(.elite) .plan-cta:hover{background:#4a4339;color:#fff;border-color:rgba(155,144,138,0.85)}
 
 /* === MODAL COMPRA PLAN === */
 .buy-overlay{position:fixed;inset:0;background:rgba(4,2,0,.82);backdrop-filter:blur(10px);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
@@ -1220,7 +1244,7 @@ html{scroll-behavior:smooth}
           <li data-i18n="plan_free_f4">AUREX Pulse básico (4 variables)</li>
           <li data-i18n="plan_free_f5">Sin tarjeta de crédito</li>
         </ul>
-        <button class="plan-cta ghost" type="button" data-i18n="plan_cta_free">Empezar gratis</button>
+        <button class="plan-cta" type="button" data-i18n="plan_cta_free">Empezar gratis</button>
       </div>
       <div class="plan featured reveal reveal-delay-1" data-plan="pro">
         <div class="plan-badge" data-i18n="plan_badge_popular">MÁS POPULAR</div>
@@ -1240,7 +1264,7 @@ html{scroll-behavior:smooth}
         </ul>
         <button class="plan-cta" type="button" data-i18n="plan_cta_pro">Suscribirme a PRO</button>
       </div>
-      <div class="plan reveal reveal-delay-2" data-plan="elite">
+      <div class="plan elite reveal reveal-delay-2" data-plan="elite">
         <div class="plan-icon">💎</div>
         <div class="plan-name">ELITE</div>
         <div class="plan-price">$19.99<span class="small" data-i18n="plan_per_mo"> /mes</span></div>
@@ -1254,7 +1278,7 @@ html{scroll-behavior:smooth}
           <li data-i18n="plan_elite_f6">FED Macro + GDELT por activo</li>
           <li data-i18n="plan_elite_f7">Termómetro IA premium</li>
         </ul>
-        <button class="plan-cta ghost" type="button" data-i18n="plan_cta_elite">Suscribirme a ELITE</button>
+        <button class="plan-cta" type="button" data-i18n="plan_cta_elite">Suscribirme a ELITE</button>
       </div>
     </div>
   </div>
