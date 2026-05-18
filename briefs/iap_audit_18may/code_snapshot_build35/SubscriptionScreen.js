@@ -101,17 +101,8 @@ export default function SubscriptionScreen({ navigation }) {
       // Build 22 Bug #6: log + fallback
       console.error('[SUB] purchase failed:', e);
       if (!e.userCancelled) {
-        // Build 35 DEBUG temporal: mostrar TODOS los detalles del error en pantalla
-        // ProGuard strippea console.error en release, por eso necesitamos Alert visible.
-        // REVERTIR este Alert detallado en Build 36 una vez identificado el codigo.
-        const debugInfo = [
-          `code: ${e.code || 'N/A'}`,
-          `readableErrorCode: ${e.readableErrorCode || 'N/A'}`,
-          `userCancelled: ${e.userCancelled}`,
-          `underlyingErrorMessage: ${e.underlyingErrorMessage || 'N/A'}`,
-          `message: ${e.message || 'N/A'}`,
-        ].join('\n');
-        Alert.alert('Error IAP debug', debugInfo);
+        // Build 36: revertido Alert debug temporal del Build 35 al simple
+        Alert.alert('Error', e.message || e.toString() || 'No se pudo procesar la compra. Intentá de nuevo o contactanos.');
       }
     } finally {
       setPurchasing(false);

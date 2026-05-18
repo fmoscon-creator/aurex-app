@@ -263,10 +263,10 @@ export default function PerfilScreen({ navigation }) {
         headers: { 'Authorization': `Bearer ${session?.access_token}`, 'Content-Type': 'application/json' },
       });
       if (res.ok) {
-        Alert.alert(t('cuenta_eliminada'), t('hasta_pronto'));
-        // Build 34 IAP-6: desidentificar RC ANTES de cerrar sesion Supabase (consistencia con IAP-4)
+        // Build 36 fix orden IAP-6: primero desidentificar RC + cerrar sesion Supabase, despues feedback al user
         try { await Purchases.logOut(); } catch (e) { console.warn('[IAP-6] Purchases.logOut fallo:', e?.message); }
         await supabase.auth.signOut();
+        Alert.alert(t('cuenta_eliminada'), t('hasta_pronto'));
       } else {
         const err = await res.json();
         Alert.alert(t('error'), err.message || t('no_eliminar_cuenta'));
@@ -452,14 +452,9 @@ export default function PerfilScreen({ navigation }) {
                     <Text style={{ fontSize: 12, color: C.textSec }}>{f}{i === 1 ? '  SOON' : ''}</Text>
                   </View>
                 ))}
-                <TouchableOpacity style={{ backgroundColor: '#A78BFA', borderRadius: 10, padding: 14, alignItems: 'center', marginTop: 10 }} onPress={async () => {
-                  try {
-                    const Purchases = require('react-native-purchases').default;
-                    const productId = proBilling === 'monthly' ? 'com.fernandomoscon.aurex.pro.monthly' : 'com.fernandomoscon.aurex.pro.annual';
-                    const { customerInfo } = await Purchases.purchaseProduct(productId);
-                    if (customerInfo.entitlements.active['pro']) Alert.alert(t('bienvenido_pro'), t('plan_activado'));
-                  } catch (e) { if (!e.userCancelled) Alert.alert('Error', e.message); }
-                }}>
+                <TouchableOpacity style={{ backgroundColor: '#A78BFA', borderRadius: 10, padding: 14, alignItems: 'center', marginTop: 10 }} onPress={() => navigation.navigate('Subscription')}>
+                  {/* Build 36: eliminado purchaseProduct deprecada (sin offerToken obligatorio en Billing v8+).
+                      Punto unico de compra = SubscriptionScreen que usa purchasePackage(pkg) con offering RC completo. */}
                   <Text style={{ fontSize: 14, fontWeight: '700', color: '#000' }}>{proBilling === 'monthly' ? t('quiero_pro') : t('pro_anual_btn')}</Text>
                 </TouchableOpacity>
               </View>
@@ -494,14 +489,9 @@ export default function PerfilScreen({ navigation }) {
                     <Text style={{ fontSize: 12, color: C.text }}>{f}</Text>
                   </View>
                 ))}
-                <TouchableOpacity style={{ backgroundColor: '#D4A017', borderRadius: 10, padding: 14, alignItems: 'center', marginTop: 10 }} onPress={async () => {
-                  try {
-                    const Purchases = require('react-native-purchases').default;
-                    const productId = eliteBilling === 'monthly' ? 'com.fernandomoscon.aurex.elite.monthly2' : 'com.fernandomoscon.aurex.elite.annual';
-                    const { customerInfo } = await Purchases.purchaseProduct(productId);
-                    if (customerInfo.entitlements.active['elite']) Alert.alert(t('bienvenido_elite'), t('plan_activado'));
-                  } catch (e) { if (!e.userCancelled) Alert.alert(t('error'), e.message); }
-                }}>
+                <TouchableOpacity style={{ backgroundColor: '#D4A017', borderRadius: 10, padding: 14, alignItems: 'center', marginTop: 10 }} onPress={() => navigation.navigate('Subscription')}>
+                  {/* Build 36: eliminado purchaseProduct deprecada (sin offerToken obligatorio en Billing v8+).
+                      Punto unico de compra = SubscriptionScreen. */}
                   <Text style={{ fontSize: 14, fontWeight: '700', color: '#000' }}>{eliteBilling === 'monthly' ? t('quiero_elite') : t('elite_anual_btn')}</Text>
                 </TouchableOpacity>
               </View>
