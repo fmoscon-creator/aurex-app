@@ -25,7 +25,7 @@
 | 🍎 **iOS Build 25 (futuro)** | ⏸ NO compilado — pre-requisitos sin cumplir | Paridad Android 1.0.33 + IAP funcionando + marca aprobada en Build 17 | IAP funcionando en Android + marca aprobada |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (20 instalaciones, 177 países) | Mantener mientras se prepara Build 36 | — |
 | 🤖 **Android Build 35 Internal Testing** | 🟡 Subido hace ~23h, FALLÓ test IAP | No promover. Build 36 va a superponer | Respuesta RC #76809 |
-| 🚨 **IAP / RevenueCat ticket #76809** | 🚨 P0 abierto, ESPERANDO respuesta RC | Esperar RC o arrancar Plan B-1 si >72h | Respuesta RC support |
+| 🎉 **IAP / RevenueCat ticket #76809** | ✅ **RESUELTO 18-may 17:30 AR con Build 36 (rebuild limpio + 4 fixes)** | Cancelar suscripción ELITE test + promover Build 36 a Producción + cerrar ticket RC | — |
 | 🎨 **Landing v3 aurex.live** | 🟡 PENDIENTE OK visual Fernando + Escritorio | Fernando abre 2 PNG + decide | Doble OK |
 | 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing v3 live | Landing v3 deploy |
 | 🌐 **PWA aurex.live** | 🟢 Live, fase 0 reorg ejecutada | Será reemplazada por landing v3 al deploy | — |
@@ -212,7 +212,34 @@ Bug que bloqueaba registro de usuarios nuevos Android (onboarding slide 4 cablea
 
 ---
 
-## 4. IAP / REVENUECAT — Bug P0 ticket #76809
+## 4. IAP / REVENUECAT — ✅ BUG RESUELTO 18-may con Build 36
+
+### 4.0 🎉 RESOLUCIÓN CONFIRMADA — 18-may-2026 17:30 AR
+
+**Resultado de prueba real en Samsung con fmoscon@gmail.com:**
+- App AUREX v1.0.36 (Internal Testing) → SubscriptionScreen → tap "QUIERO ELITE" mensual
+- Google Play abrió sheet de compra con "TARJETA DE PRUEBA" → SUSCRIBIRSE
+- **Google Play: "SE REALIZÓ CON ÉXITO EL PAGO"** + tilde azul
+- App: pop interno **"LISTO — TU PLAN fue activado"**
+- Entitlement `elite` activo confirmado, navigation goBack OK
+
+**Causa raíz confirmada (lo que SÍ era):**
+El bug NO era de RC SDK 9.15.1 ni de Billing v7 ni de configuración Play Console (todas las hipótesis del §4.3 + §4.3.b descartadas correctamente). Era **build "sucio" / bundle JS cacheado** del Build 35. La solución fue el **rebuild limpio (`./gradlew clean` antes de bundleRelease)** combinado con:
+1. Eliminar Alert debug temporal Build 35
+2. Fix orden IAP-6 en deleteAccount
+3. Eliminar `Purchases.purchaseProduct` deprecada en PerfilScreen.js (redirect a SubscriptionScreen)
+
+Coincide al 100% con la evidencia del Issue `RevenueCat/purchases-android#3039` cerrado "Not a Bug" (resuelto con rebuild limpio sin cambios SDK).
+
+**Pendientes inmediatos post-resolución:**
+1. Cancelar suscripción ELITE de prueba en Google Play Store > Suscripciones (Fernando manual)
+2. Promover Build 36 de Internal Testing → Production (reemplaza Build 33)
+3. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución
+4. Build 36 producción → desbloquea compilación Build 25 iOS (§2.7)
+
+---
+
+## 4.HISTORIA (archivo) — Bug P0 ticket #76809
 
 ### 4.1 Síntoma reproducible
 
