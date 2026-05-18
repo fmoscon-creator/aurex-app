@@ -335,9 +335,12 @@ Todo el header rediseñado iterativamente con Fernando. Items cerrados:
 
 | # | Punto |
 |---|---|
-| 7-I | OG v2.2 medium como fondo de zonas (decisión Fernando: depende del refactor arquitectural compacta — espera) |
+| **7-I + REFACTOR ESTRUCTURAL** | **BLOQUEANTE.** Aplicar OG v2.2 fondo zonas DEPENDE de definir primero: landing NO es scroll infinito — debe verse en una única imagen y cada cosa se accede al clickear desde donde corresponda. Tema estructural conceptual madre. Memoria: `feedback_landing_compact_click_to_expand` |
 | Boldonse en títulos grandes | Re-evaluar 18-may con mente fría. Opciones: a) revertir h1/h2 a Manrope y dejar Boldonse solo h3, b) otra display, c) volver todo Manrope |
 | "9 tipos de instrumentos" b4_h2 | Fernando no entiende qué son — definir copy más claro o enumerar visualmente |
+| Auditar secciones NO-header | Header revisado 17-18 may. Falta validar visualmente: Hero, Características (13 cards), Carrusel, Motor 24 variables, Cómo Funciona, 3 Banners, Portfolio, 15 Alertas, 8 Idiomas, Benchmark, Planes, Live Quotes, Footer |
+| Footer h4 (Product/Company/Channels) | Quedan sin traducir como nombres propios — verificar con Fernando si quiere traducir |
+| Deploy producción aurex.live | Mover `landing-v3-preview/` al root del repo cuando Fernando + Escritorio dan doble OK |
 
 ### 5.6 REFACTOR MAYOR — DECISIÓN BLOQUEANTE para próxima sesión
 
