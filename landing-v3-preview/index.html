@@ -988,17 +988,69 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
-<!-- ===== BLOQUE 5.5: HOW IT WORKS ===== -->
-<section class="blk center" id="how-it-works">
+<!-- ===== BLOQUE 5.5: CÓMO FUNCIONA — contenido real "Cómo usar AUREX" del tab Perfil app ===== -->
+<section class="blk" id="how-it-works">
   <div class="wrap">
-    <div class="reveal">
+    <div class="reveal" style="text-align:center">
       <span class="section-label" data-i18n="b55_label">Onboarding</span>
-      <h2 style="text-align:center" data-i18n="b55_h2">How it works.</h2>
+      <h2 data-i18n="b55_h2">Cómo funciona AUREX.</h2>
+      <p class="sub" style="max-width:680px;margin:14px auto 0" data-i18n="how_hint">Tocá cada solapa para ver qué podés hacer adentro.</p>
     </div>
-    <div class="how-grid">
-      <div class="how-card reveal" style="text-align:left"><h3>Download AUREX</h3><p>3 seconds. iOS, Android or web. Free, no credit card required.</p></div>
-      <div class="how-card reveal reveal-delay-1" style="text-align:left"><h3>Pick your assets</h3><p>Add any of the 350 assets to your portfolio or watchlist. 9 instrument types, 7 global markets.</p></div>
-      <div class="how-card reveal reveal-delay-2" style="text-align:left"><h3>Get signals in real time</h3><p>The AI engine analyzes 24 variables and delivers signals with statistical probability, in 8 languages.</p></div>
+    <div class="how-accordion">
+      <details class="how-tab" open>
+        <summary><span class="how-tab-icon">💼</span><span class="how-tab-name" data-i18n="how_tab_portafolio">Portfolio</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">➕</span><span data-i18n="cu_portafolio_1">Agregá activos: botón + arriba a la derecha del header.</span></li>
+          <li><span class="how-emoji">💰</span><span data-i18n="cu_portafolio_2">Valor total y moneda: tocá el badge $ para ciclar entre USD / USDT / BTC. PnL del período al lado.</span></li>
+          <li><span class="how-emoji">⏱️</span><span data-i18n="cu_portafolio_3">Períodos: 24h / 7d / 1m / 3m / 1y debajo del valor total.</span></li>
+          <li><span class="how-emoji">🌡️</span><span data-i18n="cu_portafolio_4">Termómetro de riesgo: ALCISTA / BAJISTA / ALTA-CONV-IA / SIN SEÑAL.</span></li>
+        </ul>
+      </details>
+      <details class="how-tab">
+        <summary><span class="how-tab-icon">📊</span><span class="how-tab-name" data-i18n="how_tab_mercados">Mercados</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">🗂️</span><span data-i18n="cu_mercados_1">Categorías: Cripto / Acciones / Stable / Futuros / Commodities / Metales / ETFs / Bonos / Forex.</span></li>
+          <li><span class="how-emoji">🌍</span><span data-i18n="cu_mercados_2">Países (en Acciones): USA / Argentina / Brasil / Europa / España / Japón / China.</span></li>
+          <li><span class="how-emoji">⏱️</span><span data-i18n="cu_mercados_3">Temporalidades por activo: 24h / 7d / 1m / 3m / 1a.</span></li>
+          <li><span class="how-emoji">🔍</span><span data-i18n="cu_mercados_4">Buscar: lupa arriba a la derecha.</span></li>
+        </ul>
+      </details>
+      <details class="how-tab">
+        <summary><span class="how-tab-icon">👀</span><span class="how-tab-name" data-i18n="how_tab_watchlist">Watchlist</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">➕</span><span data-i18n="cu_watchlist_1">Agregar activos: tocá el + arriba a la derecha del header.</span></li>
+          <li><span class="how-emoji">⭐</span><span data-i18n="cu_watchlist_2">Crear varias listas: tocá el ícono Watchlist arriba a la derecha. Renombrar, color y agregar nuevas.</span></li>
+          <li><span class="how-emoji">➕</span><span data-i18n="cu_watchlist_3">Agregar lista nueva: botón "+ Nueva lista".</span></li>
+          <li><span class="how-emoji">⚖️</span><span data-i18n="cu_watchlist_4">Comparador: seleccioná 2 o 3 activos y tocá "Comparar".</span></li>
+        </ul>
+      </details>
+      <details class="how-tab">
+        <summary><span class="how-tab-icon">🤖</span><span class="how-tab-name" data-i18n="how_tab_ia">Señales IA</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">📋</span><span data-i18n="cu_ia_1">Lista de señales activas: TODAS las del motor IA al toque.</span></li>
+          <li><span class="how-emoji">🔀</span><span data-i18n="cu_ia_2">Filtros: por tipo, por convicción IA (%), por categoría de activo.</span></li>
+          <li><span class="how-emoji">💼</span><span data-i18n="cu_ia_3">Vista Portfolio: solo las señales sobre activos que ya tenés.</span></li>
+          <li><span class="how-emoji">👆</span><span data-i18n="cu_ia_4">Tocá cualquier señal: explicación detallada con las 24 variables que la generaron.</span></li>
+        </ul>
+      </details>
+      <details class="how-tab">
+        <summary><span class="how-tab-icon">🔔</span><span class="how-tab-name" data-i18n="how_tab_alertas">Alertas</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">📡</span><span data-i18n="cu_alertas_1">15 tipos en total: IA / Pulse / Precio / Eventos macro y geopolíticos.</span></li>
+          <li><span class="how-emoji">🗂️</span><span data-i18n="cu_alertas_2">Activar/desactivar por tipo: switches arriba.</span></li>
+          <li><span class="how-emoji">🤖</span><span data-i18n="cu_alertas_3">Alertas IA: cambio de señal, alta convicción 85-88%, umbral propio, señal en Portfolio.</span></li>
+          <li><span class="how-emoji">💓</span><span data-i18n="cu_alertas_4">Alertas Pulse: cambio de zona de mercado, termómetro global, categoría.</span></li>
+        </ul>
+      </details>
+      <details class="how-tab">
+        <summary><span class="how-tab-icon">👤</span><span class="how-tab-name" data-i18n="how_tab_perfil">Perfil</span><span class="how-tab-arrow">▾</span></summary>
+        <ul class="how-tab-items">
+          <li><span class="how-emoji">🌙</span><span data-i18n="cu_perfil_1">Modo claro/oscuro: cambia el tema visual de toda la app.</span></li>
+          <li><span class="how-emoji">🌐</span><span data-i18n="cu_perfil_2">Idioma: 8 disponibles (EN/ES/PT/ZH/FR/IT/HI/AR).</span></li>
+          <li><span class="how-emoji">🔒</span><span data-i18n="cu_perfil_3">Cambiar contraseña.</span></li>
+          <li><span class="how-emoji">📩</span><span data-i18n="cu_perfil_4">Contacto: enviá un mensaje al equipo AUREX.</span></li>
+        </ul>
+      </details>
     </div>
   </div>
 </section>
