@@ -296,12 +296,19 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .b3-bullets li{padding:18px 24px;background:var(--bg-soft);border-left:3px solid var(--gold);border-radius:8px;font-size:15.5px;color:var(--text);list-style:none}
 
 /* === B4 coverage grid (counter) === */
-.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-top:36px;max-width:1100px;margin-left:auto;margin-right:auto}
-.cov-cell{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:28px 18px;text-align:center;transition:all .3s}
-.cov-cell:hover{border-color:var(--gold-bright);transform:translateY(-3px);box-shadow:0 12px 30px rgba(212,160,23,0.1)}
-.cov-num{font-family:var(--mono);font-size:42px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px;letter-spacing:-1px}
-.cov-lbl{font-size:13px;color:var(--text-sec);letter-spacing:.5px;text-transform:uppercase;font-weight:500}
-.b4-sub{font-size:13.5px;color:var(--text-dim);text-align:center;margin-top:30px;max-width:680px;margin-left:auto;margin-right:auto;font-style:italic}
+.cov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:36px;max-width:1100px;margin-left:auto;margin-right:auto}
+@media(max-width:880px){.cov-grid{grid-template-columns:repeat(2,1fr);gap:10px}}
+@media(max-width:480px){.cov-grid{grid-template-columns:repeat(2,1fr);gap:8px}}
+.cov-cell{background:linear-gradient(180deg,rgba(212,160,23,0.06) 0%,var(--bg-soft) 100%);border:1.5px solid rgba(212,160,23,0.4);border-radius:14px;padding:22px 14px 18px;text-align:center;transition:all .25s;position:relative;overflow:hidden}
+.cov-cell::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);opacity:.6}
+.cov-cell:hover{border-color:var(--gold-bright);transform:translateY(-4px);box-shadow:0 16px 36px rgba(212,160,23,0.18);background:linear-gradient(180deg,rgba(212,160,23,0.12) 0%,var(--bg-soft) 100%)}
+.cov-icon{font-size:22px;line-height:1;margin-bottom:8px}
+.cov-num{font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:36px;font-weight:700;color:var(--gold-bright);line-height:1;margin-bottom:6px;letter-spacing:-1px}
+.cov-lbl{font-size:12px;color:var(--text);letter-spacing:1px;text-transform:uppercase;font-weight:700;font-family:'IBM Plex Mono','JetBrains Mono',monospace}
+.cov-foot{margin-top:24px;display:flex;flex-direction:column;align-items:center;gap:12px}
+.cov-foot-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.4);border-radius:99px;font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:11.5px;font-weight:700;color:var(--gold-bright);letter-spacing:.5px;text-transform:uppercase}
+.cov-foot-pill-emoji{font-size:14px;line-height:1}
+.b4-sub{font-size:13.5px;color:var(--text-dim);text-align:center;margin-top:18px;max-width:680px;margin-left:auto;margin-right:auto;font-style:italic;line-height:1.5}
 
 /* === B4.5 carousel === */
 .carousel{display:flex;gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;padding:30px 0 40px;scroll-behavior:smooth;-webkit-overflow-scrolling:touch}
@@ -984,17 +991,21 @@ html{scroll-behavior:smooth}
       <h2 data-i18n="b4_h2">350 assets. 9 instrument types. One terminal.</h2>
     </div>
     <div class="cov-grid">
-      <div class="cov-cell reveal"><div class="cov-num" data-count="198">0</div><div class="cov-lbl">Stocks</div></div>
-      <div class="cov-cell reveal reveal-delay-1"><div class="cov-num" data-count="50">0</div><div class="cov-lbl">Crypto</div></div>
-      <div class="cov-cell reveal reveal-delay-2"><div class="cov-num" data-count="40">0</div><div class="cov-lbl">ETFs</div></div>
-      <div class="cov-cell reveal reveal-delay-3"><div class="cov-num" data-count="20">0</div><div class="cov-lbl">Futures</div></div>
-      <div class="cov-cell reveal"><div class="cov-num" data-count="14">0</div><div class="cov-lbl">Bonds</div></div>
-      <div class="cov-cell reveal reveal-delay-1"><div class="cov-num" data-count="12">0</div><div class="cov-lbl">Commodities</div></div>
-      <div class="cov-cell reveal reveal-delay-2"><div class="cov-num" data-count="8">0</div><div class="cov-lbl">Metals</div></div>
-      <div class="cov-cell reveal reveal-delay-3"><div class="cov-num" data-count="5">0</div><div class="cov-lbl">Forex</div></div>
-      <div class="cov-cell reveal"><div class="cov-num" data-count="3">0</div><div class="cov-lbl">Stablecoins</div></div>
+      <div class="cov-cell reveal"><div class="cov-icon">📈</div><div class="cov-num" data-count="198">0</div><div class="cov-lbl" data-i18n="b4_stocks">Acciones</div></div>
+      <div class="cov-cell reveal reveal-delay-1"><div class="cov-icon">🪙</div><div class="cov-num" data-count="50">0</div><div class="cov-lbl" data-i18n="b4_crypto">Cripto</div></div>
+      <div class="cov-cell reveal reveal-delay-2"><div class="cov-icon">📊</div><div class="cov-num" data-count="40">0</div><div class="cov-lbl" data-i18n="b4_etfs">ETFs</div></div>
+      <div class="cov-cell reveal reveal-delay-3"><div class="cov-icon">⚡</div><div class="cov-num" data-count="20">0</div><div class="cov-lbl" data-i18n="b4_futures">Futuros</div></div>
+      <div class="cov-cell reveal"><div class="cov-icon">📜</div><div class="cov-num" data-count="14">0</div><div class="cov-lbl" data-i18n="b4_bonds">Bonos</div></div>
+      <div class="cov-cell reveal reveal-delay-1"><div class="cov-icon">🌾</div><div class="cov-num" data-count="12">0</div><div class="cov-lbl" data-i18n="b4_commodities">Materias primas</div></div>
+      <div class="cov-cell reveal reveal-delay-2"><div class="cov-icon">🥇</div><div class="cov-num" data-count="8">0</div><div class="cov-lbl" data-i18n="b4_metals">Metales</div></div>
+      <div class="cov-cell reveal reveal-delay-3"><div class="cov-icon">💱</div><div class="cov-num" data-count="5">0</div><div class="cov-lbl" data-i18n="b4_forex">Forex</div></div>
+      <div class="cov-cell reveal"><div class="cov-icon">💵</div><div class="cov-num" data-count="3">0</div><div class="cov-lbl" data-i18n="b4_stablecoins">Stablecoins</div></div>
     </div>
-    <p class="b4-sub" data-i18n="b4_sub">375 assets visible in real time in the Markets tab. More added with every release — 350 is the current selection, not the ceiling.</p>
+    <div class="cov-foot">
+      <span class="cov-foot-pill"><span class="cov-foot-pill-emoji">🤖</span><span data-i18n="b4_pill_ai">Señales IA con % de probabilidad</span></span>
+      <span class="cov-foot-pill"><span class="cov-foot-pill-emoji">🔔</span><span data-i18n="b4_pill_alerts">Alertas push y por Telegram</span></span>
+    </div>
+    <p class="b4-sub" data-i18n="b4_sub">Sobre TODOS estos activos: señales IA explicadas con 24 variables y alertas push + Telegram. 350 es la selección actual — sumamos más activos en cada nueva versión.</p>
   </div>
 </section>
 
