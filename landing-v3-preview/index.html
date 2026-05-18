@@ -569,7 +569,9 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 .nl-close:hover{color:#fff;border-color:var(--gold-bright);background:rgba(212,160,23,.35);transform:rotate(90deg)}
 .nl-icon-wrap{display:flex;justify-content:center;margin-bottom:18px}
 .nl-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg,rgba(212,160,23,.18) 0%,rgba(212,160,23,.06) 100%);border:1px solid rgba(212,160,23,.4);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(212,160,23,.15)}
-.nl-modal h3{font-family:var(--display);font-size:22px;font-weight:400;color:var(--gold-bright);margin-bottom:6px;letter-spacing:.5px;text-align:center;line-height:1.2}
+.nl-modal h3{font-family:var(--display);font-size:20px;font-weight:400;color:var(--gold-bright);margin-bottom:6px;letter-spacing:.5px;text-align:center;line-height:1.2}
+.nl-title-row{display:flex;align-items:center;justify-content:center;gap:12px}
+.nl-title-logo{width:32px;height:32px;flex-shrink:0}
 .nl-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);margin:0 auto 16px;border-radius:2px}
 .nl-modal p.nl-sub{font-size:13.5px;color:var(--text);margin-bottom:24px;line-height:1.55;text-align:center;font-weight:400;opacity:.85}
 .nl-form{display:flex;flex-direction:column;gap:12px}
@@ -585,7 +587,7 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 .nl-form button:hover .nl-btn-arrow{transform:translateX(3px)}
 .nl-footer{margin-top:18px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:11.5px;color:var(--text-sec);font-family:var(--mono);letter-spacing:.3px}
 .nl-check{display:inline-flex;width:16px;height:16px;border-radius:50%;background:rgba(0,200,150,.18);border:1px solid var(--green);color:var(--green);align-items:center;justify-content:center;font-size:10px;font-weight:700}
-.nl-brand{margin-top:14px;text-align:center;font-family:var(--mono);font-size:10px;color:var(--text-dim);letter-spacing:1.5px;text-transform:uppercase;opacity:.6}
+.nl-brand{margin-top:14px;text-align:center;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);letter-spacing:1.5px;text-transform:uppercase;opacity:.95;font-weight:700}
 .nl-msg{padding:11px 14px;border-radius:9px;font-size:13px;margin-top:4px;display:none}
 .nl-msg.active{display:block}
 .nl-msg.success{background:rgba(0,200,150,.1);border:1px solid var(--green);color:var(--green)}
@@ -1622,7 +1624,7 @@ html{scroll-behavior:smooth}
     <div class="nl-icon-wrap">
       <div class="nl-icon">✉️</div>
     </div>
-    <h3 id="nl-title" data-i18n="nl_title">Get early access</h3>
+    <h3 id="nl-title" class="nl-title-row"><img src="assets/oficiales/AUREX_logo_oficial.png" alt="AUREX" class="nl-title-logo"><span data-i18n="nl_title">NEWSLETTER AUREX</span></h3>
     <div class="nl-divider"></div>
     <p class="nl-sub" data-i18n="nl_sub">Monthly market reports + new feature drops, straight from the AUREX team.</p>
     <form class="nl-form" id="nl-form" action="https://formspree.io/f/xpqnajgp" method="POST">
