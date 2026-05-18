@@ -280,13 +280,33 @@ Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nue
 
 ### 4.6 Plan B si RC no responde o no resuelve
 
-| Plan | Tiempo | Descripción |
-|---|---|---|
-| **B-1** | 2-3 días | Webhook directo Google Play (bypass RC parcial) |
-| **B-2** | 5-7 días | Reemplazo total RC con Stripe + native IAP |
-| **B-3** | 1 día | Validación manual via Google Play API (temporal) |
+| Plan | Tiempo | Descripción | Estado |
+|---|---|---|---|
+| **B-1** | 2-3 días | Webhook directo Google Play (bypass RC parcial). Backend primero: endpoint `/api/google-play/verify-purchase` + Pub/Sub listener + RTDN Play Console. Frontend después: `useGoogleBilling.js` reemplaza `Purchases.purchasePackage()` con BillingClient nativo. RC queda solo para iOS futuro. | ✅ Disponible |
+| **B-2** | ~~5-7 días~~ | ~~Reemplazo total RC con Stripe + native IAP.~~ | 🚨 **MUERTO definitivamente** — ver §4.6.b |
+| **B-3** | 1 día | Validación manual via Google Play API (temporal). Solo activar si aparece un usuario real urgente que pagó. | ✅ Disponible (no construir proactivamente) |
+| **B-5 (NUEVO)** | 1h investigación + 30min ejecutar | Downgrade selectivo `react-native-purchases` 9.15.1 → 9.14.x o 9.13.x (antes del Issue #3039). Solo bump package.json + pod install. Si funciona = fix más rápido. | 🟡 A investigar (changelog GitHub purchases-android) |
 
-**Decision matrix:** 0-3 días sin respuesta RC = esperar · 3-7 días = empezar B-1 · 7-14 días = ejecutar B-2 · B-3 solo puente.
+**Decision matrix actualizada (18-may 16:30 AR, Escritorio):**
+- **HOY**: arrancar Tier 1 (§4.5) en paralelo con investigación B-5 (downgrade SDK)
+- **0-72h sin respuesta RC**: esperar (Tier 1 + B-5 corriendo)
+- **72h+ sin respuesta RC**: arrancar **B-1** (backend primero, frontend después)
+- **B-3 solo** si aparece usuario real urgente que pagó y necesita activación manual
+
+### 4.6.b 🚨 Stripe + Lemon Squeezy DESCARTADOS DEFINITIVAMENTE — no hay procesador web viable
+
+**Stripe**: NO acepta registro desde Argentina sin LLC. Fernando opera con cuenta personal Santander Argentina, **NO va a crear LLC** (confirmado 18-may). Stripe queda **fuera de toda evaluación futura** como procesador web.
+
+**Lemon Squeezy**: ya fue probado en abril 2026 (commit `e47b5f8` 8-abr-2026). **Rechazó la cuenta AUREX por actividad cripto prohibida** ("crypto prohibited" según mensaje del commit). LS queda **fuera de toda evaluación futura**.
+
+**Consecuencia**: AUREX tiene UNA SOLA arquitectura de pagos viable hoy:
+**Google Play IAP (Android) + Apple IAP (iOS) + RevenueCat como capa de gestión**.
+
+No hay alternativa web viable. Plan B-2 (Stripe + native IAP) está muerto antes de arrancar. **Código NO debe volver a mencionarlo como contingencia.**
+
+### 4.6.c Dato adicional para Mail 3 RC: "customer not found" en RC Dashboard
+
+Según `CONSOLIDADO_IAP_v2_16MAY.md` §8: el customer (UUID Supabase) aparece como **"customer not found"** en RC Dashboard a pesar de que SDK devuelve 200 OK en `GET /v1/subscribers/UUID`. Sugiere que **RC tiene al usuario marcado como not found internamente**, lo que puede causar que `purchasePackage()` falle aunque `getOfferings()` funcione (ofertas vienen de config del proyecto, no del customer específico). **Incluir esto en Mail 3 a Alejandra** como dato adicional vinculable a Issue #3039.
 
 ### 4.7 Datos operativos RC
 
