@@ -183,18 +183,43 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .how-emoji{font-size:16px;flex-shrink:0;margin-top:1px;line-height:1.4}
 
 /* === BLOQUE 2.7 CARACTERÍSTICAS — grid 3x3 con capturas === */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
-@media(max-width:980px){.feat-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
-@media(max-width:600px){.feat-grid{grid-template-columns:1fr;gap:16px}}
-.feat-card{padding:0;background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;transition:border-color .25s,transform .25s,background .25s;overflow:hidden;display:flex;flex-direction:column}
-.feat-card:hover{border-color:rgba(212,160,23,0.55);transform:translateY(-3px);background:rgba(212,160,23,0.03)}
-.feat-img-wrap{aspect-ratio:16/10;background:#0A0500;border-bottom:1px solid var(--border);overflow:hidden;display:flex;align-items:center;justify-content:center;padding:14px;position:relative}
-.feat-img-wrap img{width:100%;height:100%;object-fit:contain;border-radius:8px;transition:transform .35s ease}
-.feat-card:hover .feat-img-wrap img{transform:scale(1.04)}
-.feat-body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
-.feat-icon{font-size:26px;margin-bottom:10px;line-height:1}
-.feat-card h3{font-family:var(--display);font-size:16px;font-weight:400;color:var(--gold-bright);margin-bottom:10px;letter-spacing:.3px;line-height:1.3}
-.feat-card p{font-size:13.5px;color:var(--text-sec);line-height:1.5}
+/* === GRID MINI #features (refactor 18-may: cards mini + modal click-to-expand) === */
+.feat-grid-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
+@media(max-width:880px){.feat-grid-mini{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}}
+@media(max-width:480px){.feat-grid-mini{grid-template-columns:1fr;gap:8px}}
+.feat-mini{position:relative;text-align:left;padding:18px 18px 20px;background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.5) 100%);border:1px solid rgba(212,160,23,0.32);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;display:flex;flex-direction:column;gap:8px;transition:all .25s;overflow:hidden}
+.feat-mini::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);opacity:.4;transition:opacity .25s}
+.feat-mini:hover{border-color:var(--gold-bright);transform:translateY(-3px);background:linear-gradient(180deg,rgba(212,160,23,0.12) 0%,rgba(8,4,0,0.65) 100%);box-shadow:0 12px 30px rgba(212,160,23,0.18)}
+.feat-mini:hover::before{opacity:.9}
+.feat-mini:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+.feat-mini-icon{font-size:24px;line-height:1;display:block}
+.feat-mini-title{font-family:var(--display);font-size:14px;font-weight:400;color:var(--gold-bright);margin:0;letter-spacing:.3px;line-height:1.25}
+.feat-mini-short{font-family:var(--mono);font-size:11px;color:var(--text-sec);margin:0;line-height:1.4;letter-spacing:.2px;flex:1}
+.feat-mini-chevron{position:absolute;bottom:12px;right:14px;font-size:18px;color:var(--gold);opacity:.6;transition:all .2s;line-height:1}
+.feat-mini:hover .feat-mini-chevron{opacity:1;transform:translateY(2px)}
+
+/* === MODAL feature detail === */
+.feat-modal-overlay{position:fixed;inset:0;background:rgba(4,2,0,0.85);backdrop-filter:blur(10px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;animation:featFade .25s ease}
+.feat-modal-overlay.active{display:flex}
+@keyframes featFade{from{opacity:0}to{opacity:1}}
+.feat-modal{position:relative;background:linear-gradient(180deg,rgba(16,10,2,0.98) 0%,rgba(8,4,0,1) 100%);border:1.5px solid rgba(212,160,23,0.55);border-radius:20px;max-width:600px;width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 90px rgba(0,0,0,0.75),0 0 80px rgba(212,160,23,0.15);animation:featSlide .3s cubic-bezier(.2,.8,.3,1)}
+@keyframes featSlide{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.feat-modal-close{position:absolute;top:14px;right:14px;background:rgba(212,160,23,0.15);border:1.5px solid rgba(212,160,23,0.5);color:var(--gold-bright);font-size:18px;font-weight:700;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:5;line-height:1}
+.feat-modal-close:hover{background:rgba(212,160,23,0.35);transform:rotate(90deg);color:#fff}
+.feat-modal-close:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+.feat-modal-title{font-family:var(--display);font-size:20px;font-weight:400;color:var(--gold-bright);text-align:center;padding:28px 56px 0;margin:0;letter-spacing:.4px;line-height:1.2}
+.feat-modal-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);margin:14px auto 18px;border-radius:2px}
+.feat-modal-img-wrap{padding:0 20px;display:flex;justify-content:center;align-items:center;flex-shrink:0}
+.feat-modal-img{max-width:100%;max-height:42vh;object-fit:contain;border-radius:10px;border:1px solid rgba(212,160,23,0.25)}
+.feat-modal-desc{padding:20px 26px 28px;font-size:14px;color:var(--text);line-height:1.55;text-align:left;margin:0;overflow-y:auto;flex:1;font-weight:400;opacity:.9}
+@media(max-width:600px){
+  .feat-modal-overlay{padding:0;align-items:flex-end}
+  .feat-modal{max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;border-bottom:none;animation:featSlideUp .3s cubic-bezier(.2,.8,.3,1)}
+  @keyframes featSlideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .feat-modal-title{padding:24px 56px 0;font-size:18px}
+  .feat-modal-img{max-height:36vh}
+  .feat-modal-desc{padding:18px 22px 28px;font-size:13.5px}
+}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 @media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px;text-align:center}}
 .hero-text h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,60px);line-height:1.1;letter-spacing:0;color:var(--gold);margin-bottom:24px}
@@ -837,7 +862,7 @@ html{scroll-behavior:smooth}
   </div>
 </section>
 
-<!-- ===== BLOQUE 2.7: CARACTERÍSTICAS — todo lo que AUREX hace ===== -->
+<!-- ===== BLOQUE 2.7: CARACTERÍSTICAS — grid mini compacto + modal click-to-expand ===== -->
 <section class="blk" id="features">
   <div class="wrap">
     <div class="reveal" style="text-align:center">
@@ -845,115 +870,101 @@ html{scroll-behavior:smooth}
       <h2 data-i18n="b27_h2">Todo lo que AUREX hace, en un vistazo.</h2>
       <p class="sub" style="max-width:680px;margin:0 auto" data-i18n="b27_sub">Cada característica diseñada para que tomes decisiones informadas sobre tu portfolio. Sin ejecutar operaciones. Sin administrar tu dinero. Solo la foto completa del mercado, siempre.</p>
     </div>
-    <div class="feat-grid">
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/markets_en.jpg" alt="350 activos en Mercados" data-i18n-alt="alt_markets"></div>
-        <div class="feat-body">
-          <div class="feat-icon">🌍</div>
-          <h3 data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3>
-          <p data-i18n="b27_f1_d">Cripto, acciones, ETFs, futuros, materias primas, bonos, forex y stablecoins. USA, Argentina, Brasil, España, Europa, Japón y China.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/ai_signals_en.jpg" alt="Motor IA con 24 variables" data-i18n-alt="alt_ai_signals"></div>
-        <div class="feat-body">
-          <div class="feat-icon">🤖</div>
-          <h3 data-i18n="b27_f2_t">Motor IA con 24 variables</h3>
-          <p data-i18n="b27_f2_d">Cada señal explicada con sus razones: tendencia 24h, RSI, volumen, volatilidad, correlaciones BTC/SPY/Oro/Petróleo, datos FED, MACD y soporte/resistencia.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/pulse_modal_en.jpg" alt="AUREX Pulse con 14 variables macro" data-i18n-alt="alt_pulse"></div>
-        <div class="feat-body">
-          <div class="feat-icon">📊</div>
-          <h3 data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3>
-          <p data-i18n="b27_f3_d">El contexto global en tiempo real: BTC + dominancia, ETH, VIX, S&amp;P500, 4 futuros US, oro, plata, petróleo, cobre, datos FED y geopolítica GDELT.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/portfolio_en.jpg" alt="Portfolio con termómetro IA" data-i18n-alt="alt_portfolio"></div>
-        <div class="feat-body">
-          <div class="feat-icon">💼</div>
-          <h3 data-i18n="b27_f4_t">Portfolio con termómetro IA</h3>
-          <p data-i18n="b27_f4_d">Tracking de tus tenencias con score de riesgo IA en tiempo real, dots de señal por activo, PnL en 5 períodos y sync en la nube entre dispositivos.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/alerts_en.jpg" alt="15 tipos de alerta push y Telegram" data-i18n-alt="alt_alerts"></div>
-        <div class="feat-body">
-          <div class="feat-icon">🔔</div>
-          <h3 data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3>
-          <p data-i18n="b27_f5_d">Alertas IA (señal, alta convicción, umbral propio), Pulse (zona de mercado, termómetro), precio (objetivo, máximo/mínimo 52 sem) y eventos (FED, CPI, earnings, GDELT).</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/watchlist_en.jpg" alt="Watchlists ilimitadas" data-i18n-alt="alt_watchlists"></div>
-        <div class="feat-body">
-          <div class="feat-icon">👀</div>
-          <h3 data-i18n="b27_f6_t">Watchlists ilimitadas</h3>
-          <p data-i18n="b27_f6_d">Creá watchlists temáticas (cripto, US tech, defensa, ESG, etc) y compará al instante. Cada activo con su señal IA actualizada.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/comparator_en.jpg" alt="Comparador 3 activos lado a lado" data-i18n-alt="alt_comparator"></div>
-        <div class="feat-body">
-          <div class="feat-icon">⚡</div>
-          <h3 data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3>
-          <p data-i18n="b27_f7_d">10 variables IA enfrentadas al mismo tiempo. Probabilidad estadística, RSI, MACD, correlaciones y más. Decisión cruzada en segundos.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/language_modal.jpg" alt="8 idiomas y multi-moneda" data-i18n-alt="alt_languages"></div>
-        <div class="feat-body">
-          <div class="feat-icon">🌐</div>
-          <h3 data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3>
-          <p data-i18n="b27_f8_d">Español, inglés, portugués, chino, francés, italiano, hindi y árabe. Conversor de monedas integrado. 4.200 millones de hablantes cubiertos.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/markets_stocks_en.jpg" alt="iOS Android Web PWA"></div>
-        <div class="feat-body">
-          <div class="feat-icon">📱</div>
-          <h3 data-i18n="b27_f9_t">iOS · Android · Web (PWA)</h3>
-          <p data-i18n="b27_f9_d">Misma experiencia en los 3. Sin instalación obligada en navegador. Misma cuenta sincronizada. Funciona en cualquier dispositivo.</p>
-        </div>
-      </div>
-      <!-- 4 cards más absorbidas del bloque "Más funciones" 8.5 -->
-      <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/share_signal_en.jpg" alt="Compartir señal" data-i18n-alt="alt_share_signal"></div>
-        <div class="feat-body">
-          <div class="feat-icon">📤</div>
-          <h3 data-i18n="b27_f10_t">Compartir señales</h3>
-          <p data-i18n="b27_f10_d">Compartí cualquier señal IA por Telegram, WhatsApp o email con un solo toque. Link directo que abre el detalle completo en AUREX.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/new_list_en.jpg" alt="Crear listas personalizadas" data-i18n-alt="alt_new_list"></div>
-        <div class="feat-body">
-          <div class="feat-icon">📋</div>
-          <h3 data-i18n="b27_f11_t">Crear listas personalizadas</h3>
-          <p data-i18n="b27_f11_d">Armá watchlists con nombre y color propios. Mezclá cripto + acciones + commodities como quieras. Ordenadas por señal IA o por precio.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/price_alert_en.jpg" alt="Agregar alertas en segundos" data-i18n-alt="alt_price_alert"></div>
-        <div class="feat-body">
-          <div class="feat-icon">⏰</div>
-          <h3 data-i18n="b27_f12_t">Agregar alertas en segundos</h3>
-          <p data-i18n="b27_f12_d">Alertas de precio configurables: por encima de X, por debajo de Y, o cambio de %. Recibís push instantáneo en mobile cuando se cumple.</p>
-        </div>
-      </div>
-      <div class="feat-card reveal reveal-delay-3">
-        <div class="feat-img-wrap"><img src="assets/captures/add_asset_en.jpg" alt="Agregar activos al portfolio" data-i18n-alt="alt_add_asset"></div>
-        <div class="feat-body">
-          <div class="feat-icon">➕</div>
-          <h3 data-i18n="b27_f13_t">Agregar activos al portfolio</h3>
-          <p data-i18n="b27_f13_d">Sumá cualquiera de los 350 activos a tu portfolio en 3 toques. Cantidad, precio de entrada, moneda. PnL automático en 5 períodos.</p>
-        </div>
-      </div>
+    <div class="feat-grid-mini">
+      <button type="button" class="feat-mini reveal" data-feat-id="f1"><span class="feat-mini-icon" aria-hidden="true">🌍</span><h3 class="feat-mini-title" data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3><p class="feat-mini-short" data-i18n="b27_f1_short">350 activos · 9 instrumentos</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f2"><span class="feat-mini-icon" aria-hidden="true">🤖</span><h3 class="feat-mini-title" data-i18n="b27_f2_t">Motor IA con 24 variables</h3><p class="feat-mini-short" data-i18n="b27_f2_short">24 variables · cada señal explicada</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f3"><span class="feat-mini-icon" aria-hidden="true">📊</span><h3 class="feat-mini-title" data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3><p class="feat-mini-short" data-i18n="b27_f3_short">14 variables macro · contexto global</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f4"><span class="feat-mini-icon" aria-hidden="true">💼</span><h3 class="feat-mini-title" data-i18n="b27_f4_t">Portfolio con termómetro IA</h3><p class="feat-mini-short" data-i18n="b27_f4_short">Termómetro IA · PnL multi-período</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f5"><span class="feat-mini-icon" aria-hidden="true">🔔</span><h3 class="feat-mini-title" data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3><p class="feat-mini-short" data-i18n="b27_f5_short">Push y Telegram · 15 tipos</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f6"><span class="feat-mini-icon" aria-hidden="true">👀</span><h3 class="feat-mini-title" data-i18n="b27_f6_t">Watchlists ilimitadas</h3><p class="feat-mini-short" data-i18n="b27_f6_short">Watchlists temáticas · comparación instantánea</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f7"><span class="feat-mini-icon" aria-hidden="true">⚡</span><h3 class="feat-mini-title" data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3><p class="feat-mini-short" data-i18n="b27_f7_short">10 variables · 3 activos enfrentados</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f8"><span class="feat-mini-icon" aria-hidden="true">🌐</span><h3 class="feat-mini-title" data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3><p class="feat-mini-short" data-i18n="b27_f8_short">EN/ES/PT/ZH/FR/IT/HI/AR · multi-moneda</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f9"><span class="feat-mini-icon" aria-hidden="true">📱</span><h3 class="feat-mini-title" data-i18n="b27_f9_t">iOS · Android · Web (PWA)</h3><p class="feat-mini-short" data-i18n="b27_f9_short">Misma cuenta · 3 plataformas</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f10"><span class="feat-mini-icon" aria-hidden="true">📤</span><h3 class="feat-mini-title" data-i18n="b27_f10_t">Compartir señales</h3><p class="feat-mini-short" data-i18n="b27_f10_short">Telegram, WhatsApp, Email · 1 toque</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f11"><span class="feat-mini-icon" aria-hidden="true">📋</span><h3 class="feat-mini-title" data-i18n="b27_f11_t">Crear listas personalizadas</h3><p class="feat-mini-short" data-i18n="b27_f11_short">Nombre y color propios · ordenadas por IA</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f12"><span class="feat-mini-icon" aria-hidden="true">⏰</span><h3 class="feat-mini-title" data-i18n="b27_f12_t">Agregar alertas en segundos</h3><p class="feat-mini-short" data-i18n="b27_f12_short">Precio configurable · push instantáneo</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-3" data-feat-id="f13"><span class="feat-mini-icon" aria-hidden="true">➕</span><h3 class="feat-mini-title" data-i18n="b27_f13_t">Agregar activos al portfolio</h3><p class="feat-mini-short" data-i18n="b27_f13_short">3 toques · PnL automático</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
     </div>
   </div>
 </section>
+
+<!-- ===== 13 BLOQUES content para los modales de features (display:none real, SEO indexable) ===== -->
+<div class="feat-modal-source" id="feat-src-f1" style="display:none" aria-hidden="true">
+  <img src="assets/captures/markets_en.jpg" alt="350 activos en Mercados" data-i18n-alt="alt_markets">
+  <h3 data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3>
+  <p data-i18n="b27_f1_d">Cripto, acciones, ETFs, futuros, materias primas, bonos, forex y stablecoins. USA, Argentina, Brasil, España, Europa, Japón y China.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f2" style="display:none" aria-hidden="true">
+  <img src="assets/captures/ai_signals_en.jpg" alt="Motor IA con 24 variables" data-i18n-alt="alt_ai_signals">
+  <h3 data-i18n="b27_f2_t">Motor IA con 24 variables</h3>
+  <p data-i18n="b27_f2_d">Cada señal explicada con sus razones: tendencia 24h, RSI, volumen, volatilidad, correlaciones BTC/SPY/Oro/Petróleo, datos FED, MACD y soporte/resistencia.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f3" style="display:none" aria-hidden="true">
+  <img src="assets/captures/pulse_modal_en.jpg" alt="AUREX Pulse con 14 variables macro" data-i18n-alt="alt_pulse">
+  <h3 data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3>
+  <p data-i18n="b27_f3_d">El contexto global en tiempo real: BTC + dominancia, ETH, VIX, S&amp;P500, 4 futuros US, oro, plata, petróleo, cobre, datos FED y geopolítica GDELT.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f4" style="display:none" aria-hidden="true">
+  <img src="assets/captures/portfolio_en.jpg" alt="Portfolio con termómetro IA" data-i18n-alt="alt_portfolio">
+  <h3 data-i18n="b27_f4_t">Portfolio con termómetro IA</h3>
+  <p data-i18n="b27_f4_d">Tracking de tus tenencias con score de riesgo IA en tiempo real, dots de señal por activo, PnL en 5 períodos y sync en la nube entre dispositivos.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f5" style="display:none" aria-hidden="true">
+  <img src="assets/captures/alerts_en.jpg" alt="15 tipos de alerta push y Telegram" data-i18n-alt="alt_alerts">
+  <h3 data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3>
+  <p data-i18n="b27_f5_d">Alertas IA (señal, alta convicción, umbral propio), Pulse (zona de mercado, termómetro), precio (objetivo, máximo/mínimo 52 sem) y eventos (FED, CPI, earnings, GDELT).</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f6" style="display:none" aria-hidden="true">
+  <img src="assets/captures/watchlist_en.jpg" alt="Watchlists ilimitadas" data-i18n-alt="alt_watchlists">
+  <h3 data-i18n="b27_f6_t">Watchlists ilimitadas</h3>
+  <p data-i18n="b27_f6_d">Creá watchlists temáticas (cripto, US tech, defensa, ESG, etc) y compará al instante. Cada activo con su señal IA actualizada.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f7" style="display:none" aria-hidden="true">
+  <img src="assets/captures/comparator_en.jpg" alt="Comparador 3 activos lado a lado" data-i18n-alt="alt_comparator">
+  <h3 data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3>
+  <p data-i18n="b27_f7_d">10 variables IA enfrentadas al mismo tiempo. Probabilidad estadística, RSI, MACD, correlaciones y más. Decisión cruzada en segundos.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f8" style="display:none" aria-hidden="true">
+  <img src="assets/captures/language_modal.jpg" alt="8 idiomas y multi-moneda" data-i18n-alt="alt_languages">
+  <h3 data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3>
+  <p data-i18n="b27_f8_d">Español, inglés, portugués, chino, francés, italiano, hindi y árabe. Conversor de monedas integrado. 4.200 millones de hablantes cubiertos.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f9" style="display:none" aria-hidden="true">
+  <img src="assets/captures/markets_stocks_en.jpg" alt="iOS Android Web PWA">
+  <h3 data-i18n="b27_f9_t">iOS · Android · Web (PWA)</h3>
+  <p data-i18n="b27_f9_d">Misma experiencia en los 3. Sin instalación obligada en navegador. Misma cuenta sincronizada. Funciona en cualquier dispositivo.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f10" style="display:none" aria-hidden="true">
+  <img src="assets/captures/share_signal_en.jpg" alt="Compartir señal" data-i18n-alt="alt_share_signal">
+  <h3 data-i18n="b27_f10_t">Compartir señales</h3>
+  <p data-i18n="b27_f10_d">Compartí cualquier señal IA por Telegram, WhatsApp o email con un solo toque. Link directo que abre el detalle completo en AUREX.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f11" style="display:none" aria-hidden="true">
+  <img src="assets/captures/new_list_en.jpg" alt="Crear listas personalizadas" data-i18n-alt="alt_new_list">
+  <h3 data-i18n="b27_f11_t">Crear listas personalizadas</h3>
+  <p data-i18n="b27_f11_d">Armá watchlists con nombre y color propios. Mezclá cripto + acciones + commodities como quieras. Ordenadas por señal IA o por precio.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f12" style="display:none" aria-hidden="true">
+  <img src="assets/captures/price_alert_en.jpg" alt="Agregar alertas en segundos" data-i18n-alt="alt_price_alert">
+  <h3 data-i18n="b27_f12_t">Agregar alertas en segundos</h3>
+  <p data-i18n="b27_f12_d">Alertas de precio configurables: por encima de X, por debajo de Y, o cambio de %. Recibís push instantáneo en mobile cuando se cumple.</p>
+</div>
+<div class="feat-modal-source" id="feat-src-f13" style="display:none" aria-hidden="true">
+  <img src="assets/captures/add_asset_en.jpg" alt="Agregar activos al portfolio" data-i18n-alt="alt_add_asset">
+  <h3 data-i18n="b27_f13_t">Agregar activos al portfolio</h3>
+  <p data-i18n="b27_f13_d">Sumá cualquiera de los 350 activos a tu portfolio en 3 toques. Cantidad, precio de entrada, moneda. PnL automático en 5 períodos.</p>
+</div>
+
+<!-- ===== MODAL GENÉRICO de features (se rellena vía JS desde feat-modal-source) ===== -->
+<div class="feat-modal-overlay" id="feat-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="feat-modal-title">
+  <div class="feat-modal" id="feat-modal">
+    <button class="feat-modal-close" id="feat-modal-close" type="button" aria-label="Close feature detail" data-i18n-aria="feat_modal_close_aria">×</button>
+    <h3 class="feat-modal-title" id="feat-modal-title"></h3>
+    <div class="feat-modal-divider"></div>
+    <div class="feat-modal-img-wrap"><img class="feat-modal-img" id="feat-modal-img" src="" alt=""></div>
+    <p class="feat-modal-desc" id="feat-modal-desc"></p>
+  </div>
+</div>
 
 <!-- ===== BLOQUE 2.5: TICKER ===== -->
 <div class="ticker-wrap">
@@ -1967,6 +1978,84 @@ html{scroll-behavior:smooth}
       closeDrawer();
     });
   });
+
+  // === FEATURES MODAL (click-to-expand sobre 13 cards mini) ===
+  const featOverlay = document.getElementById('feat-modal-overlay');
+  const featModal = document.getElementById('feat-modal');
+  const featClose = document.getElementById('feat-modal-close');
+  const featTitle = document.getElementById('feat-modal-title');
+  const featImg = document.getElementById('feat-modal-img');
+  const featDesc = document.getElementById('feat-modal-desc');
+  let featLastFocusEl = null;
+  let featHistoryPushed = false;
+
+  function openFeatModal(featId, triggerEl){
+    const src = document.getElementById('feat-src-' + featId);
+    if(!src || !featOverlay) return;
+    const srcImg = src.querySelector('img');
+    const srcH3 = src.querySelector('h3');
+    const srcP = src.querySelector('p');
+    if(srcImg){ featImg.src = srcImg.getAttribute('src'); featImg.alt = srcImg.getAttribute('alt') || ''; }
+    if(srcH3) featTitle.textContent = srcH3.textContent;
+    if(srcP) featDesc.textContent = srcP.textContent;
+    featOverlay.classList.add('active');
+    featOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    featLastFocusEl = triggerEl || document.activeElement;
+    setTimeout(() => { featClose.focus(); }, 100);
+    // Android hardware back button: pushState para que back cierre el modal antes de navegar
+    if(!featHistoryPushed){
+      history.pushState({featModal: featId}, '', '');
+      featHistoryPushed = true;
+    }
+  }
+  function closeFeatModal(){
+    if(!featOverlay || !featOverlay.classList.contains('active')) return;
+    featOverlay.classList.remove('active');
+    featOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(featLastFocusEl){ try{ featLastFocusEl.focus(); }catch(e){} featLastFocusEl = null; }
+    if(featHistoryPushed){
+      featHistoryPushed = false;
+      // si vinimos de un pushState, popear ese estado sin disparar otra vez closeFeatModal
+      try{ history.back(); }catch(e){}
+    }
+  }
+
+  // Click en cualquier card mini
+  document.querySelectorAll('.feat-mini').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const featId = btn.getAttribute('data-feat-id');
+      if(featId) openFeatModal(featId, btn);
+    });
+  });
+  // Cerrar: botón X
+  if(featClose) featClose.addEventListener('click', closeFeatModal);
+  // Cerrar: tap overlay (fuera del modal)
+  if(featOverlay) featOverlay.addEventListener('click', (e) => { if(e.target === featOverlay) closeFeatModal(); });
+  // Cerrar: Esc desktop
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && featOverlay && featOverlay.classList.contains('active')) closeFeatModal(); });
+  // Cerrar: hardware back Android (popstate del pushState)
+  window.addEventListener('popstate', () => {
+    if(featOverlay && featOverlay.classList.contains('active')){
+      featHistoryPushed = false; // ya popeó solo, no doble back
+      featOverlay.classList.remove('active');
+      featOverlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if(featLastFocusEl){ try{ featLastFocusEl.focus(); }catch(e){} featLastFocusEl = null; }
+    }
+  });
+  // Cerrar: swipe-down mobile (touchstart→touchmove con threshold 80px en Y)
+  if(featModal){
+    let touchStartY = null;
+    featModal.addEventListener('touchstart', (e) => { touchStartY = e.touches[0].clientY; }, {passive: true});
+    featModal.addEventListener('touchmove', (e) => {
+      if(touchStartY === null) return;
+      const dy = e.touches[0].clientY - touchStartY;
+      if(dy > 80 && featModal.scrollTop === 0){ touchStartY = null; closeFeatModal(); }
+    }, {passive: true});
+    featModal.addEventListener('touchend', () => { touchStartY = null; }, {passive: true});
+  }
 
   // === NEWSLETTER MICRO-MODAL ===
   const nlOpen = document.getElementById('nl-open');
