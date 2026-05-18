@@ -2211,6 +2211,31 @@ html{scroll-behavior:smooth}
     }, {threshold:0.2});
     lqIO.observe(lqBoard);
   }
+  // === HERO MOCKUP ALIGN (desktop) — TOP+BOTTOM del iphone-frame igualados al .hero-text ===
+  function alignHeroMockup(){
+    if(window.innerWidth < 980) {
+      // Mobile: reset (CSS se encarga)
+      const fr = document.querySelector('.hero-mockup .iphone-frame');
+      if(fr){ fr.style.height = ''; fr.style.width = ''; }
+      return;
+    }
+    const text = document.querySelector('.hero-text');
+    const frame = document.querySelector('.hero-mockup .iphone-frame');
+    if(!text || !frame) return;
+    const targetH = text.offsetHeight;
+    frame.style.height = targetH + 'px';
+    frame.style.width = (targetH * 9 / 19.5) + 'px';
+  }
+  // Esperar a que carguen fonts + assets para medir bien
+  window.addEventListener('load', alignHeroMockup);
+  window.addEventListener('resize', alignHeroMockup);
+  // Re-align también después de aplicar traducciones (cambia altura del texto)
+  setTimeout(alignHeroMockup, 300);
+  setTimeout(alignHeroMockup, 1500); // post i18n.json fetch
+  // Re-align cuando cambia idioma (puede agrandar/achicar textos)
+  const langSelHero = document.getElementById('lang-sel');
+  if(langSelHero){ langSelHero.addEventListener('change', () => setTimeout(alignHeroMockup, 200)); }
+
   // === LIVE TICKER (sticky bajo header) ===
   const ltTrack = document.getElementById('live-ticker-track');
   if(ltTrack){
