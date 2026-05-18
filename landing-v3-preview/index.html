@@ -53,6 +53,7 @@
   --green:#00C896;
   --red:#FF4D6D;
   --serif:'Manrope',-apple-system,BlinkMacSystemFont,sans-serif;
+  --display:'Boldonse','Manrope',sans-serif;
   --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
 }
 html,body{background:var(--bg);color:var(--text);font-family:var(--serif);line-height:1.55;-webkit-font-smoothing:antialiased;font-weight:400;overflow-x:hidden}
@@ -169,7 +170,7 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .how-accordion{display:flex;flex-direction:column;gap:10px;max-width:780px;margin:36px auto 0}
 .how-tab{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .25s,background .25s}
 .how-tab[open]{border-color:rgba(212,160,23,0.5);background:rgba(212,160,23,0.04)}
-.how-tab summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:20px 22px;font-family:var(--serif);font-size:15px;font-weight:700;color:var(--text);transition:background .2s;user-select:none}
+.how-tab summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:20px 22px;font-family:var(--display);font-size:15px;font-weight:400;color:var(--text);transition:background .2s;user-select:none;letter-spacing:.5px}
 .how-tab summary::-webkit-details-marker{display:none}
 .how-tab summary:hover{background:rgba(212,160,23,0.06)}
 .how-tab[open] summary{color:var(--gold-bright);border-bottom:1px solid rgba(212,160,23,0.25)}
@@ -192,11 +193,11 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .feat-card:hover .feat-img-wrap img{transform:scale(1.04)}
 .feat-body{padding:20px 22px 24px;display:flex;flex-direction:column;flex:1}
 .feat-icon{font-size:26px;margin-bottom:10px;line-height:1}
-.feat-card h3{font-family:var(--serif);font-size:16px;font-weight:700;color:var(--gold-bright);margin-bottom:10px;letter-spacing:-.2px;line-height:1.25}
+.feat-card h3{font-family:var(--display);font-size:16px;font-weight:400;color:var(--gold-bright);margin-bottom:10px;letter-spacing:.3px;line-height:1.3}
 .feat-card p{font-size:13.5px;color:var(--text-sec);line-height:1.5}
 .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
 @media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px;text-align:center}}
-.hero-text h1{font-family:var(--serif);font-weight:800;font-size:clamp(38px,5.5vw,68px);line-height:1.04;letter-spacing:-1.5px;color:var(--gold);margin-bottom:24px}
+.hero-text h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,60px);line-height:1.1;letter-spacing:0;color:var(--gold);margin-bottom:24px}
 .hero-text p.sub{font-size:clamp(15px,1.4vw,18px);color:rgba(245,240,232,0.92);max-width:580px;margin-bottom:34px;line-height:1.6;font-weight:400}
 @media(max-width:980px){.hero-text p.sub{margin-left:auto;margin-right:auto}}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
@@ -285,7 +286,7 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 
 /* === SECTIONS === */
 section.blk{padding:90px 0;position:relative}
-section.blk h2{font-family:var(--serif);font-size:clamp(28px,3.4vw,40px);font-weight:700;color:var(--text);margin-bottom:18px;letter-spacing:-.6px;line-height:1.15}
+section.blk h2{font-family:var(--display);font-size:clamp(26px,3.2vw,36px);font-weight:400;color:var(--text);margin-bottom:18px;letter-spacing:.2px;line-height:1.2}
 section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-width:780px;line-height:1.6}
 .center{text-align:center}
 .center .sub{margin-left:auto;margin-right:auto}
@@ -338,7 +339,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 @media(max-width:880px){.how-grid{grid-template-columns:1fr}}
 .how-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:30px;position:relative}
 .how-card::before{counter-increment:step;content:counter(step);position:absolute;top:18px;right:24px;font-family:var(--mono);font-size:46px;font-weight:700;color:var(--gold);opacity:.18;line-height:1}
-.how-card h3{font-size:18px;color:var(--gold);margin-bottom:12px;font-weight:600}
+.how-card h3{font-family:var(--display);font-size:16px;color:var(--gold);margin-bottom:12px;font-weight:400;letter-spacing:.3px;line-height:1.3}
 .how-card p{font-size:14.5px;color:var(--text-sec);line-height:1.6}
 
 /* === B6 banners === */
@@ -347,7 +348,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .bann-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:28px;transition:all .3s;position:relative;overflow:hidden}
 .bann-card:hover{border-color:var(--gold);transform:translateY(-3px)}
 .bann-icon{width:42px;height:42px;background:rgba(212,160,23,0.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:18px;color:var(--gold);font-size:20px}
-.bann-card h3{font-size:18px;color:var(--text);margin-bottom:12px;font-weight:600}
+.bann-card h3{font-family:var(--display);font-size:16px;color:var(--text);margin-bottom:12px;font-weight:400;letter-spacing:.3px;line-height:1.3}
 .bann-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
 .bann-data{margin-top:18px;font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.5px;padding-top:14px;border-top:1px dashed var(--border)}
 .b6-close{text-align:center;margin-top:40px;font-size:17px;color:var(--gold-bright);font-style:italic;font-weight:500}
@@ -367,7 +368,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .alert-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .25s}
 .alert-card:hover{border-color:var(--gold)}
 .alert-card .a-num{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:10px}
-.alert-card h3{font-size:18px;color:var(--text);margin-bottom:12px;font-weight:600}
+.alert-card h3{font-family:var(--display);font-size:16px;color:var(--text);margin-bottom:12px;font-weight:400;letter-spacing:.3px;line-height:1.3}
 .alert-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
 .alert-note{margin-top:26px;padding:18px 24px;background:rgba(212,160,23,0.05);border-left:3px solid var(--gold);border-radius:6px;font-size:13.5px;color:var(--text-sec);font-style:italic}
 
@@ -449,7 +450,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 
 .plan-icon{font-size:32px;line-height:1;margin-bottom:10px}
 .plan-name{font-family:var(--mono);font-size:13px;color:#bfb4a8;letter-spacing:2.5px;text-transform:uppercase;margin-bottom:8px;font-weight:800}
-.plan-price{font-family:var(--serif);font-size:34px;color:var(--text);font-weight:800;margin-bottom:4px;letter-spacing:-.6px;line-height:1.1}
+.plan-price{font-family:var(--display);font-size:30px;color:var(--text);font-weight:400;margin-bottom:4px;letter-spacing:0;line-height:1.1}
 .plan-price .small{font-size:13px;color:rgba(245,240,232,0.65);font-weight:400}
 .plan-period{font-family:var(--mono);font-size:10.5px;color:#bfb4a8;letter-spacing:.5px;text-transform:uppercase;margin-bottom:14px}
 .plan-features-list{list-style:none;padding:0;margin:0 0 16px;display:flex;flex-direction:column;gap:7px;text-align:left}
@@ -469,7 +470,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 .buy-modal{background:var(--bg-card);border:1.5px solid var(--gold);border-radius:20px;padding:36px 30px;max-width:460px;width:100%;position:relative;box-shadow:0 40px 80px rgba(0,0,0,.7)}
 .buy-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-dim);font-size:24px;cursor:pointer;line-height:1;padding:6px}
 .buy-close:hover{color:var(--gold)}
-.buy-modal h3{font-family:var(--serif);font-size:22px;color:var(--gold-bright);margin-bottom:6px;text-align:center;letter-spacing:-.3px}
+.buy-modal h3{font-family:var(--display);font-weight:400;font-size:20px;color:var(--gold-bright);margin-bottom:6px;text-align:center;letter-spacing:.3px}
 .buy-modal .buy-sub{font-size:13px;color:var(--text-sec);text-align:center;margin-bottom:24px}
 .buy-options{display:flex;flex-direction:column;gap:11px}
 .buy-option{display:flex;align-items:center;gap:14px;padding:14px 16px;background:rgba(212,160,23,0.06);border:1.5px solid rgba(212,160,23,0.4);border-radius:12px;color:var(--text);text-decoration:none;transition:all .2s;font-family:var(--serif);font-weight:600;font-size:14px}
@@ -509,7 +510,7 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 
 /* === B11 we don't trade === */
 .what-not{margin-top:28px;padding:36px 38px;border:1px solid var(--gold);border-radius:18px;background:var(--bg-soft);max-width:900px;margin-left:auto;margin-right:auto}
-.what-not h3{font-family:var(--serif);font-size:24px;color:var(--gold-bright);font-weight:700;margin-bottom:24px;text-align:center;letter-spacing:-.3px}
+.what-not h3{font-family:var(--display);font-size:22px;color:var(--gold-bright);font-weight:400;margin-bottom:24px;text-align:center;letter-spacing:.3px}
 .what-not ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:14px}
 @media(max-width:680px){.what-not ul{grid-template-columns:1fr}}
 .what-not li{font-size:14.5px;color:var(--text);display:flex;align-items:flex-start;gap:12px;line-height:1.5}
@@ -563,7 +564,7 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 @keyframes nlSlide{from{opacity:0;transform:translateY(-20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
 .nl-close{position:absolute;top:14px;right:16px;background:none;border:none;color:var(--text-dim);font-size:22px;cursor:pointer;line-height:1;padding:6px;transition:color .2s}
 .nl-close:hover{color:var(--gold)}
-.nl-modal h3{font-family:var(--serif);font-size:24px;font-weight:700;color:var(--gold-bright);margin-bottom:10px;letter-spacing:-.3px}
+.nl-modal h3{font-family:var(--display);font-size:22px;font-weight:400;color:var(--gold-bright);margin-bottom:10px;letter-spacing:.3px}
 .nl-modal p.nl-sub{font-size:13.5px;color:var(--text-sec);margin-bottom:22px;line-height:1.55}
 .nl-form{display:flex;flex-direction:column;gap:12px}
 .nl-form input[type=email]{background:var(--bg-darker);border:1px solid var(--border);color:var(--text);padding:13px 15px;border-radius:9px;font-size:14px;font-family:var(--serif);transition:border .2s;outline:none}
