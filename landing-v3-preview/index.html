@@ -565,8 +565,8 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 .nl-modal::after{content:"";position:absolute;top:-50%;left:50%;transform:translateX(-50%);width:80%;height:120%;background:radial-gradient(ellipse at center,rgba(245,200,66,.12) 0%,transparent 60%);pointer-events:none;z-index:0}
 .nl-modal > *{position:relative;z-index:1}
 @keyframes nlSlide{from{opacity:0;transform:translateY(-20px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}
-.nl-close{position:absolute;top:14px;right:16px;background:rgba(212,160,23,.08);border:1px solid rgba(212,160,23,.25);color:var(--text-dim);font-size:18px;cursor:pointer;line-height:1;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:3}
-.nl-close:hover{color:var(--gold-bright);border-color:var(--gold-bright);background:rgba(212,160,23,.18)}
+.nl-close{position:absolute;top:14px;right:16px;background:rgba(212,160,23,.15);border:1.5px solid rgba(212,160,23,.55);color:var(--gold-bright);font-size:18px;font-weight:700;cursor:pointer;line-height:1;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:3}
+.nl-close:hover{color:#fff;border-color:var(--gold-bright);background:rgba(212,160,23,.35);transform:rotate(90deg)}
 .nl-icon-wrap{display:flex;justify-content:center;margin-bottom:18px}
 .nl-icon{width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg,rgba(212,160,23,.18) 0%,rgba(212,160,23,.06) 100%);border:1px solid rgba(212,160,23,.4);display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 8px 24px rgba(212,160,23,.15)}
 .nl-modal h3{font-family:var(--display);font-size:22px;font-weight:400;color:var(--gold-bright);margin-bottom:6px;letter-spacing:.5px;text-align:center;line-height:1.2}
@@ -575,9 +575,9 @@ footer.site{background:var(--bg-darker);padding:60px 0 36px;border-top:1px solid
 .nl-form{display:flex;flex-direction:column;gap:12px}
 .nl-input-wrap{position:relative}
 .nl-input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gold);font-size:14px;pointer-events:none;z-index:1}
-.nl-form input[type=email]{background:rgba(0,0,0,.4);border:1.5px solid rgba(212,160,23,.3);color:var(--text);padding:14px 16px 14px 38px;border-radius:11px;font-size:14px;font-family:var(--serif);transition:all .2s;outline:none;width:100%;box-sizing:border-box}
-.nl-form input[type=email]:focus{border-color:var(--gold-bright);background:rgba(0,0,0,.55);box-shadow:0 0 0 3px rgba(212,160,23,.12)}
-.nl-form input[type=email]::placeholder{color:var(--text-dim);opacity:.7}
+.nl-form input[type=email]{background:rgba(0,0,0,.75);border:1.5px solid rgba(212,160,23,.55);color:#fff;padding:14px 16px 14px 38px;border-radius:11px;font-size:15px;font-family:var(--serif);font-weight:500;transition:all .2s;outline:none;width:100%;box-sizing:border-box}
+.nl-form input[type=email]:focus{border-color:var(--gold-bright);background:rgba(0,0,0,.9);box-shadow:0 0 0 3px rgba(212,160,23,.18)}
+.nl-form input[type=email]::placeholder{color:#A89580;opacity:1;font-weight:400}
 .nl-form button[type=submit]{background:linear-gradient(180deg,var(--gold-bright) 0%,var(--gold) 100%);color:#000;border:none;padding:14px 20px;border-radius:11px;font-size:14px;font-weight:700;letter-spacing:.4px;cursor:pointer;font-family:var(--serif);transition:all .2s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .nl-form button[type=submit]:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(212,160,23,.4)}
 .nl-form button[type=submit]:disabled{opacity:.6;cursor:not-allowed;transform:none}
