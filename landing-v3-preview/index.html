@@ -691,10 +691,10 @@ html{scroll-behavior:smooth}
         <option value="hi">🇮🇳 HI</option>
         <option value="ar">🇸🇦 AR</option>
       </select>
-      <a class="legal-btn" href="#we-dont-trade" data-tooltip="Aviso legal · Qué NO somos" aria-label="Aviso legal y qué NO es AUREX">⚖️</a>
+      <a class="legal-btn" href="#we-dont-trade" data-tooltip="Aviso legal · Qué NO somos" aria-label="Aviso legal y qué NO es AUREX" data-i18n-aria="aria_legal" data-i18n-tooltip="aria_legal_tooltip">⚖️</a>
       <button class="btn-early" type="button" id="nl-open"><span data-i18n="cta_early">Get early access</span> <span class="arr">→</span></button>
       <a class="btn btn-gold" href="#plans" data-i18n="cta_app">Get the app</a>
-      <button class="hdr-burger" type="button" id="hdr-burger" aria-label="Open menu" aria-expanded="false">
+      <button class="hdr-burger" type="button" id="hdr-burger" aria-label="Open menu" aria-expanded="false" data-i18n-aria="aria_open_menu">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -703,8 +703,8 @@ html{scroll-behavior:smooth}
 
 <!-- ===== DRAWER MOBILE ===== -->
 <div class="hdr-drawer-overlay" id="hdr-drawer-overlay" aria-hidden="true"></div>
-<aside class="hdr-drawer" id="hdr-drawer" aria-hidden="true" aria-label="Mobile menu">
-  <button class="hdr-drawer-close" type="button" id="hdr-drawer-close" aria-label="Close menu">×</button>
+<aside class="hdr-drawer" id="hdr-drawer" aria-hidden="true" aria-label="Mobile menu" data-i18n-aria="aria_mobile_menu">
+  <button class="hdr-drawer-close" type="button" id="hdr-drawer-close" aria-label="Close menu" data-i18n-aria="aria_close_menu">×</button>
 
   <!-- CTA principal arriba de TODO per pedido Fernando -->
   <a class="hdr-drawer-cta" href="#plans" data-drawer-close data-i18n="cta_app" style="margin-bottom:8px">Planes</a>
@@ -749,7 +749,7 @@ html{scroll-behavior:smooth}
   <div class="hdr-drawer-section">
     <div class="hdr-drawer-lang">
       <span>🌐</span>
-      <select id="lang-sel-drawer" aria-label="Language">
+      <select id="lang-sel-drawer" aria-label="Language" data-i18n-aria="aria_language">
         <option value="en">🇺🇸 EN — English</option>
         <option value="es">🇪🇸 ES — Español</option>
         <option value="pt">🇧🇷 PT — Português</option>
@@ -777,7 +777,7 @@ html{scroll-behavior:smooth}
       <p class="sub" data-i18n="hero_sub">Señales IA sobre 350+ activos — acciones, cripto, ETFs, futuros, materias primas, bonos y forex — con datos macro FED y eventos geopolíticos que otros no tienen. Alertas push y por Telegram, en 8 idiomas. Datos en tiempo real de 7 mercados globales, a tu alcance.</p>
       <!-- 7-Z: 3 cards descarga con logos REALES en colores REALES + texto i18n -->
       <div class="hero-ctas">
-        <a class="store-card store-apple" href="#" target="_blank" rel="noopener" aria-label="Próximamente en App Store">
+        <a class="store-card store-apple" href="#" target="_blank" rel="noopener" aria-label="Próximamente en App Store" data-i18n-aria="aria_store_apple">
           <span class="store-logo">
             <svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
           </span>
@@ -786,7 +786,7 @@ html{scroll-behavior:smooth}
             <span class="store-name">App Store</span>
           </span>
         </a>
-        <a class="store-card store-google" href="https://play.google.com/store/apps/details?id=com.aurexapp" target="_blank" rel="noopener" aria-label="Disponible en Google Play">
+        <a class="store-card store-google" href="https://play.google.com/store/apps/details?id=com.aurexapp" target="_blank" rel="noopener" aria-label="Disponible en Google Play" data-i18n-aria="aria_store_google">
           <span class="store-logo">
             <svg viewBox="0 0 512 512">
               <defs><linearGradient id="gp1" x1="20" y1="34" x2="200" y2="34" gradientTransform="rotate(45 256 256)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#00C3FF"/><stop offset="1" stop-color="#1BE2FA"/></linearGradient><linearGradient id="gp2" x1="-100" y1="100" x2="100" y2="100" gradientTransform="rotate(45 256 256)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFCE00"/><stop offset="1" stop-color="#FFEA00"/></linearGradient><linearGradient id="gp3" x1="-150" y1="0" x2="50" y2="0" gradientTransform="rotate(45 256 256)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#DE2453"/><stop offset="1" stop-color="#FE3944"/></linearGradient><linearGradient id="gp4" x1="0" y1="0" x2="0" y2="200" gradientTransform="rotate(45 256 256)" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#11D574"/><stop offset="1" stop-color="#01F176"/></linearGradient></defs>
@@ -801,7 +801,7 @@ html{scroll-behavior:smooth}
             <span class="store-name">Google Play</span>
           </span>
         </a>
-        <a class="store-card store-web" href="/app/" aria-label="Usar en navegador web">
+        <a class="store-card store-web" href="/app/" aria-label="Usar en navegador web" data-i18n-aria="aria_store_web">
           <span class="store-logo">
             <img src="assets/oficiales/AUREX_logo_oficial.png" alt="AUREX" width="32" height="32">
           </span>
@@ -831,7 +831,7 @@ html{scroll-behavior:smooth}
     </div>
     <div class="feat-grid">
       <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/markets_en.jpg" alt="350 activos en Mercados"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/markets_en.jpg" alt="350 activos en Mercados" data-i18n-alt="alt_markets"></div>
         <div class="feat-body">
           <div class="feat-icon">🌍</div>
           <h3 data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3>
@@ -839,7 +839,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/ai_signals_en.jpg" alt="Motor IA con 24 variables"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/ai_signals_en.jpg" alt="Motor IA con 24 variables" data-i18n-alt="alt_ai_signals"></div>
         <div class="feat-body">
           <div class="feat-icon">🤖</div>
           <h3 data-i18n="b27_f2_t">Motor IA con 24 variables</h3>
@@ -847,7 +847,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/pulse_modal_en.jpg" alt="AUREX Pulse con 14 variables macro"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/pulse_modal_en.jpg" alt="AUREX Pulse con 14 variables macro" data-i18n-alt="alt_pulse"></div>
         <div class="feat-body">
           <div class="feat-icon">📊</div>
           <h3 data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3>
@@ -855,7 +855,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/portfolio_en.jpg" alt="Portfolio con termómetro IA"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/portfolio_en.jpg" alt="Portfolio con termómetro IA" data-i18n-alt="alt_portfolio"></div>
         <div class="feat-body">
           <div class="feat-icon">💼</div>
           <h3 data-i18n="b27_f4_t">Portfolio con termómetro IA</h3>
@@ -863,7 +863,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/alerts_en.jpg" alt="15 tipos de alerta push y Telegram"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/alerts_en.jpg" alt="15 tipos de alerta push y Telegram" data-i18n-alt="alt_alerts"></div>
         <div class="feat-body">
           <div class="feat-icon">🔔</div>
           <h3 data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3>
@@ -871,7 +871,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/watchlist_en.jpg" alt="Watchlists ilimitadas"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/watchlist_en.jpg" alt="Watchlists ilimitadas" data-i18n-alt="alt_watchlists"></div>
         <div class="feat-body">
           <div class="feat-icon">👀</div>
           <h3 data-i18n="b27_f6_t">Watchlists ilimitadas</h3>
@@ -879,7 +879,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/comparator_en.jpg" alt="Comparador 3 activos lado a lado"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/comparator_en.jpg" alt="Comparador 3 activos lado a lado" data-i18n-alt="alt_comparator"></div>
         <div class="feat-body">
           <div class="feat-icon">⚡</div>
           <h3 data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3>
@@ -887,7 +887,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/language_modal.jpg" alt="8 idiomas y multi-moneda"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/language_modal.jpg" alt="8 idiomas y multi-moneda" data-i18n-alt="alt_languages"></div>
         <div class="feat-body">
           <div class="feat-icon">🌐</div>
           <h3 data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3>
@@ -904,7 +904,7 @@ html{scroll-behavior:smooth}
       </div>
       <!-- 4 cards más absorbidas del bloque "Más funciones" 8.5 -->
       <div class="feat-card reveal">
-        <div class="feat-img-wrap"><img src="assets/captures/share_signal_en.jpg" alt="Compartir señal"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/share_signal_en.jpg" alt="Compartir señal" data-i18n-alt="alt_share_signal"></div>
         <div class="feat-body">
           <div class="feat-icon">📤</div>
           <h3 data-i18n="b27_f10_t">Compartir señales</h3>
@@ -912,7 +912,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-img-wrap"><img src="assets/captures/new_list_en.jpg" alt="Crear listas personalizadas"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/new_list_en.jpg" alt="Crear listas personalizadas" data-i18n-alt="alt_new_list"></div>
         <div class="feat-body">
           <div class="feat-icon">📋</div>
           <h3 data-i18n="b27_f11_t">Crear listas personalizadas</h3>
@@ -920,7 +920,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-img-wrap"><img src="assets/captures/price_alert_en.jpg" alt="Agregar alertas en segundos"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/price_alert_en.jpg" alt="Agregar alertas en segundos" data-i18n-alt="alt_price_alert"></div>
         <div class="feat-body">
           <div class="feat-icon">⏰</div>
           <h3 data-i18n="b27_f12_t">Agregar alertas en segundos</h3>
@@ -928,7 +928,7 @@ html{scroll-behavior:smooth}
         </div>
       </div>
       <div class="feat-card reveal reveal-delay-3">
-        <div class="feat-img-wrap"><img src="assets/captures/add_asset_en.jpg" alt="Agregar activos al portfolio"></div>
+        <div class="feat-img-wrap"><img src="assets/captures/add_asset_en.jpg" alt="Agregar activos al portfolio" data-i18n-alt="alt_add_asset"></div>
         <div class="feat-body">
           <div class="feat-icon">➕</div>
           <h3 data-i18n="b27_f13_t">Agregar activos al portfolio</h3>
@@ -942,25 +942,25 @@ html{scroll-behavior:smooth}
 <!-- ===== BLOQUE 2.5: TICKER ===== -->
 <div class="ticker-wrap">
   <div class="ticker">
-    <span class="hl">350 assets monitored</span><span class="dot">·</span>
-    <span>8 languages</span><span class="dot">·</span>
-    <span class="hl">7 global stock markets</span><span class="dot">·</span>
-    <span>24 AI variables per signal</span><span class="dot">·</span>
-    <span class="hl">iOS · Android · Web</span><span class="dot">·</span>
-    <span>Real-time data, 24/7</span><span class="dot">·</span>
-    <span>Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
-    <span class="hl">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
-    <span>Free plan available — no credit card required</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_1">350 assets monitored</span><span class="dot">·</span>
+    <span data-i18n="tick_2">8 languages</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_3">7 global stock markets</span><span class="dot">·</span>
+    <span data-i18n="tick_4">24 AI variables per signal</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_5">iOS · Android · Web</span><span class="dot">·</span>
+    <span data-i18n="tick_6">Real-time data, 24/7</span><span class="dot">·</span>
+    <span data-i18n="tick_7">Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_8">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
+    <span data-i18n="tick_9">Free plan available — no credit card required</span><span class="dot">·</span>
     <!-- duplicado para loop infinito -->
-    <span class="hl">350 assets monitored</span><span class="dot">·</span>
-    <span>8 languages</span><span class="dot">·</span>
-    <span class="hl">7 global stock markets</span><span class="dot">·</span>
-    <span>24 AI variables per signal</span><span class="dot">·</span>
-    <span class="hl">iOS · Android · Web</span><span class="dot">·</span>
-    <span>Real-time data, 24/7</span><span class="dot">·</span>
-    <span>Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
-    <span class="hl">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
-    <span>Free plan available — no credit card required</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_1">350 assets monitored</span><span class="dot">·</span>
+    <span data-i18n="tick_2">8 languages</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_3">7 global stock markets</span><span class="dot">·</span>
+    <span data-i18n="tick_4">24 AI variables per signal</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_5">iOS · Android · Web</span><span class="dot">·</span>
+    <span data-i18n="tick_6">Real-time data, 24/7</span><span class="dot">·</span>
+    <span data-i18n="tick_7">Crypto · Stocks · ETFs · Futures · Commodities · Bonds · Forex</span><span class="dot">·</span>
+    <span class="hl" data-i18n="tick_8">FED Macro + GDELT Geopolitics</span><span class="dot">·</span>
+    <span data-i18n="tick_9">Free plan available — no credit card required</span><span class="dot">·</span>
   </div>
 </div>
 
@@ -976,9 +976,9 @@ html{scroll-behavior:smooth}
       <p class="sub" data-i18n="b3_sub">AUREX is the market-tracking terminal that sits between you and your broker. It doesn't execute trades. It doesn't manage your money. It gives you the full picture — technical data, macro signals, geopolitical events and global sentiment — so every decision you make is an informed one.</p>
     </div>
     <ul class="b3-bullets">
-      <li class="reveal reveal-delay-1">350 assets selected across 9 instrument types</li>
-      <li class="reveal reveal-delay-2">7 global stock markets: USA, Argentina, Brazil, Spain, Europe, Japan and China</li>
-      <li class="reveal reveal-delay-3">Available on iOS, Android and browser. No setup required.</li>
+      <li class="reveal reveal-delay-1" data-i18n="b3_li_1">350 assets selected across 9 instrument types</li>
+      <li class="reveal reveal-delay-2" data-i18n="b3_li_2">7 global stock markets: USA, Argentina, Brazil, Spain, Europe, Japan and China</li>
+      <li class="reveal reveal-delay-3" data-i18n="b3_li_3">Available on iOS, Android and browser. No setup required.</li>
     </ul>
   </div>
 </section>
@@ -1017,16 +1017,16 @@ html{scroll-behavior:smooth}
       <h2 style="text-align:center" data-i18n="b45_h2">See it in action.</h2>
     </div>
     <div class="carousel">
-      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/markets_en.jpg"></div><p class="car-label">Global markets · 11 exchanges · Real-time</p></div>
-      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/ai_signals_en.jpg"></div><p class="car-label">AI signals · 24 variables · 5 reasons explained</p></div>
-      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/portfolio_en.jpg"></div><p class="car-label">Your portfolio · AI risk score in real time</p></div>
-      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/watchlist_en.jpg"></div><p class="car-label">Multiple watchlists · Compare instantly</p></div>
-      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/alerts_en.jpg"></div><p class="car-label">15 alert types · Set your own rules</p></div>
-      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/comparator_en.jpg"></div><p class="car-label">Compare 3 assets · 10 AI variables side by side</p></div>
-      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/pulse_modal_en.jpg"></div><p class="car-label">Market sentiment · 14 macro sources</p></div>
-      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/markets_stocks_en.jpg"></div><p class="car-label">7 global stock markets · One terminal</p></div>
-      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/language_modal.jpg"></div><p class="car-label">8 languages · From day one</p></div>
-      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/risk_thermometer_en.jpg"></div><p class="car-label">AI explains why each signal exists</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/markets_en.jpg"></div><p class="car-label" data-i18n="car_1">Global markets · 11 exchanges · Real-time</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/ai_signals_en.jpg"></div><p class="car-label" data-i18n="car_2">AI signals · 24 variables · 5 reasons explained</p></div>
+      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/portfolio_en.jpg"></div><p class="car-label" data-i18n="car_3">Your portfolio · AI risk score in real time</p></div>
+      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/watchlist_en.jpg"></div><p class="car-label" data-i18n="car_4">Multiple watchlists · Compare instantly</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/alerts_en.jpg"></div><p class="car-label" data-i18n="car_5">15 alert types · Set your own rules</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/comparator_en.jpg"></div><p class="car-label" data-i18n="car_6">Compare 3 assets · 10 AI variables side by side</p></div>
+      <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/pulse_modal_en.jpg"></div><p class="car-label" data-i18n="car_7">Market sentiment · 14 macro sources</p></div>
+      <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/markets_stocks_en.jpg"></div><p class="car-label" data-i18n="car_8">7 global stock markets · One terminal</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/language_modal.jpg"></div><p class="car-label" data-i18n="car_9">8 languages · From day one</p></div>
+      <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/risk_thermometer_en.jpg"></div><p class="car-label" data-i18n="car_10">AI explains why each signal exists</p></div>
     </div>
   </div>
 </section>
@@ -1042,16 +1042,16 @@ html{scroll-behavior:smooth}
     <div class="cols">
       <div class="col-card reveal">
         <h3 data-i18n="b5_col1_h3">AI Engine · 10 variables</h3>
-        <p>Each signal is the result of 10 independent quantitative variables computed per asset, in real time.</p>
+        <p data-i18n="b5_motor_p">Each signal is the result of 10 independent quantitative variables computed per asset, in real time.</p>
         <div class="chip-grid">
-          <span class="chip">24h trend</span><span class="chip">RSI 14</span><span class="chip">Relative volume</span><span class="chip">Volatility</span>
+          <span class="chip" data-i18n="b5_chip_trend">24h trend</span><span class="chip">RSI 14</span><span class="chip" data-i18n="b5_chip_volume">Relative volume</span><span class="chip" data-i18n="b5_chip_vol">Volatility</span>
           <span class="chip">BTC/SPY corr</span><span class="chip">Gold/Oil corr</span><span class="chip chip-special">FED Macro</span>
           <span class="chip">Earnings</span><span class="chip">MACD 12/26</span><span class="chip">Support/Resistance 30d</span>
         </div>
       </div>
       <div class="col-card reveal reveal-delay-1">
         <h3 data-i18n="b5_col2_h3">AUREX Pulse · 14 variables</h3>
-        <p>Pulse reads the global market context in real time, cross-referencing 14 macro sources.</p>
+        <p data-i18n="b5_pulse_p">Pulse reads the global market context in real time, cross-referencing 14 macro sources.</p>
         <div class="chip-grid">
           <span class="chip">BTC price</span><span class="chip">BTC dominance</span><span class="chip">ETH</span><span class="chip">VIX</span>
           <span class="chip">S&amp;P 500</span><span class="chip">ES futures</span><span class="chip">NQ futures</span><span class="chip">YM futures</span>
@@ -1061,7 +1061,7 @@ html{scroll-behavior:smooth}
       </div>
     </div>
     <div class="highlight-card reveal reveal-delay-2">
-      <strong style="color:var(--gold-bright)">FED macro data feeds into every individual signal — not just a global gauge.</strong> GDELT geopolitical events cross-reference directly against each asset's signal. <em style="color:var(--text-sec)">No retail competitor does this.</em>
+      <strong style="color:var(--gold-bright)" data-i18n="b5_highlight_fed">FED macro data feeds into every individual signal — not just a global gauge.</strong> <span data-i18n="b5_highlight_gdelt">GDELT geopolitical events cross-reference directly against each asset's signal.</span> <em style="color:var(--text-sec)" data-i18n="b5_highlight_no_competitor">No retail competitor does this.</em>
     </div>
   </div>
 </section>
@@ -1144,23 +1144,23 @@ html{scroll-behavior:smooth}
       <div class="bann-card reveal" style="text-align:left">
         <div class="bann-icon">◉</div>
         <h3>Markets</h3>
-        <p>11 global exchanges — see open, closed and pre/post-market status in real time. Choose which markets to display and in what order.</p>
+        <p data-i18n="b6_markets_p">11 global exchanges — see open, closed and pre/post-market status in real time. Choose which markets to display and in what order.</p>
         <div class="bann-data">NYSE · NSDQ · LSE · MERVAL · B3 · NIKKEI · SSE · TSX · BMV · BVL · ASX</div>
       </div>
       <div class="bann-card reveal reveal-delay-1" style="text-align:left">
         <div class="bann-icon">⟁</div>
         <h3>Futures</h3>
-        <p>16 instruments across 6 categories. Know where the market is heading before it opens.</p>
+        <p data-i18n="b6_futures_p">16 instruments across 6 categories. Know where the market is heading before it opens.</p>
         <div class="bann-data">ES · NQ · YM · RTY · GC · SI · CL · HG · NG · ZB · ZN · DX · 6E · 6J · BTC · ETH</div>
       </div>
       <div class="bann-card reveal reveal-delay-2" style="text-align:left">
         <div class="bann-icon">⌖</div>
         <h3>Critical Events</h3>
-        <p>A live scrolling ticker of high and medium-impact economic events — FOMC, CPI, payrolls, geopolitical developments — active right now.</p>
+        <p data-i18n="b6_events_p">A live scrolling ticker of high and medium-impact economic events — FOMC, CPI, payrolls, geopolitical developments — active right now.</p>
         <div class="bann-data">FED · CPI · NFP · GDELT · EARNINGS</div>
       </div>
     </div>
-    <p class="b6-close">The global market state. One screen. No app switching.</p>
+    <p class="b6-close" data-i18n="b6_close">The global market state. One screen. No app switching.</p>
   </div>
 </section>
 
@@ -1171,12 +1171,12 @@ html{scroll-behavior:smooth}
       <div class="reveal">
         <span class="section-label" data-i18n="b7_label">Portfolio</span>
         <h2 data-i18n="b7_h2">Your holdings. With the full AI engine on top.</h2>
-        <p class="sub">AUREX Portfolio is a tracking layer, not a trading account. No money moves. No brokerage connection required. Add any of the 350 assets and immediately get the full signal context on your personal mix.</p>
+        <p class="sub" data-i18n="b7_sub">AUREX Portfolio is a tracking layer, not a trading account. No money moves. No brokerage connection required. Add any of the 350 assets and immediately get the full signal context on your personal mix.</p>
         <div class="b7-feats">
-          <div class="b7-feat">AI Risk Thermometer — real-time risk score across your entire portfolio</div>
-          <div class="b7-feat">AI Dots — individual signal visible directly on each holding</div>
-          <div class="b7-feat">PnL across 5 periods: daily, weekly, monthly, quarterly, annual</div>
-          <div class="b7-feat">Multi-currency converter built in. Cloud sync across devices.</div>
+          <div class="b7-feat" data-i18n="b7_feat_1">AI Risk Thermometer — real-time risk score across your entire portfolio</div>
+          <div class="b7-feat" data-i18n="b7_feat_2">AI Dots — individual signal visible directly on each holding</div>
+          <div class="b7-feat" data-i18n="b7_feat_3">PnL across 5 periods: daily, weekly, monthly, quarterly, annual</div>
+          <div class="b7-feat" data-i18n="b7_feat_4">Multi-currency converter built in. Cloud sync across devices.</div>
         </div>
       </div>
       <div class="b7-mockup reveal reveal-delay-1">
@@ -1196,12 +1196,12 @@ html{scroll-behavior:smooth}
       <h2 data-i18n="b8_h2">15 alert types. You set the rules.</h2>
     </div>
     <div class="alert-grid">
-      <div class="alert-card reveal"><div class="a-num">04 TYPES</div><h3>AI Alerts</h3><p>Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p></div>
-      <div class="alert-card reveal reveal-delay-1"><div class="a-num">03 TYPES</div><h3>Pulse Alerts</h3><p>Market zone change, alert by asset category, global Risk Thermometer.</p></div>
-      <div class="alert-card reveal reveal-delay-2"><div class="a-num">03 TYPES</div><h3>Price Alerts</h3><p>Target price reached, sharp price move, new 52-week high or low.</p></div>
-      <div class="alert-card reveal reveal-delay-3"><div class="a-num">05 TYPES</div><h3>Event Alerts</h3><p>FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p></div>
+      <div class="alert-card reveal"><div class="a-num">04 TYPES</div><h3>AI Alerts</h3><p data-i18n="b8_ai_p">Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p></div>
+      <div class="alert-card reveal reveal-delay-1"><div class="a-num">03 TYPES</div><h3>Pulse Alerts</h3><p data-i18n="b8_pulse_p">Market zone change, alert by asset category, global Risk Thermometer.</p></div>
+      <div class="alert-card reveal reveal-delay-2"><div class="a-num">03 TYPES</div><h3>Price Alerts</h3><p data-i18n="b8_price_p">Target price reached, sharp price move, new 52-week high or low.</p></div>
+      <div class="alert-card reveal reveal-delay-3"><div class="a-num">05 TYPES</div><h3>Event Alerts</h3><p data-i18n="b8_event_p">FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p></div>
     </div>
-    <div class="alert-note">Alerts are delivered in-app. Push notifications with app closed, SMS and Telegram delivery — coming in the next version.</div>
+    <div class="alert-note" data-i18n="b8_alert_note">Alerts are delivered in-app. Push notifications with app closed, SMS and Telegram delivery — coming in the next version.</div>
   </div>
 </section>
 
@@ -1213,10 +1213,10 @@ html{scroll-behavior:smooth}
       <h2 style="text-align:center" data-i18n="b85_h2">More you can do with AUREX.</h2>
     </div>
     <div class="more-grid">
-      <div class="more-item reveal"><img src="assets/captures/share_signal_en.jpg" alt="Share signal"><p>Share any signal via Telegram, Mail or WhatsApp link</p></div>
-      <div class="more-item reveal reveal-delay-1"><img src="assets/captures/new_list_en.jpg" alt="New list"><p>Create custom watchlists with color labels</p></div>
-      <div class="more-item reveal reveal-delay-2"><img src="assets/captures/price_alert_en.jpg" alt="Price alert"><p>Set price alerts in seconds — above, below, or %</p></div>
-      <div class="more-item reveal reveal-delay-3"><img src="assets/captures/add_asset_en.jpg" alt="Add asset"><p>Add any of the 350 assets to your portfolio</p></div>
+      <div class="more-item reveal"><img src="assets/captures/share_signal_en.jpg" alt="Share signal" data-i18n-alt="alt_share_signal"><p data-i18n="b85_share_p">Compartí cualquier señal por Telegram, Mail o link de WhatsApp</p></div>
+      <div class="more-item reveal reveal-delay-1"><img src="assets/captures/new_list_en.jpg" alt="New list" data-i18n-alt="alt_new_list"><p data-i18n="b85_list_p">Creá watchlists personalizadas con etiquetas de color</p></div>
+      <div class="more-item reveal reveal-delay-2"><img src="assets/captures/price_alert_en.jpg" alt="Price alert" data-i18n-alt="alt_price_alert"><p data-i18n="b85_alert_p">Configurá alertas de precio en segundos — arriba, abajo, o %</p></div>
+      <div class="more-item reveal reveal-delay-3"><img src="assets/captures/add_asset_en.jpg" alt="Add asset" data-i18n-alt="alt_add_asset"><p data-i18n="b85_asset_p">Agregá cualquiera de los 350 activos a tu portfolio</p></div>
     </div>
   </div>
 </section>
@@ -1227,7 +1227,7 @@ html{scroll-behavior:smooth}
     <div class="reveal">
       <span class="section-label" data-i18n="b9_label">Languages</span>
       <h2 style="text-align:center" data-i18n="b9_h2">8 languages. From day one.</h2>
-      <p class="sub">AUREX runs natively in English, Spanish, Portuguese, Chinese, French, Italian, Hindi and Arabic. Every signal, every disclaimer, every data point — in your language.</p>
+      <p class="sub" data-i18n="b9_sub">AUREX runs natively in English, Spanish, Portuguese, Chinese, French, Italian, Hindi and Arabic. Every signal, every disclaimer, every data point — in your language.</p>
     </div>
     <div class="lang-grid">
       <span class="lang-pill reveal"><span class="flag">🇺🇸</span> EN</span>
@@ -1239,7 +1239,7 @@ html{scroll-behavior:smooth}
       <span class="lang-pill reveal reveal-delay-3"><span class="flag">🇮🇳</span> HI</span>
       <span class="lang-pill reveal reveal-delay-3"><span class="flag">🇸🇦</span> AR</span>
     </div>
-    <p class="b9-close">One terminal. 8 languages. 4.2 billion speakers covered.</p>
+    <p class="b9-close" data-i18n="b9_close">One terminal. 8 languages. 4.2 billion speakers covered.</p>
   </div>
 </section>
 
@@ -1249,7 +1249,7 @@ html{scroll-behavior:smooth}
     <div class="reveal">
       <span class="section-label" data-i18n="b105_label">Benchmark</span>
       <h2 data-i18n="b105_h2">How we compare.</h2>
-      <p class="sub">AUREX vs the most consolidated platforms for the individual investor.</p>
+      <p class="sub" data-i18n="bench_sub">AUREX vs the most consolidated platforms for the individual investor.</p>
     </div>
     <div class="bench-wrap reveal reveal-delay-1">
       <table class="bench-table">
@@ -1280,47 +1280,47 @@ html{scroll-behavior:smooth}
         </thead>
         <tbody>
           <tr>
-            <td class="feature">Plan gratuito</td>
+            <td class="feature" data-i18n="bench_row_free">Plan gratuito</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
-            <td><span class="bench-warn">Básico</span></td>
+            <td><span class="bench-warn" data-i18n="bench_basic">Básico</span></td>
             <td><span class="bench-no">✕</span></td>
           </tr>
           <tr>
-            <td class="feature">Precio plan pago</td>
-            <td class="aurex"><span class="bench-price-aurex">$9.99/mes</span></td>
-            <td><span class="bench-price">$12.95/mes</span></td>
-            <td><span class="bench-price">$25–50/mes</span></td>
-            <td><span class="bench-price">$25/mes</span></td>
-            <td><span class="bench-price">$2.000/mes</span></td>
+            <td class="feature" data-i18n="bench_row_price">Precio plan pago</td>
+            <td class="aurex"><span class="bench-price-aurex">$9.99<span data-i18n="bench_per_month">/mes</span></span></td>
+            <td><span class="bench-price">$12.95<span data-i18n="bench_per_month">/mes</span></span></td>
+            <td><span class="bench-price">$25–50<span data-i18n="bench_per_month">/mes</span></span></td>
+            <td><span class="bench-price">$25<span data-i18n="bench_per_month">/mes</span></span></td>
+            <td><span class="bench-price">$2.000<span data-i18n="bench_per_month">/mes</span></span></td>
           </tr>
           <tr>
-            <td class="feature">9 tipos de instrumentos</td>
+            <td class="feature" data-i18n="bench_row_instruments">9 tipos de instrumentos</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
-            <td><span class="bench-warn">Solo US</span></td>
+            <td><span class="bench-warn" data-i18n="bench_only_us">Solo US</span></td>
             <td><span class="bench-check">✓</span></td>
           </tr>
           <tr>
-            <td class="feature">7 mercados bursátiles</td>
+            <td class="feature" data-i18n="bench_row_markets">7 mercados bursátiles</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
-            <td><span class="bench-warn">Solo US</span></td>
+            <td><span class="bench-warn" data-i18n="bench_only_us">Solo US</span></td>
             <td><span class="bench-check">✓</span></td>
           </tr>
           <tr>
-            <td class="feature">24 variables IA explicadas por señal</td>
+            <td class="feature" data-i18n="bench_row_24var">24 variables IA explicadas por señal</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-no">✕</span></td>
             <td><span class="bench-warn">ProPicks AI</span></td>
             <td><span class="bench-warn">Quant Ratings</span></td>
-            <td><span class="bench-warn">Institucional</span></td>
+            <td><span class="bench-warn" data-i18n="bench_institutional">Institucional</span></td>
           </tr>
           <tr>
-            <td class="feature">Datos FED + GDELT por señal</td>
+            <td class="feature" data-i18n="bench_row_fed">Datos FED + GDELT por señal</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-no">✕</span></td>
             <td><span class="bench-no">✕</span></td>
@@ -1328,28 +1328,28 @@ html{scroll-behavior:smooth}
             <td><span class="bench-check">✓</span></td>
           </tr>
           <tr>
-            <td class="feature">Multi-idioma nativo</td>
-            <td class="aurex"><div class="bench-cell-stack"><span class="bench-check">✓</span><span class="bench-mini">8 idiomas</span></div></td>
+            <td class="feature" data-i18n="bench_row_lang">Multi-idioma nativo</td>
+            <td class="aurex"><div class="bench-cell-stack"><span class="bench-check">✓</span><span class="bench-mini" data-i18n="bench_8_lang">8 idiomas</span></div></td>
             <td><span class="bench-no">✕</span></td>
             <td><div class="bench-cell-stack"><span class="bench-check">✓</span><span class="bench-mini">30+</span></div></td>
             <td><span class="bench-no">✕</span></td>
             <td><span class="bench-no">✕</span></td>
           </tr>
           <tr>
-            <td class="feature">iOS + Android + Web</td>
+            <td class="feature" data-i18n="bench_row_platforms">iOS + Android + Web</td>
             <td class="aurex"><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
             <td><span class="bench-check">✓</span></td>
-            <td><span class="bench-warn">Solo Web</span></td>
-            <td><span class="bench-warn">Solo Desktop</span></td>
+            <td><span class="bench-warn" data-i18n="bench_only_web">Solo Web</span></td>
+            <td><span class="bench-warn" data-i18n="bench_only_desktop">Solo Desktop</span></td>
           </tr>
         </tbody>
       </table>
     </div>
     <div class="bench-footer reveal reveal-delay-2">
-      <strong>Cross-asset coverage, explainable AI, and macro/geopolitical context — in one terminal, at retail pricing.</strong>
+      <strong data-i18n="bench_close_strong">Cross-asset coverage, explainable AI, and macro/geopolitical context — in one terminal, at retail pricing.</strong>
       <br>
-      <em style="color:var(--text-sec)">Each competitor excels in one dimension. AUREX integrates them.</em>
+      <em style="color:var(--text-sec)" data-i18n="bench_close_em">Each competitor excels in one dimension. AUREX integrates them.</em>
     </div>
   </div>
 </section>
@@ -1423,17 +1423,17 @@ html{scroll-behavior:smooth}
 <section class="blk" id="we-dont-trade">
   <div class="wrap">
     <div class="what-not reveal">
-      <h3>We analyze. We don't trade.</h3>
+      <h3 data-i18n="b11_h3">We analyze. We don't trade.</h3>
       <ul>
-        <li>We are not a broker</li>
-        <li>We don't execute trades or transactions</li>
-        <li>We don't manage your money</li>
-        <li>We don't give financial advice</li>
-        <li>We don't recommend buy or sell actions</li>
-        <li>We are not a crypto-only app</li>
-        <li>We don't replace your broker — we complement it</li>
+        <li data-i18n="b11_li_1">We are not a broker</li>
+        <li data-i18n="b11_li_2">We don't execute trades or transactions</li>
+        <li data-i18n="b11_li_3">We don't manage your money</li>
+        <li data-i18n="b11_li_4">We don't give financial advice</li>
+        <li data-i18n="b11_li_5">We don't recommend buy or sell actions</li>
+        <li data-i18n="b11_li_6">We are not a crypto-only app</li>
+        <li data-i18n="b11_li_7">We don't replace your broker — we complement it</li>
       </ul>
-      <p class="disclaimer-text">AUREX is a data visualization and analytics platform for informational and educational purposes only. It does not provide investment advice, execute transactions, or manage assets of any kind. All analysis is statistical in nature and does not guarantee future results. Always consult a qualified financial professional before making investment decisions. © 2026 AUREX — Fernando Moscón.</p>
+      <p class="disclaimer-text" data-i18n="b11_disclaimer">AUREX is a data visualization and analytics platform for informational and educational purposes only. It does not provide investment advice, execute transactions, or manage assets of any kind. All analysis is statistical in nature and does not guarantee future results. Always consult a qualified financial professional before making investment decisions. © 2026 AUREX — Fernando Moscón.</p>
     </div>
   </div>
 </section>
@@ -1444,7 +1444,7 @@ html{scroll-behavior:smooth}
     <div class="reveal lq-section-title">
       <span class="section-label" data-i18n="lq_label">Live market pulse</span>
       <h2 style="text-align:center" data-i18n="lq_h2">The same data the engine reads.</h2>
-      <p class="sect-sub">Real-time crypto prices from CoinGecko. Equities, commodities and macro futures refreshed periodically — the live tape that feeds every AUREX signal.</p>
+      <p class="sect-sub" data-i18n="lq_sub">Real-time crypto prices from CoinGecko. Equities, commodities and macro futures refreshed periodically — the live tape that feeds every AUREX signal.</p>
     </div>
 
     <div class="lq-board reveal">
@@ -1492,7 +1492,7 @@ html{scroll-behavior:smooth}
       </div>
 
       <div class="lq-foot">
-        <strong>SOURCES</strong> · Crypto: CoinGecko API (~60 s refresh) · Equities, commodities & futures: indicative, refreshed periodically · For demonstration on aurex.live — full real-time tape in the AUREX app.
+        <strong>SOURCES</strong> <span data-i18n="lq_foot">· Crypto: CoinGecko API (~60 s refresh) · Equities, commodities & futures: indicative, refreshed periodically · For demonstration on aurex.live</span> <span data-i18n="lq_foot_trail">— full real-time tape in the AUREX app.</span>
       </div>
     </div>
   </div>
@@ -1515,7 +1515,7 @@ html{scroll-behavior:smooth}
           </svg>
           <span class="word">AUREX</span>
         </div>
-        <p class="foot-tag">The global markets terminal. AI signals across 350 assets in 8 languages.</p>
+        <p class="foot-tag" data-i18n="foot_tag">The global markets terminal. AI signals across 350 assets in 8 languages.</p>
       </div>
       <div class="foot-col">
         <h4>Product</h4>
@@ -1555,8 +1555,8 @@ html{scroll-behavior:smooth}
 <!-- ===== MODAL COMPRA PLAN ===== -->
 <div class="buy-overlay" id="buy-overlay" role="dialog" aria-modal="true" aria-labelledby="buy-title" aria-hidden="true">
   <div class="buy-modal">
-    <button class="buy-close" id="buy-close" type="button" aria-label="Cerrar">×</button>
-    <h3 id="buy-title">Empezá con <span id="buy-plan-name">PRO</span></h3>
+    <button class="buy-close" id="buy-close" type="button" aria-label="Cerrar" data-i18n-aria="aria_close">×</button>
+    <h3 id="buy-title"><span data-i18n="buy_h3">Empezá con</span> <span id="buy-plan-name">PRO</span></h3>
     <p class="buy-sub" data-i18n="buy_sub">Elegí dónde activar tu plan:</p>
     <div class="buy-options">
       <a class="buy-option" href="#" id="buy-apple" target="_blank" rel="noopener">
@@ -1604,7 +1604,7 @@ html{scroll-behavior:smooth}
 <!-- ===== NEWSLETTER MICRO-MODAL ===== -->
 <div class="nl-overlay" id="nl-overlay" role="dialog" aria-modal="true" aria-labelledby="nl-title" aria-hidden="true">
   <div class="nl-modal">
-    <button class="nl-close" id="nl-close" type="button" aria-label="Close">×</button>
+    <button class="nl-close" id="nl-close" type="button" aria-label="Close" data-i18n-aria="aria_close">×</button>
     <h3 id="nl-title" data-i18n="nl_title">Get early access</h3>
     <p class="nl-sub" data-i18n="nl_sub">Monthly market reports + new feature drops, straight from the AUREX team.</p>
     <form class="nl-form" id="nl-form" action="https://formspree.io/f/xpqnajgp" method="POST">
@@ -1767,6 +1767,16 @@ html{scroll-behavior:smooth}
     document.querySelectorAll('[data-i18n-aria]').forEach(el => {
       const key = el.getAttribute('data-i18n-aria');
       if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
+    });
+    // img alt
+    document.querySelectorAll('[data-i18n-alt]').forEach(el => {
+      const key = el.getAttribute('data-i18n-alt');
+      if (dict[key] !== undefined) el.setAttribute('alt', dict[key]);
+    });
+    // data-tooltip (atributo custom usado en .legal-btn)
+    document.querySelectorAll('[data-i18n-tooltip]').forEach(el => {
+      const key = el.getAttribute('data-i18n-tooltip');
+      if (dict[key] !== undefined) el.setAttribute('data-tooltip', dict[key]);
     });
   }
 
