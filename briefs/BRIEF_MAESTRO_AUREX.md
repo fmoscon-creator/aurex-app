@@ -277,7 +277,31 @@ Stack técnico real (no la versión incorrecta del brief anterior):
 
 **Implicancia para AUREX:** la cirugía probablemente sea **rebuild limpio del Build 36 con `./gradlew clean` obligatorio** + Tier 1 IAP (que son bugs propios de AUREX independientes de RC), no cambio de SDK.
 
-### 4.5 Tier 1 IAP (6 cambios listos para implementar cuando RC responda)
+### 4.5 Tier 1 IAP — ✅ APLICADO 100% desde Build 34 (16-may, commit `cd2f1dc`)
+
+**🚨 VALIDADO por Code 18-may leyendo código real del Build 35. Snapshot público en `briefs/iap_audit_18may/code_snapshot_build35/` para que Escritorio pueda leer raw URL.**
+
+| ID | Archivo | Línea | Estado real |
+|---|---|---|---|
+| IAP-1 | `App.js` | L42-63 | ✅ APLICADO — useEffect + IIFE async `Purchases.logIn(session.user.id)` |
+| IAP-2.1 | `LoginScreen.js` | L33 | ✅ APLICADO — Path 1 SDK `Purchases.logIn(data.user.id)` |
+| IAP-2.2 | `LoginScreen.js` | L64 | ✅ APLICADO — Path 2 fetch `Purchases.logIn(user.id)` |
+| IAP-3 | `SignupScreen.js` | L92 | ✅ APLICADO — post-POST `/api/usuario` `Purchases.logIn(data.user.id)` |
+| IAP-4 | `PerfilScreen.js` | L242 (logout) | ✅ APLICADO — `Purchases.logOut()` antes `signOut()` |
+| IAP-5 | backend `server.js` L1631-1643 | otro repo | ✅ APLICADO commits `1184de5` + `a722e92` (Escritorio) |
+| IAP-6 | `PerfilScreen.js` | L268 (deleteAccount) | ✅ APLICADO — `Purchases.logOut()` antes `signOut()` |
+
+**Diff Build 33 producción → Build 35:** 43 líneas en 6 archivos. **Tier 1 + Alert debug temporal Build 35** (revertir en Build 36).
+
+**Resultado real:** Build 35 instalado en Samsung Fernando incluye Tier 1 + Alert debug. **Bug "product not available for purchase" ocurre CON Tier 1 APLICADO.** Tier 1 NO es la solución al bug bloqueante.
+
+**Acción real pendiente (no más Tier 1):** Build 36 con `./gradlew clean` obligatorio + revertir Alert debug (basado en Issue #3039 cerrado "Not a Bug" resuelto con rebuild limpio).
+
+**❌ NO volver a planificar "Tier 1" como acción pendiente. Está APLICADO desde 16-may.**
+
+---
+
+### 4.5.b Plan original (HISTÓRICO — mantener solo como referencia de qué era cada cambio)
 
 | ID | Archivo | Cambio |
 |---|---|---|
