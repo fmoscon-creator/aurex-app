@@ -259,7 +259,23 @@ App AUREX v1.0.35 (Internal Testing) → Login `fmoscon@gmail.com` → Subscript
 
 ### 4.4 Hipótesis causa raíz
 
-Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nuevo, feb 2026). Matchea Issue #3039 RC (acknowledged enero 2026 sin fix público).
+**CORREGIDO 18-may post-cruzado Code+Escritorio:**
+
+Stack técnico real (no la versión incorrecta del brief anterior):
+- `react-native-purchases ^9.15.1` (confirmado en `~/AurexApp/package.json`)
+- `purchases-android 9.28.x` (transitivo del wrapper RN)
+- **Google Play Billing v7** (NO v8 — Billing v8 llega recién en `react-native-purchases 10.0.0` del 15-abr-2026)
+- `targetSdk 36` + `compileSdk 36` (confirmado en `~/AurexApp/android/build.gradle`)
+
+**Referencia issue real:** `https://github.com/RevenueCat/purchases-android/issues/3039` (NO `react-native-purchases/issues/3039` que da 404).
+
+**Estado del Issue #3039 (validado por Escritorio):**
+- 🟢 **CERRADO como "Not a Bug"**
+- ✅ Reporter confirmó que se **resolvió sin cambios de SDK ni de código**
+- ✅ La solución fue **rebuild limpio del AAB** (`./gradlew clean` antes del bundleRelease)
+- ❌ Esto **invalida** las hipótesis "bug estructural RC sin fix público" y "upgrade a 10.x como solución"
+
+**Implicancia para AUREX:** la cirugía probablemente sea **rebuild limpio del Build 36 con `./gradlew clean` obligatorio** + Tier 1 IAP (que son bugs propios de AUREX independientes de RC), no cambio de SDK.
 
 ### 4.5 Tier 1 IAP (6 cambios listos para implementar cuando RC responda)
 
