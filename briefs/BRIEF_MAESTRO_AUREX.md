@@ -236,6 +236,18 @@ App AUREX v1.0.35 (Internal Testing) → Login `fmoscon@gmail.com` → Subscript
 | 4 | Tester sin opt-in URL | ✅ DESCARTADO |
 | 5 | Application ID mismatch | ✅ DESCARTADO (`com.aurexapp` ambos lados) |
 
+### 4.3.b Validaciones adicionales DESCARTADAS (18-may, confirmación visual Escritorio en Play Console)
+
+| Hipótesis | Estado | Validación |
+|---|---|---|
+| Producto INACTIVE en Play Console | ✅ DESCARTADO | Los 4 productos (PRO mensual/anual, ELITE mensual/anual) ACTIVOS — base plans con ícono verde. Última actualización 14-may-2026. |
+| Base plan en borrador / no activo | ✅ DESCARTADO | base plan `monthly-pro` ACTIVO confirmado en pantalla. "Planes básicos activos: 1" en los 4 productos. |
+| Tester no es license tester | ✅ DESCARTADO | fmoscon@gmail.com + aurextester12@gmail.com en lista "AUREX Testers" license testers (no solo internal). Confirmado por Escritorio 18-may. |
+| Producto no cargable por SDK | ✅ DESCARTADO | Logs verbose RC capturados 18-may 15:16:51 muestran `Retrieved productDetailsList` con productId, price USD 9.99, basePlanId `monthly-pro`, billingPeriod P1M — todo OK desde SDK. |
+| Cuenta Play Store con permisos faltantes | ✅ DESCARTADO | fmoscon@gmail.com logueada Play Store + license tester + ve "Aurex (versión Beta interna)" + puede ver opción de compra en Play Store listing (sheet azul de tarjeta de prueba). |
+
+**🚨 IMPORTANTE PARA Code futuro: NO volver a sugerir estas hipótesis como "causas probables". Están todas descartadas con evidencia visual + logs.**
+
 ### 4.4 Hipótesis causa raíz
 
 Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nuevo, feb 2026). Matchea Issue #3039 RC (acknowledged enero 2026 sin fix público).
