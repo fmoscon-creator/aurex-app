@@ -481,13 +481,17 @@ section.blk .sect-sub{margin-left:auto;margin-right:auto}
 .alert-note{margin-top:26px;padding:18px 24px;background:rgba(212,160,23,0.05);border-left:3px solid var(--gold);border-radius:6px;font-size:13.5px;color:var(--text-sec);font-style:italic}
 
 /* === B8.5 more you can do === */
-.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:36px}
-@media(max-width:980px){.more-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:580px){.more-grid{grid-template-columns:1fr}}
-.more-item{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;transition:all .3s}
-.more-item:hover{border-color:var(--gold);transform:translateY(-3px)}
-.more-item img{width:100%;max-width:200px;margin:0 auto 14px;border-radius:10px;display:block;aspect-ratio:9/19.5;object-fit:cover}
-.more-item p{font-family:var(--mono);font-size:11.5px;color:var(--gold);line-height:1.5;letter-spacing:.2px}
+.more-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:36px}
+@media(max-width:980px){.more-grid{grid-template-columns:repeat(2,1fr);gap:18px}}
+@media(max-width:580px){.more-grid{grid-template-columns:1fr;gap:16px}}
+.more-item{background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.6) 100%);border:1px solid rgba(212,160,23,0.28);border-radius:18px;padding:18px 18px 22px;text-align:center;transition:all .3s;position:relative;overflow:hidden}
+.more-item::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);opacity:.5;transition:opacity .3s}
+.more-item:hover{border-color:var(--gold-bright);transform:translateY(-4px);box-shadow:0 16px 40px rgba(212,160,23,0.18),0 0 60px rgba(212,160,23,0.08)}
+.more-item:hover::before{opacity:1}
+.more-item-img-wrap{background:linear-gradient(180deg,rgba(13,8,0,0.7) 0%,rgba(8,4,0,1) 100%);border:1px solid rgba(212,160,23,0.18);border-radius:14px;padding:10px;margin-bottom:14px;transition:border-color .3s}
+.more-item:hover .more-item-img-wrap{border-color:rgba(212,160,23,0.45)}
+.more-item img{width:100%;display:block;aspect-ratio:4/5;object-fit:contain;border-radius:8px;background:#080400}
+.more-item p{font-family:var(--display);font-size:13.5px;color:rgba(245,240,232,0.92);line-height:1.5;letter-spacing:.1px;margin:0;font-weight:400}
 
 /* === B9 languages === */
 .lang-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:38px;max-width:780px;margin-left:auto;margin-right:auto}
@@ -1315,10 +1319,10 @@ html{scroll-behavior:smooth}
       <h2 style="text-align:center" data-i18n="b85_h2">More you can do with AUREX.</h2>
     </div>
     <div class="more-grid">
-      <div class="more-item reveal"><img src="assets/captures/share_signal_en.jpg" alt="Share signal" data-i18n-alt="alt_share_signal"><p data-i18n="b85_share_p">Compartí cualquier señal por Telegram, Mail o link de WhatsApp</p></div>
-      <div class="more-item reveal reveal-delay-1"><img src="assets/captures/new_list_en.jpg" alt="New list" data-i18n-alt="alt_new_list"><p data-i18n="b85_list_p">Creá watchlists personalizadas con etiquetas de color</p></div>
-      <div class="more-item reveal reveal-delay-2"><img src="assets/captures/price_alert_en.jpg" alt="Price alert" data-i18n-alt="alt_price_alert"><p data-i18n="b85_alert_p">Configurá alertas de precio en segundos — arriba, abajo, o %</p></div>
-      <div class="more-item reveal reveal-delay-3"><img src="assets/captures/add_asset_en.jpg" alt="Add asset" data-i18n-alt="alt_add_asset"><p data-i18n="b85_asset_p">Agregá cualquiera de los 350 activos a tu portfolio</p></div>
+      <div class="more-item reveal"><div class="more-item-img-wrap"><img src="assets/captures/share_signal_en.jpg" alt="Share signal" data-i18n-alt="alt_share_signal"></div><p data-i18n="b85_share_p">Compartí cualquier señal por Telegram, Mail o link de WhatsApp</p></div>
+      <div class="more-item reveal reveal-delay-1"><div class="more-item-img-wrap"><img src="assets/captures/new_list_en.jpg" alt="New list" data-i18n-alt="alt_new_list"></div><p data-i18n="b85_list_p">Creá watchlists personalizadas con etiquetas de color</p></div>
+      <div class="more-item reveal reveal-delay-2"><div class="more-item-img-wrap"><img src="assets/captures/price_alert_en.jpg" alt="Price alert" data-i18n-alt="alt_price_alert"></div><p data-i18n="b85_alert_p">Configurá alertas de precio en segundos — arriba, abajo, o %</p></div>
+      <div class="more-item reveal reveal-delay-3"><div class="more-item-img-wrap"><img src="assets/captures/add_asset_en.jpg" alt="Add asset" data-i18n-alt="alt_add_asset"></div><p data-i18n="b85_asset_p">Agregá cualquiera de los 350 activos a tu portfolio</p></div>
     </div>
   </div>
 </section>
