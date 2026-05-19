@@ -303,7 +303,8 @@
     "b8_card_pulse_h3": "PULSE Alerts",
     "b8_card_price_h3": "Price Alerts",
     "b8_card_event_h3": "Event Alerts",
-    "alert_see_app": "See it in app"
+    "alert_see_app": "See it in app",
+    "lq_title": "Market Pulse · Global"
   },
   "es": {
     "nav_features": "Características",
@@ -594,7 +595,8 @@
     "b8_card_pulse_h3": "Alertas PULSE",
     "b8_card_price_h3": "Alertas de Precio",
     "b8_card_event_h3": "Alertas de Eventos",
-    "alert_see_app": "Ver en la app"
+    "alert_see_app": "Ver en la app",
+    "lq_title": "Pulso del Mercado · Global"
   },
   "pt": {
     "nav_features": "Recursos",
@@ -885,7 +887,8 @@
     "b8_card_pulse_h3": "Alertas PULSE",
     "b8_card_price_h3": "Alertas de Preço",
     "b8_card_event_h3": "Alertas de Eventos",
-    "alert_see_app": "Ver no app"
+    "alert_see_app": "Ver no app",
+    "lq_title": "Pulso do Mercado · Global"
   },
   "zh": {
     "nav_features": "功能",
@@ -1176,7 +1179,8 @@
     "b8_card_pulse_h3": "PULSE 提醒",
     "b8_card_price_h3": "价格提醒",
     "b8_card_event_h3": "事件提醒",
-    "alert_see_app": "在 app 中查看"
+    "alert_see_app": "在 app 中查看",
+    "lq_title": "市场脉搏 · 全球"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1467,7 +1471,8 @@
     "b8_card_pulse_h3": "Alertes PULSE",
     "b8_card_price_h3": "Alertes de Prix",
     "b8_card_event_h3": "Alertes Événements",
-    "alert_see_app": "Voir dans l'app"
+    "alert_see_app": "Voir dans l'app",
+    "lq_title": "Pouls du Marché · Global"
   },
   "it": {
     "nav_features": "Funzioni",
@@ -1758,7 +1763,8 @@
     "b8_card_pulse_h3": "Avvisi PULSE",
     "b8_card_price_h3": "Avvisi di Prezzo",
     "b8_card_event_h3": "Avvisi Eventi",
-    "alert_see_app": "Vedi nell'app"
+    "alert_see_app": "Vedi nell'app",
+    "lq_title": "Polso del Mercato · Global"
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2049,7 +2055,8 @@
     "b8_card_pulse_h3": "PULSE अलर्ट",
     "b8_card_price_h3": "मूल्य अलर्ट",
     "b8_card_event_h3": "इवेंट अलर्ट",
-    "alert_see_app": "ऐप में देखें"
+    "alert_see_app": "ऐप में देखें",
+    "lq_title": "मार्केट पल्स · ग्लोबल"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2340,6 +2347,7 @@
     "b8_card_pulse_h3": "تنبيهات PULSE",
     "b8_card_price_h3": "تنبيهات السعر",
     "b8_card_event_h3": "تنبيهات الأحداث",
-    "alert_see_app": "اعرض في التطبيق"
+    "alert_see_app": "اعرض في التطبيق",
+    "lq_title": "نبض السوق · عالمي"
   }
 }

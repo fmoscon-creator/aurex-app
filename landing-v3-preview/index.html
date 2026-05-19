@@ -187,7 +187,7 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .feat-grid-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
 @media(max-width:880px){.feat-grid-mini{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}}
 @media(max-width:480px){.feat-grid-mini{grid-template-columns:1fr;gap:8px}}
-.feat-mini{position:relative;text-align:left;padding:18px 18px 36px;min-height:135px;background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.5) 100%);border:1px solid rgba(212,160,23,0.32);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;display:flex;flex-direction:column;gap:8px;transition:all .25s;overflow:hidden}
+.feat-mini{position:relative;text-align:left;padding:18px;min-height:135px;background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.5) 100%);border:1px solid rgba(212,160,23,0.32);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;display:flex;flex-direction:column;gap:8px;transition:all .25s;overflow:hidden}
 @media(max-width:480px){.feat-mini{min-height:115px}}
 .feat-mini::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);opacity:.4;transition:opacity .25s}
 .feat-mini:hover{border-color:var(--gold-bright);transform:translateY(-3px);background:linear-gradient(180deg,rgba(212,160,23,0.12) 0%,rgba(8,4,0,0.65) 100%);box-shadow:0 12px 30px rgba(212,160,23,0.18)}
@@ -196,8 +196,8 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .feat-mini-icon{font-size:24px;line-height:1;display:block}
 .feat-mini-title{font-family:var(--display);font-size:14px;font-weight:400;color:var(--gold-bright);margin:0;letter-spacing:.3px;line-height:1.25}
 .feat-mini-short{font-family:var(--mono);font-size:11px;color:var(--text-sec);margin:0;line-height:1.4;letter-spacing:.2px;flex:1}
-.feat-mini-chevron{position:absolute;bottom:12px;right:14px;font-size:18px;color:var(--gold);opacity:.6;transition:all .2s;line-height:1}
-.feat-mini:hover .feat-mini-chevron{opacity:1;transform:translateY(2px)}
+.feat-mini-cta{display:inline-flex;align-items:center;gap:6px;margin-top:auto;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);letter-spacing:.5px;font-weight:700;text-transform:uppercase;transition:gap .2s}
+.feat-mini:hover .feat-mini-cta{gap:10px}
 
 /* === MODAL feature detail === */
 .feat-modal-overlay{position:fixed;inset:0;background:rgba(4,2,0,0.85);backdrop-filter:blur(10px);z-index:300;display:none;align-items:center;justify-content:center;padding:20px;animation:featFade .25s ease}
@@ -261,6 +261,16 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
   background: transparent;
   color: var(--gold);
   cursor: default;
+}
+.hero-labels .section-label.section-label-link{
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color .2s, color .2s, background .2s;
+}
+.hero-labels .section-label.section-label-link:hover{
+  border-color: var(--gold-bright);
+  color: var(--gold-bright);
+  background: rgba(212,160,23,0.08);
 }
 .hero-labels .section-label-cta{
   background: linear-gradient(135deg, var(--gold-bright), var(--gold));
@@ -900,7 +910,7 @@ html{scroll-behavior:smooth}
     <div class="hero-text reveal">
       <!-- 7-X.a: 2 labels lado a lado — TERMINAL GLOBAL + POR QUÉ SOMOS MEJORES (lleva al benchmark) -->
       <div class="hero-labels">
-        <span class="section-label" data-i18n="hero_label">TERMINAL GLOBAL EN VIVO</span>
+        <a class="section-label section-label-link" href="#live-quotes" data-i18n="hero_label">TERMINAL GLOBAL EN VIVO</a>
         <a class="section-label-cta" href="#we-compare" data-i18n="hero_label_benchmark">POR QUÉ SOMOS MEJORES</a>
       </div>
       <h1 data-i18n="hero_h1">La terminal global de los mercados.</h1>
@@ -961,19 +971,19 @@ html{scroll-behavior:smooth}
       <p class="sub" style="max-width:680px;margin:0 auto" data-i18n="b27_sub">Cada característica diseñada para que tomes decisiones informadas sobre tu portfolio. Sin ejecutar operaciones. Sin administrar tu dinero. Solo la foto completa del mercado, siempre.</p>
     </div>
     <div class="feat-grid-mini">
-      <button type="button" class="feat-mini reveal" data-feat-id="f1"><span class="feat-mini-icon" aria-hidden="true">🌍</span><h3 class="feat-mini-title" data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3><p class="feat-mini-short" data-i18n="b27_f1_short">350 activos · 9 instrumentos</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f2"><span class="feat-mini-icon" aria-hidden="true">🤖</span><h3 class="feat-mini-title" data-i18n="b27_f2_t">Motor IA con 24 variables</h3><p class="feat-mini-short" data-i18n="b27_f2_short">24 variables · cada señal explicada</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f3"><span class="feat-mini-icon" aria-hidden="true">📊</span><h3 class="feat-mini-title" data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3><p class="feat-mini-short" data-i18n="b27_f3_short">14 variables macro · contexto global</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal" data-feat-id="f4"><span class="feat-mini-icon" aria-hidden="true">💼</span><h3 class="feat-mini-title" data-i18n="b27_f4_t">Portfolio con termómetro IA</h3><p class="feat-mini-short" data-i18n="b27_f4_short">Termómetro IA · PnL multi-período</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f5"><span class="feat-mini-icon" aria-hidden="true">🔔</span><h3 class="feat-mini-title" data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3><p class="feat-mini-short" data-i18n="b27_f5_short">Push y Telegram · 15 tipos</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f6"><span class="feat-mini-icon" aria-hidden="true">👀</span><h3 class="feat-mini-title" data-i18n="b27_f6_t">Watchlists ilimitadas</h3><p class="feat-mini-short" data-i18n="b27_f6_short">Watchlists temáticas · comparación instantánea</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal" data-feat-id="f7"><span class="feat-mini-icon" aria-hidden="true">⚡</span><h3 class="feat-mini-title" data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3><p class="feat-mini-short" data-i18n="b27_f7_short">10 variables · 3 activos enfrentados</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f8"><span class="feat-mini-icon" aria-hidden="true">🌐</span><h3 class="feat-mini-title" data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3><p class="feat-mini-short" data-i18n="b27_f8_short">EN/ES/PT/ZH/FR/IT/HI/AR · multi-moneda</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f9"><span class="feat-mini-icon" aria-hidden="true">📱</span><h3 class="feat-mini-title" data-i18n="b27_f9_t">iOS · Android · Web (PWA)</h3><p class="feat-mini-short" data-i18n="b27_f9_short">Misma cuenta · 3 plataformas</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal" data-feat-id="f10"><span class="feat-mini-icon" aria-hidden="true">📤</span><h3 class="feat-mini-title" data-i18n="b27_f10_t">Compartir señales</h3><p class="feat-mini-short" data-i18n="b27_f10_short">Telegram, WhatsApp, Email · 1 toque</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f11"><span class="feat-mini-icon" aria-hidden="true">📋</span><h3 class="feat-mini-title" data-i18n="b27_f11_t">Crear listas personalizadas</h3><p class="feat-mini-short" data-i18n="b27_f11_short">Nombre y color propios · ordenadas por IA</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f12"><span class="feat-mini-icon" aria-hidden="true">⏰</span><h3 class="feat-mini-title" data-i18n="b27_f12_t">Agregar alertas en segundos</h3><p class="feat-mini-short" data-i18n="b27_f12_short">Precio configurable · push instantáneo</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
-      <button type="button" class="feat-mini reveal reveal-delay-3" data-feat-id="f13"><span class="feat-mini-icon" aria-hidden="true">➕</span><h3 class="feat-mini-title" data-i18n="b27_f13_t">Agregar activos al portfolio</h3><p class="feat-mini-short" data-i18n="b27_f13_short">3 toques · PnL automático</p><span class="feat-mini-chevron" aria-hidden="true">⌄</span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f1"><span class="feat-mini-icon" aria-hidden="true">🌍</span><h3 class="feat-mini-title" data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3><p class="feat-mini-short" data-i18n="b27_f1_short">350 activos · 9 instrumentos</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f2"><span class="feat-mini-icon" aria-hidden="true">🤖</span><h3 class="feat-mini-title" data-i18n="b27_f2_t">Motor IA con 24 variables</h3><p class="feat-mini-short" data-i18n="b27_f2_short">24 variables · cada señal explicada</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f3"><span class="feat-mini-icon" aria-hidden="true">📊</span><h3 class="feat-mini-title" data-i18n="b27_f3_t">AUREX Pulse · 14 variables macro</h3><p class="feat-mini-short" data-i18n="b27_f3_short">14 variables macro · contexto global</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f4"><span class="feat-mini-icon" aria-hidden="true">💼</span><h3 class="feat-mini-title" data-i18n="b27_f4_t">Portfolio con termómetro IA</h3><p class="feat-mini-short" data-i18n="b27_f4_short">Termómetro IA · PnL multi-período</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f5"><span class="feat-mini-icon" aria-hidden="true">🔔</span><h3 class="feat-mini-title" data-i18n="b27_f5_t">15 tipos de alerta · push y Telegram</h3><p class="feat-mini-short" data-i18n="b27_f5_short">Push y Telegram · 15 tipos</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f6"><span class="feat-mini-icon" aria-hidden="true">👀</span><h3 class="feat-mini-title" data-i18n="b27_f6_t">Watchlists ilimitadas</h3><p class="feat-mini-short" data-i18n="b27_f6_short">Watchlists temáticas · comparación instantánea</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f7"><span class="feat-mini-icon" aria-hidden="true">⚡</span><h3 class="feat-mini-title" data-i18n="b27_f7_t">Comparador 3 activos lado a lado</h3><p class="feat-mini-short" data-i18n="b27_f7_short">10 variables · 3 activos enfrentados</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f8"><span class="feat-mini-icon" aria-hidden="true">🌐</span><h3 class="feat-mini-title" data-i18n="b27_f8_t">8 idiomas · multi-moneda</h3><p class="feat-mini-short" data-i18n="b27_f8_short">EN/ES/PT/ZH/FR/IT/HI/AR · multi-moneda</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f9"><span class="feat-mini-icon" aria-hidden="true">📱</span><h3 class="feat-mini-title" data-i18n="b27_f9_t">iOS · Android · Web (PWA)</h3><p class="feat-mini-short" data-i18n="b27_f9_short">Misma cuenta · 3 plataformas</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal" data-feat-id="f10"><span class="feat-mini-icon" aria-hidden="true">📤</span><h3 class="feat-mini-title" data-i18n="b27_f10_t">Compartir señales</h3><p class="feat-mini-short" data-i18n="b27_f10_short">Telegram, WhatsApp, Email · 1 toque</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-1" data-feat-id="f11"><span class="feat-mini-icon" aria-hidden="true">📋</span><h3 class="feat-mini-title" data-i18n="b27_f11_t">Crear listas personalizadas</h3><p class="feat-mini-short" data-i18n="b27_f11_short">Nombre y color propios · ordenadas por IA</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-2" data-feat-id="f12"><span class="feat-mini-icon" aria-hidden="true">⏰</span><h3 class="feat-mini-title" data-i18n="b27_f12_t">Agregar alertas en segundos</h3><p class="feat-mini-short" data-i18n="b27_f12_short">Precio configurable · push instantáneo</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
+      <button type="button" class="feat-mini reveal reveal-delay-3" data-feat-id="f13"><span class="feat-mini-icon" aria-hidden="true">➕</span><h3 class="feat-mini-title" data-i18n="b27_f13_t">Agregar activos al portfolio</h3><p class="feat-mini-short" data-i18n="b27_f13_short">3 toques · PnL automático</p><span class="feat-mini-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></button>
     </div>
   </div>
 </section>
@@ -1439,7 +1449,7 @@ html{scroll-behavior:smooth}
 
 <!-- ===== BLOQUE 11 (orden nuevo 19-may): PULSO DEL MERCADO EN VIVO (Live Quotes) ===== -->
 <!-- ===== BLOQUE 11.5: LIVE QUOTES TABLERO TACTICAL ===== -->
-<section class="blk center">
+<section class="blk center" id="live-quotes">
   <div class="wrap">
     <div class="reveal lq-section-title">
       <span class="section-label" data-i18n="lq_label">Live market pulse</span>
@@ -1449,7 +1459,7 @@ html{scroll-behavior:smooth}
 
     <div class="lq-board reveal">
       <div class="lq-header">
-        <div class="lq-title">Market Pulse · Global</div>
+        <div class="lq-title" data-i18n="lq_title">Market Pulse · Global</div>
         <div class="lq-status">
           <span class="lq-dot"></span>
           <span>LIVE</span>
