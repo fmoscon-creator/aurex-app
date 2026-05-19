@@ -7,6 +7,24 @@
 
 ## 🚨 P0 — INMEDIATO al arrancar
 
+### 0. ⭐ NUEVO 19-may 07:00 AR — Compilar Build 25 iOS TestFlight (validación masiva)
+
+**ACLARACIÓN IMPORTANTE**: Build 25 iOS TestFlight **NO requiere** aprobación Build 36 Android Producción. Son flujos independientes. TestFlight = testing interno con review propio mucho más rápido. La única blocking piece para iOS es Build 17 Apple Review que sigue en queue (eso es para PRODUCCIÓN, no TestFlight).
+
+**Aprovechar Build 25 TestFlight para validar TODO junto en 1 build**:
+1. Fix `usePlan.js` actualizado → resolver bug PLAN FREE iPhone (v1.0.24 tiene versión vieja con bug, se confirmó reinstalando que no era cache local)
+2. IAP iOS con StoreKit (mismos fixes Build 36 Android — `purchaseProduct` → `navigation.navigate('Subscription')`)
+3. Bug G fix logout (session persistence)
+4. Push notifications iOS funcionando
+5. Telegram integration
+6. TODOS los ajustes pendientes acumulados — ver brief maestro §2.7 (paridad Android v1.0.33 + IAP)
+
+**NO tocar Build 17** que sigue en queue Apple Review.
+
+**Owner**: Code (pre-compile + verificación) + Fernando (compile en Xcode + upload a TestFlight + login en iPhone con fmoscon para validar).
+
+---
+
 ### 1. Verificar Google Play Console — aprobación Build 36
 - Estado al cierre: **en revisión** desde 18-may noche AR (~36h)
 - Esperado: aprobación entre 2-24h normales, hasta 72h en casos lentos
