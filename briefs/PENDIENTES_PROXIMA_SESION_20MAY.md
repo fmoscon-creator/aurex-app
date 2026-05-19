@@ -7,21 +7,54 @@
 
 ## 🚨 P0 — INMEDIATO al arrancar
 
-### 0. ⭐ NUEVO 19-may 07:00 AR — Compilar Build 25 iOS TestFlight (validación masiva)
+### 0. 🚨⭐ TOP PRIORIDAD ABSOLUTA — Compilar Build 25 iOS TestFlight (validación masiva)
 
-**ACLARACIÓN IMPORTANTE**: Build 25 iOS TestFlight **NO requiere** aprobación Build 36 Android Producción. Son flujos independientes. TestFlight = testing interno con review propio mucho más rápido. La única blocking piece para iOS es Build 17 Apple Review que sigue en queue (eso es para PRODUCCIÓN, no TestFlight).
+> **Decisión explícita Fernando 19-may 07:00 AR**:
+> *"REGISTRA ESO PARA MAÑANA. TIENE QUE SER PRIORIDAD BUILD 25 IOS A TESTFLIGHT CON TODO ESTO MÁS TODO LO ANOTADO HISTÓRICO. Cambiamos el deslogueo automático, las pantallas de acceso a login, el tema cobro de planes y alertas push y Telegram y tema de restricción real de candados y features de cada plan. SALVO VENGA UNA MALA NOTICIA DE ANDROID, ESO ES LO URGENTÍSIMO."*
 
-**Aprovechar Build 25 TestFlight para validar TODO junto en 1 build**:
-1. Fix `usePlan.js` actualizado → resolver bug PLAN FREE iPhone (v1.0.24 tiene versión vieja con bug, se confirmó reinstalando que no era cache local)
-2. IAP iOS con StoreKit (mismos fixes Build 36 Android — `purchaseProduct` → `navigation.navigate('Subscription')`)
-3. Bug G fix logout (session persistence)
-4. Push notifications iOS funcionando
-5. Telegram integration
-6. TODOS los ajustes pendientes acumulados — ver brief maestro §2.7 (paridad Android v1.0.33 + IAP)
+**ACLARACIÓN técnica importante**: TestFlight (testing interno) NO requiere aprobación Build 36 Android Producción ni aprobación Build 17 Apple Review. Son flujos independientes — TestFlight tiene su propio review más rápido o auto-aprobado para builds internos. La única blocking piece histórica era IAP Android funcionando — eso ✅ se cumplió 18-may con Build 36 (compra real validada Samsung 17:30 AR).
 
-**NO tocar Build 17** que sigue en queue Apple Review.
+#### Pre-requisitos VERIFICADOS ✅
 
-**Owner**: Code (pre-compile + verificación) + Fernando (compile en Xcode + upload a TestFlight + login en iPhone con fmoscon para validar).
+| Pre-req | Estado |
+|---|---|
+| IAP Android Build 36 funcionando | ✅ Validado 18-may 17:30 AR con compra real Samsung |
+| TestFlight independiente de Apple Review producción | ✅ Confirmado |
+| Código `usePlan.js` actualizado en branch `dev` | ✅ (lo que va al Build 25 levantará plan ELITE del backend correctamente, resolviendo bug iPhone v1.0.24) |
+| Build 17 sigue en queue Apple Review | ✅ NO TOCAR (cualquier cambio metadata = reset queue) |
+
+#### Lista CONSOLIDADA de lo que va al Build 25 iOS
+
+**Fixes nuevos detectados 19-may** (los que Fernando mencionó explícitamente):
+1. ❌→✅ **Deslogueo automático** (Bug G fix) — sesión persistente cold reboot / force-stop 90s / background 90s. Paridad Android v1.0.33+
+2. ❌→✅ **Pantallas de acceso / login UX** — flujo Signup/Login refactor (paridad con Build 21+ Android donde se arregló bug P0 signup)
+3. ❌→✅ **Cobro de planes IAP iOS** — Apple StoreKit + RC. Port del fix Build 36 Android (`Purchases.purchaseProduct` deprecada → `navigation.navigate('Subscription')` con `purchasePackage(pkg)` + offerToken). Crítico
+4. ❌→✅ **Alertas Push iOS** — APNS wired y funcionando (Build 18 falló por RNSVG vtable — resolver Podfile + pod install)
+5. ❌→✅ **Alertas Telegram** — wiring real de alertas operativas vía Telegram (paridad Android backend)
+6. ❌→✅ **Restricción REAL candados y features por plan** — FREE / PRO / ELITE limits aplicados en Portfolio (5 activos), Mercados, Watchlist (1 lista FREE), IA (3/día FREE), Alertas (6 tipos básicos FREE). Lock icons + mensajes "Disponible en PRO/ELITE". PlanLimitModal con copy específico.
+7. ❌→✅ **Bug PLAN FREE iPhone** (descubierto 19-may noche) — `usePlan.js` actualizado en branch dev ya tiene el fix; v1.0.24 instalado en iPhone Fernando tiene versión vieja con bug que queda pegado en FREE aunque backend retorne ELITE
+
+**Items históricos del brief §2.7 que también van**:
+8. **Marca / metadata AUREX LIVE** — limpiar `src/lib/i18n.js` L145+L257 ("AUREX AI" / "AUREX IA"). `ios/AurexApp/Info.plist` `CFBundleDisplayName = AUREX → AUREX LIVE`.
+9. **Tab Perfil "Cómo usar AUREX"** — tutorial in-app dentro del tab Perfil (paridad Android)
+10. **Onboarding 2 botones slide 4** — "Crear cuenta gratis" → SignupScreen + "Ya tengo cuenta" → LoginScreen (antes 3 botones todos a Login)
+11. **Bug H** Modal Agregar Activo (teclado tapaba botón Guardar)
+12. **Bug I** doble tap
+13. **Cualquier bug acumulado Android Build 33+** que aplique también a iOS
+14. **Bump versiones**: `ios/AurexApp.xcodeproj/project.pbxproj`: `CURRENT_PROJECT_VERSION 24 → 25` y `MARKETING_VERSION 1.0 → 1.0.25`
+15. **Podfile + pod install**: `cd ~/AurexApp/ios && pod install` validar que compile sin RNSVG vtable error (Build 18 intentó 12 podfiles distintos — usar el intento 12 issue #8883 arlovip que se escribió en disco)
+
+#### Flujo de trabajo mañana
+
+1. **Code**: pre-compile checklist — verificar que cada uno de los 15 items arriba está en código branch `dev` (`~/AurexApp` commit `c990612` + commits posteriores hasta `66662cd` Build 36 Android)
+2. **Code + Escritorio**: cross-check item por item contra Android v1.0.33+ producción (paridad real, no asumida)
+3. **Fernando**: cuando OK del checklist → compila en Xcode + sube a TestFlight (NO tocar Build 17 metadata)
+4. **Fernando**: instala v1.0.25 en iPhone via TestFlight + login fmoscon + valida cada uno de los 7 fixes nuevos
+5. **Reporte**: documentar resultado de cada item en brief maestro §2.7
+
+#### Salvo qué se posterga
+
+Esta prioridad cae **SOLO** si llega una **mala noticia urgente de Google sobre Build 36** (otro rechazo, problema en review, etc) — en cuyo caso primero se atiende esa emergencia y después se vuelve a Build 25 iOS.
 
 ---
 

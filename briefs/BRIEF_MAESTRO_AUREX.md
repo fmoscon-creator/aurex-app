@@ -22,7 +22,7 @@
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
 | 🍎 **Apple Build 17 iOS** | 🟡 Re-submission EN COLA Apple Review (solo marca AUREX LIVE) | Esperar respuesta Apple — NO distribuir aunque apruebe (Manual Release OFF) | Respuesta Apple Review |
-| 🍎 **iOS Build 25 (futuro)** | ⏸ NO compilado — pre-requisitos sin cumplir | Paridad Android 1.0.33 + IAP funcionando + marca aprobada en Build 17 | IAP funcionando en Android + marca aprobada |
+| 🚨🍎 **iOS Build 25 → TestFlight** | 🟢 **TODOS PRE-REQUISITOS CUMPLIDOS** (IAP Android Build 36 ✅) — **TOP PRIORIDAD ABSOLUTA MAÑANA 20-may** según Fernando | Compilar + validar 15 items (7 fixes nuevos + 8 históricos) — ver `PENDIENTES_PROXIMA_SESION_20MAY.md` sección 0 | NO requiere aprobación Build 17 ni Build 36 prod — TestFlight es flujo independiente |
 | 🤖 **Android Build 33 producción** | 🟢 ACTIVO Play Store hasta aprobación Build 36 (20 instalaciones, 177 países) | Sin acción — será reemplazado automáticamente por Build 36 al aprobar Google | Aprobación Google Build 36 |
 | 🤖 **Android Build 35 Internal Testing** | ⏹ Superado por Build 36 (Internal Testing también ya en Build 36 desde 18-may 17:17 AR) | Sin acción — quedó como histórico | — |
 | 🤖 **Android Build 36 v1.0.36** | 🟡 **EN REVISIÓN GOOGLE PLAY → PRODUCCIÓN** (enviado 18-may noche AR) | Esperar aprobación (2-24h estimado). Build 33 sigue activo hasta entonces | Aprobación Google |
@@ -132,9 +132,12 @@ Build 17 NO fue compilado para ir a producción tal como está. Fue submitted, r
 > Lo que sigue es la **lista de qué tiene que tener Build 25 iOS antes de subir a TestFlight.**
 > Hoy NO profundizamos en cada item — cuando llegue el momento, Code + Escritorio cruzan cada uno con el código real de Android v1.0.33 producción para garantizar paridad exacta.
 
-### Pre-requisito ABSOLUTO antes de compilar Build 25 iOS
+### Pre-requisito ABSOLUTO antes de compilar Build 25 iOS — ✅ CUMPLIDO
 
-🚨 **IAP funcionando en Android producción (Build 36 con fix RC o Plan B aplicado).** Sin esto, Build 25 iOS no se compila — desperdiciaríamos el slot Apple Review por un build con cobro roto.
+🟢 **IAP Android Build 36 funcionando** (validado 18-may 17:30 AR con compra real ELITE Samsung fmoscon) ✅
+🟢 **TestFlight = flujo INDEPENDIENTE**: NO requiere aprobación Build 17 Apple Review producción ni Build 36 Google Producción. Aclaración explícita Fernando 19-may 07:00 AR.
+
+**→ Build 25 iOS TestFlight HABILITADO para compilar 20-may como TOP PRIORIDAD ABSOLUTA.**
 
 ### Items pendientes Build 25 iOS
 
