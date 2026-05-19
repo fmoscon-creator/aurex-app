@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 18-may-2026 ~03:00 AR
-> **Última actualización significativa:** §5 Landing v3 — sesión 18-may madrugada cerró 7-B (Cobertura cards + iconos + pills IA/alertas + 350+), i18n masivo 91 textos hardcoded EN cableados + 65 keys preexistentes faltantes en PT/ZH/FR/IT/HI/AR (998 traducciones totales agregadas, 8 idiomas ahora con 270 keys cada uno), 7-F popup Newsletter rediseñado (logo + título "NEWSLETTER AUREX" + brand dorado), tipografía Boldonse aplicada a títulos (Fernando re-evalúa mañana 18-may, le parece informal en grandes). 6 reglas nuevas en memoria.
+> **Última actualización:** 19-may-2026 ~00:30 AR
+> **Última actualización significativa:** §3 Android — Build 36 v1.0.36 **ENVIADO A REVISIÓN GOOGLE PLAY → PRODUCCIÓN** el 18-may noche AR junto con 3 cambios más (Privacy Policy URL `/docs/privacy.html`, Data Safety cuestionario completado, Pausar segmento Alpha). Build 33 sigue activo en Producción hasta que Google apruebe (estimado 2-24h). **Paso 2 registrado**: cuando Google apruebe Build 36 en Producción, subir el mismo AAB al track Alpha (Prueba cerrada) para que los 31,58% de testers en v1.0.17 se actualicen a v1.0.36 (session persistence + push + IAP funcionando).
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -23,9 +23,12 @@
 |---|---|---|---|
 | 🍎 **Apple Build 17 iOS** | 🟡 Re-submission EN COLA Apple Review (solo marca AUREX LIVE) | Esperar respuesta Apple — NO distribuir aunque apruebe (Manual Release OFF) | Respuesta Apple Review |
 | 🍎 **iOS Build 25 (futuro)** | ⏸ NO compilado — pre-requisitos sin cumplir | Paridad Android 1.0.33 + IAP funcionando + marca aprobada en Build 17 | IAP funcionando en Android + marca aprobada |
-| 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (20 instalaciones, 177 países) | Mantener mientras se prepara Build 36 | — |
-| 🤖 **Android Build 35 Internal Testing** | 🟡 Subido hace ~23h, FALLÓ test IAP | No promover. Build 36 va a superponer | Respuesta RC #76809 |
-| 🎉 **IAP / RevenueCat ticket #76809** | ✅ **RESUELTO 18-may 17:30 AR con Build 36 (rebuild limpio + 4 fixes)** | Cancelar suscripción ELITE test + promover Build 36 a Producción + cerrar ticket RC | — |
+| 🤖 **Android Build 33 producción** | 🟢 ACTIVO Play Store hasta aprobación Build 36 (20 instalaciones, 177 países) | Sin acción — será reemplazado automáticamente por Build 36 al aprobar Google | Aprobación Google Build 36 |
+| 🤖 **Android Build 35 Internal Testing** | ⏹ Superado por Build 36 (Internal Testing también ya en Build 36 desde 18-may 17:17 AR) | Sin acción — quedó como histórico | — |
+| 🤖 **Android Build 36 v1.0.36** | 🟡 **EN REVISIÓN GOOGLE PLAY → PRODUCCIÓN** (enviado 18-may noche AR) | Esperar aprobación (2-24h estimado). Build 33 sigue activo hasta entonces | Aprobación Google |
+| 🤖 **Track Alpha (Prueba cerrada)** | 🟡 31,58% testers en v1.0.17 vieja (sin Bug G fix logout, sin IAP, sin Tier 1) | **PASO 2 cuando Google apruebe Build 36 Producción:** subir el mismo AAB al track Alpha | Aprobación Google Build 36 Producción |
+| 🎉 **IAP / RevenueCat ticket #76809** | ✅ **RESUELTO 18-may 17:30 AR con Build 36 (rebuild limpio + 4 fixes)** | Cancelar suscripción ELITE test + cerrar ticket RC | — |
+| 🛡️ **Play Console Política Privacidad + Data Safety** | ✅ CORREGIDO 18-may (Privacy URL → `/docs/privacy.html` + cuestionario Data Safety completado, ambos por Escritorio) | Sin acción — en revisión junto a Build 36 | Aprobación Google |
 | 🎨 **Landing v3 aurex.live** | 🟡 PENDIENTE OK visual Fernando + Escritorio | Fernando abre 2 PNG + decide | Doble OK |
 | 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing v3 live | Landing v3 deploy |
 | 🌐 **PWA aurex.live** | 🟢 Live, fase 0 reorg ejecutada | Será reemplazada por landing v3 al deploy | — |
@@ -155,16 +158,52 @@ Cuando llegue el momento de compilar Build 25 iOS (después de Apple aprobar Bui
 
 ---
 
-## 3. ANDROID — Builds 33 / 34 / 35 / próximo 36
+## 3. ANDROID — Builds 33 / 34 / 35 / 36
 
-### 3.1 Estado real reconciliado (verificado 17-may 14:00 AR con Escritorio + git log)
+### 3.1 Estado real reconciliado (actualizado 18-may 23:00 AR con envío Play Console Producción)
 
 | Build | Estado real | Contenido | Evidencia |
 |---|---|---|---|
-| **33 / v1.0.33** | 🟢 **PRODUCCIÓN Play Store** | Bug H fix (selectedRow + ScrollView). 20 instalaciones, 177 países. **SIN** fix IAP, **SIN** fix toolbar S24, **SIN** fix crash ScreenFragment. | Confirmado Escritorio + commit `c990612` (16-may) |
-| **34 / v1.0.34** | 🟡 Solo commit, probablemente NUNCA subido a Play | IAP Tier 1 wiring frontend (Purchases.logIn/logOut) | commit `cd2f1dc` (16-may) — Escritorio no lo ve en Play Console |
-| **35 / v1.0.35** | 🟡 PRUEBA INTERNA subido hace ~23h | Intento de fix IAP que **NO funcionó** (mismo bug "producto no disponible"). Por eso se escaló ticket RC #76809 con texto + 6 capturas | Confirmado Escritorio + Fernando + Play Console |
-| **36 / v1.0.36** (próximo) | ⏸ NO compilado todavía | Debe incluir: fix RC IAP (cuando responda) + fix crash ScreenFragment + fix toolbar S24 + cualquier tema nuevo que aparezca | Pendiente acumular pendientes |
+| **33 / v1.0.33** | 🟢 **ACTIVO PRODUCCIÓN Play Store** hasta aprobación Build 36 | Bug H fix (selectedRow + ScrollView). 20 instalaciones, 177 países. **SIN** fix IAP, **SIN** fix toolbar S24, **SIN** fix crash ScreenFragment. | Confirmado Escritorio + commit `c990612` (16-may) |
+| **34 / v1.0.34** | 🟡 Solo commit, NUNCA subido a Play | IAP Tier 1 wiring frontend (Purchases.logIn/logOut) | commit `cd2f1dc` (16-may) — Escritorio no lo ve en Play Console |
+| **35 / v1.0.35** | ⏹ Superado por Build 36 | Intento de fix IAP que **NO funcionó** (mismo bug "producto no disponible"). Disparó el ticket RC #76809 que terminó resolviéndose con Build 36. | Histórico |
+| **36 / v1.0.36** | 🟡 **EN REVISIÓN GOOGLE PLAY → PRODUCCIÓN** (enviado 18-may noche AR). También activo en Internal Testing desde 18-may 17:17 AR (donde se validó el fix IAP con compra real). | Bug IAP RESUELTO (purchaseProduct → navigate Subscription) + IAP-6 orden + Alert debug revertido + `./gradlew clean` + version bump 35→36. **PENDIENTE en Build 36:** crash ScreenFragment + toolbar S24 (no se incluyeron por urgencia de cerrar IAP). | commits `66662cd` (privado) + `647ff7a` (snapshot público) — 18-may |
+
+### 3.1.b 🚀 Estado Play Console — 4 cambios EN REVISIÓN GOOGLE (enviado 18-may noche AR)
+
+Fernando envió los **4 cambios al review de Google** desde Play Console el 18-may por la noche AR. Mensaje literal de Play Console: *"Cambios en la etapa de revisión — Tus cambios están en proceso de revisión. Es posible que encontremos problemas adicionales cuando revisemos tu app."* ETA aprobación: **2-24 horas** (estimado Escritorio + experiencia previa Build 33).
+
+| # | Cambio | Estado pre-envío | Origen del bloqueo |
+|---|---|---|---|
+| 1 | **Build 36 v1.0.36 → Producción** | Internal Testing OK → Promovido a Producción | Resolución bug IAP §4.0 |
+| 2 | **Prueba cerrada Alpha → Pausar segmento** | Activo → Solicitud pausa (formalización para que Google no lo cuente como track separado durante esta review) | Limpieza tracks |
+| 3 | **Política de Privacidad URL** | `https://aurex.live/privacy.html` (HTTP 404 → Google rechazó) → corregido a `https://aurex.live/docs/privacy.html` | Rechazo Google 18-may. Doble fix aplicado: (a) Escritorio cambió URL en Play Console; (b) Code creó `aurex-app/privacy.html` redirect HTML (`<meta http-equiv="refresh">` + `window.location.replace('/docs/privacy.html')`) para que el path viejo no devuelva 404 a usuarios o crawlers que tengan el link cacheado. |
+| 4 | **Seguridad de los datos (Data Safety)** | Cuestionario incompleto → Completado por Escritorio | Rechazo Google 18-may |
+
+**Mientras Google revisa:** Build 33 sigue activo en Producción para los usuarios. Cero impacto.
+
+**Cuando Google apruebe (esperado próximas 24h):** Build 36 reemplaza a Build 33 en Producción automáticamente. **Acción de Code post-aprobación:** ejecutar Paso 2 (§3.1.c).
+
+### 3.1.c 📋 PASO 2 PENDIENTE — Subir Build 36 al track Alpha (Prueba cerrada)
+
+**Por qué importa:** el track **Alpha** (Prueba cerrada) tiene actualmente **31,58% de las instalaciones de testers en v1.0.17** (versión vieja de abril). Esa versión **no tiene**:
+- Bug G fix logout (los usuarios se deslogueaban solos a los pocos minutos)
+- Push notifications nativas funcionando
+- IAP funcionando (mismo bug §4.0)
+- Tier 1 IAP (Purchases.logIn/logOut sincronizados con Supabase)
+- 35 features posteriores acumuladas entre Build 17 y Build 36
+
+Fernando textual: *"es CLAVE que esos TESTERS tengan la APP sin que se les desloguee con Alertas PUSH y con posibilidad de comprar planes si quieren"*.
+
+**Cómo se ejecuta:**
+1. **Pre-requisito**: Google aprobó Build 36 en Producción (Build 33 dejó de ser activo y v1.0.36 ya se distribuye).
+2. **Acción en Play Console**: Reusar el mismo AAB de Build 36 (no compilar Build 37) y subirlo al track **Prueba cerrada — Alpha**.
+3. **Resultado esperado**: los testers Alpha que tengan v1.0.17 reciben actualización automática a v1.0.36 vía Play Store.
+4. **Owner**: Code guía a Fernando paso a paso en Play Console cuando llegue el momento. Tracked en task #62.
+
+### 3.1.d Snapshots públicos para audit Escritorio
+- **Build 35 (pre-fix):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/iap_audit_18may/code_snapshot_build35/`
+- **Build 36 (post-fix):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/iap_audit_18may/code_snapshot_build36/`
 
 ### 3.2 Pendientes consolidados Build 36
 
@@ -195,16 +234,15 @@ Cuando llegue el momento de compilar Build 25 iOS (después de Apple aprobar Bui
   - **D**: custom `tabBar` component. Complejidad alta.
   - **E**: híbrido condicional con Dimensions API.
 
-#### 3.2.3 🚨 P0 — Tier 1 IAP (pausado esperando RC)
+#### 3.2.3 ✅ Tier 1 IAP — RESUELTO Build 36
 
-- 6 cambios documentados en plan archivo-por-archivo (ver §4 IAP).
-- Bloqueado por respuesta RC ticket #76809.
+Tier 1 IAP aplicado desde Build 34 (commit `cd2f1dc`) y el bug raíz de `purchaseProduct` deprecada se resolvió en Build 36 (commit `66662cd`). Ver §4 IAP completo. **Sin acción pendiente.**
 
-### 3.3 Bump versiones cuando se compile Build 36
+### 3.3 Bump versiones Build 36 (✅ APLICADO 18-may)
 
-- `~/AurexApp/android/app/build.gradle`: `versionCode 35 → 36` y `versionName "1.0.35" → "1.0.36"`.
-- Backup AAB obligatorio en `~/AurexApp/backups/aab/` post-compilación.
-- NO compilar Build 36 hasta tener al menos el bloqueante externo IAP resuelto (RC respondió o pasaron 72h y arrancamos Plan B).
+- `~/AurexApp/android/app/build.gradle`: `versionCode 35 → 36` ✅ y `versionName "1.0.35" → "1.0.36"` ✅.
+- Backup AAB en `~/AurexApp/backups/aab/` post-compilación ✅.
+- **Para Build 37 (futuro):** crash ScreenFragment (§3.2.1) + toolbar S24 (§3.2.2) — ambos quedaron pendientes en Build 36 por priorizar IAP. Plus cualquier tema nuevo de Google Play Console que aparezca tras review Build 36.
 
 ### 3.4 Bug signup P0 (histórico, resuelto en Build 33)
 
@@ -233,9 +271,10 @@ Coincide al 100% con la evidencia del Issue `RevenueCat/purchases-android#3039` 
 
 **Pendientes inmediatos post-resolución:**
 1. Cancelar suscripción ELITE de prueba en Google Play Store > Suscripciones (Fernando manual)
-2. Promover Build 36 de Internal Testing → Production (reemplaza Build 33) — ✅ Fernando confirma: enviado a revisión Producción 18-may
-3. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución (esperar 24-48h por las dudas)
-4. Build 36 producción → desbloquea compilación Build 25 iOS (§2.7)
+2. ✅ **Promover Build 36 a Producción + 3 cambios anexos en review Google desde 18-may noche AR** (ver §3.1.b para el detalle de los 4 cambios). Esperando aprobación 2-24h.
+3. **Paso 2 (post-aprobación Producción):** subir Build 36 al track Alpha (§3.1.c).
+4. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución (esperar 24-48h por las dudas).
+5. Build 36 producción aprobado → desbloquea compilación Build 25 iOS (§2.7).
 
 ---
 
