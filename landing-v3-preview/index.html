@@ -402,10 +402,23 @@ section.blk .sect-sub{margin-left:auto;margin-right:auto}
 .col-card:hover{border-color:var(--gold)}
 .col-card h3{font-family:var(--mono);font-size:13px;color:var(--gold);margin-bottom:18px;letter-spacing:1.5px;text-transform:uppercase;font-weight:700}
 .col-card p{font-size:14.5px;color:var(--text-sec);line-height:1.75;margin-bottom:20px}
-.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.chip{padding:7px 12px;background:rgba(212,160,23,0.05);border:1px solid var(--border);border-radius:18px;font-family:var(--mono);font-size:11.5px;color:var(--text);transition:all .25s;cursor:default;letter-spacing:.2px}
-.chip:hover{background:rgba(212,160,23,0.15);border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px)}
-.chip-special{background:rgba(212,160,23,0.12);border-color:var(--gold);color:var(--gold-bright);font-weight:600}
+.col-card-badge{display:inline-flex;align-items:center;gap:10px;margin-bottom:14px;font-family:var(--mono);text-transform:uppercase;letter-spacing:1.5px}
+.col-card-num{font-size:11px;color:rgba(212,160,23,0.55);font-weight:700;padding:3px 9px;background:rgba(212,160,23,0.08);border:1px solid rgba(212,160,23,0.25);border-radius:4px}
+.col-card-tag{font-size:10.5px;color:var(--gold-bright);font-weight:700;letter-spacing:2px}
+.chip-hint{font-family:var(--mono);font-size:11px;color:rgba(245,240,232,0.55);margin-top:14px;margin-bottom:8px;letter-spacing:.3px;font-style:italic}
+.chip-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.chip{padding:8px 13px;background:rgba(212,160,23,0.05);border:1px solid var(--border);border-radius:18px;font-family:var(--mono);font-size:11.5px;color:var(--text);transition:all .2s;cursor:pointer;letter-spacing:.2px;font-weight:500;line-height:1;position:relative;display:inline-flex;align-items:center;gap:6px}
+.chip::after{content:"ⓘ";font-size:10px;color:rgba(212,160,23,0.5);transition:color .2s,transform .2s;font-style:normal}
+.chip:hover{background:rgba(212,160,23,0.18);border-color:var(--gold);color:var(--gold-bright);transform:translateY(-2px);box-shadow:0 4px 12px rgba(212,160,23,0.2)}
+.chip:hover::after{color:var(--gold-bright);transform:scale(1.15)}
+.chip:focus-visible{outline:2px solid var(--gold-bright);outline-offset:2px}
+.chip.is-active{background:linear-gradient(135deg,rgba(245,200,66,0.25),rgba(212,160,23,0.15));border-color:var(--gold-bright);color:#fff;box-shadow:0 0 0 1px rgba(245,200,66,0.4),0 6px 18px rgba(212,160,23,0.3)}
+.chip-special{background:rgba(212,160,23,0.13);border-color:var(--gold);color:var(--gold-bright);font-weight:700}
+/* === TOOLTIP CHIP === */
+.chip-tip{position:fixed;z-index:400;max-width:300px;background:linear-gradient(180deg,rgba(16,10,2,0.98) 0%,rgba(8,4,0,1) 100%);border:1.5px solid rgba(212,160,23,0.55);border-radius:12px;padding:14px 16px;font-family:var(--display);font-size:13px;color:rgba(245,240,232,0.92);line-height:1.55;box-shadow:0 16px 40px rgba(0,0,0,0.6),0 0 50px rgba(212,160,23,0.12);opacity:0;pointer-events:none;transform:translateY(6px);transition:opacity .15s,transform .15s;backdrop-filter:blur(20px)}
+.chip-tip.is-visible{opacity:1;transform:translateY(0)}
+.chip-tip::before{content:"";position:absolute;width:10px;height:10px;background:linear-gradient(135deg,rgba(16,10,2,0.98),rgba(16,10,2,0.98));border:1.5px solid rgba(212,160,23,0.55);transform:rotate(45deg);top:-6px;left:24px;border-right:none;border-bottom:none}
+.chip-tip-title{display:block;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
 .highlight-card{margin-top:32px;padding:26px 30px;background:linear-gradient(135deg,#1A0D00 0%,#0D0800 100%);border:1px solid var(--gold);border-radius:16px;font-size:15px;color:var(--text);position:relative;overflow:hidden}
 .highlight-card::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
 
@@ -1080,6 +1093,12 @@ html{scroll-behavior:smooth}
   </div>
 </div>
 
+<!-- ===== TOOLTIP CHIP MOTOR 24 (global, posicionado por JS) ===== -->
+<div class="chip-tip" id="chip-tip" role="tooltip" aria-hidden="true">
+  <span class="chip-tip-title" id="chip-tip-title"></span>
+  <span id="chip-tip-body"></span>
+</div>
+
 <!-- ===== MODAL ALERTAS (captura mockup de la app) ===== -->
 <div class="alert-modal-overlay" id="alert-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="alert-modal-title">
   <div class="alert-modal" id="alert-modal">
@@ -1155,22 +1174,43 @@ html{scroll-behavior:smooth}
     </div>
     <div class="cols">
       <div class="col-card reveal">
+        <div class="col-card-badge"><span class="col-card-num">01</span><span class="col-card-tag">MOTOR IA</span></div>
         <h3 data-i18n="b5_col1_h3">AI Engine · 10 variables</h3>
         <p data-i18n="b5_motor_p">Each signal is the result of 10 independent quantitative variables computed per asset, in real time.</p>
+        <p class="chip-hint" data-i18n="chip_hint">Tocá cada variable para ver qué mide ⓘ</p>
         <div class="chip-grid">
-          <span class="chip" data-i18n="b5_chip_trend">24h trend</span><span class="chip">RSI 14</span><span class="chip" data-i18n="b5_chip_volume">Relative volume</span><span class="chip" data-i18n="b5_chip_vol">Volatility</span>
-          <span class="chip">BTC/SPY corr</span><span class="chip">Gold/Oil corr</span><span class="chip chip-special">FED Macro</span>
-          <span class="chip">Earnings</span><span class="chip">MACD 12/26</span><span class="chip">Support/Resistance 30d</span>
+          <button type="button" class="chip" data-chip-id="trend_24h" data-i18n="b5_chip_trend_24h_label">24h trend</button>
+          <button type="button" class="chip" data-chip-id="rsi_14" data-i18n="b5_chip_rsi_14_label">RSI 14</button>
+          <button type="button" class="chip" data-chip-id="rel_vol" data-i18n="b5_chip_rel_vol_label">Relative volume</button>
+          <button type="button" class="chip" data-chip-id="volatility" data-i18n="b5_chip_volatility_label">Volatility</button>
+          <button type="button" class="chip" data-chip-id="btc_spy" data-i18n="b5_chip_btc_spy_label">BTC/SPY corr</button>
+          <button type="button" class="chip" data-chip-id="gold_oil" data-i18n="b5_chip_gold_oil_label">Gold/Oil corr</button>
+          <button type="button" class="chip chip-special" data-chip-id="fed_macro" data-i18n="b5_chip_fed_macro_label">FED Macro</button>
+          <button type="button" class="chip" data-chip-id="earnings" data-i18n="b5_chip_earnings_label">Earnings</button>
+          <button type="button" class="chip" data-chip-id="macd" data-i18n="b5_chip_macd_label">MACD 12/26</button>
+          <button type="button" class="chip" data-chip-id="sr" data-i18n="b5_chip_sr_label">Support/Resistance 30d</button>
         </div>
       </div>
       <div class="col-card reveal reveal-delay-1">
+        <div class="col-card-badge"><span class="col-card-num">02</span><span class="col-card-tag">AUREX PULSE</span></div>
         <h3 data-i18n="b5_col2_h3">AUREX Pulse · 14 variables</h3>
         <p data-i18n="b5_pulse_p">Pulse reads the global market context in real time, cross-referencing 14 macro sources.</p>
+        <p class="chip-hint" data-i18n="chip_hint">Tocá cada variable para ver qué mide ⓘ</p>
         <div class="chip-grid">
-          <span class="chip">BTC price</span><span class="chip">BTC dominance</span><span class="chip">ETH</span><span class="chip">VIX</span>
-          <span class="chip">S&amp;P 500</span><span class="chip">ES futures</span><span class="chip">NQ futures</span><span class="chip">YM futures</span>
-          <span class="chip">RTY futures</span><span class="chip">Gold</span><span class="chip">Silver</span><span class="chip">Oil</span><span class="chip">Copper</span>
-          <span class="chip chip-special">GDELT Geopolitics</span>
+          <button type="button" class="chip" data-chip-id="btc_price" data-i18n="b5_chip_btc_price_label">BTC price</button>
+          <button type="button" class="chip" data-chip-id="btc_dom" data-i18n="b5_chip_btc_dom_label">BTC dominance</button>
+          <button type="button" class="chip" data-chip-id="eth" data-i18n="b5_chip_eth_label">ETH</button>
+          <button type="button" class="chip" data-chip-id="vix" data-i18n="b5_chip_vix_label">VIX</button>
+          <button type="button" class="chip" data-chip-id="sp500" data-i18n="b5_chip_sp500_label">S&amp;P 500</button>
+          <button type="button" class="chip" data-chip-id="es_fut" data-i18n="b5_chip_es_fut_label">ES futures</button>
+          <button type="button" class="chip" data-chip-id="nq_fut" data-i18n="b5_chip_nq_fut_label">NQ futures</button>
+          <button type="button" class="chip" data-chip-id="ym_fut" data-i18n="b5_chip_ym_fut_label">YM futures</button>
+          <button type="button" class="chip" data-chip-id="rty_fut" data-i18n="b5_chip_rty_fut_label">RTY futures</button>
+          <button type="button" class="chip" data-chip-id="gold" data-i18n="b5_chip_gold_label">Gold</button>
+          <button type="button" class="chip" data-chip-id="silver" data-i18n="b5_chip_silver_label">Silver</button>
+          <button type="button" class="chip" data-chip-id="oil" data-i18n="b5_chip_oil_label">Oil</button>
+          <button type="button" class="chip" data-chip-id="copper" data-i18n="b5_chip_copper_label">Copper</button>
+          <button type="button" class="chip chip-special" data-chip-id="gdelt" data-i18n="b5_chip_gdelt_label">GDELT Geopolitics</button>
         </div>
       </div>
     </div>
@@ -2448,6 +2488,75 @@ html{scroll-behavior:smooth}
   document.addEventListener('keydown', e => {
     if(e.key === 'Escape' && alertOverlay && alertOverlay.classList.contains('active')) alertModalClose();
   });
+
+  // === CHIP TOOLTIPS Motor 24 (hover desktop / tap mobile) ===
+  const chipTip = document.getElementById('chip-tip');
+  const chipTipTitle = document.getElementById('chip-tip-title');
+  const chipTipBody = document.getElementById('chip-tip-body');
+  let chipTipActive = null;
+
+  function chipGetI18n(key){
+    // i18nData es closure del IIFE, ya disponible. Lang actual lo lee de <html lang>.
+    if(!i18nData) return null;
+    const lang = (document.documentElement.lang || 'en').toLowerCase();
+    const dict = i18nData[lang] || i18nData.en;
+    return dict && dict[key] ? dict[key] : null;
+  }
+
+  function chipTipShow(chip){
+    if(!chipTip) return;
+    const id = chip.getAttribute('data-chip-id');
+    if(!id) return;
+    const labelKey = 'b5_chip_' + id + '_label';
+    const tipKey   = 'b5_chip_' + id + '_tip';
+    const labelText = chipGetI18n(labelKey) || chip.textContent.replace('ⓘ','').trim();
+    const tipText   = chipGetI18n(tipKey)   || '';
+    if(!tipText) return;
+    chipTipTitle.textContent = labelText;
+    chipTipBody.textContent = tipText;
+    // Posicionar arriba del chip, centrado horizontalmente
+    chipTip.classList.add('is-visible');
+    chipTip.setAttribute('aria-hidden','false');
+    const rect = chip.getBoundingClientRect();
+    const tipRect = chipTip.getBoundingClientRect();
+    let top = rect.top - tipRect.height - 14;
+    let left = rect.left + (rect.width / 2) - (tipRect.width / 2);
+    // Si no entra arriba, ponerlo abajo
+    if(top < 8){ top = rect.bottom + 14; }
+    // Clamp horizontal
+    const pad = 12;
+    if(left < pad) left = pad;
+    if(left + tipRect.width > window.innerWidth - pad) left = window.innerWidth - tipRect.width - pad;
+    chipTip.style.top = top + 'px';
+    chipTip.style.left = left + 'px';
+    chip.classList.add('is-active');
+    chipTipActive = chip;
+  }
+  function chipTipHide(){
+    if(!chipTip) return;
+    chipTip.classList.remove('is-visible');
+    chipTip.setAttribute('aria-hidden','true');
+    if(chipTipActive){ chipTipActive.classList.remove('is-active'); chipTipActive = null; }
+  }
+
+  document.querySelectorAll('.chip[data-chip-id]').forEach(chip => {
+    chip.addEventListener('mouseenter', () => chipTipShow(chip));
+    chip.addEventListener('mouseleave', () => chipTipHide());
+    chip.addEventListener('focus', () => chipTipShow(chip));
+    chip.addEventListener('blur', () => chipTipHide());
+    chip.addEventListener('click', e => {
+      e.preventDefault();
+      if(chipTipActive === chip) chipTipHide();
+      else chipTipShow(chip);
+    });
+  });
+  // Cerrar tooltip al click fuera (mobile)
+  document.addEventListener('click', e => {
+    if(chipTipActive && !chipTipActive.contains(e.target) && !chipTip.contains(e.target)) chipTipHide();
+  });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') chipTipHide(); });
+  window.addEventListener('scroll', () => chipTipHide(), { passive:true });
+  window.addEventListener('resize', () => chipTipHide());
 
 })();
 </script>
