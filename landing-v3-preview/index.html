@@ -429,11 +429,31 @@ section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:38px;max-wid
 /* === B8 alerts === */
 .alert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:34px}
 @media(max-width:880px){.alert-grid{grid-template-columns:1fr}}
-.alert-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .25s}
-.alert-card:hover{border-color:var(--gold)}
+.alert-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .25s;cursor:pointer;position:relative;display:flex;flex-direction:column}
+.alert-card:hover{border-color:var(--gold);background:linear-gradient(180deg,var(--bg-soft) 0%,rgba(212,160,23,0.04) 100%);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.35),0 0 0 1px rgba(212,160,23,0.15)}
+.alert-card:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
 .alert-card .a-num{font-family:var(--mono);font-size:13px;color:var(--gold);letter-spacing:1px;margin-bottom:10px}
 .alert-card h3{font-family:var(--display);font-size:16px;color:var(--text);margin-bottom:12px;font-weight:400;letter-spacing:.3px;line-height:1.3}
-.alert-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
+.alert-card p{font-size:14px;color:var(--text-sec);line-height:1.6;flex:1}
+.alert-cta{display:inline-flex;align-items:center;gap:6px;margin-top:16px;font-family:var(--mono);font-size:11px;color:var(--gold-bright);letter-spacing:.5px;font-weight:700;text-transform:uppercase;transition:gap .2s}
+.alert-card:hover .alert-cta{gap:10px}
+
+/* === ALERT MODAL (centrado siempre, mobile + desktop — regla general modales) === */
+.alert-modal-overlay{position:fixed;inset:0;background:rgba(4,2,0,0.88);backdrop-filter:blur(10px);z-index:310;display:none;align-items:center;justify-content:center;padding:20px;animation:featFade .25s ease}
+.alert-modal-overlay.active{display:flex}
+.alert-modal{position:relative;background:linear-gradient(180deg,rgba(16,10,2,0.98) 0%,rgba(8,4,0,1) 100%);border:1.5px solid rgba(212,160,23,0.55);border-radius:22px;max-width:440px;width:100%;max-height:92vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 40px 90px rgba(0,0,0,0.75),0 0 80px rgba(212,160,23,0.18);animation:featSlide .3s cubic-bezier(.2,.8,.3,1)}
+.alert-modal-close{position:absolute;top:14px;right:14px;background:rgba(212,160,23,0.15);border:1.5px solid rgba(212,160,23,0.5);color:var(--gold-bright);font-size:18px;font-weight:700;cursor:pointer;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:5;line-height:1}
+.alert-modal-close:hover{background:rgba(212,160,23,0.35);transform:rotate(90deg);color:#fff}
+.alert-modal-close:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
+.alert-modal-title{font-family:var(--display);font-size:19px;font-weight:400;color:var(--gold-bright);text-align:center;padding:24px 56px 0;margin:0;letter-spacing:.4px;line-height:1.3}
+.alert-modal-divider{width:48px;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);margin:12px auto 16px;border-radius:2px}
+.alert-modal-img-wrap{padding:0 18px 20px;display:flex;justify-content:center;align-items:flex-start;flex:1;overflow:hidden;min-height:0}
+.alert-modal-img{max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;border-radius:14px;border:1px solid rgba(212,160,23,0.3);background:rgba(8,4,0,0.5)}
+@media(max-width:600px){
+  .alert-modal-overlay{padding:16px}
+  .alert-modal{border-radius:20px;max-width:100%;max-height:88vh}
+  .alert-modal-title{padding:22px 56px 0;font-size:17px}
+}
 .alert-note{margin-top:26px;padding:18px 24px;background:rgba(212,160,23,0.05);border-left:3px solid var(--gold);border-radius:6px;font-size:13.5px;color:var(--text-sec);font-style:italic}
 
 /* === B8.5 more you can do === */
@@ -1036,6 +1056,16 @@ html{scroll-behavior:smooth}
   </div>
 </div>
 
+<!-- ===== MODAL ALERTAS (captura mockup de la app) ===== -->
+<div class="alert-modal-overlay" id="alert-modal-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="alert-modal-title">
+  <div class="alert-modal" id="alert-modal">
+    <button class="alert-modal-close" id="alert-modal-close" type="button" aria-label="Cerrar">×</button>
+    <h3 class="alert-modal-title" id="alert-modal-title"></h3>
+    <div class="alert-modal-divider"></div>
+    <div class="alert-modal-img-wrap"><img class="alert-modal-img" id="alert-modal-img" src="" alt=""></div>
+  </div>
+</div>
+
 <!-- ===== ZONA B comienza aca: constelacion activa ===== -->
 <!-- ===== ZONA B comienza acá: constelación activa ===== -->
 <div id="zone-b-marker"></div>
@@ -1203,10 +1233,10 @@ html{scroll-behavior:smooth}
       <h2 data-i18n="b8_h2">15 alert types. You set the rules.</h2>
     </div>
     <div class="alert-grid">
-      <div class="alert-card reveal"><div class="a-num">04 TYPES</div><h3>AI Alerts</h3><p data-i18n="b8_ai_p">Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p></div>
-      <div class="alert-card reveal reveal-delay-1"><div class="a-num">03 TYPES</div><h3>Pulse Alerts</h3><p data-i18n="b8_pulse_p">Market zone change, alert by asset category, global Risk Thermometer.</p></div>
-      <div class="alert-card reveal reveal-delay-2"><div class="a-num">03 TYPES</div><h3>Price Alerts</h3><p data-i18n="b8_price_p">Target price reached, sharp price move, new 52-week high or low.</p></div>
-      <div class="alert-card reveal reveal-delay-3"><div class="a-num">05 TYPES</div><h3>Event Alerts</h3><p data-i18n="b8_event_p">FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p></div>
+      <div class="alert-card reveal" data-alert-type="ai" role="button" tabindex="0" aria-haspopup="dialog"><div class="a-num">04 TYPES</div><h3 data-i18n="b8_card_ai_h3">AI Alerts</h3><p data-i18n="b8_ai_p">Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p><span class="alert-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></div>
+      <div class="alert-card reveal reveal-delay-1" data-alert-type="pulse" role="button" tabindex="0" aria-haspopup="dialog"><div class="a-num">03 TYPES</div><h3 data-i18n="b8_card_pulse_h3">PULSE Alerts</h3><p data-i18n="b8_pulse_p">Market zone change, alert by asset category, global Risk Thermometer.</p><span class="alert-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></div>
+      <div class="alert-card reveal reveal-delay-2" data-alert-type="price" role="button" tabindex="0" aria-haspopup="dialog"><div class="a-num">03 TYPES</div><h3 data-i18n="b8_card_price_h3">Price Alerts</h3><p data-i18n="b8_price_p">Target price reached, sharp price move, new 52-week high or low.</p><span class="alert-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></div>
+      <div class="alert-card reveal reveal-delay-3" data-alert-type="event" role="button" tabindex="0" aria-haspopup="dialog"><div class="a-num">05 TYPES</div><h3 data-i18n="b8_card_event_h3">Event Alerts</h3><p data-i18n="b8_event_p">FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p><span class="alert-cta"><span data-i18n="alert_see_app">Ver en la app</span> <span aria-hidden="true">→</span></span></div>
     </div>
     <div class="alert-note" data-i18n="b8_alert_note">Alerts are delivered in-app. Push notifications with app closed, SMS and Telegram delivery — coming in the next version.</div>
   </div>
@@ -2347,6 +2377,50 @@ html{scroll-behavior:smooth}
   mktRenderFuturesPlaceholder();                   // arrancar animacion ya con nombres (no esperar fetch)
   mktFetchFutures();
   setInterval(mktFetchFutures, 5 * 60 * 1000);     // refetch precios futuros cada 5 min
+
+  // === ALERT MODAL (click en cards de "15 Alertas" abre mockup app segun idioma) ===
+  const alertOverlay = document.getElementById('alert-modal-overlay');
+  const alertImg = document.getElementById('alert-modal-img');
+  const alertTitle = document.getElementById('alert-modal-title');
+  const alertClose = document.getElementById('alert-modal-close');
+  let alertLastFocus = null;
+
+  function alertModalOpen(type, triggerEl){
+    if(!alertOverlay || !alertImg || !alertTitle) return;
+    const lang = (document.documentElement.lang || 'en').toLowerCase().startsWith('es') ? 'es' : 'en';
+    const src = 'assets/captures/alerts/alerts_' + type + '_' + lang + '.jpg';
+    // Leer titulo traducido del h3 visible (cambia con cada idioma activo)
+    const h3 = triggerEl ? triggerEl.querySelector('h3') : null;
+    const titleText = h3 ? h3.textContent.trim() : 'AUREX';
+    alertImg.src = src;
+    alertImg.alt = titleText;
+    alertTitle.textContent = titleText;
+    alertOverlay.classList.add('active');
+    alertOverlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    alertLastFocus = triggerEl || document.activeElement;
+    setTimeout(() => { if(alertClose) alertClose.focus(); }, 50);
+  }
+  function alertModalClose(){
+    if(!alertOverlay) return;
+    alertOverlay.classList.remove('active');
+    alertOverlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if(alertImg) alertImg.src = '';
+    if(alertLastFocus && alertLastFocus.focus) alertLastFocus.focus();
+  }
+  document.querySelectorAll('.alert-card[data-alert-type]').forEach(card => {
+    const t = card.getAttribute('data-alert-type');
+    card.addEventListener('click', () => alertModalOpen(t, card));
+    card.addEventListener('keydown', e => {
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); alertModalOpen(t, card); }
+    });
+  });
+  if(alertClose) alertClose.addEventListener('click', alertModalClose);
+  if(alertOverlay) alertOverlay.addEventListener('click', e => { if(e.target === alertOverlay) alertModalClose(); });
+  document.addEventListener('keydown', e => {
+    if(e.key === 'Escape' && alertOverlay && alertOverlay.classList.contains('active')) alertModalClose();
+  });
 
 })();
 </script>
