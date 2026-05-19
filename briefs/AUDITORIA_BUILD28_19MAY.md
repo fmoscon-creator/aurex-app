@@ -217,6 +217,119 @@ if (p >= 1000) return '$' + Math.round(p).toLocaleString('en-US');
 | **OPS-1** | Bot Telegram 409 polling duplicado desde 16:41 | Recibir comandos del bot (alta probabilidad bot dev local corriendo) | Verificar si hay proceso bot local + matarlo |
 | **OPS-2** | CryptoCompare rate-limit 24h hit desde 16:40 | Solo logs, fallback OKX/Kraken funcional | Esperar 24h o ajustar frecuencia llamadas CC |
 | **OPS-3** | Plan FREE forzado mobile (bug viejo task #69) | Override Supabase manual aplicado 19-may | Investigar webhook RC EXPIRATION post-cancel ELITE 18-may |
+| **OPS-4** 🔴 | **CRÍTICO: Push iOS no aparece en centro de notif iPhone con app cerrada** | `sendPushFCM` server.js L89-108 sin bloque `apns` → iOS lo trata como silencioso | Ver sección dedicada abajo |
+
+---
+
+## 🚨 HALLAZGO ADICIONAL OPS-4 — Push FCM iOS sin bloque apns (CAUSA RAÍZ ENCONTRADA)
+
+### Síntoma reportado por Fernando 19-may ~16:00 AR
+Cuando BAJISTA -5 BTC disparó (15:56 AR, $76.785,37), llegaron:
+- ✅ Telegram (mensaje del bot al chat)
+- ✅ Centro de notificaciones del iPhone — **PERO solo el de Telegram, NO el de AUREX**
+- ❌ App AUREX no mostró nada (estaba cerrada en ese momento)
+
+Diferencia con ALCISTA +5 anterior (18:46 UTC): esa Fernando la vio en los 3 canales pero porque tenía la app abierta (el banner foreground in-app SÍ funciona por el bridge React Native que captura push silencioso).
+
+### Datos crudos verificados
+- Supabase `alertas_historial` para BAJISTA: `telegram_enviado: true, fcm_enviado: true` ← backend envió OK
+- Supabase `usuarios.fcm_token`: SÍ tiene token (142 chars, formato `dF_V6E...:APA91bF...`)
+- Supabase `usuarios_devices`: **VACÍO** (tabla multi-device nueva sin registros)
+- Supabase `push_logs`: muestra `register_start` + `permission ok` + `get_token` + `save_token ok` en pares simultáneos (~150ms apart)
+
+### Causa raíz — `server.js` L89-108
+
+```js
+async function sendPushFCM(fcmToken, title, body, data = {}) {
+  if (!fcmToken) return { ok: false, error: 'no-token' };
+  const stringData = {};
+  for (const k of Object.keys(data)) stringData[k] = String(data[k]);
+  try {
+    const messageId = await admin.messaging().send({
+      token: fcmToken,
+      notification: { title, body },
+      data: stringData,
+      android: {                                              // ← Android tiene config explícita
+        priority: 'high',
+        notification: { channelId: 'aurex_default', sound: 'default' },
+      },
+      // ← FALTA bloque apns para iOS
+    });
+    return { ok: true, messageId };
+  } catch (err) {
+    return { ok: false, error: err.message, code: err.code };
+  }
+}
+```
+
+**El problema:** Firebase Cloud Messaging Admin SDK necesita un bloque `apns` específico para que iOS muestre la notificación como banner visible. Sin ese bloque, iOS APNS interpreta el push como "silencioso/background" y NO lo muestra en el centro de notificaciones cuando la app está cerrada.
+
+### Por qué funciona Telegram pero no FCM iOS
+- Telegram usa su propia infra → no depende de FCM
+- FCM Android usa el bloque `android:` explícito → funciona OK
+- FCM iOS sin bloque `apns:` → Firebase envía con default → iOS lo trata como silencioso → no aparece banner
+
+### Por qué el banner in-app sí funciona cuando app está abierta
+- Cuando la app está en foreground, React Native captura el push (incluso los silenciosos) y dispara el evento `notification`
+- El handler de la app muestra el Toast manualmente
+- Por eso Fernando vio el pop in-app de la ALCISTA del 18:46 (tenía app abierta) pero NO de la BAJISTA del 15:56 (app cerrada)
+
+### Fix propuesto (5 líneas, NO requiere Build app — solo backend)
+
+```js
+async function sendPushFCM(fcmToken, title, body, data = {}) {
+  if (!fcmToken) return { ok: false, error: 'no-token' };
+  const stringData = {};
+  for (const k of Object.keys(data)) stringData[k] = String(data[k]);
+  try {
+    const messageId = await admin.messaging().send({
+      token: fcmToken,
+      notification: { title, body },
+      data: stringData,
+      android: {
+        priority: 'high',
+        notification: { channelId: 'aurex_default', sound: 'default' },
+      },
+      // NUEVO: bloque iOS APNS para que el banner aparezca con app cerrada
+      apns: {
+        payload: {
+          aps: {
+            alert: { title, body },
+            sound: 'default',
+            badge: 1,
+          },
+        },
+        headers: {
+          'apns-priority': '10',  // 10 = inmediato + visible banner
+        },
+      },
+    });
+    return { ok: true, messageId };
+  } catch (err) {
+    return { ok: false, error: err.message, code: err.code };
+  }
+}
+```
+
+### Deploy
+- Editar `server.js` L89-108
+- `git add server.js && git commit -m "FCM iOS fix: bloque apns para push visible con app cerrada"`
+- `git push origin main`
+- Railway auto-deploy ~30s
+- Próxima alerta iOS aparecerá en centro de notif iPhone
+
+### Hallazgo adicional NO CRÍTICO
+
+**Tabla `usuarios_devices` vacía** — el código backend ya tiene multi-device implementado (lee primero de `usuarios_devices`, fallback a `usuarios.fcm_token`), pero el frontend está usando aún el flujo viejo (guardando solo en `usuarios.fcm_token`). Esto significa:
+
+- Si Fernando tiene Android + iPhone, el último que se registró pisó al otro
+- El token guardado actualmente es uno solo (no sabemos si es Android o iPhone sin testear)
+- Para soporte multi-device completo, frontend debería usar `POST /api/users/:id/devices` (ya existe el endpoint L1276)
+
+**No es bloqueante** para fix OPS-4 — primero arreglar payload apns, después migrar a multi-device.
+
+### Pares duplicados en push_logs
+Los `register_start` y `save_token` aparecen en pares con timestamps de ~150ms apart. Causa probable: React Native `StrictMode` ejecuta efectos 2 veces en dev, o el hook de registro se llama desde 2 componentes. NO afecta funcionalidad (idempotente), pero es ruido en logs.
 
 ---
 
