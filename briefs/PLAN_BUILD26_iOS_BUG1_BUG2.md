@@ -72,6 +72,21 @@ Esto requiere:
 2. Lógica disparo nueva: `precio_actual ≥ precio_al_crear + valor_objetivo` (arriba) o `precio_actual ≤ precio_al_crear + valor_objetivo` (abajo, valor negativo)
 3. La condición permanece activa mientras no se cumpla, sin importar las oscilaciones intermedias
 
+### 🚨 RESTRICCIÓN EXPLÍCITA DE SCOPE (registrada por Fernando 19-may post-snapshot audit)
+
+**Build 27 toca SOLO las ALERTAS MANUALES** (las que el usuario PRO/ELITE crea desde Portfolio/Watchlist via `AlertCreateModal.js`, guardadas en tabla `alertas` Supabase, evaluadas por `checkAlertas()` en server.js, y mostradas en `MisAlertasScreen.js` cuando se toca la campana 🔔 del header).
+
+**Build 27 NO toca los 15 toggles del tab Alertas** (`AlertasScreen.js` con `CustomSwitch` para IA/Pulse/Eventos). Esas son alertas AUTOMÁTICAS de sistema que envían sus disparos a la sección "ALERTAS ACTIVAS" en la misma pantalla del tab — NO van a la campana del header. Flujo completamente separado, fuera del scope de Build 27.
+
+Confirmado con código real en snapshot público:
+- Capa A (NO se toca): `AlertasScreen.js` 15 toggles
+- Capa B (NO se toca): `BellButton.js` campana header
+- Capa C (SÍ se toca - UX 2.3): `MisAlertasScreen.js` centro admin alertas manuales
+- Capa D (SÍ se toca - UX 2.2): `AlertCreateModal.js` form crear alerta manual
+- Capa E (SÍ se toca - lógica 2.1 + emoji 2.3): `server.js` checkAlertas() + dispararAlerta()
+
+---
+
 ### Sub-fixes Bug 2 (3 componentes)
 
 #### 2.1 — Backend: `precio_al_crear` + lógica delta-desde-creación
