@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 19-may-2026 ~00:30 AR
-> **Última actualización significativa:** §3 Android — Build 36 v1.0.36 **ENVIADO A REVISIÓN GOOGLE PLAY → PRODUCCIÓN** el 18-may noche AR junto con 3 cambios más (Privacy Policy URL `/docs/privacy.html`, Data Safety cuestionario completado, Pausar segmento Alpha). Build 33 sigue activo en Producción hasta que Google apruebe (estimado 2-24h). **Paso 2 registrado**: cuando Google apruebe Build 36 en Producción, subir el mismo AAB al track Alpha (Prueba cerrada) para que los 31,58% de testers en v1.0.17 se actualicen a v1.0.36 (session persistence + push + IAP funcionando).
+> **Última actualización:** 19-may-2026 ~06:30 AR (cierre nocturno sesión maratónica)
+> **Última actualización significativa:** Sesión 19-may madrugada — **7 frentes Landing v3 cerrados** (A reorder + B banner 0.b1 Mercados/Futuros LIVE + C modales centrados/negro -35% + D Motor 24 tooltips 24 chips × 8 idiomas + E cards Alertas modal-capturas + F More cards recortadas 4:5 + G footer logos color reales + mail real). **18 commits push** a aurex-app. **800+ traducciones i18n nuevas** (keys EN 270 → 349). Plus **🚨 NUEVO bug detectado**: fmoscon@gmail.com bajó solo a PLAN FREE en mobile (iPhone TestFlight v1.0.24 + Android v1.0.36) — fix inmediato override Supabase a ELITE aplicado, causa raíz pendiente investigar mañana. **Status Build 36 Google review**: aún en revisión (esperado próximas horas), Build 33 sigue activo en Producción.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -29,6 +29,8 @@
 | 🤖 **Track Alpha (Prueba cerrada)** | 🟡 31,58% testers en v1.0.17 vieja (sin Bug G fix logout, sin IAP, sin Tier 1) | **PASO 2 cuando Google apruebe Build 36 Producción:** subir el mismo AAB al track Alpha | Aprobación Google Build 36 Producción |
 | 🎉 **IAP / RevenueCat ticket #76809** | ✅ **RESUELTO 18-may 17:30 AR con Build 36 (rebuild limpio + 4 fixes)** | Cancelar suscripción ELITE test + cerrar ticket RC | — |
 | 🛡️ **Play Console Política Privacidad + Data Safety** | ✅ CORREGIDO 18-may (Privacy URL → `/docs/privacy.html` + cuestionario Data Safety completado, ambos por Escritorio) | Sin acción — en revisión junto a Build 36 | Aprobación Google |
+| 🚨 **Bug PLAN FREE forzado mobile (19-may 06:00 AR)** | 🟡 **Override aplicado** (Supabase fmoscon → ELITE) — causa raíz NO investigada | Mañana: investigar webhook RC EXPIRATION + bug "FREE no permite 5 alertas básicas" | Backend logs + RC dashboard |
+| 🎨 **Landing v3** | 🟢 7 frentes cerrados sesión 19-may madrugada (A reorder + B banner 0.b1 + C modal/negro + D Motor 24 tooltips + E Alertas modal + F More recortadas + G footer color) | Mañana: fondos/imágenes reales + skill high-end-visual-design | OK Fernando |
 | 🎨 **Landing v3 aurex.live** | 🟡 PENDIENTE OK visual Fernando + Escritorio | Fernando abre 2 PNG + decide | Doble OK |
 | 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing v3 live | Landing v3 deploy |
 | 🌐 **PWA aurex.live** | 🟢 Live, fase 0 reorg ejecutada | Será reemplazada por landing v3 al deploy | — |
