@@ -233,9 +233,23 @@ Coincide al 100% con la evidencia del Issue `RevenueCat/purchases-android#3039` 
 
 **Pendientes inmediatos post-resolución:**
 1. Cancelar suscripción ELITE de prueba en Google Play Store > Suscripciones (Fernando manual)
-2. Promover Build 36 de Internal Testing → Production (reemplaza Build 33)
-3. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución
+2. Promover Build 36 de Internal Testing → Production (reemplaza Build 33) — ✅ Fernando confirma: enviado a revisión Producción 18-may
+3. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución (esperar 24-48h por las dudas)
 4. Build 36 producción → desbloquea compilación Build 25 iOS (§2.7)
+
+---
+
+### 📄 DOCUMENTO TÉCNICO COMPLETO
+
+Versión definitiva validada por **Code + Escritorio + Fernando** (con código real, capturas en `~/Downloads/[1-5].HEIC` y reproducción en dispositivo):
+
+- **GitHub (raw URL HTTP 200 verificada):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/DOC_IAP_BUG_RESUELTO_18may2026.md`
+- **Dropbox `.docx`:** `~/Dropbox/AUREX/SUSCRIPCIONES ANDROID y IOS/DOC_IAP_BUG_RESUELTO_18may2026.docx`
+- **Dropbox `.md` espejo:** `~/Dropbox/AUREX/SUSCRIPCIONES ANDROID y IOS/DOC_IAP_BUG_RESUELTO_18may2026.md`
+
+Contiene: descripción completa del bug + camino real del usuario + causa raíz técnica (`purchaseProduct` deprecada sin `offerToken`) + 5 fixes Build 36 (líneas pre/post-fix exactas) + por qué SubscriptionScreen no tenía el bug + resultado de prueba real + estado Android/iOS + tabla de archivos modificados + snapshots públicos del código.
+
+**Hallazgo clave:** el botón de compra Perfil → b2 **nunca funcionó desde la integración inicial de RevenueCat** (no fue un bug de 3 días ni 35 días). Build 33 sólo lo expuso al ponerlo en producción.
 
 ---
 
