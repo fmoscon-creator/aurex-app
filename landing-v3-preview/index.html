@@ -327,6 +327,28 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .lt-chg.neg{color:var(--red)}
 @media(max-width:600px){.live-ticker{height:34px}.live-ticker-track{gap:28px;animation-duration:75s}.lt-item{font-size:11px;gap:6px}.live-ticker::before,.live-ticker::after{width:32px}}
 
+/* === 0.b1 MARKET TICKERS (estado mercados + precios futuros) === */
+.market-ticker{background:linear-gradient(180deg,rgba(8,4,0,0.92) 0%,rgba(12,7,1,0.95) 100%);border-bottom:1px solid rgba(212,160,23,0.22);overflow:hidden;height:32px;position:relative;display:flex;align-items:center}
+.market-ticker::before{content:"";position:absolute;left:0;top:0;bottom:0;width:60px;background:linear-gradient(90deg,rgba(8,4,0,1) 0%,transparent 100%);z-index:2;pointer-events:none}
+.market-ticker::after{content:"";position:absolute;right:0;top:0;bottom:0;width:60px;background:linear-gradient(-90deg,rgba(8,4,0,1) 0%,transparent 100%);z-index:2;pointer-events:none}
+.market-ticker-track{display:flex;gap:24px;white-space:nowrap;animation:scroll-ticker 90s linear infinite;align-items:center;will-change:transform;padding:0 36px}
+.market-ticker:hover .market-ticker-track{animation-play-state:paused}
+.mt-item{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:11px;letter-spacing:.3px;padding:3px 9px;border-radius:4px;font-weight:500;line-height:1}
+.mt-item.mt-open{background:rgba(34,197,94,0.18);color:#22c55e;border:1px solid rgba(34,197,94,0.42)}
+.mt-item.mt-closed{background:rgba(239,68,68,0.16);color:#ef4444;border:1px solid rgba(239,68,68,0.42)}
+.mt-flag{font-size:13px;line-height:1}
+.mt-name{font-weight:700;letter-spacing:.4px}
+.mt-state{font-size:10.5px;font-weight:700;letter-spacing:.4px}
+.mt-time{font-size:10.5px;opacity:.78;font-weight:500}
+.mt-fut{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:11px;letter-spacing:.3px;line-height:1}
+.mt-fut .mt-sym{color:var(--gold-bright);font-weight:700;letter-spacing:.5px}
+.mt-fut .mt-fut-name{color:rgba(245,240,232,0.65);font-size:10.5px}
+.mt-fut .mt-fut-price{color:rgba(245,240,232,0.92);font-weight:500}
+.mt-fut .mt-fut-chg{font-weight:700}
+.mt-fut .mt-fut-chg.pos{color:var(--green)}
+.mt-fut .mt-fut-chg.neg{color:var(--red)}
+@media(max-width:600px){.market-ticker{height:28px}.market-ticker-track{gap:18px;animation-duration:75s;padding:0 24px}.mt-item,.mt-fut{font-size:10px;gap:5px}.mt-item{padding:2px 7px}.mt-flag{font-size:11px}.mt-state,.mt-time,.mt-fut-name{font-size:9.5px}.market-ticker::before,.market-ticker::after{width:24px}}
+
 /* === SECTIONS === */
 section.blk{padding:90px 0;position:relative}
 section.blk h2{font-family:var(--display);font-size:clamp(26px,3.2vw,36px);font-weight:400;color:var(--text);margin-bottom:18px;letter-spacing:.2px;line-height:1.5}
@@ -778,6 +800,14 @@ html{scroll-behavior:smooth}
     <span class="lt-item"><span class="lt-sym">BRENT</span><span class="lt-price">$73.20</span><span class="lt-chg neg">▼ -0.6%</span></span>
     <span class="lt-item"><span class="lt-sym">VIX</span><span class="lt-price">15.40</span><span class="lt-chg neg">▼ -2.1%</span></span>
   </div>
+</div>
+
+<!-- ===== BLOQUE 0.b1: ESTADO MERCADOS + FUTUROS LIVE (sticky bajo live-ticker, scroll horizontal) ===== -->
+<div class="market-ticker market-ticker-markets" aria-label="Estado de mercados globales en tiempo real">
+  <div class="market-ticker-track" id="market-ticker-markets-track"><!-- JS renderiza --></div>
+</div>
+<div class="market-ticker market-ticker-futures" aria-label="Futuros con precios en vivo">
+  <div class="market-ticker-track" id="market-ticker-futures-track"><!-- JS renderiza --></div>
 </div>
 
 <!-- ===== DRAWER MOBILE ===== -->
@@ -2214,6 +2244,98 @@ html{scroll-behavior:smooth}
     fetchLtCrypto();
     setInterval(fetchLtCrypto, 60000);
   }
+
+  // === BLOQUE 0.b1: MARKET STATUS + FUTURES TICKERS ===
+  const MKT_DEFS = [
+    { id:'EEUU',     flag:'🇺🇸', open:810, close:1200 },
+    { id:'ARG',      flag:'🇦🇷', open:840, close:1260 },
+    { id:'BRASIL',   flag:'🇧🇷', open:780, close:1175 },
+    { id:'LONDRES',  flag:'🇬🇧', open:480, close:990  },
+    { id:'ESPAÑA',   flag:'🇪🇸', open:480, close:990  },
+    { id:'ALEMANIA', flag:'🇩🇪', open:480, close:1020 },
+    { id:'FRANCIA',  flag:'🇫🇷', open:480, close:1020 },
+    { id:'JAPÓN',    flag:'🇯🇵', open:0,   close:390  },
+    { id:'CHINA',    flag:'🇨🇳', open:90,  close:420  },
+    { id:'HONGKONG', flag:'🇭🇰', open:90,  close:480  },
+    { id:'ASIA',     flag:'🌏', open:0,   close:360  }
+  ];
+  const FUT_DEFS = [
+    { s:'ES=F',  n:'S&P 500' },{ s:'NQ=F',  n:'Nasdaq' },{ s:'YM=F',  n:'Dow' },
+    { s:'RTY=F', n:'Russell' },{ s:'GC=F',  n:'Oro' },{ s:'SI=F',  n:'Plata' },
+    { s:'CL=F',  n:'WTI' },{ s:'BZ=F',  n:'Brent' },{ s:'NG=F',  n:'Gas Nat' },
+    { s:'ZB=F',  n:'Bonos 30Y' },{ s:'ZN=F',  n:'Bonos 10Y' },{ s:'ZF=F',  n:'Bonos 5Y' },
+    { s:'HG=F',  n:'Cobre' },{ s:'^VIX',  n:'VIX' },{ s:'UUP',   n:'Dollar' },
+    { s:'6E=F',  n:'Euro' },{ s:'6J=F',  n:'Yen' },{ s:'6B=F',  n:'Libra' },
+    { s:'ZC=F',  n:'Maíz' },{ s:'ZS=F',  n:'Soja' }
+  ];
+  const MKT_BACKEND = 'https://aurex-app-production.up.railway.app';
+
+  function mktRenderMarkets(){
+    const track = document.getElementById('market-ticker-markets-track');
+    if(!track) return;
+    const now = new Date();
+    const utcMin = now.getUTCHours()*60 + now.getUTCMinutes();
+    const utcDay = now.getUTCDay();
+    const isWknd = utcDay === 0 || utcDay === 6;
+    const html = MKT_DEFS.map(m => {
+      const isOpen = !isWknd && utcMin >= m.open && utcMin < m.close;
+      let mins;
+      if(isOpen) mins = m.close - utcMin;
+      else if(utcMin < m.open) mins = m.open - utcMin;
+      else mins = (24*60 - utcMin) + m.open;
+      const h = Math.floor(mins/60), mm = mins % 60;
+      const t = h + 'h' + (mm<10?'0':'') + mm + 'm';
+      const cls = isOpen ? 'mt-open' : 'mt-closed';
+      const state = isOpen ? 'ABIERTO' : 'CERRADO';
+      const time = isOpen ? '· cierra en ' + t : '· abre en ' + t;
+      return '<span class="mt-item ' + cls + '">' +
+             '<span class="mt-flag">' + m.flag + '</span>' +
+             '<span class="mt-name">' + m.id + '</span>' +
+             '<span class="mt-state">' + state + '</span>' +
+             '<span class="mt-time">' + time + '</span>' +
+             '</span>';
+    }).join('');
+    track.innerHTML = html + html; // duplicar para loop infinito
+  }
+
+  async function mktFetchFutures(){
+    const track = document.getElementById('market-ticker-futures-track');
+    if(!track) return;
+    const results = await Promise.allSettled(FUT_DEFS.map(async f => {
+      const url = MKT_BACKEND + '/api/stock/' + encodeURIComponent(f.s);
+      const r = await fetch(url, { cache:'no-store' });
+      if(!r.ok) throw new Error('http ' + r.status);
+      const d = await r.json();
+      return { ...f, price: d.price, chg: d.changePct };
+    }));
+    const html = results.map((r, i) => {
+      const f = r.status === 'fulfilled' ? r.value : { ...FUT_DEFS[i], price:null, chg:null };
+      const hasPrice = f.price !== null && f.price !== undefined && !isNaN(f.price);
+      const pos = (f.chg ?? 0) >= 0;
+      let priceStr = '—';
+      if(hasPrice){
+        priceStr = f.price >= 1000 ? '$' + Math.round(f.price).toLocaleString('en-US')
+                 : f.price >= 10   ? '$' + Number(f.price).toFixed(2)
+                                   : '$' + Number(f.price).toFixed(3);
+      }
+      const chgStr = (hasPrice && f.chg !== null && f.chg !== undefined && !isNaN(f.chg))
+        ? (pos ? '▲ +' : '▼ ') + Math.abs(f.chg).toFixed(2) + '%'
+        : '';
+      return '<span class="mt-fut">' +
+             '<span class="mt-sym">' + (f.s || '') + '</span>' +
+             '<span class="mt-fut-name">' + (f.n || '') + '</span>' +
+             '<span class="mt-fut-price">' + priceStr + '</span>' +
+             (chgStr ? '<span class="mt-fut-chg ' + (pos?'pos':'neg') + '">' + chgStr + '</span>' : '') +
+             '</span>';
+    }).join('');
+    track.innerHTML = html + html; // duplicar para loop infinito
+  }
+
+  // boot tickers 0.b1
+  mktRenderMarkets();
+  setInterval(mktRenderMarkets, 60000);            // recompute estado mercados cada 60s
+  mktFetchFutures();
+  setInterval(mktFetchFutures, 5 * 60 * 1000);     // refetch precios futuros cada 5 min
 
 })();
 </script>
