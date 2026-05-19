@@ -304,7 +304,17 @@
     "b8_card_price_h3": "Price Alerts",
     "b8_card_event_h3": "Event Alerts",
     "alert_see_app": "See it in app",
-    "lq_title": "Market Pulse · Global"
+    "lq_title": "Market Pulse · Global",
+    "foot_product": "Product",
+    "foot_company": "Company",
+    "foot_channels": "Channels",
+    "foot_web_app": "Web App",
+    "foot_ios": "iOS App Store",
+    "foot_google": "Google Play",
+    "foot_pricing": "Pricing",
+    "foot_privacy": "Privacy Policy",
+    "foot_terms": "Terms",
+    "foot_open_source": "Open source"
   },
   "es": {
     "nav_features": "Características",
@@ -596,7 +606,17 @@
     "b8_card_price_h3": "Alertas de Precio",
     "b8_card_event_h3": "Alertas de Eventos",
     "alert_see_app": "Ver en la app",
-    "lq_title": "Pulso del Mercado · Global"
+    "lq_title": "Pulso del Mercado · Global",
+    "foot_product": "Producto",
+    "foot_company": "Empresa",
+    "foot_channels": "Canales",
+    "foot_web_app": "App Web",
+    "foot_ios": "App Store iOS",
+    "foot_google": "Google Play",
+    "foot_pricing": "Planes",
+    "foot_privacy": "Política de Privacidad",
+    "foot_terms": "Términos",
+    "foot_open_source": "Código abierto"
   },
   "pt": {
     "nav_features": "Recursos",
@@ -888,7 +908,17 @@
     "b8_card_price_h3": "Alertas de Preço",
     "b8_card_event_h3": "Alertas de Eventos",
     "alert_see_app": "Ver no app",
-    "lq_title": "Pulso do Mercado · Global"
+    "lq_title": "Pulso do Mercado · Global",
+    "foot_product": "Produto",
+    "foot_company": "Empresa",
+    "foot_channels": "Canais",
+    "foot_web_app": "App Web",
+    "foot_ios": "App Store iOS",
+    "foot_google": "Google Play",
+    "foot_pricing": "Planos",
+    "foot_privacy": "Política de Privacidade",
+    "foot_terms": "Termos",
+    "foot_open_source": "Código aberto"
   },
   "zh": {
     "nav_features": "功能",
@@ -1180,7 +1210,17 @@
     "b8_card_price_h3": "价格提醒",
     "b8_card_event_h3": "事件提醒",
     "alert_see_app": "在 app 中查看",
-    "lq_title": "市场脉搏 · 全球"
+    "lq_title": "市场脉搏 · 全球",
+    "foot_product": "产品",
+    "foot_company": "公司",
+    "foot_channels": "渠道",
+    "foot_web_app": "网页版",
+    "foot_ios": "iOS 应用商店",
+    "foot_google": "Google Play",
+    "foot_pricing": "定价",
+    "foot_privacy": "隐私政策",
+    "foot_terms": "条款",
+    "foot_open_source": "开源"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1472,7 +1512,17 @@
     "b8_card_price_h3": "Alertes de Prix",
     "b8_card_event_h3": "Alertes Événements",
     "alert_see_app": "Voir dans l'app",
-    "lq_title": "Pouls du Marché · Global"
+    "lq_title": "Pouls du Marché · Global",
+    "foot_product": "Produit",
+    "foot_company": "Société",
+    "foot_channels": "Canaux",
+    "foot_web_app": "App Web",
+    "foot_ios": "App Store iOS",
+    "foot_google": "Google Play",
+    "foot_pricing": "Tarifs",
+    "foot_privacy": "Politique de Confidentialité",
+    "foot_terms": "Conditions",
+    "foot_open_source": "Open source"
   },
   "it": {
     "nav_features": "Funzioni",
@@ -1764,7 +1814,17 @@
     "b8_card_price_h3": "Avvisi di Prezzo",
     "b8_card_event_h3": "Avvisi Eventi",
     "alert_see_app": "Vedi nell'app",
-    "lq_title": "Polso del Mercato · Global"
+    "lq_title": "Polso del Mercato · Global",
+    "foot_product": "Prodotto",
+    "foot_company": "Azienda",
+    "foot_channels": "Canali",
+    "foot_web_app": "App Web",
+    "foot_ios": "App Store iOS",
+    "foot_google": "Google Play",
+    "foot_pricing": "Prezzi",
+    "foot_privacy": "Privacy",
+    "foot_terms": "Termini",
+    "foot_open_source": "Open source"
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2056,7 +2116,17 @@
     "b8_card_price_h3": "मूल्य अलर्ट",
     "b8_card_event_h3": "इवेंट अलर्ट",
     "alert_see_app": "ऐप में देखें",
-    "lq_title": "मार्केट पल्स · ग्लोबल"
+    "lq_title": "मार्केट पल्स · ग्लोबल",
+    "foot_product": "उत्पाद",
+    "foot_company": "कंपनी",
+    "foot_channels": "चैनल",
+    "foot_web_app": "वेब ऐप",
+    "foot_ios": "iOS ऐप स्टोर",
+    "foot_google": "Google Play",
+    "foot_pricing": "मूल्य निर्धारण",
+    "foot_privacy": "गोपनीयता नीति",
+    "foot_terms": "शर्तें",
+    "foot_open_source": "ओपन सोर्स"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2348,6 +2418,16 @@
     "b8_card_price_h3": "تنبيهات السعر",
     "b8_card_event_h3": "تنبيهات الأحداث",
     "alert_see_app": "اعرض في التطبيق",
-    "lq_title": "نبض السوق · عالمي"
+    "lq_title": "نبض السوق · عالمي",
+    "foot_product": "المنتج",
+    "foot_company": "الشركة",
+    "foot_channels": "القنوات",
+    "foot_web_app": "تطبيق الويب",
+    "foot_ios": "متجر iOS",
+    "foot_google": "Google Play",
+    "foot_pricing": "الخطط",
+    "foot_privacy": "سياسة الخصوصية",
+    "foot_terms": "الشروط",
+    "foot_open_source": "مفتوح المصدر"
   }
 }
