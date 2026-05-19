@@ -5,6 +5,22 @@
 
 ---
 
+## ⭐ AGREGADO 19-may post-Build 25 — Pendientes ANDROID futuro
+
+### Build Android futuro (37 o el que sea, post-aprobación Build 36 Producción)
+
+Cuando se haga el próximo Build Android, **incluir el Bug 2 UX Alertas que se aplica en Build 26 iOS** (es código compartido React Native + backend único — los cambios automáticamente quedarán en branch dev, pero requieren re-compile + re-upload Play Store para llegar a usuarios Android).
+
+Componentes a llevar:
+- **Backend** `server.js` cambios para `precio_al_crear` + nueva lógica delta — YA están aplicados al compilar Build 26 (server.js es único)
+- **Frontend form** `AlertCreateModal.js` con preview vivo + leyenda ⓘ — código compartido iOS/Android
+- **UX visual verde/rojo** en centro alertas + popup + push notification — código compartido iOS/Android
+- **Telegram** mejora formato — server.js (ya aplicado backend)
+
+**Ver detalle completo en**: `briefs/PLAN_BUILD26_iOS_BUG1_BUG2.md` §3.
+
+---
+
 ## 🚨 P0 — INMEDIATO al arrancar
 
 ### 0. 🚨⭐ TOP PRIORIDAD ABSOLUTA — Compilar Build 25 iOS TestFlight (validación masiva)
