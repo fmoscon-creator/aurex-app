@@ -363,7 +363,8 @@
     "b5_chip_copper_tip": "Copper — 'Dr. Copper', leading economic activity indicator.",
     "b5_chip_gdelt_label": "GDELT Geopolitics",
     "b5_chip_gdelt_tip": "GDELT — global geopolitical events feed cross-referenced per asset.",
-    "chip_hint": "Tap each variable to see what it measures ⓘ"
+    "chip_hint": "Tap each variable to see what it measures ⓘ",
+    "scroll_hint": "Swipe"
   },
   "es": {
     "nav_features": "Características",
@@ -714,7 +715,8 @@
     "b5_chip_copper_tip": "Cobre — 'Dr. Cobre', indicador líder de actividad económica.",
     "b5_chip_gdelt_label": "GDELT Geopolítica",
     "b5_chip_gdelt_tip": "GDELT — feed de eventos geopolíticos globales cruzados por activo.",
-    "chip_hint": "Tocá cada variable para ver qué mide ⓘ"
+    "chip_hint": "Tocá cada variable para ver qué mide ⓘ",
+    "scroll_hint": "Deslizá"
   },
   "pt": {
     "nav_features": "Recursos",
@@ -1065,7 +1067,8 @@
     "b5_chip_copper_tip": "Cobre — 'Dr. Cobre', indicador líder de atividade econômica.",
     "b5_chip_gdelt_label": "GDELT Geopolítica",
     "b5_chip_gdelt_tip": "GDELT — feed de eventos geopolíticos globais cruzados por ativo.",
-    "chip_hint": "Toque cada variável para ver o que ela mede ⓘ"
+    "chip_hint": "Toque cada variável para ver o que ela mede ⓘ",
+    "scroll_hint": "Deslize"
   },
   "zh": {
     "nav_features": "功能",
@@ -1416,7 +1419,8 @@
     "b5_chip_copper_tip": "铜 — '铜博士',经济活动领先指标。",
     "b5_chip_gdelt_label": "GDELT 地缘政治",
     "b5_chip_gdelt_tip": "GDELT — 全球地缘政治事件源,按资产交叉引用。",
-    "chip_hint": "点击每个变量查看其含义 ⓘ"
+    "chip_hint": "点击每个变量查看其含义 ⓘ",
+    "scroll_hint": "滑动查看"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1767,7 +1771,8 @@
     "b5_chip_copper_tip": "Cuivre — 'Dr Cuivre', indicateur avancé activité économique.",
     "b5_chip_gdelt_label": "GDELT Géopolitique",
     "b5_chip_gdelt_tip": "GDELT — flux d'événements géopolitiques mondiaux croisés par actif.",
-    "chip_hint": "Touchez chaque variable pour voir ce qu'elle mesure ⓘ"
+    "chip_hint": "Touchez chaque variable pour voir ce qu'elle mesure ⓘ",
+    "scroll_hint": "Faites glisser"
   },
   "it": {
     "nav_features": "Funzioni",
@@ -2118,7 +2123,8 @@
     "b5_chip_copper_tip": "Rame — 'Dr Rame', indicatore guida attività economica.",
     "b5_chip_gdelt_label": "GDELT Geopolitica",
     "b5_chip_gdelt_tip": "GDELT — feed di eventi geopolitici globali incrociati per asset.",
-    "chip_hint": "Tocca ogni variabile per vedere cosa misura ⓘ"
+    "chip_hint": "Tocca ogni variabile per vedere cosa misura ⓘ",
+    "scroll_hint": "Scorri"
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2469,7 +2475,8 @@
     "b5_chip_copper_tip": "तांबा — 'डॉ कॉपर', आर्थिक गतिविधि का प्रमुख संकेतक।",
     "b5_chip_gdelt_label": "GDELT भू-राजनीति",
     "b5_chip_gdelt_tip": "GDELT — वैश्विक भू-राजनीतिक घटना फ़ीड, संपत्ति के अनुसार।",
-    "chip_hint": "प्रत्येक चर पर टैप करें ⓘ"
+    "chip_hint": "प्रत्येक चर पर टैप करें ⓘ",
+    "scroll_hint": "स्वाइप करें"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2820,6 +2827,7 @@
     "b5_chip_copper_tip": "النحاس — 'دكتور النحاس'، مؤشر قائد للنشاط الاقتصادي.",
     "b5_chip_gdelt_label": "GDELT جيوسياسة",
     "b5_chip_gdelt_tip": "GDELT — تغذية الأحداث الجيوسياسية العالمية، مرجعية حسب الأصل.",
-    "chip_hint": "انقر على كل متغير لرؤية ما يقيس ⓘ"
+    "chip_hint": "انقر على كل متغير لرؤية ما يقيس ⓘ",
+    "scroll_hint": "اسحب"
   }
 }
