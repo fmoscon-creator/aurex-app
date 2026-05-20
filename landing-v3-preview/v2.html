@@ -2507,7 +2507,9 @@ html{scroll-behavior:smooth}
     'GC=F':'gc.f','SI=F':'si.f','CL=F':'cl.f','BZ=F':'b.f','NG=F':'ng.f',
     'ZB=F':'zb.f','ZN=F':'zn.f','ZF=F':'zf.f',
     'HG=F':'hg.f','ZC=F':'zc.f','ZS=F':'zs.f',
-    '6E=F':'6e.f','6J=F':'6j.f','6B=F':'6b.f',
+    // Forex: usar spot FX porque Stooq no tiene los futuros CME (6e.f/6j.f/6b.f -> N/D).
+    // Spot y futuros son ~iguales en precio (dif minima por carry), valido para mostrar al usuario.
+    '6E=F':'eurusd','6J=F':'jpyusd','6B=F':'gbpusd',
     '^VIX':'^vix','UUP':'uup.us'
   };
 
