@@ -762,6 +762,7 @@ html{scroll-behavior:smooth}
 section.hero .wrap{position:relative;z-index:2}
 section.hero h1{text-shadow:0 2px 16px rgba(0,0,0,.85),0 0 30px rgba(0,0,0,.5)!important}
 section.hero p.sub{color:#FFFFFF!important;font-weight:500!important;text-shadow:0 1px 2px #000,0 2px 10px rgba(0,0,0,.9),0 0 22px rgba(0,0,0,.6)!important}
+#herovid::-webkit-media-controls,#herovid::-webkit-media-controls-start-playback-button{display:none!important;-webkit-appearance:none!important;opacity:0!important}
 </style>
 </head>
 <body>
@@ -946,7 +947,7 @@ section.hero p.sub{color:#FFFFFF!important;font-weight:500!important;text-shadow
 <!-- ===== BLOQUE 2: HERO ===== -->
 <!-- ===== BLOQUE 2: HERO ===== -->
 <section class="hero">
-<video id="herovid" autoplay loop muted playsinline poster="assets/video/globo_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.80;filter:sepia(1) saturate(2.6) hue-rotate(-12deg) brightness(1.18) contrast(1.05)"><source src="assets/video/globo.mp4" type="video/mp4"></video>
+<video id="herovid" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="assets/video/globo_poster.jpg" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.80;filter:sepia(1) saturate(2.6) hue-rotate(-12deg) brightness(1.18) contrast(1.05)"><source src="assets/video/globo.mp4" type="video/mp4"></video>
 <div style="position:absolute;inset:0;z-index:1;opacity:.10;background:radial-gradient(ellipse 1100px 600px at 70% 35%,rgba(8,4,0,.2) 0%,rgba(8,4,0,.95) 78%)"></div>
 
   <div class="wrap hero-grid">
@@ -2732,7 +2733,7 @@ section.hero p.sub{color:#FFFFFF!important;font-weight:500!important;text-shadow
 </script>
 
 <script>
-(function(){var v=document.getElementById('herovid');if(v){v.addEventListener('loadeddata',function(){v.playbackRate=0.61;});v.playbackRate=0.61;}})();
+(function(){var v=document.getElementById('herovid');if(!v)return;v.muted=true;v.defaultMuted=true;v.setAttribute('muted','');v.playsInline=true;function go(){try{v.playbackRate=0.61;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}v.addEventListener('loadeddata',go);v.addEventListener('canplay',go);go();['touchstart','click','scroll'].forEach(function(ev){document.addEventListener(ev,function(){go();},{once:true,passive:true});});})();
 </script>
 </body>
 </html>
