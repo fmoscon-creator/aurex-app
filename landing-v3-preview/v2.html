@@ -757,6 +757,7 @@ html{scroll-behavior:smooth}
 @media(max-width:880px){.legal-btn{width:40px;height:40px;font-size:20px}.legal-btn::after{display:none}}
 @media(max-width:480px){.legal-btn{width:38px;height:38px;font-size:19px}}
 </style>
+<style>.market-ticker.market-ticker-futures{display:none!important}</style>
 </head>
 <body>
 <script>
@@ -873,6 +874,24 @@ html{scroll-behavior:smooth}
     <span class="lt-item"><span class="lt-sym">GOLD</span><span class="lt-price">$2,650</span><span class="lt-chg pos">▲ +0.4%</span></span>
     <span class="lt-item"><span class="lt-sym">BRENT</span><span class="lt-price">$73.20</span><span class="lt-chg neg">▼ -0.6%</span></span>
     <span class="lt-item"><span class="lt-sym">VIX</span><span class="lt-price">15.40</span><span class="lt-chg neg">▼ -2.1%</span></span>
+    <span class="lt-item" data-fut="ES=F"><span class="lt-sym">S&P 500</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="NQ=F"><span class="lt-sym">Nasdaq</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="YM=F"><span class="lt-sym">Dow</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="RTY=F"><span class="lt-sym">Russell</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="SI=F"><span class="lt-sym">Plata</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="CL=F"><span class="lt-sym">WTI</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="NG=F"><span class="lt-sym">Gas Nat</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="ZB=F"><span class="lt-sym">Bonos 30Y</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="ZN=F"><span class="lt-sym">Bonos 10Y</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="ZF=F"><span class="lt-sym">Bonos 5Y</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="HG=F"><span class="lt-sym">Cobre</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="UUP"><span class="lt-sym">Dollar</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="6E=F"><span class="lt-sym">Euro</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="6J=F"><span class="lt-sym">Yen</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="6B=F"><span class="lt-sym">Libra</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="ZC=F"><span class="lt-sym">Maíz</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    <span class="lt-item" data-fut="ZS=F"><span class="lt-sym">Soja</span><span class="lt-price">…</span><span class="lt-chg"></span></span>
+    
   </div>
 </div>
 
@@ -2606,8 +2625,22 @@ html{scroll-behavior:smooth}
     // Render lo que sea (datos o nulls si ninguno respondio y sin cache)
     const finalItems = items || FUT_DEFS.map(f => ({ ...f, price:null, chg:null }));
     if(items) mktSaveFuturesCache(items);
-    const html = mktBuildFuturesHtml(finalItems);
-    track.innerHTML = html + html;
+    finalItems.forEach(function(fx){
+      var els = document.querySelectorAll('.live-ticker-track [data-fut="'+fx.s+'"]');
+      els.forEach(function(el){
+        var pe = el.querySelector('.lt-price'), ce = el.querySelector('.lt-chg');
+        if(fx.price!=null && !isNaN(fx.price)){
+          pe.textContent = fx.price>=1000 ? '$'+Math.round(fx.price).toLocaleString('en-US')
+                         : fx.price>=10   ? '$'+Number(fx.price).toFixed(2)
+                                          : '$'+Number(fx.price).toFixed(3);
+        }
+        if(fx.chg!=null && !isNaN(fx.chg)){
+          var pos = fx.chg>=0;
+          ce.textContent = (pos?'▲ +':'▼ ')+Math.abs(fx.chg).toFixed(2)+'%';
+          ce.className = 'lt-chg '+(pos?'pos':'neg');
+        }
+      });
+    });
   }
 
   // boot tickers 0.b1
