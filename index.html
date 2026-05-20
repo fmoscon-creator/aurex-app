@@ -2736,7 +2736,10 @@ section.hero p.sub{color:#FFFFFF!important;font-weight:500!important;text-shadow
 (function(){var v=document.getElementById('herovid');if(!v)return;
 v.muted=true;v.defaultMuted=true;v.setAttribute('muted','');v.playsInline=true;
 function go(){try{v.playbackRate=0.85;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
-['loadeddata','canplay','canplaythrough'].forEach(function(ev){v.addEventListener(ev,go);});go();
+['loadedmetadata','loadeddata','canplay','canplaythrough'].forEach(function(ev){v.addEventListener(ev,go);});
+go();
+var iv=setInterval(function(){if(!v.paused){clearInterval(iv);return;}go();},250);
+setTimeout(function(){clearInterval(iv);},8000);
 ['pointermove','mousemove','touchstart','click','scroll','keydown'].forEach(function(ev){document.addEventListener(ev,function(){go();},{once:true,passive:true});});
 })();
 </script>
