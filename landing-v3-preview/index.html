@@ -986,7 +986,7 @@ html{scroll-behavior:smooth}
     <div class="hero-mockup reveal reveal-delay-2">
       <div class="iphone-frame">
         <span class="live-badge">Live data</span>
-        <img src="assets/captures/markets_en.jpg" alt="AUREX Markets + Pulse">
+        <img src="assets/captures/markets_en.jpg?v=20MAY-A" alt="AUREX Markets + Pulse">
       </div>
     </div>
   </div>
@@ -1021,7 +1021,7 @@ html{scroll-behavior:smooth}
 
 <!-- ===== 13 BLOQUES content para los modales de features (display:none real, SEO indexable) ===== -->
 <div class="feat-modal-source" id="feat-src-f1" style="display:none" aria-hidden="true">
-  <img src="assets/captures/markets_en.jpg" alt="350 activos en Mercados" data-i18n-alt="alt_markets">
+  <img src="assets/captures/markets_en.jpg?v=20MAY-A" alt="350 activos en Mercados" data-i18n-alt="alt_markets">
   <h3 data-i18n="b27_f1_t">350 activos · 7 mercados globales</h3>
   <p data-i18n="b27_f1_d">Cripto, acciones, ETFs, futuros, materias primas, bonos, forex y stablecoins. USA, Argentina, Brasil, España, Europa, Japón y China.</p>
 </div>
@@ -1153,7 +1153,7 @@ html{scroll-behavior:smooth}
       <h2 style="text-align:center" data-i18n="b45_h2">See it in action.</h2>
     </div>
     <div class="carousel">
-      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/markets_en.jpg"></div><p class="car-label" data-i18n="car_1">Global markets · 11 exchanges · Real-time</p></div>
+      <div class="car-slide reveal"><div class="iphone-frame"><img src="assets/captures/markets_en.jpg?v=20MAY-A"></div><p class="car-label" data-i18n="car_1">Global markets · 11 exchanges · Real-time</p></div>
       <div class="car-slide reveal reveal-delay-1"><div class="iphone-frame"><img src="assets/captures/ai_signals_en.jpg"></div><p class="car-label" data-i18n="car_2">AI signals · 24 variables · 5 reasons explained</p></div>
       <div class="car-slide reveal reveal-delay-2"><div class="iphone-frame"><img src="assets/captures/portfolio_en.jpg"></div><p class="car-label" data-i18n="car_3">Your portfolio · AI risk score in real time</p></div>
       <div class="car-slide reveal reveal-delay-3"><div class="iphone-frame"><img src="assets/captures/watchlist_en.jpg"></div><p class="car-label" data-i18n="car_4">Multiple watchlists · Compare instantly</p></div>
@@ -1927,6 +1927,8 @@ html{scroll-behavior:smooth}
 
   function switchCaptures(lang) {
     const captureLang = SUPPORTED_CAPTURE_LANGS.includes(lang) ? lang : 'en';
+    // Cache-buster preservation: regex captura _en.jpg o _es.jpg con OPCIONAL ?v=xxx al final
+    // Mantiene el query string del cache-buster al hacer swap entre idiomas.
     document.querySelectorAll('img[src*="_en.jpg"], img[src*="_es.jpg"]').forEach(img => {
       const newSrc = img.src.replace(/_(en|es)\.jpg/, `_${captureLang}.jpg`);
       if (newSrc !== img.src) img.src = newSrc;
