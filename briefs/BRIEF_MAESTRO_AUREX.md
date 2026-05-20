@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 19-may-2026 ~15:15 AR (cierre día completo iOS Builds 25→26→27→28)
-> **Última actualización significativa:** Sesión 19-may TARDE — **3 Builds iOS consecutivos a TestFlight** (26 + 27 + 28) con bugs detectados y resueltos en cadena. Builds 25 (validación masiva 7 fixes), 26 (Bug 1 IAP RC API key wrong → fix `appl_zLBPCgwahGaLMonmCDvEjKZDHUh`), 27 (Bug 2 UX alertas completo: precio_base lógica delta + preview vivo + leyenda ⓘ + verde/rojo MisAlertas + emoji dirección + Telegram/WA/push mejorados + SubscriptionScreen mensual/anual). Build 27 instalado reveló 7 bugs nuevos en UX (modal sale pantalla + cards todas BAJISTA + Objetivo --- + leyenda verde + alcista no aparece + doble disparo). Build 28 en cola Transporter ahora con 7 fixes (SELECT alertasService incompleto + lectura anidada `a.alertas?.X` + modal maxHeight + ScrollView interno botones fijos + leyenda gold + timestamp absoluto `19-may 14:06` + Bugs 6+7 explicados como colaterales del SELECT). **DOC NUEVO**: `briefs/FLUJO_BUILD_IOS_ANDROID.md` (manual oficial 11 pasos validado por Code+Escritorio post incidente Build 25 MARKETING_VERSION). Sesión madrugada misma día: 7 frentes Landing v3 cerrados A-G + 800+ i18n. Plus 🚨 bug PLAN FREE forzado mobile sigue con override Supabase manual (causa raíz pendiente investigar). **Status Build 36 Google review**: SIGUE EN REVISIÓN (Play Console con errores 7F98EO57/5DBCE83D del lado Google).
+> **Última actualización:** 20-may-2026 ~02:30 AR
+> **Última actualización significativa:** Ver **§1.b ACTUALIZACIÓN 18-20 MAY** (foto actual). Hitos: iOS Build 32 v1.0(32) PREPARADO (IPA exportado, fix modal Crear Alerta resuelto en simulador) esperando respuesta Apple a Build 17 · Android Build 36 v1.0.36 en revisión Google con IAP RC #76809 RESUELTO · backend OPS-4 push iOS apns · monitor 24/7 Telegram · acceso Railway Project Token · NUEVO TEMA PRIORITARIO: actualizar la web a funciones/estado Build 32 iOS + Build 36 Android · landing fondos video del hero en evaluación (mockup con 5 videos + controles).
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -21,23 +21,43 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS** | 🟡 Re-submission EN COLA Apple Review (solo marca AUREX LIVE) | Esperar respuesta Apple — NO distribuir aunque apruebe (Manual Release OFF) | Respuesta Apple Review |
-| 🍎 **iOS Build 25 TestFlight** | ✅ COMPILADO + INSTALADO 19-may 12:41 PM — validó 5 de 7 fixes (plan ELITE OK, session OK, push OK, Telegram OK, tutorial OK). Detectó bug 1 IAP (SubscriptionScreen no carga productos) y bug 2 alerta BAJA no dispara | — | — |
-| 🍎 **iOS Build 26 TestFlight** | ✅ COMPILADO + VALIDADO E2E 19-may — Bug 1 IAP RESUELTO: API key RC iOS estaba mal (`appbf4b308ae6` legacy SDK v4 → `appl_zLBPCgwahGaLMonmCDvEjKZDHUh` SDK v9). Probado con compra real sandbox PRO MENSUAL → "LISTO TU PLAN fue activado" + plan bajó a PRO en Supabase via webhook RC. Cadena E2E iOS confirmada | — | — |
-| 🍎 **iOS Build 27 TestFlight** | ✅ COMPILADO + INSTALADO 19-may — Bug 2 UX alertas COMPLETO (backend precio_base lógica delta + preview vivo form + leyenda ⓘ + verde/rojo MisAlertas + emoji direccion + Telegram/WA/push mejorado + SubscriptionScreen mensual vs anual). REVELÓ 7 bugs nuevos al instalar | Resueltos en Build 28 | — |
-| 🍎 **iOS Build 28 TestFlight** | 🟡 **EN COLA TRANSPORTER** 19-may 15:15 AR — Fix 7 bugs Build 27: SELECT alertasService incompleto (causa raíz cards todas BAJISTA + Objetivo ---), lectura `a.alertas?.X` anidada, modal maxHeight + ScrollView botones fijos, leyenda gold, timestamp absoluto, Bugs 6+7 explicados | Fernando upload TestFlight + validar 7 fixes en iPhone | — |
-| 🤖 **Android Build 33 producción** | 🟢 ACTIVO Play Store hasta aprobación Build 36 (20 instalaciones, 177 países) | Sin acción — será reemplazado automáticamente por Build 36 al aprobar Google | Aprobación Google Build 36 |
-| 🤖 **Android Build 35 Internal Testing** | ⏹ Superado por Build 36 (Internal Testing también ya en Build 36 desde 18-may 17:17 AR) | Sin acción — quedó como histórico | — |
-| 🤖 **Android Build 36 v1.0.36** | 🟡 **EN REVISIÓN GOOGLE PLAY → PRODUCCIÓN** (enviado 18-may noche AR) | Esperar aprobación (2-24h estimado). Build 33 sigue activo hasta entonces | Aprobación Google |
-| 🤖 **Track Alpha (Prueba cerrada)** | 🟡 31,58% testers en v1.0.17 vieja (sin Bug G fix logout, sin IAP, sin Tier 1) | **PASO 2 cuando Google apruebe Build 36 Producción:** subir el mismo AAB al track Alpha | Aprobación Google Build 36 Producción |
-| 🎉 **IAP / RevenueCat ticket #76809** | ✅ **RESUELTO 18-may 17:30 AR con Build 36 (rebuild limpio + 4 fixes)** | Cancelar suscripción ELITE test + cerrar ticket RC | — |
-| 🛡️ **Play Console Política Privacidad + Data Safety** | ✅ CORREGIDO 18-may (Privacy URL → `/docs/privacy.html` + cuestionario Data Safety completado, ambos por Escritorio) | Sin acción — en revisión junto a Build 36 | Aprobación Google |
-| 🚨 **Bug PLAN FREE forzado mobile (19-may 06:00 AR)** | 🟡 **Override aplicado** (Supabase fmoscon → ELITE) — causa raíz NO investigada | Mañana: investigar webhook RC EXPIRATION + bug "FREE no permite 5 alertas básicas" | Backend logs + RC dashboard |
-| 🎨 **Landing v3** | 🟢 7 frentes cerrados sesión 19-may madrugada (A reorder + B banner 0.b1 + C modal/negro + D Motor 24 tooltips + E Alertas modal + F More recortadas + G footer color) | Mañana: fondos/imágenes reales + skill high-end-visual-design | OK Fernando |
-| 🎨 **Landing v3 aurex.live** | 🟡 PENDIENTE OK visual Fernando + Escritorio | Fernando abre 2 PNG + decide | Doble OK |
-| 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing v3 live | Landing v3 deploy |
-| 🌐 **PWA aurex.live** | 🟢 Live, fase 0 reorg ejecutada | Será reemplazada por landing v3 al deploy | — |
-| ⚙️ **Backend Railway** | 🟢 OK | Sin acción inmediata | — |
+| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟡 Re-submission EN COLA Apple Review (marca AUREX LIVE) | Esperar respuesta Apple a la respuesta del rechazo de marca | Respuesta Apple Review |
+| 🍎 **iOS Build 32 (v1.0 · 32)** | 🟢 **PREPARADO** — IPA exportado (`backups/ipa/Build32/`, 42MB, 20-may) | Subir a Transporter/TestFlight EN CUANTO Apple responda Build 17 | Respuesta Apple Build 17 |
+| 🤖 **Android Build 36 (v1.0.36)** | 🟡 **EN REVISIÓN Google** → Producción (IAP RC #76809 RESUELTO) | Esperar aprobación Google; luego subir a Alpha (#62) | Revisión Google |
+| 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
+| ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
+| 🎨 **Landing aurex.live (v2.html)** | 🟡 En iteración visual — fondos VIDEO del hero en evaluación + NUEVO tema web | Fernando elige video con familia (#85) + actualizar web a estado Build 32/36 (#86) | OK Fernando |
+| 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing actualizada + live | Landing deploy |
+| 🌐 **PWA aurex.live** | 🟢 Live en `/app/` | Paridad con nativo (push, telegram, etc.) | — |
+| ⚙️ **Backend Railway** | 🟢 OK (+ OPS-4 push iOS apns + monitor 24/7) | Sin acción inmediata | — |
+
+---
+
+## 1.b ACTUALIZACIÓN 18-20 MAY 2026 — foto actual (consolidada)
+
+> Esta sección es la **foto al 20-may**. El detalle histórico (Build 25, IAP esperando RC, etc.) en §2-§4 quedó superado por lo de acá.
+
+### 🍎 iOS
+- **Build 17 (v1.0.17):** sin novedad — sigue esperando que Apple responda a la respuesta que dimos al rechazo de marca (Guideline 4.1c, "AUREX AI"→"AUREX LIVE"). Manual Release OFF.
+- **Build 32 (v1.0 · 32) PREPARADO:** IPA exportado en `~/AurexApp/backups/ipa/Build32/AurexApp.ipa` (42MB, 20-may 01:37). `CURRENT_PROJECT_VERSION=32`, `MARKETING_VERSION=1.0`. Incluye el **fix del modal "Crear Alerta"** (falló en 4 builds 28-31; resuelto recién al validar en el **simulador de Xcode** antes de compilar — `KeyboardAvoidingView behavior='padding'` + overlay centrado) + fixes UX alertas (precio_base, preview, leyenda, verde/rojo) + RC iOS API key. **Queda listo para subir a Transporter/TestFlight EN CUANTO Apple responda el Build 17.**
+
+### 🤖 Android
+- **Build 36 (v1.0.36):** compilado (`versionCode 36` / `versionName "1.0.36"`), **enviado a revisión de Google → Producción**. Pendiente aprobación; luego subir a track Alpha (tarea #62).
+- **IAP RevenueCat #76809 RESUELTO:** el bug "producto no disponible" se resolvió con **rebuild limpio (`./gradlew clean` antes de `bundleRelease`)** + fixes de higiene en Build 36. (Detalle y aclaración del post-mortem en memoria `feedback_iap_bug_resuelto_18may`.)
+
+### ⚙️ Backend / Infra
+- **OPS-4:** se agregó bloque `apns` a `sendPushFCM` en `server.js` → push iOS visible con app cerrada funcionando. Deployado en Railway (commit `242246f`).
+- **Monitor 24/7:** GitHub Action (cron */5) que pinguea el backend y avisa por Telegram si cae. Verificado funcionando.
+- **Acceso Railway:** por **Project Token** (archivo local SECRET, `--service aurex-app`), no OAuth. Incidente de seguridad (un token quedó commiteado al repo por error) **resuelto**: token revocado + history limpiado con force push.
+
+### 🎨 Landing — trabajo de HOY (20-may)
+- Exploración/descarga de **videos stock** (Mixkit + Pexels) para fondos del hero: operadores/pantallas de bolsa, globos, oro, mercados. Fernando filtró por color en Finder y quedaron sus elegidos.
+- **Mockup `aurex_hero_VIDEO.html`** (en `~/Desktop/CODE/AurexApp/mockups/landing_v4_videos/`): copia de la v2.html real con video de fondo EN MOVIMIENTO + panel de controles en vivo (5 videos: GOLD partículas/GOLD stardust/GLOBO/PLANETA/MERCADOS · color líneas Original/Dorado/Blanco · encuadre Llenar/Completo · velocidad/opacidad/oscurecer · resumen numérico · panel movible/minimizable).
+- **Decisión pendiente (#85):** casi seguro va el **GLOBO**; dorado vs blanco se define con la familia. Encuadre final = LLENAR (cover).
+- **Bug agendado (#84):** en mobile, refresh salta a la sección "Cómo nos comparamos" (benchmark) en vez del header (sospechoso: `scrollIntoView` de planes / restauración de scroll).
+
+### 🆕 NUEVO TEMA PRIORITARIO (#86)
+**Actualizar la WEB (landing aurex.live) a las funciones y el estado reales de Build 32 iOS + Build 36 Android.** Las apps ya tienen features que la landing puede no reflejar (push notifications, alertas Telegram, modal de alertas, UX de planes, etc.). Alinear copy, capturas y claims de la web con lo que las apps efectivamente hacen hoy. Prioritario apenas se cierre la iteración visual de fondos.
 
 ---
 
@@ -135,12 +155,9 @@ Build 17 NO fue compilado para ir a producción tal como está. Fue submitted, r
 > Lo que sigue es la **lista de qué tiene que tener Build 25 iOS antes de subir a TestFlight.**
 > Hoy NO profundizamos en cada item — cuando llegue el momento, Code + Escritorio cruzan cada uno con el código real de Android v1.0.33 producción para garantizar paridad exacta.
 
-### Pre-requisito ABSOLUTO antes de compilar Build 25 iOS — ✅ CUMPLIDO
+### Pre-requisito ABSOLUTO antes de compilar Build 25 iOS
 
-🟢 **IAP Android Build 36 funcionando** (validado 18-may 17:30 AR con compra real ELITE Samsung fmoscon) ✅
-🟢 **TestFlight = flujo INDEPENDIENTE**: NO requiere aprobación Build 17 Apple Review producción ni Build 36 Google Producción. Aclaración explícita Fernando 19-may 07:00 AR.
-
-**→ Build 25 iOS TestFlight HABILITADO para compilar 20-may como TOP PRIORIDAD ABSOLUTA.**
+🚨 **IAP funcionando en Android producción (Build 36 con fix RC o Plan B aplicado).** Sin esto, Build 25 iOS no se compila — desperdiciaríamos el slot Apple Review por un build con cobro roto.
 
 ### Items pendientes Build 25 iOS
 
@@ -166,52 +183,16 @@ Cuando llegue el momento de compilar Build 25 iOS (después de Apple aprobar Bui
 
 ---
 
-## 3. ANDROID — Builds 33 / 34 / 35 / 36
+## 3. ANDROID — Builds 33 / 34 / 35 / próximo 36
 
-### 3.1 Estado real reconciliado (actualizado 18-may 23:00 AR con envío Play Console Producción)
+### 3.1 Estado real reconciliado (verificado 17-may 14:00 AR con Escritorio + git log)
 
 | Build | Estado real | Contenido | Evidencia |
 |---|---|---|---|
-| **33 / v1.0.33** | 🟢 **ACTIVO PRODUCCIÓN Play Store** hasta aprobación Build 36 | Bug H fix (selectedRow + ScrollView). 20 instalaciones, 177 países. **SIN** fix IAP, **SIN** fix toolbar S24, **SIN** fix crash ScreenFragment. | Confirmado Escritorio + commit `c990612` (16-may) |
-| **34 / v1.0.34** | 🟡 Solo commit, NUNCA subido a Play | IAP Tier 1 wiring frontend (Purchases.logIn/logOut) | commit `cd2f1dc` (16-may) — Escritorio no lo ve en Play Console |
-| **35 / v1.0.35** | ⏹ Superado por Build 36 | Intento de fix IAP que **NO funcionó** (mismo bug "producto no disponible"). Disparó el ticket RC #76809 que terminó resolviéndose con Build 36. | Histórico |
-| **36 / v1.0.36** | 🟡 **EN REVISIÓN GOOGLE PLAY → PRODUCCIÓN** (enviado 18-may noche AR). También activo en Internal Testing desde 18-may 17:17 AR (donde se validó el fix IAP con compra real). | Bug IAP RESUELTO (purchaseProduct → navigate Subscription) + IAP-6 orden + Alert debug revertido + `./gradlew clean` + version bump 35→36. **PENDIENTE en Build 36:** crash ScreenFragment + toolbar S24 (no se incluyeron por urgencia de cerrar IAP). | commits `66662cd` (privado) + `647ff7a` (snapshot público) — 18-may |
-
-### 3.1.b 🚀 Estado Play Console — 4 cambios EN REVISIÓN GOOGLE (enviado 18-may noche AR)
-
-Fernando envió los **4 cambios al review de Google** desde Play Console el 18-may por la noche AR. Mensaje literal de Play Console: *"Cambios en la etapa de revisión — Tus cambios están en proceso de revisión. Es posible que encontremos problemas adicionales cuando revisemos tu app."* ETA aprobación: **2-24 horas** (estimado Escritorio + experiencia previa Build 33).
-
-| # | Cambio | Estado pre-envío | Origen del bloqueo |
-|---|---|---|---|
-| 1 | **Build 36 v1.0.36 → Producción** | Internal Testing OK → Promovido a Producción | Resolución bug IAP §4.0 |
-| 2 | **Prueba cerrada Alpha → Pausar segmento** | Activo → Solicitud pausa (formalización para que Google no lo cuente como track separado durante esta review) | Limpieza tracks |
-| 3 | **Política de Privacidad URL** | `https://aurex.live/privacy.html` (HTTP 404 → Google rechazó) → corregido a `https://aurex.live/docs/privacy.html` | Rechazo Google 18-may. Doble fix aplicado: (a) Escritorio cambió URL en Play Console; (b) Code creó `aurex-app/privacy.html` redirect HTML (`<meta http-equiv="refresh">` + `window.location.replace('/docs/privacy.html')`) para que el path viejo no devuelva 404 a usuarios o crawlers que tengan el link cacheado. |
-| 4 | **Seguridad de los datos (Data Safety)** | Cuestionario incompleto → Completado por Escritorio | Rechazo Google 18-may |
-
-**Mientras Google revisa:** Build 33 sigue activo en Producción para los usuarios. Cero impacto.
-
-**Cuando Google apruebe (esperado próximas 24h):** Build 36 reemplaza a Build 33 en Producción automáticamente. **Acción de Code post-aprobación:** ejecutar Paso 2 (§3.1.c).
-
-### 3.1.c 📋 PASO 2 PENDIENTE — Subir Build 36 al track Alpha (Prueba cerrada)
-
-**Por qué importa:** el track **Alpha** (Prueba cerrada) tiene actualmente **31,58% de las instalaciones de testers en v1.0.17** (versión vieja de abril). Esa versión **no tiene**:
-- Bug G fix logout (los usuarios se deslogueaban solos a los pocos minutos)
-- Push notifications nativas funcionando
-- IAP funcionando (mismo bug §4.0)
-- Tier 1 IAP (Purchases.logIn/logOut sincronizados con Supabase)
-- 35 features posteriores acumuladas entre Build 17 y Build 36
-
-Fernando textual: *"es CLAVE que esos TESTERS tengan la APP sin que se les desloguee con Alertas PUSH y con posibilidad de comprar planes si quieren"*.
-
-**Cómo se ejecuta:**
-1. **Pre-requisito**: Google aprobó Build 36 en Producción (Build 33 dejó de ser activo y v1.0.36 ya se distribuye).
-2. **Acción en Play Console**: Reusar el mismo AAB de Build 36 (no compilar Build 37) y subirlo al track **Prueba cerrada — Alpha**.
-3. **Resultado esperado**: los testers Alpha que tengan v1.0.17 reciben actualización automática a v1.0.36 vía Play Store.
-4. **Owner**: Code guía a Fernando paso a paso en Play Console cuando llegue el momento. Tracked en task #62.
-
-### 3.1.d Snapshots públicos para audit Escritorio
-- **Build 35 (pre-fix):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/iap_audit_18may/code_snapshot_build35/`
-- **Build 36 (post-fix):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/iap_audit_18may/code_snapshot_build36/`
+| **33 / v1.0.33** | 🟢 **PRODUCCIÓN Play Store** | Bug H fix (selectedRow + ScrollView). 20 instalaciones, 177 países. **SIN** fix IAP, **SIN** fix toolbar S24, **SIN** fix crash ScreenFragment. | Confirmado Escritorio + commit `c990612` (16-may) |
+| **34 / v1.0.34** | 🟡 Solo commit, probablemente NUNCA subido a Play | IAP Tier 1 wiring frontend (Purchases.logIn/logOut) | commit `cd2f1dc` (16-may) — Escritorio no lo ve en Play Console |
+| **35 / v1.0.35** | 🟡 PRUEBA INTERNA subido hace ~23h | Intento de fix IAP que **NO funcionó** (mismo bug "producto no disponible"). Por eso se escaló ticket RC #76809 con texto + 6 capturas | Confirmado Escritorio + Fernando + Play Console |
+| **36 / v1.0.36** (próximo) | ⏸ NO compilado todavía | Debe incluir: fix RC IAP (cuando responda) + fix crash ScreenFragment + fix toolbar S24 + cualquier tema nuevo que aparezca | Pendiente acumular pendientes |
 
 ### 3.2 Pendientes consolidados Build 36
 
@@ -242,15 +223,16 @@ Fernando textual: *"es CLAVE que esos TESTERS tengan la APP sin que se les deslo
   - **D**: custom `tabBar` component. Complejidad alta.
   - **E**: híbrido condicional con Dimensions API.
 
-#### 3.2.3 ✅ Tier 1 IAP — RESUELTO Build 36
+#### 3.2.3 🚨 P0 — Tier 1 IAP (pausado esperando RC)
 
-Tier 1 IAP aplicado desde Build 34 (commit `cd2f1dc`) y el bug raíz de `purchaseProduct` deprecada se resolvió en Build 36 (commit `66662cd`). Ver §4 IAP completo. **Sin acción pendiente.**
+- 6 cambios documentados en plan archivo-por-archivo (ver §4 IAP).
+- Bloqueado por respuesta RC ticket #76809.
 
-### 3.3 Bump versiones Build 36 (✅ APLICADO 18-may)
+### 3.3 Bump versiones cuando se compile Build 36
 
-- `~/AurexApp/android/app/build.gradle`: `versionCode 35 → 36` ✅ y `versionName "1.0.35" → "1.0.36"` ✅.
-- Backup AAB en `~/AurexApp/backups/aab/` post-compilación ✅.
-- **Para Build 37 (futuro):** crash ScreenFragment (§3.2.1) + toolbar S24 (§3.2.2) — ambos quedaron pendientes en Build 36 por priorizar IAP. Plus cualquier tema nuevo de Google Play Console que aparezca tras review Build 36.
+- `~/AurexApp/android/app/build.gradle`: `versionCode 35 → 36` y `versionName "1.0.35" → "1.0.36"`.
+- Backup AAB obligatorio en `~/AurexApp/backups/aab/` post-compilación.
+- NO compilar Build 36 hasta tener al menos el bloqueante externo IAP resuelto (RC respondió o pasaron 72h y arrancamos Plan B).
 
 ### 3.4 Bug signup P0 (histórico, resuelto en Build 33)
 
@@ -258,49 +240,7 @@ Bug que bloqueaba registro de usuarios nuevos Android (onboarding slide 4 cablea
 
 ---
 
-## 4. IAP / REVENUECAT — ✅ BUG RESUELTO 18-may con Build 36
-
-### 4.0 🎉 RESOLUCIÓN CONFIRMADA — 18-may-2026 17:30 AR
-
-**Resultado de prueba real en Samsung con fmoscon@gmail.com:**
-- App AUREX v1.0.36 (Internal Testing) → SubscriptionScreen → tap "QUIERO ELITE" mensual
-- Google Play abrió sheet de compra con "TARJETA DE PRUEBA" → SUSCRIBIRSE
-- **Google Play: "SE REALIZÓ CON ÉXITO EL PAGO"** + tilde azul
-- App: pop interno **"LISTO — TU PLAN fue activado"**
-- Entitlement `elite` activo confirmado, navigation goBack OK
-
-**Causa raíz confirmada (lo que SÍ era):**
-El bug NO era de RC SDK 9.15.1 ni de Billing v7 ni de configuración Play Console (todas las hipótesis del §4.3 + §4.3.b descartadas correctamente). Era **build "sucio" / bundle JS cacheado** del Build 35. La solución fue el **rebuild limpio (`./gradlew clean` antes de bundleRelease)** combinado con:
-1. Eliminar Alert debug temporal Build 35
-2. Fix orden IAP-6 en deleteAccount
-3. Eliminar `Purchases.purchaseProduct` deprecada en PerfilScreen.js (redirect a SubscriptionScreen)
-
-Coincide al 100% con la evidencia del Issue `RevenueCat/purchases-android#3039` cerrado "Not a Bug" (resuelto con rebuild limpio sin cambios SDK).
-
-**Pendientes inmediatos post-resolución:**
-1. Cancelar suscripción ELITE de prueba en Google Play Store > Suscripciones (Fernando manual)
-2. ✅ **Promover Build 36 a Producción + 3 cambios anexos en review Google desde 18-may noche AR** (ver §3.1.b para el detalle de los 4 cambios). Esperando aprobación 2-24h.
-3. **Paso 2 (post-aprobación Producción):** subir Build 36 al track Alpha (§3.1.c).
-4. Cerrar ticket RC #76809 con mail a Alejandra explicando resolución (esperar 24-48h por las dudas).
-5. Build 36 producción aprobado → desbloquea compilación Build 25 iOS (§2.7).
-
----
-
-### 📄 DOCUMENTO TÉCNICO COMPLETO
-
-Versión definitiva validada por **Code + Escritorio + Fernando** (con código real, capturas en `~/Downloads/[1-5].HEIC` y reproducción en dispositivo):
-
-- **GitHub (raw URL HTTP 200 verificada):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/DOC_IAP_BUG_RESUELTO_18may2026.md`
-- **Dropbox `.docx`:** `~/Dropbox/AUREX/SUSCRIPCIONES ANDROID y IOS/DOC_IAP_BUG_RESUELTO_18may2026.docx`
-- **Dropbox `.md` espejo:** `~/Dropbox/AUREX/SUSCRIPCIONES ANDROID y IOS/DOC_IAP_BUG_RESUELTO_18may2026.md`
-
-Contiene: descripción completa del bug + camino real del usuario + causa raíz técnica (`purchaseProduct` deprecada sin `offerToken`) + 5 fixes Build 36 (líneas pre/post-fix exactas) + por qué SubscriptionScreen no tenía el bug + resultado de prueba real + estado Android/iOS + tabla de archivos modificados + snapshots públicos del código.
-
-**Hallazgo clave:** el botón de compra Perfil → b2 **nunca funcionó desde la integración inicial de RevenueCat** (no fue un bug de 3 días ni 35 días). Build 33 sólo lo expuso al ponerlo en producción.
-
----
-
-## 4.HISTORIA (archivo) — Bug P0 ticket #76809
+## 4. IAP / REVENUECAT — Bug P0 ticket #76809
 
 ### 4.1 Síntoma reproducible
 
@@ -309,19 +249,10 @@ App AUREX v1.0.35 (Internal Testing) → Login `fmoscon@gmail.com` → Subscript
 ### 4.2 Estado del ticket
 
 - **Ticket RC #76809** enviado 16-may PM.
-- **Contenido inicial:** stack técnico completo + flujo reproducible + 5 causas conocidas RC descartadas + referencia Issue #3039 RC (acknowledged sin fix público).
+- **Contenido:** stack técnico completo + flujo reproducible + 5 causas conocidas RC descartadas + referencia Issue #3039 RC (acknowledged sin fix público).
 - **6 screenshots adjuntos** (ZIP 9 MB compressed): productos Play Console, customer not found en RC dashboard, popup error Samsung Z Flip 3, Build 35 activo Internal Testing.
-- **SLA típico:** 24-72h hábiles.
+- **Estado:** ESPERANDO respuesta RC support. SLA típico 24-72h hábiles.
 - **Confirmado por Fernando 17-may 13:30 AR:** sin novedades, RC no respondió aún.
-
-#### 4.2.b Historial de comunicación con Alejandra (RC support)
-
-| Mail | Fecha | Quién | Contenido enviado | Respuesta |
-|---|---|---|---|---|
-| **Inicial** | 16-may PM | Fernando | Stack técnico + 5 causas descartadas + 6 screenshots + ref Issue #3039 | Alejandra 18-may: confirma license testers + pide 3 cosas (debug logs, snippets código, código paywall custom) |
-| **Mail 1 follow-up** | 18-may | Fernando (con Code) | Logs RC verbose tag RevenueCat capturados con adb logcat 18-may 15:13-15:17 en Samsung R5CR92ADDNW + 3 snippets código texto plano (App.js Purchases.setLogLevel/configure + SubscriptionScreen.js loadOfferings + handlePurchase con Alert "Error IAP debug"). Confirmado: setLogLevel YA estaba activo, no se compiló build nuevo. | Esperando |
-| **Mail 2 follow-up** | 18-may | Fernando (con Escritorio) | Confirmación visual desde Play Console: los 4 productos (PRO/ELITE mensual/anual) con base plans ACTIVOS (no draft, no inactive), 174 países, actualizados 5-14 may. Pide confirmar si Issue #3039 ya tiene workaround interno RC. | Esperando |
-| **Mail 3 (pendiente)** | Si RC no aporta fix concreto | Fernando (con Code) | Pedir: (a) workaround interno NO publicado para Issue #3039, (b) simulación en lab interno RC con cuenta app8be7db09a7 + nuestros productos. | — |
 
 ### 4.3 Las 5 causas conocidas RC — TODAS DESCARTADAS
 
@@ -333,63 +264,11 @@ App AUREX v1.0.35 (Internal Testing) → Login `fmoscon@gmail.com` → Subscript
 | 4 | Tester sin opt-in URL | ✅ DESCARTADO |
 | 5 | Application ID mismatch | ✅ DESCARTADO (`com.aurexapp` ambos lados) |
 
-### 4.3.b Validaciones adicionales DESCARTADAS (18-may, confirmación visual Escritorio en Play Console)
-
-| Hipótesis | Estado | Validación |
-|---|---|---|
-| Producto INACTIVE en Play Console | ✅ DESCARTADO | Los 4 productos (PRO mensual/anual, ELITE mensual/anual) ACTIVOS — base plans con ícono verde. Última actualización 14-may-2026. |
-| Base plan en borrador / no activo | ✅ DESCARTADO | base plan `monthly-pro` ACTIVO confirmado en pantalla. "Planes básicos activos: 1" en los 4 productos. |
-| Tester no es license tester | ✅ DESCARTADO | fmoscon@gmail.com + aurextester12@gmail.com en lista "AUREX Testers" license testers (no solo internal). Confirmado por Escritorio 18-may. |
-| Producto no cargable por SDK | ✅ DESCARTADO | Logs verbose RC capturados 18-may 15:16:51 muestran `Retrieved productDetailsList` con productId, price USD 9.99, basePlanId `monthly-pro`, billingPeriod P1M — todo OK desde SDK. |
-| Cuenta Play Store con permisos faltantes | ✅ DESCARTADO | fmoscon@gmail.com logueada Play Store + license tester + ve "Aurex (versión Beta interna)" + puede ver opción de compra en Play Store listing (sheet azul de tarjeta de prueba). |
-
-**🚨 IMPORTANTE PARA Code futuro: NO volver a sugerir estas hipótesis como "causas probables". Están todas descartadas con evidencia visual + logs.**
-
 ### 4.4 Hipótesis causa raíz
 
-**CORREGIDO 18-may post-cruzado Code+Escritorio:**
+Bug estructural RC SDK 9.15.1 + Google Play Billing v8 + targetSdk 36 (combo nuevo, feb 2026). Matchea Issue #3039 RC (acknowledged enero 2026 sin fix público).
 
-Stack técnico real (no la versión incorrecta del brief anterior):
-- `react-native-purchases ^9.15.1` (confirmado en `~/AurexApp/package.json`)
-- `purchases-android 9.28.x` (transitivo del wrapper RN)
-- **Google Play Billing v7** (NO v8 — Billing v8 llega recién en `react-native-purchases 10.0.0` del 15-abr-2026)
-- `targetSdk 36` + `compileSdk 36` (confirmado en `~/AurexApp/android/build.gradle`)
-
-**Referencia issue real:** `https://github.com/RevenueCat/purchases-android/issues/3039` (NO `react-native-purchases/issues/3039` que da 404).
-
-**Estado del Issue #3039 (validado por Escritorio):**
-- 🟢 **CERRADO como "Not a Bug"**
-- ✅ Reporter confirmó que se **resolvió sin cambios de SDK ni de código**
-- ✅ La solución fue **rebuild limpio del AAB** (`./gradlew clean` antes del bundleRelease)
-- ❌ Esto **invalida** las hipótesis "bug estructural RC sin fix público" y "upgrade a 10.x como solución"
-
-**Implicancia para AUREX:** la cirugía probablemente sea **rebuild limpio del Build 36 con `./gradlew clean` obligatorio** + Tier 1 IAP (que son bugs propios de AUREX independientes de RC), no cambio de SDK.
-
-### 4.5 Tier 1 IAP — ✅ APLICADO 100% desde Build 34 (16-may, commit `cd2f1dc`)
-
-**🚨 VALIDADO por Code 18-may leyendo código real del Build 35. Snapshot público en `briefs/iap_audit_18may/code_snapshot_build35/` para que Escritorio pueda leer raw URL.**
-
-| ID | Archivo | Línea | Estado real |
-|---|---|---|---|
-| IAP-1 | `App.js` | L42-63 | ✅ APLICADO — useEffect + IIFE async `Purchases.logIn(session.user.id)` |
-| IAP-2.1 | `LoginScreen.js` | L33 | ✅ APLICADO — Path 1 SDK `Purchases.logIn(data.user.id)` |
-| IAP-2.2 | `LoginScreen.js` | L64 | ✅ APLICADO — Path 2 fetch `Purchases.logIn(user.id)` |
-| IAP-3 | `SignupScreen.js` | L92 | ✅ APLICADO — post-POST `/api/usuario` `Purchases.logIn(data.user.id)` |
-| IAP-4 | `PerfilScreen.js` | L242 (logout) | ✅ APLICADO — `Purchases.logOut()` antes `signOut()` |
-| IAP-5 | backend `server.js` L1631-1643 | otro repo | ✅ APLICADO commits `1184de5` + `a722e92` (Escritorio) |
-| IAP-6 | `PerfilScreen.js` | L268 (deleteAccount) | ✅ APLICADO — `Purchases.logOut()` antes `signOut()` |
-
-**Diff Build 33 producción → Build 35:** 43 líneas en 6 archivos. **Tier 1 + Alert debug temporal Build 35** (revertir en Build 36).
-
-**Resultado real:** Build 35 instalado en Samsung Fernando incluye Tier 1 + Alert debug. **Bug "product not available for purchase" ocurre CON Tier 1 APLICADO.** Tier 1 NO es la solución al bug bloqueante.
-
-**Acción real pendiente (no más Tier 1):** Build 36 con `./gradlew clean` obligatorio + revertir Alert debug (basado en Issue #3039 cerrado "Not a Bug" resuelto con rebuild limpio).
-
-**❌ NO volver a planificar "Tier 1" como acción pendiente. Está APLICADO desde 16-may.**
-
----
-
-### 4.5.b Plan original (HISTÓRICO — mantener solo como referencia de qué era cada cambio)
+### 4.5 Tier 1 IAP (6 cambios listos para implementar cuando RC responda)
 
 | ID | Archivo | Cambio |
 |---|---|---|
@@ -408,33 +287,13 @@ Stack técnico real (no la versión incorrecta del brief anterior):
 
 ### 4.6 Plan B si RC no responde o no resuelve
 
-| Plan | Tiempo | Descripción | Estado |
-|---|---|---|---|
-| **B-1** | 2-3 días | Webhook directo Google Play (bypass RC parcial). Backend primero: endpoint `/api/google-play/verify-purchase` + Pub/Sub listener + RTDN Play Console. Frontend después: `useGoogleBilling.js` reemplaza `Purchases.purchasePackage()` con BillingClient nativo. RC queda solo para iOS futuro. | ✅ Disponible |
-| **B-2** | ~~5-7 días~~ | ~~Reemplazo total RC con Stripe + native IAP.~~ | 🚨 **MUERTO definitivamente** — ver §4.6.b |
-| **B-3** | 1 día | Validación manual via Google Play API (temporal). Solo activar si aparece un usuario real urgente que pagó. | ✅ Disponible (no construir proactivamente) |
-| **B-5 (NUEVO)** | 1h investigación + 30min ejecutar | Downgrade selectivo `react-native-purchases` 9.15.1 → 9.14.x o 9.13.x (antes del Issue #3039). Solo bump package.json + pod install. Si funciona = fix más rápido. | 🟡 A investigar (changelog GitHub purchases-android) |
+| Plan | Tiempo | Descripción |
+|---|---|---|
+| **B-1** | 2-3 días | Webhook directo Google Play (bypass RC parcial) |
+| **B-2** | 5-7 días | Reemplazo total RC con Stripe + native IAP |
+| **B-3** | 1 día | Validación manual via Google Play API (temporal) |
 
-**Decision matrix actualizada (18-may 16:30 AR, Escritorio):**
-- **HOY**: arrancar Tier 1 (§4.5) en paralelo con investigación B-5 (downgrade SDK)
-- **0-72h sin respuesta RC**: esperar (Tier 1 + B-5 corriendo)
-- **72h+ sin respuesta RC**: arrancar **B-1** (backend primero, frontend después)
-- **B-3 solo** si aparece usuario real urgente que pagó y necesita activación manual
-
-### 4.6.b 🚨 Stripe + Lemon Squeezy DESCARTADOS DEFINITIVAMENTE — no hay procesador web viable
-
-**Stripe**: NO acepta registro desde Argentina sin LLC. Fernando opera con cuenta personal Santander Argentina, **NO va a crear LLC** (confirmado 18-may). Stripe queda **fuera de toda evaluación futura** como procesador web.
-
-**Lemon Squeezy**: ya fue probado en abril 2026 (commit `e47b5f8` 8-abr-2026). **Rechazó la cuenta AUREX por actividad cripto prohibida** ("crypto prohibited" según mensaje del commit). LS queda **fuera de toda evaluación futura**.
-
-**Consecuencia**: AUREX tiene UNA SOLA arquitectura de pagos viable hoy:
-**Google Play IAP (Android) + Apple IAP (iOS) + RevenueCat como capa de gestión**.
-
-No hay alternativa web viable. Plan B-2 (Stripe + native IAP) está muerto antes de arrancar. **Código NO debe volver a mencionarlo como contingencia.**
-
-### 4.6.c Dato adicional para Mail 3 RC: "customer not found" en RC Dashboard
-
-Según `CONSOLIDADO_IAP_v2_16MAY.md` §8: el customer (UUID Supabase) aparece como **"customer not found"** en RC Dashboard a pesar de que SDK devuelve 200 OK en `GET /v1/subscribers/UUID`. Sugiere que **RC tiene al usuario marcado como not found internamente**, lo que puede causar que `purchasePackage()` falle aunque `getOfferings()` funcione (ofertas vienen de config del proyecto, no del customer específico). **Incluir esto en Mail 3 a Alejandra** como dato adicional vinculable a Issue #3039.
+**Decision matrix:** 0-3 días sin respuesta RC = esperar · 3-7 días = empezar B-1 · 7-14 días = ejecutar B-2 · B-3 solo puente.
 
 ### 4.7 Datos operativos RC
 
@@ -489,43 +348,32 @@ Todo el header rediseñado iterativamente con Fernando. Items cerrados:
 | 7-CC Canales logos en COLORES OFICIALES de cada marca | ✅ |
 | 7-D Cómo Funciona: **accordion 6 tabs** con contenido REAL extraído de `~/AurexApp/src/components/ComoUsarAurexBlock.js` + 24 claves cu_* en 8 idiomas | ✅ |
 
-### 5.4 Sesión 18-may madrugada — sub-puntos cerrados
-
-| Item | Cerrado | Commit |
-|---|---|---|
-| 7-B Markets/Coverage: bordes gradient dorados + iconos por instrumento + 2 pills "Señales IA con %" + "Alertas push y Telegram" + 350→350+ + i18n 8 idiomas | ✅ | `55c8854` + fix contraste `81b4f3e` |
-| 7-G Tipografía: comparativa 7 opciones generada → elegido Boldonse + IBM Plex Mono. Carpeta `~/Dropbox/AUREX/TIPOGRAFIA/` creada con .ttf + specimen.png + decision.md | ✅ | (no commit en repo, archivos en Dropbox) |
-| **AUDITORÍA i18n estructural completa** — auditor v3 con BeautifulSoup detectó 91 textos hardcoded EN sin `data-i18n`. **608 traducciones nuevas** en 8 idiomas (Ticker, Bloque 3, Carrusel 4.5, Motor 5, 3 Banners 6, Portfolio 7, 15 Alertas 8, 8 Idiomas 9, Benchmark 10.5, "We don't trade" 11, Live Quotes 11.5, Footer, Modal compra) + 22 keys aria/alt + handler `data-i18n-alt` y `data-i18n-tooltip` agregado al JS | ✅ | `75eb60c` |
-| **Fix 65 keys preexistentes faltantes** en PT/ZH/FR/IT/HI/AR (Características b27_* + interior planes plan_*) — Fernando detectó que IT no traducía esas zonas. 390 traducciones nuevas, 8 idiomas ahora con 270 keys idénticas | ✅ | `f38297a` |
-| 7-F Newsletter popup rediseñado — icono ✉️ card dorada arriba + divider + input email contraste alto + botón flecha animada + check verde footer + logo AUREX + título "NEWSLETTER AUREX" en 8 idiomas + brand dorado al pie | ✅ | `41a1c4c` → `3e991d1` → `fb5f156` |
-| **Tipografía Boldonse aplicada a títulos** (h1 hero, h2 sección, h3 cards/banners/alerts, plan-price, modales). Manrope se mantiene en body/CTAs. IBM Plex Mono en nav/labels. **Fernando re-evalúa mañana** — le parece informal en títulos grandes (le gusta en chicos) | 🟡 | `870674d` |
-
-### 5.5 Pendientes Landing v3 — siguen abiertos
+### 5.4 Pendientes Landing v3 — siguen abiertos
 
 | # | Punto |
 |---|---|
-| **7-I + REFACTOR ESTRUCTURAL** | **BLOQUEANTE.** Aplicar OG v2.2 fondo zonas DEPENDE de definir primero: landing NO es scroll infinito — debe verse en una única imagen y cada cosa se accede al clickear desde donde corresponda. Tema estructural conceptual madre. Memoria: `feedback_landing_compact_click_to_expand` |
-| Boldonse en títulos grandes | Re-evaluar 18-may con mente fría. Opciones: a) revertir h1/h2 a Manrope y dejar Boldonse solo h3, b) otra display, c) volver todo Manrope |
-| "9 tipos de instrumentos" b4_h2 | Fernando no entiende qué son — definir copy más claro o enumerar visualmente |
-| Auditar secciones NO-header | Header revisado 17-18 may. Falta validar visualmente: Hero, Características (13 cards), Carrusel, Motor 24 variables, Cómo Funciona, 3 Banners, Portfolio, 15 Alertas, 8 Idiomas, Benchmark, Planes, Live Quotes, Footer |
-| Footer h4 (Product/Company/Channels) | Quedan sin traducir como nombres propios — verificar con Fernando si quiere traducir |
-| Deploy producción aurex.live | Mover `landing-v3-preview/` al root del repo cuando Fernando + Escritorio dan doble OK |
+| 7-B | Markets/Coverage — mejorar bordes 9 cards + frase Alertas Push/Telegram + IA con % predicción |
+| 7-C | Pricing — rediseño YA HECHO (se absorbió en 7-U). Marcar como cerrado en próximo cycle |
+| 7-F | Get Early Access popup newsletter — mejorar diseño (Suscripción Newsletter) |
+| 7-G | Tipografía: 6 versiones del header para elegir |
+| 7-I | OG v2.2 medium como fondo de zonas (ya hecho como OG image — pendiente decisión si usarlo TAMBIÉN como fondo de hero o popup) |
 
-### 5.6 REFACTOR MAYOR — DECISIÓN BLOQUEANTE para próxima sesión
+### 5.5 REFACTOR MAYOR pendiente (decisión Fernando 17-may 19:00)
 
-**Landing compacta + click-to-expand, no scroll infinito.** Concepto vigente desde 17-may 19:00, REFORZADO por Fernando 18-may 02:30 AR: "ya nos lo dijo 3 veces y Code no respondió concretamente". TODA otra decisión visual (incluido 7-I OG fondo zonas + tipografía Boldonse en grandes) DEPENDE de cómo quede esta arquitectura. **MAÑANA arranca por este tema.** Memoria: `feedback_landing_compact_click_to_expand`.
+**Landing compacta + click-to-expand, no scroll infinito.** El concepto vigente: cards/sectores abren modal o vista expandida en vez de scroll largo. Memoria: `feedback_landing_compact_click_to_expand`. Tarea grande agendada para después de cerrar ajustes puntuales actuales del header/secciones.
 
-### 5.7 Reglas de trabajo aprendidas (guardadas en memoria — siguen vigentes)
+### 5.6 Reglas de trabajo aprendidas hoy (guardadas en memoria)
 
-**17-may** (8 reglas): `validar_pixel_x_pixel_antes_de_pasar`, `i18n_cambios_aplican_8_idiomas`, `cambios_siempre_web_y_iphone`, `landing_compact_click_to_expand`, `siempre_espanol_referencia_ES`, `no_abrir_pantallas_a_fernando`, `validar_yo_antes_de_pasar_a_fernando`, `nunca_inventar_iterar_version_a_version`.
+8 reglas nuevas guardadas que aplican forever:
 
-**18-may madrugada** (6 reglas nuevas):
-1. `feedback_avisar_previo_mejoras_visuales` — mejoras laterales no pedidas → preguntar 1 línea + OK antes de aplicar.
-2. `feedback_si_esta_mal_se_arregla` — bugs/inconsistencias detectadas → arreglar sin preguntar.
-3. `feedback_nombres_no_traducen` — FREE/PRO/ELITE/AUREX + plataformas oficiales JAMÁS traducen.
-4. `feedback_cache_busting_landing` — cuando Fernando no ve cambios → URL con `?v=XXX` nuevo. Test del rojo h2 como diagnóstico definitivo.
-5. `feedback_validar_integramente_cada_paso` — **CRÍTICA**. Fernando NUNCA debe ser quien detecte un bug. Code cruza HTML+JSON+JS+8 idiomas+breakpoints ANTES de decir OK. Diff EN vs cada idioma = 0.
-6. (refuerzo) `feedback_no_abrir_pantallas_a_fernando` actualizada: PROHIBIDO usar `browser_*` MCP de Playwright — abre ventana visible aunque parezca headless.
+1. `feedback_validar_pixel_x_pixel_antes_de_pasar` — matemática + curl/grep + headless ANTES de avisar "listo".
+2. `feedback_i18n_cambios_aplican_8_idiomas` — EN+ES no alcanza, siempre los 8.
+3. `feedback_cambios_siempre_web_y_iphone` — toda mejora visual aplica a los 2 contextos.
+4. `feedback_landing_compact_click_to_expand` — concepto madre, refactor pendiente.
+5. `feedback_siempre_espanol_referencia_ES` — Code escribe TODO en español + glosario EN→ES.
+6. `feedback_no_abrir_pantallas_a_fernando` — Playwright headless only.
+7. `feedback_validar_yo_antes_de_pasar_a_fernando` — Code es QA primero.
+8. `feedback_nunca_inventar_iterar_version_a_version` — editar código real, no rediseñar desde cero.
 
 ### 5.7 Pre-requisitos para deploy a producción aurex.live
 
