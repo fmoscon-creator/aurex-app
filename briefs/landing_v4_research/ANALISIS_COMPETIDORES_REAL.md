@@ -57,18 +57,18 @@
 - Fuente: **CoinbaseDisplay** (propia)
 - Form email + Registrarse (azul Coinbase)
 
-**Sobre el "infinito de futuros perpetuos" que mencionaste:**
-- El home NO lo tiene — está en página aparte (`/derivatives` o `/advanced-trade`)
-- La URL `/derivatives-trading/stock-perpetuals` que abrí resultó ser solo T&C (texto legal)
-- La animación del infinito está en `/derivatives` (no la capturé aún — si querés la busco)
+**Sobre el "infinito de futuros perpetuos" (tu favorito) — CAPTURADO:**
+- Screenshot: `comp_coinbase_infinito.jpg` (página `/derivatives`)
+- "Welcome to the next generation of futures." sans-serif blanco sobre **negro puro**
+- **LA IMAGEN ESTRELLA**: velas japonesas (candlesticks) 3D de **vidrio azul glowing/neón**, formando un gráfico de mercado, con resplandor azul + reflejo en el piso. Espectacular.
 
-**Tecnología (inspección DOM real):**
-| Elemento | Tecnología |
-|---|---|
-| Hero | Imágenes JPEG/PNG (Contentful CDN) + iPhone mockup estático |
-| Animaciones derivatives | (pendiente capturar — está en /derivatives) |
+**Tecnología (inspección DOM real) — HALLAZGO CLAVE:**
+| Elemento | Tecnología | Detalle |
+|---|---|---|
+| Velas 3D glowing | **IMAGEN (IMG) render 3D estática** | Contentful CDN, 890x501. NO es video ni WebGL — es un render 3D pre-hecho (Blender/Cinema4D) guardado como imagen |
+| Hero home | Imágenes + iPhone mockup | Estático |
 
-**🟢 REPLICABLE:** SÍ. Coinbase usa mayormente imágenes + mockups (más simple que Stripe).
+**🟢🟢 REPLICABLE para AUREX — LA MÁS FÁCIL:** Es solo una IMAGEN. Podemos generar con IA (skill `imagegen-frontend-web`) una imagen equivalente de **velas japonesas 3D DORADAS glowing** (en vez de azul) sobre negro → conecta PERFECTO con identidad AUREX (dorado/negro). Es el efecto de mayor impacto visual con el menor esfuerzo técnico.
 
 ---
 

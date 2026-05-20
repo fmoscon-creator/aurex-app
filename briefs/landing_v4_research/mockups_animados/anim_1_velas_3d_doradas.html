@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ANIM 1 — Velas 3D Doradas AUREX (estilo Coinbase)</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000; color:#f5f0e8; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; overflow-x:hidden; }
+.hero { position:relative; min-height:100vh; display:flex; flex-direction:column; }
+.hero-copy { position:relative; z-index:2; padding:80px 24px 0; max-width:1240px; margin:0 auto; width:100%; pointer-events:none; }
+.eyebrow { font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#d4af37; font-weight:700; margin-bottom:16px; }
+.hero-copy h1 { font-size:clamp(36px,5.5vw,68px); font-weight:300; line-height:1.05; letter-spacing:-0.03em; color:#f5f0e8; max-width:760px; }
+.hero-copy h1 b { color:#d4af37; font-weight:500; }
+#canvas-wrap { position:absolute; inset:0; z-index:1; }
+canvas { display:block; width:100%; height:100%; }
+.badge { position:fixed; top:16px; right:16px; background:#d4af37; color:#000; padding:8px 16px; border-radius:6px; font-size:12px; font-weight:800; z-index:100; }
+.loading { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); color:#d4af37; font-size:14px; z-index:1; }
+</style>
+</head>
+<body>
+<div class="badge">ANIM 1 · Velas 3D Doradas</div>
+<section class="hero">
+  <div class="hero-copy">
+    <div class="eyebrow">AUREX · La nueva generación de inversores</div>
+    <h1>Señales de IA sobre <b>350 activos</b> globales. En tiempo real.</h1>
+  </div>
+  <div id="canvas-wrap"><div class="loading">Cargando escena 3D…</div></div>
+</section>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+
+const wrap = document.getElementById('canvas-wrap');
+const loading = document.querySelector('.loading');
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x000000, 0.035);
+
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth/window.innerHeight, 0.1, 100);
+camera.position.set(0, 4, 18);
+
+const renderer = new THREE.WebGLRenderer({ antialias:true, alpha:true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+wrap.appendChild(renderer.domElement);
+loading.remove();
+
+// Bloom para el glow dorado
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.1, 0.5, 0.05);
+composer.addPass(bloom);
+
+// Material vidrio dorado translúcido emissive
+function goldGlass(intensity=1){
+  return new THREE.MeshPhysicalMaterial({
+    color: 0xd4af37,
+    emissive: 0xd4af37,
+    emissiveIntensity: intensity,
+    metalness: 0.3,
+    roughness: 0.15,
+    transmission: 0.6,
+    thickness: 1.5,
+    transparent: true,
+    opacity: 0.92,
+    clearcoat: 1,
+    clearcoatRoughness: 0.1
+  });
+}
+
+// Crear "velas" tipo candlestick chart: cuerpo + mecha
+const group = new THREE.Group();
+const N = 14;
+const heights = [];
+let h = 3;
+for(let i=0;i<N;i++){ h += (Math.random()-0.45)*2.2; h = Math.max(1.5, Math.min(7, h)); heights.push(h); }
+heights.forEach((ht, i) => {
+  const x = (i - N/2) * 1.5;
+  const up = i===0 || ht >= heights[i-1];
+  const inten = up ? 1.4 : 0.8;
+  // cuerpo
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.9, ht, 0.9), goldGlass(inten));
+  body.position.set(x, ht/2, 0);
+  group.add(body);
+  // mecha (wick) arriba
+  const wick = new THREE.Mesh(new THREE.CylinderGeometry(0.06,0.06, ht*0.5, 8), goldGlass(inten*1.2));
+  wick.position.set(x, ht + ht*0.25, 0);
+  group.add(wick);
+});
+scene.add(group);
+
+// Piso reflectante sutil
+const floorGeo = new THREE.PlaneGeometry(60, 60);
+const floorMat = new THREE.MeshStandardMaterial({ color:0x050505, metalness:0.8, roughness:0.4 });
+const floor = new THREE.Mesh(floorGeo, floorMat);
+floor.rotation.x = -Math.PI/2;
+floor.position.y = 0;
+scene.add(floor);
+
+// Luces
+scene.add(new THREE.AmbientLight(0x332200, 0.6));
+const key = new THREE.PointLight(0xffcc44, 2.5, 50); key.position.set(0, 12, 10); scene.add(key);
+const rim = new THREE.PointLight(0xffaa00, 1.8, 50); rim.position.set(-10, 6, -8); scene.add(rim);
+
+// Animacion
+let t = 0;
+function animate(){
+  requestAnimationFrame(animate);
+  t += 0.005;
+  group.rotation.y = Math.sin(t) * 0.4;
+  group.children.forEach((m, i) => {
+    if(m.material) m.material.emissiveIntensity = 0.8 + Math.sin(t*2 + i*0.4)*0.4;
+  });
+  camera.position.x = Math.sin(t*0.5) * 3;
+  camera.lookAt(0, 3, 0);
+  composer.render();
+}
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth/window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  composer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+</body>
+</html>
