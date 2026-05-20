@@ -2322,29 +2322,94 @@ html{scroll-behavior:smooth}
       binancecoin:(p) => '$' + p.toFixed(2),
       ripple:  (p) => '$' + p.toFixed(4)
     };
-    async function fetchLtCrypto(){
+    // Fallback dual cripto (Opción C resiliencia): CoinGecko -> Binance -> Coinbase -> localStorage cache.
+    // Sin esto, si CoinGecko se cae (rate limit / outage), el banner queda en blanco.
+    const LT_BINANCE_SYM = { bitcoin:'BTCUSDT', ethereum:'ETHUSDT', solana:'SOLUSDT', binancecoin:'BNBUSDT', ripple:'XRPUSDT' };
+    const LT_COINBASE_SYM = { bitcoin:'BTC', ethereum:'ETH', solana:'SOL', binancecoin:'BNB', ripple:'XRP' };
+    const LT_CACHE_KEY = 'aurex_landing_crypto_cache_v1';
+
+    function ltSaveCache(prices){
+      try{ localStorage.setItem(LT_CACHE_KEY, JSON.stringify({ ts: Date.now(), prices })); }catch(e){}
+    }
+    function ltLoadCache(){
       try{
-        const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ltCryptoIds.join(',')}&vs_currencies=usd&include_24hr_change=true`;
-        const res = await fetch(url);
-        if(!res.ok) return;
-        const data = await res.json();
-        ltCryptoIds.forEach(id => {
-          if(!data[id]) return;
-          const price = data[id].usd;
-          const chg = data[id].usd_24h_change;
-          const pos = chg >= 0;
-          // Actualizar TODOS los items con ese data-sym (track duplicado tiene 2x)
-          document.querySelectorAll(`.lt-item[data-sym="${id}"]`).forEach(item => {
-            const priceEl = item.querySelector('.lt-price');
-            const chgEl = item.querySelector('.lt-chg');
-            if(priceEl) priceEl.textContent = ltFmt[id](price);
-            if(chgEl){
-              chgEl.className = 'lt-chg ' + (pos ? 'pos' : 'neg');
-              chgEl.textContent = (pos ? '▲ +' : '▼ ') + chg.toFixed(1) + '%';
-            }
-          });
+        const raw = localStorage.getItem(LT_CACHE_KEY);
+        if(!raw) return null;
+        const obj = JSON.parse(raw);
+        if(Date.now() - obj.ts > 24*60*60*1000) return null; // descartar cache > 24h
+        return obj.prices;
+      }catch(e){ return null; }
+    }
+    function ltRenderPrices(prices){
+      Object.keys(prices).forEach(id => {
+        const p = prices[id];
+        if(!p || p.price == null) return;
+        const pos = (p.chg || 0) >= 0;
+        document.querySelectorAll(`.lt-item[data-sym="${id}"]`).forEach(item => {
+          const priceEl = item.querySelector('.lt-price');
+          const chgEl = item.querySelector('.lt-chg');
+          if(priceEl) priceEl.textContent = ltFmt[id](p.price);
+          if(chgEl){
+            chgEl.className = 'lt-chg ' + (pos ? 'pos' : 'neg');
+            chgEl.textContent = (pos ? '▲ +' : '▼ ') + (p.chg != null ? p.chg.toFixed(1) : '0.0') + '%';
+          }
         });
-      }catch(e){}
+      });
+    }
+
+    async function ltTryCoinGecko(){
+      const url = `https://api.coingecko.com/api/v3/simple/price?ids=${ltCryptoIds.join(',')}&vs_currencies=usd&include_24hr_change=true`;
+      const res = await fetch(url);
+      if(!res.ok) throw new Error('cg http ' + res.status);
+      const data = await res.json();
+      const out = {};
+      ltCryptoIds.forEach(id => { if(data[id]) out[id] = { price: data[id].usd, chg: data[id].usd_24h_change }; });
+      if(Object.keys(out).length === 0) throw new Error('cg empty');
+      return out;
+    }
+    async function ltTryBinance(){
+      // Binance ticker 24hr en bulk
+      const symbols = Object.values(LT_BINANCE_SYM);
+      const url = `https://api.binance.com/api/v3/ticker/24hr?symbols=${encodeURIComponent(JSON.stringify(symbols))}`;
+      const res = await fetch(url);
+      if(!res.ok) throw new Error('bn http ' + res.status);
+      const arr = await res.json();
+      const map = {};
+      arr.forEach(t => { map[t.symbol] = t; });
+      const out = {};
+      Object.entries(LT_BINANCE_SYM).forEach(([id, sym]) => {
+        if(map[sym]) out[id] = { price: parseFloat(map[sym].lastPrice), chg: parseFloat(map[sym].priceChangePercent) };
+      });
+      if(Object.keys(out).length === 0) throw new Error('bn empty');
+      return out;
+    }
+    async function ltTryCoinbase(){
+      // Coinbase spot price por cada par (sin 24h change, lo dejamos en null)
+      const results = await Promise.allSettled(Object.entries(LT_COINBASE_SYM).map(async ([id, sym]) => {
+        const r = await fetch(`https://api.coinbase.com/v2/prices/${sym}-USD/spot`);
+        if(!r.ok) throw new Error('cb http ' + r.status);
+        const d = await r.json();
+        return [id, { price: parseFloat(d.data.amount), chg: null }];
+      }));
+      const out = {};
+      results.forEach(r => { if(r.status === 'fulfilled'){ const [id, val] = r.value; out[id] = val; } });
+      if(Object.keys(out).length === 0) throw new Error('cb empty');
+      return out;
+    }
+
+    async function fetchLtCrypto(){
+      const sources = [ltTryCoinGecko, ltTryBinance, ltTryCoinbase];
+      for(const fn of sources){
+        try{
+          const prices = await fn();
+          ltRenderPrices(prices);
+          ltSaveCache(prices);
+          return; // exito, no probar siguientes
+        }catch(e){ /* siguiente fuente */ }
+      }
+      // Todas las fuentes fallaron -> usar cache localStorage (max 24h)
+      const cached = ltLoadCache();
+      if(cached) ltRenderPrices(cached);
     }
     fetchLtCrypto();
     setInterval(fetchLtCrypto, 60000);
@@ -2432,6 +2497,24 @@ html{scroll-behavior:smooth}
     track.innerHTML = html + html;
   }
 
+  // Fallback futuros (Opción C resiliencia): Railway backend -> localStorage cache.
+  // Cuando Railway esta caido (como hoy 19-may outage), mostrar ultima lectura cacheada
+  // (max 24h) para no dejar el banner vacio.
+  const MKT_FUT_CACHE_KEY = 'aurex_landing_futures_cache_v1';
+
+  function mktSaveFuturesCache(items){
+    try{ localStorage.setItem(MKT_FUT_CACHE_KEY, JSON.stringify({ ts: Date.now(), items })); }catch(e){}
+  }
+  function mktLoadFuturesCache(){
+    try{
+      const raw = localStorage.getItem(MKT_FUT_CACHE_KEY);
+      if(!raw) return null;
+      const obj = JSON.parse(raw);
+      if(Date.now() - obj.ts > 24*60*60*1000) return null;
+      return obj.items;
+    }catch(e){ return null; }
+  }
+
   async function mktFetchFutures(){
     const track = document.getElementById('market-ticker-futures-track');
     if(!track) return;
@@ -2443,6 +2526,19 @@ html{scroll-behavior:smooth}
       return { ...f, price: d.price, chg: d.changePct };
     }));
     const items = results.map((r, i) => r.status === 'fulfilled' ? r.value : { ...FUT_DEFS[i], price:null, chg:null });
+    // Si el backend respondio con al menos UN precio valido, guardar cache.
+    // Si todos fallaron (backend caido), intentar usar cache para no quedar en blanco.
+    const validCount = items.filter(it => it.price != null).length;
+    if(validCount > 0){
+      mktSaveFuturesCache(items);
+    } else {
+      const cached = mktLoadFuturesCache();
+      if(cached) {
+        const html = mktBuildFuturesHtml(cached);
+        track.innerHTML = html + html;
+        return;
+      }
+    }
     const html = mktBuildFuturesHtml(items);
     track.innerHTML = html + html;
   }
