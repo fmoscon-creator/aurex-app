@@ -40,3 +40,17 @@ jobs:
       - name: Confirmar recuperacion (opcional log)
         if: steps.ping.outputs.http_code == '200'
         run: echo "Backend OK - sin alerta necesaria"
+
+      - name: Mensaje de PRUEBA a Telegram (solo en disparo manual)
+        # Solo corre cuando se dispara manual (Run workflow). En el cron NO corre.
+        # Sirve para confirmar que el bot+chat funcionan sin esperar a que el backend caiga.
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TG_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: '1749518554'
+        run: |
+          MSG="✅ AUREX Monitor - PRUEBA MANUAL OK%0A%0AEl monitor de salud del backend esta funcionando. Si el backend cae, vas a recibir una alerta como esta automaticamente.%0A%0A(Mensaje de prueba disparado manual desde GitHub Actions)"
+          curl -s -X POST "https://api.telegram.org/bot${TG_TOKEN}/sendMessage" \
+            -d "chat_id=${CHAT_ID}" \
+            -d "text=${MSG}" || echo "fallo envio telegram"
+          echo "Mensaje de prueba enviado a Telegram"
