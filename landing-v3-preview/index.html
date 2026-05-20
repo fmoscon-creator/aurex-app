@@ -2509,7 +2509,8 @@ html{scroll-behavior:smooth}
     'HG=F':'hg.f','ZC=F':'zc.f','ZS=F':'zs.f',
     // Forex: usar spot FX porque Stooq no tiene los futuros CME (6e.f/6j.f/6b.f -> N/D).
     // Spot y futuros son ~iguales en precio (dif minima por carry), valido para mostrar al usuario.
-    '6E=F':'eurusd','6J=F':'jpyusd','6B=F':'gbpusd',
+    // YEN: usar usdjpy (159.05 formato estandar noticias) en lugar de jpyusd (0.00629 confunde).
+    '6E=F':'eurusd','6J=F':'usdjpy','6B=F':'gbpusd',
     '^VIX':'^vix','UUP':'uup.us'
   };
 
