@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#080400">
+<meta name="description" content="AUREX — The global markets terminal. AI signals across 350 assets in 8 languages.">
+<title>AUREX — The Global Markets Terminal</title>
+<link rel="icon" type="image/png" href="/assets/icons/aurex-icon-180x180.png">
+<link rel="apple-touch-icon" href="/assets/icons/aurex-icon-180x180.png">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080400;
+  --bg-soft:#0D0800;
+  --bg-card:#0F0A02;
+  --gold:#D4A017;
+  --gold-bright:#F5C842;
+  --gold-dim:#8B6910;
+  --gold-fade:#6B5010;
+  --border:#2A1800;
+  --border-soft:#1F1200;
+  --text:#F5F0E8;
+  --text-sec:#A0958A;
+  --text-dim:#5A4010;
+}
+html,body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+a:hover{color:var(--gold-bright)}
+img,svg{display:block;max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+
+/* HEADER */
+header.site{position:sticky;top:0;z-index:100;background:rgba(8,4,0,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border-soft)}
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:16px}
+.hdr-logo{display:flex;align-items:center;gap:10px}
+.hdr-logo svg{height:36px;width:auto}
+.hdr-nav{display:flex;align-items:center;gap:28px}
+.hdr-nav a{font-size:14px;color:var(--text-sec);font-weight:500;letter-spacing:.3px}
+.hdr-nav a:hover{color:var(--gold)}
+.hdr-cta{display:flex;align-items:center;gap:12px}
+.lang-sel{background:transparent;border:1px solid var(--border);color:var(--text);padding:7px 10px;border-radius:8px;font-size:12px;letter-spacing:.5px;cursor:pointer;font-family:inherit}
+.lang-sel option{background:#0D0800;color:var(--text)}
+.btn{display:inline-block;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:600;letter-spacing:.3px;transition:all .2s;cursor:pointer;border:none;font-family:inherit}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:var(--gold-bright);color:#000}
+.btn-ghost{background:transparent;color:var(--gold);border:1px solid var(--gold)}
+.btn-ghost:hover{background:var(--gold);color:#000}
+@media(max-width:760px){.hdr-nav{display:none}}
+
+/* HERO */
+section.hero{padding:96px 0 84px;text-align:center;background:radial-gradient(ellipse at top,#1A0D00 0%,var(--bg) 70%)}
+.hero h1{font-size:clamp(40px,7vw,76px);font-weight:600;letter-spacing:-1px;line-height:1.05;color:var(--gold);margin-bottom:24px}
+.hero p.sub{font-size:clamp(15px,1.6vw,18px);color:var(--text-sec);max-width:820px;margin:0 auto 40px;line-height:1.6}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.hero-ctas .btn{padding:14px 26px;font-size:14px}
+
+/* SECTION */
+section.blk{padding:84px 0;border-top:1px solid var(--border-soft)}
+section.blk h2{font-size:clamp(28px,3.6vw,40px);font-weight:600;color:var(--text);margin-bottom:16px;letter-spacing:-.5px;line-height:1.15}
+section.blk .sub{font-size:17px;color:var(--text-sec);margin-bottom:36px;max-width:760px}
+.center{text-align:center}
+.center .sub{margin-left:auto;margin-right:auto}
+
+/* B3 — entre vos y tu broker */
+.b3-bullets{list-style:none;margin-top:32px;display:grid;grid-template-columns:1fr;gap:14px;max-width:760px}
+.b3-bullets li{padding:16px 20px;background:var(--bg-soft);border-left:3px solid var(--gold);border-radius:8px;font-size:15px;color:var(--text)}
+
+/* B4 — cobertura grid */
+.cov-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px;margin-top:32px;max-width:980px;margin-left:auto;margin-right:auto}
+.cov-cell{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:24px 16px;text-align:center;transition:all .2s}
+.cov-cell:hover{border-color:var(--gold);transform:translateY(-2px)}
+.cov-num{font-size:34px;font-weight:600;color:var(--gold);line-height:1;margin-bottom:8px}
+.cov-lbl{font-size:13px;color:var(--text-sec);letter-spacing:.3px}
+.b4-sub{font-size:13.5px;color:var(--text-dim);text-align:center;margin-top:28px;max-width:680px;margin-left:auto;margin-right:auto;font-style:italic}
+
+/* B5 — 24 variables */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px}
+@media(max-width:760px){.cols{grid-template-columns:1fr}}
+.col-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:28px}
+.col-card h3{font-size:16px;color:var(--gold);margin-bottom:14px;letter-spacing:.5px;text-transform:uppercase}
+.col-card p{font-size:14.5px;color:var(--text-sec);line-height:1.7}
+.highlight{margin-top:28px;padding:24px 28px;background:linear-gradient(135deg,#1A0D00,#0D0800);border:1px solid var(--gold);border-radius:14px;font-size:15px;color:var(--text)}
+
+/* B6 — banners */
+.bann-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:32px}
+@media(max-width:880px){.bann-grid{grid-template-columns:1fr}}
+.bann-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:14px;padding:26px;transition:all .2s}
+.bann-card:hover{border-color:var(--gold)}
+.bann-card h3{font-size:18px;color:var(--gold);margin-bottom:12px}
+.bann-card p{font-size:14px;color:var(--text-sec)}
+.b6-close{text-align:center;margin-top:36px;font-size:16px;color:var(--text);font-style:italic;letter-spacing:.3px}
+
+/* B7 — portfolio */
+.b7-feats{margin-top:28px;display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:880px}
+@media(max-width:760px){.b7-feats{grid-template-columns:1fr}}
+.b7-feat{padding:18px 22px;background:var(--bg-soft);border:1px solid var(--border);border-radius:10px;font-size:14.5px;color:var(--text);display:flex;align-items:center;gap:12px}
+.b7-feat::before{content:"●";color:var(--gold);font-size:18px}
+
+/* B8 — alertas */
+.alert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
+@media(max-width:760px){.alert-grid{grid-template-columns:1fr}}
+.alert-card{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;padding:24px}
+.alert-card h3{font-size:15px;color:var(--gold);margin-bottom:12px;letter-spacing:.3px}
+.alert-card p{font-size:14px;color:var(--text-sec);line-height:1.6}
+.alert-note{margin-top:24px;padding:16px 22px;background:rgba(212,160,23,0.05);border-left:3px solid var(--gold);border-radius:6px;font-size:13.5px;color:var(--text-sec);font-style:italic}
+
+/* B9 — idiomas */
+.lang-grid{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px}
+.lang-pill{padding:12px 18px;background:var(--bg-soft);border:1px solid var(--border);border-radius:30px;font-size:13px;color:var(--text);font-weight:500;letter-spacing:.5px;display:inline-flex;align-items:center;gap:8px;transition:all .2s;cursor:pointer}
+.lang-pill:hover{border-color:var(--gold);color:var(--gold)}
+.lang-pill .flag{font-size:18px}
+.b9-close{text-align:center;margin-top:36px;font-size:17px;color:var(--gold-bright);font-weight:500;letter-spacing:.3px}
+
+/* B10 — planes */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px}
+@media(max-width:880px){.plans{grid-template-columns:1fr}}
+.plan{background:var(--bg-soft);border:1px solid var(--border);border-radius:16px;padding:32px 26px;text-align:center;position:relative;transition:all .2s}
+.plan:hover{border-color:var(--gold);transform:translateY(-3px)}
+.plan.featured{border-color:var(--gold);background:linear-gradient(180deg,rgba(212,160,23,0.08),var(--bg-soft))}
+.plan-name{font-size:14px;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;font-weight:600}
+.plan-price{font-size:28px;color:var(--text);font-weight:600;margin-bottom:8px;letter-spacing:-.5px}
+.plan-price .small{font-size:14px;color:var(--text-sec);font-weight:400;letter-spacing:0}
+.plan-desc{font-size:14px;color:var(--text-sec);margin-top:16px;line-height:1.65;text-align:left}
+.plan-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:#000;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border-radius:5px;font-weight:600}
+
+/* B11 — disclaimer */
+.disclaimer{padding:60px 0;background:#050200;border-top:1px solid var(--border-soft)}
+.disclaimer p{font-size:12.5px;color:var(--text-dim);text-align:center;max-width:880px;margin:0 auto;line-height:1.7;font-style:italic}
+
+/* B12 — footer */
+footer.site{background:#040100;padding:48px 0 32px;border-top:1px solid var(--border-soft)}
+.foot-grid{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:24px;color:var(--text-dim);font-size:13px}
+.foot-grid a{color:var(--text-sec);margin:0 8px}
+.foot-grid a:hover{color:var(--gold)}
+.foot-copy{margin-top:24px;text-align:center;font-size:11px;color:var(--text-dim);letter-spacing:1px}
+</style>
+</head>
+<body>
+
+<!-- BLOQUE 1 — HEADER STICKY -->
+<header class="site">
+  <div class="wrap hdr">
+    <a class="hdr-logo" href="/">
+      <img src="/assets/landing/logo-aurex-clean.svg" alt="AUREX" width="180" height="60">
+    </a>
+    <nav class="hdr-nav">
+      <a href="#product" data-i18n="nav_product">Product</a>
+      <a href="#plans" data-i18n="nav_plans">Plans</a>
+      <a href="/app/" data-i18n="nav_try">Try Free</a>
+    </nav>
+    <div class="hdr-cta">
+      <select class="lang-sel" id="lang-sel">
+        <option value="en" selected>EN</option>
+        <option value="es">ES</option>
+        <option value="pt">PT</option>
+        <option value="zh">ZH</option>
+        <option value="fr">FR</option>
+        <option value="it">IT</option>
+        <option value="hi">HI</option>
+        <option value="ar">AR</option>
+      </select>
+      <a class="btn btn-gold" href="/app/" data-i18n="nav_cta">Get the app</a>
+    </div>
+  </div>
+</header>
+
+<!-- BLOQUE 2 — HERO -->
+<section class="hero">
+  <div class="wrap">
+    <h1 data-i18n="hero_tagline">The global markets terminal.</h1>
+    <p class="sub" data-i18n="hero_sub">AI signals across 350 assets — crypto, stocks, ETFs, futures, commodities, bonds and forex — in 8 languages. Real-time data from 7 global markets, in your pocket.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-gold" href="#" data-i18n="cta_ios">Download for iOS</a>
+      <a class="btn btn-gold" href="https://play.google.com/store/apps/details?id=com.aurexapp" data-i18n="cta_android">Download for Android</a>
+      <a class="btn btn-ghost" href="/app/" data-i18n="cta_browser">Try on browser</a>
+    </div>
+  </div>
+</section>
+
+<!-- BLOQUE 3 — QUÉ ES AUREX -->
+<section class="blk" id="product">
+  <div class="wrap">
+    <h2 data-i18n="b3_heading">Between you and your broker.</h2>
+    <p class="sub" data-i18n="b3_para">AUREX is the market-tracking terminal that sits between you and your broker. It doesn't execute trades. It doesn't manage your money. It gives you the full picture — technical data, macro signals, geopolitical events and global sentiment — so every decision you make is an informed one.</p>
+    <ul class="b3-bullets">
+      <li data-i18n="b3_bullet1">350 assets selected across 9 instrument types</li>
+      <li data-i18n="b3_bullet2">7 global stock markets: USA, Argentina, Brazil, Spain, Europe, Japan and China</li>
+      <li data-i18n="b3_bullet3">Available on iOS, Android and browser. No setup required.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- BLOQUE 4 — COBERTURA -->
+<section class="blk center">
+  <div class="wrap">
+    <h2 data-i18n="b4_heading">350 assets. 9 instrument types. One terminal.</h2>
+    <div class="cov-grid">
+      <div class="cov-cell"><div class="cov-num">198</div><div class="cov-lbl" data-i18n="b4_stocks">Stocks</div></div>
+      <div class="cov-cell"><div class="cov-num">50</div><div class="cov-lbl" data-i18n="b4_crypto">Crypto</div></div>
+      <div class="cov-cell"><div class="cov-num">40</div><div class="cov-lbl" data-i18n="b4_etfs">ETFs</div></div>
+      <div class="cov-cell"><div class="cov-num">20</div><div class="cov-lbl" data-i18n="b4_futures">Futures</div></div>
+      <div class="cov-cell"><div class="cov-num">14</div><div class="cov-lbl" data-i18n="b4_bonds">Bonds</div></div>
+      <div class="cov-cell"><div class="cov-num">12</div><div class="cov-lbl" data-i18n="b4_commodities">Commodities</div></div>
+      <div class="cov-cell"><div class="cov-num">8</div><div class="cov-lbl" data-i18n="b4_metals">Metals</div></div>
+      <div class="cov-cell"><div class="cov-num">5</div><div class="cov-lbl" data-i18n="b4_forex">Forex</div></div>
+      <div class="cov-cell"><div class="cov-num">3</div><div class="cov-lbl" data-i18n="b4_stablecoins">Stablecoins</div></div>
+    </div>
+    <p class="b4-sub" data-i18n="b4_sub">375 assets visible in real time in the Markets tab. More added with every release — 350 is the current selection, not the ceiling.</p>
+  </div>
+</section>
+
+<!-- BLOQUE 5 — MOTOR 24 VARIABLES -->
+<section class="blk">
+  <div class="wrap">
+    <h2 data-i18n="b5_heading">24 variables. Every signal explained.</h2>
+    <p class="sub" data-i18n="b5_subheading">Most apps give you a score. AUREX shows you the math.</p>
+    <div class="cols">
+      <div class="col-card">
+        <h3 data-i18n="b5_col1_title">AI Engine (10 variables)</h3>
+        <p data-i18n="b5_col1">Each signal is the result of 10 independent quantitative variables: 24h trend, RSI14, relative volume, volatility, BTC/SPY correlation, Gold/Oil correlation, FED macro data, earnings calendar, MACD 12/26, and 30-day support/resistance.</p>
+      </div>
+      <div class="col-card">
+        <h3 data-i18n="b5_col2_title">AUREX Pulse (14 variables)</h3>
+        <p data-i18n="b5_col2">Pulse reads the global market context in real time: BTC price, dominance and variation, ETH, VIX, S&P500, 4 US futures (ES, NQ, YM, RTY), Gold, Silver, Oil, Copper, FED Macro and GDELT Geopolitics.</p>
+      </div>
+    </div>
+    <div class="highlight" data-i18n="b5_highlight">FED macro data feeds into every individual signal — not just a global gauge. GDELT geopolitical events cross-reference directly against each asset's signal. No retail competitor does this.</div>
+  </div>
+</section>
+
+<!-- BLOQUE 6 — 3 BANNERS -->
+<section class="blk center">
+  <div class="wrap">
+    <h2 data-i18n="b6_heading">The full market picture. Always visible.</h2>
+    <div class="bann-grid">
+      <div class="bann-card">
+        <h3 data-i18n="b6_b1_title">Markets</h3>
+        <p data-i18n="b6_b1">11 global exchanges — see open, closed and pre/post-market status in real time. Choose which markets to display and in what order.</p>
+      </div>
+      <div class="bann-card">
+        <h3 data-i18n="b6_b2_title">Futures</h3>
+        <p data-i18n="b6_b2">16 instruments across 6 categories: Indices, Energy, Metals, Forex, Bonds and Crypto. Know where the market is heading before it opens.</p>
+      </div>
+      <div class="bann-card">
+        <h3 data-i18n="b6_b3_title">Critical Events</h3>
+        <p data-i18n="b6_b3">A live scrolling ticker of high and medium-impact economic events — FOMC, CPI, payrolls, geopolitical developments — active right now.</p>
+      </div>
+    </div>
+    <p class="b6-close" data-i18n="b6_close">The global market state. One screen. No app switching.</p>
+  </div>
+</section>
+
+<!-- BLOQUE 7 — PORTFOLIO -->
+<section class="blk">
+  <div class="wrap">
+    <h2 data-i18n="b7_heading">Your holdings. With the full AI engine on top.</h2>
+    <p class="sub" data-i18n="b7_sub">AUREX Portfolio is a tracking layer, not a trading account. No money moves. No brokerage connection required. Add any of the 350 assets and immediately get the full signal context on your personal mix.</p>
+    <div class="b7-feats">
+      <div class="b7-feat" data-i18n="b7_f1">AI Risk Thermometer — real-time risk score across your entire portfolio</div>
+      <div class="b7-feat" data-i18n="b7_f2">AI Dots — individual signal visible directly on each holding</div>
+      <div class="b7-feat" data-i18n="b7_f3">PnL across 5 periods: daily, weekly, monthly, quarterly and annual</div>
+      <div class="b7-feat" data-i18n="b7_f4">Multi-currency converter built in. Cloud sync across devices.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOQUE 8 — ALERTAS -->
+<section class="blk">
+  <div class="wrap">
+    <h2 data-i18n="b8_heading">15 alert types. You set the rules.</h2>
+    <div class="alert-grid">
+      <div class="alert-card">
+        <h3 data-i18n="b8_ai_title">AI Alerts (4 types)</h3>
+        <p data-i18n="b8_ai">Signal change, High Conviction (85–88%), custom probability threshold, signal on Portfolio assets.</p>
+      </div>
+      <div class="alert-card">
+        <h3 data-i18n="b8_pulse_title">Pulse Alerts (3 types)</h3>
+        <p data-i18n="b8_pulse">Market zone change, alert by asset category, global Risk Thermometer.</p>
+      </div>
+      <div class="alert-card">
+        <h3 data-i18n="b8_price_title">Price Alerts (3 types)</h3>
+        <p data-i18n="b8_price">Target price reached, sharp price move, new 52-week high or low.</p>
+      </div>
+      <div class="alert-card">
+        <h3 data-i18n="b8_event_title">Event Alerts (5 types)</h3>
+        <p data-i18n="b8_event">FOMC/FED decisions, CPI releases, market open, earnings on Portfolio assets, GDELT geopolitical events.</p>
+      </div>
+    </div>
+    <div class="alert-note" data-i18n="b8_note">Alerts are delivered in-app. Push notifications with app closed, SMS and Telegram delivery — coming in the next version.</div>
+  </div>
+</section>
+
+<!-- BLOQUE 9 — IDIOMAS -->
+<section class="blk center">
+  <div class="wrap">
+    <h2 data-i18n="b9_heading">8 languages. From day one.</h2>
+    <p class="sub" data-i18n="b9_sub">AUREX runs natively in English, Spanish, Portuguese, Chinese, French, Italian, Hindi and Arabic. Every signal, every disclaimer, every data point — in your language.</p>
+    <div class="lang-grid">
+      <span class="lang-pill"><span class="flag">🇺🇸</span> EN</span>
+      <span class="lang-pill"><span class="flag">🇪🇸</span> ES</span>
+      <span class="lang-pill"><span class="flag">🇧🇷</span> PT</span>
+      <span class="lang-pill"><span class="flag">🇨🇳</span> ZH</span>
+      <span class="lang-pill"><span class="flag">🇫🇷</span> FR</span>
+      <span class="lang-pill"><span class="flag">🇮🇹</span> IT</span>
+      <span class="lang-pill"><span class="flag">🇮🇳</span> HI</span>
+      <span class="lang-pill"><span class="flag">🇸🇦</span> AR</span>
+    </div>
+    <p class="b9-close" data-i18n="b9_close">One terminal. 8 languages. 4.2 billion speakers covered.</p>
+  </div>
+</section>
+
+<!-- BLOQUE 10 — PLANES -->
+<section class="blk center" id="plans">
+  <div class="wrap">
+    <h2 data-i18n="b10_heading">Start free. Upgrade when you're ready.</h2>
+    <div class="plans">
+      <div class="plan">
+        <div class="plan-name">FREE</div>
+        <div class="plan-price" data-i18n="b10_free_price">Free</div>
+        <p class="plan-desc" data-i18n="b10_free">Up to 5 assets in Portfolio. 3 AI signals per day. Real-time markets. Basic AUREX Pulse. No credit card required.</p>
+      </div>
+      <div class="plan featured">
+        <div class="plan-name">PRO</div>
+        <div class="plan-price" data-i18n="b10_pro_price">$9.99/month · $89.99/year</div>
+        <p class="plan-desc" data-i18n="b10_pro">Unlimited AI signals. Unlimited Portfolio. All 15 alert types active. 30-day signal history. All filters and tools. Export to Excel/PDF. Priority support.</p>
+      </div>
+      <div class="plan">
+        <div class="plan-badge" data-i18n="b10_elite_badge">Next version</div>
+        <div class="plan-name">ELITE</div>
+        <div class="plan-price" data-i18n="b10_elite_price">$19.99/month</div>
+        <p class="plan-desc" data-i18n="b10_elite">Everything in PRO, plus: personal API access, live chat support, advanced RSI/MACD, Telegram alerts. Coming soon.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOQUE 11 — DISCLAIMER -->
+<section class="disclaimer">
+  <div class="wrap">
+    <p data-i18n="b11_disclaimer">AUREX is a data visualization and analytics platform for informational and educational purposes only. It does not provide investment advice, execute transactions, or manage assets of any kind. All analysis is statistical in nature and does not guarantee future results. Always consult a qualified financial professional before making investment decisions. © 2026 AUREX — Fernando Moscón.</p>
+  </div>
+</section>
+
+<!-- BLOQUE 12 — FOOTER -->
+<footer class="site">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <a href="/app/privacy.html" data-i18n="footer_privacy">Privacy Policy</a>
+        <a href="/app/" data-i18n="footer_pwa">Use on browser</a>
+        <a href="https://github.com/fmoscon-creator/aurex-app" data-i18n="footer_repo">Open source</a>
+      </div>
+      <div style="color:var(--text-dim);font-size:12px">app.aurex@gmail.com</div>
+    </div>
+    <div class="foot-copy" data-i18n="footer_copy">© 2026 AUREX</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var I18N = null;
+  var currentLang = 'en';
+  function applyLang(lang){
+    if(!I18N || !I18N[lang]) return;
+    document.documentElement.setAttribute('lang', lang);
+    document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+    var dict = I18N[lang];
+    document.querySelectorAll('[data-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-i18n');
+      if(dict[key]) el.textContent = dict[key];
+    });
+    try{ localStorage.setItem('aurex_landing_lang', lang); }catch(e){}
+    currentLang = lang;
+  }
+  function detectLang(){
+    var saved = null;
+    try{ saved = localStorage.getItem('aurex_landing_lang'); }catch(e){}
+    if(saved) return saved;
+    var browser = (navigator.language || 'en').slice(0,2).toLowerCase();
+    var supported = ['en','es','pt','zh','fr','it','hi','ar'];
+    return supported.indexOf(browser) >= 0 ? browser : 'en';
+  }
+  fetch('/assets/landing/landing-i18n.json').then(function(r){return r.json()}).then(function(data){
+    I18N = data;
+    var lang = detectLang();
+    var sel = document.getElementById('lang-sel');
+    if(sel){
+      sel.value = lang;
+      sel.addEventListener('change', function(e){ applyLang(e.target.value); });
+    }
+    applyLang(lang);
+  }).catch(function(){});
+})();
+</script>
+</body>
+</html>
