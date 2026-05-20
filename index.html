@@ -146,7 +146,7 @@ header.site.scrolled{background:rgba(8,4,0,0.85);backdrop-filter:blur(14px);bord
   /* TODOS los items del header (lang-sel + legal-btn + btn-gold + hamburguesa) misma altura 44px */
   .hdr-cta .lang-sel{height:44px;padding:0 10px;font-size:11px;box-sizing:border-box;display:inline-flex;align-items:center}
   .hdr-cta .btn-gold{height:44px;padding:0 14px;font-size:12px;box-sizing:border-box;display:inline-flex;align-items:center;justify-content:center}
-  .hdr-cta .legal-btn{width:44px;height:44px;font-size:21px;box-sizing:border-box}
+  .hdr-cta .legal-btn{display:none!important}
   .hdr-burger{display:block;width:54px;height:44px;box-sizing:border-box}
   .hdr-burger span{left:11px;right:11px;top:14px}
   .hdr-burger span:nth-child(2){top:21px}
@@ -227,7 +227,7 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 .hero-text{display:flex;flex-direction:column}
 @media(max-width:980px){.hero-grid{grid-template-columns:1fr;gap:40px;text-align:center;align-items:center}}
 .hero-text h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,5vw,60px);line-height:1.4;letter-spacing:0;color:var(--gold);margin-bottom:24px}
-.hero-text p.sub{font-size:clamp(15px,1.4vw,18px);color:rgba(245,240,232,0.92);max-width:580px;margin-bottom:34px;line-height:1.6;font-weight:400;text-align:justify;text-justify:inter-word;hyphens:auto}
+.hero-text p.sub{font-size:clamp(15px,1.4vw,18px);color:rgba(245,240,232,0.92);max-width:620px;margin-bottom:30px;line-height:1.6;font-weight:400;text-align:center;hyphens:none;overflow-wrap:break-word;word-break:normal}
 @media(max-width:980px){.hero-text p.sub{margin-left:auto;margin-right:auto}}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
 @media(max-width:980px){.hero-ctas{justify-content:center}}
@@ -769,6 +769,7 @@ section.hero .hero-grid{grid-template-columns:1fr!important;justify-items:center
 section.hero .hero-text{align-items:center}
 </style>
 <style>.market-ticker.market-ticker-futures{display:none!important}</style>
+<style>.hero-labels-bottom{margin-top:28px;margin-bottom:0}.hero-labels-bottom .section-label,.hero-labels-bottom .section-label-cta{background:#050200!important;border-color:rgba(255,255,255,0.18)!important;color:#fff!important}.hero-labels-bottom .section-label-cta{background:#0a0500!important;color:#F5C842!important}</style>
 </head>
 <body>
 <script>
@@ -986,11 +987,6 @@ section.hero .hero-text{align-items:center}
 
   <div class="wrap hero-grid">
     <div class="hero-text reveal">
-      <!-- 7-X.a: 2 labels lado a lado — TERMINAL GLOBAL + POR QUÉ SOMOS MEJORES (lleva al benchmark) -->
-      <div class="hero-labels">
-        <a class="section-label section-label-link" href="#live-quotes" data-i18n="hero_label">TERMINAL GLOBAL EN VIVO</a>
-        <a class="section-label-cta" href="#we-compare" data-i18n="hero_label_benchmark">POR QUÉ SOMOS MEJORES</a>
-      </div>
       <h1 data-i18n="hero_h1">La terminal global de los mercados.</h1>
       <p class="sub" data-i18n="hero_sub">Señales IA sobre 350+ activos — acciones, cripto, ETFs, futuros, materias primas, bonos y forex — con datos macro FED y eventos geopolíticos que otros no tienen. Alertas push y por Telegram, en 8 idiomas. Datos en tiempo real de 7 mercados globales, a tu alcance.</p>
       <!-- 7-Z: 3 cards descarga con logos REALES en colores REALES + texto i18n -->
@@ -1028,6 +1024,11 @@ section.hero .hero-text{align-items:center}
             <span class="store-name">AUREX Web App</span>
           </span>
         </a>
+      </div>
+      <!-- 7-X.a: 2 labels lado a lado — TERMINAL GLOBAL + POR QUÉ SOMOS MEJORES (lleva al benchmark) -->
+      <div class="hero-labels hero-labels-bottom">
+        <a class="section-label section-label-link" href="#live-quotes" data-i18n="hero_label">TERMINAL GLOBAL EN VIVO</a>
+        <a class="section-label-cta" href="#we-compare" data-i18n="hero_label_benchmark">POR QUÉ SOMOS MEJORES</a>
       </div>
     </div>
     <div class="hero-mockup reveal reveal-delay-2">
