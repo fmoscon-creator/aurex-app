@@ -2497,10 +2497,19 @@ html{scroll-behavior:smooth}
     track.innerHTML = html + html;
   }
 
-  // Fallback futuros (Opción C resiliencia): Railway backend -> localStorage cache.
-  // Cuando Railway esta caido (como hoy 19-may outage), mostrar ultima lectura cacheada
-  // (max 24h) para no dejar el banner vacio.
+  // Fallback futuros (Opción C resiliencia): Railway -> Stooq publico -> localStorage cache.
+  // Stooq.com (Polonia) es fuente publica gratis sin auth y sin CORS bloqueado.
+  // Devuelve CSV con OHLC; calculamos change % vs Open del dia como aproximacion.
   const MKT_FUT_CACHE_KEY = 'aurex_landing_futures_cache_v1';
+  // Mapping AUREX symbol -> Stooq symbol (futuros US estandares + forex CME)
+  const FUT_TO_STOOQ = {
+    'ES=F':'es.f','NQ=F':'nq.f','YM=F':'ym.f','RTY=F':'rty.f',
+    'GC=F':'gc.f','SI=F':'si.f','CL=F':'cl.f','BZ=F':'b.f','NG=F':'ng.f',
+    'ZB=F':'zb.f','ZN=F':'zn.f','ZF=F':'zf.f',
+    'HG=F':'hg.f','ZC=F':'zc.f','ZS=F':'zs.f',
+    '6E=F':'6e.f','6J=F':'6j.f','6B=F':'6b.f',
+    '^VIX':'^vix','UUP':'uup.us'
+  };
 
   function mktSaveFuturesCache(items){
     try{ localStorage.setItem(MKT_FUT_CACHE_KEY, JSON.stringify({ ts: Date.now(), items })); }catch(e){}
@@ -2515,9 +2524,40 @@ html{scroll-behavior:smooth}
     }catch(e){ return null; }
   }
 
-  async function mktFetchFutures(){
-    const track = document.getElementById('market-ticker-futures-track');
-    if(!track) return;
+  async function mktTryStooq(){
+    // Bulk fetch a Stooq: hasta ~20 simbolos en una sola URL.
+    const stooqSyms = FUT_DEFS.map(f => FUT_TO_STOOQ[f.s]).filter(Boolean);
+    if(stooqSyms.length === 0) throw new Error('stooq no mapping');
+    const url = 'https://stooq.com/q/l/?s=' + stooqSyms.join('+') + '&f=sd2t2ohlcvn&h&e=csv';
+    const r = await fetch(url, { cache:'no-store' });
+    if(!r.ok) throw new Error('stooq http ' + r.status);
+    const csv = await r.text();
+    // Parse CSV (1ra linea header, resto datos)
+    const lines = csv.trim().split('\n');
+    if(lines.length < 2) throw new Error('stooq empty csv');
+    const dataMap = {};
+    for(let i = 1; i < lines.length; i++){
+      const cols = lines[i].split(',');
+      if(cols.length < 8) continue;
+      const sym = (cols[0] || '').toLowerCase();
+      const open = parseFloat(cols[3]);
+      const close = parseFloat(cols[6]);
+      if(!isFinite(close) || close === 0) continue; // N/D = sin dato
+      const chg = (isFinite(open) && open > 0) ? ((close - open) / open) * 100 : null;
+      dataMap[sym] = { price: close, chg: chg };
+    }
+    // Reconstruir items en el orden de FUT_DEFS
+    const items = FUT_DEFS.map(f => {
+      const stooqSym = (FUT_TO_STOOQ[f.s] || '').toLowerCase();
+      const d = dataMap[stooqSym];
+      return d ? { ...f, price: d.price, chg: d.chg } : { ...f, price: null, chg: null };
+    });
+    const validCount = items.filter(it => it.price != null).length;
+    if(validCount === 0) throw new Error('stooq all null');
+    return items;
+  }
+
+  async function mktTryRailway(){
     const results = await Promise.allSettled(FUT_DEFS.map(async f => {
       const url = MKT_BACKEND + '/api/stock/' + encodeURIComponent(f.s);
       const r = await fetch(url, { cache:'no-store' });
@@ -2526,20 +2566,30 @@ html{scroll-behavior:smooth}
       return { ...f, price: d.price, chg: d.changePct };
     }));
     const items = results.map((r, i) => r.status === 'fulfilled' ? r.value : { ...FUT_DEFS[i], price:null, chg:null });
-    // Si el backend respondio con al menos UN precio valido, guardar cache.
-    // Si todos fallaron (backend caido), intentar usar cache para no quedar en blanco.
     const validCount = items.filter(it => it.price != null).length;
-    if(validCount > 0){
-      mktSaveFuturesCache(items);
-    } else {
-      const cached = mktLoadFuturesCache();
-      if(cached) {
-        const html = mktBuildFuturesHtml(cached);
-        track.innerHTML = html + html;
-        return;
-      }
+    if(validCount === 0) throw new Error('railway all null');
+    return items;
+  }
+
+  async function mktFetchFutures(){
+    const track = document.getElementById('market-ticker-futures-track');
+    if(!track) return;
+    let items = null;
+    // Try 1: Railway backend (con cascada interna Yahoo/Finnhub/AV)
+    try{ items = await mktTryRailway(); }catch(e){ /* siguiente */ }
+    // Try 2: Stooq publico
+    if(!items){
+      try{ items = await mktTryStooq(); }catch(e){ /* siguiente */ }
     }
-    const html = mktBuildFuturesHtml(items);
+    // Try 3: cache localStorage (max 24h)
+    if(!items){
+      const cached = mktLoadFuturesCache();
+      if(cached) items = cached;
+    }
+    // Render lo que sea (datos o nulls si ninguno respondio y sin cache)
+    const finalItems = items || FUT_DEFS.map(f => ({ ...f, price:null, chg:null }));
+    if(items) mktSaveFuturesCache(items);
+    const html = mktBuildFuturesHtml(finalItems);
     track.innerHTML = html + html;
   }
 
