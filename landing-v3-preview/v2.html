@@ -187,18 +187,18 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 
 /* === BLOQUE 2.7 CARACTERÍSTICAS — grid 3x3 con capturas === */
 /* === GRID MINI #features (refactor 18-may: cards mini + modal click-to-expand) === */
-.feat-grid-mini{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
-@media(max-width:880px){.feat-grid-mini{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:28px}}
-@media(max-width:480px){.feat-grid-mini{grid-template-columns:1fr;gap:8px}}
-.feat-mini{position:relative;text-align:left;padding:18px;min-height:135px;background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.5) 100%);border:1px solid rgba(212,160,23,0.32);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;display:flex;flex-direction:column;gap:8px;transition:all .25s;overflow:hidden}
-@media(max-width:480px){.feat-mini{min-height:115px}}
+.feat-grid-mini{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:36px}
+@media(max-width:880px){.feat-grid-mini{grid-template-columns:repeat(3,1fr);gap:10px;margin-top:26px}}
+@media(max-width:480px){.feat-grid-mini{grid-template-columns:repeat(2,1fr);gap:8px}}
+.feat-mini{position:relative;text-align:left;padding:18px;min-height:104px;background:linear-gradient(180deg,rgba(212,160,23,0.04) 0%,rgba(8,4,0,0.5) 100%);border:1px solid rgba(212,160,23,0.32);border-radius:14px;cursor:pointer;color:var(--text);font-family:inherit;display:flex;flex-direction:column;gap:6px;transition:all .25s;overflow:hidden}
+@media(max-width:480px){.feat-mini{min-height:96px;padding:13px}}
 .feat-mini::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold-bright),transparent);opacity:.4;transition:opacity .25s}
 .feat-mini:hover{border-color:var(--gold-bright);transform:translateY(-3px);background:linear-gradient(180deg,rgba(212,160,23,0.12) 0%,rgba(8,4,0,0.65) 100%);box-shadow:0 12px 30px rgba(212,160,23,0.18)}
 .feat-mini:hover::before{opacity:.9}
 .feat-mini:focus-visible{outline:2px solid var(--gold-bright);outline-offset:3px}
-.feat-mini-icon{font-size:24px;line-height:1;display:block}
+.feat-mini-icon{display:none!important}
 .feat-mini-title{font-family:var(--display);font-size:14px;font-weight:400;color:var(--gold-bright);margin:0;letter-spacing:.3px;line-height:1.25}
-.feat-mini-short{font-family:var(--mono);font-size:11px;color:var(--text-sec);margin:0;line-height:1.4;letter-spacing:.2px;flex:1}
+.feat-mini-short{font-family:var(--mono);font-size:11.5px;color:rgba(245,240,232,0.84);margin:0;line-height:1.45;letter-spacing:.2px;flex:1}
 .feat-mini-cta{display:inline-flex;align-items:center;gap:6px;margin-top:auto;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);letter-spacing:.5px;font-weight:700;text-transform:uppercase;transition:gap .2s}
 .feat-mini:hover .feat-mini-cta{gap:10px}
 
