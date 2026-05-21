@@ -431,7 +431,16 @@ section#product{padding-top:18px}
 .chip-tip-title{display:block;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
 .highlight-card{margin-top:32px;padding:26px 30px;background:linear-gradient(135deg,#1A0D00 0%,#0D0800 100%);border:1px solid var(--gold);border-radius:16px;font-size:15px;color:var(--text);position:relative;overflow:hidden}
 section#engine{padding-top:18px;position:relative;overflow:hidden}@media(max-width:600px){section#engine{padding-top:10px}}
-section#alerts{padding-top:18px}@media(max-width:600px){section#alerts{padding-top:10px}}
+section#alerts{padding-top:18px;position:relative;overflow:hidden}@media(max-width:600px){section#alerts{padding-top:10px}}
+#alerts .alerts-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.86;filter:sepia(1) saturate(2.6) hue-rotate(-12deg) brightness(1.18) contrast(179%)}
+#alerts .alerts-ov{position:absolute;inset:0;z-index:1;opacity:.45;background:radial-gradient(ellipse 1200px 800px at 50% 40%,rgba(8,4,0,.32) 0%,rgba(8,4,0,.92) 84%)}
+#alerts .wrap{position:relative;z-index:2}
+#alerts .alert-grid{margin-top:62px}
+#alerts .alert-card{background:rgba(0,0,0,.66);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border:1.5px solid rgba(212,160,23,.62)}
+#alerts .alert-card h3{color:#fff}
+#alerts .alert-card p{color:rgba(255,255,255,.92)}
+#alerts .alert-note{color:rgba(255,255,255,.88);background:rgba(0,0,0,.45)}
+#alerts .section-label{background:#000;color:#fff;border-color:rgba(255,255,255,.6);box-shadow:0 4px 14px rgba(0,0,0,.5)}
 #engine .engine-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.79;filter:contrast(164%)}
 #engine .engine-ov{position:absolute;inset:0;z-index:1;opacity:.45;background:radial-gradient(ellipse 1200px 800px at 50% 40%,rgba(8,4,0,.3) 0%,rgba(8,4,0,.92) 85%)}
 #engine .wrap{position:relative;z-index:2}
@@ -1373,6 +1382,8 @@ section.hero .hero-text{align-items:center}
 <!-- ===== BLOQUE 7 (orden nuevo 19-may): 15 ALERTAS ===== -->
 <!-- ===== BLOQUE 8: 15 ALERTAS ===== -->
 <section class="blk" id="alerts">
+  <video class="alerts-bg" id="alertsvid" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="assets/video/alerts_bg_poster.jpg"><source src="assets/video/alerts_bg.mp4" type="video/mp4"></video>
+  <div class="alerts-ov"></div>
   <div class="wrap">
     <div class="reveal">
       <span class="section-label" data-i18n="b8_label">Alerts</span>
@@ -2830,6 +2841,10 @@ v.addEventListener('loadeddata',function(){var r=v.getBoundingClientRect();if(r.
 })();
 (function(){var v=document.getElementById('enginevid');if(!v)return;v.muted=true;
 function pl(){try{v.playbackRate=1.12;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
+})();
+(function(){var v=document.getElementById('alertsvid');if(!v)return;v.muted=true;
+function pl(){try{v.playbackRate=1.32;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
 })();
 </script>
