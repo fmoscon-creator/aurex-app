@@ -367,7 +367,11 @@
     "scroll_hint": "Swipe",
     "b4_h2_a": "350+ assets. 9 instrument types.",
     "b4_h2_b": "One terminal.",
-    "how_ver": "View"
+    "how_ver": "View",
+    "b85_share_t": "Share in one tap",
+    "b85_list_t": "Lists your way",
+    "b85_alert_t": "Alerts in seconds",
+    "b85_asset_t": "350 assets, instantly"
   },
   "es": {
     "nav_features": "Características",
@@ -722,7 +726,11 @@
     "scroll_hint": "Deslizá",
     "b4_h2_a": "350+ activos. 9 tipos de instrumentos.",
     "b4_h2_b": "Una terminal.",
-    "how_ver": "Ver"
+    "how_ver": "Ver",
+    "b85_share_t": "Compartí en 1 toque",
+    "b85_list_t": "Listas a tu medida",
+    "b85_alert_t": "Alertas en segundos",
+    "b85_asset_t": "350 activos al instante"
   },
   "pt": {
     "nav_features": "Recursos",
@@ -1077,7 +1085,11 @@
     "scroll_hint": "Deslize",
     "b4_h2_a": "350+ ativos. 9 tipos de instrumento.",
     "b4_h2_b": "Um terminal.",
-    "how_ver": "Ver"
+    "how_ver": "Ver",
+    "b85_share_t": "Compartilhe num toque",
+    "b85_list_t": "Listas do seu jeito",
+    "b85_alert_t": "Alertas em segundos",
+    "b85_asset_t": "350 ativos na hora"
   },
   "zh": {
     "nav_features": "功能",
@@ -1432,7 +1444,11 @@
     "scroll_hint": "滑动查看",
     "b4_h2_a": "350+ 种资产。9种工具类型。",
     "b4_h2_b": "一个终端。",
-    "how_ver": "查看"
+    "how_ver": "查看",
+    "b85_share_t": "一键分享",
+    "b85_list_t": "自定义列表",
+    "b85_alert_t": "秒级提醒",
+    "b85_asset_t": "350 种资产即刻"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1787,7 +1803,11 @@
     "scroll_hint": "Faites glisser",
     "b4_h2_a": "350+ actifs. 9 types d'instruments.",
     "b4_h2_b": "Un terminal.",
-    "how_ver": "Voir"
+    "how_ver": "Voir",
+    "b85_share_t": "Partagez en un toucher",
+    "b85_list_t": "Listes sur mesure",
+    "b85_alert_t": "Alertes en secondes",
+    "b85_asset_t": "350 actifs en un instant"
   },
   "it": {
     "nav_features": "Funzioni",
@@ -2142,7 +2162,11 @@
     "scroll_hint": "Scorri",
     "b4_h2_a": "350+ asset. 9 tipi di strumenti.",
     "b4_h2_b": "Un terminale.",
-    "how_ver": "Vedi"
+    "how_ver": "Vedi",
+    "b85_share_t": "Condividi in un tocco",
+    "b85_list_t": "Liste su misura",
+    "b85_alert_t": "Avvisi in secondi",
+    "b85_asset_t": "350 asset all'istante"
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2497,7 +2521,11 @@
     "scroll_hint": "स्वाइप करें",
     "b4_h2_a": "350+ एसेट्स। 9 इंस्ट्रूमेंट प्रकार।",
     "b4_h2_b": "एक टर्मिनल।",
-    "how_ver": "देखें"
+    "how_ver": "देखें",
+    "b85_share_t": "एक टैप में शेयर",
+    "b85_list_t": "अपने अनुसार सूचियाँ",
+    "b85_alert_t": "सेकंडों में अलर्ट",
+    "b85_asset_t": "350 एसेट तुरंत"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2852,6 +2880,10 @@
     "scroll_hint": "اسحب",
     "b4_h2_a": "350+ أصلًا. 9 أنواع أدوات.",
     "b4_h2_b": "محطة واحدة.",
-    "how_ver": "عرض"
+    "how_ver": "عرض",
+    "b85_share_t": "شارك بنقرة واحدة",
+    "b85_list_t": "قوائم على مقاسك",
+    "b85_alert_t": "تنبيهات في ثوانٍ",
+    "b85_asset_t": "350 أصلًا فورًا"
   }
 }
