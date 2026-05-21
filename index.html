@@ -429,7 +429,13 @@ section#product{padding-top:18px}
 .chip-tip::before{content:"";position:absolute;width:10px;height:10px;background:linear-gradient(135deg,rgba(16,10,2,0.98),rgba(16,10,2,0.98));border:1.5px solid rgba(212,160,23,0.55);transform:rotate(45deg);top:-6px;left:24px;border-right:none;border-bottom:none}
 .chip-tip-title{display:block;font-family:var(--mono);font-size:10.5px;color:var(--gold-bright);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:6px;font-weight:700}
 .highlight-card{margin-top:32px;padding:26px 30px;background:linear-gradient(135deg,#1A0D00 0%,#0D0800 100%);border:1px solid var(--gold);border-radius:16px;font-size:15px;color:var(--text);position:relative;overflow:hidden}
-section#engine{padding-top:18px}@media(max-width:600px){section#engine{padding-top:10px}}
+section#engine{padding-top:18px;position:relative;overflow:hidden}@media(max-width:600px){section#engine{padding-top:10px}}
+#engine .engine-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.79;filter:contrast(164%)}
+#engine .engine-ov{position:absolute;inset:0;z-index:1;opacity:.45;background:radial-gradient(ellipse 1200px 800px at 50% 40%,rgba(8,4,0,.3) 0%,rgba(8,4,0,.92) 85%)}
+#engine .wrap{position:relative;z-index:2}
+#engine .cols{margin-top:60px}
+#engine .col-card{background:rgba(0,0,0,.6);backdrop-filter:blur(7px);-webkit-backdrop-filter:blur(7px);border-color:rgba(212,160,23,.4)}
+#engine .sub{text-shadow:0 2px 12px rgba(0,0,0,.85)}
 .highlight-card::before{content:"";position:absolute;top:0;left:0;width:4px;height:100%;background:linear-gradient(180deg,var(--gold-bright),var(--gold))}
 
 /* === B5.5 how it works === */
@@ -1233,6 +1239,8 @@ section.hero .hero-text{align-items:center}
 <!-- ===== BLOQUE 5 (orden nuevo 19-may): MOTOR 24 VARIABLES ===== -->
 <!-- ===== BLOQUE 5: MOTOR 24 VARIABLES ===== -->
 <section class="blk" id="engine">
+  <video class="engine-bg" id="enginevid" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="assets/video/engine_bg_poster.jpg"><source src="assets/video/engine_bg.mp4" type="video/mp4"></video>
+  <div class="engine-ov"></div>
   <div class="wrap">
     <div class="reveal">
       <span class="section-label" data-i18n="b5_label">Engine</span>
@@ -2812,6 +2820,10 @@ setTimeout(function(){clearInterval(iv);},8000);
 function pl(){try{v.playbackRate=1.06;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
 v.addEventListener('loadeddata',function(){var r=v.getBoundingClientRect();if(r.top<innerHeight&&r.bottom>0)pl();});
+})();
+(function(){var v=document.getElementById('enginevid');if(!v)return;v.muted=true;
+function pl(){try{v.playbackRate=1.12;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
 })();
 </script>
 </body>
