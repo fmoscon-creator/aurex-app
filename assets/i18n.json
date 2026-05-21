@@ -366,7 +366,8 @@
     "chip_hint": "Tap each variable to see what it measures ⓘ",
     "scroll_hint": "Swipe",
     "b4_h2_a": "350+ assets. 9 instrument types.",
-    "b4_h2_b": "One terminal."
+    "b4_h2_b": "One terminal.",
+    "how_ver": "View"
   },
   "es": {
     "nav_features": "Características",
@@ -720,7 +721,8 @@
     "chip_hint": "Tocá cada variable para ver qué mide ⓘ",
     "scroll_hint": "Deslizá",
     "b4_h2_a": "350+ activos. 9 tipos de instrumentos.",
-    "b4_h2_b": "Una terminal."
+    "b4_h2_b": "Una terminal.",
+    "how_ver": "Ver"
   },
   "pt": {
     "nav_features": "Recursos",
@@ -1074,7 +1076,8 @@
     "chip_hint": "Toque cada variável para ver o que ela mede ⓘ",
     "scroll_hint": "Deslize",
     "b4_h2_a": "350+ ativos. 9 tipos de instrumento.",
-    "b4_h2_b": "Um terminal."
+    "b4_h2_b": "Um terminal.",
+    "how_ver": "Ver"
   },
   "zh": {
     "nav_features": "功能",
@@ -1428,7 +1431,8 @@
     "chip_hint": "点击每个变量查看其含义 ⓘ",
     "scroll_hint": "滑动查看",
     "b4_h2_a": "350+ 种资产。9种工具类型。",
-    "b4_h2_b": "一个终端。"
+    "b4_h2_b": "一个终端。",
+    "how_ver": "查看"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1782,7 +1786,8 @@
     "chip_hint": "Touchez chaque variable pour voir ce qu'elle mesure ⓘ",
     "scroll_hint": "Faites glisser",
     "b4_h2_a": "350+ actifs. 9 types d'instruments.",
-    "b4_h2_b": "Un terminal."
+    "b4_h2_b": "Un terminal.",
+    "how_ver": "Voir"
   },
   "it": {
     "nav_features": "Funzioni",
@@ -2136,7 +2141,8 @@
     "chip_hint": "Tocca ogni variabile per vedere cosa misura ⓘ",
     "scroll_hint": "Scorri",
     "b4_h2_a": "350+ asset. 9 tipi di strumenti.",
-    "b4_h2_b": "Un terminale."
+    "b4_h2_b": "Un terminale.",
+    "how_ver": "Vedi"
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2490,7 +2496,8 @@
     "chip_hint": "प्रत्येक चर पर टैप करें ⓘ",
     "scroll_hint": "स्वाइप करें",
     "b4_h2_a": "350+ एसेट्स। 9 इंस्ट्रूमेंट प्रकार।",
-    "b4_h2_b": "एक टर्मिनल।"
+    "b4_h2_b": "एक टर्मिनल।",
+    "how_ver": "देखें"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2844,6 +2851,7 @@
     "chip_hint": "انقر على كل متغير لرؤية ما يقيس ⓘ",
     "scroll_hint": "اسحب",
     "b4_h2_a": "350+ أصلًا. 9 أنواع أدوات.",
-    "b4_h2_b": "محطة واحدة."
+    "b4_h2_b": "محطة واحدة.",
+    "how_ver": "عرض"
   }
 }
