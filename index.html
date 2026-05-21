@@ -432,7 +432,7 @@ section#product{padding-top:18px}
 .highlight-card{margin-top:32px;padding:26px 30px;background:linear-gradient(135deg,#1A0D00 0%,#0D0800 100%);border:1px solid var(--gold);border-radius:16px;font-size:15px;color:var(--text);position:relative;overflow:hidden}
 section#engine{padding-top:18px;position:relative;overflow:hidden}@media(max-width:600px){section#engine{padding-top:10px}}
 section#alerts{padding-top:18px;position:relative;overflow:hidden}@media(max-width:600px){section#alerts{padding-top:10px}}
-section#we-compare{padding-top:18px}@media(max-width:600px){section#we-compare{padding-top:10px}}
+section#we-compare{padding-top:18px}section#plans{padding-top:18px}@media(max-width:600px){section#plans{padding-top:10px}}@media(max-width:600px){section#we-compare{padding-top:10px}}
 #alerts .alerts-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.86;filter:sepia(1) saturate(2.6) hue-rotate(-12deg) brightness(1.18) contrast(179%)}
 #alerts .alerts-ov{position:absolute;inset:0;z-index:1;opacity:.45;background:radial-gradient(ellipse 1200px 800px at 50% 40%,rgba(8,4,0,.32) 0%,rgba(8,4,0,.92) 84%)}
 #alerts .wrap{position:relative;z-index:2}
@@ -755,8 +755,9 @@ footer.site::after{content:"";position:absolute;top:2px;left:0;right:0;height:24
 .nl-msg.error{background:rgba(255,77,109,.1);border:1px solid var(--red);color:var(--red)}
 
 /* === LIVE QUOTES TABLERO TACTICAL (reemplaza B11.5 anterior) === */
-.lq-board{background:#0d0d12;border:1px solid rgba(212,160,23,.28);border-radius:16px;padding:0;overflow:hidden;font-family:var(--mono);margin-top:36px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(212,160,23,.08)}
-.lq-header{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid rgba(212,160,23,.18);background:linear-gradient(180deg,rgba(212,160,23,.05),transparent)}
+.lq-board{background:#0d0d12;border:1px solid rgba(212,160,23,.28);border-radius:16px;padding:0;overflow:hidden;font-family:var(--mono);margin:36px auto 0;max-width:580px;box-shadow:0 30px 80px rgba(0,0,0,.5),0 0 0 1px rgba(212,160,23,.08)}
+.lq-header{padding:14px 22px;border-bottom:1px solid rgba(212,160,23,.18);background:linear-gradient(180deg,rgba(212,160,23,.05),transparent)}
+.lq-header-inner{display:flex;justify-content:space-between;align-items:center;max-width:500px;width:100%;margin:0 auto;gap:16px}
 .lq-title{font-family:var(--mono);font-size:12px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase}
 .lq-status{display:flex;align-items:center;gap:14px;font-size:11px;color:var(--text-sec)}
 .lq-dot{width:7px;height:7px;border-radius:50%;background:#00ff88;box-shadow:0 0 8px #00ff88;animation:lqPulse 1.5s infinite}
@@ -765,12 +766,12 @@ footer.site::after{content:"";position:absolute;top:2px;left:0;right:0;height:24
 .lq-section{padding:18px 22px;border-bottom:1px solid rgba(212,160,23,.1)}
 .lq-section:last-child{border-bottom:none}
 .lq-section-label{font-size:10px;letter-spacing:2px;color:var(--gold);font-weight:700;text-transform:uppercase;margin-bottom:12px;opacity:.85}
-.lq-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 32px}
+.lq-grid{display:grid;grid-template-columns:max-content max-content;justify-content:center;column-gap:96px;row-gap:8px}
 @media(max-width:680px){.lq-grid{grid-template-columns:1fr;gap:8px}}
-.lq-row{display:flex;justify-content:space-between;align-items:baseline;font-size:13px;padding:4px 0}
-.lq-sym{color:#e8e8ec;font-weight:600;letter-spacing:.3px;flex-shrink:0}
-.lq-vals{display:flex;align-items:baseline;gap:14px;font-variant-numeric:tabular-nums}
-.lq-price{color:#c8c8d0;font-size:12.5px;min-width:84px;text-align:right}
+.lq-row{display:flex;justify-content:flex-start;align-items:baseline;font-size:13px;padding:4px 0;gap:10px}
+.lq-sym{color:#e8e8ec;font-weight:600;letter-spacing:.3px;flex-shrink:0;min-width:78px}
+.lq-vals{display:flex;align-items:baseline;gap:10px;font-variant-numeric:tabular-nums}
+.lq-price{color:#c8c8d0;font-size:12.5px;min-width:72px;text-align:right}
 .lq-pct{font-weight:600;min-width:58px;text-align:right;font-size:12.5px;display:inline-flex;align-items:center;gap:3px;justify-content:flex-end}
 .lq-pct.pos{color:#00ff88}
 .lq-pct.neg{color:#ff4444}
@@ -1610,11 +1611,13 @@ section.hero .hero-text{align-items:center}
 
     <div class="lq-board reveal">
       <div class="lq-header">
+        <div class="lq-header-inner">
         <div class="lq-title" data-i18n="lq_title">Market Pulse · Global</div>
         <div class="lq-status">
           <span class="lq-dot"></span>
           <span>LIVE</span>
           <span class="lq-clock" id="lq-clock">--:--:--</span>
+        </div>
         </div>
       </div>
 
