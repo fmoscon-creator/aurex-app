@@ -21,7 +21,7 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟡 Re-submission EN COLA Apple Review (marca AUREX LIVE) | Esperar respuesta Apple a la respuesta del rechazo de marca | Respuesta Apple Review |
+| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟡 **Re-submission COMPLETADA 21/05 01:19** (respuesta enviada en hilo + PDF + reenvío) → "Pendiente de revisión". ⚠️ El 16/05 quedó **colgado 6 días** (metadata cambiada pero respuesta NUNCA enviada ni reenviada — detectado y corregido 21/05, ver `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md`) | Esperar Apple 24-72h; si >72h → Expedited Review | Respuesta Apple Review |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | 🟢 **PREPARADO** — IPA exportado (`backups/ipa/Build32/`, 42MB, 20-may) | Subir a Transporter/TestFlight EN CUANTO Apple responda Build 17 | Respuesta Apple Build 17 |
 | 🤖 **Android Build 36 (v1.0.36)** | 🟡 **EN REVISIÓN Google** → Producción (IAP RC #76809 RESUELTO) | Esperar aprobación Google; luego subir a Alpha (#62) | Revisión Google |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |

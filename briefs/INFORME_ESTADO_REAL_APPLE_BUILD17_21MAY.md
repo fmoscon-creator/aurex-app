@@ -119,3 +119,24 @@ Apple Developer Team ID: TX7C2F79U9
 
 - El envío estuvo 6 días sin avanzar por nuestra omisión, NO por Apple. **Apenas se responda + reenvíe, entra a la cola de review** (24-72h típico; el historial de AUREX puede estirarlo a 3-7 días).
 - Si pasan 72h sin respuesta tras el reenvío → **Expedited Review Request**.
+
+---
+
+## 9. ✅ RESUELTO — DESTRABADO 21/05 01:19 AR (ejecutado por Escritorio)
+
+| Verificación | Estado |
+|---|---|
+| Respuesta enviada en el hilo | ✅ 2 mensajes (Apple 15/05 + Fernando Moscón 21/05 01:17) |
+| PDF en el mensaje | ✅ COMPRA DOMINIO AUREX LIVE -namecheap-order-198745654.pdf |
+| PDF en App Review Information | ✅ mismo archivo |
+| Notas App Review Information | ✅ texto completo guardado |
+| **Reenvío a revisión** | ✅ ejecutado 21/05 01:19 AR |
+| **Estado del envío** | ✅ **"Pendiente de revisión" / Waiting for Review** |
+| Manual Release | ✅ "Publicar manualmente" activo (no se distribuye solo) |
+| Nombre / Build / Submission ID | AUREX LIVE / 1.0 (17) / e0e7fb35-11a4-4c1d-854c-60a80c4799e6 |
+
+**Nota menor (sin impacto):** el texto enviado incluye una línea diciendo que el PDF se adjuntó en App Review Information por un "technical issue" en el upload del mensaje — pero finalmente el PDF SÍ quedó adjunto también en el mensaje. Es redundante, no perjudica: el reviewer ve el PDF en ambos lados.
+
+**Próximos pasos:** esperar Apple (24-72h típico, hasta 7 días). Si pasan 72h sin respuesta → Expedited Review Request. Si aprueba → NO se publica solo (Manual Release manual); luego subir Build 32 a TestFlight. Si rechaza de nuevo → analizar el nuevo motivo con Code + Escritorio.
+
+**LECCIÓN:** verificar SIEMPRE el HILO DE MENSAJES (contar mensajes + confirmar reenvío), no solo el badge de estado "Listo para revisión".
