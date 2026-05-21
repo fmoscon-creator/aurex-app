@@ -171,8 +171,8 @@ section.hero{padding:40px 0 60px;background:radial-gradient(ellipse 1200px 700px
 
 /* === BLOQUE 5.5 CÓMO FUNCIONA — accordion 6 tabs === */
 .how-accordion{display:flex;flex-direction:column;gap:10px;max-width:780px;margin:36px auto 0}
-.how-tab{background:var(--bg-soft);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .25s,background .25s}
-.how-tab[open]{border-color:rgba(212,160,23,0.5);background:rgba(212,160,23,0.04)}
+.how-tab{background:var(--bg-soft);border:1.5px solid rgba(212,160,23,0.45);border-radius:12px;overflow:hidden;transition:border-color .25s,background .25s}
+.how-tab[open]{border-color:rgba(212,160,23,0.72);background:rgba(212,160,23,0.04)}
 .how-tab summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:20px 22px;font-family:var(--display);font-size:15px;font-weight:400;color:var(--text);transition:background .2s;user-select:none;letter-spacing:.5px}
 .how-tab summary::-webkit-details-marker{display:none}
 .how-tab summary:hover{background:rgba(212,160,23,0.06)}
@@ -1309,7 +1309,7 @@ section.hero .hero-text{align-items:center}
       <p class="sub" style="max-width:680px;margin:14px auto 0" data-i18n="how_hint">Tocá cada solapa para ver qué podés hacer adentro.</p>
     </div>
     <div class="how-accordion">
-      <details class="how-tab" open>
+      <details class="how-tab">
         <summary><span class="how-tab-icon">💼</span><span class="how-tab-name" data-i18n="how_tab_portafolio">Portfolio</span><span class="how-tab-arrow">▾</span></summary>
         <ul class="how-tab-items">
           <li><span class="how-emoji">➕</span><span data-i18n="cu_portafolio_1">Agregá activos: botón + arriba a la derecha del header.</span></li>
