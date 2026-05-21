@@ -16,7 +16,7 @@
   },
   "en": {
     "nav_features": "Features",
-    "nav_markets": "Markets",
+    "nav_markets": "Live market",
     "nav_pricing": "Pricing",
     "nav_how": "How it works",
     "nav_channels": "Channels",
@@ -375,7 +375,7 @@
   },
   "es": {
     "nav_features": "Características",
-    "nav_markets": "Mercados",
+    "nav_markets": "Mercado en vivo",
     "nav_pricing": "Planes",
     "nav_how": "Cómo funciona",
     "nav_channels": "Canales",
@@ -734,7 +734,7 @@
   },
   "pt": {
     "nav_features": "Recursos",
-    "nav_markets": "Mercados",
+    "nav_markets": "Mercado ao vivo",
     "nav_pricing": "Planos",
     "nav_how": "Como funciona",
     "nav_channels": "Canais",
@@ -1093,7 +1093,7 @@
   },
   "zh": {
     "nav_features": "功能",
-    "nav_markets": "市场",
+    "nav_markets": "实时市场",
     "nav_pricing": "套餐",
     "nav_how": "工作原理",
     "nav_channels": "频道",
@@ -1452,7 +1452,7 @@
   },
   "fr": {
     "nav_features": "Fonctionnalités",
-    "nav_markets": "Marchés",
+    "nav_markets": "Marché en direct",
     "nav_pricing": "Tarifs",
     "nav_how": "Fonctionnement",
     "nav_channels": "Canaux",
@@ -1811,7 +1811,7 @@
   },
   "it": {
     "nav_features": "Funzioni",
-    "nav_markets": "Mercati",
+    "nav_markets": "Mercato dal vivo",
     "nav_pricing": "Prezzi",
     "nav_how": "Come funziona",
     "nav_channels": "Canali",
@@ -2170,7 +2170,7 @@
   },
   "hi": {
     "nav_features": "विशेषताएँ",
-    "nav_markets": "बाज़ार",
+    "nav_markets": "लाइव मार्केट",
     "nav_pricing": "मूल्य",
     "nav_how": "कैसे काम करता है",
     "nav_channels": "चैनल",
@@ -2529,7 +2529,7 @@
   },
   "ar": {
     "nav_features": "الميزات",
-    "nav_markets": "الأسواق",
+    "nav_markets": "السوق المباشر",
     "nav_pricing": "الأسعار",
     "nav_how": "كيف يعمل",
     "nav_channels": "القنوات",
