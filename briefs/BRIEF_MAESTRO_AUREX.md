@@ -2,7 +2,7 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 21-may-2026 AR
+> **Última actualización:** 21-may-2026 AR (mañana) — **🟢 Android Build 36 PUBLICADO en producción 7:29 AM · iOS Build 17 EN REVISIÓN activa**
 > **Última actualización significativa:** Ver **§1.c ACTUALIZACIÓN 20-21 MAY — LANDING REDISEÑO CON VIDEO** (foto actual). Hitos: iOS Build 32 v1.0(32) PREPARADO esperando respuesta Apple a Build 17 · Android Build 36 v1.0.36 en revisión Google con IAP RC #76809 RESUELTO · **LANDING aurex.live (index.html root): HERO (globo) + COBERTURA + MOTOR + ALERTAS rediseñadas con VIDEO de fondo (Pexels) + alto contraste, PUBLICADAS en producción** · CARACTERÍSTICAS compactada · 35 videos stock descargados vía Pexels API · NUEVO TEMA PRIORITARIO #86: actualizar copy web a estado Build 32/36.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
@@ -21,9 +21,9 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟡 **Re-submission COMPLETADA 21/05 01:19** (respuesta enviada en hilo + PDF + reenvío) → "Pendiente de revisión". ⚠️ El 16/05 quedó **colgado 6 días** (metadata cambiada pero respuesta NUNCA enviada ni reenviada — detectado y corregido 21/05, ver `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md`) | Esperar Apple 24-72h; si >72h → Expedited Review | Respuesta Apple Review |
+| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟢 **EN REVISIÓN ACTIVA** — Apple tomó la respuesta del 21/05 y arrancó la revisión (estado pasó de "Pendiente" a "En revisión"; 2 mensajes en el hilo). Salió del limbo de 6 días (ver `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md`) | Esperar resolución Apple (24-72h típico). Si aprueba → NO publicar solo (Manual Release); subir Build 32 a TestFlight | Respuesta Apple Review |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | 🟢 **PREPARADO** — IPA exportado (`backups/ipa/Build32/`, 42MB, 20-may) | Subir a Transporter/TestFlight EN CUANTO Apple responda Build 17 | Respuesta Apple Build 17 |
-| 🤖 **Android Build 36 (v1.0.36)** | 🟡 **EN REVISIÓN Google** (verificado 21/05 en Versiones del track Producción: "En revisión · 1 código de versión"). Público actual = **v1.0.33** ("Disponible en Google Play · lanzado 16 may 12:44"). Build 36 NO publicado | Esperar Google → al aprobar lanzar + Alpha (#62). **#90 (futuro, no urgente):** título de la app en Play Store YA es "AUREX" (OK); el "AUREX AI" es el nombre de la CUENTA DE DESARROLLADOR (no rechaza Google) — opcional cambiarlo + fix edge-to-edge API | Revisión Google |
+| 🤖 **Android Build 36 (v1.0.36)** | 🟢 **APROBADO + PUBLICADO en PRODUCCIÓN** (21 may 7:29 AM — "Disponible en Google Play", usuarios reciben la actualización). v1.0.36 = nueva producción pública. Incluye fix IAP #76809 | **Validar compra IAP REAL en producción** (cuenta real, refund 48h) — confirmar que el fix funciona. #90 (futuro): nombre cuenta dev + edge-to-edge | — |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
 | ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
 | 🎨 **Landing aurex.live (index.html root)** | 🟢 En producción — HERO + COBERTURA + MOTOR + ALERTAS con VIDEO de fondo + alto contraste · CARACTERÍSTICAS compactada · COMENZÁ acordeón fix | Seguir secciones con video (#88) + actualizar copy a Build 32/36 (#86) | OK Fernando |
