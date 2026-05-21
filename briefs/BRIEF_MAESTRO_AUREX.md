@@ -624,3 +624,13 @@ docs(brief-maestro): §5 Landing — Fernando dio OK visual, arranca deploy
 **Previsualizadores** (herramienta de iteración, NO producción) en `landing_v4_videos/`: PREVIEW_cobertura.html, PREVIEW_motor.html, PREVIEW_alertas.html — video + info encima + controles color/velocidad/opacidad/contraste, arrastrables.
 
 **Pendiente landing:** seguir secciones con video alternado (#88) · actualizar copy a Build 32/36 (#86) · backlog #41/#44/#49/#50/#52/#54.
+
+---
+
+## MONETIZACIÓN ANDROID (PayPal) — 21/05
+
+Flujo confirmado: **Google Play cobra al usuario → Google retiene 15% (suscripciones) → el resto se deposita en PayPal AUREX (USD) → Fernando retira MANUALMENTE al banco (USD→ARS, 1-5 días hábiles, tipo de cambio PayPal)**. El dinero queda en PayPal sin vencimiento hasta el retiro manual.
+
+La compra de prueba del 14/5 ($9,99, completada) fue de Fernando y **anterior a la publicación de v1.0.36** (21/05, con fix IAP #76809). Para validar el flujo en la versión publicada conviene una **compra nueva desde la app v1.0.36** (Play Store), reembolsable en Play Console dentro de 48h.
+
+> **Detalle sensible (cuenta bancaria Santander, saldo, movimientos): `Dropbox/AUREX/MAPA DE TRABAJO/DOC_MONETIZACION_ANDROID_PAYPAL.md` — NO se sube al repo público por seguridad.**
