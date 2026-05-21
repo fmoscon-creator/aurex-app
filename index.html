@@ -826,6 +826,22 @@ footer.site .foot-bg-img{position:absolute;inset:0;width:100%;height:100%;object
 footer.site .foot-bg-ov{position:absolute;inset:0;z-index:1;background:rgba(8,4,0,.5);opacity:.8}
 footer.site .wrap{position:relative;z-index:2}
 </style>
+<style id="wn-v2-css">
+.what-not-v2 .wn-cols{display:grid;grid-template-columns:1fr 1fr;gap:38px;text-align:left;margin-bottom:8px}
+.what-not-v2 .wn-col-head{font-family:var(--mono);font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;font-weight:700;margin-bottom:18px;padding-bottom:11px;border-bottom:1px solid rgba(212,160,23,.22)}
+.what-not-v2 .wn-yes .wn-col-head{color:var(--gold-bright)}
+.what-not-v2 .wn-no .wn-col-head{color:rgba(245,240,232,.5)}
+.what-not-v2 ul{list-style:none;display:block!important;grid-template-columns:none!important;gap:0;margin:0;padding:0}
+.what-not-v2 li{font-size:14px;display:flex;align-items:flex-start;gap:11px;line-height:1.5;margin-bottom:14px}
+.what-not-v2 li::before{display:none!important;content:none!important}
+.what-not-v2 .wn-ic{flex-shrink:0;width:20px;height:20px;margin-top:1px;display:block}
+.what-not-v2 .wn-ic svg{width:100%;height:100%;display:block}
+.what-not-v2 .wn-yes li{color:var(--text)}
+.what-not-v2 .wn-ic-yes{color:var(--gold-bright)}
+.what-not-v2 .wn-no li{color:rgba(245,240,232,.74)}
+.what-not-v2 .wn-ic-no{color:rgba(245,240,232,.42)}
+@media(max-width:600px){.what-not-v2 .wn-cols{grid-template-columns:1fr;gap:26px}}
+</style>
 </head>
 <body>
 <script>
@@ -1731,17 +1747,34 @@ footer.site .wrap{position:relative;z-index:2}
 <!-- ===== BLOQUE 11: WE DON'T TRADE ===== -->
 <section class="blk" id="we-dont-trade">
   <div class="wrap">
-    <div class="what-not reveal">
+    <div class="what-not what-not-v2 reveal">
       <h3 data-i18n="b11_h3">We analyze. We don't trade.</h3>
-      <ul>
-        <li data-i18n="b11_li_1">We are not a broker</li>
-        <li data-i18n="b11_li_2">We don't execute trades or transactions</li>
-        <li data-i18n="b11_li_3">We don't manage your money</li>
-        <li data-i18n="b11_li_4">We don't give financial advice</li>
-        <li data-i18n="b11_li_5">We don't recommend buy or sell actions</li>
-        <li data-i18n="b11_li_6">We are not a crypto-only app</li>
-        <li data-i18n="b11_li_7">We don't replace your broker — we complement it</li>
-      </ul>
+      <div class="wn-cols">
+        <div class="wn-col wn-yes">
+          <div class="wn-col-head" data-i18n="b11_yes_head">What we do</div>
+          <ul>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_1">We analyze 350+ assets with AI, live</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_2">We explain every signal with 24 variables — no black box</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_3">We show you the conviction level of each signal</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_4">We cover stocks, crypto, commodities and futures</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_5">We alert you instantly to moves and events</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_6">All in your language — 8 languages</span></li>
+            <li><span class="wn-ic wn-ic-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.4 12.4l2.5 2.5 4.7-5.2"/></svg></span><span data-i18n="b11_yes_7">We complement your broker: the decision is yours</span></li>
+          </ul>
+        </div>
+        <div class="wn-col wn-no">
+          <div class="wn-col-head" data-i18n="b11_no_head">What we don't do</div>
+          <ul>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_1">We are not a broker</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_2">We don't execute trades or transactions</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_3">We don't manage your money</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_4">We don't give financial advice</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_5">We don't recommend buy or sell actions</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_6">We are not a crypto-only app</span></li>
+            <li><span class="wn-ic wn-ic-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><line x1="6.7" y1="6.7" x2="17.3" y2="17.3"/></svg></span><span data-i18n="b11_li_7">We don't replace your broker — we complement it</span></li>
+          </ul>
+        </div>
+      </div>
       <p class="disclaimer-text" data-i18n="b11_disclaimer">AUREX is a data visualization and analytics platform for informational and educational purposes only. It does not provide investment advice, execute transactions, or manage assets of any kind. All analysis is statistical in nature and does not guarantee future results. Always consult a qualified financial professional before making investment decisions. © 2026 AUREX — Fernando Moscón.</p>
     </div>
   </div>
