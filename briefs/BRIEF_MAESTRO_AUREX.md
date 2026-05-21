@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 20-may-2026 ~02:30 AR
-> **Última actualización significativa:** Ver **§1.b ACTUALIZACIÓN 18-20 MAY** (foto actual). Hitos: iOS Build 32 v1.0(32) PREPARADO (IPA exportado, fix modal Crear Alerta resuelto en simulador) esperando respuesta Apple a Build 17 · Android Build 36 v1.0.36 en revisión Google con IAP RC #76809 RESUELTO · backend OPS-4 push iOS apns · monitor 24/7 Telegram · acceso Railway Project Token · NUEVO TEMA PRIORITARIO: actualizar la web a funciones/estado Build 32 iOS + Build 36 Android · landing fondos video del hero en evaluación (mockup con 5 videos + controles).
+> **Última actualización:** 21-may-2026 AR
+> **Última actualización significativa:** Ver **§1.c ACTUALIZACIÓN 20-21 MAY — LANDING REDISEÑO CON VIDEO** (foto actual). Hitos: iOS Build 32 v1.0(32) PREPARADO esperando respuesta Apple a Build 17 · Android Build 36 v1.0.36 en revisión Google con IAP RC #76809 RESUELTO · **LANDING aurex.live (index.html root): HERO (globo) + COBERTURA + MOTOR + ALERTAS rediseñadas con VIDEO de fondo (Pexels) + alto contraste, PUBLICADAS en producción** · CARACTERÍSTICAS compactada · 35 videos stock descargados vía Pexels API · NUEVO TEMA PRIORITARIO #86: actualizar copy web a estado Build 32/36.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -26,7 +26,7 @@
 | 🤖 **Android Build 36 (v1.0.36)** | 🟡 **EN REVISIÓN Google** → Producción (IAP RC #76809 RESUELTO) | Esperar aprobación Google; luego subir a Alpha (#62) | Revisión Google |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
 | ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
-| 🎨 **Landing aurex.live (v2.html)** | 🟡 En iteración visual — fondos VIDEO del hero en evaluación + NUEVO tema web | Fernando elige video con familia (#85) + actualizar web a estado Build 32/36 (#86) | OK Fernando |
+| 🎨 **Landing aurex.live (index.html root)** | 🟢 En producción — HERO + COBERTURA + MOTOR + ALERTAS con VIDEO de fondo + alto contraste · CARACTERÍSTICAS compactada · COMENZÁ acordeón fix | Seguir secciones con video (#88) + actualizar copy a Build 32/36 (#86) | OK Fernando |
 | 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing actualizada + live | Landing deploy |
 | 🌐 **PWA aurex.live** | 🟢 Live en `/app/` | Paridad con nativo (push, telegram, etc.) | — |
 | ⚙️ **Backend Railway** | 🟢 OK (+ OPS-4 push iOS apns + monitor 24/7) | Sin acción inmediata | — |
@@ -600,3 +600,27 @@ docs(brief-maestro): §5 Landing — Fernando dio OK visual, arranca deploy
 ---
 
 **Fin brief maestro. Se actualiza con cada hito. Una sola URL canónica para Escritorio y Fernando.**
+
+---
+
+## 1.c ACTUALIZACIÓN 20-21 MAY — LANDING REDISEÑO CON VIDEO
+
+**Regla de trabajo establecida:** aurex.live = `index.html` en la RAÍZ del repo `fmoscon-creator/aurex-app` (GitHub Pages, cache 10 min). TODO cambio se pushea ahí y se valida en S (Safari) / C (Chrome) / M (Mobile). El `landing-v3-preview/v2.html` legacy quedó desincronizado y NO se usa más.
+
+**Secciones rediseñadas con VIDEO de fondo (autoplay vía IntersectionObserver — Safari no autoplea off-screen):**
+- **HERO**: globo dorado (sesión previa).
+- **COBERTURA (#markets)**: video operador (Pexels 47214) · 9 datos en Boldonse · pills al borde · card explicativo fondo negro · título 2 renglones fijos (b4_h2_a/b, 8 idiomas) · label "Cobertura" fondo negro.
+- **MOTOR (#engine)**: video FLUJOS (PXFLUJOS_03) Original · opac 79 · contraste 164 · vel 112 · 2 cards (Motor IA 10 var + AUREX Pulse 14 var) en glass · ⓘ de cada chip = badge circular dorado · label "Motor" fondo negro · subtítulo dorado · header arriba con gap.
+- **ALERTAS (#alerts)**: video DATOS (Pexels 47796) Dorado · opac 86 · contraste 179 · vel 132 · 4 cards glass bordes dorados textos blancos · label "Alertas" borde+letras BLANCAS · header arriba con gap.
+
+**Otros cambios landing:**
+- CARACTERÍSTICAS: grid compactado (4/fila desktop, sin emoji, texto más claro).
+- PRODUCTO (#product): subida + indicador "Deslizá →" animado (scroll_hint, 8 idiomas).
+- COMENZÁ (#how-it-works): Portfolio ya no arranca desplegado · bordes dorados de solapas más visibles · flecha ▾ → "Ver ▾" (how_ver, 8 idiomas, rota solo el chevron).
+- Todas las secciones con video: padding-top reducido (menos scroll entre secciones).
+
+**Videos stock:** 35 descargados a `~/Desktop/CODE/AurexApp/mockups/motor_videos/` (+ Dropbox) vía **Pexels API** (key de Fernando, guardada solo en `/tmp/pexels_key.txt` local — regenerable). Categorías: PXAI, PXFLUJOS, PXCUANT, PXMARKET, PXNET (plexus). Coverr descartado (devolvía videos irrelevantes).
+
+**Previsualizadores** (herramienta de iteración, NO producción) en `landing_v4_videos/`: PREVIEW_cobertura.html, PREVIEW_motor.html, PREVIEW_alertas.html — video + info encima + controles color/velocidad/opacidad/contraste, arrastrables.
+
+**Pendiente landing:** seguir secciones con video alternado (#88) · actualizar copy a Build 32/36 (#86) · backlog #41/#44/#49/#50/#52/#54.
