@@ -806,6 +806,12 @@ section.hero .hero-text{align-items:center}
 <style>.hero-labels-bottom{margin-top:28px;margin-bottom:0}.hero-labels-bottom .section-label,.hero-labels-bottom .section-label-cta{background:#050200!important;border-color:rgba(255,255,255,0.18)!important;color:#fff!important}.hero-labels-bottom .section-label-cta{background:#0a0500!important;color:#F5C842!important}</style>
 <style>.hdr-cta-feat{display:none}@media(max-width:880px){.hdr-cta .hdr-cta-feat{display:inline-flex;align-items:center;height:44px;padding:0 12px;border:1px solid rgba(212,160,23,0.45);border-radius:10px;background:rgba(212,160,23,0.05);color:#F5F0E8;font-family:'IBM Plex Mono','JetBrains Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;text-decoration:none;white-space:nowrap;box-sizing:border-box}}</style>
 <style>section#markets{padding-top:16px}@media(max-width:600px){section#markets{padding-top:10px}}</style>
+<style id="lq-video-css">
+#live-quotes{position:relative;overflow:hidden}
+#live-quotes .lq-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:0;opacity:.92;filter:contrast(162%)}
+#live-quotes .lq-bg-ov{position:absolute;inset:0;z-index:1;opacity:.3;background:radial-gradient(ellipse 1200px 800px at 50% 45%,rgba(8,4,0,.3) 0%,rgba(8,4,0,.88) 90%)}
+#live-quotes .wrap{position:relative;z-index:2}
+</style>
 </head>
 <body>
 <script>
@@ -1602,6 +1608,7 @@ section.hero .hero-text{align-items:center}
 <!-- ===== BLOQUE 11 (orden nuevo 19-may): PULSO DEL MERCADO EN VIVO (Live Quotes) ===== -->
 <!-- ===== BLOQUE 11.5: LIVE QUOTES TABLERO TACTICAL ===== -->
 <section class="blk center" id="live-quotes">
+<video class="lq-bg-video" id="lqvid" autoplay loop muted playsinline webkit-playsinline preload="auto" poster="assets/video/pulso_3_profit_poster.jpg"><source src="assets/video/pulso_3_profit.mp4" type="video/mp4"></video><div class="lq-bg-ov"></div>
   <div class="wrap">
     <div class="reveal lq-section-title">
       <span class="section-label" data-i18n="lq_label">Live market pulse</span>
@@ -2851,6 +2858,12 @@ function pl(){try{v.playbackRate=1.12;}catch(e){}var p=v.play();if(p&&p.catch)p.
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
 })();
 (function(){var v=document.getElementById('alertsvid');if(!v)return;v.muted=true;
+function pl(){try{v.playbackRate=1.32;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
+if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
+})();
+</script>
+<script>
+(function(){var v=document.getElementById('lqvid');if(!v)return;v.muted=true;
 function pl(){try{v.playbackRate=1.32;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
 })();
