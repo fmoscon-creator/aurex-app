@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 21-may-2026 AR (mañana) — **🟢 Android Build 36 PUBLICADO en producción 7:29 AM · iOS Build 17 EN REVISIÓN activa**
-> **Última actualización significativa:** Ver **§1.c ACTUALIZACIÓN 20-21 MAY — LANDING REDISEÑO CON VIDEO** (foto actual). Hitos: iOS Build 32 v1.0(32) PREPARADO esperando respuesta Apple a Build 17 · Android Build 36 v1.0.36 en revisión Google con IAP RC #76809 RESUELTO · **LANDING aurex.live (index.html root): HERO (globo) + COBERTURA + MOTOR + ALERTAS rediseñadas con VIDEO de fondo (Pexels) + alto contraste, PUBLICADAS en producción** · CARACTERÍSTICAS compactada · 35 videos stock descargados vía Pexels API · NUEVO TEMA PRIORITARIO #86: actualizar copy web a estado Build 32/36.
+> **Última actualización:** 21-may-2026 AR (tarde) — **🟢 LANDING aurex.live DEFINITIVA y lista para compartir + SEO/Google completo · Android Build 36 PUBLICADO en producción · iOS Build 17 EN REVISIÓN**
+> **Última actualización significativa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto actual). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -26,9 +26,9 @@
 | 🤖 **Android Build 36 (v1.0.36)** | 🟢 **APROBADO + PUBLICADO en PRODUCCIÓN** (21 may 7:29 AM — "Disponible en Google Play", usuarios reciben la actualización). v1.0.36 = nueva producción pública. Incluye fix IAP #76809 | **Validar compra IAP REAL en producción** (cuenta real, refund 48h) — confirmar que el fix funciona. #90 (futuro): nombre cuenta dev + edge-to-edge | — |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
 | ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
-| 🎨 **Landing aurex.live (index.html root)** | 🟢 En producción — HERO + COBERTURA + MOTOR + ALERTAS con VIDEO de fondo + alto contraste · CARACTERÍSTICAS compactada · COMENZÁ acordeón fix | Seguir secciones con video (#88) + actualizar copy a Build 32/36 (#86) | OK Fernando |
-| 📋 **Plan MKT v3** | ⏸ NO arrancado | Bloqueado hasta landing actualizada + live | Landing deploy |
-| 🌐 **PWA aurex.live** | 🟢 Live en `/app/` | Paridad con nativo (push, telegram, etc.) | — |
+| 🎨 **Landing aurex.live (index.html root)** | 🟢 **DEFINITIVA y lista para compartir** — 4 fixes mobile (Deslizá, MOTOR/PULSO video, footer) + card SÍ/NO rediseñado (8 idiomas) + **SEO completo** (favicon, robots, sitemap, noindex, fix noindex heredado, Search Console verificado) | **Barrido funcional pre-difusión** (newsletter/descargas/canales/cotizaciones) + copy a Build 36 (#86) | OK Fernando |
+| 📋 **Plan MKT** | 🟡 **DESBLOQUEADO — clave arrancar** (landing ya live; cae el bloqueante) | Leer `MARKETING_CONTEXT_AUREX` → definir canales/piezas/calendario con Fernando | — |
+| 🌐 **PWA aurex.live `/app/`** | 🟡 **Actualización URGENTE** — recibe tráfico desde la landing | Sacar "INVEST AI" (texto prohibido visible) + paridad Build 36 (push/telegram/alertas/UX planes) | — |
 | ⚙️ **Backend Railway** | 🟢 OK (+ OPS-4 push iOS apns + monitor 24/7) | Sin acción inmediata | — |
 
 ---
@@ -58,6 +58,48 @@
 
 ### 🆕 NUEVO TEMA PRIORITARIO (#86)
 **Actualizar la WEB (landing aurex.live) a las funciones y el estado reales de Build 32 iOS + Build 36 Android.** Las apps ya tienen features que la landing puede no reflejar (push notifications, alertas Telegram, modal de alertas, UX de planes, etc.). Alinear copy, capturas y claims de la web con lo que las apps efectivamente hacen hoy. Prioritario apenas se cierre la iteración visual de fondos.
+
+---
+
+## 1.c ACTUALIZACIÓN 21-MAY (TARDE) — LANDING DEFINITIVA + SEO/GOOGLE + frentes
+
+> **Foto más reciente.** La landing quedó **lista para compartir** (`https://aurex.live`). Esto reemplaza a §1.b para lo de landing/SEO.
+
+### 🎨 LANDING aurex.live — cerrada para difusión
+Hecho hoy (todo en producción, verificado en vivo con curl + capturas):
+- **Mobile (4 fixes que faltaban):** indicador **"Deslizá →"** en Comparativa y Planes · **MOTOR** con video de fondo visible (aire lateral + gap + cards translúcidas) · **PULSO** abierto en cards separadas estilo ALERTAS (video entre medio y laterales) · **FOOTER** con textura dorada al 100% del sector. Todo en media queries mobile; desktop intacto.
+- **Card "Analizamos. No operamos."** rediseñado por feedback de la gente: 2 columnas **SÍ (lo que hacemos, dorado) | NO (lo que no, gris tenue)**, **cruz roja eliminada**, íconos SVG de línea fina (sin emojis), 9 claves i18n nuevas (`b11_yes_*`, `b11_no_head`) en los **8 idiomas**.
+- **SEO / Google (faltaba por completo — lo detectó Fernando al buscarse):**
+  - **Favicon** = logo AUREX (fondo negro + "AUREX"): `favicon.ico` multi-res en raíz + PNG 32/96 + apple-touch 180.
+  - `robots.txt` + `sitemap.xml` (la landing como resultado principal).
+  - **`noindex`** en `/app` (login) y en las 3 privacy → dejan de salir como links sueltos confusos en Google.
+  - **🔴 Fix crítico:** la landing arrastraba `<meta robots noindex,nofollow>` del borrador → corregido a `index,follow`. **Sin esto Google nunca la iba a mostrar** aunque se compartiera.
+  - **Google Search Console** dado de alta y **verificado** (meta-tag en index.html) + sitemap enviado + **indexación solicitada** (cola prioritaria). *(Confirmar con Fernando con qué cuenta Google quedó.)* Reflejo en el buscador: **horas a días**.
+
+**Pendientes Landing / próximos pasos (en orden):**
+1. **Barrido funcional pre-difusión (lo más importante):** ¿el **newsletter** guarda el mail (Formspree)? · **botones de descarga** (App Store iOS aún en revisión → ver qué hace el link; Google Play OK; Web App) · **links de canales** (Telegram/X/IG/TikTok/YT/LinkedIn) que existan y abran · **cotizaciones en vivo** (banner + Pulso) que carguen datos reales.
+2. **OG/preview al compartir** por WhatsApp (imagen + título) — verificar que se vea bien.
+3. **Copy a estado Build 36** (#86): alinear claims/capturas con lo que las apps hacen hoy.
+4. Menores: Boldonse en títulos (#44, Fernando lo siente informal) · videos/efectos por sección (#88).
+
+### 📋 PLAN MKT — DESBLOQUEADO, clave arrancar (Fernando: "ya es clave empezar")
+La landing ya está **live y compartible** → cae el bloqueante de "esperar landing". **Es el momento de arrancar el Plan MKT.** Antes de invocar marketing-skills, leer `MARKETING_CONTEXT_AUREX` (Dropbox/AUREX/MARKETING). A definir con Fernando: canales prioritarios, primeras piezas, calendario. Frente nuevo, prioritario.
+
+### 🌐 PWA `/app/` — ACTUALIZACIÓN URGENTE (clave, hacerla rápido)
+Ahora que la landing manda tráfico a la PWA, actualizarla es prioritario:
+- **Sacar "INVEST AI"** de la pantalla de login (texto de marca prohibido; lo levantó Google como descripción).
+- **Paridad con Android nativo Build 36** (gap acumulado): push, alertas Telegram, modal de alertas, UX de planes, "Cómo usar AUREX".
+- Que la PWA refleje el estado real de las apps, no una versión vieja.
+
+### 🤖 ANDROID — Build 36 PUBLICADO en producción
+- **v1.0.36 en producción** (21/05 7:29 AM, "Disponible en Google Play"). Incluye fix IAP #76809.
+- **Monetización (informe Escritorio 21/05):** Google cobra → retiene ~15% → deposita en PayPal AUREX → retiro manual a Santander cta. cte. term. **3568** (1-5 días, USD→ARS). Detalle en `~/Dropbox/AUREX/MAPA DE TRABAJO/DOC_MONETIZACION_ANDROID_PAYPAL.md`.
+- **Pendiente clave:** validar **compra IAP real** en v1.0.36 (cuenta real, refund 48h Play Console). Fernando gestionando TC + autorización del banco.
+- Futuro (#90): nombre cuenta dev "AUREX AI"→"AUREX LIVE" + fix edge-to-edge.
+
+### 🍎 iOS — Build 17 EN REVISIÓN activa
+- Build 17 (v1.0.17) **en revisión** de Apple (resubmit del 21/05 que había estado 6 días colgado, ya destrabado). Manual Release ON.
+- Build 32 (v1.0·32) **preparado** (IPA exportado) → subir a TestFlight apenas Apple responda el Build 17.
 
 ---
 
