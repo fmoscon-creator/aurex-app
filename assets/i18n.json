@@ -364,7 +364,9 @@
     "b5_chip_gdelt_label": "GDELT Geopolitics",
     "b5_chip_gdelt_tip": "GDELT — global geopolitical events feed cross-referenced per asset.",
     "chip_hint": "Tap each variable to see what it measures ⓘ",
-    "scroll_hint": "Swipe"
+    "scroll_hint": "Swipe",
+    "b4_h2_a": "350+ assets. 9 instrument types.",
+    "b4_h2_b": "One terminal."
   },
   "es": {
     "nav_features": "Características",
@@ -716,7 +718,9 @@
     "b5_chip_gdelt_label": "GDELT Geopolítica",
     "b5_chip_gdelt_tip": "GDELT — feed de eventos geopolíticos globales cruzados por activo.",
     "chip_hint": "Tocá cada variable para ver qué mide ⓘ",
-    "scroll_hint": "Deslizá"
+    "scroll_hint": "Deslizá",
+    "b4_h2_a": "350+ activos. 9 tipos de instrumentos.",
+    "b4_h2_b": "Una terminal."
   },
   "pt": {
     "nav_features": "Recursos",
@@ -1068,7 +1072,9 @@
     "b5_chip_gdelt_label": "GDELT Geopolítica",
     "b5_chip_gdelt_tip": "GDELT — feed de eventos geopolíticos globais cruzados por ativo.",
     "chip_hint": "Toque cada variável para ver o que ela mede ⓘ",
-    "scroll_hint": "Deslize"
+    "scroll_hint": "Deslize",
+    "b4_h2_a": "350+ ativos. 9 tipos de instrumento.",
+    "b4_h2_b": "Um terminal."
   },
   "zh": {
     "nav_features": "功能",
@@ -1420,7 +1426,9 @@
     "b5_chip_gdelt_label": "GDELT 地缘政治",
     "b5_chip_gdelt_tip": "GDELT — 全球地缘政治事件源,按资产交叉引用。",
     "chip_hint": "点击每个变量查看其含义 ⓘ",
-    "scroll_hint": "滑动查看"
+    "scroll_hint": "滑动查看",
+    "b4_h2_a": "350+ 种资产。9种工具类型。",
+    "b4_h2_b": "一个终端。"
   },
   "fr": {
     "nav_features": "Fonctionnalités",
@@ -1772,7 +1780,9 @@
     "b5_chip_gdelt_label": "GDELT Géopolitique",
     "b5_chip_gdelt_tip": "GDELT — flux d'événements géopolitiques mondiaux croisés par actif.",
     "chip_hint": "Touchez chaque variable pour voir ce qu'elle mesure ⓘ",
-    "scroll_hint": "Faites glisser"
+    "scroll_hint": "Faites glisser",
+    "b4_h2_a": "350+ actifs. 9 types d'instruments.",
+    "b4_h2_b": "Un terminal."
   },
   "it": {
     "nav_features": "Funzioni",
@@ -2124,7 +2134,9 @@
     "b5_chip_gdelt_label": "GDELT Geopolitica",
     "b5_chip_gdelt_tip": "GDELT — feed di eventi geopolitici globali incrociati per asset.",
     "chip_hint": "Tocca ogni variabile per vedere cosa misura ⓘ",
-    "scroll_hint": "Scorri"
+    "scroll_hint": "Scorri",
+    "b4_h2_a": "350+ asset. 9 tipi di strumenti.",
+    "b4_h2_b": "Un terminale."
   },
   "hi": {
     "nav_features": "विशेषताएँ",
@@ -2476,7 +2488,9 @@
     "b5_chip_gdelt_label": "GDELT भू-राजनीति",
     "b5_chip_gdelt_tip": "GDELT — वैश्विक भू-राजनीतिक घटना फ़ीड, संपत्ति के अनुसार।",
     "chip_hint": "प्रत्येक चर पर टैप करें ⓘ",
-    "scroll_hint": "स्वाइप करें"
+    "scroll_hint": "स्वाइप करें",
+    "b4_h2_a": "350+ एसेट्स। 9 इंस्ट्रूमेंट प्रकार।",
+    "b4_h2_b": "एक टर्मिनल।"
   },
   "ar": {
     "nav_features": "الميزات",
@@ -2828,6 +2842,8 @@
     "b5_chip_gdelt_label": "GDELT جيوسياسة",
     "b5_chip_gdelt_tip": "GDELT — تغذية الأحداث الجيوسياسية العالمية، مرجعية حسب الأصل.",
     "chip_hint": "انقر على كل متغير لرؤية ما يقيس ⓘ",
-    "scroll_hint": "اسحب"
+    "scroll_hint": "اسحب",
+    "b4_h2_a": "350+ أصلًا. 9 أنواع أدوات.",
+    "b4_h2_b": "محطة واحدة."
   }
 }
