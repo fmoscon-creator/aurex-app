@@ -197,6 +197,19 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 **Implicancia estratégica:** (a) defender con el dominio = repetir lo que ya falló; (b) el ángulo nuevo defendible es **coexistencia fáctica + rubro distinto** (ellos GRC empresarial / nosotros mercados consumer) + ninguno con trademark; (c) salida segura = nombre con raíz distintiva al estilo de las que SÍ pasan, pesando la consistencia con **Android (ya publicado como AUREX y aprobado por Google — el conflicto es SOLO de Apple)**. Recordar §2.6: Build 17 NO va a producción → no quemar la cuenta a reply tras reply; resolver la marca de fondo ANTES de Build 25.
 
+### 2.4-quater ✅ DATOS VERIFICADOS para la reply + plan de nombre (22/05, Code vía iTunes Lookup/Search API)
+
+**Decisión de marca (a confirmar Fernando):** App Store name **"AUREX LIVE" (con espacio) → "AurexLive" (pegado)**, replicando el patrón de las apps "Aurex+sufijo" que Apple SÍ aprueba. Pegado + reply de coexistencia es la jugada de mayor probabilidad y **no requiere documentación legal** (clave: no hay trademark ni empresa constituida — eso NO se escribe acá, ver memoria local privada).
+
+**Precedentes a citar en la reply (verificados activos HOY, con nombre/categoría/fecha exactos):**
+- **AurexNova** — developer *Delfina Pazia* — categoría **Finance** (mismo rubro nuestro) — App Store `id6771328873` — última versión publicada **20-may-2026** (2 días antes del rechazo). *El precedente más fuerte: Apple aprobó una "Aurex+sufijo" en Finance esta misma semana.*
+- **AurexPro** — developer *AUREXPRO LLC* — categoría **Business** — **v6.27** (app madura, desde antes de ene-2026). *Precedente establecido/de larga data.*
+- Contraparte: **"Aurex: AI GRC & Analytics"** — *Beinex Consulting Private Limited* — Business/GRC — v4.2.5 (rel 10-abr-2026). Es el developer que Apple protege; usa "Aurex" como **palabra suelta** → "AurexLive" es MÁS distintivo que su propio nombre.
+
+**NO hacer (corregido en consenso):** NO pedirle a Apple "qué documentación adicional necesitan" — si piden titularidad legal no hay nada que entregar, empeora el caso.
+
+**Pendiente al confirmar Fernando:** (1) texto exacto de la reply (coexistencia: citar AurexNova/Finance + AurexPro/Business con datos de arriba + rubro distinto); (2) plan de cambio "AurexLive" en las 12 superficies de App Store Connect; (3) consistencia futura del display name en `ios/AurexApp/Info.plist` para Build 25.
+
 ### 2.5 Riesgos abiertos
 
 | Riesgo | Probabilidad | Mitigación |
