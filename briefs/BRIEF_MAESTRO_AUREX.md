@@ -2,8 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 22-may-2026 AR (madrugada) — **🟢 PWA: "INVEST AI" eliminado + auditoría de paridad PWA↔nativa (consenso Code+Escritorio) + GATING #1 (Portfolio/Watchlist) EN PRODUCCIÓN · Landing definitiva · Android Build 36 publicado · 🔴 iOS Build 17 RE-RECHAZADO 22/05 (4.1c marca AUREX vs aurex.ai — ver §2.4-bis)**
-> **Cierre de sesión 22-may:** Ver **§1.d CIERRE 22-MAY** (PWA + auditoría + gating #1). Documentos: `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
+> **Última actualización:** 22-may-2026 AR (TARDE) — **🟢 iOS Build 33 "AurexLive" ENVIADO a revisión de Apple (22/05 12:53 AR · submission `e0e7fb35` · estado "Pendiente de revisión")**. Estrategia: rebrand de grafía **"AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS + **reply de coexistencia** (AurexNova/AurexPro conviven; aurex.ai = Beinex GRC, otro rubro). Ver **§1.e** + **§2.4-septies/octies**. · PWA: "INVEST AI" eliminado + auditoría de paridad + GATING #1 en producción · Landing definitiva · Android Build 36 publicado (intacto como "AUREX").
+> **Cierre de sesión 22-may (TARDE):** Ver **§1.e CIERRE 22-MAY (TARDE) — Build 33 ENVIADO**. Cierre madrugada (PWA): **§1.d**. Documentos: `briefs/PLAN_APPLE_AUREXLIVE_REPLY_22MAY.md` · `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
 > **Última actualización significativa previa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto landing/SEO). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
@@ -22,8 +22,8 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🔴 **RE-RECHAZADO 22/05 (2° rechazo)** — Apple respondió al resubmit del 21/05 y **volvió a rechazar por Guideline 4.1(c) Copycats**, citando que el nombre pertenece al developer **www.aurex.ai**. El argumento "dominio propio aurex.live + AUREX LIVE" + PDF Namecheap **NO alcanzó**. Ahora el conflicto es la **raíz "AUREX"**, no la palabra "AI". Ver cronología §2.2 + análisis §2.4-bis | **Decisión estratégica de marca con Fernando + Escritorio** (no improvisar reply). Opciones: diferenciar nombre / carta de no-objeción de aurex.ai / registrar trademark / apelar al App Review Board | Decisión Fernando |
-| 🍎 **iOS Build 32 (v1.0 · 32)** | 🟢 **EN TESTFLIGHT — validado** (Fernando confirma 22-may; el brief antes decía "preparado para subir", desactualizado). ⚠️ OJO: Build 32 se compiló con `CFBundleDisplayName = "AUREX"` → en TestFlight muestra "AUREX" bajo el ícono, NO "AurexLive". Para "AurexLive" en el binario hay que editar Info.plist + re-archivar (Build 33). | Decidir: ¿pelear marca con Build 17/32 (display "AUREX") o re-archivar con "AurexLive"? Ver §2.4-quinquies | Decisión Fernando |
+| 🍎 **Apple iOS — Build 33 "AurexLive"** | 🟢 **ENVIADO a revisión Apple 22/05 12:53 AR** (submission `e0e7fb35-11a4-4c1d-854c-60a80c4799e6`, estado **"Pendiente de revisión"**). Responde el 2° rechazo 4.1(c) Copycats con **rebrand de grafía "AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS (patrón AurexNova/AurexPro que Apple SÍ aprueba) + **reply de coexistencia** (aurex.ai = Beinex GRC, rubro distinto; sin reclamar trademark) + PDF Namecheap. Build 33 = Build 32 + `CFBundleDisplayName=AurexLive` + headers internos iOS condicionales. Ver §1.e + §2.4-septies/octies | **Esperar respuesta Apple (24-48h)**. Manual Release **OFF** (no se publica solo si aprueba). Si **aprueba** → evaluar rebrand de coherencia total (Android+web+headers, §3.5). Si **re-rechaza** citando contenido interno → rebrand headers/onboarding o escalar a App Review Board | Apple (en review) |
+| 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
 | 🤖 **Android Build 36 (v1.0.36)** | 🟢 **APROBADO + PUBLICADO en PRODUCCIÓN** (21 may 7:29 AM — "Disponible en Google Play", usuarios reciben la actualización). v1.0.36 = nueva producción pública. Incluye fix IAP #76809 | **Validar compra IAP REAL en producción** (cuenta real, refund 48h) — confirmar que el fix funciona. #90 (futuro): nombre cuenta dev + edge-to-edge | — |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
 | ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
@@ -126,6 +126,50 @@ Ahora que la landing manda tráfico a la PWA, actualizarla es prioritario:
 4. Telegram conectar + Mis Alertas historial + umbrales editables (#5).
 5. Menores + imágenes onboarding (#6).
 Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCIÓN.
+
+---
+
+## 1.e CIERRE 22-MAY (TARDE) — 🍎 iOS Build 33 "AurexLive" ENVIADO a revisión de Apple
+
+> **Hito del día.** Tras dos rechazos por Guideline 4.1(c) Copycats, se envió a Apple la versión **1.0 (33) "AurexLive"**. Cualquier chat nuevo: esto es lo último que pasó en iOS.
+
+### ✅ RESULTADO
+- **ENVIADO a revisión: 22-may-2026, 12:53 AR.**
+- **Submission ID:** `e0e7fb35-11a4-4c1d-854c-60a80c4799e6`.
+- **Estado:** "Pendiente de revisión" (en cola de Apple).
+- **Publicación:** **MANUAL** (si Apple aprueba, NO se publica solo; lo decide Fernando).
+- Las **4 suscripciones** (grupo AUREX PLANES, ID 22018005) van **en cola con la versión** ("Pendiente de revisión").
+
+### 🎯 LA ESTRATEGIA (por qué "AurexLive")
+El 2° rechazo (22/05) ya no objetaba la palabra "AI" sino la **raíz "AUREX"**, citando a **www.aurex.ai = Beinex Consulting** (developer real con app GRC empresarial en el App Store). El argumento "dominio propio aurex.live + AUREX LIVE" del 1er intento **no alcanzó**. Verificamos vía iTunes API que **conviven varias "Aurex" aprobadas** (AurexNova/Finance, AurexPro/Business) usando **raíz + sufijo pegado**. → Jugada elegida (consenso Code+Escritorio, OK Fernando):
+1. **Rebrand de grafía SOLO en iOS:** "AUREX LIVE" (con espacio) → **"AurexLive"** (pegado, una palabra, como las que Apple SÍ aprueba). NO es rebrand de identidad.
+2. **Reply de coexistencia fáctica** (en inglés): cita AurexNova (Apple ID 6771328873, Finance) + AurexPro (Business) como precedentes; aurex.ai = Beinex GRC empresarial vs AurexLive = mercados consumer (rubros distintos, sin confusión); marca derivada del dominio propio aurex.live (Namecheap, 3-abr-2026). **SIN reclamar trademark** (no hay) y **SIN pedirle documentación a Apple**.
+3. **Android NO se toca** (queda como "AUREX", publicado y aprobado por Google — el conflicto es solo de Apple).
+
+### 🛠️ QUÉ SE HIZO HOY (ejecución)
+- **Build 33 compilado limpio** (rm DerivedData + ios/build + Metro + `pod install`) → IPA validado (CFBundleDisplayName=AurexLive, CFBundleVersion=33, ShortVersion=1.0, signing `com.fernandomoscon.aurex`/TX7C2F79U9) → **subido a TestFlight** (Transporter, ícono dorado OK).
+- **Metadata App Store Connect → "AurexLive"**: App Name, Descripción (7 ocurrencias incl. "AurexLive Pulse/engine"), grupo de suscripciones ("Nombre de la app" = AurexLive), Privacy Policy URL → `aurex.live/docs/privacy-ios.html`.
+- **`docs/privacy-ios.html` + `docs/terms-ios.html`** en repo landing = copia EXACTA de las Android + solo "AUREX"→"AurexLive" (CSS original, sin tocar las de Android).
+- **Reply de coexistencia** pegada y **enviada en el hilo** de revisión + **PDF Namecheap** adjunto en App Review Information.
+- **Manual Release OFF.**
+
+### 🧩 OBSTÁCULOS DEL DÍA (resueltos) — para no repetirlos
+1. **"Fondo blanco" en las páginas legales (Safari):** NO era el código — era el **Modo Lector (Reader) de Safari** auto-activado para aurex.live (botón "Resumir" lo delataba). Se resolvió desactivando *Safari → Ajustes → Sitios web → Lector → aurex.live → Desactivado*. El CSS estuvo siempre bien. (Code perdió tiempo tocando CSS + tocó sin querer las páginas de Android → revertido; lección: **diagnosticar antes de editar, no tocar lo no pedido**.)
+2. **"Se ha producido un error inesperado al enviar a revisión":** era un **glitch temporal del servidor de Apple**, NO las suscripciones. **Se destrabó solo** al rato (el 2° aviso de error desapareció). Las 4 suscripciones estaban OK (en cola, con captura; la sección "Compras dentro de la app y suscripciones" no aparece en la página de versión justamente porque ya están adjuntadas/en cola).
+3. **El campo "Notas" (Review Notes) de la VERSIÓN tenía el texto VIEJO** ("AUREX LIVE" separado + nombre previo "AUREX AI", sin coexistencia) — distinto del reply correcto del hilo. Lo detectó **Fernando**. Se reemplazó por el texto bueno (mismo del hilo) + Guardar.
+4. **El re-envío tras rechazo es de 2 PASOS** (dato clave para el futuro):
+   - **Paso A — "Actualizar revisión"** (botón azul en la página de la VERSIÓN): guarda y deja el elemento en **"Listo para revisión"**. NO es el envío final.
+   - **Paso B — "Volver a enviar a revisión de apps"** (botón azul en la página del ENVÍO/submission): **este es el envío final real**. Antes estaba gris (elemento "Rechazado"); se habilitó al quedar "Listo para revisión".
+   - **El clic final (Paso B) lo dio FERNANDO**, no Escritorio (regla reforzada abajo).
+
+### 📌 REGLA REFORZADA (incidente del día)
+**El botón que ENVÍA a Apple a revisión lo aprieta ÚNICAMENTE Fernando**, tras revisión conjunta con Code. Escritorio deja todo preparado y avisa, pero **NO toca ese botón** (hoy lo apretó sin OK y, aunque el glitch lo frenó, no debía). Ver [[feedback_escritorio_no_actua_solo]].
+
+### 🌅 PRÓXIMO (iOS)
+- **Esperar respuesta de Apple** (típico 24-48h). Llega al hilo de mensajes + mail. NO tocar "Cancelar envío".
+- Si **aprueba "AurexLive"** → recién ahí se evalúa el **rebrand de coherencia total** (Android + web + headers internos compartidos), ver §3.5 + §2.4-quinquies(D).
+- Si **re-rechaza** con el mismo boilerplate → escalar a **App Review Board** (con el historial de coexistencia ya documentado) y/o rebrand de los frentes que dejamos sin tocar (headers internos 8 pantallas, onboarding, capturas).
+- **Frentes que se dejaron SIN tocar a propósito** (no fueron objetados en ningún rechazo; alto costo manual): imágenes de **Onboarding** con "AUREX" incrustado + las **10 capturas** de la ficha (las saca Fernando del iPhone). Se rehacen SOLO si Apple los objeta.
 
 ---
 
@@ -269,9 +313,11 @@ Escritorio reportó el 22/05 que "Compras dentro de la app" y "Suscripciones" se
 
 **Implicancia para Build 33 (paso real, que Escritorio acertó):** como las suscripciones estaban adjuntas a Build 17 para su primera review y Build 17 fue rechazado, **al enviar Build 33 hay que SELECCIONAR las 4 suscripciones en la sección "Compras dentro de la app y suscripciones" de la página de esa versión, antes de mandarla a revisión.** Eso es proceso normal de primera review, no un producto faltante. **No es bloqueante** del Paso 1 (Build 33 como validación de marca, Manual Release OFF, no se cobra).
 
-### 2.4-septies ✅ ESTADO DE EJECUCIÓN — Build 33 "AurexLive" (22-may madrugada, Code)
+### 2.4-septies ✅ EJECUTADO Y ENVIADO — Build 33 "AurexLive" (22-may, Code) → desenlace en §1.e
 
-**CÓDIGO APLICADO en `~/AurexApp` local (SIN commit/push todavía — ver ⚠️ remoto):**
+> **Resultado:** Build 33 compilado + validado + en TestFlight + metadata "AurexLive" + reply de coexistencia → **ENVIADO a revisión Apple 22/05 12:53** (submission `e0e7fb35`, "Pendiente de revisión"). La crónica del envío (obstáculos y flujo de 2 pasos) está en **§1.e**.
+
+**CÓDIGO APLICADO en `~/AurexApp` local (compilado y enviado; commit/reconciliación del remoto = PENDIENTE, ver ⚠️):**
 - `src/lib/brand.js` (nuevo): `BRAND_NAME` = AurexLive(iOS)/AUREX(Android), `PRIVACY_URL`/`TERMS_URL` (-ios en iOS), `IS_IOS`.
 - `ios/AurexApp/Info.plist`: `CFBundleDisplayName` AUREX → **AurexLive**.
 - **9 pantallas**: header → `{BRAND_NAME}` (Login, Signup, Portfolio, Mercados, Watchlist, IA, MisAlertas, Perfil, Alertas).
@@ -282,17 +328,17 @@ Escritorio reportó el 22/05 que "Compras dentro de la app" y "Suscripciones" se
 - **Validado en simulador iOS**: IA, Portfolio, Mercados, Watchlist OK ("AurexLive" entra, sin balanza, • LIVE, campana completa).
 - `docs/privacy-ios.html` + `docs/terms-ios.html` creados en repo landing (SIN push).
 
-**Build 33:** bump `CURRENT_PROJECT_VERSION` 32→33 (`MARKETING_VERSION`=1.0 intacto). Clean completo (DerivedData + ios/build + Metro + caché) + `pod install`. Archive compilando vía CLI → IPA irá a `backups/ipa/Build33/`.
+**Build 33:** bump `CURRENT_PROJECT_VERSION` 32→33 (`MARKETING_VERSION`=1.0 intacto). Clean completo (DerivedData + ios/build + Metro + caché) + `pod install` + Archive vía CLI → **IPA validado en `~/AurexApp/backups/ipa/Build33/AurexApp.ipa`** (CFBundleDisplayName=AurexLive · CFBundleVersion=33 · ShortVersion=1.0 · signing `com.fernandomoscon.aurex`/TX7C2F79U9) → **subido a TestFlight + metadata + reply ENVIADOS a revisión 22/05 12:53** (§1.e).
 
 **⚠️ REMOTO `github.com/fmoscon-creator/AurexApp` CONTAMINADO:** Escritorio commiteó cambios sobre código VIEJO (pre-Build32). **NO hacer `git pull` en el local.** Compilar desde local. Reconciliar después (local = fuente de verdad). Ver [[feedback_nunca_simultaneo_github_code_escritorio]].
 
-### 2.4-octies 📋 PENDIENTES — MAÑANA (quién / cómo)
+### 2.4-octies 📋 ESTADO DE LOS PASOS (actualizado 22-may TARDE)
 
-1. **Subir Build 33 a TestFlight** — *Fernando* (Transporter). IPA en `~/AurexApp/backups/ipa/Build33/AurexApp.ipa` (Code lo deja validado). Vigilar síntomas STOP (logo dorado, nombre OK, "1.0 (33)", botón Entregar azul). Luego asignar grupo Internal Testing manual.
-2. **Pasos en App Store Connect** — *Fernando ejecuta, Escritorio guía paso a paso (NO solo)*: metadata 12 superficies → "AurexLive"; Privacy Policy URL → `aurex.live/docs/privacy-ios.html`; adjuntar las 4 suscripciones (grupo 22018005) a la versión; pegar reply de coexistencia + PDF Namecheap; **Manual Release OFF**; reenviar a revisión.
-3. **Push de `privacy-ios.html`/`terms-ios.html`** al repo landing — *Code (con OK Fernando)* → para que las URLs funcionen en aurex.live.
-4. **Commit del código nativo + reconciliar remoto AurexApp** — *Code (con OK Fernando)*, con cuidado (local = fuente de verdad, NO pull).
-5. **Validar Build 33 en iPhone** (TestFlight) — *Fernando*: que diga "AurexLive", headers sin balanza/timer, todo funcione.
+1. ✅ **Build 33 a TestFlight** — HECHO (Transporter, ícono dorado OK, "1.0 (33)").
+2. ✅ **Pasos en App Store Connect** — HECHO: metadata → "AurexLive" (App Name, Descripción, grupo de suscripciones), Privacy URL → `aurex.live/docs/privacy-ios.html`, reply de coexistencia + PDF Namecheap, **Manual Release OFF**, **enviado a revisión 12:53** (las 4 suscripciones van en cola con la versión, no había que re-adjuntarlas). Crónica en §1.e.
+3. ✅ **`privacy-ios.html` / `terms-ios.html`** pusheados al repo landing (commit `fe50850`) → URLs vivas en aurex.live.
+4. ⏳ **Commit del código nativo + reconciliar remoto `AurexApp`** — PENDIENTE (local = fuente de verdad, NO `git pull`; el remoto quedó contaminado por Escritorio con código viejo, ver §2.4-septies ⚠️).
+5. ⏳ **Validar Build 33 en iPhone (TestFlight)** — Fernando ya lo ve como "1.0 (33) AurexLive"; validación funcional fina (headers sin balanza/timer, todo OK) pendiente.
 
 ### 2.5 Riesgos abiertos
 
@@ -637,21 +683,26 @@ Cuando todo Landing v3 esté OK doble (Fernando + Escritorio):
 
 ---
 
-## 7. PWA aurex.live (estado fase 0)
+## 7. PWA aurex.live `/app/` — paridad con la nativa EN CURSO (colgado con avance, faltan pasos)
 
-- Live actualmente en aurex.live, fase 0 reorg ejecutada (commit `0243a53` del 16-may): PWA movida a `/app/` + landing nueva en root.
-- Cuando landing v3 reemplace la actual, la PWA queda en `/app/`.
-- Brief reorg: `~/Desktop/aurex-app/briefs/PLAN_FASE0_REORG_REPO_v1_16MAY.md` (en archive — ya ejecutado).
+> **Estado 22-may:** la PWA está live en `aurex.live/app/`, recibe tráfico desde la landing. Hay una **auditoría de paridad completa (código de las 6 tabs)** y el **primer gating en producción**. **Quedó con avance pero MUCHOS pasos por terminar** para igualar a la nativa actual (Android 1.0.36 / iOS Build 33).
 
-### 7.1 Paridad pendiente PWA vs nativa (gap acumulado 26-abr → 14-may)
+### 7.1 Lo HECHO (22-may, en producción)
+- **"INVEST AI" eliminado** (splash + login) → "TERMINAL DE MERCADOS" (texto de marca prohibido que Google levantaba).
+- **Arranque en tema OSCURO** por defecto (validar propagación de cache, #91).
+- **Auditoría de paridad PWA↔nativa** de las 6 tabs (consenso Code+Escritorio) → `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + `briefs/AUDITORIA_PARIDAD_PWA_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
+- **🔴 GATING #1 EN PRODUCCIÓN** (commit `bf3bac7`): Portfolio (FREE máx 5) + Watchlist (FREE máx 10) ahora llaman `checkPlanLimit`/`showPaywall`. **Hallazgo central:** la PWA YA tenía toda la infra de gating (`PLAN_LIMITS_CLIENT`, `checkPlanLimit`, `showPaywall`) pero llamada **0 veces** → el trabajo es **cablear, no construir**.
 
-- Push notifications.
-- Telegram real.
-- Cómo usar AUREX (tutorial).
-- Sistema alertas completo.
-- AppState refresh.
+### 7.2 Lo PENDIENTE (en orden — el gran bloque que falta)
+1. **🔴 Gating por plan en TODA la PWA (lo más urgente, es monetización):** falta en **Alertas** (toggles PRO/ELITE), **IA** (detalle de señal: motivos/variables/contexto ocultos por plan + límite 3 señales/día FREE), **Mercados** (Pulse por plan), **Watchlist** (límite de listas). Hoy un FREE ve/usa de más en esas pantallas.
+2. **"Cómo usar AUREX"** en Perfil (bloque guía 6 tabs + Planes; claves i18n `cu_*` ya existen) — gap de contenido más grande.
+3. **Alertas funcional:** canales **Telegram** (validar teléfono → deep-link `/start` → polling `telegram_chat_id`) + **Push** reales + **"Mis Alertas" historial** (`alertas_historial`, leídas/borrar, badge, BellButton) + umbrales editables por alerta.
+4. **IA:** botones header 🔔/⚖️ + sub-direcciones ALCISTA/BAJISTA + bug `varDefs`.
+5. **Menores:** filtro "Solo favoritos" (Mercados), menú "Ordenar" (Watchlist), mail soporte → `support.aurex.live@gmail.com`, imágenes onboarding.
 
-**Política:** cada vez que se modifica Android nativo, Code DEBE evaluar si aplica a PWA y reportarlo en este brief (regla `feedback_pwa_paridad_android_continua`).
+> Plan de ejecución detallado y priorizado: `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCIÓN. Validación VISUAL de las tabs pendiente (faltó `idb`/Command Line Tools para automatizar el simulador).
+
+**Política permanente:** cada vez que se modifica Android nativo, Code DEBE evaluar si aplica a PWA y reportarlo acá (regla `feedback_pwa_paridad_android_continua`).
 
 ---
 
@@ -688,6 +739,37 @@ Cuando todo Landing v3 esté OK doble (Fernando + Escritorio):
 
 ---
 
+## 8.b FLUJO OFICIAL DE COMPILACIÓN — iOS + Android (+ 🧹 LIMPIEZA OBLIGATORIA)
+
+> **Documento completo y permanente:** `briefs/FLUJO_BUILD_IOS_ANDROID.md` (raw: `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/FLUJO_BUILD_IOS_ANDROID.md`). Acá va el **resumen operativo** para que cualquier chat compile sin releer todo. Nació del incidente Build 25 iOS (errores groseros) — existe para que NO se repitan.
+
+### Roles fijos (NUNCA cambian)
+- **Code:** todo lo técnico — clean, compile, export, **validación de IPA/AAB ANTES de entregar**. NO le pasa un binario a Fernando sin validarlo contra el último build exitoso.
+- **Fernando:** solo **sube** el archivo final (Transporter iOS / Play Console Android) + asigna grupos de testing + **da el clic de "Enviar a revisión"**. NO toca Xcode, NO compila.
+- **Escritorio:** verifica estado en App Store Connect / Play Console + valida lista de cambios Android antes de enviar. NO compila, NO ejecuta en repos privados, **NO toca el botón de envío a revisión**.
+
+### 🧹 PASO 0 — LIMPIEZA OBLIGATORIA (el "tema de la limpieza" que dio error de IAP)
+**Causa raíz del bug IAP Android Build 35** ("product not available for purchase", 3 días perdidos): un **bundle JS cacheado** del build anterior sobrevivió porque NO se limpió antes de compilar. **NUNCA saltear el clean**, sin importar lo que diga un brief o checklist.
+- **Android:** `cd ~/AurexApp/android && ./gradlew clean`
+- **iOS (equivalente exacto):**
+  ```bash
+  rm -rf ~/AurexApp/ios/build/
+  rm -rf ~/Library/Developer/Xcode/DerivedData/AurexApp-*
+  cd ~/AurexApp/ios && pod install
+  ```
+  (+ limpiar caché Metro si quedó proceso vivo). **NO confiar en Pods/Gradle/DerivedData cacheados.** Build 33 iOS se compiló con este clean completo y salió limpio.
+
+### Flujo iOS (TestFlight / App Store)
+1. **Clean** (Paso 0). 2. **Fixes + bump versión + commit**: subir SOLO `CURRENT_PROJECT_VERSION` (32→33…); **`MARKETING_VERSION` = 1.0 SIEMPRE** (cambiarlo a "1.0.25" fue el desastre de Build 25 → Transporter con logo gris + bundleID raw). 3. **Archive + Export IPA vía CLI** (`xcodebuild`, Code; Fernando NO abre Xcode) → backup en `backups/ipa/BuildXX/` (re-compile = sufijo `_v2`,`_v3`, nunca `_fix`). 4. **VALIDACIÓN post-export (CRÍTICO):** `unzip` + comparar `CFBundleDisplayName / Identifier / ShortVersion / Version` contra el último IPA exitoso → la ÚNICA diferencia debe ser `CFBundleVersion`; verificar signing `com.fernandomoscon.aurex`/TX7C2F79U9. Si discrepa otra key → STOP. 5. **Transporter (Fernando)** — síntomas STOP: logo gris, bundleID raw, falta botón Entregar. 6. **Escritorio** confirma procesado (ícono dorado). 7. **Asignar grupo Internal Testing manual** (al subir por CLI NO se auto-asigna). 8. **Validar en iPhone**.
+
+### Flujo Android (Play Store)
+1. **Clean** (`./gradlew clean`). 2. **Fixes + bump** `versionCode` **y** `versionName` (suben juntos) + commit. 3. **`./gradlew bundleRelease`** → AAB firmado → backup en `backups/aab/BuildXX/`. 4. **Escritorio verifica la lista de cambios ANTES** de "Enviar a revisión" (previene mandar cambios no intencionados, como pasó en Build 36 con el track Alpha). 5. **Fernando envía** con OK de Escritorio. 6. **Escritorio verifica estado** (ETA Google 2-24h, hasta 72h).
+
+### Reglas permanentes (resumen)
+Clean SIEMPRE · Backup SIEMPRE antes de subir · Fernando NO toca Xcode · iOS `MARKETING_VERSION`=1.0 fijo · Android versionCode+Name juntos · Code valida IPA post-export · síntomas STOP en Transporter · grupo Internal manual iOS · Escritorio valida lista Android · Code NO aplica versiones del brief literal sin cruzar el historial real de la tienda.
+
+---
+
 ## 9. MAPA DE ARCHIVOS — dónde vive cada cosa
 
 ### 9.1 Repos GitHub (3)
@@ -699,6 +781,8 @@ Cuando todo Landing v3 esté OK doble (Fernando + Escritorio):
 | **aurex-backend** (Node Railway) | `https://github.com/fmoscon-creator/aurex-backend` | 🌐 PÚBLICO | `~/Desktop/aurex-backend` | `main` | Push main → Railway auto-deploy |
 
 **Acceso Escritorio:** repos PÚBLICOS sí. Repo PRIVADO `AurexApp` NO (Code le pega contenido relevante si necesita).
+
+> ⚠️ **Clon local del repo público:** puede recrearse por sesión (este chat trabajó desde un clon temporal, no desde `~/Desktop/aurex-app`, que quedó vacío). **La fuente canónica es GitHub** — si el path local está vacío, clonar de `https://github.com/fmoscon-creator/aurex-app.git` antes de editar.
 
 ### 9.2 Dropbox `~/Dropbox/AUREX/`
 
@@ -754,6 +838,11 @@ Backup espejo: `~/Desktop/aurex-memory-backup/`.
 | Landing v3 benchmark competidores | `BENCHMARK_v2_COMPETIDORES_REALES_17MAY.md` |
 | Respuesta a Escritorio sobre landing | `RESPUESTA_ESCRITORIO_OK_CODEO_17MAY.md` |
 | MKT consolidado v2 | `CONSOLIDADO_MKT_LANDING_v2_16MAY.md` |
+| **Apple — reply coexistencia + plan "AurexLive" (Build 33)** | `PLAN_APPLE_AUREXLIVE_REPLY_22MAY.md` |
+| **Build 33 — diff del rebrand iOS** | `DIFF_BUILD33_AUREXLIVE.md` |
+| **Flujo oficial de compilación iOS + Android** | `FLUJO_BUILD_IOS_ANDROID.md` |
+| **Paridad PWA↔nativa (auditoría 6 tabs)** | `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + `AUDITORIA_PARIDAD_PWA_22MAY.md` |
+| **IAP bug resuelto (rebuild limpio `gradlew clean`)** | `DOC_IAP_BUG_RESUELTO_18may2026.md` |
 
 > Todos los briefs SUPERADOS (v1 cuando hay v2, briefs históricos absorbidos en este maestro) viven en `briefs/archive/`. NO se borran, quedan para auditoría.
 
