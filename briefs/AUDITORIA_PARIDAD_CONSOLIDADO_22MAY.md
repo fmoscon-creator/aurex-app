@@ -44,3 +44,8 @@ Motor IA (mismo backend `/api/ia-signals`, 10 variables) · Termómetro de Riesg
 6. **Menores (#10) + imágenes onboarding (#11).**
 
 **CONSENSO: ✅ Code y Escritorio coinciden. Listo para arrancar por el #1 (gating Portfolio/Watchlist).**
+
+---
+## ESTADO DE EJECUCIÓN
+- **22-may (madrugada AR):** ✅ **Prioridad #1 HECHA y verificada en producción** — gating de plan cableado en Portfolio (FREE máx 5) y Watchlist (FREE máx 10): `_openAddActivoModal` y `wlCreateList` llaman `checkPlanLimit` + `showPaywall`. Test en vivo: FREE+5 activos bloquea con paywall, FREE+2 deja. Commit `bf3bac7`.
+- **PRÓXIMO (mañana 9am AR):** Prioridad #2 — gating de Alertas por tipo (lock visual + bloqueo en `calculateAlerts` para tipos PRO/ELITE: alta_conviccion_ia, cambio_senal, geopolitica_gdelt, etc.). Luego #3 señales/día IA + Pulse, #4 "Cómo usar AUREX", #5 Telegram/Mis Alertas, #6 menores.
