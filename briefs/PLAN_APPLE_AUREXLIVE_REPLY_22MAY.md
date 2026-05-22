@@ -18,7 +18,7 @@ Dear App Review Team,
 
 Thank you for your continued review of submission ID e0e7fb35-11a4-4c1d-854c-60a80c4799e6.
 
-To fully address the Guideline 4.1(c) feedback, we have renamed the app to "AurexLive" — a single, distinctive compound name derived from our own product domain, aurex.live.
+To fully address the Guideline 4.1(c) feedback, we have renamed the app to "AurexLive" — a single, distinctive compound name derived from our own product domain, aurex.live. We have already updated the app name to "AurexLive" across all App Store Connect metadata.
 
 We respectfully note that the root "Aurex" is not exclusive to www.aurex.ai. The App Store currently lists several independent developers using this root, including:
 - "AurexNova" by Delfina Pazia — Finance category (Apple ID 6771328873)
