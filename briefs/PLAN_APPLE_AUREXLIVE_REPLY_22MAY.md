@@ -90,7 +90,7 @@ Apple Developer Team ID: TX7C2F79U9
 | 2 | Nombre bajo el ícono | `ios/AurexApp/Info.plist` → `CFBundleDisplayName` | "AUREX" → **AurexLive** | No (Info.plist iOS-only) |
 | 3 | Headers internos (8 pantallas) | código RN compartido (`Login/Portfolio/Mercados/Watchlist/IA/MisAlertas/Perfil/Signup`) | **`Platform.OS==='ios' ? 'AurexLive' : 'AUREX'`** → iOS muestra AurexLive, Android queda igual | No (Android no se recompila) |
 | 4 | Privacidad / Términos | `docs/*.html` | crear **`/docs/privacy-ios.html` + `/docs/terms-ios.html`** con "AurexLive"; apuntar ahí: campo Privacy Policy URL de ASC + link interno iOS (`Platform.OS`). Android sigue con `/docs/privacy.html` | No (Android usa los originales) |
-| 5 | Capturas de la ficha (10 screenshots) | App Store Connect (metadata) | **regenerar** del Build 33 ya compilado (headers AurexLive) y reemplazar. *(Punto de Escritorio — visible en la ficha ANTES de instalar.)* | No (metadata iOS) |
+| 5 | Capturas de la ficha (10 screenshots) | App Store Connect (metadata) | **NO se tocan en Paso 1.** Las saca FERNANDO desde su iPhone (no son generables por Code/Escritorio) y subirlas dio errores. Apple objeta el nombre, NO las capturas; ningún rechazo previo las mencionó. Se regeneran del Build 33 SOLO si Apple las objeta. | No |
 | 6 | Grupo + nombres de suscripción | App Store Connect (#8) | → AurexLive (**opcional**, cosmético) | No |
 | 7 | Ícono | binario | **DECISIÓN Fernando 22-may: mantener el logo SIN texto/marca dentro (solo el símbolo "A" dorada), tal cual Build 32. NO se agrega "AurexLive" al ícono** (el nombre ya aparece debajo vía CFBundleDisplayName; HIG de Apple desaconseja texto en el ícono). No se toca. | — |
 | 8 | Reply + PDF | App Store Connect → App Review Notes | pegar reply de coexistencia (Parte A) + PDF Namecheap | No |
@@ -99,8 +99,10 @@ Apple Developer Team ID: TX7C2F79U9
 
 **Resultado:** el binario y la ficha de iOS quedan **100% "AurexLive"** (nombre, headers, privacy, capturas) **sin tocar Android** (que queda en "AUREX", intacto, sin revisión de Google).
 
-### ÚNICO frente que NO se cubre así (decisión aparte)
-- **Onboarding** (`OnboardingScreen.js`, imágenes `src/assets/onboarding/v2/` — OBS1 "AUREX", OBS2 "DISCOVER AUREX", OBS3 "WHY AUREX"): el "AUREX" está **incrustado en las imágenes** (no es texto ni URL), y son compartidas iOS+Android. Es lo PRIMERO que ve el reviewer. Opciones: (a) **aceptar el riesgo** en el 1er intento (es contenido interno, no el nombre que objeta 4.1c) y regenerar solo si Apple lo objeta; (b) **generar un set de imágenes iOS** con "AurexLive" (lo más caro). Recomendación Code+Escritorio: **(a)** para el primer intento.
+### Frentes que NO se tocan en el Paso 1 (se dejan para SI Apple los objeta)
+Ambos son contenido visible pero NO el nombre que objeta el 4.1(c); ninguno fue mencionado en los 2 rechazos previos. Costo de rehacerlos = alto y manual. Decisión Code+Escritorio+Fernando: **dejarlos en el 1er intento.**
+- **Onboarding** (`OnboardingScreen.js`, imágenes `src/assets/onboarding/v2/` — OBS1 "AUREX", OBS2 "DISCOVER AUREX", OBS3 "WHY AUREX"): "AUREX" **incrustado en las imágenes** (no texto ni URL), compartidas iOS+Android. Si Apple lo objeta → regenerar set de imágenes iOS.
+- **Capturas de la ficha (10 screenshots)**: muestran "AUREX" en los headers. **Las saca Fernando desde su iPhone** (no automatizable; subirlas dio errores). Si Apple las objeta → Fernando captura del Build 33 instalado y reemplaza.
 
 ## SI APPLE RESPONDE
 - **Aprueba "AurexLive"** → recién ahí se decide el rebrand del resto (headers compartidos + privacy/terms + Android + web) para coherencia total. Ver brief §3.5 + §2.4-quinquies(D).
