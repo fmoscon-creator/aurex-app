@@ -241,6 +241,22 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 5. Si Apple **rechaza otra vez citando el contenido interno** (improbable según el texto del 4.1c) → recién ahí el rebrand transversal (8 pantallas + i18n).
 **Principio: NO mutilar la marca "AUREX" (ya aprobada en Google Play + web) por las dudas, antes de saber si Apple cede al cambio de nombre.** Decisión final = Fernando.
 
+### 2.4-sexies ✅ IAP iOS — LOS 4 PRODUCTOS EXISTEN (triple confirmación 22/05). Falso bloqueante de Escritorio aclarado.
+
+Escritorio reportó el 22/05 que "Compras dentro de la app" y "Suscripciones" se ven vacías en App Store Connect → **es un error de DÓNDE miró, NO faltan productos.** Confirmado por **3 fuentes coincidentes** (documento propio de Fernando + memoria verificada por Escritorio el 14-may + `docs/SUSCRIPCIONES.md` source-of-truth):
+- Grupo **AUREX PLANES — Group ID 22018005**
+- PRO Mensual `com.fernandomoscon.aurex.pro.monthly` — Apple ID **6761736879** — RC iOS `prodcd14c3e521` — nivel 1 — $9.99
+- PRO Anual `...pro.annual` — Apple ID **6761794509** — nivel 2 — $89.99
+- ELITE Mensual `...elite.monthly2` — Apple ID **6761796966** — nivel 3 — $19.99
+- ELITE Anual `...elite.annual` — Apple ID **6761798180** — nivel 4 — $179.99
+- Estado: **Pendiente de revisión** (estaban en queue junto con Build 17).
+
+**Por qué Escritorio los ve "vacíos":** (1) son **suscripciones auto-renovables** → NO aparecen en "Compras dentro de la app" (sección de consumibles), viven en **Suscripciones**; (2) el banner "Tu primera compra debe enviarse con una versión nueva… selecciónala en la página de la versión" es el aviso de la **página de la VERSIÓN** = los IAP nunca pasaron su primera review (pending), hay que adjuntarlos a una versión antes de enviar.
+
+**Dónde verificar (Escritorio):** Monetización → **Suscripciones** → grupo "AUREX PLANES" (Group ID 22018005) / buscar los Apple IDs.
+
+**Implicancia para Build 33 (paso real, que Escritorio acertó):** como las suscripciones estaban adjuntas a Build 17 para su primera review y Build 17 fue rechazado, **al enviar Build 33 hay que SELECCIONAR las 4 suscripciones en la sección "Compras dentro de la app y suscripciones" de la página de esa versión, antes de mandarla a revisión.** Eso es proceso normal de primera review, no un producto faltante. **No es bloqueante** del Paso 1 (Build 33 como validación de marca, Manual Release OFF, no se cobra).
+
 ### 2.5 Riesgos abiertos
 
 | Riesgo | Probabilidad | Mitigación |
