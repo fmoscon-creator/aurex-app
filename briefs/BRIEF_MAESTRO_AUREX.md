@@ -346,6 +346,19 @@ Cuando llegue el momento de compilar Build 25 iOS (después de Apple aprobar Bui
 
 Bug que bloqueaba registro de usuarios nuevos Android (onboarding slide 4 cableado a LoginScreen sin SignupScreen). **RESUELTO en Build 21** y consolidado en Build 33 producción. Histórico.
 
+### 3.5 🔵 (CONDICIONAL) Cambiar nombre Android "AUREX" → "AurexLive" — SOLO si iOS aprueba AurexLive
+
+> **Estado: Build 36 (v1.0.36) está AUTORIZADO y PUBLICADO en producción Google Play.** Android NO tiene el problema 4.1c de Apple (Google ya aprobó). Esto es **solo por consistencia de marca**, a evaluar **únicamente si Apple termina aceptando "AurexLive"** en iOS (ver §2.4-bis/ter/quater). NO ejecutar ahora.
+
+**¿Es posible / complejo? — verificado en el código real (`~/AurexApp`, 22-may):**
+- **Nombre en la ficha de Google Play (lo que se ve en el listing de la tienda):** campo de texto editable en Play Console. Se sube como **metadata, NO requiere nuevo AAB**; revisión Google en horas/días.
+- **Nombre debajo del ícono (en el teléfono):** sale de `app_name` en `android/app/src/main/res/values/strings.xml` → **hoy = `AUREX`**. Cambiarlo a "AurexLive" requiere editar esa línea + bump `versionCode` + **nuevo build + revisión Google**. Simple (1 línea + build menor), no es proceso desde cero.
+- **`applicationId` / `namespace` = `com.aurexapp`** → **PERMANENTE, NO cambia** (no tiene relación con el nombre visible). *(Verificado: Escritorio tenía razón; ⚠️ NO confundir con el bundle ID de iOS, que es `com.fernandomoscon.aurex`.)*
+
+**Cruz con iOS (dato verificado):** el `CFBundleDisplayName` en `ios/AurexApp/Info.plist` hoy dice **`AUREX`** (no "AUREX LIVE"). Si se decide "AurexLive", ese es el valor a poner en iOS Build 25 (ya estaba como pendiente en §2.7) y en Android `strings.xml` — para que las 3 superficies (Play, App Store, ícono) queden consistentes.
+
+**Decisión: evaluar a fondo SOLO tras superar el rechazo iOS. Por ahora queda documentado, sin tocar Android (producción estable).**
+
 ---
 
 ## 4. IAP / REVENUECAT — Bug P0 ticket #76809
