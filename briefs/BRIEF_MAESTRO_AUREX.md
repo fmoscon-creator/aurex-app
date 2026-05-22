@@ -233,6 +233,14 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 **Code (C) ya confirmó que cualquier re-archivo NO toca IAP/RC** (bundle ID + product IDs intactos), así que técnicamente el camino 1 o 2 es seguro para suscripciones. Lo que falta es la **decisión de marca**, que es de Fernando.
 
+**RECOMENDACIÓN CONSOLIDADA (Code + Escritorio, 22-may):** El 4.1(c) objeta el **NOMBRE de la app + ícono**, NO el contenido interno de la UI (argumento de Escritorio: si Apple rechazara por mostrar una marca en la interfaz interna, ninguna app pasaría review). → El "AUREX" en los headers internos es **riesgo de CREDIBILIDAD secundario, no la causa del rechazo**. **Camino escalonado recomendado (menor costo primero):**
+1. **Build 33** = Build 32 (ícono ya limpio) + `CFBundleDisplayName = "AurexLive"` + bump. *(Nombre bajo el ícono = lo que Apple mira.)*
+2. **Metadata App Store** → "AurexLive" (12 superficies) + **reply de coexistencia** (`PLAN_APPLE_AUREXLIVE_REPLY_22MAY.md`) + privacy/terms alineados.
+3. **NO tocar** los headers internos de la app ni la marca en Android/web todavía.
+4. Si Apple **aprueba** → marca "AUREX" queda intacta en Android/web, cambio mínimo, listo.
+5. Si Apple **rechaza otra vez citando el contenido interno** (improbable según el texto del 4.1c) → recién ahí el rebrand transversal (8 pantallas + i18n).
+**Principio: NO mutilar la marca "AUREX" (ya aprobada en Google Play + web) por las dudas, antes de saber si Apple cede al cambio de nombre.** Decisión final = Fernando.
+
 ### 2.5 Riesgos abiertos
 
 | Riesgo | Probabilidad | Mitigación |
