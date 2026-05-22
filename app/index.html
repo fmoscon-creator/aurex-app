@@ -18,7 +18,7 @@
 (function(){
   try{
     var pref = localStorage.getItem('aurex_theme');
-    if(pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'light';
+    if(pref !== 'light' && pref !== 'dark' && pref !== 'system') pref = 'dark';
     var mode;
     if(pref === 'system'){
       mode = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';
@@ -30,7 +30,7 @@
     var meta = document.getElementById('aurex-theme-color-meta');
     if(meta) meta.setAttribute('content', mode === 'light' ? '#EEF1F7' : '#0D1117');
   } catch(e){
-    document.documentElement.setAttribute('data-theme', 'light');
+    document.documentElement.setAttribute('data-theme', 'dark');
   }
 })();
 </script>
