@@ -955,11 +955,11 @@ footer.site .wrap{position:relative;z-index:2}
     <span class="lt-item" data-sym="solana"><span class="lt-sym">SOL</span><span class="lt-price">$162.50</span><span class="lt-chg neg">▼ -0.3%</span></span>
     <span class="lt-item" data-sym="binancecoin"><span class="lt-sym">BNB</span><span class="lt-price">$635.40</span><span class="lt-chg pos">▲ +0.6%</span></span>
     <span class="lt-item" data-sym="ripple"><span class="lt-sym">XRP</span><span class="lt-price">$2.4150</span><span class="lt-chg pos">▲ +1.2%</span></span>
-    <span class="lt-item"><span class="lt-sym">SPY</span><span class="lt-price">$595.40</span><span class="lt-chg pos">▲ +0.5%</span></span>
-    <span class="lt-item"><span class="lt-sym">QQQ</span><span class="lt-price">$512.80</span><span class="lt-chg pos">▲ +0.8%</span></span>
-    <span class="lt-item"><span class="lt-sym">AAPL</span><span class="lt-price">$189.34</span><span class="lt-chg pos">▲ +1.2%</span></span>
-    <span class="lt-item"><span class="lt-sym">NVDA</span><span class="lt-price">$875.20</span><span class="lt-chg pos">▲ +3.1%</span></span>
-    <span class="lt-item"><span class="lt-sym">TSLA</span><span class="lt-price">$165.20</span><span class="lt-chg neg">▼ -1.8%</span></span>
+    <span class="lt-item" data-stock="SPY"><span class="lt-sym">SPY</span><span class="lt-price">$595.40</span><span class="lt-chg pos">▲ +0.5%</span></span>
+    <span class="lt-item" data-stock="QQQ"><span class="lt-sym">QQQ</span><span class="lt-price">$512.80</span><span class="lt-chg pos">▲ +0.8%</span></span>
+    <span class="lt-item" data-stock="AAPL"><span class="lt-sym">AAPL</span><span class="lt-price">$189.34</span><span class="lt-chg pos">▲ +1.2%</span></span>
+    <span class="lt-item" data-stock="NVDA"><span class="lt-sym">NVDA</span><span class="lt-price">$875.20</span><span class="lt-chg pos">▲ +3.1%</span></span>
+    <span class="lt-item" data-stock="TSLA"><span class="lt-sym">TSLA</span><span class="lt-price">$165.20</span><span class="lt-chg neg">▼ -1.8%</span></span>
     <span class="lt-item"><span class="lt-sym">GOLD</span><span class="lt-price">$2,650</span><span class="lt-chg pos">▲ +0.4%</span></span>
     <span class="lt-item"><span class="lt-sym">BRENT</span><span class="lt-price">$73.20</span><span class="lt-chg neg">▼ -0.6%</span></span>
     <span class="lt-item"><span class="lt-sym">VIX</span><span class="lt-price">15.40</span><span class="lt-chg neg">▼ -2.1%</span></span>
@@ -2589,8 +2589,32 @@ footer.site .wrap{position:relative;z-index:2}
       const cached = ltLoadCache();
       if(cached) ltRenderPrices(cached);
     }
+    // Acciones/ETF del banner LIVE desde backend AUREX (/api/stock/)
+    async function ltFetchStocks(){
+      const base = 'https://aurex-app-production.up.railway.app/api/stock/';
+      const syms = ['SPY','QQQ','AAPL','NVDA','TSLA'];
+      await Promise.all(syms.map(async sym => {
+        try {
+          const res = await fetch(base + sym);
+          if(!res.ok) return;
+          const d = await res.json();
+          if(!d || typeof d.price !== 'number') return;
+          const pos = (d.changePct || 0) >= 0;
+          document.querySelectorAll(`#live-ticker-track .lt-item[data-stock="${sym}"]`).forEach(el => {
+            const priceEl = el.querySelector('.lt-price');
+            const chgEl = el.querySelector('.lt-chg');
+            if(priceEl) priceEl.textContent = '$' + d.price.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+            if(chgEl){
+              chgEl.className = 'lt-chg ' + (pos ? 'pos' : 'neg');
+              chgEl.textContent = (pos ? '▲ +' : '▼ ') + (d.changePct || 0).toFixed(1) + '%';
+            }
+          });
+        } catch(e){ /* silent */ }
+      }));
+    }
     fetchLtCrypto();
-    setInterval(fetchLtCrypto, 60000);
+    ltFetchStocks();
+    setInterval(() => { fetchLtCrypto(); ltFetchStocks(); }, 60000);
   }
 
   // === BLOQUE 0.b1: MARKET STATUS + FUTURES TICKERS ===
