@@ -82,19 +82,25 @@ Apple Developer Team ID: TX7C2F79U9
 
 > La marca "AUREX LIVE" ya estaba aceptada desde el 1er rechazo. El cambio ahora es solo de **grafía: "AUREX LIVE" (con espacio) → "AurexLive" (pegado)** — NO es un rebrand de identidad. Se hace **solo en iOS**; Android (publicado, plataforma secundaria por mercado) se decide DESPUÉS de saber si Apple acepta.
 
-### Build 33 iOS — lo que SÍ se toca ahora
-1. `ios/AurexApp/Info.plist` → `CFBundleDisplayName`: "AUREX" → **"AurexLive"** (es iOS-only, NO toca Android).
-2. Bump build number → **33** (re-archivar; ícono ya limpio en Build 32; NO toca IAP/RC — bundle ID + product IDs intactos).
-3. Metadata App Store Connect: App Name (#1) + IAP grupo "Nombre de la app" (#8) + cualquier superficie con el nombre → **"AurexLive"** (ver Parte B).
-4. **Reply de coexistencia** (Parte A) + confirmar PDF Namecheap adjunto.
-5. **Adjuntar las 4 suscripciones** (grupo AUREX PLANES, ID 22018005) a la versión Build 33 antes de enviarla a revisión.
-6. Manual Release OFF.
+### MAPA COMPLETO — dónde dice "AUREX" en iOS y qué se hace (Code+Escritorio, todos los frentes)
 
-### Lo que NO se toca en este paso (queda para DESPUÉS de saber si Apple acepta)
-- **Headers internos** `<Text>AUREX</Text>` (8 pantallas, `LoginScreen`/`PortfolioScreen`/`MercadosScreen`/`WatchlistScreen`/`IAScreen`/`MisAlertasScreen`/`PerfilScreen`/`SignupScreen`): son **código React Native COMPARTIDO iOS+Android** → tocarlos cambiaría Android también. Se dejan.
-- **`docs/privacy.html` / `docs/terms.html`**: compartidos iOS+Android+web. Se dejan.
-- **Android** (`strings.xml`, ficha Google Play): se decide DESPUÉS.
-- **Riesgo asumido (consensuado):** el reviewer puede ver "AUREX" en los headers internos = **riesgo de credibilidad secundario, NO la causa del 4.1c** (que objeta nombre + ícono). Si Apple rechazara POR el contenido interno (improbable) → recién ahí el rebrand compartido + Android.
+| # | Frente | Dónde | Acción Build 33 / Paso 1 | ¿Toca Android? |
+|---|---|---|---|---|
+| 1 | Nombre en la tienda | App Store Connect → App Name (#1) | → **AurexLive** | No (metadata iOS) |
+| 2 | Nombre bajo el ícono | `ios/AurexApp/Info.plist` → `CFBundleDisplayName` | "AUREX" → **AurexLive** | No (Info.plist iOS-only) |
+| 3 | Headers internos (8 pantallas) | código RN compartido (`Login/Portfolio/Mercados/Watchlist/IA/MisAlertas/Perfil/Signup`) | **`Platform.OS==='ios' ? 'AurexLive' : 'AUREX'`** → iOS muestra AurexLive, Android queda igual | No (Android no se recompila) |
+| 4 | Privacidad / Términos | `docs/*.html` | crear **`/docs/privacy-ios.html` + `/docs/terms-ios.html`** con "AurexLive"; apuntar ahí: campo Privacy Policy URL de ASC + link interno iOS (`Platform.OS`). Android sigue con `/docs/privacy.html` | No (Android usa los originales) |
+| 5 | Capturas de la ficha (10 screenshots) | App Store Connect (metadata) | **regenerar** del Build 33 ya compilado (headers AurexLive) y reemplazar. *(Punto de Escritorio — visible en la ficha ANTES de instalar.)* | No (metadata iOS) |
+| 6 | Grupo + nombres de suscripción | App Store Connect (#8) | → AurexLive (**opcional**, cosmético) | No |
+| 7 | Ícono | binario | ya limpio en Build 32 — **no se toca** | — |
+| 8 | Reply + PDF | App Store Connect → App Review Notes | pegar reply de coexistencia (Parte A) + PDF Namecheap | No |
+| 9 | Suscripciones a la versión | App Store Connect → página de versión | **adjuntar las 4** (grupo AUREX PLANES, ID 22018005) antes de enviar | No |
+| 10 | Build | re-archivar | bump → **Build 33**; NO toca IAP/RC (bundle ID + product IDs intactos); Manual Release OFF | No |
+
+**Resultado:** el binario y la ficha de iOS quedan **100% "AurexLive"** (nombre, headers, privacy, capturas) **sin tocar Android** (que queda en "AUREX", intacto, sin revisión de Google).
+
+### ÚNICO frente que NO se cubre así (decisión aparte)
+- **Onboarding** (`OnboardingScreen.js`, imágenes `src/assets/onboarding/v2/` — OBS1 "AUREX", OBS2 "DISCOVER AUREX", OBS3 "WHY AUREX"): el "AUREX" está **incrustado en las imágenes** (no es texto ni URL), y son compartidas iOS+Android. Es lo PRIMERO que ve el reviewer. Opciones: (a) **aceptar el riesgo** en el 1er intento (es contenido interno, no el nombre que objeta 4.1c) y regenerar solo si Apple lo objeta; (b) **generar un set de imágenes iOS** con "AurexLive" (lo más caro). Recomendación Code+Escritorio: **(a)** para el primer intento.
 
 ## SI APPLE RESPONDE
 - **Aprueba "AurexLive"** → recién ahí se decide el rebrand del resto (headers compartidos + privacy/terms + Android + web) para coherencia total. Ver brief §3.5 + §2.4-quinquies(D).
