@@ -269,6 +269,31 @@ Escritorio reportó el 22/05 que "Compras dentro de la app" y "Suscripciones" se
 
 **Implicancia para Build 33 (paso real, que Escritorio acertó):** como las suscripciones estaban adjuntas a Build 17 para su primera review y Build 17 fue rechazado, **al enviar Build 33 hay que SELECCIONAR las 4 suscripciones en la sección "Compras dentro de la app y suscripciones" de la página de esa versión, antes de mandarla a revisión.** Eso es proceso normal de primera review, no un producto faltante. **No es bloqueante** del Paso 1 (Build 33 como validación de marca, Manual Release OFF, no se cobra).
 
+### 2.4-septies ✅ ESTADO DE EJECUCIÓN — Build 33 "AurexLive" (22-may madrugada, Code)
+
+**CÓDIGO APLICADO en `~/AurexApp` local (SIN commit/push todavía — ver ⚠️ remoto):**
+- `src/lib/brand.js` (nuevo): `BRAND_NAME` = AurexLive(iOS)/AUREX(Android), `PRIVACY_URL`/`TERMS_URL` (-ios en iOS), `IS_IOS`.
+- `ios/AurexApp/Info.plist`: `CFBundleDisplayName` AUREX → **AurexLive**.
+- **9 pantallas**: header → `{BRAND_NAME}` (Login, Signup, Portfolio, Mercados, Watchlist, IA, MisAlertas, Perfil, Alertas).
+- **Balanza ⚖️ oculta en iOS** en las 5 tabs (`{!IS_IOS && ...}`), queda en Perfil (tarjeta "Aviso Legal"). Android la mantiene.
+- **Timer oculto en iOS** en `LiveIndicator` (queda punto+LIVE). Android lo mantiene.
+- Perfil: links Términos/Privacidad → `TERMS_URL`/`PRIVACY_URL`.
+- IA: fix de centrado del header (logo+marca a la izquierda; campana ya no se corta).
+- **Validado en simulador iOS**: IA, Portfolio, Mercados, Watchlist OK ("AurexLive" entra, sin balanza, • LIVE, campana completa).
+- `docs/privacy-ios.html` + `docs/terms-ios.html` creados en repo landing (SIN push).
+
+**Build 33:** bump `CURRENT_PROJECT_VERSION` 32→33 (`MARKETING_VERSION`=1.0 intacto). Clean completo (DerivedData + ios/build + Metro + caché) + `pod install`. Archive compilando vía CLI → IPA irá a `backups/ipa/Build33/`.
+
+**⚠️ REMOTO `github.com/fmoscon-creator/AurexApp` CONTAMINADO:** Escritorio commiteó cambios sobre código VIEJO (pre-Build32). **NO hacer `git pull` en el local.** Compilar desde local. Reconciliar después (local = fuente de verdad). Ver [[feedback_nunca_simultaneo_github_code_escritorio]].
+
+### 2.4-octies 📋 PENDIENTES — MAÑANA (quién / cómo)
+
+1. **Subir Build 33 a TestFlight** — *Fernando* (Transporter). IPA en `~/AurexApp/backups/ipa/Build33/AurexApp.ipa` (Code lo deja validado). Vigilar síntomas STOP (logo dorado, nombre OK, "1.0 (33)", botón Entregar azul). Luego asignar grupo Internal Testing manual.
+2. **Pasos en App Store Connect** — *Fernando ejecuta, Escritorio guía paso a paso (NO solo)*: metadata 12 superficies → "AurexLive"; Privacy Policy URL → `aurex.live/docs/privacy-ios.html`; adjuntar las 4 suscripciones (grupo 22018005) a la versión; pegar reply de coexistencia + PDF Namecheap; **Manual Release OFF**; reenviar a revisión.
+3. **Push de `privacy-ios.html`/`terms-ios.html`** al repo landing — *Code (con OK Fernando)* → para que las URLs funcionen en aurex.live.
+4. **Commit del código nativo + reconciliar remoto AurexApp** — *Code (con OK Fernando)*, con cuidado (local = fuente de verdad, NO pull).
+5. **Validar Build 33 en iPhone** (TestFlight) — *Fernando*: que diga "AurexLive", headers sin balanza/timer, todo funcione.
+
 ### 2.5 Riesgos abiertos
 
 | Riesgo | Probabilidad | Mitigación |
