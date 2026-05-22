@@ -189,6 +189,14 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 **Pendiente de Fernando (dato que define el camino):** ¿hay algún derecho de marca documentable más allá del dominio (registro en curso, uso comercial anterior, etc.)? El USPTO ya nos dio que NO hay trademark "AUREX" registrado por nadie en software/apps/finanzas — eso no nos da derecho pero tampoco se lo da formalmente a aurex.ai en USPTO.
 
+### 2.4-ter 🔎 HALLAZGO 22/05 — qué hay realmente en el App Store (verificado por Code vía iTunes Search API)
+
+**Quién es aurex.ai:** = **Beinex Consulting Private Limited**. **TIENEN app publicada en el App Store: "Aurex: AI GRC & Analytics"** (categoría Business; auditoría/compliance/GRC empresarial). También "Aurex - ATDD" (mismo developer). → **Por esto el argumento "dominio aurex.live" no alcanzó:** enfrente NO hay un sitio web cualquiera, hay un **developer de Apple con marca + app activa**. Apple protege a ese developer. Apelar diciendo "no hay base" NO sirve: la base existe.
+
+**Munición a favor (coexistencia REAL, no teórica):** en el App Store conviven HOY varias "Aurex": **AurexNova (Finance)**, AurexPro (Business), AureX: Security App, Aurex (Health & Fitness), Aurex Digital Technology (2 apps). **Apple permite coexistencia de la raíz "Aurex" cuando va pegada a un distintivo** (AurexNova, AurexPro). Patrón observado: las que conviven usan **raíz + sufijo pegado**; "AUREX LIVE" deja **"AUREX" como palabra suelta = idéntica a la marca de Beinex** → probable razón de que a nosotros sí nos frene.
+
+**Implicancia estratégica:** (a) defender con el dominio = repetir lo que ya falló; (b) el ángulo nuevo defendible es **coexistencia fáctica + rubro distinto** (ellos GRC empresarial / nosotros mercados consumer) + ninguno con trademark; (c) salida segura = nombre con raíz distintiva al estilo de las que SÍ pasan, pesando la consistencia con **Android (ya publicado como AUREX y aprobado por Google — el conflicto es SOLO de Apple)**. Recordar §2.6: Build 17 NO va a producción → no quemar la cuenta a reply tras reply; resolver la marca de fondo ANTES de Build 25.
+
 ### 2.5 Riesgos abiertos
 
 | Riesgo | Probabilidad | Mitigación |
