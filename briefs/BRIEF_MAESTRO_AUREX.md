@@ -222,7 +222,16 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 **(C) ¿El cambio de nombre afecta suscripciones / planes / RevenueCat? → NO.** (Pregunta de Fernando, verificada en código.) Lo que ata las suscripciones y RC es: **bundle ID** (`com.fernandomoscon.aurex`, no cambia) + **product IDs** de los IAP (no cambian) + **entitlements RC** (`'pro'`, `'elite'`) + offerings/packages (`Purchases.getOfferings()` / `purchasePackage`) + **API key RC** (atada al bundle ID). **Ninguno depende del display name.** El "Nombre de la app" del grupo de suscripción (superficie #8) es cosmético (lo que el usuario ve en Ajustes → Suscripciones); cambiarlo a "AurexLive" NO rompe productos, compras ni RC. Un build re-archivado con display name "AurexLive" + mismo bundle ID + mismos product IDs deja IAP/RC intactos.
 
-**Implicancia para la decisión:** dado (B), cambiar solo metadata deja a Build 17/32 mostrando "AUREX". Como (C) confirma que un re-archivo NO toca IAP/RC, **es viable y seguro re-archivar un build con `CFBundleDisplayName = "AurexLive"`** para tener consistencia total (binario + metadata + privacy/terms). Decisión Fernando + Escritorio.
+**(D) 🔴 "AUREX" está ESCRITO en el header de casi TODAS las pantallas (hallazgo de Fernando, verificado en código).** Junto al logo-símbolo `<AurexLogo>` (sin palabra) hay un `<Text>AUREX</Text>` en: Login (`LoginScreen.js:85`), Signup (`:125`), Portfolio (`PortfolioScreen.js:689`), Mercados (`MercadosScreen.js:869`), Watchlist (`WatchlistScreen.js:753`), IA (`IAScreen.js:308`), Mis Alertas (`MisAlertasScreen.js:145`), Perfil (`:931` + "AUREX v{ver}"). Además "AUREX PULSE™", "AUREX FEAR & GREED 14X™", FAQ "¿Qué es AUREX?". → **El reviewer, al abrir Build 32/33, ve "AUREX" en el header de las 6 tabs + login.** Ni Code ni Escritorio lo habían evaluado.
+
+**Implicancia REAL para la decisión (corrige lo anterior):** Build 33 **NO es "1 línea en Info.plist"**. Para que el reviewer NO vea "AUREX" al usar la app, hay que cambiar también los **headers internos** (≈8 pantallas) + decidir qué pasa con los nombres de features ("AUREX Pulse™", etc.). Eso ya es un **mini-rebrand de la identidad visible**, no un parche. Y choca con que **"AUREX" es la marca en Android (publicado en Google Play) + web (aurex.live)** → cambiar solo iOS crea divergencia de marca entre plataformas.
+
+**DISYUNTIVA DE MARCA (decisión de negocio, solo Fernando):**
+1. **Rebrand total a "AurexLive"** (iOS binario + headers + metadata + Android + web): coherencia máxima, pero es el cambio más grande y toca lo ya publicado en Android/web.
+2. **"AurexLive" solo en iOS** (display name + headers internos del binario iOS), dejando Android/web como "AUREX": destraba Apple pero divergencia de marca cross-plataforma (raro a largo plazo).
+3. **Pelear para mantener "AUREX"** (coexistencia/apelación, §2.4-bis/ter/quater) sin tocar nada interno: si Apple cede, marca unificada; si no cede, no se entra a iOS con "AUREX".
+
+**Code (C) ya confirmó que cualquier re-archivo NO toca IAP/RC** (bundle ID + product IDs intactos), así que técnicamente el camino 1 o 2 es seguro para suscripciones. Lo que falta es la **decisión de marca**, que es de Fernando.
 
 ### 2.5 Riesgos abiertos
 
