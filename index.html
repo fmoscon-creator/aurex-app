@@ -846,6 +846,15 @@ footer.site .wrap{position:relative;z-index:2}
 .what-not-v2 .wn-ic-no{color:rgba(245,240,232,.42)}
 @media(max-width:600px){.what-not-v2 .wn-cols{grid-template-columns:1fr;gap:26px}}
 </style>
+<style id="legal-overlay-css">
+.legal-overlay{position:fixed;inset:0;background:rgba(4,2,0,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:400;display:none;align-items:center;justify-content:center;padding:20px}
+.legal-overlay.active{display:flex}
+.legal-modal{position:relative;width:100%;max-width:840px;height:88vh;background:#080808;border:1px solid rgba(212,160,23,.35);border-radius:16px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,.7)}
+.legal-frame{width:100%;height:100%;border:0;background:#080808;display:block}
+.legal-close{position:absolute;top:10px;right:12px;z-index:2;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.65);border:1px solid rgba(212,160,23,.5);color:#F5C842;font-size:22px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.legal-close:hover{background:rgba(212,160,23,.15)}
+@media(max-width:600px){.legal-modal{height:90vh;max-width:100%} .legal-overlay{padding:10px}}
+</style>
 </head>
 <body>
 <script>
@@ -1814,8 +1823,8 @@ footer.site .wrap{position:relative;z-index:2}
       <div class="foot-col">
         <h4 data-i18n="foot_company">Company</h4>
         <a href="mailto:support.aurex.live@gmail.com" class="foot-mail">support.aurex.live@gmail.com</a>
-        <a href="/docs/privacy.html" data-i18n="foot_privacy">Privacy Policy</a>
-        <a href="/docs/terms.html" data-i18n="foot_terms">Terms</a>
+        <a href="/docs/privacy.html" onclick="openLegal('/docs/privacy.html');return false;" data-i18n="foot_privacy">Privacy Policy</a>
+        <a href="/docs/terms.html" onclick="openLegal('/docs/terms.html');return false;" data-i18n="foot_terms">Terms</a>
         <a href="https://github.com/fmoscon-creator/aurex-app" target="_blank" rel="noopener" data-i18n="foot_open_source">Open source</a>
       </div>
       <div class="foot-col">
@@ -1833,7 +1842,7 @@ footer.site .wrap{position:relative;z-index:2}
     <div class="foot-bottom">
       <div class="foot-copy">© 2026 AUREX · FERNANDO MOSCÓN</div>
       <div>
-        <a href="/docs/privacy.html">PRIVACY</a> &nbsp; <a href="/docs/terms.html">TERMS</a> &nbsp; <a href="#we-dont-trade">LEGAL</a>
+        <a href="/docs/privacy.html" onclick="openLegal('/docs/privacy.html');return false;">PRIVACY</a> &nbsp; <a href="/docs/terms.html" onclick="openLegal('/docs/terms.html');return false;">TERMS</a> &nbsp; <a href="#we-dont-trade">LEGAL</a>
       </div>
     </div>
   </div>
@@ -2968,6 +2977,35 @@ if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es
 (function(){var v=document.getElementById('lqvid');if(!v)return;v.muted=true;
 function pl(){try{v.playbackRate=1.32;}catch(e){}var p=v.play();if(p&&p.catch)p.catch(function(){});}
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)pl();else{try{v.pause();}catch(_){}}});},{threshold:0.12});io.observe(v);}else{pl();}
+})();
+</script>
+<div class="legal-overlay" id="legal-overlay" role="dialog" aria-modal="true" aria-hidden="true">
+  <div class="legal-modal">
+    <button class="legal-close" id="legal-close" type="button" aria-label="Cerrar">&times;</button>
+    <iframe class="legal-frame" id="legal-frame" title="Documento legal AUREX" loading="lazy"></iframe>
+  </div>
+</div>
+<script>
+(function(){
+  var ov = document.getElementById('legal-overlay');
+  var fr = document.getElementById('legal-frame');
+  window.openLegal = function(url){
+    if(!ov || !fr) return;
+    fr.src = url + (url.indexOf('?')<0?'?':'&') + 'v=' + Date.now();
+    ov.classList.add('active');
+    ov.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+  };
+  function closeLegal(){
+    ov.classList.remove('active');
+    ov.setAttribute('aria-hidden','true');
+    fr.src = 'about:blank';
+    document.body.style.overflow = '';
+  }
+  var cb = document.getElementById('legal-close');
+  if(cb) cb.addEventListener('click', closeLegal);
+  if(ov) ov.addEventListener('click', function(e){ if(e.target === ov) closeLegal(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && ov && ov.classList.contains('active')) closeLegal(); });
 })();
 </script>
 </body>
