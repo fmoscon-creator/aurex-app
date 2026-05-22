@@ -212,7 +212,11 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 ### 2.4-quinquies 🔬 HALLAZGOS 22/05 (Code, verificado en código + íconos reales) — 3 puntos que ni el plan inicial ni Escritorio cubrían
 
-**(A) DISCREPANCIA sobre el ÍCONO — Code vs Escritorio.** Escritorio afirma que el ícono de la app "tiene la palabra AUREX en texto pequeño dorado debajo de la A" → riesgo 4.1c por ícono. **Code abrió el archivo real `ios/AurexApp/Images.xcassets/AppIcon.appiconset/icon-1024.png` y NO tiene texto:** es solo la "A" dorada (flecha/brújula) + 2 círculos concéntricos sobre negro. Comparado con el ícono de Beinex (cinta azul-cyan sobre navy) → **opuestos, cero confusión visual.** Probable causa de la confusión de Escritorio: el **logo de marca** `logo-aurex.png` SÍ tiene la palabra "AUREX" (es otro asset, usado en web/banners, NO es el ícono de la app). **A RESOLVER mirando el ícono real en App Store Connect / TestFlight:** si no tiene texto (lo esperado), la preocupación de Escritorio se cae y NO hay que rehacer el ícono.
+**(A) ÍCONO — RESUELTO (Code + Escritorio coinciden). La confusión era que mirábamos builds distintos:**
+- **Build 17** (el que Apple revisó y RECHAZÓ): ícono **CON** texto "AUREX" debajo de la "A". El **header de App Store Connect muestra el ícono del Build 17** → por eso Escritorio veía texto.
+- **Build 32** (en TestFlight, validado): ícono **SIN** texto — solo la "A" dorada + círculos sobre negro. Verificado por **Escritorio en TestFlight** + por **Code** (repo `icon-1024.png` 12-abr, comprobado con brillo amplificado: solo círculos, sin texto; coincide con el ícono compilado en el IPA de Build 32).
+- Comparado con el ícono de Beinex (cinta azul-cyan sobre navy) → opuestos, cero confusión visual.
+- **Conclusión: el ícono YA está resuelto en Build 32** (limpio, sin texto). NO hay que rehacer ningún ícono si se usa Build 32 como base. El ícono "con texto" solo vive en Build 17 (que igual no va a producción).
 
 **(B) El agujero real de consistencia = `CFBundleDisplayName`.** El binario (Build 17 Y Build 32) muestra **"AUREX"** bajo el ícono (no "AUREX LIVE" ni "AurexLive"). Eso NO se cambia sin recompilar. Si cambiamos solo la metadata a "AurexLive", el reviewer instala una app que dice "AUREX" debajo del ícono = la palabra en disputa. Bundle ID iOS = `com.fernandomoscon.aurex`, `PRODUCT_NAME = AurexApp` (interno, no visible).
 
