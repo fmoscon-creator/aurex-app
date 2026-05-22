@@ -92,7 +92,7 @@ Apple Developer Team ID: TX7C2F79U9
 | 4 | Privacidad / Términos | `docs/*.html` | crear **`/docs/privacy-ios.html` + `/docs/terms-ios.html`** con "AurexLive"; apuntar ahí: campo Privacy Policy URL de ASC + link interno iOS (`Platform.OS`). Android sigue con `/docs/privacy.html` | No (Android usa los originales) |
 | 5 | Capturas de la ficha (10 screenshots) | App Store Connect (metadata) | **regenerar** del Build 33 ya compilado (headers AurexLive) y reemplazar. *(Punto de Escritorio — visible en la ficha ANTES de instalar.)* | No (metadata iOS) |
 | 6 | Grupo + nombres de suscripción | App Store Connect (#8) | → AurexLive (**opcional**, cosmético) | No |
-| 7 | Ícono | binario | ya limpio en Build 32 — **no se toca** | — |
+| 7 | Ícono | binario | **DECISIÓN Fernando 22-may: mantener el logo SIN texto/marca dentro (solo el símbolo "A" dorada), tal cual Build 32. NO se agrega "AurexLive" al ícono** (el nombre ya aparece debajo vía CFBundleDisplayName; HIG de Apple desaconseja texto en el ícono). No se toca. | — |
 | 8 | Reply + PDF | App Store Connect → App Review Notes | pegar reply de coexistencia (Parte A) + PDF Namecheap | No |
 | 9 | Suscripciones a la versión | App Store Connect → página de versión | **adjuntar las 4** (grupo AUREX PLANES, ID 22018005) antes de enviar | No |
 | 10 | Build | re-archivar | bump → **Build 33**; NO toca IAP/RC (bundle ID + product IDs intactos); Manual Release OFF | No |
