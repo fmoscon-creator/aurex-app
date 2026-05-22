@@ -241,6 +241,18 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 5. Si Apple **rechaza otra vez citando el contenido interno** (improbable según el texto del 4.1c) → recién ahí el rebrand transversal (8 pantallas + i18n).
 **Principio: NO mutilar la marca "AUREX" (ya aprobada en Google Play + web) por las dudas, antes de saber si Apple cede al cambio de nombre.** Decisión final = Fernando.
 
+**ACTUALIZACIÓN (22-may, premisa de Fernando):** **iOS es la plataforma objetivo real por mercado; Android es secundario** (aunque aprobado/publicado v1.0.36). Esto **reduce el peso del "no tocar Android"** y reabre el rebrand completo como opción seria.
+
+**¿Es seguro cambiar el nombre de Android estando ya publicado (v1.0.36)? — análisis:**
+- **Técnicamente NO rompe nada:** `applicationId = com.aurexapp` + **product IDs Android** + RC son **inmutables** → instalaciones existentes, actualizaciones, suscripciones activas y cobros siguen igual. El nombre visible es independiente.
+- **Lo que cambia:** (a) nombre en la ficha de Google Play (metadata, revisión Google horas/días); (b) nombre bajo el ícono (`strings.xml` → nuevo build + revisión).
+- **Riesgo de que Google objete el rename:** bajo (ya aprobó "AUREX"; "AurexLive" es más distintivo) — pero es **lectura, no certeza**.
+- **Costos blandos:** usuarios actuales ven el nombre cambiar AUREX→AurexLive (leve); se resetea algo de ASO del término "AUREX".
+
+**Implicancia:** si iOS es el foco y cambiar Android no rompe nada técnico, el **rebrand completo a "AurexLive"** (iOS binario+headers + Android + web + privacy/terms) pasa a ser **coherente y de bajo riesgo real**, y resuelve de una los 2 temas omitidos (privacy/terms + headers). El costo es de **identidad de marca**: pasás de "AUREX" a "AurexLive" como nombre del producto. **Esa es la decisión de fondo (de negocio), de Fernando.**
+
+**Privacy/terms (corrige contradicción previa):** el alcance depende del camino. Rebrand completo → privacy/terms SÍ se alinean a "AurexLive". Camino escalonado (solo nombre+ícono iOS) → NO se tocan (contenido compartido iOS+Android+web). Ya no hay contradicción.
+
 ### 2.4-sexies ✅ IAP iOS — LOS 4 PRODUCTOS EXISTEN (triple confirmación 22/05). Falso bloqueante de Escritorio aclarado.
 
 Escritorio reportó el 22/05 que "Compras dentro de la app" y "Suscripciones" se ven vacías en App Store Connect → **es un error de DÓNDE miró, NO faltan productos.** Confirmado por **3 fuentes coincidentes** (documento propio de Fernando + memoria verificada por Escritorio el 14-may + `docs/SUSCRIPCIONES.md` source-of-truth):
