@@ -2,7 +2,7 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 22-may-2026 AR (madrugada) — **🟢 PWA: "INVEST AI" eliminado + auditoría de paridad PWA↔nativa (consenso Code+Escritorio) + GATING #1 (Portfolio/Watchlist) EN PRODUCCIÓN · Landing definitiva · Android Build 36 publicado · iOS Build 17 en revisión**
+> **Última actualización:** 22-may-2026 AR (madrugada) — **🟢 PWA: "INVEST AI" eliminado + auditoría de paridad PWA↔nativa (consenso Code+Escritorio) + GATING #1 (Portfolio/Watchlist) EN PRODUCCIÓN · Landing definitiva · Android Build 36 publicado · 🔴 iOS Build 17 RE-RECHAZADO 22/05 (4.1c marca AUREX vs aurex.ai — ver §2.4-bis)**
 > **Cierre de sesión 22-may:** Ver **§1.d CIERRE 22-MAY** (PWA + auditoría + gating #1). Documentos: `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
 > **Última actualización significativa previa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto landing/SEO). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
@@ -22,7 +22,7 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🟢 **EN REVISIÓN ACTIVA** — Apple tomó la respuesta del 21/05 y arrancó la revisión (estado pasó de "Pendiente" a "En revisión"; 2 mensajes en el hilo). Salió del limbo de 6 días (ver `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md`) | Esperar resolución Apple (24-72h típico). Si aprueba → NO publicar solo (Manual Release); subir Build 32 a TestFlight | Respuesta Apple Review |
+| 🍎 **Apple Build 17 iOS (v1.0.17)** | 🔴 **RE-RECHAZADO 22/05 (2° rechazo)** — Apple respondió al resubmit del 21/05 y **volvió a rechazar por Guideline 4.1(c) Copycats**, citando que el nombre pertenece al developer **www.aurex.ai**. El argumento "dominio propio aurex.live + AUREX LIVE" + PDF Namecheap **NO alcanzó**. Ahora el conflicto es la **raíz "AUREX"**, no la palabra "AI". Ver cronología §2.2 + análisis §2.4-bis | **Decisión estratégica de marca con Fernando + Escritorio** (no improvisar reply). Opciones: diferenciar nombre / carta de no-objeción de aurex.ai / registrar trademark / apelar al App Review Board | Decisión Fernando |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | 🟢 **PREPARADO** — IPA exportado (`backups/ipa/Build32/`, 42MB, 20-may) | Subir a Transporter/TestFlight EN CUANTO Apple responda Build 17 | Respuesta Apple Build 17 |
 | 🤖 **Android Build 36 (v1.0.36)** | 🟢 **APROBADO + PUBLICADO en PRODUCCIÓN** (21 may 7:29 AM — "Disponible en Google Play", usuarios reciben la actualización). v1.0.36 = nueva producción pública. Incluye fix IAP #76809 | **Validar compra IAP REAL en producción** (cuenta real, refund 48h) — confirmar que el fix funciona. #90 (futuro): nombre cuenta dev + edge-to-edge | — |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
@@ -147,11 +147,12 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 | Fecha (AR) | Evento |
 |---|---|
 | 24-abr-2026 05:24 | Submit original Build 17 |
-| 15-may 18:31 | **Apple RECHAZÓ** — Guideline 4.1(c) Copycats — nombre "AUREX AI" confundible con `aurex.ai` |
+| 15-may 18:31 | **Apple RECHAZÓ (1°)** — Guideline 4.1(c) Copycats — nombre "AUREX AI" confundible con `aurex.ai` |
 | 16-may 02:00 | Fernando aprobó Opción D-modificada (cambio "AUREX AI" → "AUREX LIVE" + Manual Release OFF) |
 | 16-may PM | Escritorio aplicó cambios 12 superficies App Store Connect, subió PDF Namecheap, pegó reply argumentada |
-| 16-may 03:30 AR | Re-submission enviada, EN COLA Apple Review |
-| **17-may 13:12 AR** | Sin novedades, sigue en cola |
+| 16-may 03:30 AR | (Se creyó "Re-submission enviada" — INCORRECTO; ver `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md`: nunca se reenvió, quedó 6 días colgado) |
+| **21-may 01:17-01:19 AR** | **RESUBMIT REAL** (Escritorio): respuesta enviada en el hilo + reenvío a revisión. **Argumento usado:** marca propia "AUREX LIVE" derivada del **dominio aurex.live** (Namecheap order #198745654, registrado 3-abr-2026, registrante Fernando Gabriel Moscón) + PDF de compra adjunto + "no affiliation con aurex.ai" + búsqueda USPTO: **no hay trademark "AUREX" registrado** en software/apps/finanzas. Texto completo en `INFORME_ESTADO_REAL_APPLE_BUILD17_21MAY.md` §5. Estado → "Pendiente de revisión". |
+| **22-may (revisado en iPhone 17 Pro Max)** | 🔴 **Apple RE-RECHAZÓ (2°)** — **Guideline 4.1(c) Copycats OTRA VEZ**: "the app's name contains an icon, brand, or product name that belongs to the following developer: **www.aurex.ai**". Apple ofrece 2 vías: (a) revisar metadata para remover la marca de terceros, o (b) si el developer (aurex.ai) lo aprobó, adjuntar evidencia documental. **CLAVE: el argumento "dominio propio aurex.live" + nombre "AUREX LIVE" NO le alcanzó a Apple. El conflicto ya no es la palabra "AI" — es la RAÍZ "AUREX" misma.** |
 
 ### 2.3 Inventario 12 superficies App Store Connect (status post-cambios)
 
@@ -165,10 +166,28 @@ Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCI
 
 ### 2.4 Pendientes Apple
 
-1. **Esperar respuesta Apple** (24-72h típico, hasta 7 días por historial AUREX).
-2. Si **aprueba** → NO distribuir (Manual Release OFF). Build 17 queda "approved-no-distribuido". Después se reemplaza por Build 25 iOS cuando IAP funcione en Android.
-3. Si **rechaza otra vez** → análisis cruzado Code + Escritorio, iterar.
-4. Si **>72h sin respuesta** → preparar Expedited Review Request.
+> ⚠️ DESACTUALIZADO por el 2° rechazo del 22/05 — ver §2.4-bis.
+
+1. ~~Esperar respuesta Apple~~ → ya respondió: RE-RECHAZÓ (22/05).
+2. Si aprueba → NO distribuir (Manual Release). N/A por ahora.
+3. **Rechazó otra vez → análisis cruzado Code + Escritorio + Fernando (§2.4-bis).**
+
+### 2.4-bis 🔴 ANÁLISIS DEL 2° RECHAZO (22-may) — qué cambió y qué caminos quedan
+
+**Hecho:** Apple respondió al resubmit del 21/05 (donde argumentamos derecho propio vía **dominio aurex.live** + PDF Namecheap + USPTO sin trademark) y **volvió a rechazar — Guideline 4.1(c) Copycats**, esta vez nombrando explícitamente al developer **www.aurex.ai** como dueño de la marca.
+
+**Lectura:**
+- aurex.ai es una **empresa real y distinta** (verificado por curl: *"Aurex.ai | Intelligent GRC, Audit & Analytics Platform"*, HTTP 200 — software empresarial de auditoría/compliance con IA; otro rubro que el nuestro de mercados/inversión).
+- El **camino que ya intentamos falló**: probar propiedad del *dominio* aurex.live + cambiar "AUREX AI"→"AUREX LIVE" **NO le alcanza a Apple**. Para Apple, tener un dominio ≠ tener derecho de marca, y le da prioridad a aurex.ai como brand owner.
+- El conflicto **ya no es la palabra "AI"** (eso se cambió con éxito conceptual) sino la **raíz "AUREX"** en sí.
+
+**Caminos reales que QUEDAN (a decidir con Fernando + Escritorio — NO improvisar el reply):**
+1. **Carta de no-objeción de aurex.ai** — es la vía que Apple ofrece textualmente ("if you've been authorized... attach documentary evidence"). Depende de que aurex.ai acceda.
+2. **Diferenciar el nombre de forma más fuerte** — no "AUREX" a secas ni "AUREX LIVE" (ya rechazado), sino algo claramente propio. Riesgo: implica re-trabajar marca en toda la app/stores.
+3. **Registrar el trademark "AUREX"** en la clase fintech/software — derecho fuerte pero lento (meses) y con costo; no destraba YA.
+4. **Apelar al App Review Board** argumentando coexistencia legítima (rubros/clases distintos: ellos GRC/audit, nosotros mercados/inversión consumer). Ya dijimos "no affiliation" y no alcanzó, pero una apelación formal es otro canal.
+
+**Pendiente de Fernando (dato que define el camino):** ¿hay algún derecho de marca documentable más allá del dominio (registro en curso, uso comercial anterior, etc.)? El USPTO ya nos dio que NO hay trademark "AUREX" registrado por nadie en software/apps/finanzas — eso no nos da derecho pero tampoco se lo da formalmente a aurex.ai en USPTO.
 
 ### 2.5 Riesgos abiertos
 
