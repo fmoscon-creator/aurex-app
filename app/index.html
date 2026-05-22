@@ -4266,6 +4266,11 @@ document.addEventListener("DOMContentLoaded", function(){
       if (currentCount >= L.portfolioMax) return { ok: false, plan: P, limit: L.portfolioMax, message: 'Tu plan ' + P + ' permite hasta ' + L.portfolioMax + ' activos en Portfolio. Pasate a PRO o ELITE para sumar mas.' };
       return { ok: true };
     }
+    if (action === 'add_watchlist') {
+      if (L.watchlistMax === Infinity) return { ok: true };
+      if (currentCount >= L.watchlistMax) return { ok: false, plan: P, limit: L.watchlistMax, message: 'Tu plan ' + P + ' permite hasta ' + L.watchlistMax + ' listas en Watchlist. Pasate a PRO o ELITE para crear mas.' };
+      return { ok: true };
+    }
     if (action === 'add_alert') {
       var tipo = (currentCount || '').toLowerCase();
       if (L.alertTypes.indexOf(tipo) === -1) return { ok: false, plan: P, tipo_alerta: tipo, message: 'Tu plan ' + P + ' no incluye alertas tipo "' + tipo + '". Pasate a PRO o ELITE para activarlas.' };

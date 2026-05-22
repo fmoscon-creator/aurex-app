@@ -1531,6 +1531,12 @@ function _openAddActivoModal(prefillTicker){
   var body = document.getElementById('port-modal-body');
   var title = document.getElementById('port-modal-title');
   if(!modal || !body) return;
+  // Gating por plan: FREE topa en portfolioMax (5). La infra ya existe en index.html.
+  if(window.checkPlanLimit){
+    var _pc = (window._portItems || []).length;
+    var _chk = window.checkPlanLimit('add_portfolio', _pc);
+    if(_chk && !_chk.ok){ if(window.showPaywall) window.showPaywall(_chk); return; }
+  }
   if(title) title.textContent = t('port_agregar_activo');
   body.innerHTML =
     '<div style="display:flex;flex-direction:column;gap:10px;">' +
@@ -1962,6 +1968,11 @@ window.wlCreateList = function(){
   var name = nameEl ? nameEl.value.trim() : '';
   if(!name){ alert('Ingresa un nombre'); return; }
   var lists = _wlGetLists();
+  // Gating por plan: FREE topa en watchlistMax (10).
+  if(window.checkPlanLimit){
+    var _chk = window.checkPlanLimit('add_watchlist', lists.length);
+    if(_chk && !_chk.ok){ wlCloseCreateModal(); if(window.showPaywall) window.showPaywall(_chk); return; }
+  }
   var newList = { name: name, color: _wlNewColor, is_primary: _wlNewPrimary || lists.length === 0, position: lists.length };
   wlCloseCreateModal();
   _wlInsertList(newList, function(){
