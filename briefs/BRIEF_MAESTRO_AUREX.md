@@ -2,8 +2,9 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 21-may-2026 AR (tarde) — **🟢 LANDING aurex.live DEFINITIVA y lista para compartir + SEO/Google completo · Android Build 36 PUBLICADO en producción · iOS Build 17 EN REVISIÓN**
-> **Última actualización significativa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto actual). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
+> **Última actualización:** 22-may-2026 AR (madrugada) — **🟢 PWA: "INVEST AI" eliminado + auditoría de paridad PWA↔nativa (consenso Code+Escritorio) + GATING #1 (Portfolio/Watchlist) EN PRODUCCIÓN · Landing definitiva · Android Build 36 publicado · iOS Build 17 en revisión**
+> **Cierre de sesión 22-may:** Ver **§1.d CIERRE 22-MAY** (PWA + auditoría + gating #1). Documentos: `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
+> **Última actualización significativa previa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto landing/SEO). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
 
 ---
@@ -100,6 +101,31 @@ Ahora que la landing manda tráfico a la PWA, actualizarla es prioritario:
 ### 🍎 iOS — Build 17 EN REVISIÓN activa
 - Build 17 (v1.0.17) **en revisión** de Apple (resubmit del 21/05 que había estado 6 días colgado, ya destrabado). Manual Release ON.
 - Build 32 (v1.0·32) **preparado** (IPA exportado) → subir a TestFlight apenas Apple responda el Build 17.
+
+---
+
+## 1.d CIERRE 22-MAY (madrugada AR) — PWA: limpieza + auditoría paridad + gating #1
+
+> Sesión sobre la **app web (PWA, `/app/`)**. Continúa **mañana 22-may 9am AR**.
+
+**✅ Hecho hoy (en producción salvo donde se indica):**
+- **"INVEST AI" eliminado** de la PWA (splash + login) → "TERMINAL DE MERCADOS" (era texto de marca prohibido que Google levantaba).
+- **Arranque en tema OSCURO** por defecto (coherencia con landing + capturas). ⏳ Validar propagación de cache (mi última captura aún daba claro; el usuario igual puede elegir en Perfil). Pendiente #91.
+- **AUDITORÍA DE PARIDAD PWA vs app nativa (6 tabs)** — consenso Code+Escritorio, ambos con código real a la vista:
+  - Consolidado: `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md`
+  - Capturas (18: nativas + PWA + comparaciones) + código nativa + código PWA dividido: `briefs/paridad_pwa_22may/`
+  - Evidencia gating: `briefs/paridad_pwa_22may/EVIDENCIA_CODIGO_PWA_GATING.md`
+- **🔴 Gating #1 HECHO y verificado EN PRODUCCIÓN:** Portfolio (FREE máx 5) + Watchlist (FREE máx 10) — `_openAddActivoModal` y `wlCreateList` ahora llaman `checkPlanLimit`/`showPaywall`. Antes un FREE no tenía tope. Commit `bf3bac7`.
+
+**📌 Hallazgo central:** la PWA tenía TODA la infra de gating (`PLAN_LIMITS_CLIENT`, `checkPlanLimit`, `showPaywall`) pero llamada **0 veces**. El arreglo es **cablear, no construir**.
+
+**🌅 PRÓXIMO (mañana 9am AR), en orden:**
+1. **Gating Alertas por tipo (#2)** — toggles PRO/ELITE bloqueados para FREE (lock + `calculateAlerts`).
+2. Límite 3 señales/día IA + Pulse detalle FREE (#3).
+3. **"Cómo usar AUREX"** en Perfil (#4, falta en la PWA — reusar i18n `cu_*`).
+4. Telegram conectar + Mis Alertas historial + umbrales editables (#5).
+5. Menores + imágenes onboarding (#6).
+Detalle completo en `AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` §ESTADO DE EJECUCIÓN.
 
 ---
 
