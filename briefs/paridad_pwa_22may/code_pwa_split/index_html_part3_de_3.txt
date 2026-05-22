@@ -1,0 +1,363 @@
+      <div class="feat ok">Todo lo de PRO</div>
+      <div class="feat ok">Seales IA prioritarias</div>
+      <div class="feat ok">API de trading automtico</div>
+      <div class="feat ok">Alertas WhatsApp + Email</div>
+      <div class="feat ok">Reporte semanal personalizado</div>
+      <div class="feat ok">Acceso anticipado a funciones</div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px">
+      <button class="plan-btn btn-elite" style="flex:1;font-size:12px;padding:11px;font-weight:800" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-9T718444CV910321WNHMGOWY')">ELITE Mensual $19.99</button>
+      <button class="plan-btn btn-elite" style="flex:1;font-size:12px;padding:11px;font-weight:800;background:#8B6208" onclick="window.open('https://www.paypal.com/webapps/billing/plans/subscribe?plan_id=P-1WB81912S68516031NHMGRPY')">ELITE Anual $179.99</button>
+    </div>
+  </div>
+
+</div>
+</div>
+
+  <!-- TAB-BAR NAVEGACIN -->
+  <nav class="tab-bar" id="main-tab-bar">
+    <div class="tab-btn active" id="btn-portfolio" onclick="navTo('portfolio')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      <span>Portfolio</span>
+    </div>
+    <div class="tab-btn" id="btn-mercados" onclick="navTo('mercados')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+      <span>Mercados</span>
+    </div>
+    <div class="tab-btn" id="btn-watchlist" onclick="navTo('watchlist')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <span>Watchlist</span>
+    </div>
+    <div class="tab-btn" id="btn-ia" onclick="navTo('ia')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.22 4.22l2.12 2.12M17.66 17.66l2.12 2.12M2 12h3M19 12h3M4.22 19.78l2.12-2.12M17.66 6.34l2.12-2.12"/></svg>
+      <span>IA</span>
+    </div>
+    <div class="tab-btn" id="btn-alertas" onclick="navTo('alertas')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span>Alertas</span>
+    </div>
+    <div class="tab-btn" id="btn-perfil" onclick="navTo('perfil')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span>Perfil</span>
+    </div>
+  </nav>
+</div>
+</div>
+
+<script>
+// Fix estructura: mover screens y tab-bar al .phone si estn fuera
+(function fixPhoneStructure(){
+  var phone = document.querySelector('.phone');
+  if(!phone) return;
+  var screenIds = ['screen-ia','screen-watchlist','screen-alertas','screen-perfil'];
+  var tabBar = document.getElementById('main-tab-bar');
+  screenIds.forEach(function(id){
+    var el = document.getElementById(id);
+    if(el && el.parentElement !== phone){
+      phone.appendChild(el);
+    }
+  });
+  if(tabBar && tabBar.parentElement !== phone){
+    phone.appendChild(tabBar);
+  }
+})();
+
+window.navTo = function(screen) {
+  var screens = document.querySelectorAll('.screen');
+  screens.forEach(function(s){ s.style.display = 'none'; });
+  var target = document.getElementById('screen-' + screen);
+  if(target) target.style.display = 'flex';
+  var btns = document.querySelectorAll('.tab-btn');
+  btns.forEach(function(b){ b.classList.remove('active'); });
+  var activeBtn = document.getElementById('btn-' + screen);
+  if(activeBtn) activeBtn.classList.add('active');
+  if(screen==='mercados'){ setTimeout(function(){ renderTab(window._activeTab||'cripto'); },50); }
+  if(screen==='watchlist'){ setTimeout(function(){ if(window._wlSyncFromSupabase) _wlSyncFromSupabase(function(){ if(window.renderWatchCnt) window.renderWatchCnt(); }); else if(window.renderWatchCnt) window.renderWatchCnt(); },50); }
+  if(screen==='perfil'){var pc=document.getElementById('perfil-canvas');if(pc&&pc.parentElement)pc.parentElement.scrollTop=0;}
+  if(window._i18n) window._i18n.applyTranslations();
+};
+
+//  Selector de pas para telfono 
+
+// Init: mostrar portfolio por defecto
+navTo('portfolio');
+
+window.updatePhonePrefix = function(){
+  var sel = document.getElementById('reg-pais');
+  var hidden = document.getElementById('reg-celular');
+  var numInput = document.getElementById('reg-celular-num');
+  if(!sel) return;
+  var prefix = sel.value;
+  if(hidden) hidden.value = prefix + ' ' + ((numInput && numInput.value) || '');
+};
+window.syncPhoneField = function(){var sel=document.getElementById('reg-pais-sel');var hidden=document.getElementById('reg-celular');var numInput=document.getElementById('reg-celular-num');if(!hidden||!numInput)return;var prefix=sel?sel.value:'+54';hidden.value=prefix+' '+numInput.value.trim();};
+
+</script>
+
+
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(function(regs){
+    regs.forEach(function(r){ r.unregister(); });
+  });
+}
+</script>
+<script>
+// Init inline - no depende de aurex-features.js
+document.addEventListener("DOMContentLoaded", function(){
+  var done = localStorage.getItem("aurex_onboarding_done");
+  var ob = document.getElementById("onboarding");
+  var ph = document.querySelector(".phone");
+  if(done){
+    // Ya hizo onboarding - mostrar app
+    if(ob) ob.style.display = "none";
+    if(ph) ph.style.display = "flex";
+    // navTo portfolio si existe
+    if(typeof window.navTo === "function") window.navTo("portfolio");
+    else {
+      // Fallback: mostrar screen-portfolio directamente
+      var screens = document.querySelectorAll(".screen");
+      for(var i=0;i<screens.length;i++) screens[i].style.display="none";
+      var port = document.getElementById("screen-portfolio");
+      if(port) port.style.display="flex";
+    }
+  } else {
+    // Mostrar onboarding
+    if(ob) ob.style.display = "block";
+    if(ph) ph.style.display = "none";
+  }
+});
+</script>
+
+<!-- Modal Aviso Legal (Fase 4 F1-bis) -->
+<div id="modal-aviso-legal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;" onclick="if(event.target===this)this.style.display='none'">
+  <div style="background:#fff;border-radius:20px;padding:24px 20px;max-height:80vh;overflow-y:auto;width:calc(100% - 32px);max-width:380px;border:2px solid var(--gold);box-shadow:0 15px 28px rgba(0,0,0,0.55);">
+    <div style="text-align:center;margin-bottom:16px;">
+      <span style="font-weight:700;font-size:16px;color:#111;" data-i18n="aviso_legal_titulo">⚖️ AVISO LEGAL</span>
+    </div>
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 12px;" data-i18n="aviso_legal_p1">
+      La información proporcionada por AUREX tiene carácter exclusivamente informativo y educativo. No constituye asesoramiento financiero, recomendación de inversión, ni oferta de compra o venta de ningún activo financiero.
+    </p>
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 12px;" data-i18n="aviso_legal_p2">
+      Las señales, análisis e indicadores mostrados son generados por algoritmos automatizados y no deben interpretarse como garantía de resultados futuros. Invertir conlleva riesgos, incluida la posible pérdida del capital invertido.
+    </p>
+    <p style="font-size:13px;color:#333;line-height:1.7;margin:0 0 16px;" data-i18n="aviso_legal_p3">
+      Consulte siempre a un asesor financiero certificado antes de tomar decisiones de inversión.
+    </p>
+    <div style="text-align:center;font-size:11px;color:#999;margin-bottom:16px;">
+      © 2026 AUREX — Fernando Moscon
+    </div>
+    <div onclick="document.getElementById('modal-aviso-legal').style.display='none'" style="text-align:center;cursor:pointer;font-size:14px;font-weight:600;color:#dc2626;">
+      <span data-i18n="aviso_legal_cerrar">✕ Cerrar</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     AUREX Plan Gating — sincroniza plan FREE/PRO/ELITE con backend
+     Funciona junto con backend /webhook/paypal que actualiza usuarios.plan al recibir pagos
+     ============================================================ -->
+<script>
+(function(){
+  var BACKEND_URL = 'https://aurex-app-production.up.railway.app';
+  var PLAN_LIMITS_CLIENT = {
+    FREE: { portfolioMax: 5, watchlistMax: 10, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura'] },
+    PRO:  { portfolioMax: Infinity, watchlistMax: Infinity, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura','alta_conviccion_ia','cambio_senal','senal_portfolio','cambio_zona_pulse','por_categoria','termometro_riesgo','fed_fomc','cpi_pbi','earnings'] },
+    ELITE:{ portfolioMax: Infinity, watchlistMax: Infinity, alertTypes: ['umbral','precio_objetivo','variacion_brusca','max_min','apertura','alta_conviccion_ia','cambio_senal','senal_portfolio','cambio_zona_pulse','por_categoria','termometro_riesgo','fed_fomc','cpi_pbi','earnings','geopolitica_gdelt'] },
+  };
+
+  window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: null };
+
+  // Lee plan del usuario logueado desde backend Supabase. Si no esta logueado o falla, queda FREE.
+  window.loadUserPlan = async function(){
+    try {
+      var u = window._currentUser;
+      if (!u || !u.id) { window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() }; return 'FREE'; }
+      var r = await fetch(BACKEND_URL + '/api/usuario/' + u.id);
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      var d = await r.json();
+      var p = (d.plan || 'FREE').toUpperCase();
+      if (!PLAN_LIMITS_CLIENT[p]) p = 'FREE';
+      window.aurexPlan = { plan: p, limits: PLAN_LIMITS_CLIENT[p], loadedAt: Date.now() };
+      try { localStorage.setItem('aurex_plan', p); } catch(e){}
+      console.log('[AurexGating] Plan cargado:', p);
+      window.applyPlanGating();
+      return p;
+    } catch(e) {
+      console.error('[AurexGating] error loadUserPlan:', e.message);
+      window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() };
+      return 'FREE';
+    }
+  };
+
+  // Aplica reglas visuales del plan actual a la UI
+  // Conecta con elementos REALES del HTML preexistente:
+  //   #plan-badge-header / #plan-badge-header-wrapper (badge del header del usuario, linea 2382-2384)
+  //   #plan-actual-nombre / #plan-actual-subtitle / #plan-actual-desc / #plan-actual-card (bloque Plan actual, linea 2393-2401)
+  //   #btn-pro-monthly / #btn-pro-annual / #btn-elite-monthly / #btn-elite-annual (botones upgrade modal planes)
+  window.applyPlanGating = function(){
+    var p = window.aurexPlan.plan;
+
+    // Estilos por plan (color del badge y bordes)
+    var STYLES = {
+      FREE:  { color: '#8B949E', bg: 'rgba(139,148,158,0.12)', border: 'rgba(139,148,158,0.3)' },
+      PRO:   { color: '#A78BFA', bg: 'rgba(167,139,250,0.15)', border: '#A78BFA' },
+      ELITE: { color: '#c9a84c', bg: 'rgba(201,168,76,0.15)', border: '#c9a84c' },
+    };
+    var s = STYLES[p] || STYLES.FREE;
+
+    // Textos por plan (subtitle + descripcion del bloque "Plan actual")
+    var SUBTITLE = { FREE: 'Plan gratuito', PRO: 'Plan PRO — Inversor activo', ELITE: 'Plan ELITE — Inversor profesional' };
+    var DESC = {
+      FREE:  '5 activos • 3 señales IA/día • AUREX Pulse básico',
+      PRO:   'Activos ilimitados • Señales IA ilimitadas • AUREX Pulse + Termómetro Riesgo • 14 tipos de alertas + Telegram',
+      ELITE: 'Todo PRO • Análisis técnico avanzado (RSI/MACD) • Alertas geopolíticas GDELT exclusivas • AUREX Pulse completo + historial',
+    };
+
+    // 1. Badge del header del usuario (linea 2383)
+    var badge = document.getElementById('plan-badge-header');
+    var badgeWrap = document.getElementById('plan-badge-header-wrapper');
+    if (badge) {
+      badge.textContent = 'PLAN ' + p;
+      badge.removeAttribute('data-i18n'); // evitar override por sistema i18n al cambiar idioma
+      badge.style.color = s.color;
+    }
+    if (badgeWrap) {
+      badgeWrap.style.background = s.bg;
+      badgeWrap.style.borderColor = s.border;
+    }
+
+    // 2. Bloque "Plan actual" expandible (lineas 2393-2400)
+    var nombreEl = document.getElementById('plan-actual-nombre');
+    var subtitleEl = document.getElementById('plan-actual-subtitle');
+    var descEl = document.getElementById('plan-actual-desc');
+    if (nombreEl) {
+      nombreEl.textContent = p;
+      nombreEl.style.color = (p === 'FREE') ? 'var(--textSec)' : s.color;
+    }
+    if (subtitleEl) {
+      subtitleEl.textContent = SUBTITLE[p] || SUBTITLE.FREE;
+      subtitleEl.removeAttribute('data-i18n');
+    }
+    if (descEl) {
+      descEl.textContent = DESC[p] || DESC.FREE;
+      descEl.removeAttribute('data-i18n');
+    }
+
+    // 3. Botones upgrade en modal de planes — ocultar segun plan actual
+    var allUpgradeBtns = document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual, #btn-elite-monthly, #btn-elite-annual');
+    if (p === 'ELITE') {
+      // Si ya es ELITE, ocultar TODOS los botones de upgrade
+      allUpgradeBtns.forEach(function(b){ b.style.display = 'none'; });
+    } else if (p === 'PRO') {
+      // Si es PRO, ocultar botones PRO (ya lo tiene), mostrar ELITE
+      document.querySelectorAll('#btn-pro-monthly, #btn-pro-annual').forEach(function(b){ b.style.display = 'none'; });
+      document.querySelectorAll('#btn-elite-monthly, #btn-elite-annual').forEach(function(b){ b.style.display = ''; });
+    } else {
+      // FREE: mostrar todos
+      allUpgradeBtns.forEach(function(b){ b.style.display = ''; });
+    }
+
+    // 4. Build 18 Bloque 3: banner upsell persistente (visible solo FREE/PRO)
+    var banner = document.getElementById('upsell-banner');
+    if (banner) {
+      if (p === 'ELITE') {
+        banner.style.display = 'none';
+      } else {
+        var isFree = (p === 'FREE');
+        var targetColor = isFree ? '#A78BFA' : '#c9a84c';
+        banner.style.display = 'flex';
+        banner.style.background = (isFree ? 'rgba(167,139,250,0.15)' : 'rgba(201,168,76,0.15)');
+        banner.style.border = '1px solid ' + (isFree ? 'rgba(167,139,250,0.4)' : 'rgba(201,168,76,0.4)');
+        banner.style.color = targetColor;
+        document.getElementById('upsell-icon').style.background = targetColor;
+        document.getElementById('upsell-icon').textContent = isFree ? '⚡' : '👑';
+        document.getElementById('upsell-title').style.color = targetColor;
+        document.getElementById('upsell-title').textContent = isFree
+          ? 'Pasate a PRO — $9,99/mes'
+          : 'Pasate a ELITE — $19,99/mes';
+        document.getElementById('upsell-sub').textContent = isFree
+          ? 'Activos ilimitados · 14 tipos de alertas · Telegram en tiempo real'
+          : 'AUREX Pulse completo · RSI/MACD · Alertas geopolíticas GDELT';
+        document.getElementById('upsell-arrow').style.color = targetColor;
+        document.getElementById('upsell-arrow').textContent = '›';
+      }
+    }
+
+    console.log('[AurexGating] UI aplicada para plan:', p);
+  };
+
+  // Valida si una accion esta permitida en el plan actual. Devuelve {ok, message?}
+  window.checkPlanLimit = function(action, currentCount){
+    var L = window.aurexPlan.limits || PLAN_LIMITS_CLIENT.FREE;
+    var P = window.aurexPlan.plan || 'FREE';
+    if (action === 'add_portfolio') {
+      if (L.portfolioMax === Infinity) return { ok: true };
+      if (currentCount >= L.portfolioMax) return { ok: false, plan: P, limit: L.portfolioMax, message: 'Tu plan ' + P + ' permite hasta ' + L.portfolioMax + ' activos en Portfolio. Pasate a PRO o ELITE para sumar mas.' };
+      return { ok: true };
+    }
+    if (action === 'add_alert') {
+      var tipo = (currentCount || '').toLowerCase();
+      if (L.alertTypes.indexOf(tipo) === -1) return { ok: false, plan: P, tipo_alerta: tipo, message: 'Tu plan ' + P + ' no incluye alertas tipo "' + tipo + '". Pasate a PRO o ELITE para activarlas.' };
+      return { ok: true };
+    }
+    return { ok: true };
+  };
+
+  // Muestra un paywall simple cuando se intenta una accion bloqueada
+  window.showPaywall = function(reason){
+    var msg = reason && reason.message ? reason.message : 'Esta funcion requiere PRO o ELITE.';
+    if (typeof abrirModalPlanes === 'function') {
+      alert(msg + '\n\nVamos a abrir los planes para que veas las opciones.');
+      try { abrirModalPlanes(); } catch(e){}
+    } else {
+      alert(msg + '\n\nAbri el modal de Planes para suscribirte.');
+    }
+  };
+
+  // Detecta retorno desde PayPal (cuando vuelve con ?paypal=success o referrer paypal.com)
+  function detectarRetornoPayPal(){
+    var q = new URLSearchParams(window.location.search);
+    var paypalFlag = q.get('paypal') === 'success' || q.get('subscription_id') || q.get('ba_token');
+    var referrerIsPayPal = document.referrer && /paypal\.com/.test(document.referrer);
+    if (paypalFlag || referrerIsPayPal) {
+      console.log('[AurexGating] Retorno desde PayPal detectado. Re-leyendo plan en 8 seg para dar tiempo al webhook...');
+      var notif = document.createElement('div');
+      notif.style.cssText = 'position:fixed;top:20px;right:20px;background:#10b981;color:#fff;padding:14px 18px;border-radius:10px;font-size:14px;font-weight:600;z-index:99999;box-shadow:0 4px 12px rgba(0,0,0,.2)';
+      notif.textContent = '✓ Procesando tu suscripcion en PayPal... esto tarda unos segundos';
+      document.body.appendChild(notif);
+      setTimeout(function(){
+        window.loadUserPlan().then(function(p){
+          notif.textContent = '✓ Tu plan ahora es: ' + p + ' — ¡bienvenido!';
+          setTimeout(function(){ notif.remove(); }, 5000);
+        });
+      }, 8000);
+      // Limpiar URL para evitar re-trigger en refresh
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+  }
+
+  // Carga inicial al login del usuario
+  document.addEventListener('DOMContentLoaded', function(){
+    detectarRetornoPayPal();
+    var intentos = 0;
+    var interval = setInterval(function(){
+      if (window._currentUser && window._currentUser.id) {
+        clearInterval(interval);
+        window.loadUserPlan();
+      } else if (++intentos > 30) {
+        clearInterval(interval);
+        // Sin usuario logueado: plan = FREE
+        window.aurexPlan = { plan:'FREE', limits: PLAN_LIMITS_CLIENT.FREE, loadedAt: Date.now() };
+        window.applyPlanGating();
+      }
+    }, 500);
+  });
+})();
+</script>
+
+</body>
+</html>
+<!-- deploy 1775525028 -->

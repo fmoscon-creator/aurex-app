@@ -1,0 +1,293 @@
+  favBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  favBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">'+(isFav?'⭐':'☆')+'</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+(isFav?t('mkt_lp_quitar_fav').replace('★ ',''):t('mkt_lp_agregar_fav').replace('★ ',''))+'</span>';
+  favBtn.addEventListener('click', function() {
+    window._closeLPSheet();
+    if(isFav) window._lpQuitarFavorito(ticker);
+    else window._lpAgregarFavorito(ticker);
+  });
+  modal.appendChild(favBtn);
+
+  // 3. 💼 Agregar a Portfolio — nativa: C.bg background
+  var portBtn = document.createElement('div');
+  portBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:6px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  portBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">💼</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('mkt_lp_agregar_portfolio')+'</span>';
+  portBtn.addEventListener('click', function() {
+    window._closeLPSheet();
+    setTimeout(function(){ if(window.openPortModal) window.openPortModal(ticker); }, 50);
+  });
+  modal.appendChild(portBtn);
+
+  // 4. 📤 Compartir — nativa: C.bg background, marginBottom:8
+  var shareBtn = document.createElement('div');
+  shareBtn.style.cssText = 'display:flex;align-items:center;padding:10px 12px;border-radius:10px;background:var(--bg);margin-bottom:8px;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  shareBtn.innerHTML = '<span style="font-size:15px;margin-right:8px;">📤</span><span style="flex:1;font-size:13px;font-weight:600;color:var(--text);">'+t('port_compartir')+'</span>';
+  shareBtn.addEventListener('click', function() {
+    var msg = ticker + ' \u2014 ' + (name||'') + '\nv\u00EDa AUREX \u2014 aurex.live';
+    if(navigator.share) {
+      navigator.share({text:msg}).catch(function(){});
+    } else {
+      navigator.clipboard.writeText(msg).then(function(){ alert(t('mkt_copiado')); }).catch(function(){});
+    }
+    window._closeLPSheet();
+  });
+  modal.appendChild(shareBtn);
+
+  // 5. Cancelar — nativa: border only, no bg, centered
+  var cancel = document.createElement('div');
+  cancel.style.cssText = 'padding:9px;border-radius:10px;border:1px solid var(--border2);text-align:center;cursor:pointer;-webkit-tap-highlight-color:rgba(0,0,0,0);';
+  cancel.innerHTML = '<span style="font-size:12px;font-weight:600;color:var(--textSec);">'+t('cancelar')+'</span>';
+  cancel.addEventListener('click', window._closeLPSheet);
+  modal.appendChild(cancel);
+
+  overlay.appendChild(modal);
+  overlay.addEventListener('click', function(e) {
+    if(e.target === overlay) window._closeLPSheet();
+  });
+  document.body.appendChild(overlay);
+};
+
+// Editar posición — abre modal mínimo de edición de cantidad y precio
+window._lpEditarPortItem = function(itemId) {
+  var items = window._portItems || [];
+  var item = null;
+  for (var i=0; i<items.length; i++) if (items[i].id === itemId) { item = items[i]; break; }
+  if (!item) { alert(t('port_item_not_found')); return; }
+  // Modal inline para edit
+  var existing = document.getElementById('lp-edit-modal'); if (existing) existing.remove();
+  var ov = document.createElement('div');
+  ov.id = 'lp-edit-modal';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:2100;background:rgba(0,0,0,0.5);' +
+    'display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.innerHTML =
+    '<div style="background:var(--card);border-radius:16px;padding:18px;width:100%;max-width:320px;">' +
+      '<div style="font-size:16px;font-weight:700;color:var(--text);text-align:center;margin-bottom:14px;">' +
+        t('port_editar_title') + ' ' + item.simbolo + '</div>' +
+      '<div style="display:flex;gap:8px;margin-bottom:12px;">' +
+        '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">'+t('port_cantidad_label')+'</div>' +
+        '<input id="lp-edit-qty" type="number" step="any" min="0" value="' + item.cantidad + '" ' +
+        'style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);' +
+        'border-radius:8px;padding:9px 11px;color:var(--text);font-size:14px;outline:none;"/></div>' +
+        '<div style="flex:1;"><div style="font-size:10px;color:var(--textDim);margin-bottom:4px;">'+t('port_precio_compra_short')+'</div>' +
+        '<input id="lp-edit-price" type="number" step="any" min="0" value="' + item.precio_compra + '" ' +
+        'style="width:100%;box-sizing:border-box;background:var(--bg);border:1px solid var(--border2);' +
+        'border-radius:8px;padding:9px 11px;color:var(--text);font-size:14px;outline:none;"/></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;">' +
+        '<div id="lp-edit-cancel" style="flex:1;text-align:center;padding:11px;border-radius:9px;' +
+        'background:var(--border);color:var(--text);font-size:13px;font-weight:600;cursor:pointer;">'+t('cancelar')+'</div>' +
+        '<div id="lp-edit-save" style="flex:1;text-align:center;padding:11px;border-radius:9px;' +
+        'background:var(--green);color:var(--bg);font-size:13px;font-weight:700;cursor:pointer;">'+t('guardar')+'</div>' +
+      '</div>' +
+    '</div>';
+  ov.addEventListener('click', function(e) { if (e.target === ov) ov.remove(); });
+  document.body.appendChild(ov);
+  document.getElementById('lp-edit-cancel').addEventListener('click', function(){ ov.remove(); });
+  document.getElementById('lp-edit-save').addEventListener('click', function() {
+    var q = parseFloat(document.getElementById('lp-edit-qty').value);
+    var p = parseFloat(document.getElementById('lp-edit-price').value);
+    if (!q || q <= 0 || !p || p <= 0) { alert(t('port_err_edit_values')); return; }
+    item.cantidad = q;
+    item.precio_compra = p;
+    // Persistir si hay backend, sino localStorage
+    try { localStorage.setItem('aurex_port_items', JSON.stringify(items)); } catch(_){}
+    if (typeof window._renderPortfolioItems === 'function') window._renderPortfolioItems(items);
+    if (typeof window._updateTotals === 'function') window._updateTotals(items);
+    ov.remove();
+  });
+};
+
+// Attach por tab — idempotente
+
+function _attachAllPortfolioLP() {
+  document.querySelectorAll('[id^="port-row-"]').forEach(function(el) {
+    if (el._lpAttached) return;
+    var uuid = el.id.replace('port-row-', '');
+    var items = window._portItems || [];
+    var item = null;
+    for (var i=0; i<items.length; i++) if (items[i].id === uuid) { item = items[i]; break; }
+    var ticker = item ? item.simbolo : uuid;
+    var meta = _lpGetActivoMeta(ticker);
+    var name = item ? (item.nombre || (meta ? meta.n : '')) : '';
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, name, [
+        { icon:'📊', label:t('port_lp_analisis'), variant:'primary',
+          action: function(){ if (window.openPortItemDetail) window.openPortItemDetail(uuid); } },
+        { icon:'✏️', label:t('port_lp_editar'),
+          action: function(){ window._lpEditarPortItem(uuid); } },
+        { icon:'📤', label:t('port_lp_compartir'),
+          action: function(){ window._lpCompartirPortfolio(ticker, item); } },
+        { icon:'🗑',  label:t('port_lp_confirmar_eliminar'), variant:'destructive',
+          action: function(){
+            if (confirm(t('port_lp_confirmar_eliminar') + ' ' + ticker + '?')) { if (window.deletePortfolioItem) window.deletePortfolioItem(uuid); }
+          } }
+      ]);
+    });
+  });
+}
+
+function _attachAllMercadosLP() {
+  document.querySelectorAll('#cnt .item-row').forEach(function(el) {
+    if (el._lpAttached) return;
+    var ticker = el.id.replace('row-', '');
+    var meta = _lpGetActivoMeta(ticker);
+    _attachLongPress(el, function() {
+      window._showMercadosLPSheet(ticker, meta);
+    });
+  });
+}
+
+function _attachAllWatchlistLP() {
+  document.querySelectorAll('#watch-cnt > div[onclick^="wlOpenDetail"]').forEach(function(el) {
+    if (el._lpAttached) return;
+    var m = (el.getAttribute('onclick') || '').match(/wlOpenDetail\('([^']+)'\)/);
+    var ticker = m ? m[1] : null;
+    if (!ticker) return;
+    var meta = _lpGetActivoMeta(ticker);
+    var name = meta ? meta.n : '';
+    _attachLongPress(el, function() {
+      window._showLPSheet(ticker, name, [
+        { icon:'📊', label:'Análisis IA completo', variant:'primary',
+          action: function(){ if (window.wlOpenDetail) window.wlOpenDetail(ticker); } },
+        { icon:'🤝', label:'Compartir señal',
+          action: function(){ if (window._compartirSenal) window._compartirSenal(ticker); } },
+        { icon:'🗑',  label:'Quitar de esta lista', variant:'destructive',
+          action: function(){
+            if (confirm('Quitar ' + ticker + ' de la lista?')) { if (window.wlRemoveAsset) window.wlRemoveAsset(ticker); }
+          } }
+      ]);
+    });
+  });
+}
+
+window._initLongPressActions = function() {
+  _attachAllPortfolioLP();
+  _attachAllMercadosLP();
+  _attachAllWatchlistLP();
+  _refreshFavStars();
+  // IA: NO long press (la nativa no lo tiene, solo click normal)
+  function obs(containerId, fn) {
+    var c = document.getElementById(containerId);
+    if (!c || c._lpObsAdded) return;
+    c._lpObsAdded = true;
+    new MutationObserver(function(){ fn(); }).observe(c, { childList: true, subtree: false });
+  }
+  obs('port-cnt', _attachAllPortfolioLP);
+  obs('cnt', function(){ _attachAllMercadosLP(); _refreshFavStars(); });
+  obs('watch-cnt', _attachAllWatchlistLP);
+};
+
+// === Modal Idioma (igual a nativa IMG_1772) ===
+window._openIdiomaModal = function() {
+  var existing = document.getElementById('idioma-modal-overlay');
+  if (existing) existing.remove();
+  var currentLang = localStorage.getItem('aurex_lang') || 'es';
+  var langs = [
+    { code: 'es', flag: '🇪🇸', name: 'Español', soon: false },
+    { code: 'en', flag: '🇺🇸', name: 'English', soon: false },
+    { code: 'pt', flag: '🇧🇷', name: 'Português', soon: false },
+    { code: 'zh', flag: '🇨🇳', name: '中文', soon: false },
+    { code: 'fr', flag: '🇫🇷', name: 'Français', soon: false },
+    { code: 'it', flag: '🇮🇹', name: 'Italiano', soon: false },
+    { code: 'hi', flag: '🇮🇳', name: 'हिन्दी', soon: false },
+    { code: 'ar', flag: '🇦🇪', name: 'العربية', soon: false }
+  ];
+  var rows = langs.map(function(l) {
+    var selected = l.code === currentLang;
+    var check = selected ? '<span style="color:#22c55e;font-size:16px;font-weight:700;">✓</span>' : '';
+    var soonTag = l.soon ? ' <span style="color:#999;font-size:11px;">· SOON</span>' : '';
+    var textColor = l.soon ? '#999' : '#222';
+    return '<div onclick="' + (l.soon ? '' : "window._setIdioma('" + l.code + "')") + '" style="display:flex;align-items:center;justify-content:space-between;padding:14px 4px;border-bottom:1px solid #eee;cursor:' + (l.soon ? 'default' : 'pointer') + ';">' +
+      '<span style="font-size:14px;color:' + textColor + ';">' + l.flag + ' ' + l.name + soonTag + '</span>' +
+      check +
+    '</div>';
+  }).join('');
+  var ov = document.createElement('div');
+  ov.id = 'idioma-modal-overlay';
+  ov.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;padding:20px;';
+  ov.onclick = function(e) { if (e.target === ov) ov.remove(); };
+  ov.innerHTML =
+    '<div style="background:#fff;border:3px solid var(--gold);border-radius:16px;padding:20px;width:100%;max-width:300px;">' +
+      '<div style="text-align:center;font-size:16px;font-weight:700;color:#111;margin-bottom:14px;">'+t('idioma_label')+'</div>' +
+      rows +
+      '<div onclick="document.getElementById(\'idioma-modal-overlay\').remove()" style="margin-top:14px;text-align:center;padding:12px;border:1px solid #ddd;border-radius:10px;font-size:14px;font-weight:600;color:#333;cursor:pointer;">'+t('cancelar')+'</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+};
+
+window._setIdioma = function(code) {
+  if (window._i18n) window._i18n.setLang(code);
+  else localStorage.setItem('aurex_lang', code);
+  var ov = document.getElementById('idioma-modal-overlay');
+  if (ov) ov.remove();
+  var flags = { es: '🇪🇸', en: '🇺🇸', pt: '🇧🇷', zh: '🇨🇳', fr: '🇫🇷', it: '🇮🇹', hi: '🇮🇳', ar: '🇦🇪' };
+  var flagEl = document.getElementById('lang-flag');
+  if (flagEl) flagEl.textContent = flags[code] || '🇪🇸';
+};
+
+// === LIVE refresh timer (punto 14) ===
+window._liveLastFetch = Date.now();
+(function _initLiveTimer() {
+  function updateLiveTime() {
+    var diff = Math.floor((Date.now() - (window._liveLastFetch || Date.now())) / 1000);
+    var txt = diff < 60 ? t('mkt_live_hace_s') + diff + 's' : t('mkt_live_hace_s') + Math.floor(diff / 60) + t('mkt_live_hace_min');
+    var el = document.getElementById('liveTime');
+    if (el) el.textContent = txt;
+    var el2 = document.getElementById('liveTimePort');
+    if (el2) el2.textContent = txt;
+  }
+  setInterval(updateLiveTime, 10000);
+  updateLiveTime();
+})();
+
+// === Inyección por tab (sort menus) ===
+
+window._initSortMenus = function() { try {
+  // PORTFOLIO
+  if (!document.getElementById('portfolio-sort-wrap')) {
+    var portCnt = document.getElementById('port-cnt');
+    if (portCnt && portCnt.parentElement) {
+      var pw = document.createElement('div');
+      pw.style.cssText = 'display:flex;justify-content:flex-end;padding:6px 14px 2px;';
+      pw.appendChild(_buildSortBtn('portfolio', function(k){ try { window._applyPortfolioSort(k); } catch(e){ console.error('sort port', e); } }));
+      portCnt.parentElement.insertBefore(pw, portCnt);
+      // No aplicar sort al init — solo cuando usuario selecciona opción
+    }
+  }
+
+  // MERCADOS — entre .tabs y #cnt
+  if (!document.getElementById('mercados-sort-wrap')) {
+    var tabs = document.querySelector('#screen-mercados .tabs');
+    var mktCnt = document.getElementById('cnt');
+    if (tabs && mktCnt && tabs.parentElement) {
+      var mw = document.createElement('div');
+      mw.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
+      mw.appendChild(_buildSortBtn('mercados', function(k){ try { window._applyMercadosSort(k); } catch(e){ console.error('sort mkt', e); } }));
+      tabs.parentElement.insertBefore(mw, mktCnt);
+    }
+  }
+
+  // IA — sort inline ya está en HTML (ia-sort-inline), no inyectar segundo
+
+  // WATCHLIST — MutationObserver
+  var wc = document.getElementById('watch-cnt');
+  if (wc && !wc._sortObserverAdded) {
+    var inject = function() {
+      if (!wc || wc.children.length < 2) return;
+      if (document.getElementById('watchlist-sort-wrap')) return;
+      var ww = document.createElement('div');
+      ww.id = 'wl-sort-bar';
+      ww.style.cssText = 'display:flex;justify-content:flex-end;padding:4px 14px 2px;';
+      ww.appendChild(_buildSortBtn('watchlist', function(k){ try { window._applyWatchlistSort(k); } catch(e){ console.error('sort wl', e); } }));
+      var anchor = wc.children[2] || null;
+      if (anchor) wc.insertBefore(ww, anchor);
+      else wc.appendChild(ww);
+    };
+    var obs = new MutationObserver(function() {
+      // re-inyectar si se borró
+      if (!document.getElementById('watchlist-sort-wrap')) inject();
+    });
+    obs.observe(wc, { childList: true });
+    wc._sortObserverAdded = true;
+    inject(); // intento inicial
+  }
+} catch(e) { console.error('_initSortMenus error:', e); } };
