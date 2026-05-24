@@ -3,6 +3,7 @@
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
 > **Última actualización:** 22-may-2026 AR (TARDE) — **🟢 iOS Build 33 "AurexLive" ENVIADO a revisión de Apple (22/05 12:53 AR · submission `e0e7fb35` · estado "Pendiente de revisión")**. Estrategia: rebrand de grafía **"AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS + **reply de coexistencia** (AurexNova/AurexPro conviven; aurex.ai = Beinex GRC, otro rubro). Ver **§1.e** + **§2.4-septies/octies**. · PWA: "INVEST AI" eliminado + auditoría de paridad + GATING #1 en producción · Landing definitiva · Android Build 36 publicado (intacto como "AUREX").
+> **24-may:** ✅ **IAP Android VALIDADO con compra REAL** (PRO Mensual USD 9.99 + cancelación, cuenta app.aurex — bug #76809 cerrado en producción). 🔴 **PENDIENTE: formulario fiscal EEUU W-8BEN — esta semana (máx 30-may)**, sino Google retiene 30% de los pagos. + Backend: auditoría/fix de fuentes y reportes health (§8.c). Ver **§3.6**.
 > **Cierre de sesión 22-may (TARDE):** Ver **§1.e CIERRE 22-MAY (TARDE) — Build 33 ENVIADO**. Cierre madrugada (PWA): **§1.d**. Documentos: `briefs/PLAN_APPLE_AUREXLIVE_REPLY_22MAY.md` · `briefs/AUDITORIA_PARIDAD_CONSOLIDADO_22MAY.md` + carpeta `briefs/paridad_pwa_22may/`.
 > **Última actualización significativa previa:** Ver **§1.c ACTUALIZACIÓN 21-MAY (TARDE)** (foto landing/SEO). Hitos: **LANDING cerrada para difusión** (4 fixes mobile + card "Analizamos/No operamos" con columna SÍ + SEO completo: favicon, robots, sitemap, noindex /app+privacy, fix noindex heredado, Google Search Console verificado + indexación solicitada) · **PLAN MKT DESBLOQUEADO** (landing live) · **PWA actualización URGENTE** (sacar "INVEST AI" + paridad Build 36) · Android Build 36 PUBLICADO + monetización PayPal mapeada · iOS Build 17 en revisión, Build 32 preparado.
 > **URL canónica para Escritorio:** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
@@ -24,9 +25,9 @@
 |---|---|---|---|
 | 🍎 **Apple iOS — Build 33 "AurexLive"** | 🟢 **ENVIADO a revisión Apple 22/05 12:53 AR** (submission `e0e7fb35-11a4-4c1d-854c-60a80c4799e6`, estado **"Pendiente de revisión"**). Responde el 2° rechazo 4.1(c) Copycats con **rebrand de grafía "AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS (patrón AurexNova/AurexPro que Apple SÍ aprueba) + **reply de coexistencia** (aurex.ai = Beinex GRC, rubro distinto; sin reclamar trademark) + PDF Namecheap. Build 33 = Build 32 + `CFBundleDisplayName=AurexLive` + headers internos iOS condicionales. Ver §1.e + §2.4-septies/octies | **Esperar respuesta Apple (24-48h)**. Manual Release **OFF** (no se publica solo si aprueba). Si **aprueba** → evaluar rebrand de coherencia total (Android+web+headers, §3.5). Si **re-rechaza** citando contenido interno → rebrand headers/onboarding o escalar a App Review Board | Apple (en review) |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
-| 🤖 **Android Build 36 (v1.0.36)** | 🟢 **APROBADO + PUBLICADO en PRODUCCIÓN** (21 may 7:29 AM — "Disponible en Google Play", usuarios reciben la actualización). v1.0.36 = nueva producción pública. Incluye fix IAP #76809 | **Validar compra IAP REAL en producción** (cuenta real, refund 48h) — confirmar que el fix funciona. #90 (futuro): nombre cuenta dev + edge-to-edge | — |
+| 🤖 **Android Build 36 (v1.0.36)** | 🟢 **PUBLICADO en PRODUCCIÓN** + **IAP VALIDADO con compra REAL** (24-may: PRO Mensual USD 9.99 cobrado + cancelación, cuenta app.aurex). | **🔴 Completar formulario fiscal EEUU (W-8BEN) — esta semana, máx 30-may** (sino Google retiene 30% de los pagos). Ver §3.6. #90 (futuro): nombre cuenta dev + edge-to-edge | Trámite Fernando |
 | 🤖 **Android Build 33 producción** | 🟢 PUBLICADO Play Store (queda como producción hasta que 36 apruebe) | Será reemplazado por Build 36 | — |
-| ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO** (rebuild limpio `gradlew clean` en Build 36) | Validar compra real cuando Build 36 esté en track | — |
+| ✅ **IAP / RevenueCat #76809** | 🟢 **RESUELTO + VALIDADO EN PRODUCCIÓN REAL** (24-may: compra PRO Mensual USD 9.99 + cancelación, ambas OK en RevenueCat y en el dispositivo) | — (cerrado) | — |
 | 🎨 **Landing aurex.live (index.html root)** | 🟢 **DEFINITIVA y lista para compartir** — 4 fixes mobile (Deslizá, MOTOR/PULSO video, footer) + card SÍ/NO rediseñado (8 idiomas) + **SEO completo** (favicon, robots, sitemap, noindex, fix noindex heredado, Search Console verificado) | **Barrido funcional pre-difusión** (newsletter/descargas/canales/cotizaciones) + copy a Build 36 (#86) | OK Fernando |
 | 📋 **Plan MKT** | 🟡 **DESBLOQUEADO — clave arrancar** (landing ya live; cae el bloqueante) | Leer `MARKETING_CONTEXT_AUREX` → definir canales/piezas/calendario con Fernando | — |
 | 🌐 **PWA aurex.live `/app/`** | 🟡 **Actualización URGENTE** — recibe tráfico desde la landing | Sacar "INVEST AI" (texto prohibido visible) + paridad Build 36 (push/telegram/alertas/UX planes) | — |
@@ -488,6 +489,24 @@ Bug que bloqueaba registro de usuarios nuevos Android (onboarding slide 4 cablea
 **Cruz con iOS (dato verificado):** el `CFBundleDisplayName` en `ios/AurexApp/Info.plist` hoy dice **`AUREX`** (no "AUREX LIVE"). Si se decide "AurexLive", ese es el valor a poner en iOS Build 25 (ya estaba como pendiente en §2.7) y en Android `strings.xml` — para que las 3 superficies (Play, App Store, ícono) queden consistentes.
 
 **Decisión: evaluar a fondo SOLO tras superar el rechazo iOS. Por ahora queda documentado, sin tocar Android (producción estable).**
+
+---
+
+### 3.6 ✅ IAP VALIDADO en producción real + 🔴 PENDIENTE fiscal W-8BEN (24-may-2026)
+
+**✅ IAP #76809 VALIDADO con compra REAL (24-may):**
+- Compra real desde Android v1.0.36 con la cuenta **app.aurex@gmail** → **PRO Mensual `com.fernandomoscon.aurex.pro.monthly` · USD 9.99 cobrado** (producción, NO sandbox — verificado con el toggle "Sandbox data" OFF en RevenueCat). Registrada en RevenueCat (New Sub · Argentina · Play Store).
+- **Cancelación** desde el dispositivo → procesada correctamente.
+- → Ciclo compra+cancelación IAP funciona **end-to-end en producción real**. El bug que costó 3 días de bloqueo P0 queda **cerrado y validado con dinero real**.
+- **Recuperar los USD 9.99 de la prueba:** Play Console → Pedidos → Reembolsar (100% dentro de 48h de la compra).
+
+**🔴 PENDIENTE — Formulario fiscal de EEUU (W-8BEN) — HACER ESTA SEMANA (máx. 30-may-2026):**
+- **Qué:** Google Play (operado por Google LLC, EEUU) exige el formulario fiscal de EEUU a todo dev que cobra. Para individuo argentino = **W-8BEN**. Verificado el 24-may en Play Console → Pagos → "Información fiscal de Estados Unidos": **NO está cargado** (sale la pantalla "Antes de comenzar" = formulario en blanco). Lo que SÍ está (verificado 22-abr) es el **perfil de pagos** (banco + dirección) — eso es OTRA cosa.
+- **Por qué urgente:** sin el W-8BEN, **Google retiene hasta el 30% de los pagos** hasta aprobarlo. NO bloquea ventas, pero retiene la plata. Apareció ahora porque la compra real generó la primera transacción.
+- **Cómo:** Play Console → Pagos → Configuración → Información fiscal de EEUU → "Agregar info fiscal". 15-20 min (se cae tras 1h, no guarda). Datos: Persona física · Argentina · **CUIT como foreign TIN** · **Argentina NO tiene tratado con EEUU** (no se reclama reducción) · actividad realizada fuera de EEUU.
+- **Cómo se hará:** lo completa **Fernando con Code acompañando en línea** (campo por campo), idealmente con el **contador** confirmando los campos sensibles (TIN, tipo de ingreso). Es declaración jurada fiscal → no improvisar. **Code NO es asesor fiscal.**
+
+**🟢 Mail "formas de pago alternativas" (24-may) — NO es problema:** es una función de la cuenta de Google de app.aurex **como COMPRADOR** (se activó al hacer la compra de prueba: respaldo de tarjetas si la principal falla). NO afecta a AUREX/Play Console. NO confundir con "Alternative/User Choice Billing" para devs (eso es otra cosa). Sin acción requerida.
 
 ---
 
