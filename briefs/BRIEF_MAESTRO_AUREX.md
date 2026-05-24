@@ -773,6 +773,13 @@ Clean SIEMPRE · Backup SIEMPRE antes de subir · Fernando NO toca Xcode · iOS 
 ## 8.c 📡 STATUS CONEXIONES — FALLBACK — REPORTES HEALTH (Telegram diario/mensual + alerta % uso)
 
 > **Auditoría profunda del sistema de fuentes de datos (24-may-2026, Code, sobre el código real `aurex-backend/server.js` + estado en vivo de Railway).** Repo backend: `github.com/fmoscon-creator/aurex-backend` (PÚBLICO). Endpoint estado en vivo: `aurex-app-production.up.railway.app/api/debug/sources`.
+> **✅ ESTADO: IMPLEMENTADO y EN PRODUCCIÓN (24-may, deploys 1-4 a Railway) — ver §8.c.7.** Lo de §8.c.3/§8.c.4 queda como registro de la auditoría.
+
+**🔎 Hallazgos clave de la ejecución (24-may):**
+- **El ÚNICO símbolo que caía a CoinGecko era USDT** (stablecoin $1), pedido cada 2 min → quemaba ~80% del cupo Demo por 1 activo de 350. Resuelto: stablecoins (USDT/USDC/DAI) se refrescan cada 12h.
+- **CoinGecko Demo NO expone el uso real por API** (verificado: `/api/v3/key` → error 10005 "PRO only"; las respuestas no traen headers de cupo). El % real del mes solo vive en el **dashboard/email** de CoinGecko. El reporte muestra el conteo interno + esa aclaración. **CryptoCompare SÍ** lo expone (`/stats/rate/limit` → dato real, hoy 16.200/11.000 = 147%, agotada).
+- **Las alertas de cupo iban por WhatsApp/Evolution (PAUSADO WA-002) → nunca llegaban.** Se cablearon a **Telegram** (`notifyAdminTG`).
+- **Endpoints nuevos:** `/api/debug/quotas` (uso de cupo) y **`/api/health/reports?format=text`** (reportes desde Supabase, accesibles por Code y Escritorio — NO Dropbox).
 
 ### 8.c.1 Cascada por tipo de activo — cuál está ACTIVA
 | Tipo | Fuente ACTIVA | Estado | Cascada de respaldo |
@@ -816,7 +823,8 @@ Clean SIEMPRE · Backup SIEMPRE antes de subir · Fernando NO toca Xcode · iOS 
 ### 8.c.5 Sistema de reportes Health x Telegram (cómo funciona HOY)
 - **Diario** — `dailyHealthReport()`: **2×/día, 08:00 y 20:00 AR**. Numerado **#seq** (autoincrement de Supabase tabla `daily_reports` → ese es el "#51"). Contenido: conexiones por categoría + % CryptoCompare + incidentes 24h. Se manda por Telegram (`ADMIN_TELEGRAM_CHAT_ID`) y persiste en Supabase.
 - **Mensual** — `monthlyHealthReport()`: **último día hábil del mes** (18:00 AR; si cae finde, el viernes previo). Persiste en `monthly_reports`. → **A mejorar** con días-activos-por-fuente (boceto 8.c.6).
-- **Alerta % uso:** CryptoCompare 80/95% (ya existe). CoinGecko 80/90% (a crear). + tope por fuente en cada reporte (a agregar).
+- **Alerta % uso:** CryptoCompare 80/95% ✅ (ahora por Telegram). CoinGecko 80/90% ✅ (sobre conteo interno). + tope por fuente en cada reporte ✅. Todo por Telegram.
+- **Tally diario** ✅ (`_tallySourceDay`, 22:00 AR) registra la fuente activa cripto+stock del día → alimenta el informe mensual. **Endpoint reportes:** `/api/health/reports`.
 
 ### 8.c.6 Boceto — INFORME MENSUAL CONSOLIDADO (objetivo: fin de mayo)
 ```
@@ -840,8 +848,13 @@ Clean SIEMPRE · Backup SIEMPRE antes de subir · Fernando NO toca Xcode · iOS 
 ━━━━━━━━━━━━━━━━━━
 ```
 
-### 8.c.7 Plan de implementación (pendiente de ejecutar en backend — deploy Railway)
-Orden: **(1)** USDT cache 12h + Binance→`.us` (health/reporte + 6 llamadas) — *deadline reporte 08:00*; **(2)** alerta CoinGecko 80/90% + tope por fuente en el reporte; **(3)** alerta genérica agotamiento/reactivación por fuente; **(4)** endpoint público de reportes + export mensual a GitHub; **(5)** informe mensual con días-activos-por-fuente.
+### 8.c.7 ✅ Implementación — EJECUTADA (deploys 1-4 a Railway, 24-may)
+- **Deploy 1 (`9951e68`):** USDT/stablecoins cada 12h + `api.binance.com`→`api.binance.us` en TODO (precios, señales, sentiment, klines, health, reporte). → el reporte ya no miente con el 451.
+- **Deploy 2 (`d4b5477`):** contador+alerta CoinGecko 80/90%, alertas de cupo cableadas a **Telegram** (antes WhatsApp muerto), topes por fuente en el reporte, alerta de **agotamiento + reactivación** (CC+CG).
+- **Deploy 3 (`55df902`):** intento de leer uso real vía API → reveló que CoinGecko Demo no lo expone (solo CryptoCompare lo da).
+- **Deploy 4 (`f193e5c`):** CoinGecko sin invento (conteo interno + nota), endpoint **`/api/health/reports`** (Supabase, NO Dropbox), **tally diario** de fuente activa + sección "DÍAS ACTIVOS POR FUENTE" en el informe mensual.
+- **Verificado en vivo:** 54 cripto cotizando (Binance.US activa), CryptoCompare real 147%, endpoint de reportes devuelve daily+mensual.
+- **Limitación honesta:** el tally arrancó a medir el **24-may** → el informe mensual de mayo será **parcial** (24→31); el primero completo es el de **junio**. (Export del mensual a GitHub: opcional, NO implementado — los reportes ya son accesibles por el endpoint.)
 
 ---
 
