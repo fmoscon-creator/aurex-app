@@ -770,6 +770,81 @@ Clean SIEMPRE · Backup SIEMPRE antes de subir · Fernando NO toca Xcode · iOS 
 
 ---
 
+## 8.c 📡 STATUS CONEXIONES — FALLBACK — REPORTES HEALTH (Telegram diario/mensual + alerta % uso)
+
+> **Auditoría profunda del sistema de fuentes de datos (24-may-2026, Code, sobre el código real `aurex-backend/server.js` + estado en vivo de Railway).** Repo backend: `github.com/fmoscon-creator/aurex-backend` (PÚBLICO). Endpoint estado en vivo: `aurex-app-production.up.railway.app/api/debug/sources`.
+
+### 8.c.1 Cascada por tipo de activo — cuál está ACTIVA
+| Tipo | Fuente ACTIVA | Estado | Cascada de respaldo |
+|---|---|---|---|
+| **Cripto** (50 + 3 stable) | **Binance.US** | 🟢 | CryptoCompare(fb1 🔴) → OKX(fb2 🟢) → Kraken(fb3 🟢) → CoinGecko(fb4 🟢) → caché |
+| **Acciones / ETF / Bonos / Metales / Commodities / Forex / Futuros** (297) | **Yahoo Finance** | 🟢 | Finnhub(fb1 🟢) → Alpha Vantage(fb2 🟢, 25/día) |
+
+- **Binance.US ≠ api.binance.com:** los **precios** usan `api.binance.us` (funciona, sin geo-block). `api.binance.com` (global) está bloqueada por Railway con **HTTP 451**.
+- Binance.US NO lista 5 símbolos (`INJ, TON, USDT, XMR, RUNE`) → caen por la cascada. Hoy (verificado en vivo): INJ/TON los trae OKX, XMR Kraken, y **USDT es el ÚNICO que cae a CoinGecko**.
+- **Binance.US NO sirve para stocks/ETF/etc.** (es exchange cripto puro, no cotiza renta variable/fija). Para reforzar esa cascada habría que sumar otra fuente de stocks (Twelve Data / FMP / Stooq / Polygon).
+
+### 8.c.2 Estado + TOPE de cada fuente (la capacidad de desborde, no solo verde/rojo)
+| Fuente | Rol | Tope del plan | Estado | Reset |
+|---|---|---|---|---|
+| Binance.US | cripto primaria | sin límite | 🟢 | — |
+| CryptoCompare | cripto fb1 | **11.000/mes** | 🔴 AGOTADA (17.760/11.000) | día 1 de cada mes (cron `0 3 1 * *`) |
+| OKX | cripto fb2 | sin key | 🟢 | — |
+| Kraken | cripto fb3 | sin key | 🟢 | — |
+| CoinGecko | cripto fb4 | **~10.000/mes (Demo)** | 🟡 ~80% | fin de mes |
+| Yahoo | stocks primaria | sin límite | 🟢 | — |
+| Finnhub | stocks fb1 | (verificar) | 🟢 | — |
+| Alpha Vantage | stocks fb2 | **25/día** | 🟢 | diario |
+
+### 8.c.3 🔴 Problemas detectados (auditoría 24-may)
+1. **USDT quema CoinGecko:** 1 stablecoin ($1,00 fijo) pedida **720×/día** (cada 2 min) consume ~80% del cupo Demo. Por 1 activo de 350.
+2. **El reporte miente sobre Binance:** el health/reporte chequea `api.binance.com` (451) en vez de `api.binance.us` (la real, OK) → muestra "Binance rojo 451" cuando la primaria está sana.
+3. **6 llamadas a `api.binance.com` global** (señales IA, sentiment, klines: líneas 1998/2237/2244/2312/2474/2713) fallan con 451 → análisis degradado.
+4. **Sin alerta de CoinGecko:** solo CryptoCompare tiene contador+alerta. El aviso del 80% llegó por **email del proveedor**, no por el backend.
+5. **Reportes solo en Supabase** (no había backup accesible; Dropbox tenía 2 `.docx` viejos manuales).
+6. **Informe mensual sin "días activos por fuente"** (el detalle que se quiere).
+7. **Sin alerta genérica de agotamiento + reactivación** por fuente.
+
+### 8.c.4 ✅ Decisiones (24-may) — a implementar en el backend
+- **USDT:** dejar de pedirlo en vivo → **cache 12h (2×/día)** (o hardcode $1,00). CoinGecko cae de ~21.600/mes a ~60/mes. **[DECIDIDO]**
+- **Binance:** migrar `api.binance.com` → `api.binance.us` en el health/reporte **y** en las 6 llamadas de señales/sentiment/klines → el reporte refleja la verdad. **Deadline: dejar corregido para el reporte de las 08:00 AR. [DECIDIDO · URGENTE]**
+- **Alerta CoinGecko 80% / 90%** (igual que CryptoCompare). **[DECIDIDO]**
+- **Mostrar el TOPE de cada fuente en el reporte** (se use o no) + % de uso → anticipa desborde, no solo verde/rojo cuando ya cayó. **[DECIDIDO]**
+- **Alerta genérica de agotamiento + reactivación** para CUALQUIER fuente con límite: Telegram especial al agotarse Y al reactivarse en el reset del período (no solo CryptoCompare). **[DECIDIDO]**
+- **Guardado de reportes:** **NO Dropbox** (es de uso personal de Fernando). → **Supabase (ya los guarda) + endpoint público de lectura** para que Code y Escritorio accedan sin trabas, + **export del mensual a GitHub** (repo público) como archivo durable. **[PROPUESTO por Code — a confirmar Fernando]**
+
+### 8.c.5 Sistema de reportes Health x Telegram (cómo funciona HOY)
+- **Diario** — `dailyHealthReport()`: **2×/día, 08:00 y 20:00 AR**. Numerado **#seq** (autoincrement de Supabase tabla `daily_reports` → ese es el "#51"). Contenido: conexiones por categoría + % CryptoCompare + incidentes 24h. Se manda por Telegram (`ADMIN_TELEGRAM_CHAT_ID`) y persiste en Supabase.
+- **Mensual** — `monthlyHealthReport()`: **último día hábil del mes** (18:00 AR; si cae finde, el viernes previo). Persiste en `monthly_reports`. → **A mejorar** con días-activos-por-fuente (boceto 8.c.6).
+- **Alerta % uso:** CryptoCompare 80/95% (ya existe). CoinGecko 80/90% (a crear). + tope por fuente en cada reporte (a agregar).
+
+### 8.c.6 Boceto — INFORME MENSUAL CONSOLIDADO (objetivo: fin de mayo)
+```
+📊 AUREX — INFORME MENSUAL — MAYO 2026   (#M-05 · último día hábil)
+━━━━━━━━━━━━━━━━━━
+💰 CRIPTO (53 activos)
+  Días con cada fuente ACTIVA:
+   • Binance.US ...... 27 d (87%)  primaria
+   • OKX ............. 3 d (10%)   fb2
+   • CoinGecko ....... 1 d (3%)    fb4
+  Fallbacks que entraron en juego: OKX, CoinGecko
+  Límites alcanzados:
+   • CryptoCompare 🔴 agotó cupo 22/05 (17.760/11.000) — fuera 9 días
+   • CoinGecko 🟡 pico 80% (8.0k/10k)
+  Topes: Binance.US ∞ · CryptoCompare 11k/mes · CoinGecko 10k/mes · OKX/Kraken s/key
+📈 STOCKS/ETF/Bonos/Commod/Forex/Fut (297)
+   • Yahoo ........... 31 d (100%) primaria
+   • Finnhub / Alpha Vantage ... 0 d
+  Límites alcanzados: ninguno
+🚨 Incidentes del mes: N   ·   ⏱ Uptime cotizaciones: 100%
+━━━━━━━━━━━━━━━━━━
+```
+
+### 8.c.7 Plan de implementación (pendiente de ejecutar en backend — deploy Railway)
+Orden: **(1)** USDT cache 12h + Binance→`.us` (health/reporte + 6 llamadas) — *deadline reporte 08:00*; **(2)** alerta CoinGecko 80/90% + tope por fuente en el reporte; **(3)** alerta genérica agotamiento/reactivación por fuente; **(4)** endpoint público de reportes + export mensual a GitHub; **(5)** informe mensual con días-activos-por-fuente.
+
+---
+
 ## 9. MAPA DE ARCHIVOS — dónde vive cada cosa
 
 ### 9.1 Repos GitHub (3)
