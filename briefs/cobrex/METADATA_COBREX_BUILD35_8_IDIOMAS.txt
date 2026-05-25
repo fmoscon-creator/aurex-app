@@ -1,0 +1,229 @@
+==========================================================================
+ METADATA APP STORE CONNECT — COBREX — BUILD 35 — 8 IDIOMAS
+ 25-may-2026 · Para cargar en App Store Connect (lo hace Escritorio)
+ "Cobrex" es nombre propio: NO se traduce en ningun idioma.
+ Limites Apple: Subtitle <=30 · Promotional <=170 · Keywords <=100 · Description <=4000
+==========================================================================
+
+--------------------------------------------------------------------------
+ CAMPOS COMUNES A TODOS LOS IDIOMAS
+--------------------------------------------------------------------------
+APP NAME: Cobrex
+PRIVACY POLICY URL: https://aurex.live/docs/privacy-cobrex.html
+SUPPORT URL: https://aurex.live
+MARKETING URL: https://aurex.live
+COPYRIGHT: 2026 Fernando Moscon
+
+APP REVIEW INFORMATION:
+  Sign-in required: YES
+  Demo user: demo@cobrex.io
+  Demo password: Cobrex2026
+  Contact: Fernando Moscon · +54 11 6789-1320 · fmoscon@gmail.com
+  Adjunto PDF namecheap: ELIMINAR
+  Grupo de suscripciones (ID 22018005): renombrar "AUREX PLANES" -> "Cobrex"
+
+APP REVIEW NOTES (pegar en ingles, una sola vez):
+---
+Dear App Review Team,
+
+The app is named "Cobrex" - an original, coined name with no relation to any third-party brand, product or developer. It is not derived from, nor affiliated with, www.aurex.ai or any other company.
+
+Cobrex is a consumer market-data and statistical-analysis app (informational/educational only; it does not provide financial advice). The app icon is our own original design and contains no third-party brand, logo or text.
+
+Demo account to review all features (ELITE tier enabled):
+- Email: demo@cobrex.io
+- Password: Cobrex2026
+
+In-app purchases use standard StoreKit subscriptions. Thank you.
+
+Fernando Gabriel Moscon - Apple Developer Team ID: TX7C2F79U9
+---
+
+==========================================================================
+ 1) INGLES (EE.UU.) — PRINCIPAL
+==========================================================================
+SUBTITLE: AI market analytics
+PROMOTIONAL TEXT: Track 350+ global assets in real time with AI statistical analysis, Cobrex Pulse and smart alerts. Crypto, stocks, ETFs, commodities and more.
+KEYWORDS: crypto,stocks,trading,alerts,markets,investing,analysis,AI,ETF,commodities,finance,charts
+DESCRIPTION:
+Cobrex is an AI-powered market data analytics platform. It monitors 350+ global assets in real time: cryptocurrencies, stocks, ETFs, commodities, futures and currencies.
+
+WHAT COBREX DOES
+AI engine: evaluates multiple variables per asset to generate probabilistic statistical analysis (not investment recommendations).
+Cobrex Pulse: market sentiment index with 14 weighted variables, from 0 (Extreme Fear) to 100 (Extreme Greed), with Global / Crypto / Stocks / Commodities / Futures filters.
+Smart alerts: get notified when an asset hits your target price, the AI analysis changes, there is a sharp move, or Cobrex Pulse enters an extreme zone. Via push, email or Telegram depending on your plan.
+Portfolio and Watchlist: track your assets and custom lists with live quotes.
+8 languages, light and dark mode.
+
+PLANS
+FREE: basic access to markets and Cobrex Pulse.
+PRO and ELITE: more assets, variables, alerts and advanced indicators (RSI/MACD, geopolitical alerts).
+
+IMPORTANT
+Cobrex is a data visualization and statistical analysis tool for informational and educational purposes only. It does not constitute financial advice or investment recommendations. All decisions are the sole responsibility of the user. Past statistical patterns do not guarantee future results.
+
+==========================================================================
+ 2) ESPANOL (ESPANA)
+==========================================================================
+SUBTITLE: Analisis de mercados con IA
+PROMOTIONAL TEXT: Segui 350+ activos globales en tiempo real con analisis estadistico por IA, Cobrex Pulse y alertas inteligentes. Cripto, acciones, ETFs, commodities y mas.
+KEYWORDS: cripto,acciones,bolsa,trading,alertas,mercados,inversiones,analisis,IA,ETF,commodities,finanzas
+DESCRIPTION:
+Cobrex es una plataforma de analisis de datos de mercado con inteligencia artificial. Monitorea mas de 350 activos globales en tiempo real: criptomonedas, acciones, ETFs, commodities, futuros y divisas.
+
+QUE HACE COBREX
+Motor IA: evalua multiples variables por activo para generar analisis estadistico probabilistico (no son recomendaciones de inversion).
+Cobrex Pulse: indice de sentimiento de mercado con 14 variables ponderadas, de 0 (Miedo Extremo) a 100 (Codicia Extrema), con filtros Global / Cripto / Acciones / Commodities / Futuros.
+Alertas inteligentes: te avisan cuando un activo alcanza tu precio objetivo, cambia el analisis IA, hay una variacion brusca o Cobrex Pulse entra en zona extrema. Por notificacion push, email o Telegram segun tu plan.
+Portfolio y Watchlist: segui tus activos y listas personalizadas con cotizaciones en vivo.
+8 idiomas, modo claro y oscuro.
+
+PLANES
+FREE: acceso basico a mercados y Cobrex Pulse.
+PRO y ELITE: mas activos, variables, alertas e indicadores avanzados (RSI/MACD, alertas geopoliticas).
+
+IMPORTANTE
+Cobrex es una herramienta de visualizacion de datos y analisis estadistico con fines exclusivamente informativos y educativos. No constituye asesoramiento financiero ni recomendaciones de inversion. Toda decision es responsabilidad exclusiva del usuario. Los patrones estadisticos pasados no garantizan resultados futuros.
+
+==========================================================================
+ 3) PORTUGUES (BRASIL)
+==========================================================================
+SUBTITLE: Analise de mercados com IA
+PROMOTIONAL TEXT: Acompanhe 350+ ativos globais em tempo real com analise estatistica por IA, Cobrex Pulse e alertas inteligentes. Cripto, acoes, ETFs, commodities e mais.
+KEYWORDS: cripto,acoes,bolsa,trading,alertas,mercados,investimentos,analise,IA,ETF,commodities,financas
+DESCRIPTION:
+Cobrex e uma plataforma de analise de dados de mercado com inteligencia artificial. Monitora mais de 350 ativos globais em tempo real: criptomoedas, acoes, ETFs, commodities, futuros e moedas.
+
+O QUE O COBREX FAZ
+Motor de IA: avalia multiplas variaveis por ativo para gerar analise estatistica probabilistica (nao sao recomendacoes de investimento).
+Cobrex Pulse: indice de sentimento de mercado com 14 variaveis ponderadas, de 0 (Medo Extremo) a 100 (Ganancia Extrema), com filtros Global / Cripto / Acoes / Commodities / Futuros.
+Alertas inteligentes: avisam quando um ativo atinge seu preco-alvo, a analise de IA muda, ha um movimento brusco ou o Cobrex Pulse entra em zona extrema. Por notificacao push, e-mail ou Telegram conforme seu plano.
+Portfolio e Watchlist: acompanhe seus ativos e listas personalizadas com cotacoes ao vivo.
+8 idiomas, modo claro e escuro.
+
+PLANOS
+FREE: acesso basico a mercados e Cobrex Pulse.
+PRO e ELITE: mais ativos, variaveis, alertas e indicadores avancados (RSI/MACD, alertas geopoliticos).
+
+IMPORTANTE
+Cobrex e uma ferramenta de visualizacao de dados e analise estatistica com fins exclusivamente informativos e educativos. Nao constitui aconselhamento financeiro nem recomendacoes de investimento. Toda decisao e de responsabilidade exclusiva do usuario. Padroes estatisticos passados nao garantem resultados futuros.
+
+==========================================================================
+ 4) ITALIANO
+==========================================================================
+SUBTITLE: Analisi dei mercati con IA
+PROMOTIONAL TEXT: Segui oltre 350 asset globali in tempo reale con analisi statistica IA, Cobrex Pulse e avvisi intelligenti. Cripto, azioni, ETF, materie prime e altro.
+KEYWORDS: cripto,azioni,borsa,trading,avvisi,mercati,investimenti,analisi,IA,ETF,commodities,finanza
+DESCRIPTION:
+Cobrex e una piattaforma di analisi dei dati di mercato con intelligenza artificiale. Monitora oltre 350 asset globali in tempo reale: criptovalute, azioni, ETF, materie prime, futures e valute.
+
+COSA FA COBREX
+Motore IA: valuta piu variabili per asset per generare analisi statistiche probabilistiche (non sono raccomandazioni di investimento).
+Cobrex Pulse: indice di sentiment di mercato con 14 variabili ponderate, da 0 (Paura Estrema) a 100 (Avidita Estrema), con filtri Globale / Cripto / Azioni / Materie prime / Futures.
+Avvisi intelligenti: ti avvisano quando un asset raggiunge il prezzo obiettivo, cambia l'analisi IA, c'e un movimento brusco o Cobrex Pulse entra in zona estrema. Tramite notifica push, email o Telegram in base al tuo piano.
+Portfolio e Watchlist: segui i tuoi asset e liste personalizzate con quotazioni in tempo reale.
+8 lingue, modalita chiara e scura.
+
+PIANI
+FREE: accesso base ai mercati e a Cobrex Pulse.
+PRO ed ELITE: piu asset, variabili, avvisi e indicatori avanzati (RSI/MACD, avvisi geopolitici).
+
+IMPORTANTE
+Cobrex e uno strumento di visualizzazione dati e analisi statistica a scopo esclusivamente informativo ed educativo. Non costituisce consulenza finanziaria ne raccomandazioni di investimento. Ogni decisione e responsabilita esclusiva dell'utente. I modelli statistici passati non garantiscono risultati futuri.
+
+==========================================================================
+ 5) FRANCES (FRANCIA)
+==========================================================================
+SUBTITLE: Analyse des marches par IA
+PROMOTIONAL TEXT: Suivez 350+ actifs mondiaux en temps reel avec analyse statistique par IA, Cobrex Pulse et alertes intelligentes. Crypto, actions, ETF, matieres premieres et plus.
+KEYWORDS: crypto,actions,bourse,trading,alertes,marches,investissement,analyse,IA,ETF,commodities,finance
+DESCRIPTION:
+Cobrex est une plateforme d'analyse de donnees de marche propulsee par l'intelligence artificielle. Elle surveille plus de 350 actifs mondiaux en temps reel : cryptomonnaies, actions, ETF, matieres premieres, contrats a terme et devises.
+
+CE QUE FAIT COBREX
+Moteur IA : evalue plusieurs variables par actif pour generer une analyse statistique probabiliste (ce ne sont pas des recommandations d'investissement).
+Cobrex Pulse : indice de sentiment de marche avec 14 variables ponderees, de 0 (Peur Extreme) a 100 (Avidite Extreme), avec filtres Global / Crypto / Actions / Matieres premieres / Futures.
+Alertes intelligentes : vous etes prevenu lorsqu'un actif atteint votre prix cible, que l'analyse IA change, qu'il y a un mouvement brusque ou que Cobrex Pulse entre en zone extreme. Par notification push, e-mail ou Telegram selon votre forfait.
+Portfolio et Watchlist : suivez vos actifs et listes personnalisees avec des cotations en direct.
+8 langues, mode clair et sombre.
+
+FORFAITS
+FREE : acces de base aux marches et a Cobrex Pulse.
+PRO et ELITE : plus d'actifs, de variables, d'alertes et d'indicateurs avances (RSI/MACD, alertes geopolitiques).
+
+IMPORTANT
+Cobrex est un outil de visualisation de donnees et d'analyse statistique a des fins exclusivement informatives et educatives. Il ne constitue pas un conseil financier ni des recommandations d'investissement. Toute decision releve de la seule responsabilite de l'utilisateur. Les tendances statistiques passees ne garantissent pas les resultats futurs.
+
+==========================================================================
+ 6) CHINO SIMPLIFICADO (ZH-Hans)
+==========================================================================
+SUBTITLE: AI市场数据分析
+PROMOTIONAL TEXT: 实时追踪350+全球资产，提供AI统计分析、Cobrex Pulse和智能提醒。加密货币、股票、ETF、大宗商品等。
+KEYWORDS: 加密货币,股票,交易,提醒,市场,投资,分析,AI,ETF,大宗商品,金融,图表
+DESCRIPTION:
+Cobrex 是一款由人工智能驱动的市场数据分析平台。实时监控350+全球资产：加密货币、股票、ETF、大宗商品、期货和外汇。
+
+COBREX 的功能
+AI引擎：评估每个资产的多个变量，生成概率统计分析（非投资建议）。
+Cobrex Pulse：市场情绪指数，含14个加权变量，从0（极度恐惧）到100（极度贪婪），提供 全球/加密/股票/大宗商品/期货 筛选。
+智能提醒：当资产达到目标价、AI分析变化、出现剧烈波动或Cobrex Pulse进入极端区域时通知您。根据您的方案，通过推送、邮件或Telegram接收。
+投资组合和自选列表：实时行情追踪您的资产和自定义列表。
+8种语言，浅色和深色模式。
+
+方案
+FREE：基础访问市场和Cobrex Pulse。
+PRO和ELITE：更多资产、变量、提醒和高级指标（RSI/MACD、地缘政治提醒）。
+
+重要提示
+Cobrex 是一款数据可视化和统计分析工具，仅供参考和教育用途。不构成投资建议或推荐。所有决策由用户自行负责。过往统计模式不保证未来结果。
+
+==========================================================================
+ 7) HINDI
+==========================================================================
+SUBTITLE: AI से बाज़ार विश्लेषण
+PROMOTIONAL TEXT: 350+ वैश्विक एसेट को रीयल-टाइम में ट्रैक करें — AI सांख्यिकीय विश्लेषण, Cobrex Pulse और स्मार्ट अलर्ट के साथ। क्रिप्टो, स्टॉक, ETF, कमोडिटी और बहुत कुछ।
+KEYWORDS: क्रिप्टो,स्टॉक,ट्रेडिंग,अलर्ट,बाज़ार,निवेश,विश्लेषण,AI,ETF,कमोडिटी,वित्त
+DESCRIPTION:
+Cobrex एक AI-संचालित मार्केट डेटा एनालिटिक्स प्लेटफ़ॉर्म है। यह 350+ वैश्विक एसेट को रीयल-टाइम में मॉनिटर करता है: क्रिप्टोकरेंसी, स्टॉक, ETF, कमोडिटी, फ्यूचर्स और मुद्राएँ।
+
+COBREX क्या करता है
+AI इंजन: हर एसेट के लिए कई वेरिएबल का मूल्यांकन कर संभाव्य सांख्यिकीय विश्लेषण बनाता है (निवेश सिफ़ारिश नहीं)।
+Cobrex Pulse: 14 भारित वेरिएबल वाला मार्केट सेंटिमेंट इंडेक्स, 0 (अत्यधिक भय) से 100 (अत्यधिक लालच) तक, ग्लोबल / क्रिप्टो / स्टॉक / कमोडिटी / फ्यूचर्स फ़िल्टर के साथ।
+स्मार्ट अलर्ट: जब कोई एसेट आपके लक्ष्य मूल्य पर पहुँचे, AI विश्लेषण बदले, तेज़ उतार-चढ़ाव हो या Cobrex Pulse चरम ज़ोन में जाए तो सूचित करते हैं। आपके प्लान के अनुसार push, ईमेल या Telegram से।
+पोर्टफ़ोलियो और वॉचलिस्ट: लाइव भाव के साथ अपने एसेट और कस्टम सूचियाँ ट्रैक करें।
+8 भाषाएँ, लाइट और डार्क मोड।
+
+प्लान
+FREE: मार्केट और Cobrex Pulse तक बुनियादी पहुँच।
+PRO और ELITE: अधिक एसेट, वेरिएबल, अलर्ट और उन्नत संकेतक (RSI/MACD, भू-राजनीतिक अलर्ट)।
+
+महत्वपूर्ण
+Cobrex केवल सूचनात्मक और शैक्षिक उद्देश्यों के लिए एक डेटा विज़ुअलाइज़ेशन और सांख्यिकीय विश्लेषण उपकरण है। यह वित्तीय सलाह या निवेश सिफ़ारिश नहीं है। हर निर्णय पूरी तरह उपयोगकर्ता की ज़िम्मेदारी है। पिछले सांख्यिकीय पैटर्न भविष्य के परिणामों की गारंटी नहीं देते।
+
+==========================================================================
+ 8) ARABE
+==========================================================================
+SUBTITLE: تحليل الأسواق بالذكاء الاصطناعي
+PROMOTIONAL TEXT: تابع أكثر من 350 أصلاً عالمياً في الوقت الفعلي مع تحليل إحصائي بالذكاء الاصطناعي وCobrex Pulse وتنبيهات ذكية. عملات مشفّرة، أسهم، صناديق ETF، سلع والمزيد.
+KEYWORDS: عملات مشفرة,أسهم,تداول,تنبيهات,أسواق,استثمار,تحليل,ذكاء اصطناعي,ETF,سلع,مالية
+DESCRIPTION:
+Cobrex منصة لتحليل بيانات الأسواق مدعومة بالذكاء الاصطناعي. تراقب أكثر من 350 أصلاً عالمياً في الوقت الفعلي: العملات المشفّرة والأسهم وصناديق ETF والسلع والعقود الآجلة والعملات.
+
+ماذا يفعل COBREX
+محرك الذكاء الاصطناعي: يقيّم متغيرات متعددة لكل أصل لإنشاء تحليل إحصائي احتمالي (وليست توصيات استثمارية).
+Cobrex Pulse: مؤشر معنويات السوق بـ 14 متغيراً مرجّحاً، من 0 (خوف شديد) إلى 100 (طمع شديد)، مع فلاتر عالمي / مشفّرة / أسهم / سلع / عقود آجلة.
+تنبيهات ذكية: تُعلمك عندما يصل أصل إلى سعرك المستهدف أو يتغير تحليل الذكاء الاصطناعي أو يحدث تحرك حاد أو يدخل Cobrex Pulse منطقة متطرفة. عبر الإشعارات أو البريد الإلكتروني أو Telegram حسب خطتك.
+المحفظة وقائمة المتابعة: تابع أصولك وقوائمك المخصصة بأسعار حية.
+8 لغات، الوضع الفاتح والداكن.
+
+الخطط
+FREE: وصول أساسي إلى الأسواق وCobrex Pulse.
+PRO وELITE: المزيد من الأصول والمتغيرات والتنبيهات والمؤشرات المتقدمة (RSI/MACD، تنبيهات جيوسياسية).
+
+مهم
+Cobrex أداة لتصور البيانات والتحليل الإحصائي لأغراض إعلامية وتعليمية حصراً. لا تشكّل استشارة مالية أو توصيات استثمارية. كل قرار يقع على مسؤولية المستخدم وحده. الأنماط الإحصائية السابقة لا تضمن نتائج مستقبلية.
+
+==========================================================================
+ FIN — 8 idiomas listos. App Name "Cobrex" identico en todos.
+ Revisar limites de caracteres al pegar (Apple recorta lo que exceda).
+==========================================================================
