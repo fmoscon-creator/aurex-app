@@ -152,8 +152,8 @@ The app is named "Cobrex" — an original, coined name with no relation to any t
 Cobrex is a consumer market-data and statistical-analysis app (informational/educational only; it does not provide financial advice). The app icon is our own original design and contains no third-party brand, logo or text.
 
 Demo account to review all features (ELITE tier enabled):
-- Email: [DEMO_EMAIL]
-- Password: [DEMO_PASSWORD]
+- Email: demo@cobrex.io
+- Password: [definida — la carga Escritorio en Connect; no va en repo público]
 
 In-app purchases use standard StoreKit subscriptions. Thank you.
 
@@ -169,8 +169,8 @@ Fernando Gabriel Moscón — Apple Developer Team ID: TX7C2F79U9
 
 ### 7.9 Datos de contacto / Demo (DECISIONES)
 - **Email de contacto de revisión:** `fmoscon@gmail.com` → **se mantiene** (no tiene marca).
-- **Usuario demo:** hoy es `app.aurex@gmail.com`. Tiene "aurex". **Riesgo bajo** (un reviewer rara vez mira el dominio del login) pero para cero ambigüedad → **DECISIÓN Fernando:** (A) mantener, o (B) Code crea un usuario demo neutral en Supabase (sin "aurex") con plan ELITE. Recomendación Code: si hay tiempo, (B).
-- **Password demo:** se mantiene el actual (no se expone aquí; está en SECRET).
+- **Usuario demo:** ✅ **RESUELTO** — creado `demo@cobrex.io` en Supabase (email confirmado, plan **ELITE**, login verificado OK). Reemplaza a `app.aurex@gmail.com`.
+- **Password demo:** definida (`Cobrex2026` u otra que confirme Fernando) — la carga Escritorio en Connect; NO se escribe en este repo público.
 - **Nombre/teléfono de contacto:** se mantienen.
 
 ### 7.10 Grupo de suscripciones
