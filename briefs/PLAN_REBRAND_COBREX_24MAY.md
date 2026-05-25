@@ -186,3 +186,26 @@ Fernando Gabriel Moscón — Apple Developer Team ID: TX7C2F79U9
 ## 8. ⚠️ RIESGO
 - 4.1c con Cobrex: **bajo** (no hay app ni marca homónima, a diferencia de Aurex vs aurex.ai).
 - Connotación "cobra/cobrar": no afecta aprobación; en ES juega a favor.
+
+---
+
+## 9. 🔄 ACTUALIZACIÓN v3 — 25-may (estado consolidado Code + Escritorio)
+
+### ✅ HECHO
+- **Connect CARGADO (Escritorio):** App Name→Cobrex, Subtitle, y **metadata en los 8 idiomas** (Promo, Description, Keywords EN ya en inglés). Grupo de suscripciones "AUREX PLANES"→"Cobrex" (ID 22018005, Product IDs intactos). App Review: demo `demo@cobrex.io` / `Cobrex2026`, notas Cobrex nuevas, **PDF namecheap eliminado**, publicación Manual.
+- **Metadata 8 idiomas** (texto fuente): `briefs/cobrex/METADATA_COBREX_BUILD35_8_IDIOMAS.txt` + Dropbox.
+- **Código iOS (texto):** brand.js→Cobrex, i18n 272, 7 pantallas, **NSPermissions Info.plist** (cámara/FaceID/galería)→Cobrex.
+- **Onboarding rediseñado (aprobado):** modo CLARO, **logo transparente sin marca HD** (`Dropbox/AUREX/LOGO AUREX/logo_AUREX_TRANSPARENTE_SIN_MARCA*.png`), 4 ganchos en código i18n (8 idiomas), íconos vectoriales. **80 PNGs** archivados en `Dropbox/AUREX/ONBORDING/ONBORDING IOS BUILD 35 MODO CLARO|OSCURO/<idioma>/`.
+- **Paywall post-signup** (FREE + PRO/ELITE mensual+anual), **tab inicial → Mercados**, **ojo 👁 en "repetir contraseña"** del signup, demo user ELITE.
+- Páginas legales Cobrex vivas (privacy/terms-cobrex.html, HTTP 200).
+
+### ⏳ PENDIENTE Build 35 (Code — mañana)
+1. Regenerar **splash nativo** (BootSplashLogo) + **pantalla de carga** (launch_header) a "Cobrex".
+2. Portar onboarding aprobado a RN + **detección de idioma** (EN default; si el device está en uno de los 8, ese).
+3. Bump `CURRENT_PROJECT_VERSION` 34→**35** + clean obligatorio + archive + export IPA + validar binario (0 "AUREX" en assets).
+
+### ⏳ PENDIENTE envío (Fernando — mañana)
+- Sube Build 35 (Transporter) + screenshots modo claro (iPhone 6.5" + iPad 13") + los 2 clics finales.
+
+### ⚠️ ABIERTO
+- **Privacy Policy URL** en Connect: está en **App Information → info localizable → "URL de política de privacidad"** = `https://aurex.live/docs/privacy-cobrex.html`. Escritorio/Fernando lo setean ahí.
