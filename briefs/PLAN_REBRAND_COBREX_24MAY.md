@@ -1,100 +1,188 @@
-# 🔁 PLAN DE REBRAND iOS → "COBREX" (Plan B — Apple Guideline 4.1c)
+# 🔁 PLAN REBRAND iOS → "COBREX" — BUILD 35 (Plan B, Apple Guideline 4.1c)
 
-> **24-may-2026.** Para revisión de Escritorio + ejecución coordinada. Raw URL: `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/PLAN_REBRAND_COBREX_24MAY.md`
-> **Contexto:** Apple rechazó "Aurex / AurexLive" **3 veces** (Guideline 4.1c Copycats — la raíz "Aurex" pertenece a www.aurex.ai/Beinex). Plan B = renombrar la app a **COBREX** (sin "Aurex").
-
----
-
-## 0. EL NOMBRE — COBREX (decidido por Fernando 24-may)
-- **Verificación consolidada (Code + Escritorio, coinciden):** iOS US/AR libre · Android libre · **USPTO sin registro** · **EUIPO**: solo existe "ECOBREX" (con E, lubricantes/química — nombre y rubro distintos, **no es conflicto**) · `.io` LIBRE · `.live` LIBRE · `.com` tomado · `.ai` LIBRE (verif. Escritorio).
-- **Única homónima:** "Kobrex" (con **K**, cables de cobre, manufactura — otra grafía, otro rubro, **sin app** → no dispara 4.1c).
-- **Connotación:** "REX" = rey (premium, misma energía que Aurex). "Cobra" en EN = serpiente (leve); en **ES "cobrar" = dinero** (positivo para fintech) + raíz "cobre" = metal/valor.
-- **PENDIENTE de Fernando:** (1) confirmar 100% en `tmsearch.uspto.gov` + `euipo.europa.eu/eSearch`; (2) registrar dominio → **`cobrex.live`** (combina con el actual) o `cobrex.io`.
-
-> **🎯 ALCANCE: SOLO iOS (definido por Fernando 24-may).** Android está **publicado y funcionando** como "AUREX" (v1.0.36, Google ya aprobó) → **NO se toca ahora.** Android/web se evalúan **solo SI Apple aprueba "Cobrex" en iOS** — no se arriesga lo que ya funciona por un nombre que todavía no pasó la review.
+> **Creado 24-may-2026 · Actualizado 25-may-2026 (v2 — Build 35).** Raw URL: `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/PLAN_REBRAND_COBREX_24MAY.md`
+> **Contexto:** Apple rechazó "Aurex/AurexLive" **3 veces** (4.1c Copycats — la raíz "Aurex" es de www.aurex.ai/Beinex). Plan B = renombrar a **COBREX**.
+> **🎯 ALCANCE: SOLO iOS.** Android está publicado y funcionando como "AUREX" (v1.0.36) → **NO se toca.** Se evalúa solo SI Apple aprueba Cobrex.
 
 ---
 
-## 1. 🔒 LO QUE NO SE TOCA (CRÍTICO — romper esto sería catastrófico)
-- **Bundle ID iOS** `com.fernandomoscon.aurex` y **Android** `com.aurexapp` → **NO cambian** (son invisibles al usuario; cambiarlos = app nueva, se pierde historial/suscripciones).
-- **Product IDs de IAP** (`com.fernandomoscon.aurex.pro.monthly`, etc.) → **NO cambian.**
-- **RevenueCat, Supabase, Backend (lógica), API keys** → **NO se tocan.** Suscripciones, cobros y datos siguen igual.
-- **Ícono de la app** (la "A" dorada) → **NO se toca** (Apple objetó el NOMBRE, no el ícono).
-- **Repos de GitHub** → no se renombran.
+## ⚠️ POR QUÉ ESTE PLAN ES v2 (qué salió mal con el "Build 34")
+
+El "Build 34" cambió **todo el texto** a Cobrex (verificado) pero **NO las imágenes con "AUREX" horneado**. Un reviewer que instala "Cobrex" desde cero veía "AUREX" en el splash, en la pantalla de carga y en el onboarding → inconsistencia y riesgo de rechazo. **Build 34 queda DESCARTADO.** El build válido es **Build 35** = texto + imágenes.
+
+Errores reconocidos:
+- **Code:** ejecutó hasta compilar sin auditar las 3 superficies de imagen; la info ya estaba en `PLAN_APPLE_AUREXLIVE_REPLY_22MAY.md` (onboarding "AUREX incrustado") y no se cruzó.
+- **Proceso:** el código nativo vive local (rama `dev`, sin commitear) y el remoto `AurexApp` está contaminado (`version=11`) → Escritorio no podía auditar. **Solucionado:** snapshot del código en `briefs/cobrex/code_snapshot/` (raw URLs abajo).
+
+---
+
+## 0. NOMBRE — COBREX (decidido por Fernando)
+iOS US/AR libre · Android libre · **USPTO sin registro** · **EUIPO** solo "ECOBREX" (otro rubro, no conflicto) · `.io`/`.live` libres. Dominio se compra **solo si Apple aprueba**. Hoy se usa **aurex.live** para Privacy/Support URL (es metadata editable, no requiere rebuild).
+
+---
+
+## 1. 🔒 LO QUE NO SE TOCA
+- **Bundle ID** `com.fernandomoscon.aurex` · **Product IDs IAP** · **RevenueCat / Supabase / Backend** · **Ícono** (la "A" dorada, sin texto) · **Repos** no se renombran.
+- **`MARKETING_VERSION` = 1.0** (NUNCA cambia; solo sube `CURRENT_PROJECT_VERSION`).
+- **Android** (todo).
 
 ---
 
 ## 2. 👥 ROLES + ⚠️ REGLA DE ORO
-| Rol | Hace | NUNCA hace |
+| Rol | Hace | NUNCA |
 |---|---|---|
-| **Code** | Código nativo, build (clean+archive+IPA), validación de IPA, push de páginas legales | — |
-| **Fernando** | Sube el IPA (Transporter) + asigna grupo de testing + **da el CLIC FINAL de "Enviar/Volver a enviar a revisión"** | — |
-| **Escritorio** | Ajusta/modifica la **metadata en App Store Connect** + opina sobre el plan | **🚨 JAMÁS aprieta el botón final de Revisión/Envío. Deja TODO listo y avisa — el clic lo da Fernando.** |
-
-> **Regla absoluta (Fernando):** el botón que envía a Apple a revisión lo aprieta **ÚNICAMENTE Fernando**, tras revisión conjunta. Escritorio prepara y avisa, nunca envía.
+| **Code** | Código nativo, cableado de imágenes, build (clean+archive+IPA), validación binario, snapshots de auditoría, textos de Connect | — |
+| **Fernando** | **Diseña las 4 pantallas de onboarding** + decide splash, sube el IPA (Transporter), saca screenshots, **da el CLIC FINAL de envío a revisión** | — |
+| **Escritorio** | Ajusta la **metadata en App Store Connect** (con los textos de §7), audita el código vía snapshot | **🚨 JAMÁS aprieta el botón de envío. Prepara y avisa; el clic lo da Fernando.** |
 
 ---
 
-## 3. 🍎 FASE 1 — iOS (lo crítico para destrabar Apple) → Build 34
-
-### 3.1 Código nativo iOS (Code) — `~/AurexApp`
-| # | Archivo | Cambio |
+## 3. ✅ HECHO Y VERIFICADO (texto)
+| Ítem | Estado | Verificación |
 |---|---|---|
-| 1 | `src/lib/brand.js` | `BRAND_NAME` iOS: `'AurexLive'` → **`'Cobrex'`** (1 línea → cubre las 9 pantallas que ya usan la variable: Login, Signup, Portfolio, Mercados, Watchlist, IA, MisAlertas, Perfil, Alertas) |
-| 2 | `ios/AurexApp/Info.plist` | `CFBundleDisplayName` → **`Cobrex`** (nombre bajo el ícono) |
-| 3 | `src/lib/i18n.js` + textos hardcodeados | Reemplazar "AUREX/AurexLive" donde sea **nombre de marca visible** → "Cobrex" en los **8 idiomas** (incluye "AUREX Pulse™", "AUREX Fear & Greed 14X™", FAQ "¿Qué es AUREX?"). Code hace `grep` exhaustivo antes para no dejar ninguno. |
-| 4 | `brand.js` → `PRIVACY_URL`/`TERMS_URL` | apuntar a las páginas Cobrex (ver 3.2) |
-| 5 | `ios/AurexApp.xcodeproj/project.pbxproj` | bump `CURRENT_PROJECT_VERSION` 33 → **34** (`MARKETING_VERSION` queda **1.0**, NO tocar) |
+| `brand.js` iOS → `Cobrex` (Android sigue `AUREX`) | ✅ | snapshot `brand.js` |
+| `Info.plist` `CFBundleDisplayName` → `Cobrex` | ✅ | snapshot `Info.plist` |
+| `pbxproj` `CURRENT_PROJECT_VERSION` (queda en 34, sube a **35** al recompilar) | ⏳ | — |
+| `i18n.js` 272 reemplazos, 0 restos, bot `@Aurexalertas` intacto | ✅ | snapshot `i18n.js` (`grep -c AUREX`=0) |
+| 7 pantallas + UpsellBanner: textos visibles → Cobrex / `COBREX PULSE™` / `COBREX FEAR & GREED 14X™` | ✅ | snapshot `screens/` |
+| Páginas legales **vivas**: `aurex.live/docs/privacy-cobrex.html` + `terms-cobrex.html` | ✅ | HTTP 200 |
+| `brand.js` PRIVACY_URL/TERMS_URL → páginas cobrex | ✅ | snapshot `brand.js` |
 
-Luego: **clean obligatorio** (`rm -rf DerivedData/AurexApp-* ios/build` + `pod install`) → **Archive + Export IPA vía CLI** → **validar IPA** (CFBundleDisplayName=Cobrex, Version=34, signing `com.fernandomoscon.aurex`/TX7C2F79U9) antes de entregar.
-
-### 3.2 Páginas legales que Apple SÍ revisa (Code) — repo `aurex-app`
-- Crear **`docs/privacy-cobrex.html`** + **`docs/terms-cobrex.html`** = copia exacta de las actuales + solo "AUREX/AurexLive" → "Cobrex".
-- Push → URLs vivas en `aurex.live/docs/privacy-cobrex.html` (o en el dominio nuevo cuando se registre).
-- **Dominio en Fase 1 = `aurex.live` (ya lo tenés), con páginas Cobrex.** NO hace falta comprar dominio nuevo para enviar: la Privacy/Support URL es **metadata editable** (se cambia sin reenviar el build). Fernando comprará `cobrex.io`/`cobrex.live` **solo si Apple aprueba**, y ahí se actualiza la URL.
-- **Por qué importa:** el reviewer abre la Privacy/Support URL → deben decir **Cobrex**. El resto de `aurex.live` (landing/PWA) puede seguir "AUREX": Apple revisa el **contenido de las URL que cargás en la ficha**, no explora el dominio.
-
-### 3.3 Metadata en App Store Connect (Escritorio ajusta · Fernando OK · NO envía Escritorio)
-| Campo | Acción |
-|---|---|
-| **App Name** | → **Cobrex** |
-| **Subtitle / Promotional Text** | reemplazar nombre si aparece |
-| **Descripción (corta y larga)** | reemplazar todas las "AurexLive/AUREX" (nombre de marca) → **Cobrex** |
-| **Keywords** | sacar "aurex", evaluar "cobrex" |
-| **Grupo de suscripciones → "Nombre de la app"** | → Cobrex (cosmético, no rompe IAP) |
-| **Privacy Policy URL** | → `aurex.live/docs/privacy-cobrex.html` (o dominio nuevo) |
-| **App Review Notes** | **texto nuevo** (ya NO el de coexistencia): explicar que la app se renombró a **"Cobrex"**, nombre propio sin relación con aurex.ai ni con ninguna marca de terceros. |
-| **Screenshots (10)** | regenerar del Build 34 (las saca **Fernando** del iPhone — ya mostrarán "Cobrex" en los headers) |
-
-### 3.4 Build + envío (Fernando)
-1. Sube **Build 34** con Transporter (síntomas STOP: logo gris / bundleID raw / falta botón Entregar).
-2. Asigna grupo Internal Testing (manual, al subir por CLI no se auto-asigna).
-3. Verifica en iPhone (TestFlight) que diga "Cobrex".
-4. **Reenvía a revisión** → flujo de 2 pasos: "Actualizar revisión" (deja "Listo") → **"Volver a enviar a revisión de apps"** = **CLIC FINAL DE FERNANDO.** Manual Release OFF.
+**Snapshot para auditoría (Escritorio):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/cobrex/code_snapshot/MANIFEST.md`
 
 ---
 
-## 4. 🔵 FASE 2 — Android / web / dominio (CONDICIONAL — SOLO si Apple aprueba Cobrex)
-> **NO se ejecuta ahora.** Android está **publicado y funcionando** como "AUREX" (v1.0.36) y la web también → **no se arriesga lo que ya funciona por un nombre que aún no pasó la review de Apple.** Esta fase se evalúa **solo si Apple aprueba "Cobrex" en iOS.** Incluye: comprar dominio (`cobrex.io`/`cobrex.live`), Android (strings.xml + build + Play Console), PWA/landing (i18n 8 idiomas + logo SVG), onboarding, backend (textos Telegram).
+## 4. ❌ FALTA — IMÁGENES con "AUREX" horneado (lo crítico de Build 35)
+Las 3 se ven adentro de la app; el reviewer las ve al instalar. **Bloqueantes.**
 
-- **Onboarding** (`src/assets/onboarding/v2/` — "AUREX" incrustado en las imágenes): regenerar set Cobrex (manual/diseño).
-- **Android** (`android/app/src/main/res/values/strings.xml` `app_name` + `brand.js` lado Android): → Cobrex + bump versionCode/Name + `gradlew clean` + bundleRelease + Play Console (revisión Google horas/días).
-- **PWA** (`app/aurex-v3.js`, `aurex-features.js`, `app/index.html`, `app/aurex-i18n.js`): "AUREX" → "Cobrex".
-- **Landing** (`index.html` + `landing-i18n.json`/`assets/shared/aurex-i18n.js` 8 idiomas + **logo SVG** `assets/landing/logo-aurex-clean.svg` → confirmar si el "AUREX" es `<text>` editable o `<path>` a rediseñar).
-- **Backend** (`server.js`): textos de Telegram "AUREX" → "Cobrex" (cosmético, deploy instantáneo).
-- **Dominio:** registrar `cobrex.live`/`cobrex.io` y migrar URLs (o mantener `aurex.live` con contenido Cobrex).
+| # | Superficie | Cuándo se ve | Archivo | Quién |
+|---|---|---|---|---|
+| 1 | **Splash nativo** | 1° al abrir, cada vez | `ios/AurexApp/Images.xcassets/BootSplashLogo-092ad1.imageset/` (logo + "AUREX") | **DECISIÓN** (ver §6) |
+| 2 | **Pantalla de carga** | cada arranque | `src/assets/launch_header.png` ("AUREX INVEST AI") | **DECISIÓN** (ver §6) |
+| 3 | **Onboarding** (4 slides) | instalación nueva | `src/assets/onboarding/v2/…` (4×8 idiomas×claro/oscuro) | **Fernando rediseña** |
 
----
+> El onboarding: Fernando lo **diseña de cero** tomando estructura/info de la web. Decisión pendiente: ¿8 idiomas completos (~48 img) o solo inglés claro+oscuro (8 img, mínimo para el reviewer)?
+> **Cómo se cablea (Code):** las imágenes son `require()` estáticos en `OnboardingScreen.js` y el imageset nativo; se reemplazan los archivos manteniendo nombres → 0 cambios de código, o se ajustan paths.
 
-## 5. 📋 ORDEN DE EJECUCIÓN
-1. **Fernando:** confirma Cobrex en USPTO/EUIPO (5 min) + decide dominio.
-2. **Code:** grep exhaustivo del nombre en `~/AurexApp` + cambios 3.1 + páginas legales 3.2 + clean/archive/IPA validado (Build 34).
-3. **Escritorio:** metadata 3.3 en App Store Connect (ajusta/modifica) — **NO envía.**
-4. **Fernando:** sube Build 34 (Transporter) + valida iPhone + **da el clic final de envío**.
-5. **Fase 2** (dominio Cobrex + Android/PWA/landing/backend/onboarding) → **solo si Apple aprueba Cobrex.** No antes.
+**App universal (iPhone + iPad):** `TARGETED_DEVICE_FAMILY = "1,2"` → iPad **sí** requiere sus propias screenshots (§5).
 
 ---
 
-## 6. ⚠️ NOTA DE RIESGO
-- **4.1c:** Cobrex no tiene app ni marca homónima → **riesgo bajo** de repetir el rechazo (muy distinto de Aurex, que chocaba con aurex.ai, developer real con app).
-- **Connotación "cobra":** no afecta la aprobación de Apple; es tema de branding. En ES juega a favor ("cobrar").
+## 5. ❌ FALTA — SCREENSHOTS de la ficha (Connect)
+Las actuales en Connect son del Build 17 → dicen "AUREX". Con la app "Cobrex" = inconsistencia → **rehacer.**
+- **Modo claro**, de **Build 35** instalado.
+- **iPhone 6.5"** (1242×2688 o 1284×2778) **obligatorio** + **iPad 13"** (2048×2732) **obligatorio** (app universal).
+- **NO en la terminal** (decisión Fernando; la vez anterior dio problemas). Se sacan del dispositivo/simulador con Build 35.
+- Qué capturar (10 máx): Mercados+Cobrex Pulse, IA/Señales, Portfolio, Watchlist, Alertas, Planes — las que muestren "Cobrex" en headers.
+
+---
+
+## 6. 📋 ORDEN DE EJECUCIÓN — BUILD 35
+1. **Fernando:** rediseña las 4 imágenes de onboarding (+ define §-decisión splash). Code entrega specs exactas (dimensiones por slide/modo).
+2. **DECISIÓN splash (1 y 2 de §4):** (A) los rediseña Fernando junto al onboarding, o (B) **Code los regenera** reusando el SVG del logo (`AurexLogo.js`) + texto "Cobrex" vía HTML→PNG. Recomendación Code: **B** (son simples: logo + wordmark).
+3. **Code:** reemplaza las 3 superficies de imagen + bump `CURRENT_PROJECT_VERSION` 34→**35** + **clean obligatorio** (DerivedData + ios/build + Metro cache) + `pod install` + archive + export IPA.
+4. **Code:** valida el binario Build 35 — metadata (Cobrex/35) + firma + **y que las imágenes nuevas estén embebidas** (no quede "AUREX" en ningún asset).
+5. **Fernando:** sube Build 35 (Transporter) + saca screenshots (§5).
+6. **Escritorio:** carga metadata de §7 en Connect (sin enviar).
+7. **Fernando:** verifica en iPhone + **clic final** de "Volver a enviar a revisión".
+
+---
+
+## 7. 📝 TEXTOS EXACTOS PARA APP STORE CONNECT (listos para pegar)
+
+> Derivados del contenido REAL de la app (FAQ de Perfil, Cobrex Pulse, planes). Escritorio los pega sin modificar.
+
+### 7.1 App Name
+`Cobrex`
+
+### 7.2 Subtitle (30 chars máx)
+`Análisis de mercados con IA` (27 chars)  ·  EN: `AI market analytics` (19)
+
+### 7.3 Promotional Text (170 chars máx)
+ES: `Seguí 350+ activos globales en tiempo real con análisis estadístico por IA, Cobrex Pulse y alertas inteligentes. Cripto, acciones, ETFs, commodities y más.`
+EN: `Track 350+ global assets in real time with AI statistical analysis, Cobrex Pulse and smart alerts. Crypto, stocks, ETFs, commodities and more.`
+
+### 7.4 Descripción larga (4000 chars máx) — ES
+```
+Cobrex es una plataforma de análisis de datos de mercado con inteligencia artificial. Monitorea más de 350 activos globales en tiempo real: criptomonedas, acciones, ETFs, commodities, futuros y divisas.
+
+QUÉ HACE COBREX
+• Motor IA: evalúa múltiples variables por activo para generar análisis estadístico probabilístico (no son recomendaciones de inversión).
+• Cobrex Pulse: índice de sentimiento de mercado con 14 variables ponderadas, de 0 (Miedo Extremo) a 100 (Codicia Extrema), con filtros Global / Cripto / Acciones / Commodities / Futuros.
+• Alertas inteligentes: te avisan cuando un activo alcanza tu precio objetivo, cambia el análisis IA, hay una variación brusca o Cobrex Pulse entra en zona extrema. Por notificación push, email o Telegram según tu plan.
+• Portfolio y Watchlist: seguí tus activos y listas personalizadas con cotizaciones en vivo.
+• 8 idiomas, modo claro y oscuro.
+
+PLANES
+• FREE: acceso básico a mercados y Cobrex Pulse.
+• PRO y ELITE: más activos, variables, alertas e indicadores avanzados (RSI/MACD, alertas geopolíticas).
+
+IMPORTANTE
+Cobrex es una herramienta de visualización de datos y análisis estadístico con fines exclusivamente informativos y educativos. No constituye asesoramiento financiero ni recomendaciones de inversión. Toda decisión es responsabilidad exclusiva del usuario. Los patrones estadísticos pasados no garantizan resultados futuros.
+```
+
+### 7.5 Descripción larga — EN
+```
+Cobrex is an AI-powered market data analytics platform. It monitors 350+ global assets in real time: cryptocurrencies, stocks, ETFs, commodities, futures and currencies.
+
+WHAT COBREX DOES
+• AI engine: evaluates multiple variables per asset to generate probabilistic statistical analysis (not investment recommendations).
+• Cobrex Pulse: market sentiment index with 14 weighted variables, from 0 (Extreme Fear) to 100 (Extreme Greed), with Global / Crypto / Stocks / Commodities / Futures filters.
+• Smart alerts: get notified when an asset hits your target price, the AI analysis changes, there is a sharp move, or Cobrex Pulse enters an extreme zone. Via push, email or Telegram depending on your plan.
+• Portfolio & Watchlist: track your assets and custom lists with live quotes.
+• 8 languages, light and dark mode.
+
+PLANS
+• FREE: basic access to markets and Cobrex Pulse.
+• PRO and ELITE: more assets, variables, alerts and advanced indicators (RSI/MACD, geopolitical alerts).
+
+IMPORTANT
+Cobrex is a data visualization and statistical analysis tool for informational and educational purposes only. It does not constitute financial advice or investment recommendations. All decisions are the sole responsibility of the user. Past statistical patterns do not guarantee future results.
+```
+
+### 7.6 Keywords (100 chars máx, sin espacios, sin "aurex")
+`cripto,acciones,bolsa,trading,alertas,mercados,inversiones,analisis,IA,ETF,commodities,finanzas` (95 chars)
+
+### 7.7 App Review Notes (EN — pegar en App Review Information)
+```
+Dear App Review Team,
+
+The app is named "Cobrex" — an original, coined name with no relation to any third-party brand, product or developer. It is not derived from, nor affiliated with, www.aurex.ai or any other company.
+
+Cobrex is a consumer market-data and statistical-analysis app (informational/educational only; it does not provide financial advice). The app icon is our own original design and contains no third-party brand, logo or text.
+
+Demo account to review all features (ELITE tier enabled):
+- Email: [DEMO_EMAIL]
+- Password: [DEMO_PASSWORD]
+
+In-app purchases use standard StoreKit subscriptions. Thank you.
+
+Fernando Gabriel Moscón — Apple Developer Team ID: TX7C2F79U9
+```
+> ⚠️ **Credenciales NO van en este doc público.** Las pone Escritorio/Fernando directo en Connect (el password está en `~/Desktop/CODE/SECRET/`). Ver §7.9.
+
+### 7.8 URLs / Copyright
+- **Privacy Policy URL:** `https://aurex.live/docs/privacy-cobrex.html` (viva, HTTP 200)
+- **Support URL:** `https://aurex.live` (recomendación Code: home, no la privacy)
+- **Marketing URL:** `https://aurex.live` (se mantiene)
+- **Copyright:** `2026 Fernando Moscón` (se mantiene — es persona, no marca)
+
+### 7.9 Datos de contacto / Demo (DECISIONES)
+- **Email de contacto de revisión:** `fmoscon@gmail.com` → **se mantiene** (no tiene marca).
+- **Usuario demo:** hoy es `app.aurex@gmail.com`. Tiene "aurex". **Riesgo bajo** (un reviewer rara vez mira el dominio del login) pero para cero ambigüedad → **DECISIÓN Fernando:** (A) mantener, o (B) Code crea un usuario demo neutral en Supabase (sin "aurex") con plan ELITE. Recomendación Code: si hay tiempo, (B).
+- **Password demo:** se mantiene el actual (no se expone aquí; está en SECRET).
+- **Nombre/teléfono de contacto:** se mantienen.
+
+### 7.10 Grupo de suscripciones
+- Grupo "AUREX PLANES" (ID 22018005) → renombrar **nombre de referencia** a `Cobrex` (cosmético).
+- Ruta: App Store Connect → (app) → **Suscripciones** → grupo → editar el nombre visible/referencia.
+- **NO afecta** Product IDs ni suscripciones activas. Es solo el rótulo del grupo.
+
+### 7.11 PDF adjunto en App Review
+- Hay un PDF "namecheap AUREX LIVE" adjunto (justificaba el nombre viejo). Con Cobrex **no aplica y confunde** → **ELIMINAR el adjunto.** Cobrex no necesita adjunto (nombre propio sin conflicto).
+
+---
+
+## 8. ⚠️ RIESGO
+- 4.1c con Cobrex: **bajo** (no hay app ni marca homónima, a diferencia de Aurex vs aurex.ai).
+- Connotación "cobra/cobrar": no afecta aprobación; en ES juega a favor.
