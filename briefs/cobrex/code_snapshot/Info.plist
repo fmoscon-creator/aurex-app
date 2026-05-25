@@ -48,13 +48,13 @@
 		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
-	<string>AUREX necesita acceso a tu camara para tomar tu foto de perfil</string>
+	<string>Cobrex necesita acceso a tu camara para tomar tu foto de perfil</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>AUREX usa Face ID para proteger el acceso a tus datos</string>
+	<string>Cobrex usa Face ID para proteger el acceso a tus datos</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>AUREX necesita acceso a tu galeria para cambiar tu foto de perfil</string>
+	<string>Cobrex necesita acceso a tu galeria para cambiar tu foto de perfil</string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
 	<key>UIBackgroundModes</key>
