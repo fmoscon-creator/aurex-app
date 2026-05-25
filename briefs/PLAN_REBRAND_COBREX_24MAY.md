@@ -11,6 +11,8 @@
 - **Connotación:** "REX" = rey (premium, misma energía que Aurex). "Cobra" en EN = serpiente (leve); en **ES "cobrar" = dinero** (positivo para fintech) + raíz "cobre" = metal/valor.
 - **PENDIENTE de Fernando:** (1) confirmar 100% en `tmsearch.uspto.gov` + `euipo.europa.eu/eSearch`; (2) registrar dominio → **`cobrex.live`** (combina con el actual) o `cobrex.io`.
 
+> **🎯 ALCANCE: SOLO iOS (definido por Fernando 24-may).** Android está **publicado y funcionando** como "AUREX" (v1.0.36, Google ya aprobó) → **NO se toca ahora.** Android/web se evalúan **solo SI Apple aprueba "Cobrex" en iOS** — no se arriesga lo que ya funciona por un nombre que todavía no pasó la review.
+
 ---
 
 ## 1. 🔒 LO QUE NO SE TOCA (CRÍTICO — romper esto sería catastrófico)
@@ -49,7 +51,8 @@ Luego: **clean obligatorio** (`rm -rf DerivedData/AurexApp-* ios/build` + `pod i
 ### 3.2 Páginas legales que Apple SÍ revisa (Code) — repo `aurex-app`
 - Crear **`docs/privacy-cobrex.html`** + **`docs/terms-cobrex.html`** = copia exacta de las actuales + solo "AUREX/AurexLive" → "Cobrex".
 - Push → URLs vivas en `aurex.live/docs/privacy-cobrex.html` (o en el dominio nuevo cuando se registre).
-- **Por qué importa:** el reviewer abre la Privacy/Support URL. Deben decir **Cobrex**, NO "AUREX" (sino reactiva la inconsistencia).
+- **Dominio en Fase 1 = `aurex.live` (ya lo tenés), con páginas Cobrex.** NO hace falta comprar dominio nuevo para enviar: la Privacy/Support URL es **metadata editable** (se cambia sin reenviar el build). Fernando comprará `cobrex.io`/`cobrex.live` **solo si Apple aprueba**, y ahí se actualiza la URL.
+- **Por qué importa:** el reviewer abre la Privacy/Support URL → deben decir **Cobrex**. El resto de `aurex.live` (landing/PWA) puede seguir "AUREX": Apple revisa el **contenido de las URL que cargás en la ficha**, no explora el dominio.
 
 ### 3.3 Metadata en App Store Connect (Escritorio ajusta · Fernando OK · NO envía Escritorio)
 | Campo | Acción |
@@ -71,8 +74,8 @@ Luego: **clean obligatorio** (`rm -rf DerivedData/AurexApp-* ios/build` + `pod i
 
 ---
 
-## 4. 🔵 FASE 2 — Coherencia de marca (después de Fase 1 / en paralelo)
-> Decisión de Fernando: ¿rebrand **solo iOS** (Android/web siguen "AUREX") o **total**? Recomendación: Fase 1 (iOS) YA; Fase 2 cuando se confirme, para coherencia. **Las URLs que Apple ve (3.2) van en Cobrex desde Fase 1 igual.**
+## 4. 🔵 FASE 2 — Android / web / dominio (CONDICIONAL — SOLO si Apple aprueba Cobrex)
+> **NO se ejecuta ahora.** Android está **publicado y funcionando** como "AUREX" (v1.0.36) y la web también → **no se arriesga lo que ya funciona por un nombre que aún no pasó la review de Apple.** Esta fase se evalúa **solo si Apple aprueba "Cobrex" en iOS.** Incluye: comprar dominio (`cobrex.io`/`cobrex.live`), Android (strings.xml + build + Play Console), PWA/landing (i18n 8 idiomas + logo SVG), onboarding, backend (textos Telegram).
 
 - **Onboarding** (`src/assets/onboarding/v2/` — "AUREX" incrustado en las imágenes): regenerar set Cobrex (manual/diseño).
 - **Android** (`android/app/src/main/res/values/strings.xml` `app_name` + `brand.js` lado Android): → Cobrex + bump versionCode/Name + `gradlew clean` + bundleRelease + Play Console (revisión Google horas/días).
@@ -88,7 +91,7 @@ Luego: **clean obligatorio** (`rm -rf DerivedData/AurexApp-* ios/build` + `pod i
 2. **Code:** grep exhaustivo del nombre en `~/AurexApp` + cambios 3.1 + páginas legales 3.2 + clean/archive/IPA validado (Build 34).
 3. **Escritorio:** metadata 3.3 en App Store Connect (ajusta/modifica) — **NO envía.**
 4. **Fernando:** sube Build 34 (Transporter) + valida iPhone + **da el clic final de envío**.
-5. **Fase 2** (Android/PWA/landing/backend/onboarding) según decisión solo-iOS vs total.
+5. **Fase 2** (dominio Cobrex + Android/PWA/landing/backend/onboarding) → **solo si Apple aprueba Cobrex.** No antes.
 
 ---
 
