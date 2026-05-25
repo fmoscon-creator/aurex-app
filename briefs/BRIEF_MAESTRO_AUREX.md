@@ -1035,3 +1035,24 @@ Flujo confirmado: **Google Play cobra al usuario → Google retiene 15% (suscrip
 La compra de prueba del 14/5 ($9,99, completada) fue de Fernando y **anterior a la publicación de v1.0.36** (21/05, con fix IAP #76809). Para validar el flujo en la versión publicada conviene una **compra nueva desde la app v1.0.36** (Play Store), reembolsable en Play Console dentro de 48h.
 
 > **Detalle sensible (cuenta bancaria Santander, saldo, movimientos): `Dropbox/AUREX/MAPA DE TRABAJO/DOC_MONETIZACION_ANDROID_PAYPAL.md` — NO se sube al repo público por seguridad.**
+
+---
+
+## 🔁 COBREX — REBRAND iOS BUILD 35 (estado 25-may-2026)
+
+**Plan B Apple 4.1c:** "Aurex/AurexLive" rechazado 3 veces → renombrado iOS a **COBREX** (USPTO/EUIPO limpios; dominio se compra solo si aprueba; hoy aurex.live para URLs). SOLO iOS; Android sigue "AUREX" v1.0.36 sin tocar. Bundle ID / Product IDs / IAP / RevenueCat / Supabase / ícono INTACTOS. Detalle completo: `briefs/PLAN_REBRAND_COBREX_24MAY.md` (v3).
+
+**✅ HECHO:**
+- Código texto: brand.js→Cobrex, i18n (272), 7 pantallas, NSPermissions Info.plist (cámara/FaceID/galería).
+- Onboarding rediseñado (modo CLARO, logo transparente sin marca HD, 4 ganchos en código i18n 8 idiomas). **80 PNGs** archivados en `Dropbox/AUREX/ONBORDING/ONBORDING IOS BUILD 35 MODO CLARO|OSCURO/`.
+- Paywall post-signup (FREE + PRO/ELITE mensual+anual), tab inicial→Mercados, ojo 👁 en repetir-contraseña signup, demo `demo@cobrex.io`/`Cobrex2026` ELITE (Supabase).
+- Páginas legales Cobrex vivas (HTTP 200).
+- **Connect CARGADO por Escritorio:** App Name+Subtitle, metadata 8 idiomas (TXT en `Dropbox/AUREX/METADATA IOS - ANDROID/METADATA IOS BUILD 35/` + GitHub `briefs/cobrex/`), grupo suscripciones→Cobrex, App Review (demo nuevo, notas Cobrex, PDF namecheap eliminado, publicación Manual).
+
+**⏳ PENDIENTE Build 35 (Code — mañana):** regenerar splash nativo + launch_header a Cobrex; portar onboarding a RN + detección idioma (EN default + device); bump 34→35 + clean + archive + IPA + validar (0 "AUREX" en assets).
+
+**⏳ PENDIENTE envío (Fernando — mañana):** sube Build 35 (Transporter) + screenshots modo claro (iPhone 6.5" + iPad 13") + 2 clics finales. Build 34 quedó OBSOLETO (le faltaban las imágenes).
+
+**⚠️ ABIERTO:** Privacy Policy URL en Connect → está en App Information → info localizable → "URL de política de privacidad" = `https://aurex.live/docs/privacy-cobrex.html`.
+
+**Keys nuevas:** Pexels (`SECRET KEY PEXELS.txt`) y Runway (sin créditos) en `Dropbox/AUREX/CODE/SECRET/`. El SECRET de Desktop está vacío (iCloud); usar siempre el de Dropbox.
