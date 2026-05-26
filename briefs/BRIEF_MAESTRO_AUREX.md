@@ -62,6 +62,20 @@
   - **(A) Camino limpio, sin infra (recomendado):** dejar el 404 (es la respuesta HTTP correcta para una página borrada) + usar **"Eliminaciones" en Search Console** para que Google la dropee + **borrar archivos viejos del repo** que siguen vivos (`index_old_20may.html`, `/landing-v3-preview/v2.html`, `Aurex — Sistema de Identidad Visual v1.0.html`, y el duplicado `/privacy.html` de la raíz —tras chequear qué lo referencia: apps/Play Console). Canonical de legales = `/docs/`.
   - **(B) 301 real (ideal SEO, más trabajo):** poner **Cloudflare adelante del dominio** (gratis) y configurar redirects 301 reales. ⚠️ GitHub Pages NO hace 301 de servidor; el redirect meta-refresh es un parche → descartado.
 
+### 📧 Mail corporativo @aurex.live — PENDIENTE (independiente de Apple, se puede hacer YA)
+- **Gap (Fernando, 25-may):** tiene el dominio **aurex.live** (Namecheap) pero **nunca se configuró el email del dominio** (`hola@aurex.live`, `soporte@aurex.live`…) → viene usando cuentas **Gmail "inventadas"** (fmoscon / app.aurex / support.aurex.live@gmail.com / aurextester12).
+- **Cómo se hace (Escritorio):** conectar el dominio a un proveedor de email + agregar **3 registros DNS en Namecheap** (~5 min). Opciones:
+  - **Google Workspace** (~USD 6/mes por cuenta) — Gmail con tu dominio; lo más profesional y lo que más conoce Fernando.
+  - **Zoho Mail** (gratis hasta 5 cuentas) — para arrancar sin gastar.
+  - **Namecheap Private Email** (~USD 1/mes) — básico pero suficiente.
+- **Proceso:** 1) contratar el servicio · 2) Code guía los 3 registros DNS en Namecheap · 3) listo, mails `@aurex.live`.
+- **No depende de Apple ni de Cobrex.** Se hace hoy con aurex.live; cuando exista `cobrex.io` se repite en 5 min. Recomendación para arrancar barato: **Zoho (gratis)** o **Google Workspace** si quiere Gmail nativo — decisión de Fernando.
+
+### 🏷️ Cobrex — Plan de reservas de marca (FASE 2 · CONTINGENTE a aprobación Apple · NO ejecutar antes)
+- **Regla (Code + Escritorio):** NO registrar handles/dominios/cuentas "Cobrex" hasta que Apple apruebe. Motivos: si re-rechaza, todo lo reservado queda inútil/genera trabajo de reversa; y registrar `@cobrex` público **filtra el nombre** antes de tiempo.
+- **Lo que SÍ se prepara ahora:** el **listado completo** de qué reservar (6 redes/canales + handles exactos + display names + dominios `.io`/`.live` + mails) listo para ejecutar en **~15 min** el día del OK de Apple. (Listado lo está armando **Escritorio** → integrar acá cuando llegue.)
+- **Verificación de disponibilidad de handles:** requiere navegar cada red → se hace **el día de la aprobación** (chequear + registrar todo junto), NO antes. Necesita autorización de Fernando llegado el momento.
+
 ---
 
 ## 1.b ACTUALIZACIÓN 18-20 MAY 2026 — foto actual (consolidada)
