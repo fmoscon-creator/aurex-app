@@ -64,14 +64,17 @@
   - **(A) Camino limpio, sin infra (recomendado):** dejar el 404 (es la respuesta HTTP correcta para una página borrada) + usar **"Eliminaciones" en Search Console** para que Google la dropee + **borrar archivos viejos del repo** que siguen vivos (`index_old_20may.html`, `/landing-v3-preview/v2.html`, `Aurex — Sistema de Identidad Visual v1.0.html`, y el duplicado `/privacy.html` de la raíz —tras chequear qué lo referencia: apps/Play Console). Canonical de legales = `/docs/`.
   - **(B) 301 real (ideal SEO, más trabajo):** poner **Cloudflare adelante del dominio** (gratis) y configurar redirects 301 reales. ⚠️ GitHub Pages NO hace 301 de servidor; el redirect meta-refresh es un parche → descartado.
 
-### 📧 Mail corporativo del dominio — 🟡 DIFERIDO (decisión Fernando 25-may: esperar resolución de marca Apple)
+### 📧 Mail corporativo @cobrex.io — 🟢 EN CURSO (26-may · Zoho Mail Lite)
 - **Gap (Fernando, 25-may):** tiene el dominio **aurex.live** (Namecheap) pero **nunca se configuró el email del dominio** (`hola@aurex.live`, `soporte@aurex.live`…) → viene usando cuentas **Gmail "inventadas"** (fmoscon / app.aurex / support.aurex.live@gmail.com / aurextester12).
 - **Cómo se hace (Escritorio):** conectar el dominio a un proveedor de email + agregar **3 registros DNS en Namecheap** (~5 min). Opciones:
   - **Google Workspace** (~USD 6/mes por cuenta) — Gmail con tu dominio; lo más profesional y lo que más conoce Fernando.
   - **Zoho Mail** (gratis hasta 5 cuentas) — para arrancar sin gastar.
   - **Namecheap Private Email** (~USD 1/mes) — básico pero suficiente.
 - **Proceso:** 1) contratar el servicio · 2) Code guía los 3 registros DNS en Namecheap · 3) listo, mails `@aurex.live`.
-- **🟡 DECISIÓN (Fernando, 25-may): ESPERAR.** Si Apple aprueba Cobrex, la idea es **migrar TODA la marca** (Android + web) de AUREX → Cobrex → entonces el mail se configura **una sola vez en el dominio FINAL** (`cobrex.io`), no en `aurex.live` (sería descartable). Si Apple **re-rechaza** → AUREX queda como marca → ahí se configura `@aurex.live`. Matiz menor: hoy el contacto público de la landing es un Gmail (`support.aurex.live@gmail.com`); un `soporte@dominio` se vería más pro, pero no es bloqueante. La parte técnica (proveedor + 3 DNS en Namecheap, ~5 min) aplica igual al dominio que finalmente quede.
+- **🟢 EN CURSO (26-may):** Apple aprobó Cobrex → se desbloqueó. Proveedor elegido: **Zoho Mail Lite** (US$1/mo · ~$12/año). *(El "free" de Zoho ya no existe para dominios propios — lo verificó Escritorio; Google Workspace ~$84/año se descartó por caro.)*
+- **Estado del setup Zoho:** plan **pagado** ✅ · dominio `cobrex.io` **verificado en Zoho** ✅ (TXT `zoho-verification=zb28958589.zmverify.zoho.com`, confirmado por dig en Google+Cloudflare) · casilla **`cobrex@cobrex.io`** creada/creándose (super-admin, display name "Cobrex").
+- **PRÓXIMO PASO (DNS en Namecheap):** cargar **MX + SPF + DKIM** de Zoho. ⚠️ **CRÍTICO:** **REEMPLAZAR** el SPF viejo de Namecheap (`v=spf1 include:spf.efwd.registrar-servers.com ~all`) por el de Zoho (`v=spf1 include:zoho.com ~all`) — **NO duplicar** (2 SPF rompen la entregabilidad). Y **BORRAR los MX viejos** de Namecheap (efwd/registrar-servers) → que queden **solo los de Zoho** (US: mx.zoho.com pri10, mx2 pri20, mx3 pri50). Code valida el DNS por `dig` antes de guardar.
+- **Después:** alias `support@cobrex.io` → reenvía a `cobrex@`. **Estructura final:** `cobrex@cobrex.io` (gestión, la usa Fernando) + `support@cobrex.io` (alias público). NO tocar el DNS de la web (solo registros de mail).
 
 ### 🏷️ Cobrex — Plan de reservas de marca (FASE 2 · CONTINGENTE a aprobación Apple · NO ejecutar antes)
 - **🎉 APPLE APROBÓ 26-may → Fase 2 EN EJECUCIÓN** (la regla de "no reservar antes de aprobar" ya se cumplió).
