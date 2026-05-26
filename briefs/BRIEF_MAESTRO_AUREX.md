@@ -73,8 +73,26 @@
 
 ### 🏷️ Cobrex — Plan de reservas de marca (FASE 2 · CONTINGENTE a aprobación Apple · NO ejecutar antes)
 - **Regla (Code + Escritorio):** NO registrar handles/dominios/cuentas "Cobrex" hasta que Apple apruebe. Motivos: si re-rechaza, todo lo reservado queda inútil/genera trabajo de reversa; y registrar `@cobrex` público **filtra el nombre** antes de tiempo.
-- **Lo que SÍ se prepara ahora:** el **listado completo** de qué reservar (6 redes/canales + handles exactos + display names + dominios `.io`/`.live` + mails) listo para ejecutar en **~15 min** el día del OK de Apple. (Listado lo está armando **Escritorio** → integrar acá cuando llegue.)
-- **Verificación de disponibilidad de handles:** requiere navegar cada red → se hace **el día de la aprobación** (chequear + registrar todo junto), NO antes. Necesita autorización de Fernando llegado el momento.
+- **Disponibilidad de handles (informe Escritorio, verificado 25/05/2026):**
+
+| Plataforma | @cobrex | @cobrexio | @cobrexapp | @cobrexlive |
+|---|---|---|---|---|
+| X / Twitter | 🔴 Ocupado | 🟢 Libre | 🟢 Libre | 🟢 Libre |
+| Instagram | 🔴 Ocupado | 🟢 Libre | 🟢 Libre | 🟢 Libre |
+| TikTok | 🔴 Ocupado | 🟢 Libre | 🟢 Libre | 🟢 Libre |
+| YouTube | 🔴 Ocupado | 🟢 Libre | 🟢 Libre | 🟢 Libre |
+| Telegram | 🔴 Ocupado | 🟢 Libre | 🟢 Libre | ⚠️ Por confirmar |
+| LinkedIn | 🟢 Libre | — | — | — |
+
+- **✅ Validación Code (25-may):**
+  - `@cobrex` está **ocupado en todas menos LinkedIn** → descartado como handle uniforme.
+  - Para coherencia de marca el handle debe ser **el mismo en todas las redes**. Candidatos uniformes (libres en las 5 sociales): **`@cobrexio`** y **`@cobrexapp`**. `@cobrexlive` queda con duda en Telegram.
+  - **🏆 Recomendación Code: `@cobrexio`** — es el único que además **coincide con el dominio `cobrex.io`** (handle = dominio = máxima coherencia y memorabilidad). 2ª opción: `@cobrexapp`.
+  - **LinkedIn:** crear **página de empresa "Cobrex"** (ventaja: `@cobrex` libre ahí).
+- **⚠️ Avisos para el día D:**
+  - **Re-verificar disponibilidad el día del registro** — puede cambiar (alguien puede tomar `@cobrexio`/`@cobrexapp` en cualquier momento). Por eso se registra TODO junto, rápido, el día del OK de Apple.
+  - Telegram `@cobrexlive` sin confirmar → si se fuera por `@cobrexlive` hay que confirmarlo primero; con `@cobrexio` se evita el problema.
+  - Requiere autorización de Fernando + sesión limpia (una sola cuenta) llegado el momento.
 
 ---
 
