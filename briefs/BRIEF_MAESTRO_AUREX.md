@@ -83,9 +83,12 @@
 - **REGLA DE USO (crítica):** firma de mail / Word / PDF / documentos → versión **TRANSPARENTE** (nunca recuadro). Fondo sólido (claro/oscuro) solo para app icons / avatares de redes.
 - Specs técnicas completas: `LOGO COBREX/ESPECIFICACIONES_LOGO_COBREX_AUREX_26MAY_v3.docx`. Resumen para Escritorio en GitHub: `briefs/cobrex/RESUMEN_LOGOS_COBREX.md`.
 
-### 🌐 Convergencia web cobrex.io — PENDIENTE (bloque, post-publicación)
-- Hoy la app (publicada) apunta a **aurex.live** en: URL de soporte, URL de marketing, Privacy (`aurex.live/docs/privacy-cobrex.html`) y Terms (`/docs/terms-cobrex.html`). Funciona y Apple lo aprobó — es el dominio viejo, no está roto.
-- **Para migrar a cobrex.io hay que (en orden):** 1) **montar la web cobrex.io** (DNS + hosting + páginas privacy/terms/landing) — `cobrex.io` hoy es solo dominio parkeado · 2) actualizar en App Store Connect las URLs (soporte/marketing/privacy/terms) → cobrex.io · 3) los links privacy/terms **dentro de la app** (`brand.js`) → requieren **build nuevo** para cambiarlos. ⚠️ La "Versión 1.0 (33)" de Connect NO se toca (etiqueta cosmética; el binario es Build 35).
+### 🌐 Convergencia web cobrex.io — EN CURSO (web MONTADA 27-may; faltan URLs Connect + build)
+- Hoy la app (publicada) apunta a **aurex.live** en: URL de soporte, URL de marketing, Privacy/Terms. Funciona y Apple lo aprobó — dominio viejo, no roto.
+- **Migración (en orden):**
+  1. ✅ **Web cobrex.io MONTADA (27-may)** — GitHub Pages, repo **`fmoscon-creator/cobrex`**. Sitio **live** en cobrex.io: landing + `/privacy.html` + `/terms.html` (todo Cobrex, contacto **support@cobrex.io**, sin "aurex"). DNS = 4 A de GitHub (185.199.108-111.153) + CNAME `www`→`fmoscon-creator.github.io`. **🔒 Correo Zoho INTACTO** (MX/SPF/DKIM/verificación NO se tocaron, validado por dig). Cert HTTPS provisionando (~1h) → después activar "Enforce HTTPS".
+  2. ⏳ PENDIENTE (Escritorio, **sin build**): actualizar en App Store Connect las URLs (soporte/marketing/privacy/terms) → `https://cobrex.io/...` (privacy.html / terms.html). Esperar a que el cert HTTPS esté listo.
+  3. ⏳ PENDIENTE (Code, **en el próximo build**): links privacy/terms in-app (`brand.js`) → cobrex.io. ⚠️ "Versión 1.0 (33)" NO se toca.
 
 ### ⚠️ DETECTADO AL PUBLICAR (27-may) — revisar/arreglar mañana
 - 🟡 **EN OBSERVACIÓN 24h:** en App Store Connect el **Nombre = "Cobrex"** + **capturas = Cobrex** (verificado por Escritorio; subtítulo "AI market analytics", keywords OK). **PERO la tienda PÚBLICA (IMG_2699) AÚN muestra "AUREX AI" + capturas viejas de AUREX** (con logo "aurex" arriba-izq y "Alertas por WhatsApp"). Probable **cache** de la app recién publicada → debería pasar a Cobrex al propagar. **⚠️ Si en ~24h la tienda pública NO cambia a Cobrex → es REAL: escalar (revisar otras localizaciones/versión en ASC, reenviar metadata o contactar Apple).** Reconfirmar buscando "Cobrex" en la App Store del iPhone. Ícono CONFIRMADO por Code (`icon-1024.png` Build 35) = **solo símbolo dorado, SIN texto** = el mismo emblema de Cobrex → OK, NO se toca. **🚫 No promocionar hasta que la ficha pública muestre Cobrex (esperar propagación ≤24h + reconfirmar).**
