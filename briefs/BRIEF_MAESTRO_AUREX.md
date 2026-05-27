@@ -157,8 +157,9 @@
 - **Fix:** (1) Escritorio: ASC → Información de la app → "Información que se puede traducir" → cambiar el selector a **cada idioma** y poner **Nombre = "Cobrex"** en TODAS las localizaciones (no solo Español). (2) Code: recompilar con bump de versión. (3) Enviar a revisión.
 - **Camino A (rápido, si urge):** build mínimo SOLO-nombre (sin cambios de diseño) → ~1 día → Cobrex en todas las tiendas. **Camino B:** va con el Build 36 completo. **Decisión de Fernando.**
 
-### F) URLs cobrex.io (recordatorio, ver §1.f convergencia)
-- **Escritorio (sin build, cuando el cert HTTPS esté listo):** soporte/marketing/privacy/terms en ASC → `https://cobrex.io/...`.
+### F) URLs cobrex.io — ✅ HTTPS LISTO (27-may, destrabado)
+- **HTTPS funcionando** en cobrex.io: cert Let's Encrypt `CN=cobrex.io` (válido hasta 25-ago-2026), **Enforce HTTPS activo** (HTTP→HTTPS 301). Los 3 URLs (`/`, `/privacy.html`, `/terms.html`) dan **200 con candado**. Validado por Code (curl+openssl) + Escritorio. **Bloqueante del build destrabado.** Fix que lo destrabó: borrar+re-agregar el custom domain en GitHub Pages (el cert estaba en estado `None`). DNS Namecheap y correo Zoho NO se tocaron.
+- **Escritorio (ASC, sin build):** soporte/marketing/privacy/terms → `https://cobrex.io/...`.
 - **Code (en el build):** `brand.js` privacy/terms → cobrex.io.
 
 ---
