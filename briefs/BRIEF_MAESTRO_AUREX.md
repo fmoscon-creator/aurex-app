@@ -126,6 +126,43 @@
 
 ---
 
+## 1.g 🍎 BUILD 36 iOS "Cobrex" — TODO LO QUE VA (cierre 27-may-2026)
+
+> **Diseño del arranque CERRADO y validado por Fernando** (claro + oscuro, 8 idiomas). Falta implementarlo en código + los ajustes de abajo. **El Build 36 usa el modo CLARO** (se ve visualmente mejor; el oscuro queda como backup).
+
+### A) Diseño del arranque (6 pantallas) — ✅ CERRADO y GUARDADO
+- **Dónde está (Dropbox — lo lee Code):** `~/Dropbox/AUREX/ONBORDING/ONBORDING BUILD 36 IOS CLARO/[idioma]/` y `.../ONBORDING BUILD 36 IOS OSCURO/[idioma]/` — **8 idiomas** (en, es, pt, it, fr, zh, hi, ar), **6 imágenes c/u**: `01_onb1` · `02_onb2` · `03_onb3` · `04_onb4` · `05_splash` · `06_loading` (= 48 por carpeta). Finales sueltos en `~/Dropbox/AUREX/ICON 3D/FINAL/` (`_ONB1_FINAL`…`_ONB4_FINAL`, `_SPLASH_FINAL`/`_SPLASH_FINAL_DARK`, `_LOADING_FINAL`/`_LOADING_FINAL_DARK`, `_CONST_v6` = constelación congelada).
+- **Dónde está (GitHub — lo lee Escritorio):** repo **`fmoscon-creator/aurex-app`** → `briefs/cobrex/build36/` (modo claro EN como muestra).
+- **Onboarding (4):** íconos **3D** (gráfico / campana / portfolio / gauge, **sin anillo**) · **constelación dorada** en los márgenes (idéntica en las 4, sin pisar logo/texto/botón) · **logo más grande y bajo** · **título Arial Bold tamaño 52** (igual en las 4) · botón **gold (241,194,24)** alto **93** margen **46** texto negro · **"← Back"** en pantallas 2-4 · última: **2 botones** ("Create free account" gold + "I have an account" blanco/borde dorado) + **texto legal** (`aceptar_terminos`).
+- **Splash nativo (BootSplash):** logo COBREX **limpio** (sin cuadrado crema ni artefactos) · fondo `#EEF1F7` · constelación · tagline **"YOUR GLOBAL ASSETS PLATFORM"** debajo de COBREX · **SIN "INVEST AI"**.
+- **Loading (SplashView):** = splash + **rueda que gira** · **SIN "INVEST AI"** · constelación **visible en claro**.
+
+### B) Cambios de CÓDIGO en el build (Code · `OnboardingScreen.js` + `SplashView.js` + bootsplash)
+1. **Onboarding:** reemplazar SVG line-art por íconos 3D + constelación + logo + colores/medidas de (A).
+2. **`SplashView.js`:** **quitar "INVEST AI" (línea ~84)** + tagline + constelación visible en claro + fix timing (bootsplash tapa al SplashView).
+3. **Bootsplash:** regenerar logo limpio (sin cuadrado crema), fondo `#EEF1F7` (iOS + Android).
+4. **Botón secundario onboarding (`OnboardingScreen.js:130`):** hoy hardcodea `backgroundColor:'#1f2530'` (oscuro) → en **modo claro debe ser blanco + borde dorado + texto dorado**. Fix.
+5. **`brand.js`:** links privacy/terms in-app → cobrex.io.
+
+### C) ⚠️ PANTALLA DE PLANES post-login — NUEVO, HAY QUE AGREGARLO (Code)
+- **Hoy NO se auto-muestra.** Verificado en código: `App.js` va `login/signup → app → tabs (Main)` directo; `RootNavigator` arranca en `Main`. **`SubscriptionScreen` existe y funciona, pero solo se abre cuando el usuario toca "upgrade" o pega contra un límite.**
+- **Acordado:** tras el login/signup debe **abrirse la pantalla de planes (SubscriptionScreen)** para invitar a elegir un plan (no obligatorio, puede elegir después). **Code lo agrega** = navegar a `Subscription` la 1ª vez que entra tras signup/login.
+
+### D) Detección de idioma del dispositivo — ✅ YA ESTÁ EN EL CÓDIGO (no requiere cambio)
+- Verificado en `i18n.js`: `detectDeviceLang()` lee el idioma del device (iOS `AppleLocale`/`AppleLanguages`); si es uno de los **8** (en/es/pt/it/fr/zh/hi/ar) lo usa, **si no → EN** por default. `initLang()` usa el guardado o detecta. `App.js:102` lo aplica **antes** del onboarding → todo sale en el idioma detectado. (Loading/splash no tienen texto traducible: COBREX + tagline en inglés.)
+
+### E) 🔴 App Store: la ficha sale "AUREX AI" en TODOS los idiomas menos inglés — REQUIERE nueva versión/build
+- **Diagnóstico (Code vía iTunes Lookup API, 27-may — NO es cache):** store **US (inglés) = "Cobrex" ✅**, pero store **AR (español) = "AUREX AI" ❌** (mismo `trackId 6761672161`, v1.0(33), mismo build). El **nombre se carga POR IDIOMA**. **Error de la sesión anterior de Escritorio:** cambió **solo el Inglés** a "Cobrex" y dejó **las otras localizaciones (Español + los demás) en "AUREX AI"**.
+- **⚠️ CLAVE: cambiar el NOMBRE NO es inmediato.** Apple (pantalla "Información de la app"): *"Para modificar el nombre de la app... crea una nueva versión de la app."* → **requiere nueva versión + build + revisión (~1 día)**. Editar el nombre se guarda pero no sale en la tienda hasta aprobar la versión.
+- **Fix:** (1) Escritorio: ASC → Información de la app → "Información que se puede traducir" → cambiar el selector a **cada idioma** y poner **Nombre = "Cobrex"** en TODAS las localizaciones (no solo Español). (2) Code: recompilar con bump de versión. (3) Enviar a revisión.
+- **Camino A (rápido, si urge):** build mínimo SOLO-nombre (sin cambios de diseño) → ~1 día → Cobrex en todas las tiendas. **Camino B:** va con el Build 36 completo. **Decisión de Fernando.**
+
+### F) URLs cobrex.io (recordatorio, ver §1.f convergencia)
+- **Escritorio (sin build, cuando el cert HTTPS esté listo):** soporte/marketing/privacy/terms en ASC → `https://cobrex.io/...`.
+- **Code (en el build):** `brand.js` privacy/terms → cobrex.io.
+
+---
+
 ## 1.b ACTUALIZACIÓN 18-20 MAY 2026 — foto actual (consolidada)
 
 > Esta sección es la **foto al 20-may**. El detalle histórico (Build 25, IAP esperando RC, etc.) en §2-§4 quedó superado por lo de acá.
