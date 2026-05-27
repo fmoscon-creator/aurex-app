@@ -87,6 +87,12 @@
 - Hoy la app (publicada) apunta a **aurex.live** en: URL de soporte, URL de marketing, Privacy (`aurex.live/docs/privacy-cobrex.html`) y Terms (`/docs/terms-cobrex.html`). Funciona y Apple lo aprobó — es el dominio viejo, no está roto.
 - **Para migrar a cobrex.io hay que (en orden):** 1) **montar la web cobrex.io** (DNS + hosting + páginas privacy/terms/landing) — `cobrex.io` hoy es solo dominio parkeado · 2) actualizar en App Store Connect las URLs (soporte/marketing/privacy/terms) → cobrex.io · 3) los links privacy/terms **dentro de la app** (`brand.js`) → requieren **build nuevo** para cambiarlos. ⚠️ La "Versión 1.0 (33)" de Connect NO se toca (etiqueta cosmética; el binario es Build 35).
 
+### ⚠️ DETECTADO AL PUBLICAR (27-may) — revisar/arreglar mañana
+- 🔴 **La ficha de App Store muestra "AUREX AI"** (nombre viejo/rechazado) aunque la app por DENTRO es 100% Cobrex (verificado en capturas Fernando: splash/login/markets/profile = "Cobrex v1.0.35"). Es el campo **"Nombre"** (App Information), NO el binario. **Mañana:** verificar en ASC → *Información de la app → Nombre*. Si dice "AUREX AI" → cambiar a **"Cobrex"** (requiere enviarlo con actualización de metadata). Puede ser cache propagando (revisar en ≤24h). **🚫 NO promocionar la app hasta que la ficha diga "Cobrex".**
+- 🟡 **Onboarding: logo/marca COBREX chico y desplazado muy arriba** (IMG_2701) → bug UI en el componente onboarding → requiere **build nuevo**. Agrupar con la migración de URLs privacy/terms→cobrex.io en el próximo build.
+- 🟡 **Splash: artefacto gráfico raro abajo-derecha** (IMG_2700) → revisar asset del splash.
+- Capturas en `Dropbox/AUREX/ASC/IMG_2700-2709`.
+
 ### 🏷️ Cobrex — Plan de reservas de marca (FASE 2 · CONTINGENTE a aprobación Apple · NO ejecutar antes)
 - **🎉 APPLE APROBÓ 26-may → Fase 2 EN EJECUCIÓN** (la regla de "no reservar antes de aprobar" ya se cumplió).
 - **✅ HECHO — Dominio `cobrex.io` COMPRADO** (26-may-2026 9:19 AR · Namecheap order **203562249** · 2 años → **vence 26-may-2028** · auto-renew ON · WHOIS privacy ON · USD 100.96). **Parkeado/reservado — NO requiere DNS ni config ahora**; el DNS se configura recién al migrar la web `aurex.live`→`cobrex.io` (convergencia, post-publicación). Receipt en `Dropbox/AUREX/DOMINIO WEB/COBREX DOMINIO WEB/`.
