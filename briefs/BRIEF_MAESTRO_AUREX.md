@@ -83,6 +83,10 @@
 - **REGLA DE USO (crítica):** firma de mail / Word / PDF / documentos → versión **TRANSPARENTE** (nunca recuadro). Fondo sólido (claro/oscuro) solo para app icons / avatares de redes.
 - Specs técnicas completas: `LOGO COBREX/ESPECIFICACIONES_LOGO_COBREX_AUREX_26MAY_v3.docx`. Resumen para Escritorio en GitHub: `briefs/cobrex/RESUMEN_LOGOS_COBREX.md`.
 
+### 🌐 Convergencia web cobrex.io — PENDIENTE (bloque, post-publicación)
+- Hoy la app (publicada) apunta a **aurex.live** en: URL de soporte, URL de marketing, Privacy (`aurex.live/docs/privacy-cobrex.html`) y Terms (`/docs/terms-cobrex.html`). Funciona y Apple lo aprobó — es el dominio viejo, no está roto.
+- **Para migrar a cobrex.io hay que (en orden):** 1) **montar la web cobrex.io** (DNS + hosting + páginas privacy/terms/landing) — `cobrex.io` hoy es solo dominio parkeado · 2) actualizar en App Store Connect las URLs (soporte/marketing/privacy/terms) → cobrex.io · 3) los links privacy/terms **dentro de la app** (`brand.js`) → requieren **build nuevo** para cambiarlos. ⚠️ La "Versión 1.0 (33)" de Connect NO se toca (etiqueta cosmética; el binario es Build 35).
+
 ### 🏷️ Cobrex — Plan de reservas de marca (FASE 2 · CONTINGENTE a aprobación Apple · NO ejecutar antes)
 - **🎉 APPLE APROBÓ 26-may → Fase 2 EN EJECUCIÓN** (la regla de "no reservar antes de aprobar" ya se cumplió).
 - **✅ HECHO — Dominio `cobrex.io` COMPRADO** (26-may-2026 9:19 AR · Namecheap order **203562249** · 2 años → **vence 26-may-2028** · auto-renew ON · WHOIS privacy ON · USD 100.96). **Parkeado/reservado — NO requiere DNS ni config ahora**; el DNS se configura recién al migrar la web `aurex.live`→`cobrex.io` (convergencia, post-publicación). Receipt en `Dropbox/AUREX/DOMINIO WEB/COBREX DOMINIO WEB/`.
