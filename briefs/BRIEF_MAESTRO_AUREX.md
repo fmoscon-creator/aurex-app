@@ -175,6 +175,46 @@
 
 ---
 
+## 1.h ⏳ BUILD 37 iOS — PENDIENTE (post Build 36) — auditoría completa de traducciones
+
+> **Hallazgo Fernando 27-may** (post-Code-Build-36, NO bloquea Build 36 porque son bugs PREEXISTENTES desde Build 35 ya publicado). **Mandar Build 36 primero**, esto va aparte en Build 37.
+
+**Problema:** hay strings **hardcodeados en español** en varias pantallas que NO respetan el idioma seleccionado por el usuario. Con idioma EN seleccionado siguen apareciendo en ES.
+
+**Casos CONCRETOS detectados por Fernando (con EN seleccionado, salen en ES):**
+1. **`PortfolioScreen`** — card de "Activá análisis técnico avanzado en tu portafolio con señales IA" (o similar) → debe ir por `i18n.js` con 8 idiomas.
+2. **`WatchlistScreen`** — debajo de "Your watchlist is empty", aparece en ES "Creá tu primera lista para seguir activos con señales IA".
+3. **`PortfolioScreen` → long-press en activo → modal "Full AI Analysis"** → las **5 variables objetivas que lo justifican** salen en ES.
+4. **`LoginScreen`** (visto en TestFlight Build 36 — IMG_2732) — botón secundario **"No tengo cuenta — Crear cuenta gratis"** sale en ES aunque el idioma esté en EN.
+
+Fernando: *"claramente hay un montón de cosas no traducidas correctamente"* → auditoría **completa**, no parcial.
+
+**Scope Build 37 (Code):**
+1. **Grep amplio** de literales en español en `src/` (`Activá`, `Creá`, `Mirá`, `tu`, `tus`, `señales`, `con`, `para`, conjugaciones rioplatenses, etc.) — excluyendo lo que ya está en `i18n.js`.
+2. Por cada string detectado: agregar clave en `i18n.js` con las **8 traducciones** (es/en/pt/it/fr/zh/hi/ar) y reemplazar el literal por `t('clave')` en el componente.
+3. Verificar en TestFlight en al menos 2-3 idiomas (EN + PT + ar/zh).
+4. **Bonus** (opcional): regla de lint que detecte literales `<Text>...</Text>` con palabras en español (preventivo).
+
+**NO tocar Build 36** — esto es Build 37 y va después.
+
+### Otros hallazgos Build 37 — detectados al validar Build 36 en TestFlight (28-may madrugada)
+
+**🎨 Onboarding (`OnboardingScreen.js`):**
+- **Constelación no titila / no se anima.** En las 4 onboarding la constelación se renderiza como **imagen estática** (PNG `constellation.png` como background). En el `SplashView` SÍ titila (animado). Para consistencia con el splash que Fernando validó, **la constelación del onboarding debería titilar también**. Solución: reemplazar el `<Image>` estático por estrellas RN renderizadas con `Animated.Value` (replicar el patrón de `SplashView` con ~30 dots animados; usar las mismas posiciones del `_CONST_v6.png` para mantener el patrón aprobado).
+- **Logo + COBREX todavía se ven medio chicos** en las 4 ONB (Fernando, viendo IMG_2728-2731). Actualmente: `AurexLogo size={96}` + `COBREX fontSize:22`. Subir a `size={130}` + `fontSize:28` aprox, validar visualmente en TestFlight.
+
+**💳 Pantalla de Planes (`App.js`) — paywall a usuario PRO/ELITE:**
+- **Bug visto en IMG_2734:** el paywall se auto-abrió a Fernando aunque ES PRO ("Current plan" badge en PRO Mensual). Por diseño NO debe mostrarse a PRO/ELITE.
+- **Causa:** `App.js` lee el plan de `AsyncStorage` (cache local). En instalación fresca (TestFlight) el cache estaba vacío → trató como FREE → mostró el paywall.
+- **Fix:** reemplazar la lectura de `AsyncStorage.getItem('aurex_plan')` por `Purchases.getCustomerInfo()` → leer `entitlements.active['pro']` y `['elite']` (verdad real de RevenueCat, no cache).
+- ⚠️ **En producción NO hay PRO/ELITE reales todavía** → este bug es invisible para usuarios reales, por eso NO bloquea Build 36.
+
+**🎬 Loading screen — artefactos del storyboard nativo:**
+- Visto en IMG_2727: el splash nativo muestra el logo Cobrex limpio (✅ el fix de Build 36 funcionó) PERO mantiene del storyboard antiguo un texto **"Loading…"** + un **spinner tipo sol** que NO son del diseño aprobado. Vienen del `BootSplash.storyboard` / `LaunchScreen.storyboard` (heredado de Build 35).
+- **Fix:** revisar el .storyboard del bootsplash en `ios/AurexApp/` y eliminar el `UILabel "Loading..."` + el `UIActivityIndicator`. Dejar solo el logo + fondo.
+
+---
+
 ## 1.b ACTUALIZACIÓN 18-20 MAY 2026 — foto actual (consolidada)
 
 > Esta sección es la **foto al 20-may**. El detalle histórico (Build 25, IAP esperando RC, etc.) en §2-§4 quedó superado por lo de acá.
