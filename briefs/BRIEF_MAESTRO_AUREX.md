@@ -3,6 +3,7 @@
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
 > **Última actualización:** 28-may-2026 01:50 AR — **🚀 iOS Build 36 "Cobrex" v1.1 (36) ENVIADO A REVISIÓN APPLE** (submission ID `cccb573a-8b29-4668-8036-f4c5dfb4e437`, "Pendiente de revisión"). **Publicación AUTOMÁTICA configurada** → al aprobar publica sola en las 8 tiendas. Resuelve el bug "AUREX AI" del Build 35 (7 idiomas no-inglés mostraban "AUREX AI" en la ficha; ahora todos "Cobrex"). El envío incluye: 7 nombres corregidos + 8 Privacy URLs `cobrex.io/privacy.html` (catch crítico de Fernando: era por-idioma, Escritorio había cambiado solo inglés) + 8 URLs soporte/marketing → cobrex.io + 8 What's New + 4 IAPs renombrados (cola paralela de review) + 175 países verificados + capturas Cobrex iPhone/iPad + nuevo splash limpio + onboarding rediseñado (íconos 3D + constelación) + pantalla planes post-login (FREE puede continuar con botón gris + Skip). Cuenta demo Apple: `demo@cobrex.io` / `Cobrex2026` / plan ELITE (verificada en Supabase: creada 25-may, login exitoso confirmado). ETA review: 24-48h. Ver **§1.g.CIERRE**.
+> **28-may (paralelo, mientras Apple revisa):** **🚀 REDES COBREX FASE 2 EN MARCHA — 4 de 6 listas** · Instagram `cobrex.io` ✅ · TikTok `cobrex.io` ✅ · X `cobrexio` ✅ · Telegram canal `cobrexio` ✅ (admin desde cel personal Fernando) · pendientes: YouTube (decisión cuenta Google) + LinkedIn empresa. Bio común EN 4 puntos en todas. Banners Cobrex generados (X 1500×500, YouTube 2560×1440, LinkedIn 1128×191 + 1584×396, watermark YT 150×150) en `Dropbox/.../REDES SOCIALES DE COBREX/banners/` con paleta del template AUREX. Ver **§1.i**.
 > **27-may (previa):** **iOS Build 35 "COBREX" APROBADO POR APPLE** + **APP PUBLICADA** — Fernando lanzó release + configuró **disponibilidad 175 países**. ⚠️ **Bug detectado en producción:** ficha App Store mostraba "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC). Build 36 lo arregla. ✅ Contratos verificados in-effect, mail `cobrex@cobrex.io` operativo (Zoho), alias support@ creado, dominio cobrex.io comprado + HTTPS LISTO con cert Let's Encrypt. Ver **§1.f** + **§1.g**.
 > **25-may (previa):** iOS Build 35 ENVIADO a revisión (25/05 14:02, submission `e0e7fb35-11a4-4c1d-854c-60a80c4799e6`). Rebrand **"AurexLive" → "Cobrex"** SOLO iOS (nombre original acuñado, sin relación con aurex.ai/Beinex), tras el 3er rechazo 4.1c. Build 35 = textos Cobrex en 8 idiomas + **splash nativo COBREX** + onboarding RN + `CFBundleDisplayName=Cobrex` (v35) + 20 capturas (iPhone 6.5" 1242×2688 + iPad 13" 2048×2732). Android 36 sigue "AUREX" en producción (intacto). Ver **§1.f**. ✅ **Formulario fiscal Play Console (W-8BEN) COMPLETADO y APROBADO 25-may** (válido hasta 2029; 30% solo sobre ingresos US-sourced, resto del mundo sin retención). ⚠️ **Google Search Console: error de indexación 404 (msg WNC-20237597)** en aurex.live — 🟡 **DIFERIDO hasta que Apple resuelva** (no tocar el sitio durante la revisión; análisis + opciones en §1.f).
 > **22-may (previa):** **🟢 iOS Build 33 "AurexLive" ENVIADO a revisión de Apple (22/05 12:53 AR · submission `e0e7fb35` · estado "Pendiente de revisión")**. Estrategia: rebrand de grafía **"AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS + **reply de coexistencia** (AurexNova/AurexPro conviven; aurex.ai = Beinex GRC, otro rubro). Ver **§1.e** + **§2.4-septies/octies**. · PWA: "INVEST AI" eliminado + auditoría de paridad + GATING #1 en producción · Landing definitiva · Android Build 36 publicado (intacto como "AUREX").
@@ -212,6 +213,40 @@
 - 🔴 **Privacy URL es POR IDIOMA en ASC, no global**. La sección "Privacidad de la app" del sidebar es global, pero dentro de cada localización de la versión hay un campo separado. Cambiar SIEMPRE en los 8.
 - 🔴 **NUNCA inventar el "What's New"**: Code inventó un sample, Escritorio lo tradujo a 8 idiomas. Quedaron 2 palabras a pulir. Para Build 37: Fernando decide la copy real, Code la pone tal cual.
 - 🟢 **Cuenta demo SIEMPRE verificarla pre-envío**: existencia + password + plan. Causa #1 de rechazos de Apple es "credenciales no funcionan".
+
+---
+
+## 1.i 📱 REDES SOCIALES COBREX — 4 de 6 listas (28-may-2026)
+
+> Setup de redes Fase 2 — handles registrados con coherencia de marca, **mismo bio en todas** (ver [[bio-redes-cobrex]]). Mail registro `cobrex@cobrex.io` (Zoho); cel registro `+54 9 11 7675 2222`; recupero `fmoscon@gmail.com` / `+54 9 11 6789 1320`. Doc detallado en `Dropbox/AUREX/REDES SOCIALES/REDES SOCIALES DE COBREX/REDES_SOCIALES_COBREX.md`.
+
+| Red | Handle final | Link | Estado | Fecha | Notas |
+|---|---|---|---|---|---|
+| Instagram | `cobrex.io` | [instagram.com/cobrex.io](https://instagram.com/cobrex.io) | ✅ | 27-may | Cuenta Business · categoría Finanzas · bio 4 puntos · contacto cobrex@ + tel |
+| TikTok | `cobrex.io` | [tiktok.com/@cobrex.io](https://tiktok.com/@cobrex.io) | ✅ | 28-may | Perfil público · bio idéntica a IG · nombre "Cobrex" |
+| X (Twitter) | `cobrexio` | [x.com/cobrexio](https://x.com/cobrexio) | ✅ | 28-may | Banner oscuro 1500×500 · avatar negro · website cobrex.io · location Global |
+| Telegram | `cobrexio` | [t.me/cobrexio](https://t.me/cobrexio) | ✅ | 28-may | Canal público · admin desde cel personal Fernando · sin banner (Telegram no usa) · traducción auto pendiente Nivel 3 (sistema boosts) · verificado en vivo por Code |
+| YouTube | — | — | ⬜ | — | Pendiente — requiere cuenta Google (decisión: A1 nueva `cobrex@cobrex.io` o A2 usar Google personal Fernando) |
+| LinkedIn | — | — | ⬜ | — | Pendiente — página empresa "Cobrex" desde cuenta personal Fernando (junto a AUREX + JORDAN PLAS) |
+
+**Bio común (EN, copiada en todas):**
+```
+🌎 Your Global Assets Platform.
+📊 Crypto · Stocks · Markets — real time.
+🔔 Smart price alerts.
+📈 Portfolio & watchlist in one place.
+```
+
+**Assets generados Code 28-may** — en `Dropbox/AUREX/REDES SOCIALES/REDES SOCIALES DE COBREX/banners/`:
+- `BANNER_X-TWITTER_oscuro_1500x500.png` (X header)
+- `BANNER_LINKEDIN_empresa_oscuro_1128x191.png`
+- `BANNER_LINKEDIN_perfil_oscuro_1584x396.png`
+- `BANNER_YOUTUBE_oscuro_2560x1440.png`
+- `WATERMARK_YOUTUBE_150x150.png`
+
+Script reusable: `/tmp/generate_banners_cobrex.py` (calcado del template AUREX, paleta dorada `#D4A017`/`#FFD84D` + navy `#0D1017`/`#05070D`, fondo constelación; logo `LOGO COBREX/logo_COBREX_transparente_CON_MARCA.png`).
+
+**Próximos pasos:** YouTube (decisión cuenta Google) + LinkedIn empresa → cerrar Fase 2. Una vez cerradas las 6, los links se cargan en el footer de la web cobrex.io.
 
 ---
 
