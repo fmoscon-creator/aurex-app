@@ -157,6 +157,17 @@
 - **Fix:** (1) Escritorio: ASC → Información de la app → "Información que se puede traducir" → cambiar el selector a **cada idioma** y poner **Nombre = "Cobrex"** en TODAS las localizaciones (no solo Español). (2) Code: recompilar con bump de versión. (3) Enviar a revisión.
 - **Camino A (rápido, si urge):** build mínimo SOLO-nombre (sin cambios de diseño) → ~1 día → Cobrex en todas las tiendas. **Camino B:** va con el Build 36 completo. **Decisión de Fernando.**
 
+### E-bis) 🔴 Descripciones de los IAP todavía dicen "AUREX" — ASC (Escritorio)
+- **Hallazgo 27-may (Code, buscando datos reales en `Dropbox/AUREX/REVENUECAT/INFO SUSCRIPCIONES...al 14.5.docx`):** las descripciones de los 4 productos IAP en ASC dicen **"AUREX"**: *"Full access to all AUREX PRO features"*, *"Premium AUREX AI signals"*. La pantalla de planes (`SubscriptionScreen`) muestra `pkg.product.description` → en la app **Cobrex** se ven con "AUREX".
+- **Datos reales:** PRO Mensual `$9.99/mes` · PRO Anual `$89.99/año` · ELITE Mensual `$19.99/mes` · ELITE Anual `$179.99/año`. Offering `aurex_default` (4 packages). IDs `com.fernandomoscon.aurex.{pro,elite}.{monthly,annual}`.
+- **Fix (Escritorio, ASC, sin build):** actualizar las **descripciones (y nombres visibles) de los 4 IAP → "Cobrex"** en la(s) localización(es). Bundle ID / product IDs NO se tocan (estructurales).
+
+### E-ter) Pantalla de PLANES post-login — ✅ DISEÑO VALIDADO (27-may)
+- Auto-abrir la `SubscriptionScreen` tras login/signup (cambio en `App.js`, Code). El resto NO se rediseña. Planes reales: FREE $0 · PRO $9.99/mes·$89.99/año · ELITE $19.99/mes·$179.99/año.
+- **Salida gratis (validado Fernando = A+C):** **(A)** botón **"Continuar con el plan FREE →"** en la card FREE — **fondo gris claro + texto gris oscuro** (respeta el gris `#8B949E` del FREE en Perfil), secundario (no compite con PRO/ELITE). **(C)** link **"Saltar ✕"** arriba-derecha. Ambos → entran a **Mercados** (`initialRouteName="Mercados"` confirmado en `TabNavigator.js:18`).
+- Se muestran SOLO cuando se auto-abre tras login (param `fromLogin`); por "upgrade" desde la app sigue el **"← Volver"** actual.
+- ⏳ PENDIENTE DEFINIR con Fernando: **¿cuándo auto-abrir?** (cada login / solo signup / solo FREE). Recomendación Code: tras signup + login **solo para usuarios FREE** (no a PRO/ELITE).
+
 ### F) URLs cobrex.io — ✅ HTTPS LISTO (27-may, destrabado)
 - **HTTPS funcionando** en cobrex.io: cert Let's Encrypt `CN=cobrex.io` (válido hasta 25-ago-2026), **Enforce HTTPS activo** (HTTP→HTTPS 301). Los 3 URLs (`/`, `/privacy.html`, `/terms.html`) dan **200 con candado**. Validado por Code (curl+openssl) + Escritorio. **Bloqueante del build destrabado.** Fix que lo destrabó: borrar+re-agregar el custom domain en GitHub Pages (el cert estaba en estado `None`). DNS Namecheap y correo Zoho NO se tocaron.
 - **Escritorio (ASC, sin build):** soporte/marketing/privacy/terms → `https://cobrex.io/...`.
