@@ -2,7 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 26-may-2026 AR — **🎉 iOS Build 35 "COBREX" APROBADO POR APPLE** ("approved for distribution"; tras 3 rechazos 4.1c → el rebrand AurexLive→Cobrex FUNCIONÓ). 🎉🎉 **APP PUBLICADA 27-may** — Fernando lanzó el release + configuró la **disponibilidad en los 175 países** (estaba sin configurar = figuraba "retirada de la venta"; RESUELTO). Todos los países pasando de "En proceso" a "Disponible" → **live en la App Store en ≤24h.** Título "1.0 (33)" = etiqueta vieja; lo publicado es el **Build 35 Cobrex**. **AHORA = Fase 2:** reservar marca Cobrex (`@cobrexio` redes + LinkedIn + dominio `cobrex.io`) → publicar (1 clic) → luego convergencia Android+web→Cobrex. ✅ **Contratos verificados in-effect (27-may, Escritorio):** Free + Paid Apps Agreement activos hasta abr-2027, banco Santander USD activo, W-8BEN + DSA OK → **SIN bloqueos para publicar** (las suscripciones cobrarán). **📧 mail `cobrex@cobrex.io` OPERATIVO** — DNS Zoho (MX+SPF+DKIM) cargado en Namecheap, validado por Code (`dig`/`openssl`) y verificado en verde por Zoho; recibe, manda y no cae en spam (**test E2E OK ambos sentidos**). Alias `support@`→`cobrex@` creado → **frente mail 100% CERRADO**. Pendientes menores: firma HTML + config iPhone/Mac Mail. Ver **§1.f**.
+> **Última actualización:** 28-may-2026 01:50 AR — **🚀 iOS Build 36 "Cobrex" v1.1 (36) ENVIADO A REVISIÓN APPLE** (submission ID `cccb573a-8b29-4668-8036-f4c5dfb4e437`, "Pendiente de revisión"). **Publicación AUTOMÁTICA configurada** → al aprobar publica sola en las 8 tiendas. Resuelve el bug "AUREX AI" del Build 35 (7 idiomas no-inglés mostraban "AUREX AI" en la ficha; ahora todos "Cobrex"). El envío incluye: 7 nombres corregidos + 8 Privacy URLs `cobrex.io/privacy.html` (catch crítico de Fernando: era por-idioma, Escritorio había cambiado solo inglés) + 8 URLs soporte/marketing → cobrex.io + 8 What's New + 4 IAPs renombrados (cola paralela de review) + 175 países verificados + capturas Cobrex iPhone/iPad + nuevo splash limpio + onboarding rediseñado (íconos 3D + constelación) + pantalla planes post-login (FREE puede continuar con botón gris + Skip). Cuenta demo Apple: `demo@cobrex.io` / `Cobrex2026` / plan ELITE (verificada en Supabase: creada 25-may, login exitoso confirmado). ETA review: 24-48h. Ver **§1.g.CIERRE**.
+> **27-may (previa):** **iOS Build 35 "COBREX" APROBADO POR APPLE** + **APP PUBLICADA** — Fernando lanzó release + configuró **disponibilidad 175 países**. ⚠️ **Bug detectado en producción:** ficha App Store mostraba "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC). Build 36 lo arregla. ✅ Contratos verificados in-effect, mail `cobrex@cobrex.io` operativo (Zoho), alias support@ creado, dominio cobrex.io comprado + HTTPS LISTO con cert Let's Encrypt. Ver **§1.f** + **§1.g**.
 > **25-may (previa):** iOS Build 35 ENVIADO a revisión (25/05 14:02, submission `e0e7fb35-11a4-4c1d-854c-60a80c4799e6`). Rebrand **"AurexLive" → "Cobrex"** SOLO iOS (nombre original acuñado, sin relación con aurex.ai/Beinex), tras el 3er rechazo 4.1c. Build 35 = textos Cobrex en 8 idiomas + **splash nativo COBREX** + onboarding RN + `CFBundleDisplayName=Cobrex` (v35) + 20 capturas (iPhone 6.5" 1242×2688 + iPad 13" 2048×2732). Android 36 sigue "AUREX" en producción (intacto). Ver **§1.f**. ✅ **Formulario fiscal Play Console (W-8BEN) COMPLETADO y APROBADO 25-may** (válido hasta 2029; 30% solo sobre ingresos US-sourced, resto del mundo sin retención). ⚠️ **Google Search Console: error de indexación 404 (msg WNC-20237597)** en aurex.live — 🟡 **DIFERIDO hasta que Apple resuelva** (no tocar el sitio durante la revisión; análisis + opciones en §1.f).
 > **22-may (previa):** **🟢 iOS Build 33 "AurexLive" ENVIADO a revisión de Apple (22/05 12:53 AR · submission `e0e7fb35` · estado "Pendiente de revisión")**. Estrategia: rebrand de grafía **"AUREX LIVE" (con espacio) → "AurexLive" (pegado)** SOLO en iOS + **reply de coexistencia** (AurexNova/AurexPro conviven; aurex.ai = Beinex GRC, otro rubro). Ver **§1.e** + **§2.4-septies/octies**. · PWA: "INVEST AI" eliminado + auditoría de paridad + GATING #1 en producción · Landing definitiva · Android Build 36 publicado (intacto como "AUREX").
 > **24-may:** ✅ **IAP Android VALIDADO con compra REAL** (PRO Mensual USD 9.99 + cancelación, cuenta app.aurex — bug #76809 cerrado en producción). 🔴 **PENDIENTE: formulario fiscal EEUU W-8BEN — esta semana (máx 30-may)**, sino Google retiene 30% de los pagos. + Backend: auditoría/fix de fuentes y reportes health (§8.c). Ver **§3.6**.
@@ -25,7 +26,8 @@
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple iOS — Build 35 "Cobrex"** | 🎉 **APROBADO POR APPLE 26-may** ("approved for distribution") — el rebrand AurexLive→Cobrex resolvió los 3 rechazos 4.1c. Publicación en **MANUAL** → app aún NO pública (Fernando publica cuando quiera). Build 35 = textos Cobrex 8 idiomas + splash nativo COBREX + onboarding RN + `CFBundleDisplayName=Cobrex` v35 + 20 capturas + demo `demo@cobrex.io`. Ver §1.f | **Fase 2:** verificar contratos in-effect → reservar marca Cobrex (`@cobrexio`+dominio) → **publicar** (1 clic) → convergencia Android/web→Cobrex | Fernando (sin apuro, está en manual) |
+| 🍎 **Apple iOS — Build 36 "Cobrex" v1.1** | 🚀 **ENVIADO A REVISIÓN 28-may 01:50 AR** (submission `cccb573a-8b29-4668-8036-f4c5dfb4e437`, "Pendiente de revisión"). Publicación AUTOMÁTICA configurada. Resuelve "AUREX AI" en 7 idiomas + rediseño onboarding + paywall post-login + URLs cobrex.io. Ver §1.g.CIERRE | Esperar correo de Apple (24-48h). Si aprueba → publica solo. Si rechaza → analizar motivo | Apple Review |
+| 🍎 **iOS Build 35 "Cobrex"** | ✅ **APROBADO + PUBLICADO** (26-may aprobado, 27-may publicado en 175 países). ⚠️ Quedó con bug: ficha App Store muestra "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC; Escritorio había cambiado solo el Inglés). **Build 36 lo arregla.** Ver §1.f | — (será reemplazado al aprobar Build 36) | — |
 | 🍎 **iOS Build 33 "AurexLive"** | ⚪ **SUPERADO por Build 35.** Quedó en revisión con `CFBundleDisplayName=AurexLive`; Build 35 lo reemplaza con "Cobrex". | — (histórico, ver §1.e) | — |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
 | 🤖 **Android Build 36 (v1.0.36)** | 🟢 **PUBLICADO en PRODUCCIÓN** + **IAP VALIDADO con compra REAL** (24-may: PRO Mensual USD 9.99 cobrado + cancelación, cuenta app.aurex). | ✅ **Formulario fiscal W-8BEN COMPLETADO y APROBADO (25-may, válido hasta 2029)** — 30% retención solo sobre ingresos US-sourced; resto del mundo sin retención (Argentina sin tratado). #90 (futuro): nombre cuenta dev + edge-to-edge | — |
@@ -173,11 +175,51 @@
 - **Escritorio (ASC, sin build):** soporte/marketing/privacy/terms → `https://cobrex.io/...`.
 - **Code (en el build):** `brand.js` privacy/terms → cobrex.io.
 
+### CIERRE — BUILD 36 v1.1 (36) ENVIADO A REVISIÓN 28-may-2026 01:50 AR 🚀
+
+**Submission ID:** `cccb573a-8b29-4668-8036-f4c5dfb4e437` · **Estado:** "Pendiente de revisión" · **Publicación:** AUTOMÁTICA al aprobar.
+
+**Lo que se envió (todo verificado pre-clic, doble control Code+Fernando+Escritorio):**
+
+| ✓ | Item | Detalle |
+|---|---|---|
+| ✅ | **Binario** | Build 36 (v1.1) firmado TX7C2F79U9, IPA en `~/AurexApp/backups/ipa/Build36/AurexApp.ipa` (22MB), subido vía Transporter |
+| ✅ | **8 nombres "Cobrex"** | Resuelve el bug "AUREX AI" en 7 idiomas no-inglés del Build 35 |
+| ✅ | **8 Privacy URLs** | Todas → `https://cobrex.io/privacy.html`. **Catch crítico de Fernando:** Privacy URL es por-idioma en ASC; Escritorio había cambiado solo el inglés. Sin esa observación, 7 idiomas iban con URL vieja `aurex.live/docs/privacy.html`. Fix realizado en los 8 antes del envío |
+| ✅ | **8 URLs soporte/marketing** | → cobrex.io |
+| ✅ | **8 What's New** | Texto: "Cobrex rebrand: new onboarding with 3D icons, fixed plan screen post-login, polished launch experience. Bug fixes." (Anotado para Build 37: pulir "corregida tras login" → "al iniciar sesión"; "lanzamiento" → "arranque") |
+| ✅ | **4 IAPs renombrados** | Estado "Actualizaciones pendientes de revisión" → Apple los revisa en cola paralela. Reference names internos siguen "AUREX PRO/ELITE" (solo visibles a Fernando, no al usuario; no bloquea) |
+| ✅ | **175 países activos** | Verificado en Precio y disponibilidad (no se cayó al crear v1.1) |
+| ✅ | **Capturas** | 10 iPhone 6.5" + 10 iPad 13", todas Cobrex (sin AUREX) |
+| ✅ | **Promo text / Copyright / Keywords** | Sin AUREX en ningún campo |
+| ✅ | **Notas al revisor** | Incluye disclaimer aurex.ai + cuenta demo `demo@cobrex.io` / `Cobrex2026` / plan ELITE (verificada en Supabase 25-may; login exitoso confirmado; ELITE activo en tabla `usuarios`) |
+| ✅ | **Categorías / Age rating / EULA** | OK, sin cambios |
+
+**Cambios de código incluidos (commits en rama `dev` de `fmoscon-creator/AurexApp` PRIVADO):**
+- `23e78b6` Build 36 code changes (brand, splash, onboarding, planes, i18n, assets).
+- `4abe421` Build 33-35 rebrand backup (18 archivos modificados sueltos consolidados).
+- `d50f8d6` Build 36 cierre (AnimatedG fix + bootsplash logo + version bump 1.0→1.1, 35→36).
+
+**Archivos clave tocados:** `src/lib/brand.js` (URLs cobrex.io iOS), `src/components/SplashView.js` (sin "INVEST AI", tagline "YOUR GLOBAL ASSETS PLATFORM", constelación visible), `src/screens/OnboardingScreen.js` (íconos 3D + constelación PNG + logo más grande + botón secundario blanco/borde dorado), `App.js` + `src/screens/SubscriptionScreen.js` (auto-abre paywall tras login SOLO a FREE, con botón gris "Continuar FREE" + Skip ✕), `src/lib/i18n.js` (keys `saltar` y `continuar_free` en 8 idiomas), `ios/AurexApp.xcodeproj/project.pbxproj` (v1.1 / 36), `ios/AurexApp/Images.xcassets/BootSplashLogo-092ad1.imageset/*` (logo regenerado limpio sin cuadrado crema), `assets/onboarding/` (PNGs validados onb1-4 + constellation.png), `assets/bootsplash/manifest.json` (bg `#EEF1F7`).
+
+**Lo que NO se tocó (a propósito):** Bundle ID `com.fernandomoscon.aurex`, product IDs IAP, claves RevenueCat (`appl_zLBPCgwahGaLMonmCDvEjKZDHUh`), ícono de la app, Android Build 36 (sigue "AUREX" en producción).
+
+**Próximo paso:** esperar correo de Apple (24-48h típico).
+- ✅ Si aprueba → publica automático → "AUREX AI" desaparece de las 8 tiendas en minutos.
+- 🔴 Si rechaza → analizar motivo, ajustar, re-enviar.
+
+**Aprendizajes / a no repetir:**
+- 🔴 **Privacy URL es POR IDIOMA en ASC, no global**. La sección "Privacidad de la app" del sidebar es global, pero dentro de cada localización de la versión hay un campo separado. Cambiar SIEMPRE en los 8.
+- 🔴 **NUNCA inventar el "What's New"**: Code inventó un sample, Escritorio lo tradujo a 8 idiomas. Quedaron 2 palabras a pulir. Para Build 37: Fernando decide la copy real, Code la pone tal cual.
+- 🟢 **Cuenta demo SIEMPRE verificarla pre-envío**: existencia + password + plan. Causa #1 de rechazos de Apple es "credenciales no funcionan".
+
 ---
 
-## 1.h ⏳ BUILD 37 iOS — PENDIENTE (post Build 36) — auditoría completa de traducciones
+## 1.h ⏳ BUILD 37 iOS — PENDIENTE (post-aprobación Build 36) — scope consolidado
 
-> **Hallazgo Fernando 27-may** (post-Code-Build-36, NO bloquea Build 36 porque son bugs PREEXISTENTES desde Build 35 ya publicado). **Mandar Build 36 primero**, esto va aparte en Build 37.
+> **Build 36 ya ENVIADO a revisión 28-may 01:50 AR** (§1.g.CIERRE). Build 37 se arranca **después** de que Apple apruebe Build 36 (no en paralelo, para no chocar metadata). Todos los items abajo son bugs/mejoras DETECTADOS pero NO bloqueantes para Build 36.
+
+### 1.h.1 — Auditoría completa de traducciones (strings hardcodeados en ES)
 
 **Problema:** hay strings **hardcodeados en español** en varias pantallas que NO respetan el idioma seleccionado por el usuario. Con idioma EN seleccionado siguen apareciendo en ES.
 
@@ -195,23 +237,27 @@ Fernando: *"claramente hay un montón de cosas no traducidas correctamente"* →
 3. Verificar en TestFlight en al menos 2-3 idiomas (EN + PT + ar/zh).
 4. **Bonus** (opcional): regla de lint que detecte literales `<Text>...</Text>` con palabras en español (preventivo).
 
-**NO tocar Build 36** — esto es Build 37 y va después.
+**NO arrancar Build 37 hasta que Apple apruebe Build 36** (para no chocar metadata en revisión).
 
-### Otros hallazgos Build 37 — detectados al validar Build 36 en TestFlight (28-may madrugada)
-
-**🎨 Onboarding (`OnboardingScreen.js`):**
+### 1.h.2 — Onboarding (`OnboardingScreen.js`)
 - **Constelación no titila / no se anima.** En las 4 onboarding la constelación se renderiza como **imagen estática** (PNG `constellation.png` como background). En el `SplashView` SÍ titila (animado). Para consistencia con el splash que Fernando validó, **la constelación del onboarding debería titilar también**. Solución: reemplazar el `<Image>` estático por estrellas RN renderizadas con `Animated.Value` (replicar el patrón de `SplashView` con ~30 dots animados; usar las mismas posiciones del `_CONST_v6.png` para mantener el patrón aprobado).
 - **Logo + COBREX todavía se ven medio chicos** en las 4 ONB (Fernando, viendo IMG_2728-2731). Actualmente: `AurexLogo size={96}` + `COBREX fontSize:22`. Subir a `size={130}` + `fontSize:28` aprox, validar visualmente en TestFlight.
 
-**💳 Pantalla de Planes (`App.js`) — paywall a usuario PRO/ELITE:**
-- **Bug visto en IMG_2734:** el paywall se auto-abrió a Fernando aunque ES PRO ("Current plan" badge en PRO Mensual). Por diseño NO debe mostrarse a PRO/ELITE.
-- **Causa:** `App.js` lee el plan de `AsyncStorage` (cache local). En instalación fresca (TestFlight) el cache estaba vacío → trató como FREE → mostró el paywall.
-- **Fix:** reemplazar la lectura de `AsyncStorage.getItem('aurex_plan')` por `Purchases.getCustomerInfo()` → leer `entitlements.active['pro']` y `['elite']` (verdad real de RevenueCat, no cache).
+### 1.h.3 — Paywall post-login (`App.js`) — bug fresh install
+- **Bug visto en IMG_2734 (TestFlight Build 36):** el paywall se auto-abrió a Fernando aunque ES PRO ("Current plan" badge en PRO Mensual). Por diseño NO debe mostrarse a PRO/ELITE.
+- **Causa:** `App.js` lee el plan de `AsyncStorage` (cache local con clave `aurex_plan`). En instalación fresca (TestFlight) el cache estaba vacío → trató como FREE → mostró el paywall.
+- **Fix:** reemplazar la lectura de `AsyncStorage.getItem('aurex_plan')` por `Purchases.getCustomerInfo()` → leer `entitlements.active['pro']` y `['elite']` (verdad real de RevenueCat, no cache). Si RC devuelve PRO/ELITE → no abrir paywall.
 - ⚠️ **En producción NO hay PRO/ELITE reales todavía** → este bug es invisible para usuarios reales, por eso NO bloquea Build 36.
 
-**🎬 Loading screen — artefactos del storyboard nativo:**
+### 1.h.4 — Loading screen (storyboard nativo) — artefactos heredados
 - Visto en IMG_2727: el splash nativo muestra el logo Cobrex limpio (✅ el fix de Build 36 funcionó) PERO mantiene del storyboard antiguo un texto **"Loading…"** + un **spinner tipo sol** que NO son del diseño aprobado. Vienen del `BootSplash.storyboard` / `LaunchScreen.storyboard` (heredado de Build 35).
 - **Fix:** revisar el .storyboard del bootsplash en `ios/AurexApp/` y eliminar el `UILabel "Loading..."` + el `UIActivityIndicator`. Dejar solo el logo + fondo.
+
+### 1.h.5 — Pulir copy "What's New" (cosmético)
+- El What's New del Build 36 quedó con dos palabras que conviene refinar en próximas versiones (Code inventó el sample, Escritorio tradujo, Fernando lo detectó tarde):
+  - "fixed plan screen post-login" / "pantalla de plan **corregida tras login**" → es comportamiento NUEVO, no bug fix. Reescribir: "pantalla de planes **al iniciar sesión**".
+  - "polished launch experience" / "experiencia de **lanzamiento** mejorada" → "lanzamiento" en ES es ambiguo (release vs arranque). Reescribir: "**arranque renovado**".
+- **Para Build 37 y futuros**: el texto de What's New lo decide Fernando (Code NO inventa, regla dura — ver `feedback-nunca-inventar.md`).
 
 ---
 
