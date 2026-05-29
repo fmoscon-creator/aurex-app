@@ -1103,6 +1103,13 @@ Cuando todo Landing v3 esté OK doble (Fernando + Escritorio):
 1. **Clean** (Paso 0). 2. **Fixes + bump versión + commit**: subir SOLO `CURRENT_PROJECT_VERSION` (32→33…); **`MARKETING_VERSION` = 1.0 SIEMPRE** (cambiarlo a "1.0.25" fue el desastre de Build 25 → Transporter con logo gris + bundleID raw). 3. **Archive + Export IPA vía CLI** (`xcodebuild`, Code; Fernando NO abre Xcode) → backup en `backups/ipa/BuildXX/` (re-compile = sufijo `_v2`,`_v3`, nunca `_fix`). 4. **VALIDACIÓN post-export (CRÍTICO):** `unzip` + comparar `CFBundleDisplayName / Identifier / ShortVersion / Version` contra el último IPA exitoso → la ÚNICA diferencia debe ser `CFBundleVersion`; verificar signing `com.fernandomoscon.aurex`/TX7C2F79U9. Si discrepa otra key → STOP. 5. **Transporter (Fernando)** — síntomas STOP: logo gris, bundleID raw, falta botón Entregar. 6. **Escritorio** confirma procesado (ícono dorado). 7. **Asignar grupo Internal Testing manual** (al subir por CLI NO se auto-asigna). 8. **Validar en iPhone**.
 
 ### Flujo Android (Play Store)
+**0. ⚠️ ENTORNO Java (CRÍTICO, prefijar SIEMPRE antes de `./gradlew`):** macOS no tiene JDK en PATH → gradle falla "Unable to locate a Java Runtime". Y el JDK de Android Studio (jbr) es **JDK 21, INCOMPATIBLE** (rompe con `JvmVendorSpec IBM_SEMERU`). **Usar JDK 17 de Homebrew:**
+```bash
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+(+ `android/local.properties` con `sdk.dir=$ANDROID_HOME`). Detalle: memoria `project_android_local_setup.md` + `FLUJO_BUILD_IOS_ANDROID.md`. *(Aprendido 29-may build 37: jbr 21 rompió, JDK 17 anduvo.)*
 1. **Clean** (`./gradlew clean`). 2. **Fixes + bump** `versionCode` **y** `versionName` (suben juntos) + commit. 3. **`./gradlew bundleRelease`** → AAB firmado → backup en `backups/aab/BuildXX/`. 4. **Escritorio verifica la lista de cambios ANTES** de "Enviar a revisión" (previene mandar cambios no intencionados, como pasó en Build 36 con el track Alpha). 5. **Fernando envía** con OK de Escritorio. 6. **Escritorio verifica estado** (ETA Google 2-24h, hasta 72h).
 
 ### Reglas permanentes (resumen)

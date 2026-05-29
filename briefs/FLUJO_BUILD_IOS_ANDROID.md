@@ -132,6 +132,19 @@ iPhone → TestFlight → notificación de update disponible → instalar → ab
 
 ## 2. FLUJO ANDROID — PLAY STORE (INTERNAL TESTING Y PRODUCCIÓN)
 
+### Paso 0a — ENTORNO Java/Android ⚠️ CRÍTICO (Code) — prefijar SIEMPRE antes de cualquier `./gradlew`
+
+macOS NO tiene JDK en el PATH por defecto → `./gradlew` falla con **"Unable to locate a Java Runtime"**. Y el JDK de **Android Studio (jbr) es JDK 21**, que es **INCOMPATIBLE** con el Gradle de este proyecto (falla con `JvmVendorSpec does not have member field IBM_SEMERU`). **Hay que usar JDK 17 (Homebrew).** Exportar SIEMPRE antes de gradle:
+```bash
+export JAVA_HOME="/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home"
+export ANDROID_HOME="/opt/homebrew/share/android-commandlinetools"
+export PATH="$JAVA_HOME/bin:$ANDROID_HOME/platform-tools:$PATH"
+```
+- **JDK 17 (Homebrew `openjdk@17`), NUNCA el JDK 21 de Android Studio** (no validado, rompe el build).
+- `local.properties` (gitignored, en `android/`) debe tener `sdk.dir=/opt/homebrew/share/android-commandlinetools`.
+- Detalle completo en memoria `project_android_local_setup.md`.
+- *(Aprendido 29-may-2026 al compilar Build 37: el jbr 21 de Android Studio rompió el build; con JDK 17 anduvo.)*
+
 ### Paso 0 — Clean obligatorio (Code)
 
 ```bash
