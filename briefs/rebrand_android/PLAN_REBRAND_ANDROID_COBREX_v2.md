@@ -149,7 +149,35 @@
 
 ---
 
+## 2-ter. 🌐 IDIOMAS + FORMATOS DE RECURSOS + MATRIZ DE TRADUCCIÓN (lo que faltaba)
+
+### Idiomas cargados (8) — TODA la metadata textual va traducida en los 8
+`en` (default) · `es` · `pt` · `it` · `fr` · `zh` · `hi` · `ar`.
+**Regla dura:** CADA campo de texto que cambie (nombre, desc breve, desc completa, novedades, nombres y **descripciones** de las 4 suscripciones, beneficios por plan) debe quedar traducido y cargado **en los 8**. *(El bug de iOS Build 35 — "AUREX AI" en 7 idiomas — fue exactamente por no hacerlo por-idioma.)*
+⬜ **Escritorio confirma:** ¿están los 8 idiomas cargados en Play Console hoy, o algunos faltan?
+
+### Formatos de recursos gráficos (spec Google Play — la pongo yo, Escritorio confirma actuales)
+| Recurso | Formato / medida | Cantidad | Estado / acción |
+|---|---|---|---|
+| Ícono | 512×512 PNG | 1 | símbolo dorado, **NO cambia** |
+| Gráfico de funciones (feature graphic) | 1024×500 | 1 | ⬜ relevar; si dice "AUREX" → regenerar Cobrex |
+| Capturas teléfono | PNG/JPG, 9:16 o 16:9, lado mín 320px | 2-8 | muestran "AUREX" + diseño viejo → **regenerar del build Cobrex** |
+| Capturas tablet 7" | idem | 0-8 | ⬜ ¿hay cargadas? |
+| Capturas tablet 10" | idem | 0-8 | ⬜ ¿hay cargadas? |
+| Video promocional | URL YouTube | 0-1 | ⬜ ¿hay? ¿menciona AUREX? |
+
+### 💡 Idea/mejora de Code (capturas) — DECISIÓN Fernando
+Las capturas actuales muestran headers "AUREX" → hay que rehacerlas del build Cobrex. **Google Play permite cargar capturas solo en el idioma default y hace fallback** para los demás → **NO hacen falta 8 sets de capturas.** Recomiendo: rehacer capturas en **inglés (default)** del build rebrandeado (como hizo iOS) + traducir solo los **textos** de la ficha en los 8. Ahorra trabajo enorme sin perder calidad. *(Si querés capturas localizadas en un idioma clave puntual, se agregan.)*
+
+### 💡 Idea/mejora de Code (traducción) — para NO repetir el error del "What's New"
+Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idiomas). Propongo: **Code arma los textos de metadata en los 8 idiomas tomándolos del i18n real** (no traducción manual de Escritorio — esa fue la causa del error "What's New" en iOS Build 36) → Escritorio los pega y verifica. **Excepción:** las "Novedades"/What's New las decide Fernando (regla dura, Code no inventa).
+
+---
+
 ## 3. ROLES + CONTROL CRUZADO (sin cambios respecto al v1)
+
+> ⚠️ **CÓMO se controla (regla de Fernando, 29-may):** el control NO es contestar solo lo que se pregunta. Code y Escritorio deben **evaluar de forma completa, integral y AUTÓNOMA**, **avisar cuando piensan distinto (con el porqué)** y **proponer mejores ideas**. **No queremos complacencia ni "sí a todo".** Un relevamiento parcial o un "ok a todo" NO es control válido.
+
 - **Code:** código (editar/compilar/validar AAB). **Escritorio:** Play Console/RevenueCat/metadata + control del código vía repo público. **Fernando:** sube AAB, asigna testing, da el clic de envío, aprueba checkpoints.
 - **CP2** (antes de compilar): Escritorio revisa lista final de cambios. **CP3** (antes de enviar): Escritorio verifica estado Play Console; Fernando da el clic.
 
