@@ -2,7 +2,8 @@
 
 > **Archivo único de seguimiento.** Reemplaza los múltiples briefs sueltos. Se actualiza con cada hito.
 > **NO bump de nombre** (sin `_v1`, `_17MAY`). La historia vive en `git log`.
-> **Última actualización:** 28-may-2026 (tarde) — **🌐 WEB cobrex.io TERMINADA** + **🟠 registrado el próximo frente: REBRAND ANDROID → COBREX (§3.5)**. Web: landing Cobrex completa (clon de aurex.live + rebrand) con 6 links de redes, capturas, botones App Store/Play/Web y **preview de WhatsApp en español** (título "COBREX — Terminal Global de Mercados" + descripción cobertura completa + imagen hero 1200×630 con los 3 botones, header subido para minimizar negro). Repo `fmoscon-creator/cobrex`, working dir local `~/Desktop/cobrex_web`. **Memoria** consolidada en `~/.claude/projects/-Users-fernandomoscon-Dropbox-AUREX/memory/` (ver §0.a cómo iniciar sesión). **Próximos frentes (INDEPENDIENTES entre sí):** (a) **rebrand Android→Cobrex** — Android v1.0.36 ya publicado, **NO depende de iOS**, se hace cuando Fernando quiera (§3.5); (b) **Build 37 iOS** — NO enviarlo hasta que Apple RESPONDA la revisión del Build 36 iOS v1.1 (§1.h, iOS-vs-iOS). Ver §3.5 + §1 tabla.
+> **Última actualización:** 29-may-2026 — **🍎 iOS Build 36 v1.1 (36) RECHAZADO por Apple** (submission `cccb573a…`, revisado en iPad Air M2). 2 motivos, ambos arreglables: **(1) Guideline 2.3.2** — las imágenes promocionales de los 4 IAP eran el ícono de la app (duplicadas) → **Escritorio las BORRÓ** (no se promocionan); **(2) Guideline 3.1.2(c)** — faltaba link a Términos de Uso (EULA) → **Escritorio lo agregó en la descripción (8 idiomas)** + **Code agregó links Términos/Privacidad + disclosure de renovación EN EL PAYWALL** (`SubscriptionScreen`). **NO es la marca — Cobrex pasó.** → **Build 37 iOS en preparación** (solo TEXTO, riesgo mínimo): fix rechazo + limpieza marca aurex→cobrex (mail `support@cobrex.io` + redes Cobrex + textos compartir cobrex.io) + **1.h.1 traducciones ES hardcodeadas** + 1.h.5 Novedades (texto de Fernando). **Deferido a Build 38:** 1.h.2/1.h.3/1.h.4 (cosméticos/riesgo). Falta: compilar 37 + video (Centro de resoluciones) + reenviar (Fernando). Ver **§1.h**.
+> **28-may-2026 (tarde) — 🌐 WEB cobrex.io TERMINADA** + **🟠 registrado el próximo frente: REBRAND ANDROID → COBREX (§3.5)**. Web: landing Cobrex completa (clon de aurex.live + rebrand) con 6 links de redes, capturas, botones App Store/Play/Web y **preview de WhatsApp en español** (título "COBREX — Terminal Global de Mercados" + descripción cobertura completa + imagen hero 1200×630 con los 3 botones, header subido para minimizar negro). Repo `fmoscon-creator/cobrex`, working dir local `~/Desktop/cobrex_web`. **Memoria** consolidada en `~/.claude/projects/-Users-fernandomoscon-Dropbox-AUREX/memory/` (ver §0.a cómo iniciar sesión). **Próximos frentes (INDEPENDIENTES entre sí):** (a) **rebrand Android→Cobrex** — Android v1.0.36 ya publicado, **NO depende de iOS**, se hace cuando Fernando quiera (§3.5); (b) **Build 37 iOS** — NO enviarlo hasta que Apple RESPONDA la revisión del Build 36 iOS v1.1 (§1.h, iOS-vs-iOS). Ver §3.5 + §1 tabla.
 > **28-may-2026 01:50 AR — 🚀 iOS Build 36 "Cobrex" v1.1 (36) ENVIADO A REVISIÓN APPLE** (submission ID `cccb573a-8b29-4668-8036-f4c5dfb4e437`, "Pendiente de revisión"). **Publicación AUTOMÁTICA configurada** → al aprobar publica sola en las 8 tiendas. Resuelve el bug "AUREX AI" del Build 35 (7 idiomas no-inglés mostraban "AUREX AI" en la ficha; ahora todos "Cobrex"). El envío incluye: 7 nombres corregidos + 8 Privacy URLs `cobrex.io/privacy.html` (catch crítico de Fernando: era por-idioma, Escritorio había cambiado solo inglés) + 8 URLs soporte/marketing → cobrex.io + 8 What's New + 4 IAPs renombrados (cola paralela de review) + 175 países verificados + capturas Cobrex iPhone/iPad + nuevo splash limpio + onboarding rediseñado (íconos 3D + constelación) + pantalla planes post-login (FREE puede continuar con botón gris + Skip). Cuenta demo Apple: `demo@cobrex.io` / `Cobrex2026` / plan ELITE (verificada en Supabase: creada 25-may, login exitoso confirmado). ETA review: 24-48h. Ver **§1.g.CIERRE**.
 > **28-may (paralelo, mientras Apple revisa):** **🎉 REDES COBREX FASE 2 CERRADA — 6 de 6 LISTAS** · Instagram `cobrex.io` ✅ · TikTok `cobrex.io` ✅ · X `cobrexio` ✅ · Telegram canal `cobrexio` ✅ · YouTube `@cobrex-io` ✅ (Brand Account, banner ajustado a safe area 1546×423) · LinkedIn `linkedin.com/company/cobrexio` ✅ (página empresa, 20 especialidades, banner 4200×700). Bio común EN 4 puntos en todas. Banners Cobrex generados en `Dropbox/.../REDES SOCIALES DE COBREX/banners/` con paleta del template AUREX. **Próximo:** arrancar la web cobrex.io con todos los links de redes ya integrados. Ver **§1.i**.
 > **27-may (previa):** **iOS Build 35 "COBREX" APROBADO POR APPLE** + **APP PUBLICADA** — Fernando lanzó release + configuró **disponibilidad 175 países**. ⚠️ **Bug detectado en producción:** ficha App Store mostraba "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC). Build 36 lo arregla. ✅ Contratos verificados in-effect, mail `cobrex@cobrex.io` operativo (Zoho), alias support@ creado, dominio cobrex.io comprado + HTTPS LISTO con cert Let's Encrypt. Ver **§1.f** + **§1.g**.
@@ -58,7 +59,8 @@ con TODOS los frentes y recién ahí respondé.
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
-| 🍎 **Apple iOS — Build 36 "Cobrex" v1.1** | 🚀 **ENVIADO A REVISIÓN 28-may 01:50 AR** (submission `cccb573a-8b29-4668-8036-f4c5dfb4e437`, "Pendiente de revisión"). Publicación AUTOMÁTICA configurada. Resuelve "AUREX AI" en 7 idiomas + rediseño onboarding + paywall post-login + URLs cobrex.io. Ver §1.g.CIERRE | Esperar correo de Apple (24-48h). Si aprueba → publica solo. Si rechaza → analizar motivo | Apple Review |
+| 🍎 **Apple iOS — Build 36 "Cobrex" v1.1** | 🔴 **RECHAZADO 29-may** (2.3.2 imágenes promo IAP = ícono · 3.1.2c faltaba link Términos). **NO es la marca.** Metadata ya corregida (Escritorio). Ver §1.h | — (lo reemplaza Build 37) | — |
+| 🍎 **Apple iOS — Build 37 "Cobrex" v1.1 (37)** | 🟡 **EN PREPARACIÓN** — fix rechazo (links paywall ✅) + limpieza marca ✅ + 1.h.1 traducciones + 1.h.5 Novedades. Solo texto, riesgo mínimo | Code: compilar → Fernando: subir + video + reenviar | — |
 | 🍎 **iOS Build 35 "Cobrex"** | ✅ **APROBADO + PUBLICADO** (26-may aprobado, 27-may publicado en 175 países). ⚠️ Quedó con bug: ficha App Store muestra "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC; Escritorio había cambiado solo el Inglés). **Build 36 lo arregla.** Ver §1.f | — (será reemplazado al aprobar Build 36) | — |
 | 🍎 **iOS Build 33 "AurexLive"** | ⚪ **SUPERADO por Build 35.** Quedó en revisión con `CFBundleDisplayName=AurexLive`; Build 35 lo reemplaza con "Cobrex". | — (histórico, ver §1.e) | — |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
@@ -283,9 +285,21 @@ Script reusable: `/tmp/generate_banners_cobrex.py` (calcado del template AUREX, 
 
 ---
 
-## 1.h ⏳ BUILD 37 iOS — PENDIENTE (post-aprobación Build 36) — scope consolidado
+## 1.h ⏳ BUILD 37 iOS — EN PREPARACIÓN (resuelve el rechazo del Build 36) + 🔵 BUILD 38 (deferido)
 
-> **Build 36 iOS = v1.1 (036), ENVIADO a revisión de Apple el 28-may** (§1.g.CIERRE), **sin novedades aún**. Build 37 iOS se arranca/envía **SOLO después de que Apple RESPONDA (apruebe o rechace) el Build 36** — porque son **dos builds de la MISMA app iOS** y no se manda uno nuevo mientras otro está en revisión. ⚠️ Esto es iOS-vs-iOS; **NO tiene relación con Android** (Android v1.0.36 ya está publicado, otra tienda, independiente). Todos los items abajo son bugs/mejoras DETECTADOS pero NO bloqueantes para Build 36.
+> **Build 36 RECHAZADO por Apple el 29-may** (2.3.2 imágenes promo IAP = ícono/duplicadas · 3.1.2c faltaba link Términos de Uso). **NO es la marca — Cobrex aprobado.** Se arma el **Build 37** para resolverlo. **Decisión de Fernando (29-may): el Build 37 lleva SOLO cambios de TEXTO (riesgo mínimo, sin lógica nueva ni nativo).** Lo cosmético/riesgoso se difiere al **Build 38**.
+>
+> **✅ SCOPE BUILD 37 (este):**
+> - **Fix rechazo:** Escritorio borró las 4 imágenes promo + agregó link Términos en la descripción (8 idiomas) ✅ · Code agregó **links Términos/Privacidad + disclosure de renovación automática EN EL PAYWALL** (`SubscriptionScreen`, clave i18n `legal_suscripcion` en 8 idiomas) ✅.
+> - **Limpieza marca aurex→cobrex** (código compartido, sirve también para Android): mail `support@cobrex.io` (Perfil + i18n) · redes Perfil (IG `cobrex.io`/X `cobrexio`/YT `@cobrex-io`) · textos de compartir `aurex.live`→`cobrex.io` (Portfolio/Watchlist/Mercados/IA). ✅ Hecho. *(Único `aurex.live` que queda en `src/` = rama Android de `brand.js`, intencional.)*
+> - **1.h.1 traducciones** (ver abajo) — en curso.
+> - **1.h.5 Novedades** — texto que define Fernando.
+> - **Falta:** compilar 1.1 (37) + Fernando sube + adjunta video en Centro de resoluciones + reenvía.
+>
+> **🔵 DEFERIDO a BUILD 38 (Fernando 29-may — cosmético/riesgo, NO entran al 37):**
+> - **1.h.2** Onboarding: constelación animada (titilar) + logo/COBREX más grandes — *cosmético + riesgo (código de animación).*
+> - **1.h.3** Paywall fresh-install: leer RevenueCat `getCustomerInfo()` en vez de AsyncStorage `aurex_plan` (hoy en instalación fresca el paywall se abre a PRO/ELITE) — *bug real pero **invisible en producción** (no hay PRO/ELITE pagos) + toca lógica de compra.*
+> - **1.h.4** Loading nativo: quitar "Loading…" + spinner sol del `.storyboard` (restos del diseño viejo) — *cosmético + nativo.*
 
 ### 1.h.1 — Auditoría completa de traducciones (strings hardcodeados en ES)
 
@@ -307,17 +321,17 @@ Fernando: *"claramente hay un montón de cosas no traducidas correctamente"* →
 
 **NO arrancar/enviar Build 37 iOS hasta que Apple RESPONDA (apruebe o rechace) el Build 36 iOS v1.1** (para no chocar dos builds de la MISMA app iOS en revisión simultánea). No tiene relación con Android.
 
-### 1.h.2 — Onboarding (`OnboardingScreen.js`)
+### 1.h.2 — Onboarding (`OnboardingScreen.js`) — 🔵 BUILD 38 (deferido)
 - **Constelación no titila / no se anima.** En las 4 onboarding la constelación se renderiza como **imagen estática** (PNG `constellation.png` como background). En el `SplashView` SÍ titila (animado). Para consistencia con el splash que Fernando validó, **la constelación del onboarding debería titilar también**. Solución: reemplazar el `<Image>` estático por estrellas RN renderizadas con `Animated.Value` (replicar el patrón de `SplashView` con ~30 dots animados; usar las mismas posiciones del `_CONST_v6.png` para mantener el patrón aprobado).
 - **Logo + COBREX todavía se ven medio chicos** en las 4 ONB (Fernando, viendo IMG_2728-2731). Actualmente: `AurexLogo size={96}` + `COBREX fontSize:22`. Subir a `size={130}` + `fontSize:28` aprox, validar visualmente en TestFlight.
 
-### 1.h.3 — Paywall post-login (`App.js`) — bug fresh install
+### 1.h.3 — Paywall post-login (`App.js`) — bug fresh install — 🔵 BUILD 38 (deferido; invisible en producción)
 - **Bug visto en IMG_2734 (TestFlight Build 36):** el paywall se auto-abrió a Fernando aunque ES PRO ("Current plan" badge en PRO Mensual). Por diseño NO debe mostrarse a PRO/ELITE.
 - **Causa:** `App.js` lee el plan de `AsyncStorage` (cache local con clave `aurex_plan`). En instalación fresca (TestFlight) el cache estaba vacío → trató como FREE → mostró el paywall.
 - **Fix:** reemplazar la lectura de `AsyncStorage.getItem('aurex_plan')` por `Purchases.getCustomerInfo()` → leer `entitlements.active['pro']` y `['elite']` (verdad real de RevenueCat, no cache). Si RC devuelve PRO/ELITE → no abrir paywall.
 - ⚠️ **En producción NO hay PRO/ELITE reales todavía** → este bug es invisible para usuarios reales, por eso NO bloquea Build 36.
 
-### 1.h.4 — Loading screen (storyboard nativo) — artefactos heredados
+### 1.h.4 — Loading screen (storyboard nativo) — artefactos heredados — 🔵 BUILD 38 (deferido)
 - Visto en IMG_2727: el splash nativo muestra el logo Cobrex limpio (✅ el fix de Build 36 funcionó) PERO mantiene del storyboard antiguo un texto **"Loading…"** + un **spinner tipo sol** que NO son del diseño aprobado. Vienen del `BootSplash.storyboard` / `LaunchScreen.storyboard` (heredado de Build 35).
 - **Fix:** revisar el .storyboard del bootsplash en `ios/AurexApp/` y eliminar el `UILabel "Loading..."` + el `UIActivityIndicator`. Dejar solo el logo + fondo.
 
