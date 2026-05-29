@@ -170,7 +170,19 @@
 | ~~Chromebook~~ | — | — | — | — | ❌ **NO se usa** (decisión Fernando) |
 | Video promo | URL YouTube | — | — | 0-1 | ⬜ ¿hay? ¿menciona AUREX? (Escritorio confirma) |
 
-**Resumen capturas a producir:** 3 formatos (Teléfono + Tablet 7" + Tablet 10") × **solo inglés**. ⬜ Escritorio confirma **cuántas** capturas hay en cada formato (para saber cuántos slots rehacer).
+**Resumen capturas a producir:** 3 formatos (Teléfono + Tablet 7" + Tablet 10") × **solo inglés**.
+
+**Las 8 capturas (orden definido por Fernando — el límite de Play es 8):**
+1. **Portfolio** (tab)
+2. **Markets / Mercados** (tab)
+3. **Watchlist** (tab)
+4. **IA** (tab)
+5. **Alerts / Alertas** (tab)
+6. **Perfil** (tab)
+7. **Idiomas** (selector de idioma)
+8. **Crear alerta** (modal/pantalla)
+
+→ **8 por formato × 3 formatos = 24 capturas**, todas en **inglés**, tomadas por Fernando del build Android (en prueba interna, FASE 3). Mismo criterio que iOS (coherencia entre tiendas).
 
 ### ⚠️ DATO DURO — el upload de imágenes fue un CAOS la vez anterior (se colgó el chat al manipular imágenes)
 **Causa:** se intentaba recortar/redimensionar imágenes DENTRO del navegador. **Solución (regla para este rebrand):**
