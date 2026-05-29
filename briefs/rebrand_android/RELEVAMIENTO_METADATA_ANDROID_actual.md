@@ -30,8 +30,12 @@ AUREX is the global markets terminal for the individual market follower. Track 3
 → Al adaptar (Code): usar **9:16** para los 3 formatos; Tablet 10" escalar a ≥1080/lado (ej. 1440×2560).
 
 ## ⬜ PENDIENTE de relevar (sin apuro)
-- Descripciones completas de los otros 7 idiomas (o confirmar que es el mismo find/replace de marca).
-- 4 suscripciones: descripciones actuales (¿dicen AUREX?) por idioma.
+- Descripciones completas de los otros 7 idiomas → confirmado: mismo find/replace de marca (no hace falta relevar c/u).
+- ✅ **4 suscripciones RELEVADAS (29-may):** product IDs `...{elite,pro}.{annual,monthly/monthly2}` (NO se tocan) · planes básicos annual/monthly-elite/pro · 174 países · gracia 14d(anual)/7d(mensual). **Cambios:**
+  - Nombres: "AUREX ELITE/PRO Anual/Mensual" → "Cobrex …".
+  - Beneficios PRO (anual+mensual): "**AUREX Pulse** market signals" → "Cobrex Pulse market signals".
+  - Beneficios ELITE: NO dicen AUREX ("Full Pulse + RSI/MACD") → sin cambio (opcional "Full Cobrex Pulse").
+  - Precios verificados: ELITE $179.99/$19.99 · PRO $89.99/$9.99 (coinciden con la app). NO se tocan.
 - ✅ **Nombre del DESARROLLADOR (cuenta) = "AUREX AI"** (cuenta personal, ID `7150208556536701506`). Es lo que figura como "desarrollador" debajo del título de la app en la tienda. **DISTINTO del nombre de la app** ("AUREX" / `com.aurexapp`). **DECISIÓN Fernando:** cambiarlo a "Cobrex" (recomendado, coherencia total) — cambio a nivel cuenta (Config → Cuenta de desarrollador), NO rompe pagos (el ID no cambia), Google puede pedir re-verificación.
 - URLs actuales (web, privacidad, soporte) → cobrex.io.
 - Cuántas capturas hay cargadas HOY en Teléfono / Tablet 7" / Tablet 10".
