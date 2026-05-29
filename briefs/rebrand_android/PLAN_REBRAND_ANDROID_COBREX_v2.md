@@ -187,7 +187,7 @@
 ### ⚠️ DATO DURO — el upload de imágenes fue un CAOS la vez anterior (se colgó el chat al manipular imágenes)
 **Causa:** se intentaba recortar/redimensionar imágenes DENTRO del navegador. **Solución (regla para este rebrand):**
 1. **Code prepara CADA imagen ya en su dimensión y peso EXACTOS** (PIL/sips, sin navegador/Chromium). Cero manipulación en Play Console.
-2. **Carpeta única definida:** `Dropbox/AUREX/WEB/WEB COBREX/PLAY STORE COBREX/` con subcarpetas `icono/ banner/ telefono/ tablet7/ tablet10/` (sin XR ni Chromebook).
+2. **Carpeta única definida (Fernando, 29-may):** `Dropbox/AUREX/CAPTURAS PANTALLAS/ANDROID BUILD 37 MODO CLARO INGLES/` con subcarpetas: `_originales_telefono/` (Fernando deja acá las 8 del teléfono) · `telefono/` · `tablet7/` · `tablet10/` (Code deja las adaptadas) · `banner/` (Code deja el gráfico de funciones Cobrex). El ícono no cambia. Sin XR ni Chromebook.
 3. **El upload lo hace FERNANDO directamente en Play Console** (no Escritorio): solo seleccionar los archivos ya listos y subir — sin tocar nada.
 4. **Para que NO se cuelgue el chat (pasó la vez anterior):** Escritorio **NO manipula ni sube imágenes** (eso es lo que colgaba el navegador) → solo **mira y verifica** cada slot (imagen correcta, dimensión, sin "AUREX", idioma). El upload pesado lo hace Fernando en su navegador, **de a tandas chicas** (formato por formato), con archivos ya dimensionados (suben al instante, sin procesamiento).
 5. Assets con marca "AUREX" (banner/gráfico de funciones, cualquier logo con texto) → **Code los regenera a Cobrex** desde el kit `Dropbox/AUREX/LOGO COBREX/`.
@@ -243,7 +243,7 @@ Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idi
 | Compilar | `./gradlew bundleRelease` → AAB | Code | — |
 | Backup + validar AAB | `backups/aab/Build37/` + verificar `app_name=Cobrex`/versión/firma | Code | Code |
 | Track interno + validar en dispositivo | nombre, splash, onboarding, planes (NO a PRO/ELITE), toolbar S24, balanza fuera | Fernando | Code asiste |
-| **Capturas: sacar 8 del TELÉFONO** (Portfolio/Markets/Watchlist/IA/Alertas/Perfil/Idiomas/Crear-alerta), en inglés | del build en prueba interna; dejarlas en `PLAY STORE COBREX/_originales_telefono/` | Fernando | — |
+| **Capturas: sacar 8 del TELÉFONO** (Portfolio/Markets/Watchlist/IA/Alertas/Perfil/Idiomas/Crear-alerta), en inglés | del build en prueba interna; dejarlas en `CAPTURAS PANTALLAS/ANDROID BUILD 37 MODO CLARO INGLES/_originales_telefono/` | Fernando | — |
 | **Adaptar las 8 a los 3 formatos** (Teléfono+Tablet7"+Tablet10") sin estirar | PIL/sips, reencuadrar/rellenar → 24 archivos en sus subcarpetas | Code | Code (dimensiones) |
 
 ### FASE 4 — Metadata Play Console (Escritorio, sin build) — datos en §2
