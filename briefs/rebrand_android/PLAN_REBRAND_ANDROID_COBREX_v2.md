@@ -56,16 +56,96 @@
 
 ---
 
-## 2. INFO REAL DE PLAY CONSOLE (Escritorio, CP1) — para FASE 4
-- **Nombre app:** `AUREX` (5/30) → **Cobrex**.
-- **Desc breve (72/80):** *"Real-time global markets tracker. 350 assets, 24 variables, 8 languages."* → neutral (no dice AUREX); se puede dejar o pulir, sin urgencia.
-- **Desc completa:** arranca *"AUREX is the global markets terminal…"* + varias menciones ("AUREX Pulse", motor) → **reemplazar TODAS por Cobrex**.
-- **4 suscripciones (nombres visibles dicen AUREX → cambiar; product IDs NO):**
-  - `…elite.annual` "AUREX ELITE Anual" → "Cobrex ELITE Anual"
-  - `…elite.monthly2` "AUREX ELITE Mensual" → "Cobrex ELITE Mensual"
-  - `…pro.annual` "AUREX PRO Anual" → "Cobrex PRO Anual"
-  - `…pro.monthly` "AUREX PRO Mensual" → "Cobrex PRO Mensual"
-- **RevenueCat:** Escritorio confirma offering/packages Android + entitlements `pro`/`elite` OK; key Android existe/funciona.
+## 2. 📋 INVENTARIO COMPLETO DE METADATA — Play Console + RevenueCat (TODO campo)
+
+> **Regla:** ningún campo queda sin relevar. Estado: ✅ = Escritorio ya lo pasó (CP1) · ⬜ = **FALTA que Escritorio releve y pase el valor actual** (obligatorio para ejecutar). **⚠️ El iOS Build 35 tuvo el bug "AUREX AI en 7 idiomas" justamente por NO relevar campo-por-campo y por-idioma → acá NO se repite.**
+
+### A) Ficha de Play Store — **POR CADA IDIOMA** (confirmar las 8 localizaciones)
+| Campo | Valor ACTUAL | Valor NUEVO | Quién | Estado |
+|---|---|---|---|---|
+| A1. Nombre app (≤30) | `AUREX` | `Cobrex` | Escritorio | ✅ (solo EN; ⬜ confirmar en los 8 idiomas) |
+| A2. Desc breve (≤80) | "Real-time global markets tracker. 350 assets, 24 variables, 8 languages." | pulir opcional (no dice AUREX) | Escritorio | ✅ EN / ⬜ otros 7 idiomas |
+| A3. Desc completa (≤4000) | "AUREX is the global markets terminal…" (+ "AUREX Pulse", motor, etc.) | reemplazar TODAS las menciones AUREX→Cobrex | Escritorio | ✅ EN / ⬜ otros 7 idiomas |
+| A4. Novedades / "What's New" | ⬜ | copy real (la decide Fernando, Code NO inventa) | Fernando→Escritorio | ⬜ |
+
+### B) Recursos gráficos
+| Campo | Valor ACTUAL | Valor NUEVO | Quién | Estado |
+|---|---|---|---|---|
+| B1. Ícono (512²) | símbolo dorado sin texto | NO cambia | — | ✅ |
+| B2. Gráfico de funciones (1024×500) | ⬜ **¿dice "AUREX"?** | si dice AUREX → regenerar Cobrex | Escritorio releva / Code-Fernando generan | ⬜ |
+| B3. Capturas teléfono | ⬜ ¿cuáles? ¿muestran AUREX? ¿idiomas? | capturas Cobrex | Escritorio releva | ⬜ |
+| B4/B5. Capturas tablet 7"/10" | ⬜ | Cobrex | Escritorio | ⬜ |
+| B6. Video promo | ⬜ ¿existe? | — | Escritorio | ⬜ |
+
+### C) Detalles de tienda / contacto
+| Campo | Valor ACTUAL | Valor NUEVO | Quién | Estado |
+|---|---|---|---|---|
+| C1. Categoría | ⬜ | confirmar (igual) | Escritorio | ⬜ |
+| C2. Etiquetas/tags | ⬜ | revisar si hay "AUREX" | Escritorio | ⬜ |
+| C3. Email contacto | ⬜ | `support@cobrex.io` | Escritorio | ⬜ |
+| C4. Teléfono | ⬜ | confirmar | Escritorio | ⬜ |
+| C5. Sitio web | ⬜ (¿aurex.live?) | `cobrex.io` | Escritorio | ⬜ |
+| C6. Política de privacidad (URL) | ⬜ (¿aurex.live?) | `cobrex.io/privacy.html` | Escritorio | ⬜ |
+
+### D) ⚠️ Cuenta de desarrollador (lo que aparece DEBAJO del nombre)
+| Campo | Valor ACTUAL | Valor NUEVO | Quién | Estado |
+|---|---|---|---|---|
+| D1. **Nombre del desarrollador** | **`AUREX AI`** (esto es lo que Fernando ve bajo el título) | 🔴 **DECISIÓN FERNANDO** → ¿`Cobrex`? ⚠️ afecta a TODA la cuenta (todas las apps del dev) + puede requerir revisión Google | Fernando decide / Escritorio aplica | 🔴 DECISIÓN PENDIENTE |
+| D2. Email/sitio del dev | ⬜ | confirmar | Escritorio | ⬜ |
+
+### E) Suscripciones / productos in-app
+| Campo | Valor ACTUAL | Valor NUEVO | Quién | Estado |
+|---|---|---|---|---|
+| E1-E4. **Nombres visibles** 4 subs | "AUREX ELITE/PRO Anual/Mensual" | "Cobrex ELITE/PRO Anual/Mensual" | Escritorio | ✅ |
+| E1-E4. **Descripciones** de cada sub | ⬜ **¿dicen AUREX?** | → Cobrex | Escritorio releva | ⬜ |
+| E1-E4. Precios | PRO $9.99/$89.99 · ELITE $19.99/$179.99 | NO cambian | — | ✅ |
+| E5. Product IDs | `com.fernandomoscon.aurex.{pro,elite}.{monthly,annual}` | **NO se tocan** (estructurales) | — | ✅ |
+| E6. ¿Beneficios/features listados por plan? (por idioma) | ⬜ | revisar AUREX | Escritorio | ⬜ |
+| E7. ¿Productos in-app NO-suscripción? | ⬜ confirmar si hay | — | Escritorio | ⬜ |
+
+### F) RevenueCat
+| Campo | Estado |
+|---|---|
+| Offering/packages Android + entitlements `pro`/`elite` | ✅ Escritorio confirma OK |
+| Key Android existe/funciona | ✅ (sin pegar la key) |
+| ¿Algún display name en RC dice "AUREX"? | ⬜ confirmar |
+
+### G) Formularios/config de cuenta (confirmar que NO digan AUREX y NO se rompan)
+| Campo | Estado |
+|---|---|
+| G1. Clasificación de contenido | ⬜ confirmar sin cambios |
+| G2. Público objetivo | ⬜ |
+| G3. Seguridad de datos (Data safety) | ⬜ confirmar |
+| G4. Países/disponibilidad (¿175?) | ⬜ confirmar |
+
+### 📨 PEDIDO COMPLETO A ESCRITORIO (CP1-bis — obligatorio antes de ejecutar)
+> Escritorio: pasá **TODOS los campos ⬜** de arriba con su **valor actual exacto** y, donde aplique, **por cada uno de los 8 idiomas** (el bug de iOS fue por no mirar por-idioma). En especial: **D1 nombre del desarrollador**, **A1-A3 en los 8 idiomas**, **B2 gráfico de funciones**, **E1-E4 descripciones de suscripciones**, **C5/C6 URLs**. Con eso el inventario queda 100% y se puede ejecutar.
+
+---
+
+## 2-bis. 📱 TABLA DE COMPARACIÓN — PANTALLAS / SECTORES de la app (qué cambia en cada una)
+
+> Qué ve el usuario en cada pantalla, hoy en Android vs cómo queda tras el rebrand. Para que Fernando revise pantalla por pantalla.
+
+| Pantalla / sector | Android HOY | Tras rebrand | Origen del cambio |
+|---|---|---|---|
+| Splash nativo | logo viejo, bg crema/artefactos | logo Cobrex limpio, bg `#EEF1F7`, sin "INVEST AI", tagline | A6 (nativo) + Build 36 RN |
+| Loading (SplashView RN) | "AUREX" | "COBREX" + constelación | A1 (BRAND_NAME) |
+| Onboarding 1-4 | "AUREX" + (diseño viejo si quedaba) | "COBREX" + íconos 3D + constelación (Build 36 compartido) | A1 + código compartido |
+| Login | header "AUREX" | "Cobrex" | A1 |
+| Signup | header "AUREX" | "Cobrex" | A1 |
+| Planes post-login | se auto-abre; **bug: sale a PRO/ELITE** | solo a FREE (fix RC entitlements) | 🔵 fix compartido |
+| Portfolio (header) | "AUREX" + ⚖️ + timer | "Cobrex", **sin ⚖️ ni timer** | A1 + A3 |
+| Mercados (header) | "AUREX" + ⚖️ + timer | "Cobrex", sin ⚖️/timer | A1 + A3 |
+| Watchlist (header) | "AUREX" + ⚖️ + timer | "Cobrex", sin ⚖️/timer | A1 + A3 |
+| IA (header) | "AUREX" + ⚖️ + timer | "Cobrex", sin ⚖️/timer | A1 + A3 |
+| Alertas (header) | "AUREX" + ⚖️ + timer | "Cobrex", sin ⚖️/timer | A1 + A3 |
+| Mis Alertas (header) | "AUREX" | "Cobrex" | A1 |
+| Perfil | "AUREX v1.0.36" + balanza en header | "Cobrex v1.0.37" + **Aviso Legal/⚖️ queda en Perfil** + links privacy/terms → cobrex.io | A1 + A3 + A4 |
+| Toolbar inferior (6 tabs) | labels cortadas en S24 | fontSize 8 (legible) | 🟠 bug S24 |
+| Textos sueltos hardcodeados ES | aparecen en ES con idioma EN | a i18n (8 idiomas) | fix 1.h.1 |
+
+> 👀 **Fernando: revisá pantalla por pantalla.** Si en alguna querías algo distinto, o falta algo, decímelo.
 
 ---
 
@@ -134,4 +214,8 @@
 
 ---
 
-**Fin v2.** Pendiente: **OK final de Fernando al v2** → ejecutar FASE 1.
+**Fin v2.** **AÚN NO EJECUTABLE.** Faltan 3 cosas antes de tocar código:
+1. ⬜ **Escritorio** completa el inventario de metadata (todos los campos ⬜ de §2, por idioma) — CP1-bis.
+2. 🔴 **Fernando** decide **D1** (nombre del desarrollador "AUREX AI" → ¿Cobrex? afecta toda la cuenta).
+3. ✅/⬜ **Fernando** da el OK final al v2 completo.
+Recién con eso → ejecutar FASE 1.
