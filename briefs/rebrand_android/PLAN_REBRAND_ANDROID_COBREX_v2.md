@@ -53,7 +53,8 @@
 | B10 | Política de privacidad (URL) | Contenido de la app / Ficha | ⬜ | cobrex.io/privacy.html | editar |
 | B11 | Email de contacto | Ficha → detalles de contacto | ⬜ | support@cobrex.io | editar |
 | B12 | Novedades (What's New) | Ficha de la versión | — | texto que define Fernando | editar |
-| B13 | RevenueCat — display names | Dashboard RevenueCat | ⬜ ¿dicen AUREX? | Cobrex | relevar + editar |
+| B13 | RevenueCat — **display names** | Dashboard RevenueCat | ✅ relevado: Offering "AUREX PLANS" (id `aurex_default`) · Entitlements "AUREX Elite"/"AUREX Pro" (ids `pro`/`elite`) · Products App Store "AUREX ELITE/PRO Anual/Mensual" | → "Cobrex Plans" / "Cobrex Elite" / "Cobrex Pro" / "Cobrex …" | Escritorio en RC dashboard — **SOLO display names; los IDs NO se tocan (los usa el código)** |
+| ✅ | **Imágenes generadas (Code, 29-may)** | `AUREX/ANDROID/REBRAND ANDROID a COBREX/` | — | `cobrex_icon_512.png` (símbolo solo = iOS) + `cobrex_banner_1024x500.png` (estilo LinkedIn) | listas para subir |
 | B14 | **Ícono de la ficha (512×512) = AUREX** | Ficha (Recursos gráficos) | gold A + "AUREX" | Cobrex | **Code regenera** 512×512 |
 
 ---
