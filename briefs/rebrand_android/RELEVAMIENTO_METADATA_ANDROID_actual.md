@@ -32,7 +32,7 @@ AUREX is the global markets terminal for the individual market follower. Track 3
 ## ⬜ PENDIENTE de relevar (sin apuro)
 - Descripciones completas de los otros 7 idiomas (o confirmar que es el mismo find/replace de marca).
 - 4 suscripciones: descripciones actuales (¿dicen AUREX?) por idioma.
-- Nombre del DESARROLLADOR (hoy "AUREX AI") — decisión Fernando.
+- ✅ **Nombre del DESARROLLADOR (cuenta) = "AUREX AI"** (cuenta personal, ID `7150208556536701506`). Es lo que figura como "desarrollador" debajo del título de la app en la tienda. **DISTINTO del nombre de la app** ("AUREX" / `com.aurexapp`). **DECISIÓN Fernando:** cambiarlo a "Cobrex" (recomendado, coherencia total) — cambio a nivel cuenta (Config → Cuenta de desarrollador), NO rompe pagos (el ID no cambia), Google puede pedir re-verificación.
 - URLs actuales (web, privacidad, soporte) → cobrex.io.
 - Cuántas capturas hay cargadas HOY en Teléfono / Tablet 7" / Tablet 10".
 - Categoría, tags, email/tel de contacto. RevenueCat display names. Content rating / data safety / países.
