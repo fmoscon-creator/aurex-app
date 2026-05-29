@@ -773,6 +773,8 @@ Bug que bloqueaba registro de usuarios nuevos Android (onboarding slide 4 cablea
 
 ### 3.5 🟠 PRÓXIMO FRENTE GRANDE — Unificar marca Android "AUREX" → "COBREX" (post-web)
 
+> 📋 **PLAN INTEGRAL v1 ESCRITO (28-may)** → `MAPA DE TRABAJO/PLAN_REBRAND_ANDROID_COBREX_v1.md` + paquete de código real para control de Escritorio `CONTROL_CODIGO_REAL_REBRAND_ANDROID.md`. **Publicados en repo público** para Escritorio: `briefs/rebrand_android/` (raw: `…/main/briefs/rebrand_android/PLAN_REBRAND_ANDROID_COBREX_v1.md`). **Flujo:** Code escribió v1 (solo con código real) → Escritorio valida + manda info Play Console/RevenueCat (CP1) → v2 → Fernando aprueba → ejecutar. **Hallazgo clave:** RN = código JS compartido → el rebrand iOS Build 36 ya está en el código de Android; falta flip de `brand.js` + nativo Android + metadata. **3 decisiones pendientes de Fernando** (balanza/timer en Android, nombre listing full Cobrex vs ASO, notification channel id).
+
 > **DECISIÓN DE FERNANDO (28-may-2026):** ahora que **iOS "Cobrex" está APROBADO y PUBLICADO** (Build 35 aprobado, Build 36 en revisión) y la **web cobrex.io quedó terminada**, hay que **unificar TODA la marca en COBREX**. Hoy la marca está dividida: iOS = Cobrex, pero **Android sigue "AUREX"** en Google Play. El próximo frente grande de trabajo es **renombrar la app Android AUREX → Cobrex**.
 >
 > **ORDEN ACORDADO:** 1) ✅ Web cobrex.io (hecha, 28-may) → 2) ⏳ **Rebrand Android → Cobrex**, cuando Fernando lo decida.
