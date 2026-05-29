@@ -156,15 +156,24 @@
 **Regla dura:** CADA campo de texto que cambie (nombre, desc breve, desc completa, novedades, nombres y **descripciones** de las 4 suscripciones, beneficios por plan) debe quedar traducido y cargado **en los 8**. *(El bug de iOS Build 35 — "AUREX AI" en 7 idiomas — fue exactamente por no hacerlo por-idioma.)*
 ⬜ **Escritorio confirma:** ¿están los 8 idiomas cargados en Play Console hoy, o algunos faltan?
 
-### Formatos de recursos gráficos (spec Google Play — la pongo yo, Escritorio confirma actuales)
-| Recurso | Formato / medida | Cantidad | Estado / acción |
-|---|---|---|---|
-| Ícono | 512×512 PNG | 1 | símbolo dorado, **NO cambia** |
-| Gráfico de funciones (feature graphic) | 1024×500 | 1 | ⬜ relevar; si dice "AUREX" → regenerar Cobrex |
-| Capturas teléfono | PNG/JPG, 9:16 o 16:9, lado mín 320px | 2-8 | muestran "AUREX" + diseño viejo → **regenerar del build Cobrex** |
-| Capturas tablet 7" | idem | 0-8 | ⬜ ¿hay cargadas? |
-| Capturas tablet 10" | idem | 0-8 | ⬜ ¿hay cargadas? |
-| Video promocional | URL YouTube | 0-1 | ⬜ ¿hay? ¿menciona AUREX? |
+### Formatos de recursos gráficos — Google Play (NO confundir con Apple: acá NO hay "iPad" ni "XR"; son teléfono/tablet 7"/10"/Chromebook)
+| Recurso | Dimensión exacta | Formato | Peso máx | Cantidad | Acción |
+|---|---|---|---|---|---|
+| Ícono | **512×512** | PNG 32-bit | 1 MB | 1 | símbolo dorado, **NO cambia** |
+| Gráfico de funciones (banner) | **1024×500** | PNG/JPG sin alpha | 1 MB | 1 | tiene "AUREX" → **Code regenera Cobrex** |
+| Capturas teléfono | 320–3840/lado, ratio ≤2:1 (recom. **1080×1920**) | PNG/JPG | 8 MB c/u | 2-8 | **nuevas del build Android** (FASE 3) |
+| Capturas tablet 7" | recom. **1200×1920** | PNG/JPG | 8 MB | 0-8 | ⬜ ¿hay? → nuevas si las había |
+| Capturas tablet 10" | recom. **1600×2560** | PNG/JPG | 8 MB | 0-8 | ⬜ ¿hay? → nuevas si las había |
+| Capturas Chromebook | apaisada, recom. **1920×1080** | PNG/JPG | 8 MB | 0-8 | ⬜ ¿hay? → nuevas si las había |
+| Video promo | URL YouTube | — | — | 0-1 | ⬜ ¿hay? ¿menciona AUREX? |
+
+### ⚠️ DATO DURO — el upload de imágenes fue un CAOS la vez anterior (se colgó el chat al manipular imágenes)
+**Causa:** se intentaba recortar/redimensionar imágenes DENTRO del navegador. **Solución (regla para este rebrand):**
+1. **Code prepara CADA imagen ya en su dimensión y peso EXACTOS** (PIL/sips, sin navegador/Chromium). Cero manipulación en Play Console.
+2. **Carpeta única definida:** `Dropbox/AUREX/WEB/WEB COBREX/PLAY STORE COBREX/` con subcarpetas `icono/ banner/ telefono/ tablet7/ tablet10/ chromebook/`.
+3. **El upload lo hace FERNANDO** (no Escritorio): solo seleccionar los archivos ya listos y subir — sin tocar nada. Esto elimina el caos.
+4. **Escritorio VERIFICA** cada slot (imagen correcta, dimensión, sin "AUREX", idioma).
+5. Assets con marca "AUREX" (banner/gráfico de funciones, cualquier logo con texto) → **Code los regenera a Cobrex** desde el kit `Dropbox/AUREX/LOGO COBREX/`.
 
 ### 📸 CAPTURAS — origen, momento y quién (era un hueco del plan; resuelto)
 **NO reusar las capturas de iOS.** Motivos: (a) dimensiones de iPhone/iPad no encajan en los formatos de Google Play (teléfono + tablet 7"/10"); (b) muestran barra de estado y marco de iOS → en la tienda Android se ve "raro" y Google puede objetarlo.
