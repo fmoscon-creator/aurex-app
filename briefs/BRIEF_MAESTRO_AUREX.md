@@ -60,7 +60,7 @@ con TODOS los frentes y recién ahí respondé.
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
 | 🍎 **Apple iOS — Build 36 "Cobrex" v1.1** | 🔴 **RECHAZADO 29-may** (2.3.2 imágenes promo IAP = ícono · 3.1.2c faltaba link Términos). **NO es la marca.** Metadata ya corregida (Escritorio). Ver §1.h | — (lo reemplaza Build 37) | — |
-| 🍎 **Apple iOS — Build 37 "Cobrex" v1.1 (37)** | 🟢 **IPA COMPILADO Y VALIDADO** (29-may, `~/AurexApp/backups/ipa/Build37/AurexApp.ipa`, 22.7MB). Incluye fix rechazo (links Términos/Privacidad + disclosure renovación en paywall) + limpieza marca aurex→cobrex + 1.h.1 Grupo1 traducciones. Validación: única diff vs Build 36 = versión 37; Cobrex, signing TX7C2F79U9 ✅ | Fernando: Transporter → TestFlight → probar iPhone → reenviar (build 37 + video + Novedades) | — |
+| 🍎 **Apple iOS — Build 38 "Cobrex" v1.1 (38)** | 🟢 **IPA VALIDADO, listo para reenvío** (29-may, `~/AurexApp/backups/ipa/Build38/AurexApp.ipa`). Build 37 se probó en TestFlight (fix rechazo OK: links del paywall abren cobrex.io ✅) y se detectaron 4 ajustes → corregidos en **Build 38**: botón Login→i18n, card Perfil (UpsellBanner)→i18n, teclado ya no tapa el botón (ScrollView en Login+Signup), links paywall más visibles. v38, Cobrex, signing TX7C2F79U9 ✅. Commit `2169640` | Fernando: Transporter → TestFlight → revalidar → reenviar (build 38 + video + Novedades) | — |
 | 🍎 **iOS Build 35 "Cobrex"** | ✅ **APROBADO + PUBLICADO** (26-may aprobado, 27-may publicado en 175 países). ⚠️ Quedó con bug: ficha App Store muestra "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC; Escritorio había cambiado solo el Inglés). **Build 36 lo arregla.** Ver §1.f | — (será reemplazado al aprobar Build 36) | — |
 | 🍎 **iOS Build 33 "AurexLive"** | ⚪ **SUPERADO por Build 35.** Quedó en revisión con `CFBundleDisplayName=AurexLive`; Build 35 lo reemplaza con "Cobrex". | — (histórico, ver §1.e) | — |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
@@ -296,7 +296,7 @@ Script reusable: `/tmp/generate_banners_cobrex.py` (calcado del template AUREX, 
 > - **1.h.5 Novedades** — texto que define Fernando.
 > - **Falta:** compilar 1.1 (37) + Fernando sube + adjunta video en Centro de resoluciones + reenvía.
 >
-> **🔵 DEFERIDO a BUILD 38 (Fernando 29-may — cosmético/riesgo, NO entran al 37):**
+> **🔵 DEFERIDO a BUILD 39+ futuro (Fernando 29-may — cosmético/riesgo; NO entran al reenvío). ⚠️ Nota: "build 38" terminó siendo el reenvío del rechazo (botón Login + card Perfil + teclado + links paywall, validado 29-may), así que estos cosméticos pasan al build 39+:**
 > - **1.h.2** Onboarding: constelación animada (titilar) + logo/COBREX más grandes — *cosmético + riesgo (código de animación).*
 > - **1.h.3** Paywall fresh-install: leer RevenueCat `getCustomerInfo()` en vez de AsyncStorage `aurex_plan` (hoy en instalación fresca el paywall se abre a PRO/ELITE) — *bug real pero **invisible en producción** (no hay PRO/ELITE pagos) + toca lógica de compra.*
 > - **1.h.4** Loading nativo: quitar "Loading…" + spinner sol del `.storyboard` (restos del diseño viejo) — *cosmético + nativo.*

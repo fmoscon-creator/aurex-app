@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANUAL ESTRUCTURAL — AUREX</title>
+<style>
+  :root { --gold: #D4A017; --dark: #0D1117; --green: #3FB950; --red: #F85149; --yellow: #D29922; --border: #30363d; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a1a; line-height: 1.7; padding: 40px; max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 28px; color: var(--dark); border-bottom: 3px solid var(--gold); padding-bottom: 12px; margin-bottom: 8px; }
+  h2 { font-size: 22px; color: var(--dark); margin-top: 40px; margin-bottom: 16px; border-left: 4px solid var(--gold); padding-left: 12px; }
+  h3 { font-size: 17px; color: #333; margin-top: 24px; margin-bottom: 10px; }
+  p { margin-bottom: 12px; }
+  ul, ol { margin-bottom: 12px; padding-left: 24px; }
+  li { margin-bottom: 4px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+  .meta strong { color: #333; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px 0; font-size: 14px; }
+  th { background: var(--dark); color: #fff; text-align: left; padding: 10px 12px; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  tr:nth-child(even) { background: #f8f8f8; }
+  code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace; }
+  pre { background: var(--dark); color: #e6edf3; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 12px 0 20px 0; font-size: 13px; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .badge-new { background: #ddf4ff; color: #0550ae; }
+  .badge-ok { background: #dafbe1; color: #1a7f37; }
+  .badge-warn { background: #fff8c5; color: #9a6700; }
+  .badge-err { background: #ffebe9; color: #cf222e; }
+  .note { background: #fff8c5; border-left: 4px solid var(--yellow); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .important { background: #ffebe9; border-left: 4px solid var(--red); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .success { background: #dafbe1; border-left: 4px solid var(--green); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .pending { background: #f0f0f0; border-left: 4px solid #666; padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  hr { border: none; border-top: 2px solid #e0e0e0; margin: 32px 0; }
+  .footer { text-align: center; color: #999; font-size: 13px; margin-top: 40px; padding-top: 20px; border-top: 2px solid var(--gold); }
+  @media print { body { padding: 20px; font-size: 12px; } pre { font-size: 11px; } h1 { font-size: 24px; } h2 { font-size: 18px; } }
+</style>
+</head>
+<body>
+
+<h1>MANUAL ESTRUCTURAL AUREX</h1>
+<div class="meta">
+  <strong>Estado</strong>: En construccion — verificado seccion por seccion<br>
+  <strong>Metodologia</strong>: Cada dato verificado contra fuente real (CLI, codigo, dashboards). Nada de memoria.<br>
+  <strong>Autores</strong>: CODE + Escritorio. Fernando valida producto, no datos tecnicos.<br>
+  <strong>Ultima actualizacion</strong>: 18/abril/2026
+</div>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 1: REPOSITORIOS</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (CLI + disco) + Escritorio (GitHub web)</em></p>
+
+<h3>1.1 Tres repos independientes</h3>
+<table>
+  <tr><th>Repo</th><th>URL</th><th>Branch produccion</th><th>Deploy</th></tr>
+  <tr><td><code>aurex-app</code></td><td>github.com/fmoscon-creator/aurex-app</td><td><code>main</code></td><td>GitHub Pages → aurex.live</td></tr>
+  <tr><td><code>AurexApp</code></td><td>github.com/fmoscon-creator/AurexApp</td><td><code>main</code> (build 9)</td><td>Xcode → App Store</td></tr>
+  <tr><td><code>aurex-backend</code></td><td>github.com/fmoscon-creator/aurex-backend</td><td><code>main</code></td><td>Push → Railway auto-deploy</td></tr>
+</table>
+
+<h3>1.2 aurex-app (PWA web)</h3>
+<p><strong>Branch</strong>: <code>main</code> (unica)</p>
+<p><strong>Archivos de produccion</strong> (los que sirven aurex.live):</p>
+<table>
+  <tr><th>Archivo</th><th>Funcion</th><th>Tamano</th></tr>
+  <tr><td><code>index.html</code></td><td>App completa (HTML + CSS + JS inline)</td><td>278 KB</td></tr>
+  <tr><td><code>aurex-v3.js</code></td><td>Datos de activos + motor IA</td><td>264 KB</td></tr>
+  <tr><td><code>aurex-features.js</code></td><td>Features: Watchlist, IA, sort, headers, legal</td><td>427 KB</td></tr>
+  <tr><td><code>logo-aurex.png</code></td><td>Logo pantalla login</td><td>146 KB</td></tr>
+  <tr><td><code>manifest.json</code></td><td>Config PWA</td><td>654 B</td></tr>
+  <tr><td><code>service-worker.js</code></td><td>Service worker (minimo)</td><td>30 B</td></tr>
+</table>
+
+<p><strong>Documentacion</strong> (<code>docs/</code>):</p>
+<ul>
+  <li><code>terms.html</code>, <code>privacy.html</code>, <code>support.html</code> — paginas legales</li>
+  <li><code>TAB_ALERTAS_SPEC.md</code>, <code>TAB_WATCHLIST_SPEC.md</code> — specs de tabs</li>
+  <li><code>PERFIL_TAB_DOCUMENTACION.md</code> — doc tab Perfil</li>
+  <li><code>MANUAL_ESTRUCTURAL.md</code> — este documento</li>
+  <li><code>MANUAL_ALERTAS_WHATSAPP.md</code> — manual de alertas y monitoreo</li>
+  <li><code>SPEC_AUTO_RESOLUCION.md</code> — spec del sistema de auto-resolucion</li>
+</ul>
+
+<p><strong>Archivos OBSOLETOS</strong> (legacy, no se usan en produccion):</p>
+<ul>
+  <li><code>aurex-v2.js</code>, <code>aurex-v4.js</code>, <code>aurex-v5.js</code>, <code>aurex-clean.js</code> — versiones JS viejas</li>
+  <li><code>index_bueno.html</code>, <code>index.html.backup</code>, <code>start.html</code> — HTML viejos</li>
+  <li><code>aurex_perfil.html</code>, <code>aurex_simbolos_v2.html</code> — prototipos</li>
+  <li><code>native/</code> — carpeta con codigo nativo viejo (NO es el repo AurexApp)</li>
+  <li><code>backend/node_modules/</code> — residuo de carpeta backend eliminada</li>
+</ul>
+
+<div class="pending"><strong>ACCION PENDIENTE</strong>: Limpiar archivos obsoletos para reducir confusion.</div>
+
+<h3>1.3 AurexApp (Nativa iOS)</h3>
+<p><strong>Branches</strong>:</p>
+<table>
+  <tr><th>Branch</th><th>Que contiene</th><th>Estado</th></tr>
+  <tr><td><code>main</code></td><td>Build 9 (enviado a Apple 9/abril)</td><td>NO TOCAR hasta respuesta Apple</td></tr>
+  <tr><td><code>dev</code></td><td>8 idiomas + mejoras (88 commits adelante de main)</td><td>Branch de trabajo activo</td></tr>
+  <tr><td><code>main-builds-10-12</code></td><td>Legacy builds intermedios</td><td>Legacy, no se usa</td></tr>
+</table>
+
+<p><strong>Estructura <code>src/</code></strong>:</p>
+<p>Screens (9):</p>
+<table>
+  <tr><th>Archivo</th><th>Pantalla</th></tr>
+  <tr><td><code>PortfolioScreen.js</code></td><td>Portfolio con activos, P&L, termometro</td></tr>
+  <tr><td><code>MercadosScreen.js</code></td><td>350+ activos, precios, AUREX Pulse</td></tr>
+  <tr><td><code>IAScreen.js</code></td><td>Senales IA, filtros, variables modelo</td></tr>
+  <tr><td><code>WatchlistScreen.js</code></td><td>Listas, comparador, compartir</td></tr>
+  <tr><td><code>AlertasScreen.js</code></td><td>Motor alertas, toggles, Pulse zonas</td></tr>
+  <tr><td><code>PerfilScreen.js</code></td><td>9 secciones acordeon, planes, seguridad</td></tr>
+  <tr><td><code>LoginScreen.js</code></td><td>Login con Supabase</td></tr>
+  <tr><td><code>OnboardingScreen.js</code></td><td>Onboarding nuevos usuarios</td></tr>
+  <tr><td><code>SubscriptionScreen.js</code></td><td>Pantalla suscripciones</td></tr>
+</table>
+
+<p>Libs (10):</p>
+<table>
+  <tr><th>Archivo</th><th>Funcion</th></tr>
+  <tr><td><code>i18n.js</code></td><td>8 idiomas, ~712 keys</td></tr>
+  <tr><td><code>iaEngine.js</code></td><td>Motor IA v7</td></tr>
+  <tr><td><code>assets.js</code></td><td>350+ activos (tickers, logos, colores)</td></tr>
+  <tr><td><code>supabase.js</code></td><td>Conexion Supabase</td></tr>
+  <tr><td><code>ThemeContext.js</code></td><td>Modo claro/oscuro</td></tr>
+  <tr><td><code>theme.js</code></td><td>Colores por tema</td></tr>
+  <tr><td><code>prices.js</code></td><td>Cache de precios</td></tr>
+  <tr><td><code>locale.js</code></td><td>Formato numeros</td></tr>
+  <tr><td><code>demoData.js</code></td><td>Datos demo</td></tr>
+</table>
+
+<p>Components (5):</p>
+<table>
+  <tr><th>Archivo</th><th>Funcion</th></tr>
+  <tr><td><code>AurexLogo.js</code></td><td>Logo SVG AUREX</td></tr>
+  <tr><td><code>AssetLogo.js</code></td><td>Logo de activo (CoinCap/FMP/fallback)</td></tr>
+  <tr><td><code>LanguageButton.js</code></td><td>Selector idioma en header (8 idiomas)</td></tr>
+  <tr><td><code>LiveIndicator.js</code></td><td>Indicador LIVE pulsante</td></tr>
+  <tr><td><code>SplashView.js</code></td><td>Splash screen</td></tr>
+</table>
+
+<div class="pending"><strong>ACCION PENDIENTE</strong>: Branch <code>main-builds-10-12</code> — verificar si se puede eliminar.</div>
+
+<h3>1.4 aurex-backend (Backend API)</h3>
+<p><strong>Branch</strong>: <code>main</code> (unica)</p>
+<table>
+  <tr><th>Archivo</th><th>Funcion</th></tr>
+  <tr><td><code>server.js</code></td><td>Servidor Express: API, cron alertas, motor IA, Telegram, WhatsApp, health check, fallbacks</td></tr>
+  <tr><td><code>alertImage.js</code></td><td>Generador imagenes WhatsApp (4 templates, dark/light, pureimage)</td></tr>
+  <tr><td><code>activos.json</code></td><td>Lista 350+ activos</td></tr>
+  <tr><td><code>package.json</code></td><td>Dependencias (express, supabase, sharp, pureimage, twilio, etc.)</td></tr>
+  <tr><td><code>nixpacks.toml</code></td><td>Fuerza Node.js 20 en Railway — NO ELIMINAR</td></tr>
+  <tr><td><code>railway.json</code></td><td>Config deploy: <code>node server.js</code></td></tr>
+  <tr><td><code>Procfile</code></td><td>Alternativa: <code>web: node server.js</code></td></tr>
+  <tr><td><code>DEPLOY.md</code></td><td>Instrucciones deploy</td></tr>
+  <tr><td><code>assets/logo.png</code></td><td>Logo transparente (dark mode)</td></tr>
+  <tr><td><code>assets/logo-dark.png</code></td><td>Logo fondo negro (light mode)</td></tr>
+  <tr><td><code>assets/fonts/Inter-*.ttf</code></td><td>Fuentes para imagenes (Bold, Medium, Regular)</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 2: INFRAESTRUCTURA</h2>
+<p><em>Verificado: 18/abril/2026 por Escritorio (Railway dashboard) + CODE (CLI)</em></p>
+
+<h3>2.1 Railway — Backend API</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th><th>Verificado por</th></tr>
+  <tr><td>Proyecto</td><td>lavish-ambition</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Servicio</td><td>aurex-app</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Region</td><td>us-east4 (Virginia, USA)</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Replicas</td><td>1</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>CPU</td><td>8 vCPU (limite plan)</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>RAM</td><td>8 GB (limite plan)</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>URL publica</td><td><code>aurex-app-production.up.railway.app</code></td><td>CODE (curl OK)</td></tr>
+  <tr><td>Puerto</td><td>3000</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Builder</td><td>Nixpacks (railway.json)</td><td>CODE (archivo verificado)</td></tr>
+  <tr><td>Provider</td><td>Node (nixpacks.toml)</td><td>CODE (archivo verificado)</td></tr>
+  <tr><td>Source repo</td><td>fmoscon-creator/aurex-backend → main</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Auto-deploy</td><td>Si — push a main dispara deploy via webhook GitHub</td><td>Escritorio (dashboard)</td></tr>
+</table>
+
+<h3>2.2 Railway — Evolution API (WhatsApp)</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th><th>Verificado por</th></tr>
+  <tr><td>Servicio</td><td>evo-v1</td><td>Escritorio (dashboard)</td></tr>
+  <tr><td>Estado</td><td>Online</td><td>CODE (API: state=open)</td></tr>
+  <tr><td>URL</td><td><code>evo-v1-production.up.railway.app</code></td><td>CODE (curl OK)</td></tr>
+  <tr><td>Instancia</td><td>aurex</td><td>CODE (API verificada)</td></tr>
+  <tr><td>Version</td><td>Evolution v1.8.7</td><td>Escritorio (dashboard)</td></tr>
+</table>
+
+<h3>2.3 Supabase</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th><th>Verificado por</th></tr>
+  <tr><td>URL</td><td><code>dklljnfhlzmfsfmxrpie.supabase.co</code></td><td>CODE (variable Railway)</td></tr>
+  <tr><td>Tablas</td><td>10 verificadas</td><td>CODE (query directo)</td></tr>
+</table>
+
+<h3>2.4 Otros servicios</h3>
+<table>
+  <tr><th>Servicio</th><th>Funcion</th><th>Estado</th></tr>
+  <tr><td>GitHub Pages</td><td>Hosting PWA aurex.live</td><td>Activo</td></tr>
+  <tr><td>Apple Developer</td><td>App Store iOS</td><td>Build 9 pendiente revision</td></tr>
+  <tr><td>Meta/WhatsApp</td><td>Cloud API (dormido, no se usa)</td><td>Dormido</td></tr>
+  <tr><td>PayPal Business</td><td>Pagos PWA</td><td>Activo</td></tr>
+  <tr><td>RevenueCat</td><td>IAP iOS (StoreKit)</td><td>PENDIENTE VERIFICAR estado</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 3: DEPLOY</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (archivos config + CLI + historial)</em></p>
+
+<h3>3.1 Backend (aurex-backend → Railway)</h3>
+<p><strong>Proceso:</strong></p>
+<pre><code>1. Editar codigo en aurex-backend (local: /tmp/aurex-backend)
+2. git add + git commit + git push origin main
+3. Railway detecta push via webhook GitHub
+4. Nixpacks lee nixpacks.toml → instala Node.js 20
+5. npm install (dependencias de package.json)
+6. Ejecuta: node server.js (definido en railway.json)
+7. Servidor arranca en PORT 3000</code></pre>
+
+<p><strong>Archivos que controlan el deploy</strong>:</p>
+<table>
+  <tr><th>Archivo</th><th>Contenido verificado</th><th>Funcion</th></tr>
+  <tr><td><code>railway.json</code></td><td><code>builder: NIXPACKS</code>, <code>startCommand: node server.js</code></td><td>Config Railway</td></tr>
+  <tr><td><code>nixpacks.toml</code></td><td><code>nixPkgs = ["nodejs_20"]</code></td><td>Fuerza Node.js 20</td></tr>
+  <tr><td><code>Procfile</code></td><td><code>web: node server.js</code></td><td>Alternativa</td></tr>
+  <tr><td><code>package.json</code></td><td><code>scripts.start: "node server.js"</code></td><td>npm start</td></tr>
+</table>
+
+<p><strong>Tiempo de deploy</strong>: ~4-5 minutos (build + deploy)</p>
+
+<div class="important">
+  <strong>REGLAS:</strong><br>
+  - NUNCA usar <code>railway up</code> — sube archivos sin Nixpacks, rompe todo<br>
+  - NUNCA eliminar <code>nixpacks.toml</code> — Railway vuelve a usar Caddy<br>
+  - SIEMPRE deployar via push a GitHub main<br>
+  - SIEMPRE verificar STATUS: SUCCESS despues de push
+</div>
+
+<p><strong>Incidente documentado (17/abril/2026):</strong> <code>railway up</code> desde <code>/backend</code> subio archivos sin Node.js → backend caido ~1 hora. Fix: <code>nixpacks.toml</code> + <code>NIXPACKS_NO_CACHE=1</code> + <code>railway redeploy --yes</code>.</p>
+
+<h3>3.2 PWA (aurex-app → GitHub Pages)</h3>
+<pre><code>1. Editar codigo en aurex-app (local: ~/Desktop/aurex-app)
+2. Incrementar cache bust: aurex-v3.js?v=XXX en index.html
+3. git add + git commit + git push origin main
+4. GitHub Pages auto-deploya (~1 minuto)
+5. Verificar: aurex.live (F5 forzar recarga)</code></pre>
+<p><strong>Cache bust actual</strong>: <code>v=149</code></p>
+
+<h3>3.3 Nativa iOS (AurexApp → App Store)</h3>
+<pre><code>1. Trabajar en branch dev
+2. Cuando Apple apruebe build actual:
+   git checkout main && git merge dev
+3. Abrir AurexApp.xcworkspace en Xcode
+4. Incrementar build number (CURRENT_PROJECT_VERSION)
+5. Product → Archive → Distribute to App Store
+6. App Store Connect: seleccionar build → Submit for Review</code></pre>
+
+<table>
+  <tr><th>Dato</th><th>Valor verificado</th></tr>
+  <tr><td>Bundle ID</td><td><code>com.fernandomoscon.aurex</code></td></tr>
+  <tr><td>Marketing Version</td><td>1.0</td></tr>
+  <tr><td>Build en Xcode project</td><td>11</td></tr>
+  <tr><td>Build real (TestFlight)</td><td>13 (10/abril 17:06 PM)</td></tr>
+  <tr><td>Proximo build</td><td>14</td></tr>
+</table>
+
+<h3>3.4 Rollback</h3>
+<p><strong>Backend</strong>: revertir ultimo commit y pushear</p>
+<pre><code>cd /tmp/aurex-backend
+git revert HEAD && git push origin main</code></pre>
+
+<p><strong>PWA</strong>: revertir ultimo commit y pushear</p>
+<pre><code>cd ~/Desktop/aurex-app
+git revert HEAD && git push origin main</code></pre>
+
+<p><strong>Nativa</strong>: usar safety points</p>
+<pre><code>git checkout safety-point-YYYY-MM-DD-nombre</code></pre>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 4: VARIABLES DE ENTORNO</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (CLI) + Escritorio (dashboard) — coinciden</em></p>
+
+<p><strong>16 variables de usuario</strong> (configuradas manualmente):</p>
+<table>
+  <tr><th>Variable</th><th>Funcion</th></tr>
+  <tr><td><code>SUPABASE_URL</code></td><td>URL de Supabase</td></tr>
+  <tr><td><code>SUPABASE_SERVICE_KEY</code></td><td>Key admin Supabase (bypasa RLS)</td></tr>
+  <tr><td><code>EVOLUTION_API_URL</code></td><td>URL Evolution API (WhatsApp)</td></tr>
+  <tr><td><code>EVOLUTION_API_KEY</code></td><td>API key Evolution</td></tr>
+  <tr><td><code>EVOLUTION_INSTANCE</code></td><td>Nombre instancia (aurex)</td></tr>
+  <tr><td><code>ADMIN_WHATSAPP</code></td><td>Numero admin Fernando (5491167891320)</td></tr>
+  <tr><td><code>ANTHROPIC_API_KEY</code></td><td>Key Claude API (analisis IA en alertas)</td></tr>
+  <tr><td><code>ALPHA_VANTAGE_KEY</code></td><td>Key precios acciones</td></tr>
+  <tr><td><code>TELEGRAM_BOT_TOKEN</code></td><td>Token bot Telegram alertas</td></tr>
+  <tr><td><code>TWILIO_ACCOUNT_SID</code></td><td>Twilio SID (fallback WhatsApp)</td></tr>
+  <tr><td><code>TWILIO_AUTH_TOKEN</code></td><td>Twilio auth token</td></tr>
+  <tr><td><code>TWILIO_WHATSAPP_FROM</code></td><td>Numero Twilio WhatsApp</td></tr>
+  <tr><td><code>LEMONSQUEEZY_WEBHOOK_SECRET</code></td><td>Secret webhooks pagos</td></tr>
+  <tr><td><code>FRONTEND_URL</code></td><td>CORS origin (*)</td></tr>
+  <tr><td><code>PORT</code></td><td>Puerto servidor (3000)</td></tr>
+  <tr><td><code>NIXPACKS_NO_CACHE</code></td><td>Forzar rebuild limpio (dejar en 1)</td></tr>
+</table>
+
+<p><strong>Variable ELIMINADA</strong>: <code>NIXPACKS_ROOT_DIR=backend</code> — fue causa del incidente de backend caido el 17/abril.</p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 5: BASE DE DATOS (Supabase)</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (queries directos + grep de codigo)</em></p>
+
+<h3>5.1 Conexion</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>URL</td><td><code>dklljnfhlzmfsfmxrpie.supabase.co</code></td></tr>
+  <tr><td>Auth</td><td>Supabase Auth (email + password)</td></tr>
+  <tr><td>Anon Key</td><td>Hardcodeada en nativa <code>supabase.js</code> y PWA <code>index.html</code></td></tr>
+  <tr><td>Service Key</td><td>En Railway variables (bypasa RLS)</td></tr>
+</table>
+
+<h3>5.2 Tablas — Estado real</h3>
+<p><strong>10 tablas</strong> existen en Supabase:</p>
+<table>
+  <tr><th>Tabla</th><th>Usada en server.js</th><th>Usada en PWA</th><th>Usada en nativa</th><th>Estado</th></tr>
+  <tr><td><code>alertas</code></td><td>7 queries</td><td>-</td><td>-</td><td><span class="badge badge-ok">ACTIVA</span> — alertas de precio</td></tr>
+  <tr><td><code>alertas_historial</code></td><td>1 insert</td><td>-</td><td>-</td><td><span class="badge badge-ok">ACTIVA</span> — historial disparadas</td></tr>
+  <tr><td><code>alerts</code></td><td>-</td><td>-</td><td>-</td><td><span class="badge badge-err">LEGACY</span> — no la usa ningun codigo</td></tr>
+  <tr><td><code>health_events</code></td><td>8+ queries</td><td>-</td><td>-</td><td><span class="badge badge-new">NUEVA</span> — alertas de sistema con IDs</td></tr>
+  <tr><td><code>portfolio</code></td><td>4 queries</td><td>-</td><td>-</td><td><span class="badge badge-ok">ACTIVA</span> — activos del usuario</td></tr>
+  <tr><td><code>profiles</code></td><td>-</td><td>-</td><td>-</td><td><span class="badge badge-warn">SIN USO</span> — ningún código la consulta</td></tr>
+  <tr><td><code>usuarios</code></td><td>4 queries</td><td>2 queries</td><td>-</td><td><span class="badge badge-ok">ACTIVA</span> — datos usuario</td></tr>
+  <tr><td><code>watchlist</code></td><td>3 queries</td><td>-</td><td>-</td><td><span class="badge badge-warn">LEGACY v1</span> — server.js la usa pero hay v2</td></tr>
+  <tr><td><code>watchlist_items</code></td><td>4 queries</td><td>-</td><td>-</td><td><span class="badge badge-ok">ACTIVA v2</span></td></tr>
+  <tr><td><code>watchlists</code></td><td>5 queries</td><td>-</td><td>-</td><td><span class="badge badge-ok">ACTIVA v2</span></td></tr>
+</table>
+
+<h3>5.3 Tabla health_events (detalle) <span class="badge badge-new">NUEVA</span></h3>
+<table>
+  <tr><th>Columna</th><th>Tipo</th><th>Descripcion</th></tr>
+  <tr><td><code>id</code></td><td>uuid (PK, auto)</td><td>ID interno Supabase</td></tr>
+  <tr><td><code>alert_id</code></td><td>text</td><td>ID visible: WA-001, BN-002, etc.</td></tr>
+  <tr><td><code>type</code></td><td>text</td><td>evolution / supabase / binance / ia_stale / system</td></tr>
+  <tr><td><code>status</code></td><td>text</td><td>active / resolved</td></tr>
+  <tr><td><code>message</code></td><td>text</td><td>Descripcion del problema</td></tr>
+  <tr><td><code>resolution_message</code></td><td>text</td><td>Descripcion de la resolucion</td></tr>
+  <tr><td><code>triggered_at</code></td><td>timestamptz</td><td>Cuando se disparo</td></tr>
+  <tr><td><code>resolved_at</code></td><td>timestamptz</td><td>Cuando se resolvio</td></tr>
+  <tr><td><code>duration_seconds</code></td><td>integer</td><td>Duracion del incidente en segundos</td></tr>
+  <tr><td><code>notified</code></td><td>boolean</td><td>Si se envio WhatsApp de apertura</td></tr>
+  <tr><td><code>resolution_notified</code></td><td>boolean</td><td>Si se envio WhatsApp de cierre</td></tr>
+  <tr><td><code>mitigated_at</code></td><td>timestamptz</td><td>Cuando se mitigo (fallback activo)</td></tr>
+  <tr><td><code>mitigation_source</code></td><td>text</td><td>Fuente fallback: cryptocompare / coingecko</td></tr>
+</table>
+
+<h3>5.4 Acciones recomendadas</h3>
+<ul>
+  <li>Eliminar tabla <code>alerts</code> (legacy, 0 filas, sin codigo)</li>
+  <li>Migrar de <code>watchlist</code> v1 a v2 y eliminar endpoints v1</li>
+  <li>Clarificar relacion <code>profiles</code> vs <code>usuarios</code> — unificar si es posible</li>
+</ul>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 6: APIs / ENDPOINTS</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (grep server.js + curl en produccion)</em></p>
+<p><strong>Base URL</strong>: <code>https://aurex-app-production.up.railway.app</code></p>
+
+<h3>6.1 Health / General</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th><th>Probado</th></tr>
+  <tr><td>GET</td><td><code>/</code></td><td>Health check — devuelve status, app, version, time</td><td>OK</td></tr>
+  <tr><td>GET</td><td><code>/api/health/status</code></td><td><span class="badge badge-new">NUEVO</span> Estado alertas + flags + fuente precios</td><td>OK</td></tr>
+</table>
+
+<h3>6.2 Motor IA + Datos</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th><th>Probado</th></tr>
+  <tr><td>GET</td><td><code>/api/activos</code></td><td>Lista 350+ activos (de activos.json)</td><td>OK</td></tr>
+  <tr><td>GET</td><td><code>/api/ia-signals</code></td><td>Senales IA calculadas (350 activos)</td><td>OK</td></tr>
+  <tr><td>POST</td><td><code>/api/ia-signals</code></td><td>Forzar recalculo de senales</td><td>No probado</td></tr>
+  <tr><td>GET</td><td><code>/api/pulse</code></td><td>AUREX Pulse scores (5 filtros)</td><td>OK</td></tr>
+</table>
+
+<h3>6.3 Precios</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th><th>Probado</th></tr>
+  <tr><td>GET</td><td><code>/api/stock/:symbol</code></td><td>Precio via Alpha Vantage (cache 60s)</td><td>OK</td></tr>
+  <tr><td>GET</td><td><code>/api/yahoo</code></td><td>Proxy Yahoo Finance (chart data)</td><td>OK</td></tr>
+  <tr><td>GET</td><td><code>/api/yahoo/search</code></td><td>Busqueda Yahoo Finance</td><td>OK</td></tr>
+</table>
+
+<h3>6.4 Portfolio (CRUD)</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>GET</td><td><code>/api/portfolio/:userId</code></td><td>Listar activos del portfolio</td></tr>
+  <tr><td>POST</td><td><code>/api/portfolio</code></td><td>Agregar activo al portfolio</td></tr>
+  <tr><td>PATCH</td><td><code>/api/portfolio/:id</code></td><td>Editar activo</td></tr>
+  <tr><td>DELETE</td><td><code>/api/portfolio/:id</code></td><td>Eliminar activo</td></tr>
+</table>
+
+<h3>6.5 Alertas (CRUD)</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>GET</td><td><code>/api/alertas/:userId</code></td><td>Listar alertas del usuario</td></tr>
+  <tr><td>POST</td><td><code>/api/alertas</code></td><td>Crear alerta</td></tr>
+  <tr><td>PATCH</td><td><code>/api/alertas/:id</code></td><td>Editar alerta</td></tr>
+  <tr><td>DELETE</td><td><code>/api/alertas/:id</code></td><td>Eliminar alerta</td></tr>
+</table>
+
+<h3>6.6 Watchlist v1 (legacy)</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>GET</td><td><code>/api/watchlist/:userId</code></td><td>Listar watchlist v1</td></tr>
+  <tr><td>POST</td><td><code>/api/watchlist</code></td><td>Agregar a watchlist v1</td></tr>
+  <tr><td>DELETE</td><td><code>/api/watchlist/:id</code></td><td>Eliminar de watchlist v1</td></tr>
+</table>
+
+<h3>6.7 Watchlists v2 (activa)</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>GET</td><td><code>/api/watchlists/:userId</code></td><td>Listar listas del usuario</td></tr>
+  <tr><td>GET</td><td><code>/api/watchlists/:userId/items</code></td><td>Items de todas las listas</td></tr>
+  <tr><td>POST</td><td><code>/api/watchlists</code></td><td>Crear lista</td></tr>
+  <tr><td>PATCH</td><td><code>/api/watchlists/:id</code></td><td>Editar lista</td></tr>
+  <tr><td>DELETE</td><td><code>/api/watchlists/:id</code></td><td>Eliminar lista (+ items)</td></tr>
+  <tr><td>POST</td><td><code>/api/watchlist-items</code></td><td>Agregar item a lista</td></tr>
+  <tr><td>PATCH</td><td><code>/api/watchlist-items/:id</code></td><td>Editar item</td></tr>
+  <tr><td>DELETE</td><td><code>/api/watchlist-items/:id</code></td><td>Eliminar item</td></tr>
+</table>
+
+<h3>6.8 Usuarios</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>GET</td><td><code>/api/usuario/:userId</code></td><td>Obtener datos usuario</td></tr>
+  <tr><td>POST</td><td><code>/api/usuario</code></td><td>Crear/obtener usuario (upsert por email)</td></tr>
+  <tr><td>PATCH</td><td><code>/api/usuario/:userId</code></td><td>Editar usuario</td></tr>
+  <tr><td>POST</td><td><code>/api/login</code></td><td>Proxy login Supabase Auth</td></tr>
+  <tr><td>POST</td><td><code>/api/avatar</code></td><td>Upload foto perfil (base64 → Supabase Storage)</td></tr>
+</table>
+
+<h3>6.9 WhatsApp (Evolution API)</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th><th>Probado</th></tr>
+  <tr><td>POST</td><td><code>/api/whatsapp/send</code></td><td>Enviar mensaje texto</td><td>OK</td></tr>
+  <tr><td>POST</td><td><code>/api/whatsapp/test-image</code></td><td>Enviar imagen alerta (4 templates)</td><td>OK</td></tr>
+  <tr><td>GET</td><td><code>/api/whatsapp/status</code></td><td>Estado conexion Evolution</td><td>OK</td></tr>
+  <tr><td>POST</td><td><code>/api/test-admin-alert</code></td><td>Enviar alerta admin test</td><td>OK</td></tr>
+</table>
+
+<h3>6.10 Telegram / Twilio / Webhooks</h3>
+<table>
+  <tr><th>Metodo</th><th>Ruta</th><th>Funcion</th></tr>
+  <tr><td>POST</td><td><code>/api/test-telegram</code></td><td>Enviar mensaje test al bot</td></tr>
+  <tr><td>POST</td><td><code>/api/test-whatsapp</code></td><td>Enviar WhatsApp via Twilio (fallback)</td></tr>
+  <tr><td>POST</td><td><code>/webhook/lemonsqueezy</code></td><td>Webhook Lemon Squeezy pagos (verifica firma HMAC)</td></tr>
+</table>
+
+<h3>6.11 Cron Jobs</h3>
+<table>
+  <tr><th>Job</th><th>Intervalo</th><th>Funcion</th></tr>
+  <tr><td><code>checkAlertas</code></td><td>30 seg</td><td>Alertas de precio → dispara WhatsApp/Telegram</td></tr>
+  <tr><td><code>calcularPulse</code></td><td>5 min</td><td>Scores AUREX Pulse (5 filtros)</td></tr>
+  <tr><td><code>calcularSenalesIA</code></td><td>5 min</td><td>Senales IA para 350 activos</td></tr>
+  <tr><td><code>healthCheck</code></td><td>5 min</td><td>Verifica 4 servicios → alerta/mitigar/resolver + prueba fallbacks directo</td></tr>
+  <tr><td><code>dailyHealthReport</code></td><td>08:00 AR</td><td>Reporte diario de incidentes via WhatsApp</td></tr>
+</table>
+
+<p><strong>Total: 37 endpoints + 5 cron jobs</strong></p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 7: FLUJO DE DATOS</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (grep server.js + index.html)</em></p>
+
+<h3>7.1 Fuentes de datos</h3>
+<table>
+  <tr><th>Fuente</th><th>Que provee</th><th>Usado en</th></tr>
+  <tr><td>Binance API</td><td>Precios cripto RT (primaria)</td><td>server.js + PWA</td></tr>
+  <tr><td>CryptoCompare</td><td>Precios cripto (fallback 1) <span class="badge badge-new">NUEVO</span></td><td>server.js</td></tr>
+  <tr><td>CoinGecko</td><td>Precios cripto (fallback 2)</td><td>server.js + PWA</td></tr>
+  <tr><td>Yahoo Finance</td><td>Precios acciones/futuros/indices, chart data</td><td>server.js</td></tr>
+  <tr><td>Alpha Vantage</td><td>Precios acciones (fallback, cache 60s)</td><td>server.js</td></tr>
+  <tr><td>CoinCap</td><td>Logos cripto</td><td>Nativa + PWA</td></tr>
+  <tr><td>FMP</td><td>Logos acciones</td><td>Nativa + PWA</td></tr>
+  <tr><td>ExchangeRate API</td><td>Tipos de cambio (conversor)</td><td>PWA</td></tr>
+</table>
+
+<h3>7.2 Fallback de precios crypto <span class="badge badge-new">NUEVO</span></h3>
+<pre><code>Binance (primaria) → CryptoCompare (100k/mes) → CoinGecko (10k/mes) → Cache local (30min TTL)</code></pre>
+<p>Cada precio incluye <code>{ price, source, stale, ts }</code>. La fuente activa se guarda en <code>global._lastCryptoSource</code>.</p>
+
+<h3>7.3 Flujo PWA → Backend</h3>
+<pre><code>1. /api/ia-signals → senales IA (350 activos)
+2. /api/portfolio/:userId → activos del usuario
+3. /api/watchlists/:userId/items → items watchlists
+4. /api/pulse → scores AUREX Pulse</code></pre>
+
+<h3>7.4 Flujo Nativa → Backend</h3>
+<p>La nativa consume las mismas APIs via <code>fetch()</code> desde React Native. La URL del backend esta hardcodeada.</p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 8: WHATSAPP</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (server.js + alertImage.js + curl)</em></p>
+
+<h3>8.1 Infraestructura</h3>
+<table>
+  <tr><th>Componente</th><th>Detalle</th></tr>
+  <tr><td>Servicio</td><td>Evolution API v1.8.7 en Railway (evo-v1)</td></tr>
+  <tr><td>Instancia</td><td>aurex</td></tr>
+  <tr><td>Linea emisora</td><td>+54 9 11 3360 2563 (eSIM Claro, iPhone Fernando)</td></tr>
+  <tr><td>Linea admin</td><td>+54 9 11 6789 1320 (WhatsApp personal Fernando)</td></tr>
+</table>
+
+<h3>8.2 Funciones en server.js</h3>
+<table>
+  <tr><th>Funcion</th><th>Que hace</th></tr>
+  <tr><td><code>sendWhatsAppEvolution(phone, text)</code></td><td>Envia mensaje de texto via Evolution API</td></tr>
+  <tr><td><code>sendWhatsAppImage(phone, imageBuffer, caption)</code></td><td>Envia imagen con caption via Evolution API</td></tr>
+  <tr><td><code>notifyAdmin(subject, body)</code></td><td>Envia alerta admin (intenta imagen, fallback texto)</td></tr>
+  <tr><td><code>dispararAlerta(alerta, precio)</code></td><td>Dispara alerta completa (imagen + fallback texto + fallback Twilio)</td></tr>
+  <tr><td><code>openAlert(type, message)</code></td><td>Abre alerta de sistema con ID consecutivo</td></tr>
+  <tr><td><code>mitigateAlert(type, source)</code></td><td><span class="badge badge-new">NUEVA</span> Marca alerta como mitigada via fallback</td></tr>
+  <tr><td><code>resolveAlert(type)</code></td><td>Resuelve alerta, calcula duracion</td></tr>
+</table>
+
+<h3>8.3 Templates de imagen (alertImage.js)</h3>
+<table>
+  <tr><th>Template</th><th>Subtitulo</th><th>Contenido</th></tr>
+  <tr><td><code>ia</code></td><td>AI Alert</td><td>Ticker + BULLISH/BEARISH + % + Price/Target/Stop + barra</td></tr>
+  <tr><td><code>precio</code></td><td>Price Alert</td><td>Ticker + TARGET REACHED + Current Price vs Target + Difference %</td></tr>
+  <tr><td><code>pulse</code></td><td>AUREX Pulse</td><td>5 cards (Global/Crypto/Stocks/Commod/Futures) con scores + zonas</td></tr>
+  <tr><td><code>admin</code></td><td>System Alert</td><td>Alert ID + mensaje de error + timestamp</td></tr>
+</table>
+
+<p><strong>Tecnologia</strong>: pureimage (canvas JS puro) + sharp (logo composite + resize Retina 2x)<br>
+<strong>Fuente</strong>: Inter (Bold, Medium, Regular) en <code>assets/fonts/</code><br>
+<strong>Idioma</strong>: Ingles, formato numerico americano</p>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 9: i18n (INTERNACIONALIZACION)</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (grep i18n.js + screens)</em></p>
+
+<h3>9.1 Estado actual</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>Archivo</td><td><code>AurexApp/src/lib/i18n.js</code></td></tr>
+  <tr><td>Total keys</td><td>712 por idioma</td></tr>
+  <tr><td>Idiomas</td><td>8</td></tr>
+</table>
+
+<h3>9.2 Idiomas</h3>
+<table>
+  <tr><th>Codigo</th><th>Idioma</th><th>Estado</th></tr>
+  <tr><td>es</td><td>Espanol</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>en</td><td>English</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>pt</td><td>Portugues</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>zh</td><td>Chino</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>fr</td><td>Frances</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>it</td><td>Italiano</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>hi</td><td>Hindi</td><td><span class="badge badge-ok">Completo</span></td></tr>
+  <tr><td>ar</td><td>Arabe</td><td><span class="badge badge-ok">Completo</span></td></tr>
+</table>
+
+<h3>9.3 Hardcodes pendientes</h3>
+<table>
+  <tr><th>Pantalla</th><th>Que falta</th><th>Complejidad</th></tr>
+  <tr><td>PortfolioScreen</td><td>Motivos analisis IA (5 frases con interpolacion)</td><td>Alta</td></tr>
+  <tr><td>AlertasScreen</td><td>IA_VARS names/descriptions (10 variables)</td><td>Media</td></tr>
+  <tr><td>PWA (index.html)</td><td>Todo — no tiene sistema i18n</td><td>Alta</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 10: APPLE</h2>
+<p><em>Verificado: 18/abril/2026 por Escritorio (App Store Connect) + CODE</em></p>
+
+<h3>10.1 Cuenta</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>Programa</td><td>Apple Developer Program</td></tr>
+  <tr><td>Team ID</td><td>TX7C2F79U9</td></tr>
+  <tr><td>Apple Account</td><td>fmoscon@gmail.com</td></tr>
+</table>
+
+<h3>10.2 App</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>App Name</td><td>AUREX</td></tr>
+  <tr><td>Apple ID</td><td>6761672161</td></tr>
+  <tr><td>Bundle ID</td><td>com.fernandomoscon.aurex</td></tr>
+  <tr><td>Version en revision</td><td>1.0 (build 9)</td></tr>
+  <tr><td>Estado</td><td>Pendiente de revision (expedited accepted 18/abril)</td></tr>
+</table>
+
+<h3>10.3 Builds en TestFlight</h3>
+<table>
+  <tr><th>Build</th><th>Fecha</th><th>Estado</th></tr>
+  <tr><td>9</td><td>9/abril 21:07</td><td>Enviado a App Store Review</td></tr>
+  <tr><td>10</td><td>10/abril 12:47</td><td>TestFlight</td></tr>
+  <tr><td>11</td><td>10/abril 15:12</td><td>TestFlight</td></tr>
+  <tr><td>12</td><td>10/abril 15:21</td><td>TestFlight</td></tr>
+  <tr><td>13</td><td>10/abril 17:06</td><td>TestFlight (mas reciente)</td></tr>
+</table>
+<p><strong>Proximo build</strong>: 14</p>
+
+<h3>10.4 Caso abierto con Apple</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>Case ID</td><td>102872158784</td></tr>
+  <tr><td>Fecha</td><td>17/abril/2026</td></tr>
+  <tr><td>Motivo</td><td>9 dias en Waiting for Review</td></tr>
+  <tr><td>Respuesta Apple</td><td>"We'll expedite review for AUREX" (18/abril)</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 11: SAFETY POINTS</h2>
+<p><em>Verificado: 18/abril/2026 por CODE (git tag -l en los 3 repos)</em></p>
+
+<h3>11.1 AurexApp (Nativa) — 5 tags</h3>
+<table>
+  <tr><th>Tag</th><th>Fecha</th><th>Estado</th></tr>
+  <tr><td><code>safety-point-2026-04-15-whatsapp-live</code></td><td>15/abril</td><td>Build 9, ES/EN, modo claro</td></tr>
+  <tr><td><code>safety-point-2026-04-16-nativa-estable</code></td><td>16/abril</td><td>Post pop temporalidad</td></tr>
+  <tr><td><code>safety-point-2026-04-16-i18n-perfil-completo</code></td><td>16/abril</td><td>Perfil 9 solapas traducidas</td></tr>
+  <tr><td><code>safety-point-2026-04-16-8-idiomas-completo</code></td><td>16/abril</td><td>8 idiomas + PT/ZH</td></tr>
+  <tr><td><code>safety-point-2026-04-17-8idiomas-whatsapp-templates</code></td><td>17/abril</td><td>Estado actual dev</td></tr>
+</table>
+
+<h3>11.2 aurex-backend — 1 tag</h3>
+<table>
+  <tr><th>Tag</th><th>Fecha</th><th>Estado</th></tr>
+  <tr><td><code>safety-point-2026-04-17-whatsapp-4templates</code></td><td>17/abril</td><td>4 templates WhatsApp</td></tr>
+</table>
+
+<h3>11.3 aurex-app (PWA) — 3 tags</h3>
+<table>
+  <tr><th>Tag</th><th>Fecha</th><th>Estado</th></tr>
+  <tr><td><code>safety-point-2026-04-15-pre-port-nativa</code></td><td>15/abril</td><td>PWA pre-port nativa</td></tr>
+  <tr><td><code>safety-point-2026-04-16-perfil-login-ok</code></td><td>16/abril</td><td>Perfil + login replicados</td></tr>
+  <tr><td><code>safety-point-2026-04-17-pwa-arquitectura</code></td><td>17/abril</td><td>/backend eliminado + README</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 12: REGLAS DE TRABAJO</h2>
+
+<h3>12.1 Infraestructura</h3>
+<table>
+  <tr><th>Regla</th><th>Por que</th></tr>
+  <tr><td>NUNCA usar <code>railway up</code> desde CLI</td><td>Sube archivos sin Nixpacks → rompe build</td></tr>
+  <tr><td>NUNCA eliminar <code>nixpacks.toml</code></td><td>Railway vuelve a usar Caddy en vez de Node</td></tr>
+  <tr><td>NUNCA tocar infra sin ciclo Reporte → Propuesta → OK → Ejecucion</td><td>Incidente 17/abril</td></tr>
+  <tr><td>SIEMPRE deployar backend via push a GitHub main</td><td>Railway auto-deploya via webhook</td></tr>
+  <tr><td>SIEMPRE verificar STATUS: SUCCESS despues de push</td><td>Evitar bugs en produccion</td></tr>
+</table>
+
+<h3>12.2 Codigo</h3>
+<table>
+  <tr><th>Regla</th><th>Por que</th></tr>
+  <tr><td>NUNCA pushear sin validar pixel por pixel antes</td><td>Multiples versiones con errores</td></tr>
+  <tr><td>NUNCA ejecutar sin OK explicito de Fernando</td><td>Fernando es el titular del proyecto</td></tr>
+  <tr><td>NUNCA inventar datos sin verificar contra fuente real</td><td>Build number mal, repo equivocado</td></tr>
+  <tr><td>SIEMPRE verificar sintaxis (<code>node -c</code>) antes de commit</td><td>Strings rotos en i18n</td></tr>
+  <tr><td>SIEMPRE leer codigo existente antes de modificar</td><td>Duplicacion innecesaria</td></tr>
+  <tr><td>PWA replica EXACTO la nativa (REGLA MAESTRA)</td><td>Consistencia visual</td></tr>
+</table>
+
+<h3>12.3 Nativa iOS</h3>
+<table>
+  <tr><th>Regla</th><th>Por que</th></tr>
+  <tr><td>Trabajar en branch <code>dev</code></td><td><code>main</code> = produccion/App Store</td></tr>
+  <tr><td>NO mergear dev→main hasta que Apple apruebe build actual</td><td>Aislar variables si hay rechazo</td></tr>
+  <tr><td>REGLA DE ORO: leer codigo → analizar → presentar → OK → codificar</td><td>Evita errores por trabajar sin contexto</td></tr>
+  <tr><td>Probar en iPhone real</td><td>Simulador tiene bugs de networking/biometrics</td></tr>
+</table>
+
+<h3>12.4 Comunicacion</h3>
+<table>
+  <tr><th>Regla</th><th>Por que</th></tr>
+  <tr><td>Responder siempre en espanol</td><td>Fernando es hispanohablante</td></tr>
+  <tr><td>Un tema a la vez</td><td>Evita confusion y errores</td></tr>
+  <tr><td>NUNCA preguntar a Fernando datos que CODE puede verificar</td><td>Filesystem, codigo, APIs — CODE lo lee solo</td></tr>
+  <tr><td>NUNCA pedir a Fernando clickear en portales/dashboards</td><td>Buscar alternativa o documentar como pendiente</td></tr>
+  <tr><td>Cuando pido algo a Fernando, ESPERO en silencio</td><td>No mandar propuestas paralelas</td></tr>
+</table>
+
+<hr>
+
+<!-- ═══════════════════════════════════════════ -->
+<h2>Seccion 13: ESTADO FEATURES PWA</h2>
+<p><em>Verificado: 18/abril/2026 por Escritorio (specs) + CODE (codigo)</em></p>
+
+<h3>13.1 Features principales implementadas</h3>
+<table>
+  <tr><th>Feature</th><th>Nombre</th><th>Archivo</th></tr>
+  <tr><td>F1-bis</td><td>Chip Aviso Legal en headers</td><td>aurex-features.js</td></tr>
+  <tr><td>F2</td><td>Indicador "Hoy" animado en Portfolio</td><td>aurex-features.js</td></tr>
+  <tr><td>F3</td><td>Sort menus flotantes (4 tabs)</td><td>aurex-features.js</td></tr>
+  <tr><td>F4</td><td>Long press en filas (Portfolio + Mercados)</td><td>aurex-features.js</td></tr>
+  <tr><td>F5</td><td>Cross-tab (Agregar a Portfolio + Favoritos)</td><td>aurex-features.js</td></tr>
+</table>
+
+<h3>13.2 Otras features implementadas</h3>
+<table>
+  <tr><th>Feature</th><th>Estado</th></tr>
+  <tr><td>Onboarding (4 pasos) + constelacion animada</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Conversor de monedas</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Portfolio persistente (Supabase) + currency switch</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Mercados: tabs + paises + timeframes + editar orden</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>AUREX Pulse Fear & Greed 14X + 5 filtros</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Senales IA + sort + filtros + Mi Portfolio</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Motor Alertas (toggle, scope, pulse zones)</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Watchlist CRUD + comparador + compartir</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Login / Registro + Perfil 9 secciones</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Modo claro/oscuro + selector idioma</td><td><span class="badge badge-ok">OK</span></td></tr>
+  <tr><td>Banners (Futuros/Combo/Noticias) + Sparklines + Dots IA</td><td><span class="badge badge-ok">OK</span></td></tr>
+</table>
+
+<h3>13.3 PWA — Lo que NO tiene</h3>
+<table>
+  <tr><th>Aspecto</th><th>Estado</th></tr>
+  <tr><td>i18n</td><td>No tiene sistema — todo hardcodeado en espanol</td></tr>
+  <tr><td>Filtro sticky scroll</td><td>No implementado</td></tr>
+  <tr><td>WhatsApp alertas reales (usuario)</td><td>Solo toggle visual</td></tr>
+  <tr><td>Push notifications reales</td><td>Solo permiso basico, sin backend</td></tr>
+  <tr><td>RTL (arabe)</td><td>No implementado</td></tr>
+</table>
+
+<hr>
+
+<div class="footer">
+  Manual Estructural AUREX — Version 1.1<br>
+  Secciones 1-13 completadas<br>
+  Ultima actualizacion: 18/abril/2026<br>
+  Actualizado con: tabla health_events, endpoint /api/health/status, fallbacks crypto, mitigateAlert
+</div>
+
+</body>
+</html>

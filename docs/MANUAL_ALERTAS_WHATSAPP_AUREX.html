@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANUAL DE ALERTAS WHATSAPP Y REPORTES DE SEGURIDAD — AUREX</title>
+<style>
+  :root { --gold: #D4A017; --dark: #0D1117; --green: #3FB950; --red: #F85149; --yellow: #D29922; --border: #30363d; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #fff; color: #1a1a1a; line-height: 1.7; padding: 40px; max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 28px; color: var(--dark); border-bottom: 3px solid var(--gold); padding-bottom: 12px; margin-bottom: 8px; }
+  h2 { font-size: 22px; color: var(--dark); margin-top: 40px; margin-bottom: 16px; border-left: 4px solid var(--gold); padding-left: 12px; }
+  h3 { font-size: 17px; color: #333; margin-top: 24px; margin-bottom: 10px; }
+  p { margin-bottom: 12px; }
+  .meta { color: #666; font-size: 14px; margin-bottom: 24px; }
+  .meta strong { color: #333; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 20px 0; font-size: 14px; }
+  th { background: var(--dark); color: #fff; text-align: left; padding: 10px 12px; font-weight: 600; }
+  td { padding: 8px 12px; border-bottom: 1px solid #e0e0e0; vertical-align: top; }
+  tr:nth-child(even) { background: #f8f8f8; }
+  code { background: #f0f0f0; padding: 2px 6px; border-radius: 3px; font-size: 13px; font-family: 'SF Mono', 'Fira Code', monospace; }
+  pre { background: var(--dark); color: #e6edf3; padding: 16px 20px; border-radius: 8px; overflow-x: auto; margin: 12px 0 20px 0; font-size: 13px; line-height: 1.5; }
+  pre code { background: none; padding: 0; color: inherit; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 600; }
+  .badge-ok { background: #dafbe1; color: #1a7f37; }
+  .badge-warn { background: #fff8c5; color: #9a6700; }
+  .badge-err { background: #ffebe9; color: #cf222e; }
+  .badge-new { background: #ddf4ff; color: #0550ae; }
+  .note { background: #fff8c5; border-left: 4px solid var(--yellow); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .important { background: #ffebe9; border-left: 4px solid var(--red); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  .success { background: #dafbe1; border-left: 4px solid var(--green); padding: 12px 16px; margin: 16px 0; border-radius: 0 6px 6px 0; font-size: 14px; }
+  hr { border: none; border-top: 2px solid #e0e0e0; margin: 32px 0; }
+  .footer { text-align: center; color: #999; font-size: 13px; margin-top: 40px; padding-top: 20px; border-top: 2px solid var(--gold); }
+  @media print { body { padding: 20px; font-size: 12px; } pre { font-size: 11px; } h1 { font-size: 24px; } h2 { font-size: 18px; } }
+</style>
+</head>
+<body>
+
+<h1>MANUAL DE ALERTAS WHATSAPP Y REPORTES DE SEGURIDAD AUREX</h1>
+<div class="meta">
+  <strong>Estado</strong>: Verificado contra código real<br>
+  <strong>Última actualización</strong>: 18/abril/2026<br>
+  <strong>Autores</strong>: CODE + Escritorio<br>
+  <strong>Repo</strong>: aurex-backend (server.js + alertImage.js)
+</div>
+
+<hr>
+
+<h2>1. ARQUITECTURA DEL SISTEMA</h2>
+
+<h3>1.1 Componentes</h3>
+<table>
+  <tr><th>Componente</th><th>Función</th><th>Ubicación</th></tr>
+  <tr><td>Evolution API v1.8.7</td><td>Envío de mensajes WhatsApp</td><td>Railway servicio evo-v1</td></tr>
+  <tr><td>server.js</td><td>Lógica de alertas, health check, crons, fallbacks</td><td>Railway servicio aurex-app</td></tr>
+  <tr><td>alertImage.js</td><td>Generación de imágenes para alertas (4 templates)</td><td>Railway servicio aurex-app</td></tr>
+  <tr><td>health_events (Supabase)</td><td>Persistencia de alertas con IDs y estados</td><td>Supabase</td></tr>
+  <tr><td>Fuentes Inter (TTF)</td><td>Tipografía en imágenes (Bold, Medium, Regular)</td><td>assets/fonts/</td></tr>
+</table>
+
+<h3>1.2 Líneas WhatsApp</h3>
+<table>
+  <tr><th>Línea</th><th>Número</th><th>Función</th></tr>
+  <tr><td>Emisora (AUREX)</td><td>+54 9 11 3360 2563</td><td>Envía alertas a usuarios</td></tr>
+  <tr><td>Admin (Fernando)</td><td>+54 9 11 6789 1320</td><td>Recibe alertas de sistema</td></tr>
+</table>
+
+<h3>1.3 URLs</h3>
+<table>
+  <tr><th>Servicio</th><th>URL</th></tr>
+  <tr><td>Backend API</td><td><code>https://aurex-app-production.up.railway.app</code></td></tr>
+  <tr><td>Evolution API</td><td><code>https://evo-v1-production.up.railway.app</code></td></tr>
+</table>
+
+<hr>
+
+<h2>2. TIPOS DE ALERTA</h2>
+
+<h3>2.1 Alertas de usuario (para clientes PRO/ELITE)</h3>
+<p>Se disparan cuando un activo alcanza el precio objetivo configurado por el usuario.</p>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>Trigger</td><td>Cron <code>checkAlertas</code> cada 30 segundos</td></tr>
+  <tr><td>Función</td><td><code>dispararAlerta(alerta, precio)</code> — server.js L118</td></tr>
+  <tr><td>Envío</td><td>Imagen generada → fallback texto Evolution → fallback Twilio</td></tr>
+  <tr><td>Fuente precios</td><td>Binance (crypto) → CryptoCompare → CoinGecko → cache + Alpha Vantage (stocks)</td></tr>
+  <tr><td>Análisis</td><td>Claude API genera análisis IA breve por alerta</td></tr>
+  <tr><td>Historial</td><td>Guarda en tabla <code>alertas_historial</code></td></tr>
+</table>
+
+<h3>2.2 Alertas de sistema (solo admin Fernando)</h3>
+<p>Se disparan automáticamente cuando un servicio crítico falla.</p>
+<table>
+  <tr><th>Tipo</th><th>Prefijo ID</th><th>Qué monitorea</th><th>Intervalo</th></tr>
+  <tr><td>Evolution API</td><td>WA</td><td>Estado conexión WhatsApp (state = open)</td><td>5 min</td></tr>
+  <tr><td>Supabase</td><td>DB</td><td>Query de prueba a tabla usuarios</td><td>5 min</td></tr>
+  <tr><td>Binance</td><td>BN</td><td>Fetch BTC price con timeout 5s + fallback directo</td><td>5 min</td></tr>
+  <tr><td>IA Signals</td><td>IA</td><td>Último cálculo > 10 minutos</td><td>5 min</td></tr>
+  <tr><td>System</td><td>SYS</td><td>Reservado para alertas manuales</td><td>Manual</td></tr>
+</table>
+
+<hr>
+
+<h2>3. SISTEMA DE IDs</h2>
+
+<h3>3.1 Formato</h3>
+<pre><code>[PREFIJO]-[NÚMERO DE 3 DÍGITOS]
+Ejemplos: WA-001, DB-003, BN-012, IA-001, SYS-001</code></pre>
+
+<h3>3.2 Generación</h3>
+<ul>
+  <li>Función: <code>getNextAlertId(type)</code> — server.js L821</li>
+  <li>Lee último alert_id del tipo en Supabase</li>
+  <li>Extrae número, incrementa +1</li>
+  <li>Pad a 3 dígitos: 1 → 001, 42 → 042</li>
+  <li>Si no hay registros previos: empieza en 001</li>
+</ul>
+
+<h3>3.3 Unicidad</h3>
+<ul>
+  <li>Consecutivo por tipo (WA va por su cuenta, DB por la suya)</li>
+  <li>No se reutilizan (WA-003 nunca se repite)</li>
+  <li>El ID aparece en: imagen, caption WhatsApp, tabla Supabase, logs</li>
+</ul>
+
+<hr>
+
+<h2>4. CICLO DE VIDA DE UNA ALERTA</h2>
+
+<h3>4.1 Tres estados</h3>
+<table>
+  <tr><th>Estado</th><th>Significado</th><th>WhatsApp</th><th>Icono</th></tr>
+  <tr><td><span class="badge badge-err">ACTIVE</span></td><td>Servicio caído, alerta abierta</td><td>🚨 Imagen SYSTEM ALERT + caption</td><td>🔴</td></tr>
+  <tr><td><span class="badge badge-warn">MITIGATED</span></td><td>Servicio caído pero datos OK via fallback</td><td>🟡 MITIGATED + fuente fallback</td><td>🟡</td></tr>
+  <tr><td><span class="badge badge-ok">RESOLVED</span></td><td>Servicio restaurado</td><td>✅ RESOLVED + duración</td><td>✅</td></tr>
+</table>
+
+<h3>4.2 Apertura (ACTIVE)</h3>
+<pre><code>1. healthCheck() detecta fallo
+2. Verifica que NO haya alerta active del mismo tipo (dedup)
+3. Genera alert_id consecutivo (ej: BN-003)
+4. Inserta en health_events: status=active
+5. Genera imagen SYSTEM ALERT con ID
+6. Envía WhatsApp imagen + caption con ID
+7. Marca notified=true</code></pre>
+<p>Función: <code>openAlert(type, message)</code> — server.js L830</p>
+
+<h3>4.3 Mitigación (MITIGATED) <span class="badge badge-new">NUEVO 18/abril</span></h3>
+<pre><code>1. healthCheck() detecta que Binance sigue caído
+2. Prueba CryptoCompare directamente (5s timeout)
+3. Si CryptoCompare OK → src = 'cryptocompare'
+4. Si CryptoCompare falla → prueba CoinGecko (5s timeout)
+5. Si fallback activo: busca alerta active con mitigated_at IS NULL
+6. Actualiza: mitigated_at + mitigation_source
+7. Envía WhatsApp: "🟡 MITIGATED BN-002 — data OK via cryptocompare"
+8. Si ya fue mitigado (mitigated_at != NULL): no hace nada (idempotente)</code></pre>
+<p>Función: <code>mitigateAlert(type, source)</code> — server.js L883</p>
+
+<div class="success">
+  <strong>Clave:</strong> El healthCheck prueba los fallbacks <strong>directamente</strong> en el catch block de Binance. No depende de <code>fetchCryptoPriceBatch</code> ni de que existan alertas de usuario. Es autónomo.
+</div>
+
+<h3>4.4 Resolución (RESOLVED)</h3>
+<pre><code>1. healthCheck() detecta recuperación (Binance responde OK)
+2. Busca alerta active del tipo
+3. Calcula duración (resolved_at - triggered_at)
+4. Actualiza: status=resolved, resolved_at, duration_seconds
+5. Envía WhatsApp: "✅ RESOLVED BN-003 — Duration: 4m 32s"
+6. Marca resolution_notified=true</code></pre>
+<p>Función: <code>resolveAlert(type)</code> — server.js L859</p>
+
+<h3>4.5 Diagrama de flujo</h3>
+<pre><code>                    Servicio cae
+                         │
+                    ┌─────▼─────┐
+                    │  ACTIVE   │  🚨 WhatsApp imagen
+                    │  (alert)  │
+                    └─────┬─────┘
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+     Fallback activo          Servicio vuelve
+     (CC/CG OK)               (Binance OK)
+              │                       │
+        ┌─────▼─────┐          ┌─────▼─────┐
+        │ MITIGATED │          │ RESOLVED  │
+        │  (datos   │  🟡      │ (cerrado) │  ✅
+        │   OK via  │          └───────────┘
+        │  fallback)│
+        └─────┬─────┘
+              │
+       Servicio vuelve
+              │
+        ┌─────▼─────┐
+        │ RESOLVED  │  ✅ WhatsApp texto + duración
+        └───────────┘</code></pre>
+
+<h3>4.6 Dedup</h3>
+<ul>
+  <li>Si ya existe una alerta <code>active</code> del mismo tipo → NO crea otra</li>
+  <li>Dos incidentes separados = dos IDs diferentes</li>
+  <li>Ejemplo: BN-003 (active → resolved), luego BN-004 (nuevo incidente)</li>
+</ul>
+
+<h3>4.7 Cooldown</h3>
+<ul>
+  <li>15 minutos entre alertas repetidas del mismo tipo</li>
+  <li>Variable: <code>HEALTH_COOLDOWN = 15 * 60 * 1000</code> — server.js L818</li>
+  <li>Evita spam si un servicio parpadea</li>
+</ul>
+
+<hr>
+
+<h2>5. FALLBACK DE PRECIOS CRYPTO <span class="badge badge-new">NUEVO</span></h2>
+
+<h3>5.1 Cadena de fallback (fetchCryptoPriceBatch)</h3>
+<table>
+  <tr><th>Orden</th><th>Fuente</th><th>Endpoint</th><th>Límite gratuito</th></tr>
+  <tr><td>1 (primaria)</td><td>Binance</td><td><code>/api/v3/ticker/price</code> (batch)</td><td>Ilimitado</td></tr>
+  <tr><td>2 (fallback)</td><td>CryptoCompare</td><td><code>/data/pricemulti</code> (batch)</td><td>100k calls/mes</td></tr>
+  <tr><td>3 (fallback)</td><td>CoinGecko</td><td><code>/api/v3/simple/price</code> (batch)</td><td>10k calls/mes</td></tr>
+  <tr><td>4 (emergencia)</td><td>Cache local</td><td>En memoria (TTL 30min)</td><td>—</td></tr>
+</table>
+
+<h3>5.2 Comportamiento</h3>
+<ul>
+  <li>Cada precio incluye: <code>{ price, source, stale, ts }</code></li>
+  <li><code>global._lastCryptoSource</code> se actualiza con cada fetch exitoso</li>
+  <li>Si Binance vuelve después de un fallback → se llama <code>mitigateAlert</code> desde <code>fetchCryptoPriceBatch</code></li>
+  <li>Cache de emergencia: TTL 30 minutos, marcado como <code>stale: true</code></li>
+</ul>
+
+<h3>5.3 healthCheck prueba fallbacks directamente <span class="badge badge-new">NUEVO 18/abril</span></h3>
+<p>Cuando Binance falla en el healthCheck, el catch block prueba CryptoCompare y CoinGecko <strong>directamente</strong> con timeout de 5 segundos cada uno, sin depender de <code>fetchCryptoPriceBatch</code>:</p>
+<pre><code>} catch(e) {
+    // Binance falló — verificar fallbacks directamente
+    let src = 'unknown';
+    try {
+      const r2 = await fetch('https://min-api.cryptocompare.com/data/price?fsym=BTC&tsyms=USD',
+        { signal: AbortSignal.timeout(5000) });
+      const d2 = await r2.json();
+      if (d2.USD) src = 'cryptocompare';
+    } catch(_) {}
+    if (src === 'unknown') {
+      try {
+        const r3 = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd',
+          { signal: AbortSignal.timeout(5000) });
+        const d3 = await r3.json();
+        if (d3.bitcoin?.usd) src = 'coingecko';
+      } catch(_) {}
+    }
+    if (src === 'unknown' && cryptoCache['BTC']?.price) src = 'cache';
+
+    global._lastCryptoSource = src;
+
+    if (!_health.binance) {
+      // Primera vez — abrir alerta con mensaje diferenciado
+      _health.binance = true;
+      if (src === 'cryptocompare' || src === 'coingecko') {
+        await openAlert('binance', 'DOWN — using ' + src + ' fallback. Data OK.');
+      } else if (src === 'cache') {
+        await openAlert('binance', 'ALL crypto sources DOWN. Serving cached data.');
+      } else {
+        await openAlert('binance', 'DOWN. Error: ' + e.message);
+      }
+    } else {
+      // Binance ya caído — mitigar si hay fallback activo
+      if (src === 'cryptocompare' || src === 'coingecko') {
+        await mitigateAlert('binance', src);
+      }
+      console.log('[HEALTH] Binance still down, lastSource:', src);
+    }
+  }</code></pre>
+
+<div class="important">
+  <strong>Por qué es necesario:</strong> <code>fetchCryptoPriceBatch</code> solo corre desde <code>checkAlertas</code>, que solo ejecuta si hay alertas de usuario configuradas. Sin alertas de usuario, <code>_lastCryptoSource</code> nunca se actualiza desde el default <code>'binance'</code>. El healthCheck ahora es autónomo.
+</div>
+
+<hr>
+
+<h2>6. TABLA SUPABASE: health_events</h2>
+
+<h3>6.1 Columnas (verificadas contra Supabase real)</h3>
+<table>
+  <tr><th>Columna</th><th>Tipo</th><th>Descripción</th></tr>
+  <tr><td><code>id</code></td><td>uuid (PK, auto)</td><td>ID interno Supabase</td></tr>
+  <tr><td><code>alert_id</code></td><td>text</td><td>ID visible: WA-001, DB-001, etc.</td></tr>
+  <tr><td><code>type</code></td><td>text</td><td>evolution / supabase / binance / ia_stale / system</td></tr>
+  <tr><td><code>status</code></td><td>text</td><td>active / resolved</td></tr>
+  <tr><td><code>message</code></td><td>text</td><td>Descripción del problema</td></tr>
+  <tr><td><code>resolution_message</code></td><td>text</td><td>Descripción de la resolución</td></tr>
+  <tr><td><code>triggered_at</code></td><td>timestamptz</td><td>Cuándo se disparó</td></tr>
+  <tr><td><code>resolved_at</code></td><td>timestamptz</td><td>Cuándo se resolvió</td></tr>
+  <tr><td><code>duration_seconds</code></td><td>integer</td><td>Duración del incidente en segundos</td></tr>
+  <tr><td><code>notified</code></td><td>boolean</td><td>Si se envió WhatsApp de apertura</td></tr>
+  <tr><td><code>resolution_notified</code></td><td>boolean</td><td>Si se envió WhatsApp de cierre</td></tr>
+  <tr><td><code>mitigated_at</code></td><td>timestamptz</td><td><span class="badge badge-new">NUEVO</span> Cuándo se mitigó (fallback activo)</td></tr>
+  <tr><td><code>mitigation_source</code></td><td>text</td><td><span class="badge badge-new">NUEVO</span> Fuente del fallback: cryptocompare / coingecko</td></tr>
+</table>
+
+<h3>6.2 Índices</h3>
+<ul>
+  <li><code>idx_health_events_type_status</code> — búsqueda rápida por tipo + estado</li>
+  <li><code>idx_health_events_triggered</code> — ordenar por fecha</li>
+</ul>
+
+<hr>
+
+<h2>7. RESTAURACIÓN DE ESTADO AL REINICIAR <span class="badge badge-new">NUEVO</span></h2>
+
+<h3>7.1 Problema</h3>
+<p>Cuando Railway redeploya, el objeto <code>_health = {}</code> se reinicia vacío. Si había una alerta activa (ej: BN-002), el servidor pierde el flag <code>_health.binance = true</code> y no puede resolver ni mitigar la alerta.</p>
+
+<h3>7.2 Solución: restoreHealthState()</h3>
+<pre><code>async function restoreHealthState() {
+  const { data } = await supabase.from('health_events')
+    .select('type').eq('status', 'active');
+  if (data && data.length > 0) {
+    data.forEach(function(evt) { _health[evt.type] = true; });
+    console.log('[HEALTH] Restored active alerts:',
+      data.map(function(e) { return e.type; }).join(', '));
+  }
+}</code></pre>
+
+<h3>7.3 Orden de inicialización <span class="badge badge-new">FIX 18/abril</span></h3>
+<pre><code>// Los crons SOLO arrancan después de restaurar el estado
+restoreHealthState().then(() => {
+  cron.schedule('*/5 * * * *', healthCheck);
+  cron.schedule('0 11 * * *', dailyHealthReport);
+  console.log('[HEALTH] Cron: check 5min + daily report 08:00 AR');
+});</code></pre>
+
+<div class="important">
+  <strong>Bug corregido 18/abril:</strong> Originalmente <code>restoreHealthState()</code> se llamaba sin <code>await</code> y los crons se registraban inmediatamente. El primer healthCheck corría con <code>_health = {}</code> vacío → Binance respondía OK → no detectaba que BN-002 estaba activo → la alerta quedaba huérfana para siempre. Fix: envolver en <code>.then()</code>.
+</div>
+
+<hr>
+
+<h2>8. TEMPLATES DE IMAGEN WHATSAPP</h2>
+
+<h3>8.1 Tecnología</h3>
+<table>
+  <tr><th>Componente</th><th>Librería</th><th>Función</th></tr>
+  <tr><td>Canvas</td><td>pureimage (100% JS, sin binarios nativos)</td><td>Dibuja texto, formas, fondos</td></tr>
+  <tr><td>Logo composite</td><td>sharp</td><td>Superpone logo + resize Retina 2x</td></tr>
+  <tr><td>Fuentes</td><td>Inter TTF (Bold, Medium, Regular)</td><td>Texto legible en todas las plataformas</td></tr>
+</table>
+
+<h3>8.2 Resolución</h3>
+<ul>
+  <li>Canvas: 800x400 pixels</li>
+  <li>Resize final: 1600x800 (Retina 2x, Lanczos3)</li>
+  <li>Logo: 100px, transparente, mismo para dark y light</li>
+</ul>
+
+<h3>8.3 Cuatro templates</h3>
+<table>
+  <tr><th>Template</th><th>Tipo</th><th>Subtítulo</th><th>Contenido</th></tr>
+  <tr><td>IA</td><td><code>ia</code></td><td>AI Alert</td><td>Ticker + BULLISH/BEARISH + % + Price/Target/Stop + barra probabilidad</td></tr>
+  <tr><td>Precio</td><td><code>precio</code></td><td>Price Alert</td><td>Ticker + TARGET REACHED + Current Price vs Target + Difference %</td></tr>
+  <tr><td>Pulse</td><td><code>pulse</code></td><td>AUREX Pulse</td><td>5 cards (Global/Crypto/Stocks/Commod/Futures) con scores + zonas</td></tr>
+  <tr><td>Admin</td><td><code>admin</code></td><td>System Alert</td><td>Alert ID + tipo + mensaje error + timestamp</td></tr>
+</table>
+
+<h3>8.4 Diseño visual</h3>
+<table>
+  <tr><th>Elemento</th><th>Dark</th><th>Light</th></tr>
+  <tr><td>Fondo general</td><td>#0D1117</td><td>#F5F0E8 (crema dorado)</td></tr>
+  <tr><td>Fondo admin</td><td>#1A0808</td><td>#FFF0F0</td></tr>
+  <tr><td>Borde superior</td><td colspan="2">4px color acento</td></tr>
+  <tr><td>Cards</td><td colspan="2">Accent bar lateral 5px + borde 2px + fondo card</td></tr>
+  <tr><td>Gold</td><td colspan="2">#D4A017</td></tr>
+  <tr><td>Green</td><td colspan="2">#3FB950</td></tr>
+  <tr><td>Red</td><td colspan="2">#F85149</td></tr>
+  <tr><td>Líneas header/footer</td><td colspan="2">Gold 2px</td></tr>
+  <tr><td>Idioma</td><td colspan="2">Inglés, formato numérico americano</td></tr>
+</table>
+
+<h3>8.5 Captions por tipo</h3>
+<table>
+  <tr><th>Tipo</th><th>Formato caption</th></tr>
+  <tr><td>IA</td><td><code>📈 BTC BULLISH 82% / 🎯 Target $72,846 / aurex.live</code></td></tr>
+  <tr><td>Precio</td><td><code>🎯 ETH $3,850.00 Now / +10.0% of Target / aurex.live</code></td></tr>
+  <tr><td>Pulse</td><td><code>💓 AUREX Pulse 72 · Greed / Global Market Sentiment / aurex.live</code></td></tr>
+  <tr><td>Admin</td><td><code>🚨 ALERT BN-003 — Binance DOWN / timestamp / aurex.live</code></td></tr>
+</table>
+
+<h3>8.6 Cadena de fallback</h3>
+<pre><code>1. Genera imagen (pureimage) → envía via Evolution sendMedia
+2. Si imagen falla → envía texto plano via Evolution sendText
+3. Si Evolution falla → envía via Twilio WhatsApp</code></pre>
+
+<hr>
+
+<h2>9. REPORTE DIARIO</h2>
+
+<h3>9.1 Configuración</h3>
+<table>
+  <tr><th>Dato</th><th>Valor</th></tr>
+  <tr><td>Función</td><td><code>dailyHealthReport()</code> — server.js</td></tr>
+  <tr><td>Cron</td><td><code>0 11 * * *</code> (11:00 UTC = 08:00 AM Argentina)</td></tr>
+  <tr><td>Canal</td><td>WhatsApp texto a admin</td></tr>
+  <tr><td>Fuente datos</td><td>Tabla health_events últimas 24h</td></tr>
+</table>
+
+<h3>9.2 Formato del reporte</h3>
+<pre><code>📊 AUREX Daily Health Report
+━━━━━━━━━━━━━━━━━━
+
+✅ RESOLVED (2):
+  BN-003  binance  4m
+  WA-012  evolution  3m
+
+🟡 MITIGATED (1):
+  BN-002  binance  via cryptocompare
+
+🔴 ACTIVE (1):
+  DB-007  supabase  ⚠️
+
+Total: 2 resolved, 1 mitigated, 1 active
+━━━━━━━━━━━━━━━━━━
+aurex.live</code></pre>
+
+<h3>9.3 Si no hubo incidentes</h3>
+<pre><code>📊 AUREX Daily Health Report
+━━━━━━━━━━━━━━━━━━
+
+✅ All systems operational.
+No incidents in last 24h.
+
+aurex.live</code></pre>
+
+<h3>9.4 Límite de filas</h3>
+<ul>
+  <li>Máximo 6 alertas resueltas visibles</li>
+  <li>Si hay más: "... and X more"</li>
+  <li>Alertas activas: todas visibles (son urgentes)</li>
+</ul>
+
+<hr>
+
+<h2>10. ENDPOINT DE MONITOREO <span class="badge badge-new">NUEVO 18/abril</span></h2>
+
+<h3>10.1 GET /api/health/status</h3>
+<p>Endpoint público que devuelve el estado actual de las alertas sin necesitar credenciales. Permite a CODE y Escritorio monitorear autónomamente sin molestar a Fernando.</p>
+
+<pre><code>GET https://aurex-app-production.up.railway.app/api/health/status</code></pre>
+
+<h3>10.2 Respuesta</h3>
+<pre><code>{
+  "ok": true,
+  "timestamp": "2026-04-18T20:55:01.236Z",
+  "lastCryptoSource": "cryptocompare",
+  "activeFlags": { "binance": true },
+  "events": [
+    {
+      "alert_id": "BN-002",
+      "type": "binance",
+      "status": "active",
+      "message": "Error: No price",
+      "triggered_at": "2026-04-18T18:30:01.397Z",
+      "resolved_at": null,
+      "duration_seconds": null,
+      "mitigated_at": "2026-04-18T20:55:01.236Z",
+      "mitigation_source": "cryptocompare"
+    }
+  ]
+}</code></pre>
+
+<h3>10.3 Campos</h3>
+<table>
+  <tr><th>Campo</th><th>Descripción</th></tr>
+  <tr><td><code>lastCryptoSource</code></td><td>Fuente de precios activa: binance / cryptocompare / coingecko / cache / unknown</td></tr>
+  <tr><td><code>activeFlags</code></td><td>Estado en memoria de <code>_health</code> — qué servicios están marcados como caídos</td></tr>
+  <tr><td><code>events</code></td><td>Últimas 20 alertas de Supabase con todos los campos relevantes</td></tr>
+</table>
+
+<hr>
+
+<h2>11. ENDPOINTS</h2>
+
+<h3>11.1 WhatsApp</h3>
+<table>
+  <tr><th>Método</th><th>Ruta</th><th>Función</th><th>Auth</th></tr>
+  <tr><td>POST</td><td><code>/api/whatsapp/send</code></td><td>Enviar texto (numero + mensaje)</td><td>No</td></tr>
+  <tr><td>POST</td><td><code>/api/whatsapp/test-image</code></td><td>Enviar imagen alerta test</td><td>No</td></tr>
+  <tr><td>GET</td><td><code>/api/whatsapp/status</code></td><td>Estado conexión Evolution</td><td>No</td></tr>
+  <tr><td>POST</td><td><code>/api/test-admin-alert</code></td><td>Enviar alerta admin test</td><td>No</td></tr>
+  <tr><td>POST</td><td><code>/api/test-whatsapp</code></td><td>Enviar via Twilio (fallback)</td><td>No</td></tr>
+</table>
+
+<h3>11.2 Monitoreo <span class="badge badge-new">NUEVO</span></h3>
+<table>
+  <tr><th>Método</th><th>Ruta</th><th>Función</th><th>Auth</th></tr>
+  <tr><td>GET</td><td><code>/api/health/status</code></td><td>Estado alertas + flags + fuente precios</td><td>No</td></tr>
+</table>
+
+<h3>11.3 Parámetros test-image</h3>
+<pre><code>{
+  "numero": "5491167891320",
+  "type": "ia | precio | pulse | admin",
+  "symbol": "BTC",
+  "direction": "ALCISTA | BAJISTA | ALTA CONV-IA",
+  "probability": 82,
+  "price": 67450,
+  "target": 72846,
+  "stop": 64752,
+  "theme": "dark | light",
+  "pulseScore": 72,
+  "pulseCrypto": 69,
+  "pulseStocks": 85,
+  "pulseCommod": 21,
+  "pulseFutures": 90,
+  "message": "texto para admin"
+}</code></pre>
+
+<hr>
+
+<h2>12. CRON JOBS</h2>
+<table>
+  <tr><th>Job</th><th>Intervalo</th><th>Función</th></tr>
+  <tr><td>checkAlertas</td><td>30 seg</td><td>Alertas de precio usuario → WhatsApp</td></tr>
+  <tr><td>calcularPulse</td><td>5 min</td><td>Scores AUREX Pulse</td></tr>
+  <tr><td>calcularSenalesIA</td><td>5 min</td><td>Señales IA 350 activos</td></tr>
+  <tr><td>healthCheck</td><td>5 min</td><td>Verifica 4 servicios → alerta/mitigar/resolver</td></tr>
+  <tr><td>dailyHealthReport</td><td>08:00 AR (11:00 UTC)</td><td>Reporte diario de incidentes</td></tr>
+</table>
+
+<div class="note">
+  <strong>Nota:</strong> Los crons de healthCheck y dailyHealthReport solo se registran <strong>después</strong> de que <code>restoreHealthState()</code> complete, para garantizar que los flags de alertas activas estén restaurados.
+</div>
+
+<hr>
+
+<h2>13. ARCHIVOS</h2>
+<table>
+  <tr><th>Archivo</th><th>Función</th></tr>
+  <tr><td><code>server.js</code></td><td>Todo: endpoints, crons, alertas, health check, fallbacks, mitigación</td></tr>
+  <tr><td><code>alertImage.js</code></td><td>4 templates de imagen (IA, Precio, Pulse, Admin)</td></tr>
+  <tr><td><code>assets/logo.png</code></td><td>Logo AUREX transparente (dark mode)</td></tr>
+  <tr><td><code>assets/logo-dark.png</code></td><td>Logo AUREX fondo negro (light mode)</td></tr>
+  <tr><td><code>assets/fonts/Inter-Bold.ttf</code></td><td>Fuente bold</td></tr>
+  <tr><td><code>assets/fonts/Inter-Medium.ttf</code></td><td>Fuente medium</td></tr>
+  <tr><td><code>assets/fonts/Inter-Regular.ttf</code></td><td>Fuente regular</td></tr>
+</table>
+
+<hr>
+
+<h2>14. LÍMITES POR PLAN</h2>
+<table>
+  <tr><th>Plan</th><th>Alertas WhatsApp/día</th><th>Estado</th></tr>
+  <tr><td>FREE</td><td>0 (solo push)</td><td>Codificado, no activo</td></tr>
+  <tr><td>PRO</td><td>3</td><td>Codificado, no activo</td></tr>
+  <tr><td>ELITE</td><td>10</td><td>Codificado, no activo</td></tr>
+</table>
+<div class="note">
+  <strong>NOTA:</strong> Los límites están en el código pero el cron <code>checkAlertas</code> aún no los aplica. Envía a todos los que tienen <code>whatsapp_numero</code> en la alerta.
+</div>
+
+<hr>
+
+<h2>15. TESTING</h2>
+
+<h3>15.1 Enviar alerta IA test</h3>
+<pre><code>curl -X POST https://aurex-app-production.up.railway.app/api/whatsapp/test-image \
+  -H "Content-Type: application/json" \
+  -d '{"numero":"5491167891320","type":"ia","symbol":"BTC","direction":"ALCISTA","probability":82,"price":67450,"target":72846,"stop":64752,"theme":"dark"}'</code></pre>
+
+<h3>15.2 Verificar estado WhatsApp</h3>
+<pre><code>curl https://aurex-app-production.up.railway.app/api/whatsapp/status
+# Respuesta OK: {"instance":{"instanceName":"aurex","state":"open"}}</code></pre>
+
+<h3>15.3 Enviar alerta admin test</h3>
+<pre><code>curl -X POST https://aurex-app-production.up.railway.app/api/test-admin-alert \
+  -H "Content-Type: application/json" \
+  -d '{"subject":"Test","body":"Prueba del sistema de alertas"}'</code></pre>
+
+<h3>15.4 Verificar estado de salud (monitoreo) <span class="badge badge-new">NUEVO</span></h3>
+<pre><code>curl https://aurex-app-production.up.railway.app/api/health/status
+# Devuelve: lastCryptoSource, activeFlags, últimas 20 alertas</code></pre>
+
+<h3>15.5 Verificar health_events en Supabase</h3>
+<pre><code>curl "$SUPABASE_URL/rest/v1/health_events?select=*&order=triggered_at.desc&limit=10" \
+  -H "apikey: $SUPABASE_SERVICE_KEY" \
+  -H "Authorization: Bearer $SUPABASE_SERVICE_KEY"</code></pre>
+
+<hr>
+
+<h2>16. INCIDENTES DOCUMENTADOS</h2>
+<table>
+  <tr><th>Fecha</th><th>ID</th><th>Tipo</th><th>Descripción</th><th>Duración</th><th>Estado</th></tr>
+  <tr><td>17/abril 01:50</td><td>BN-001</td><td>Binance</td><td>Falla conexión Railway→Binance</td><td>47m 48s</td><td><span class="badge badge-ok">RESOLVED</span></td></tr>
+  <tr><td>17/abril ~15:30</td><td>—</td><td>Backend</td><td>Deploy roto por <code>railway up</code> desde CLI</td><td>~1 hora</td><td><span class="badge badge-ok">RESOLVED</span></td></tr>
+  <tr><td>18/abril 15:30</td><td>BN-002</td><td>Binance</td><td>Falla conexión Railway→Binance (us-east4)</td><td>En curso</td><td><span class="badge badge-warn">MITIGATED</span> via cryptocompare</td></tr>
+</table>
+
+<h3>16.1 Incidente Railway 17/abril</h3>
+<ul>
+  <li><strong>Causa</strong>: <code>railway up</code> desde carpeta /backend subió archivos sin Node.js</li>
+  <li><strong>Fix</strong>: nixpacks.toml + NIXPACKS_NO_CACHE=1 + railway redeploy</li>
+  <li><strong>Lección</strong>: NUNCA usar <code>railway up</code>, SIEMPRE push a GitHub</li>
+</ul>
+
+<h3>16.2 Incidente BN-002 18/abril <span class="badge badge-new">NUEVO</span></h3>
+<ul>
+  <li><strong>Causa</strong>: Binance inaccesible desde Railway us-east4 (intermitente)</li>
+  <li><strong>Detección</strong>: healthCheck abrió BN-002 automáticamente</li>
+  <li><strong>Mitigación</strong>: CryptoCompare sirviendo datos correctamente</li>
+  <li><strong>Bugs encontrados y corregidos</strong>:
+    <ol>
+      <li><code>restoreHealthState()</code> sin await → crons arrancaban antes de restaurar flags → fix: <code>.then()</code></li>
+      <li>healthCheck dependía de <code>_lastCryptoSource</code> actualizado por <code>fetchCryptoPriceBatch</code>, que solo corre si hay alertas de usuario → fix: healthCheck prueba fallbacks directamente</li>
+    </ol>
+  </li>
+  <li><strong>WhatsApp recibido</strong>: 🟡 MITIGATED BN-002 a las 17:55 AR (20:55 UTC)</li>
+  <li><strong>Pendiente</strong>: Esperar que Binance vuelva → ✅ RESOLVED BN-002 automático</li>
+</ul>
+
+<hr>
+
+<div class="footer">
+  Generado por CODE para AUREX — 18/abril/2026<br>
+  Versión actualizada con: mitigateAlert, fallback directo en healthCheck, restoreHealthState fix, endpoint /api/health/status
+</div>
+
+</body>
+</html>
