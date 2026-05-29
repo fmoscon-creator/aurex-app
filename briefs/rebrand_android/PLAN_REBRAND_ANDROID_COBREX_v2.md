@@ -166,8 +166,13 @@
 | Capturas tablet 10" | idem | 0-8 | ⬜ ¿hay cargadas? |
 | Video promocional | URL YouTube | 0-1 | ⬜ ¿hay? ¿menciona AUREX? |
 
-### 💡 Idea/mejora de Code (capturas) — DECISIÓN Fernando
-Las capturas actuales muestran headers "AUREX" → hay que rehacerlas del build Cobrex. **Google Play permite cargar capturas solo en el idioma default y hace fallback** para los demás → **NO hacen falta 8 sets de capturas.** Recomiendo: rehacer capturas en **inglés (default)** del build rebrandeado (como hizo iOS) + traducir solo los **textos** de la ficha en los 8. Ahorra trabajo enorme sin perder calidad. *(Si querés capturas localizadas en un idioma clave puntual, se agregan.)*
+### 📸 CAPTURAS — origen, momento y quién (era un hueco del plan; resuelto)
+**NO reusar las capturas de iOS.** Motivos: (a) dimensiones de iPhone/iPad no encajan en los formatos de Google Play (teléfono + tablet 7"/10"); (b) muestran barra de estado y marco de iOS → en la tienda Android se ve "raro" y Google puede objetarlo.
+**Origen correcto: capturas NUEVAS del build de Android.**
+**Momento: DESPUÉS de subir el build a PRUEBA INTERNA** (así son del build real ya rebrandeado, con frame y resolución Android correctos).
+**Quién: Fernando, desde un Android real** (como sacó las de iOS del iPhone). *Alternativa:* emulador Android, pero es pesado y puede congelar la Mac (regla dura) → preferir dispositivo real.
+**Idioma: solo inglés (default).** Google Play hace *fallback* al default para los demás idiomas → **NO hacen falta 8 sets**; se traducen solo los TEXTOS de la ficha. *(Si Fernando quiere capturas localizadas en un idioma puntual, se agregan.)*
+**Flujo:** FASE 3 build → prueba interna → Fernando toma capturas Android (inglés) → procesar a medidas Play → Escritorio sube (FASE 4).
 
 ### 💡 Idea/mejora de Code (traducción) — para NO repetir el error del "What's New"
 Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idiomas). Propongo: **Code arma los textos de metadata en los 8 idiomas tomándolos del i18n real** (no traducción manual de Escritorio — esa fue la causa del error "What's New" en iOS Build 36) → Escritorio los pega y verifica. **Excepción:** las "Novedades"/What's New las decide Fernando (regla dura, Code no inventa).
@@ -212,6 +217,7 @@ Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idi
 | Compilar | `./gradlew bundleRelease` → AAB | Code | — |
 | Backup + validar AAB | `backups/aab/Build37/` + verificar `app_name=Cobrex`/versión/firma | Code | Code |
 | Track interno + validar en dispositivo | nombre, splash, onboarding, planes (NO a PRO/ELITE), toolbar S24, balanza fuera | Fernando | Code asiste |
+| **Tomar capturas NUEVAS del Android** | desde Android real, en inglés (default), del build en prueba interna | Fernando | Code procesa a medidas Play |
 
 ### FASE 4 — Metadata Play Console (Escritorio, sin build) — datos en §2
 | Tarea | Hace | Controla |
@@ -219,7 +225,7 @@ Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idi
 | Nombre listing → Cobrex | Escritorio | Code (lectura) |
 | Desc completa: reemplazar AUREX→Cobrex | Escritorio | Code |
 | 4 suscripciones: nombres visibles → Cobrex | Escritorio | Code (valida IDs intactos) |
-| Capturas Cobrex | Escritorio | Fernando |
+| Subir capturas Cobrex (las que tomó Fernando del Android en FASE 3, ya procesadas) | Escritorio | Fernando |
 | URLs privacy/terms → cobrex.io | Escritorio | Code |
 
 ### FASE 5 — Envío + publicación (Fernando)
