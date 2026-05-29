@@ -6,7 +6,7 @@
 Inglés (default) · Chino simplificado · Español (Latinoamérica) · Francés · Hindi · Italiano · Portugués · Árabe.
 
 ## FICHA — Inglés (valor ACTUAL)
-**Nombre:** `AUREX` (≤30) → **Cobrex**
+**Nombre:** `AUREX` (≤30, confirmado por Fernando = solo "AUREX", sin "AI") → **Cobrex**
 **Descripción breve:** "Real-time global markets tracker. 350 assets, 24 variables, 8 languages."
 → ✅ "24 variables" es CORRECTO = 10 (AI Engine) + 14 (Pulse). Solo cambia nada de marca acá (no dice AUREX). Opcional pulir.
 
