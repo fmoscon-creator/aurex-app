@@ -12,7 +12,7 @@
 3. **D1 — Nombre del desarrollador (cuenta Google Play):** "AUREX AI" → **"Cobrex"**. **TODO se tiene que llamar Cobrex.** ✅
 > *Nota técnica menor (sin acción):* el canal interno de notificaciones (`aurex_default`) se deja como está — es un ID que el usuario NUNCA ve y cambiarlo podría resetear notificaciones de usuarios existentes. No es una decisión, es un no-tocar.
 
-**Dato confirmado para los 265 usuarios actuales de AUREX:** al actualizar a v1.0.37 ven el nombre cambiar a "Cobrex" automáticamente, **sin perder login/datos/suscripciones** (mismo `applicationId com.aurexapp`, mismos product IDs). El ícono no cambia (ya es solo símbolo). Transición transparente.
+**Dato confirmado para los 265 usuarios actuales de AUREX:** al actualizar a v1.0.37 ven el nombre cambiar a "Cobrex" automáticamente, **sin perder login/datos/suscripciones** (mismo `applicationId com.aurexapp`, mismos product IDs). El **ícono SÍ se actualiza a Cobrex** (hoy tiene "AUREX" — cambio visible menor en el cajón de apps). Login/datos/suscripciones intactos.
 
 ---
 
@@ -30,7 +30,7 @@
 | A8 | **Splash nativo → logo Cobrex limpio** | arranque de la app | bootsplash Android (assets) |
 | A9 | Fix crash al volver de segundo plano | (no visible — evita un crash) | `MainActivity.kt` (override `onCreate`) |
 | A10 | Toolbar con labels cortadas en Samsung S24 | barra inferior de las 6 tabs | `TabNavigator.js` (`fontSize` 9→8) |
-| — | **Ícono de la app** | — | **NO cambia** (símbolo dorado) |
+| A11 | **Ícono launcher (en la app) = gold A + texto "AUREX"** ⚠️ (a diferencia de iOS que es solo símbolo) | cajón de apps del teléfono | **regenerar a Cobrex** → mipmaps Android (`res/mipmap-*/ic_launcher.png` + `ic_launcher_round.png`) |
 | — | Onboarding 3D / Splash RN / pantalla de planes | ya están en diseño Cobrex | **código compartido — ya viene del build iOS** |
 
 > A4/A5/A6 ya están en el código compartido (los hicimos en el build iOS) → en Android salen "gratis". Lo nuevo y propio de Android es A1, A2, A3, A7, A8, A9, A10.
@@ -54,7 +54,7 @@
 | B11 | Email de contacto | Ficha → detalles de contacto | ⬜ | support@cobrex.io | editar |
 | B12 | Novedades (What's New) | Ficha de la versión | — | texto que define Fernando | editar |
 | B13 | RevenueCat — display names | Dashboard RevenueCat | ⬜ ¿dicen AUREX? | Cobrex | relevar + editar |
-| — | Ícono (512×512) | Ficha | símbolo dorado | **NO cambia** | — |
+| B14 | **Ícono de la ficha (512×512) = AUREX** | Ficha (Recursos gráficos) | gold A + "AUREX" | Cobrex | **Code regenera** 512×512 |
 
 ---
 
