@@ -182,7 +182,7 @@
 7. **Idiomas** (selector de idioma)
 8. **Crear alerta** (modal/pantalla)
 
-→ **8 por formato × 3 formatos = 24 capturas**, todas en **inglés**, tomadas por Fernando del build Android (en prueba interna, FASE 3). Mismo criterio que iOS (coherencia entre tiendas).
+→ **Workflow real (el de siempre, NO inventar otro):** Fernando saca **8 capturas del TELÉFONO** (del build Android en prueba interna, en inglés) y las deja en la carpeta. **Code las ADAPTA a los 3 formatos** (Teléfono 1080×1920 · Tablet 7" 1200×1920 · Tablet 10" 1600×2560) **reencuadrando/rellenando, SIN estirar ni deformar** = 24 archivos finales. **NO hace falta tablet:** Google valida dimensión+formato, no el dispositivo de origen. Es el mismo proceso que en iOS (capturas del iPhone → adaptadas a iPhone 6.5" + iPad 13").
 
 ### ⚠️ DATO DURO — el upload de imágenes fue un CAOS la vez anterior (se colgó el chat al manipular imágenes)
 **Causa:** se intentaba recortar/redimensionar imágenes DENTRO del navegador. **Solución (regla para este rebrand):**
@@ -196,9 +196,9 @@
 **NO reusar las capturas de iOS.** Motivos: (a) dimensiones de iPhone/iPad no encajan en los formatos de Google Play (teléfono + tablet 7"/10"); (b) muestran barra de estado y marco de iOS → en la tienda Android se ve "raro" y Google puede objetarlo.
 **Origen correcto: capturas NUEVAS del build de Android.**
 **Momento: DESPUÉS de subir el build a PRUEBA INTERNA** (así son del build real ya rebrandeado, con frame y resolución Android correctos).
-**Quién: Fernando, desde un Android real** (como sacó las de iOS del iPhone). *Alternativa:* emulador Android, pero es pesado y puede congelar la Mac (regla dura) → preferir dispositivo real.
-**Idioma: solo inglés (default).** Google Play hace *fallback* al default para los demás idiomas → **NO hacen falta 8 sets**; se traducen solo los TEXTOS de la ficha. *(Si Fernando quiere capturas localizadas en un idioma puntual, se agregan.)*
-**Flujo:** FASE 3 build → prueba interna → Fernando toma capturas Android (inglés) → procesar a medidas Play → Escritorio sube (FASE 4).
+**Quién: Fernando saca las 8 del TELÉFONO** (no hace falta tablet) → **Code las adapta a los 3 formatos** (reencuadrar/rellenar, sin estirar). Mismo proceso de siempre (iOS = capturas del iPhone adaptadas).
+**Idioma: solo inglés (default).** Google Play hace *fallback* al default para los demás idiomas → **NO hacen falta 8 sets por idioma**; se traducen solo los TEXTOS de la ficha.
+**Flujo:** FASE 3 build → prueba interna → Fernando saca 8 capturas del teléfono (inglés) → **Code las adapta a Teléfono+Tablet7"+Tablet10"** → Fernando sube (FASE 4) → Escritorio verifica.
 
 ### 💡 Idea/mejora de Code (traducción) — para NO repetir el error del "What's New"
 Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idiomas). Propongo: **Code arma los textos de metadata en los 8 idiomas tomándolos del i18n real** (no traducción manual de Escritorio — esa fue la causa del error "What's New" en iOS Build 36) → Escritorio los pega y verifica. **Excepción:** las "Novedades"/What's New las decide Fernando (regla dura, Code no inventa).
@@ -243,7 +243,8 @@ Los textos ya están traducidos profesionalmente en el código (`i18n.js`, 8 idi
 | Compilar | `./gradlew bundleRelease` → AAB | Code | — |
 | Backup + validar AAB | `backups/aab/Build37/` + verificar `app_name=Cobrex`/versión/firma | Code | Code |
 | Track interno + validar en dispositivo | nombre, splash, onboarding, planes (NO a PRO/ELITE), toolbar S24, balanza fuera | Fernando | Code asiste |
-| **Tomar capturas NUEVAS del Android** | desde Android real, en inglés (default), del build en prueba interna | Fernando | Code procesa a medidas Play |
+| **Capturas: sacar 8 del TELÉFONO** (Portfolio/Markets/Watchlist/IA/Alertas/Perfil/Idiomas/Crear-alerta), en inglés | del build en prueba interna; dejarlas en `PLAY STORE COBREX/_originales_telefono/` | Fernando | — |
+| **Adaptar las 8 a los 3 formatos** (Teléfono+Tablet7"+Tablet10") sin estirar | PIL/sips, reencuadrar/rellenar → 24 archivos en sus subcarpetas | Code | Code (dimensiones) |
 
 ### FASE 4 — Metadata Play Console (Escritorio, sin build) — datos en §2
 | Tarea | Hace | Controla |
