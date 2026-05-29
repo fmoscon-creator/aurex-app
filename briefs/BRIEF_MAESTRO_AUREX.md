@@ -60,7 +60,7 @@ con TODOS los frentes y recién ahí respondé.
 | Frente | Estado | Próxima acción | Bloqueante externo |
 |---|---|---|---|
 | 🍎 **Apple iOS — Build 36 "Cobrex" v1.1** | 🔴 **RECHAZADO 29-may** (2.3.2 imágenes promo IAP = ícono · 3.1.2c faltaba link Términos). **NO es la marca.** Metadata ya corregida (Escritorio). Ver §1.h | — (lo reemplaza Build 37) | — |
-| 🍎 **Apple iOS — Build 37 "Cobrex" v1.1 (37)** | 🟡 **EN PREPARACIÓN** — fix rechazo (links paywall ✅) + limpieza marca ✅ + 1.h.1 traducciones + 1.h.5 Novedades. Solo texto, riesgo mínimo | Code: compilar → Fernando: subir + video + reenviar | — |
+| 🍎 **Apple iOS — Build 37 "Cobrex" v1.1 (37)** | 🟢 **IPA COMPILADO Y VALIDADO** (29-may, `~/AurexApp/backups/ipa/Build37/AurexApp.ipa`, 22.7MB). Incluye fix rechazo (links Términos/Privacidad + disclosure renovación en paywall) + limpieza marca aurex→cobrex + 1.h.1 Grupo1 traducciones. Validación: única diff vs Build 36 = versión 37; Cobrex, signing TX7C2F79U9 ✅ | Fernando: Transporter → TestFlight → probar iPhone → reenviar (build 37 + video + Novedades) | — |
 | 🍎 **iOS Build 35 "Cobrex"** | ✅ **APROBADO + PUBLICADO** (26-may aprobado, 27-may publicado en 175 países). ⚠️ Quedó con bug: ficha App Store muestra "Cobrex" solo en inglés y "AUREX AI" en los otros 7 idiomas (nombre se carga POR IDIOMA en ASC; Escritorio había cambiado solo el Inglés). **Build 36 lo arregla.** Ver §1.f | — (será reemplazado al aprobar Build 36) | — |
 | 🍎 **iOS Build 33 "AurexLive"** | ⚪ **SUPERADO por Build 35.** Quedó en revisión con `CFBundleDisplayName=AurexLive`; Build 35 lo reemplaza con "Cobrex". | — (histórico, ver §1.e) | — |
 | 🍎 **iOS Build 32 (v1.0 · 32)** | ⚪ **SUPERADO por Build 33.** Quedó en TestFlight validado, pero con `CFBundleDisplayName="AUREX"`. Build 33 lo reemplaza con "AurexLive". | — (histórico) | — |
@@ -300,6 +300,8 @@ Script reusable: `/tmp/generate_banners_cobrex.py` (calcado del template AUREX, 
 > - **1.h.2** Onboarding: constelación animada (titilar) + logo/COBREX más grandes — *cosmético + riesgo (código de animación).*
 > - **1.h.3** Paywall fresh-install: leer RevenueCat `getCustomerInfo()` en vez de AsyncStorage `aurex_plan` (hoy en instalación fresca el paywall se abre a PRO/ELITE) — *bug real pero **invisible en producción** (no hay PRO/ELITE pagos) + toca lógica de compra.*
 > - **1.h.4** Loading nativo: quitar "Loading…" + spinner sol del `.storyboard` (restos del diseño viejo) — *cosmético + nativo.*
+> - **1.h.7 (Grupo 2 de traducciones — FAQ)** El FAQ de Perfil ("¿Qué es Cobrex?", "¿Cómo funciona el Motor IA?", etc.) son **6 preguntas + 6 respuestas** inline **solo en ES+EN** (`PerfilScreen` ~957-962) → faltan pt/zh/hi/fr/it/ar = ~72 traducciones (idiomas difíciles, riesgo de calidad) → pasarlas a i18n con traducción revisada. Deferido del 1.h.1 (no entra al Build 37 por volumen + riesgo de traducción).
+> - **1.h.6 (Grupo 3 de traducciones)** "Full AI Analysis" — las frases que justifican la señal (`PortfolioScreen` ~1454+: "Precio subió X en 24hs - momentum alcista…", "RSI14 en X…", "Volumen en línea…") están hardcodeadas en ES **con condicionales embebidos** (alcista/bajista) → reestructurarlas a i18n tiene **riesgo** → deferido del 1.h.1 (Build 37 lleva solo Grupo 1 + Grupo 2 FAQ).
 
 ### 1.h.1 — Auditoría completa de traducciones (strings hardcodeados en ES)
 
