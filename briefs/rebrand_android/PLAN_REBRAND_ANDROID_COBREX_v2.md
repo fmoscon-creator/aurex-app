@@ -58,19 +58,13 @@
 
 ---
 
-## 0.d 📲 PARA FERNANDO — QUÉ EXTRAER (y de dónde) para completar el plan
+## 0.d 📲 PARA FERNANDO — lo ÚNICO que falta relevar (lo demás es find/replace directo)
 
-> En vez de saturar a Escritorio, lo sacás vos (que Escritorio te lleve a cada pantalla) y me lo pasás. Es esto:
-
-**En Play Console (app Cobrex):**
-1. **Ficha de Play Store principal** → en CADA idioma (8): el **nombre**, **desc breve** y **desc completa** actuales. *(El inglés ya lo tengo; con los otros 7 confirmamos que sea el mismo find/replace de marca.)*
-2. **Recursos gráficos** (en la ficha) → ¿el **gráfico de funciones** dice "AUREX"? ¿cuántas **capturas** hay en Teléfono / Tablet 7" / Tablet 10"? ¿hay **video**?
-3. **Detalles de contacto** (en la ficha) → **sitio web**, **email**, **teléfono** actuales.
-4. **Política de privacidad** (Contenido de la app) → la **URL** actual.
-5. **Monetización → Suscripciones** → de los 4 productos: el **nombre** y la **descripción** actuales (¿dicen AUREX?). Confirmar los product IDs (no se tocan).
-
-**En RevenueCat (dashboard):**
-6. ¿Algún **display name** de offering/entitlement/producto dice "AUREX"? (los IDs y la integración NO se tocan, solo los nombres visibles).
+> **Aclaración (29-may):** casi toda la metadata es el **mismo find/replace AUREX→Cobrex** que Escritorio ejecuta directo en cada idioma — NO hace falta extraer/ver los textos (los nombres de marca no se traducen, son iguales en los 8 idiomas). El inglés ya lo tengo. Las capturas se reemplazan todas (8 × 3 formatos × EN, medidas ya conocidas). Entonces lo único genuinamente necesario:
+> 1. **Gráfico de funciones (banner) actual** → Fernando lo manda (o dice si tiene texto "AUREX"). Es lo único que Code **regenera como imagen** en Cobrex (1024×500). No es find/replace.
+> 2. **RevenueCat** → vistazo rápido: ¿algún display name visible dice "AUREX"? (sí/no). Los IDs/integración NO se tocan.
+>
+> Todo el resto (nombre, desc breve/completa, nombres+descripciones de suscripciones, URLs web/privacidad, email) = **find/replace AUREX→Cobrex / aurex.live→cobrex.io / support@cobrex.io**, ejecutado por Escritorio cuando arranque la FASE 4. No requiere relevamiento previo.
 
 ---
 
