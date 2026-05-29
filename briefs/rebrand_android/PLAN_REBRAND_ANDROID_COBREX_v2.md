@@ -6,12 +6,71 @@
 
 ---
 
-## 0. DECISIONES DE FERNANDO — LOCKED ✅
-1. **Balanza ⚖️ + timer:** se **SACAN** de los headers de las 6 tabs en Android (igual que iOS) → más espacio + queda en **Perfil** ("Aviso Legal / Legal Notice", ya existe).
-2. **Nombre en Play Store:** **full "Cobrex"** (sin conservar "AUREX"; ASO de "AUREX" será cero post-rebrand y mantenerlo confunde).
-3. **`default_notification_channel_id` = `aurex_default`:** se **DEJA** (ID interno Android, invisible al usuario, no rompe canales existentes; iOS no tiene equivalente). Code + Escritorio coinciden.
+## 0. DECISIONES DE FERNANDO — LOCKED ✅ (29-may)
+1. **Balanza ⚖️ + timer:** se **SACAN** de los headers de las 6 tabs en Android (igual que iOS) → más espacio + queda en **Perfil** ("Aviso Legal / Legal Notice", ya existe). ✅
+2. **Nombre en Play Store:** **full "Cobrex"** (sin conservar "AUREX"). ✅
+3. **D1 — Nombre del desarrollador (cuenta Google Play):** "AUREX AI" → **"Cobrex"**. **TODO se tiene que llamar Cobrex.** ✅
+> *Nota técnica menor (sin acción):* el canal interno de notificaciones (`aurex_default`) se deja como está — es un ID que el usuario NUNCA ve y cambiarlo podría resetear notificaciones de usuarios existentes. No es una decisión, es un no-tocar.
 
 **Dato confirmado para los 265 usuarios actuales de AUREX:** al actualizar a v1.0.37 ven el nombre cambiar a "Cobrex" automáticamente, **sin perder login/datos/suscripciones** (mismo `applicationId com.aurexapp`, mismos product IDs). El ícono no cambia (ya es solo símbolo). Transición transparente.
+
+---
+
+## 0.b 📋 CUADRO A — CAMBIOS DENTRO DE LA APP (qué · dónde se ve · archivo)
+
+| # | Qué cambia | Dónde lo VE el usuario | Archivo / cómo |
+|---|---|---|---|
+| A1 | Marca **"AUREX" → "Cobrex"** (texto del header) | Login, Signup, Portfolio, Mercados, Watchlist, IA, Mis Alertas, Perfil (headers) + Onboarding + Splash RN | `brand.js` → flip rama Android `BRAND_NAME` |
+| A2 | URLs privacidad/términos **aurex.live → cobrex.io** | Perfil (links legales) + pantalla de planes | `brand.js` → `PRIVACY_URL` / `TERMS_URL` |
+| A3 | **Sacar balanza ⚖️ + timer** de los headers (quedan en Perfil "Aviso Legal") | Portfolio, Mercados, Watchlist, IA, Alertas (header) | quitar los 5 `{!IS_IOS && …}` + timer de `LiveIndicator` |
+| A4 | Mail soporte **→ support@cobrex.io** | Perfil → Contacto | `PerfilScreen` / `brand` *(ya hecho en código compartido del build iOS)* |
+| A5 | Redes **→ cuentas Cobrex** | Perfil → Instagram/X/YouTube | *(ya hecho, compartido)* |
+| A6 | Textos de compartir **→ cobrex.io** | al compartir activo/señal | Portfolio/Watchlist/Mercados/IA *(ya hecho, compartido)* |
+| A7 | **Nombre bajo el ícono → Cobrex** | pantalla de inicio del teléfono | `strings.xml` → `app_name` |
+| A8 | **Splash nativo → logo Cobrex limpio** | arranque de la app | bootsplash Android (assets) |
+| A9 | Fix crash al volver de segundo plano | (no visible — evita un crash) | `MainActivity.kt` (override `onCreate`) |
+| A10 | Toolbar con labels cortadas en Samsung S24 | barra inferior de las 6 tabs | `TabNavigator.js` (`fontSize` 9→8) |
+| — | **Ícono de la app** | — | **NO cambia** (símbolo dorado) |
+| — | Onboarding 3D / Splash RN / pantalla de planes | ya están en diseño Cobrex | **código compartido — ya viene del build iOS** |
+
+> A4/A5/A6 ya están en el código compartido (los hicimos en el build iOS) → en Android salen "gratis". Lo nuevo y propio de Android es A1, A2, A3, A7, A8, A9, A10.
+
+---
+
+## 0.c 📋 CUADRO B — CAMBIOS EN LA METADATA (qué · dónde en Play Console · cómo)
+
+| # | Campo | Dónde en Play Console | Actual | Nuevo | Cómo |
+|---|---|---|---|---|---|
+| B1 | Nombre de la app | Ficha de Play Store principal | `AUREX` | `Cobrex` | editar, en los **8 idiomas** |
+| B2 | Descripción breve | Ficha principal | "…24 variables…" (no dice AUREX) | pulir (opcional) | editar |
+| B3 | Descripción completa | Ficha principal | "AUREX is…" | reemplazar **AUREX→Cobrex**, **AUREX Pulse→Cobrex Pulse**, **aurex.live→cobrex.io** | 8 idiomas |
+| B4 | **Nombre del desarrollador** | Configuración → Cuenta de desarrollador | `AUREX AI` | `Cobrex` | nivel cuenta (Google puede pedir re-verificación) |
+| B5 | Suscripciones (4) — **nombres** | Monetización → Suscripciones | "AUREX PRO/ELITE…" | "Cobrex PRO/ELITE…" | editar — **product IDs NO se tocan** |
+| B6 | Suscripciones — **descripciones** | Monetización → Suscripciones | ⬜ ¿dicen AUREX? | Cobrex | **relevar** + editar |
+| B7 | Gráfico de funciones (banner) | Ficha → Recursos gráficos | ⬜ ¿dice AUREX? | Cobrex | **Code regenera** 1024×500 |
+| B8 | Capturas (Teléfono + Tablet 7" + 10") | Ficha → Recursos gráficos | AUREX/viejas (solo EN) | nuevas Cobrex | Fernando saca del teléfono → Code adapta |
+| B9 | Sitio web | Ficha → detalles de contacto | ⬜ (¿aurex.live?) | cobrex.io | editar |
+| B10 | Política de privacidad (URL) | Contenido de la app / Ficha | ⬜ | cobrex.io/privacy.html | editar |
+| B11 | Email de contacto | Ficha → detalles de contacto | ⬜ | support@cobrex.io | editar |
+| B12 | Novedades (What's New) | Ficha de la versión | — | texto que define Fernando | editar |
+| B13 | RevenueCat — display names | Dashboard RevenueCat | ⬜ ¿dicen AUREX? | Cobrex | relevar + editar |
+| — | Ícono (512×512) | Ficha | símbolo dorado | **NO cambia** | — |
+
+---
+
+## 0.d 📲 PARA FERNANDO — QUÉ EXTRAER (y de dónde) para completar el plan
+
+> En vez de saturar a Escritorio, lo sacás vos (que Escritorio te lleve a cada pantalla) y me lo pasás. Es esto:
+
+**En Play Console (app Cobrex):**
+1. **Ficha de Play Store principal** → en CADA idioma (8): el **nombre**, **desc breve** y **desc completa** actuales. *(El inglés ya lo tengo; con los otros 7 confirmamos que sea el mismo find/replace de marca.)*
+2. **Recursos gráficos** (en la ficha) → ¿el **gráfico de funciones** dice "AUREX"? ¿cuántas **capturas** hay en Teléfono / Tablet 7" / Tablet 10"? ¿hay **video**?
+3. **Detalles de contacto** (en la ficha) → **sitio web**, **email**, **teléfono** actuales.
+4. **Política de privacidad** (Contenido de la app) → la **URL** actual.
+5. **Monetización → Suscripciones** → de los 4 productos: el **nombre** y la **descripción** actuales (¿dicen AUREX?). Confirmar los product IDs (no se tocan).
+
+**En RevenueCat (dashboard):**
+6. ¿Algún **display name** de offering/entitlement/producto dice "AUREX"? (los IDs y la integración NO se tocan, solo los nombres visibles).
 
 ---
 
