@@ -23,6 +23,36 @@
 
 ---
 
+## 0.a 🚀 CÓMO INICIA UNA SESIÓN NUEVA DE CODE (leer SIEMPRE primero)
+
+> **Esto resuelve "cada chat me dice algo distinto de cómo empezar".** Es el procedimiento único y definitivo. Vale tanto para Fernando (qué escribir) como para Code (qué leer antes de responder).
+
+### 1) Comando para abrir Code (Fernando, en Terminal.app)
+```
+cd ~/Dropbox/AUREX
+claude --add-dir ~/Downloads ~/Desktop
+```
+- **Arrancar SIEMPRE desde `~/Dropbox/AUREX`** (no desde el home `~`, no desde `~/AurexApp`). El directorio de arranque define qué carpeta de memoria usa Code — si cambia, la memoria "se parte" y no se autocarga (pasó: quedó repartida en 3 carpetas).
+- `--add-dir` suma Escritorio y Descargas al alcance. Resultado: Code accede a `~/Dropbox/AUREX` + `~/Downloads` + `~/Desktop` (verificado: lee y escribe en los 3).
+
+### 2) Texto para pegar como primer mensaje (Fernando)
+```
+Retomamos AUREX/Cobrex. Leé tu memoria consolidada y el brief maestro
+(~/Dropbox/AUREX/MAPA DE TRABAJO/BRIEF_MAESTRO_AUREX.md), ponete al día
+con TODOS los frentes y recién ahí respondé.
+```
+
+### 3) Qué tiene que LEER Code antes de responder (orden)
+1. **MEMORIA CONSOLIDADA — fuente viva, lo más actual:**
+   `~/.claude/projects/-Users-fernandomoscon-Dropbox-AUREX/memory/`
+   (125 archivos al 28-may-2026: `MEMORY.md` índice + `project_*` + `feedback_*` + estados Cobrex). **Solo se autocarga si Code se abrió desde `~/Dropbox/AUREX`.** Empezar por `MEMORY.md` (índice de una línea por memoria) y abrir las relevantes al tema.
+2. **BRIEF MAESTRO — estado de todos los frentes:** este archivo.
+3. Para profundidad técnica → §10 "Archivos de referencia".
+
+> ⚠️ **Carpetas de memoria viejas (NO usar como fuente, ya consolidadas acá):** `-Users-fernandomoscon/memory/` (117, hasta 26-may) y `-Users-fernandomoscon-AurexApp/memory/` (9, hasta 28-may) quedaron fusionadas en la carpeta de arriba el 28-may. El backup `~/Desktop/aurex-memory-backup/` es de 3-may = viejo, ignorar. Si en el futuro la memoria se vuelve a partir (porque se abrió Code desde otra carpeta), consolidar de nuevo en la carpeta `-Dropbox-AUREX`.
+
+---
+
 ## 1. RESUMEN EJECUTIVO — todos los frentes en 1 tabla
 
 | Frente | Estado | Próxima acción | Bloqueante externo |
