@@ -19,21 +19,48 @@ Solo se cambia **texto visible** (nombre, descripción, beneficios, display name
 
 ## A) GOOGLE PLAY CONSOLE — Monetización → Suscripciones (lo que se ve en el card)
 
-En cada producto revisar **3 campos**: Nombre, Descripción, Beneficios. Reemplazar toda aparición de **AUREX → Cobrex** en TODOS los idiomas cargados.
+Texto COMPLETO de cada campo (sin abreviaturas). Reemplazar el ACTUAL por el NUEVO, tal cual, en TODOS los idiomas cargados.
 
-| # | Producto (Product ID) | Campo | ANTES | DESPUÉS |
-|---|---|---|---|---|
-| 1 | PRO Mensual (`...pro.monthly`) | Descripción | Full access to all **AUREX** PRO features. | Full access to all **Cobrex** PRO features. |
-| 1 | PRO Mensual | Beneficios | Real-time alerts for 350+ assets · **AUREX** Pulse market signals · Watchlist & portfolio tracking | Real-time alerts for 350+ assets · **Cobrex** Pulse market signals · Watchlist & portfolio tracking |
-| 2 | PRO Anual (`...pro.annual`) | Descripción | Full access to all **AUREX** PRO features. Annual subscription, save 25%. | Full access to all **Cobrex** PRO features. Annual subscription, save 25%. |
-| 2 | PRO Anual | Beneficios | Real-time alerts for 350+ assets · **AUREX** Pulse market signals · Save 25% vs monthly plan | Real-time alerts for 350+ assets · **Cobrex** Pulse market signals · Save 25% vs monthly plan |
-| 3 | ELITE Mensual (`...elite.monthly2`) | Descripción | Premium **AUREX** AI signals. Monthly. | Premium **Cobrex** AI signals. Monthly. |
-| 3 | ELITE Mensual | Beneficios | AI signals with confidence scores · Full Pulse + RSI/MACD advanced · Unlimited alerts & watchlist | (sin AUREX — verificar igual) |
-| 4 | ELITE Anual (`...elite.annual`) | Descripción | Premium **AUREX** AI signals. Annual, save 25%. | Premium **Cobrex** AI signals. Annual, save 25%. |
-| 4 | ELITE Anual | Beneficios | AI signals with confidence scores · Full Pulse + RSI/MACD advanced · Save 25% vs monthly plan | (sin AUREX — verificar igual) |
+### PRO Mensual — Product ID `com.fernandomoscon.aurex.pro.monthly`
+**Descripción**
+- ACTUAL: `Full access to all AUREX PRO features.`
+- NUEVO:  `Full access to all Cobrex PRO features.`
 
-> El **Nombre** del producto (ej. "AUREX PRO Monthly") también puede decir AUREX → cambiarlo a "Cobrex PRO Monthly", etc.
-> ⚠️ Textos de 14-may (15 días). Escritorio: leer el texto ACTUAL real en consola y aplicar AUREX→Cobrex sobre lo que esté, por si cambió.
+**Beneficios**
+- ACTUAL: `Real-time alerts for 350+ assets · AUREX Pulse market signals · Watchlist & portfolio tracking`
+- NUEVO:  `Real-time alerts for 350+ assets · Cobrex Pulse market signals · Watchlist & portfolio tracking`
+
+### PRO Anual — Product ID `com.fernandomoscon.aurex.pro.annual`
+**Descripción**
+- ACTUAL: `Full access to all AUREX PRO features. Annual subscription, save 25%.`
+- NUEVO:  `Full access to all Cobrex PRO features. Annual subscription, save 25%.`
+
+**Beneficios**
+- ACTUAL: `Real-time alerts for 350+ assets · AUREX Pulse market signals · Save 25% vs monthly plan`
+- NUEVO:  `Real-time alerts for 350+ assets · Cobrex Pulse market signals · Save 25% vs monthly plan`
+
+### ELITE Mensual — Product ID `com.fernandomoscon.aurex.elite.monthly2`
+**Descripción**
+- ACTUAL: `Premium AUREX AI signals. Monthly.`
+- NUEVO:  `Premium Cobrex AI signals. Monthly.`
+
+**Beneficios** — NO contiene "AUREX" → NO se cambia, queda igual:
+- `AI signals with confidence scores · Full Pulse + RSI/MACD advanced · Unlimited alerts & watchlist`
+
+### ELITE Anual — Product ID `com.fernandomoscon.aurex.elite.annual`
+**Descripción**
+- ACTUAL: `Premium AUREX AI signals. Annual, save 25%.`
+- NUEVO:  `Premium Cobrex AI signals. Annual, save 25%.`
+
+**Beneficios** — NO contiene "AUREX" → NO se cambia, queda igual:
+- `AI signals with confidence scores · Full Pulse + RSI/MACD advanced · Save 25% vs monthly plan`
+
+### Nombre del producto (es lo que se ve en la hoja de compra, ej. "AUREX PRO Mensual")
+Cada producto tiene un Nombre por idioma. NO tengo el texto exacto verificado en los 8 idiomas, así que la regla es:
+**en el Nombre de cada producto, reemplazar la palabra `AUREX` por `Cobrex` y dejar el resto igual.**
+Ejemplos confirmados (en-US): `AUREX PRO Monthly → Cobrex PRO Monthly` · `AUREX ELITE Annual → Cobrex ELITE Annual`. En español: `AUREX PRO Mensual → Cobrex PRO Mensual`.
+
+> ⚠️ Descripciones/beneficios de arriba son los verificados al 14-may (15 días). Escritorio: si el texto actual en consola difiere, aplicar igual la regla `AUREX → Cobrex` sobre lo que esté cargado, sin cambiar nada más.
 
 ---
 
