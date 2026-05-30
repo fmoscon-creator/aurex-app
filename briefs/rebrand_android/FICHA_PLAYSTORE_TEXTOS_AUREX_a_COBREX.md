@@ -36,13 +36,13 @@ Incluye combinaciones:
 
 ---
 
-## ⚠️ NO TOCAR / MARCAR APARTE (no reemplazar a ciegas)
-- **Email de contacto del desarrollador**: `support.aurex.live@gmail.com` → es un correo REAL operativo, **NO se cambia**.
-- **URLs / dominios**: si en la descripción aparece `aurex.live` u otro dominio → **NO reemplazar automático**. Anotarlo y avisar (el sitio nuevo es `cobrex.io`, pero se confirma antes de cambiar).
-- **Nada de IDs / package / nombres técnicos.**
+## TAMBIÉN CAMBIAR (parte de esta misma pasada — no dejar para después)
+- **Email de contacto del desarrollador**: cambiar a `support@cobrex.io` (es el email real de Cobrex, el mismo que usa la app). El de aurex.live NO existe.
+- **Sitio web del desarrollador / URLs en la descripción**: si aparece `aurex.live` → cambiar a `cobrex.io`.
+- **Nombre del desarrollador** (Developer name) que se muestra en la ficha: si dice "AUREX" → "Cobrex".
 
-## Extra (a nivel cuenta, si dice AUREX)
-- **Nombre del desarrollador** (Developer name) que se muestra en la ficha: si dice "AUREX" → cambiar a "Cobrex".
+## ⚠️ NO TOCAR
+- **Nada de IDs / package / nombres técnicos** (`com.aurexapp`, `com.fernandomoscon.aurex.*`, etc.) aunque digan "aurex".
 
 ---
 
