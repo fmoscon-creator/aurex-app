@@ -17,6 +17,18 @@ Solo se cambia **texto visible** (nombre, descripción, beneficios, display name
 
 ---
 
+## RUTAS exactas en Play Console
+
+**Textos de planes (nombre/descripción/beneficios):**
+`play.google.com/console` → elegir app → menú izq. **Monetizar con Play → Productos → Suscripciones** → click en cada suscripción → editar Nombre + Beneficios (+ Descripción si aparece).
+
+**Ícono de la app + banner (lo que se ve en la hoja de compra):**
+menú izq. **Crecimiento → Presencia en Play Store → Ficha principal de Play Store** → "Ícono de la app" (subir `cobrex_icon_512.png`) y "Gráfico de funciones" (subir banner 1024×500).
+
+**Orden:** PRIMERO Play Console (A + D, es lo que ve el usuario). RevenueCat (B) DESPUÉS — es solo cosmético interno, el usuario no lo ve.
+
+---
+
 ## A) GOOGLE PLAY CONSOLE — Monetización → Suscripciones (lo que se ve en el card)
 
 Texto COMPLETO de cada campo (sin abreviaturas). Reemplazar el ACTUAL por el NUEVO, tal cual, en TODOS los idiomas cargados.
