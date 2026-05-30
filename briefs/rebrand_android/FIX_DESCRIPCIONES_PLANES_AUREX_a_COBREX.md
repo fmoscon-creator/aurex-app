@@ -44,5 +44,16 @@ En cada producto revisar **3 campos**: Nombre, Descripción, Beneficios. Reempla
 
 ---
 
+## D) Ícono de la FICHA de Play Store (lo que se ve en la hoja de compra de Google Play)
+
+La hoja de compra nativa de Google Play (al tocar "Quiero PRO") muestra el **ícono de la ficha de Play Store** (asset 512×512 subido en Play Console), NO el ícono del binario. Hoy es el logo viejo con marca "AUREX".
+
+- **Reemplazar** en Play Console → Crecimiento → Presencia en Store → Ficha principal → **Ícono de la app**.
+- **Archivo nuevo (ya listo, 32-bit RGBA):** `~/Dropbox/AUREX/ANDROID/REBRAND ANDROID a COBREX/cobrex_icon_512.png`
+- **Banner / gráfico de funciones (1024×500):** `~/Dropbox/AUREX/ANDROID/REBRAND ANDROID a COBREX/cobrex_banner_1024x500.png`
+- Sin build. Es solo asset de la ficha.
+
+---
+
 ## C) iOS (App Store Connect) — para no repetir en iOS
 Mismos textos en los 4 productos iOS (nombres "AUREX PRO Monthly" etc. + descripciones). Aplica el mismo find/replace cuando se toque metadata iOS.
