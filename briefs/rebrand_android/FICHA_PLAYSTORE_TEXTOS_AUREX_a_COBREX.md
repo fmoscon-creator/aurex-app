@@ -36,10 +36,13 @@ Incluye combinaciones:
 
 ---
 
-## TAMBIÉN CAMBIAR (parte de esta misma pasada — no dejar para después)
-- **Email de contacto del desarrollador**: cambiar a `support@cobrex.io` (es el email real de Cobrex, el mismo que usa la app). El de aurex.live NO existe.
-- **Sitio web del desarrollador / URLs en la descripción**: si aparece `aurex.live` → cambiar a `cobrex.io`.
-- **Nombre del desarrollador** (Developer name) que se muestra en la ficha: si dice "AUREX" → "Cobrex".
+## TAMBIÉN CAMBIAR — pero esto es 1 SOLA VEZ (NO por idioma)
+Estos campos son globales de la app, no se repiten por idioma. Están en la misma página **Ficha principal de Play Store**, bajando hasta el bloque **"Detalles de contacto"**:
+- **Email de contacto**: `support@cobrex.io` (el de aurex.live NO existe).
+- **Sitio web**: `cobrex.io` (si dice aurex.live).
+- **Nombre del desarrollador** (Developer name): si dice "AUREX" → "Cobrex".
+
+> Aclaración: la URL aurex.live **dentro del texto** de la Descripción completa SÍ puede estar en cada idioma → esa se cambia junto con el texto de ese idioma, en la misma pasada. El campo "Sitio web" de contacto es el único global.
 
 ## ⚠️ NO TOCAR
 - **Nada de IDs / package / nombres técnicos** (`com.aurexapp`, `com.fernandomoscon.aurex.*`, etc.) aunque digan "aurex".
