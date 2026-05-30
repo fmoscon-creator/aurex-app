@@ -6,6 +6,21 @@
 
 ---
 
+## ✅ ESTADO 29-may (lo que falta es SOLO esto, confirmado por Fernando)
+Los nombres + descripciones en los 8 idiomas YA están en Cobrex y guardados. **Falta solo:**
+
+1. **Las 2 líneas con `aurex.live` en la Descripción completa → cambiar a `cobrex.io`** (en los 8 idiomas):
+   - `— Available on iOS, Android and as PWA installable from aurex.live.`  →  `— Available on iOS, Android and as PWA installable from cobrex.io.`
+   - línea suelta al final `aurex.live`  →  `cobrex.io`
+   - Guardar cada idioma.
+2. **Email de contacto** (1 sola vez, en "Detalles de contacto"): → `support@cobrex.io`
+3. **Sitio web** (1 sola vez, en "Detalles de contacto"): → `cobrex.io`
+4. **Nombre del desarrollador** (a nivel cuenta): `AUREX AI` → **`Cobrex AI`** (Fernando decidió mantener el "AI"). ⚠️ Cambio de cuenta — puede pedir verificación de identidad de Google y tardar. Lo hace Fernando salvo que se indique lo contrario.
+
+---
+
+---
+
 ## RUTA en Play Console
 ```
 play.google.com/console → elegir app
