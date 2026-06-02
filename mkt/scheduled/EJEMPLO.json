@@ -8,5 +8,6 @@
   "fecha_prog": "2026-06-02T13:00:00-03:00",
   "texto": "⭐⭐⭐⭐⭐ Esto nos escribió Juan Cruz desde Argentina 🇦🇷\n\n\"Excelente app, super intuitiva y completa\"\n\nGracias a los que ya están usando Cobrex 🦉\nDescargala gratis 👉 cobrex.io",
   "media_url": "mkt/assets/generadas/card_testimonio_juancruz.png",
-  "estado": "pendiente"
+  "estado": "pendiente_ok",
+  "_estados": "pendiente_ok -> (OK formal de Fernando) -> aprobado -> publicado | error. El cron SOLO publica 'aprobado'. Nada sale sin OK de Fernando."
 }

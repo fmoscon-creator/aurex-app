@@ -2,7 +2,10 @@
 
 *Fecha: 01-jun-2026 AR · Autor: Code (Claude Code) · Para: Escritorio + Fernando*
 *Responde los 5 puntos de Escritorio sobre quién/cómo/con qué/dónde se automatiza la publicación.*
-*Regla base: **Fernando NO ejecuta ni publica nada**. Escritorio genera contenido, Code formatea+genera assets+publica automático y programado.*
+*Regla base: **Fernando NO ejecuta ni publica nada manualmente**. Escritorio genera contenido, Code formatea+genera assets+programa+publica automático.*
+
+> ## 🛑 GATE DE APROBACIÓN (regla dura de Fernando)
+> **NADA se publica realmente al aire hasta que Fernando da OK FORMAL y FINAL.** La automatización le saca el TRABAJO MANUAL (no postea, no diseña, no programa a mano) — **no** el control. El sistema prepara/diseña/programa todo solo y lo deja en estado **`listo_para_revisar`**; Fernando aprueba; **recién ahí** el cron publica. Ninguna pieza sale pública sin ese OK explícito. Por eso el estado en `scheduled/` arranca en `pendiente_ok`, no en `pendiente`.
 
 ---
 
@@ -92,7 +95,7 @@ datos: { autor: "Juan Cruz Bildosola", rating: 5, texto: "Excelente app..." }
 ## 4. CÓMO SE PROGRAMA LA PUBLICACIÓN
 
 - **Mismo backend Railway + `node-cron`** donde ya corre el reporte diario Cobrex (infra probada, 24/7, cero costo nuevo).
-- Un cron cada ~15 min: `SELECT * FROM mkt_content WHERE estado='pendiente' AND fecha_prog<=now()` → por cada fila: generar asset → publicar en el canal → `UPDATE estado`.
+- Un cron cada ~15 min publica **solo lo aprobado**: `WHERE estado='aprobado' AND fecha_prog<=now()` → genera asset → publica en el canal → `UPDATE estado='publicado'`. Las piezas nuevas entran en `pendiente_ok` y **no se tocan** hasta que Fernando las pasa a `aprobado` (su OK formal).
 - Reintento automático en `error` (hasta N veces) + el reporte diario puede incluir un resumen "MKT: X publicados / Y errores".
 
 ---
