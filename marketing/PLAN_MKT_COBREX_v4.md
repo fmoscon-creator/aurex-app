@@ -56,6 +56,7 @@
 | **Web/PWA** | ✅ cobrex.io + PWA en cobrex.io/app. |
 | **Redes** | 6 canales abiertos, **0 seguidores**. |
 | **Datos** | Reporte diario automático (descargas/país, ranking, reseñas, MRR) = material real. |
+| **D0 tentativo** | 🟡 16-jun-2026 (ajustable · OK final de Fernando) |
 
 ---
 
@@ -327,6 +328,8 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 > **Realismo:** los prereq 1–6 dependen de nosotros (días de trabajo, sobre todo completar el banco + el setup de IG por Escritorio). LinkedIn/TikTok NO bloquean el arranque (entran en Fase 2 cuando aprueben). **D0 se confirma cuando 1–6 estén ✅** — no antes.
 
 ### 14.2. Línea de tiempo (con fechas; D0 TENTATIVO)
+> **D0 tentativo: lunes 16-jun-2026** (ajustable). Se confirma cuando prereq 1–6 estén ✅ + OK de Fernando.
+
 - **D0 = inicio Fase 1. TENTATIVO: lunes 16-jun-2026** (decisión Fernando 02-jun; se ajusta llegado el momento si los prereq 1–6 no cerraron). Ventana de preparación: **2–13 jun**.
 - **D0 (16-jun):** Instagram (#1) + Telegram (#2) arrancan con automatización 100% lista. Métricas desde el día 1.
 - **~30-jun (D0+2 sem):** sumar YouTube (si OAuth listo). 1er reporte MKT semanal.
@@ -389,7 +392,7 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 | Frecuencia por canal (§13) | ✅ | Code+Escritorio |
 | Métricas + proceso de medición (§12) | ✅ | Code |
 | 🔴 Calendario editorial (qué/día/hora/canal/idioma) — **BLOQUEANTE de la grilla** | ⬜ | **Escritorio** |
-| 🔴 D0 (fecha de inicio) — **TENTATIVO 16-jun** (ajustable; atado a prereq 1–6 ✅ + OK) | 🟡 tentativo fijado | **Fernando confirma** |
+| 🟡 D0 tentativo = **lunes 16-jun-2026** (ajustable si prereq 1–6 no cierran antes) | 🟡 tentativo fijado | **Fernando confirma** |
 
 > **🔴 Bloqueo actual del cronograma:** estos 2 ítems son los que traban el arranque de la grilla. El **calendario editorial** está en cancha de **Escritorio**; **D0** depende de que los prereq 1–6 estén ✅ y de tu OK. Lo demás del cronograma (prioridad, frecuencia, métricas) ya está cerrado.
 
