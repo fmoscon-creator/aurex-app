@@ -1,8 +1,11 @@
-# PLAN DE MARKETING COBREX — v4.4
+# PLAN DE MARKETING COBREX — v4.5
 
 *Fecha: 02-jun-2026 AR · Autor: Code, consolidado con Escritorio · Pendiente OK formal de Fernando*
-*Reemplaza v4.3…v4.0. Reemplaza toda la era AUREX (v1–v3).*
+*Reemplaza v4.4…v4.0. Reemplaza toda la era AUREX (v1–v3).*
 *FUENTE ÚNICA del sistema de diseño y de cómo se produce y publica cada contenido. Si no está acá, no está definido.*
+
+## CHANGELOG v4.4 → v4.5
+- **Nuevo §15: CHECKLIST DE AVANCE (tablero vivo)** — estructural / contenido / grilla-cronograma / **OK de cada parte (Escritorio · Code · Fernando)**. Se actualiza cada día/sesión con el avance real. Es el control de progreso del plan.
 
 ## CHANGELOG v4.3 → v4.4
 - §14: **D0 deja de ser fecha fija (era "9-jun", irreal).** Ahora D0 = cuando los prerequisitos 1–6 estén ✅ + OK de Fernando. Timeline RELATIVO a D0 (no calendario). Realismo: hoy falta completar el banco y configurar las redes para automático → **D0 será más adelante, no esta semana.** LinkedIn/TikTok no bloquean (Fase 2).
@@ -327,4 +330,55 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 - **D0 + 6 sem:** se habilitan las **comparativas** (§4.6).
 - **Fase 2:** LinkedIn + TikTok cuando aprueben las APIs; video con voz IA / animación búho.
 
-> Cuando los prereq 1–6 estén ✅, **Code propone la fecha concreta de D0 y Fernando la confirma.** **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.5… en cada cambio material.
+> Cuando los prereq 1–6 estén ✅, **Code propone la fecha concreta de D0 y Fernando la confirma.** **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.6… en cada cambio material.
+
+---
+
+## 15. ✅ CHECKLIST DE AVANCE (tablero vivo)
+
+> **Se actualiza cada día/sesión con el avance real.** Leyenda: ✅ hecho · 🟡 en progreso/parcial · ⬜ pendiente. Última actualización: **02-jun-2026**.
+
+### 15.A. Estructural
+| Ítem | Estado | Responsable |
+|---|---|---|
+| Lugar común único `/mkt/` en repo `aurex-app` | ✅ | Code |
+| Banco de assets estructurado por canal + specs | ✅ | Code |
+| Banco replicado a Dropbox (regla de sync) | ✅ | Code |
+| Sistema de diseño (2 modos + tipos + logo/búho) | ✅ | Code |
+| Gate de aprobación (`pendiente_ok`→`aprobado`) | ✅ | Code |
+| Telegram — API lista + verificada | ✅ | Code |
+| X — credenciales cargadas | 🟡 falta probar posteo real | Code |
+| Instagram Graph — FB Page + token | ⬜ | Escritorio (1–5) + Code (6) |
+| YouTube — OAuth | ⬜ | Escritorio + Code |
+| Banner in-app "Unite al canal" (feature flag) | ⬜ | Code |
+| LinkedIn + TikTok — solicitar API (Fase 2) | ⬜ | Escritorio |
+
+### 15.B. Contenido
+| Ítem | Estado | Responsable |
+|---|---|---|
+| Catálogo de 11 tipos de contenido definido | ✅ | Code+Escritorio |
+| Banco de assets poblado: búho, capturas web, banners | ✅ | Code |
+| Cargar: logo SVG, íconos 3D, badges tiendas, fondos | ⬜ | Code+Escritorio |
+| Banco de 10 preguntas (4.7) | 🟡 5 base, faltan 5 | Escritorio |
+| Card de muestra (testimonio) | 🟡 v1 hecha, mejorar con logo/badges/fondo | Code |
+| 1er lote de piezas reales | ⬜ | Code (genera) |
+
+### 15.C. Grilla / Cronograma
+| Ítem | Estado | Responsable |
+|---|---|---|
+| Prioridad de canales (audiencia AR) | ✅ | Code+Escritorio |
+| Frecuencia por canal (§13) | ✅ | Code+Escritorio |
+| Métricas + proceso de medición (§12) | ✅ | Code |
+| Calendario editorial (qué/día/hora/canal/idioma) | ⬜ | Escritorio |
+| D0 (fecha de inicio) | ⬜ atado a prereq 1–6 | Fernando confirma |
+
+### 15.D. OK / Aprobaciones de cada parte
+| Aprobación | Estado |
+|---|---|
+| Borrador del plan — **Code** | ✅ |
+| Revisión del plan — **Escritorio** | 🟡 dio feedback (v4.1→v4.4); falta su OK final |
+| **OK FORMAL del PLAN — Fernando** | ⬜ (aún iterando) |
+| OK de cada lote de piezas — **Fernando** | ⬜ (cuando haya piezas) |
+| OK de arranque D0 — **Fernando** | ⬜ (cuando prereq 1–6 ✅) |
+
+> **Cómo se mantiene:** al cierre de cada sesión, Code actualiza los estados de este §15 según lo que avanzó (y bumpea la versión). Es el control de progreso: de un vistazo se ve qué falta y de quién depende.
