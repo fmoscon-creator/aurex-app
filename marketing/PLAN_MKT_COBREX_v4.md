@@ -1,8 +1,12 @@
-# PLAN DE MARKETING COBREX — v4.5
+# PLAN DE MARKETING COBREX — v4.6
 
 *Fecha: 02-jun-2026 AR · Autor: Code, consolidado con Escritorio · Pendiente OK formal de Fernando*
-*Reemplaza v4.4…v4.0. Reemplaza toda la era AUREX (v1–v3).*
+*Reemplaza v4.5…v4.0. Reemplaza toda la era AUREX (v1–v3).*
 *FUENTE ÚNICA del sistema de diseño y de cómo se produce y publica cada contenido. Si no está acá, no está definido.*
+
+## CHANGELOG v4.5 → v4.6
+- **D0 TENTATIVO fijado: lunes 16-jun-2026** (decisión Fernando 02-jun; ajustable si los prereq no cierran). Timeline §14.2 con fechas desde el 16-jun.
+- **Reparto de ejecución (§14.3):** Escritorio ejecuta ya todo lo que depende de navegador/contenido (impedido para Code); Code revisa cada acción + ejecuta lo técnico. Checklist §15 con fechas.
 
 ## CHANGELOG v4.4 → v4.5
 - **Nuevo §15: CHECKLIST DE AVANCE (tablero vivo)** — estructural / contenido / grilla-cronograma / **OK de cada parte (Escritorio · Code · Fernando)**. Se actualiza cada día/sesión con el avance real. Es el control de progreso del plan.
@@ -322,15 +326,30 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 
 > **Realismo:** los prereq 1–6 dependen de nosotros (días de trabajo, sobre todo completar el banco + el setup de IG por Escritorio). LinkedIn/TikTok NO bloquean el arranque (entran en Fase 2 cuando aprueben). **D0 se confirma cuando 1–6 estén ✅** — no antes.
 
-### 14.2. Línea de tiempo (RELATIVA a D0, no a fechas de calendario)
-- **D0:** Instagram (#1) + Telegram (#2) arrancan con automatización 100% lista. Métricas desde el día 1.
-- **D0 + 2 sem:** sumar YouTube (si OAuth listo). 1er reporte MKT semanal.
-- **D0 + 3 sem (o publicación #10):** debut de la **mascota búho**.
-- **D0 + 4 sem:** corte de métricas (objetivo: 50 seguidores IG + 50 Telegram). Ajustar mix.
-- **D0 + 6 sem:** se habilitan las **comparativas** (§4.6).
+### 14.2. Línea de tiempo (con fechas; D0 TENTATIVO)
+- **D0 = inicio Fase 1. TENTATIVO: lunes 16-jun-2026** (decisión Fernando 02-jun; se ajusta llegado el momento si los prereq 1–6 no cerraron). Ventana de preparación: **2–13 jun**.
+- **D0 (16-jun):** Instagram (#1) + Telegram (#2) arrancan con automatización 100% lista. Métricas desde el día 1.
+- **~30-jun (D0+2 sem):** sumar YouTube (si OAuth listo). 1er reporte MKT semanal.
+- **~7-jul (D0+3 sem) o publicación #10:** debut de la **mascota búho**.
+- **~14-jul (D0+4 sem):** corte de métricas (objetivo: 50 seguidores IG + 50 Telegram). Ajustar mix.
+- **~28-jul (D0+6 sem):** se habilitan las **comparativas** (§4.6).
 - **Fase 2:** LinkedIn + TikTok cuando aprueben las APIs; video con voz IA / animación búho.
 
-> Cuando los prereq 1–6 estén ✅, **Code propone la fecha concreta de D0 y Fernando la confirma.** **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.6… en cada cambio material.
+### 14.3. Reparto de ejecución durante la preparación (2–13 jun)
+> **Escritorio ejecuta YA** todo lo que depende de navegador/contenido (impedido para Code); **Code revisa cada acción y opina** + ejecuta lo técnico.
+
+| Acción | Ejecuta | Revisa/opina |
+|---|---|---|
+| Setup Instagram Graph (FB Page + token → Railway) | **Escritorio** | Code |
+| YouTube OAuth | **Escritorio** (login) + Code (código) | — |
+| Solicitar LinkedIn + TikTok API | **Escritorio** | Code |
+| Calendario editorial + 10 preguntas (4.7) + spec 1ras piezas IG | **Escritorio** | Code |
+| Logo Cobrex SVG + búho (export/IA) | **Escritorio** | Code integra al banco |
+| Completar banco: fondos, badges tiendas | **Code** | Escritorio |
+| Banner in-app "Unite al canal" | **Code** | Fernando |
+| Card de muestra v2 (logo+badges+fondo) | **Code** | Fernando |
+
+> Cuando los prereq 1–6 estén ✅, **Code confirma si el 16-jun es viable** o propone ajuste; Fernando da el OK final de D0. **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.6… en cada cambio material.
 
 ---
 
@@ -370,7 +389,7 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 | Frecuencia por canal (§13) | ✅ | Code+Escritorio |
 | Métricas + proceso de medición (§12) | ✅ | Code |
 | 🔴 Calendario editorial (qué/día/hora/canal/idioma) — **BLOQUEANTE de la grilla** | ⬜ | **Escritorio** |
-| 🔴 D0 (fecha de inicio) — **BLOQUEANTE** (atado a prereq 1–6 ✅ + OK) | ⬜ | **Fernando confirma** |
+| 🔴 D0 (fecha de inicio) — **TENTATIVO 16-jun** (ajustable; atado a prereq 1–6 ✅ + OK) | 🟡 tentativo fijado | **Fernando confirma** |
 
 > **🔴 Bloqueo actual del cronograma:** estos 2 ítems son los que traban el arranque de la grilla. El **calendario editorial** está en cancha de **Escritorio**; **D0** depende de que los prereq 1–6 estén ✅ y de tu OK. Lo demás del cronograma (prioridad, frecuencia, métricas) ya está cerrado.
 
