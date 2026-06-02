@@ -380,9 +380,12 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 |---|---|---|
 | Catálogo de 11 tipos de contenido definido | ✅ | Code+Escritorio |
 | Banco de assets poblado: búho, capturas web, banners | ✅ | Code |
-| Cargar: logo SVG, íconos 3D, badges tiendas, fondos | ⬜ | Code+Escritorio |
+| Banco: **badges tiendas** (App Store+Google Play, es+en) | ✅ | Code |
+| Banco: **fondos** gráfico financiero (oscuro+claro 1080×1350) | ✅ | Code |
+| Banco: **logo Cobrex SVG** (extraído de la web) | ✅ | Code |
+| Banco: **íconos 3D** | ⬜ | Escritorio (IA) |
 | Banco de 10 preguntas (4.7) | 🟡 5 base, faltan 5 | Escritorio |
-| Card de muestra (testimonio) | 🟡 v1 hecha, mejorar con logo/badges/fondo | Code |
+| **Card de muestra v2** (logo+fondo+badges+fuentes reales) | ✅ | Code |
 | 1er lote de piezas reales | ⬜ | Code (genera) |
 
 ### 15.C. Grilla / Cronograma
