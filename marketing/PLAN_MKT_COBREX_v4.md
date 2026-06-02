@@ -369,8 +369,10 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 | Prioridad de canales (audiencia AR) | ✅ | Code+Escritorio |
 | Frecuencia por canal (§13) | ✅ | Code+Escritorio |
 | Métricas + proceso de medición (§12) | ✅ | Code |
-| Calendario editorial (qué/día/hora/canal/idioma) | ⬜ | Escritorio |
-| D0 (fecha de inicio) | ⬜ atado a prereq 1–6 | Fernando confirma |
+| 🔴 Calendario editorial (qué/día/hora/canal/idioma) — **BLOQUEANTE de la grilla** | ⬜ | **Escritorio** |
+| 🔴 D0 (fecha de inicio) — **BLOQUEANTE** (atado a prereq 1–6 ✅ + OK) | ⬜ | **Fernando confirma** |
+
+> **🔴 Bloqueo actual del cronograma:** estos 2 ítems son los que traban el arranque de la grilla. El **calendario editorial** está en cancha de **Escritorio**; **D0** depende de que los prereq 1–6 estén ✅ y de tu OK. Lo demás del cronograma (prioridad, frecuencia, métricas) ya está cerrado.
 
 ### 15.D. OK / Aprobaciones de cada parte
 | Aprobación | Estado |
