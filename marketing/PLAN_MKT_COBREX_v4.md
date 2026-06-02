@@ -1,8 +1,13 @@
-# PLAN DE MARKETING COBREX — v4.1
+# PLAN DE MARKETING COBREX — v4.2
 
 *Fecha: 02-jun-2026 AR · Autor: Code, consolidado con Escritorio · Pendiente OK formal de Fernando*
-*Reemplaza v4.0 (02-jun). Reemplaza toda la era AUREX (v1–v3).*
+*Reemplaza v4.1/v4.0. Reemplaza toda la era AUREX (v1–v3).*
 *FUENTE ÚNICA del sistema de diseño y de cómo se produce y publica cada contenido. Si no está acá, no está definido.*
+
+## CHANGELOG v4.1 → v4.2
+- **Nuevo §6.b: BANCO DE ASSETS (paso 0)** — estructura `mkt/assets/` con `fuentes/` (material base que crece) + `por-canal/` (exportado al formato/peso de cada red) + specs por canal. **Poblado** con búho v2, capturas web, banners; videos de la web y capturas de la app **indexados** (viven en sus repos, no se duplican en Git).
+- **Handles CONFIRMADOS** (§10) del doc oficial `REDES_SOCIALES_COBREX.md`: el punto en IG/TikTok ES válido (no era error). Se quita "[POR CONFIRMAR]".
+- Aprovechar imágenes/videos de la web cobrex.io para alternar y dar a conocer la web.
 
 ## CHANGELOG v4.0 → v4.1
 - **Nuevo §2: análisis y prioridad de los 6 canales con criterio ESTRATÉGICO (audiencia AR), no técnico → Instagram es #1.**
@@ -153,6 +158,27 @@ Frontmatter `.md`: `canal · idioma · tipo · modo · fecha_prog · plantilla �
 
 ---
 
+## 6.b BANCO DE ASSETS (PASO 0 — antes que el contenido)
+
+> Detalle completo y specs en `mkt/assets/README.md`. **Base de inicio que siempre crece y mejora.**
+
+```
+mkt/assets/
+  fuentes/      material base (logos, iconos-3d, mascota-buho, capturas-app[idx], capturas-web, videos-web[idx], fondos, badges, templates)
+  por-canal/    exportado al FORMATO/PESO de cada red (instagram, tiktok, youtube, x, telegram, linkedin)
+  generadas/    piezas finales listas
+```
+
+**Specs por canal** (resumen; tabla completa en el README): Instagram 1080×1080 / 1080×1350 / 1080×1920 · TikTok 1080×1920 · YouTube short 1080×1920 + thumb 1280×720 · X 1600×900 · Telegram 1080×1080 · LinkedIn 1200×627. Code optimiza el peso y **nunca sube un formato que el canal no permita**.
+
+**Criterio (decisión Code):** las **imágenes y material de marca** van al banco en GitHub (livianos); los **videos pesados NO se duplican en Git** (lo inflaría) → se **indexan** apuntando al repo `cobrex` (`assets/video/`: hero, MOTOR, ALERTAS, PULSE, COBERTURA) donde ya están versionados; las **capturas de la app** se indexan a `aurex-app/assets/`.
+
+**✅ Ya poblado:** búho v2 (claro+oscuro) + doc · 14 capturas web · banners X/YouTube/LinkedIn · índices de videos-web y capturas-app.
+**Falta cargar:** logo Cobrex SVG, íconos 3D, badges App Store+Google Play, fondos con gráfico financiero.
+**Aprovechar la web:** alternar imágenes/videos de cobrex.io cada X posteos → variedad + dar a conocer la web (no hay que generar nada nuevo para arrancar).
+
+---
+
 ## 7. QUIÉN HACE QUÉ (sin Fernando en ejecución; sin pasos manuales)
 | | Escritorio | Code |
 |---|---|---|
@@ -200,8 +226,10 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 | X | `x.com/cobrexio` ✅ | credenciales cargadas |
 | YouTube | `@cobrex-io` ✅ | falta OAuth |
 | LinkedIn | `company/cobrexio` ✅ | aprobación (semanas) |
-| **Instagram** | **[POR CONFIRMAR]** — ¿`@cobrexio` / `@cobrex_io`? (el punto no es válido) | FB Page + token |
-| **TikTok** | **[POR CONFIRMAR]** — ¿`@cobrexio` / `@cobrex_io`? (el punto no es válido) | aprobación (semanas) |
+| **Instagram** | `cobrex.io` ✅ (instagram.com/cobrex.io — el punto ES válido en IG) | FB Page + token |
+| **TikTok** | `@cobrex.io` ✅ (tiktok.com/@cobrex.io) | aprobación (semanas) |
+
+> **Handles confirmados del doc oficial** `Dropbox/AUREX/REDES SOCIALES/REDES SOCIALES DE COBREX/REDES_SOCIALES_COBREX.md` (registrados 27-28 may). Mail de registro `cobrex@cobrex.io`. YouTube Channel ID `UCXb6q8eZsHPP4nu6yYm0diA`. Bio común (4 líneas EN) y banners en ese mismo doc/carpeta.
 
 ---
 
