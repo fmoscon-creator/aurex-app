@@ -1,8 +1,11 @@
-# PLAN DE MARKETING COBREX — v4.3
+# PLAN DE MARKETING COBREX — v4.4
 
 *Fecha: 02-jun-2026 AR · Autor: Code, consolidado con Escritorio · Pendiente OK formal de Fernando*
-*Reemplaza v4.2/v4.1/v4.0. Reemplaza toda la era AUREX (v1–v3).*
+*Reemplaza v4.3…v4.0. Reemplaza toda la era AUREX (v1–v3).*
 *FUENTE ÚNICA del sistema de diseño y de cómo se produce y publica cada contenido. Si no está acá, no está definido.*
+
+## CHANGELOG v4.3 → v4.4
+- §14: **D0 deja de ser fecha fija (era "9-jun", irreal).** Ahora D0 = cuando los prerequisitos 1–6 estén ✅ + OK de Fernando. Timeline RELATIVO a D0 (no calendario). Realismo: hoy falta completar el banco y configurar las redes para automático → **D0 será más adelante, no esta semana.** LinkedIn/TikTok no bloquean (Fase 2).
 
 ## CHANGELOG v4.2 → v4.3
 - §6.b: **replicación a Dropbox como regla operativa permanente** (no dos lugares, el mismo banco en dos ubicaciones sincronizadas).
@@ -299,26 +302,29 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 
 ---
 
-## 14. PREREQUISITOS Y LÍNEA DE TIEMPO (con fechas reales)
+## 14. PREREQUISITOS Y LÍNEA DE TIEMPO
 
-### 14.1. Prerequisitos para arrancar (antes de D0)
-| # | Prerequisito | Responsable | ETA |
+> **D0 (inicio Fase 1) NO es una fecha de calendario fija.** Es el día en que **TODOS los prerequisitos del §14.1 estén ✅ y Fernando dé el OK.** Arranca **cuando esté listo, no antes.** **Hoy falta bastante** (el banco no está completo y **ninguna red está configurada para posteo automático todavía**) → **D0 será más adelante, NO esta semana.**
+
+### 14.1. Prerequisitos para arrancar (en orden; sin fecha forzada)
+| # | Prerequisito | Responsable | Depende de |
 |---|---|---|---|
-| 1 | **Setup Instagram Graph** (FB Page + vincular IG + app + token → Railway) — pasos en §11 | Escritorio (1–5) + Code (6) | 2–3 jun |
-| 2 | Solicitar **LinkedIn + TikTok API** (quedan en cola, semanas) | Escritorio | 2 jun |
-| 3 | Setup **YouTube OAuth** | Escritorio + Code | 3–4 jun |
-| 4 | Completar banco: **logo SVG, íconos 3D, badges tiendas, fondos** | Code (genera) + Escritorio (logo/búho/IA) | 3–4 jun |
-| 5 | **Banner in-app "Unite al canal"** (feature flag) — adquisición #1 | Code (app) | 3–5 jun |
-| 6 | Escritorio: **banco de 10 preguntas (4.7) + calendario editorial + spec de las 1ras piezas IG** | Escritorio | 3–5 jun |
-| 7 | **1er lote de piezas** generado → `pendiente_ok` → **OK de Fernando** | Code genera, Fernando aprueba | 5–6 jun |
+| 1 | **Completar el banco**: logo SVG, íconos 3D, badges tiendas, fondos | Code (genera) + Escritorio (logo/búho/IA) | nosotros |
+| 2 | **Setup Instagram Graph** (FB Page + vincular IG + app + token → Railway) — §11 | Escritorio (1–5) + Code (6) | nosotros (trabajo) |
+| 3 | Setup **YouTube OAuth** | Escritorio + Code | nosotros |
+| 4 | **Banner in-app "Unite al canal"** (feature flag) — adquisición #1 | Code (app) | nosotros |
+| 5 | Escritorio: **10 preguntas (4.7) + calendario editorial + spec de las 1ras piezas IG** | Escritorio | Escritorio |
+| 6 | **1er lote de piezas** generado → `pendiente_ok` → **OK de Fernando** | Code genera, Fernando aprueba | Fernando |
+| — | (En paralelo, NO bloquea D0) Solicitar **LinkedIn + TikTok API** | Escritorio | aprobación externa = **semanas** |
 
-### 14.2. Línea de tiempo (fechas)
-- **D0 = inicio Fase 1. OBJETIVO: lunes 9-jun-2026** (sujeto a que los 7 prerequisitos estén ✅ y a la confirmación de Fernando). *Si el setup IG se demora, D0 se corre — pero la fecha objetivo es el 9-jun.*
-- **Semana 1 (9–15 jun):** Instagram (3 piezas + reels) + Telegram (1 pieza/día) arrancan. Métricas desde el día 1.
-- **Semana 2 (16–22 jun):** sumar YouTube (si OAuth listo) + ritmo pleno IG/Telegram. 1er reporte MKT semanal (lunes 16).
-- **Semana 3 (23–29 jun):** debut de la **mascota búho** (o en la publicación #10, lo que llegue antes). Evaluar métricas vs objetivos.
-- **Semana 4 (30 jun–6 jul):** corte de métricas (objetivo: 50 seguidores IG + 50 Telegram). Ajustar mix.
-- **Semana 6 (~14 jul):** se habilitan las **comparativas** (§4.6).
-- **Fase 2:** LinkedIn + TikTok cuando aprueben las APIs; video con voz IA/animación búho.
+> **Realismo:** los prereq 1–6 dependen de nosotros (días de trabajo, sobre todo completar el banco + el setup de IG por Escritorio). LinkedIn/TikTok NO bloquean el arranque (entran en Fase 2 cuando aprueben). **D0 se confirma cuando 1–6 estén ✅** — no antes.
 
-> **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.4… en cada cambio material.
+### 14.2. Línea de tiempo (RELATIVA a D0, no a fechas de calendario)
+- **D0:** Instagram (#1) + Telegram (#2) arrancan con automatización 100% lista. Métricas desde el día 1.
+- **D0 + 2 sem:** sumar YouTube (si OAuth listo). 1er reporte MKT semanal.
+- **D0 + 3 sem (o publicación #10):** debut de la **mascota búho**.
+- **D0 + 4 sem:** corte de métricas (objetivo: 50 seguidores IG + 50 Telegram). Ajustar mix.
+- **D0 + 6 sem:** se habilitan las **comparativas** (§4.6).
+- **Fase 2:** LinkedIn + TikTok cuando aprueben las APIs; video con voz IA / animación búho.
+
+> Cuando los prereq 1–6 estén ✅, **Code propone la fecha concreta de D0 y Fernando la confirma.** **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.5… en cada cambio material.
