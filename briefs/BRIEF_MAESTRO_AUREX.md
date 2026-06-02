@@ -290,6 +290,35 @@ Script reusable: `/tmp/generate_banners_cobrex.py` (calcado del template AUREX, 
 
 ---
 
+## 1.j 📊 SISTEMA DE REPORTES COBREX — plan completo (01-jun-2026)
+
+**Objetivo:** reporte diario AUTOMÁTICO de performance de Cobrex → Telegram (grupo "Cobrex Performance", 12:00 AR) + escritura automática a Google Sheet (histórico), SIN carga manual de nadie.
+
+**Estado:**
+- ✅ Reporte LIMITADO andando (cron 12:00 AR en backend Railway): posición de búsqueda iOS (AR/US) + ratings, vía API pública Apple. Grupo Telegram "Cobrex Performance" (chat_id `-5115002517`, bot `@Aurexalertas_bot`), env var `PERF_TELEGRAM_CHAT_ID` seteada.
+- ✅ 3 credenciales generadas por Escritorio + **CARGADAS en Railway**: ASC API key de Ventas (`ASC_KEY_ID=ZXVAN65PXA`, `ASC_ISSUER_ID=6960762a-...`, `ASC_P8_B64`), Google Play service account (`GOOGLE_PLAY_SA_B64`), RevenueCat (`REVENUECAT_API_KEY_V2`).
+- ⏳ PENDIENTE = **el código** que consulta las 3 APIs → reporte COMPLETO (paso A en curso).
+
+**Alcance del reporte completo (acordado con Escritorio):**
+- Descargas + usuarios activos: iOS + Android (separados + total).
+- Apertura **por país** (iOS y Android) + totales por país.
+- **Reseñas iOS (ASC) + Android (Play Console)** del día + ratings.
+- Ranking de búsqueda + **MRR/suscripciones** (RevenueCat).
+- Formato Telegram: **texto compacto por secciones** (📱iOS / 🤖Android / 💰Revenue), con **FECHA DE CORTE visible** (las APIs tienen delay 1-2 días → el dato es de antier, NO es error).
+- El backend **escribe el Sheet** automático (histórico) además de mandar Telegram.
+- **Validación:** control visual por **MRR** (estable salvo nueva sub/cancelación).
+
+**Fuentes/APIs (credenciales ya en Railway):**
+- **iOS** → App Store Connect API (JWT ES256) → Sales Reports (descargas/activos) + reseñas.
+- **Android** → Google Play Developer API (OAuth service account). ⚠️ requiere acceso de la service account `cobrex-play-reporter@...` en **Play Console → Usuarios y permisos** (sino **403**) — VERIFICAR.
+- **MRR/subs** → RevenueCat API.
+
+**Reparto:** Escritorio generó credenciales (✅ hecho). Code monta el código — **paso A: por etapas (RevenueCat → ASC → Google Play)**, una API por vez, sin romper el backend (alertas/HEALTH/crons).
+
+**⚠️ Entorno (01-jun):** macOS bloqueó el acceso de Code a la carpeta **Desktop** (TCC; el proceso corriente no toma el permiso aunque el toggle esté azul → se recupera reiniciando Code, que Fernando NO quiso). **Workaround en uso:** backend clonado en `/tmp/abk1` (de GitHub), token Railway en `Dropbox/AUREX/railway/`, credenciales en Dropbox — todo accesible sin Desktop. Detalle vivo: [[project_sistema_reportes_cobrex]].
+
+---
+
 ## 1.h ⏳ BUILD 37 iOS — EN PREPARACIÓN (resuelve el rechazo del Build 36) + 🔵 BUILD 38 (deferido)
 
 > **Build 36 RECHAZADO por Apple el 29-may** (2.3.2 imágenes promo IAP = ícono/duplicadas · 3.1.2c faltaba link Términos de Uso). **NO es la marca — Cobrex aprobado.** Se arma el **Build 37** para resolverlo. **Decisión de Fernando (29-may): el Build 37 lleva SOLO cambios de TEXTO (riesgo mínimo, sin lógica nueva ni nativo).** Lo cosmético/riesgoso se difiere al **Build 38**.
