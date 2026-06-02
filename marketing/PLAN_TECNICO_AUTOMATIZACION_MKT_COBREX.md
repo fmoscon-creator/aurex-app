@@ -130,4 +130,72 @@ Como dijiste: ya no hay bloqueadores técnicos (app live, reseñas reales, datos
 - ⚙️ Tokens de APIs (una vez, login de Escritorio): X primero; IG/FB + YouTube después.
 - ✅ Escritorio empieza a cargar piezas en `mkt_content` (o markdown en el repo).
 
+## 8. SKILLS Y HERRAMIENTAS POR TAREA (Code) + columna para Escritorio
+
+> **Fernando pidió detallar qué skill/herramienta usa cada uno en cada tarea.** Esta es la propuesta de Code (skills verificadas, instaladas). **Escritorio: completá la 3ª columna con tus herramientas y opiná si cambiarías algo.**
+
+### 8.1. DISEÑO / VISUAL (lo hace Code)
+
+| Tarea | Skill / herramienta de CODE | Herramienta de ESCRITORIO (completar) | Quién lidera |
+|---|---|---|---|
+| Identidad, paleta, logo, sistema de marca Cobrex | `brandkit` + `brand-guidelines` | ¿Canva? | Code |
+| Cards de posts (señal, Pulse, testimonio, dato del día, ranking) | `canvas-design` + `high-end-visual-design` + `design-taste-frontend` → render **Sharp+SVG** (Railway) o **Playwright+Chrome** (local) | — | Code |
+| Carruseles Instagram / piezas hero | `canvas-design` + `high-end-visual-design` | ¿Canva templates? | Code |
+| Dirección de arte / referencias visuales | `imagegen-frontend-web` | — | Code |
+| Estética alternativa minimalista | `minimalist-ui` | — | Code |
+| Íconos 3D / búho Cobrex | `brandkit` + `imagegen-frontend-web` (conceptos) → ⚠️ **faltan, hay que generarlos** | ¿exporta de Figma/banco? | Code + Escritorio |
+| Video corto (Reel/Short/TikTok) | `video-content-strategist` (guion) + **ffmpeg** (ensamblado) | — | Code |
+
+### 8.2. CONTENIDO / COPY (Escritorio genera, Code pule + maqueta)
+
+| Tarea | Skill de CODE | Herramienta de ESCRITORIO (completar) | Quién lidera |
+|---|---|---|---|
+| Copy de posts / captions / titulares | `copywriting` (asiste/pule) | **genera el copy** (su LLM) | Escritorio |
+| Editar / mejorar copy existente | `copy-editing` | — | Code |
+| Que el texto suene humano (no robótico) | `content-humanizer` | — | Code |
+| Pipeline de producción (topic → pieza lista) | `content-production` | — | Code |
+| Estrategia de contenido / topic clusters | `content-strategy` | aporta temas | Code + Escritorio |
+| Guiones de video | `video-content-strategist` | aporta ángulo | Code + Escritorio |
+
+### 8.3. GESTIÓN DE REDES
+
+| Tarea | Skill de CODE | Herramienta de ESCRITORIO (completar) | Quién lidera |
+|---|---|---|---|
+| Estrategia social + calendario multicanal | `social-media-manager` | — | Code + Escritorio |
+| Contenido social por canal (X/IG/LinkedIn/TikTok/YT) | `social-content` | — | Code + Escritorio |
+| Growth en X / contenido viral | `x-twitter-growth` | — | Code |
+| Análisis de performance (engagement, ROI) | `social-media-analyzer` (+ datos del reporte diario) | métricas de paneles | Code |
+| Engagement / replies / community | — | **monitorea y draftea** (navegador) | Escritorio |
+| Publicación donde NO hay API (LinkedIn/TikTok al inicio) | — | **publica manual** (navegador) | Escritorio |
+
+### 8.4. ESTRATEGIA MKT / SEO / ASO
+
+| Tarea | Skill de CODE | Herramienta de ESCRITORIO (completar) | Quién lidera |
+|---|---|---|---|
+| Positioning / GTM / battlecard | `marketing-strategy-pmm` | — | Code |
+| Plan de lanzamiento / anuncios de features | `launch-strategy` | — | Code |
+| Páginas comparativas vs competidores | `competitor-alternatives` | — | Code |
+| Psicología / ideas de marketing | `marketing-psychology` + `marketing-ideas` | aporta ideas | Code + Escritorio |
+| **ASO** (App Store + Play: keywords, metadata) | `app-store-optimization` | edita fichas en consolas | Code (analiza) + Escritorio (carga) |
+| SEO web cobrex.io (audit, schema, arquitectura, SEO a escala) | `seo-audit` + `schema-markup` + `site-architecture` + `programmatic-seo` + `ai-seo` | — | Code |
+| Orquestar qué skill usar en cada caso | `marketing-ops` (router) | — | Code |
+
+### 8.5. AUTOMATIZACIÓN / TÉCNICO (100% Code)
+
+| Tarea | Herramienta de CODE |
+|---|---|
+| Generar imágenes PNG | **Sharp+SVG** (Railway) / **Playwright+Chrome** (local) |
+| Generar/editar video | **ffmpeg** (voz IA/animación = fase 2: ElevenLabs/Runway) |
+| Publicar automático en redes | **backend Railway + node-cron + APIs** (Telegram listo) |
+| Cola y tracking de publicación | **Supabase** (`mkt_content`) |
+| Datos reales como insumo de contenido | **reporte diario Cobrex** (descargas/reseñas/ranking/MRR) |
+
+### 8.6. EMAIL / CRO (más adelante, lo hace Code)
+
+`email-sequence` + `cold-email` (email) · `page-cro` + `paywall-upgrade-cro` + `popup-cro` + `signup-flow-cro` (conversión web/app) · `pricing-strategy` · `referral-program`.
+
+> **Resumen del reparto de herramientas:** **Code** tiene 10 skills de diseño + 42 marketing-skills + Sharp/Playwright/ffmpeg + el motor de publicación (Railway/APIs/Supabase). **Escritorio** aporta: generación de copy/guiones, ideas/ángulos, monitoreo de comunidad, carga en consolas (ASO) y publicación manual donde no hay API. **Escritorio: completá tu columna y decinos qué herramientas propias sumás (Canva, etc.) y si reasignás alguna tarea.**
+
+---
+
 > **Resumen para Fernando (1 línea):** Escritorio escribe el contenido en un lugar común, Code arma la imagen/video y lo publica solo a la hora programada vía las APIs (arrancamos por Telegram hoy con las reseñas reales y los datos del reporte). Vos no tocás nada.
