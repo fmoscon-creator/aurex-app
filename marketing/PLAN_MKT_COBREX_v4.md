@@ -176,6 +176,7 @@ mkt/assets/
 **✅ Ya poblado:** búho v2 (claro+oscuro) + doc · 14 capturas web · banners X/YouTube/LinkedIn · índices de videos-web y capturas-app.
 **Falta cargar:** logo Cobrex SVG, íconos 3D, badges App Store+Google Play, fondos con gráfico financiero.
 **Aprovechar la web:** alternar imágenes/videos de cobrex.io cada X posteos → variedad + dar a conocer la web (no hay que generar nada nuevo para arrancar).
+**🔁 Replicación obligatoria (regla fija de Fernando):** el banco se mantiene **SIEMPRE replicado y actualizado** en `Dropbox/AUREX/BANCO IMAGENES REDES SOCIALES COBREX/`. Cada cambio en GitHub → Code lo copia a Dropbox. Ambos lados idénticos.
 
 ---
 

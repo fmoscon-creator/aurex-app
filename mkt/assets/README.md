@@ -1,6 +1,8 @@
 # 🎨 BANCO DE ASSETS COBREX
 
 > **Base de inicio que SIEMPRE crece y mejora.** Material reutilizable + exportado al formato/peso exacto de cada canal. Tanto Code como Escritorio suben y usan de acá.
+>
+> **🔁 REPLICACIÓN OBLIGATORIA (regla fija de Fernando):** este banco se mantiene **SIEMPRE replicado y actualizado** en Dropbox → `Dropbox/AUREX/BANCO IMAGENES REDES SOCIALES COBREX/`. Cada vez que se actualiza acá (GitHub), Code lo copia a esa carpeta de Dropbox. Los dos lados deben quedar idénticos.
 
 ## Estructura
 
