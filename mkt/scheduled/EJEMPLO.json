@@ -1,0 +1,12 @@
+{
+  "_nota": "Formato de post YA PROCESADO por Code, listo para que el cron lo publique. Lo genera Code a partir del .md de content/. Escritorio NO escribe acá.",
+  "id": "2026-06-02_telegram_es_testimonio-juancruz",
+  "canal": "telegram",
+  "destino": "t.me/cobrexio",
+  "idioma": "es",
+  "tipo": "testimonio",
+  "fecha_prog": "2026-06-02T13:00:00-03:00",
+  "texto": "⭐⭐⭐⭐⭐ Esto nos escribió Juan Cruz desde Argentina 🇦🇷\n\n\"Excelente app, super intuitiva y completa\"\n\nGracias a los que ya están usando Cobrex 🦉\nDescargala gratis 👉 cobrex.io",
+  "media_url": "mkt/assets/generadas/card_testimonio_juancruz.png",
+  "estado": "pendiente"
+}
