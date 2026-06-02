@@ -19,6 +19,7 @@
     },
     "instagram": {
       "handle": "@cobrex.io",
+      "_handle_a_confirmar": "El punto puede no ser válido como username de IG. Escritorio confirma: ¿@cobrex.io, @cobrex_io o @cobrexio?",
       "auto_publicacion": "VIABLE_CON_SETUP",
       "api": "Meta Graph API (cuenta Business)",
       "falta": "Vincular IG Business a una FB Page Cobrex + token de larga duración",

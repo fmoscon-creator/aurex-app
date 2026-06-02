@@ -272,7 +272,7 @@ datos: { ... }         # datos que van en la card
 |---|---|---|---|
 | Telegram | `t.me/cobrexio` | ✅ LISTA | bot admin + verificado |
 | X | `x.com/cobrexio` | ✅ credenciales cargadas | falta probar posteo real al montar motor |
-| Instagram | `@cobrex.io` | ⚠️ falta vincular FB Page + token | — |
+| Instagram | `@cobrex.io` ⚠️ **handle a CONFIRMAR** (el punto puede no ser válido como username de IG — ¿es `@cobrex.io`, `@cobrex_io` o `@cobrexio`?) | ⚠️ falta vincular FB Page + token | — |
 | YouTube | `@cobrex-io` | ⚠️ falta OAuth | — |
 | LinkedIn | `company/cobrexio` | 🔴 API requiere aprobación → semi-manual | — |
 | TikTok | `@cobrex.io` | 🔴 API requiere review → semi-manual | — |
