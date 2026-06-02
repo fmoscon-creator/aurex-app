@@ -1,8 +1,16 @@
-# PLAN DE MARKETING COBREX — v4.2
+# PLAN DE MARKETING COBREX — v4.3
 
 *Fecha: 02-jun-2026 AR · Autor: Code, consolidado con Escritorio · Pendiente OK formal de Fernando*
-*Reemplaza v4.1/v4.0. Reemplaza toda la era AUREX (v1–v3).*
+*Reemplaza v4.2/v4.1/v4.0. Reemplaza toda la era AUREX (v1–v3).*
 *FUENTE ÚNICA del sistema de diseño y de cómo se produce y publica cada contenido. Si no está acá, no está definido.*
+
+## CHANGELOG v4.2 → v4.3
+- §6.b: **replicación a Dropbox como regla operativa permanente** (no dos lugares, el mismo banco en dos ubicaciones sincronizadas).
+- §14: **eliminado** el item "confirmar handles" (ya confirmados en §10, era contradicción interna).
+- §11: **pasos exactos del setup de Instagram** (quién crea la FB Page, quién genera el token, dónde se guarda).
+- §9: **YouTube desarrollado** con su tabla de tácticas (como IG/Telegram).
+- §12: **métricas con proceso** (quién mide, cuándo, dónde se reporta).
+- §14: **línea de tiempo con fechas reales** (D0 + dependencias), no "semanas" abstractas.
 
 ## CHANGELOG v4.1 → v4.2
 - **Nuevo §6.b: BANCO DE ASSETS (paso 0)** — estructura `mkt/assets/` con `fuentes/` (material base que crece) + `por-canal/` (exportado al formato/peso de cada red) + specs por canal. **Poblado** con búho v2, capturas web, banners; videos de la web y capturas de la app **indexados** (viven en sus repos, no se duplican en Git).
@@ -176,7 +184,7 @@ mkt/assets/
 **✅ Ya poblado:** búho v2 (claro+oscuro) + doc · 14 capturas web · banners X/YouTube/LinkedIn · índices de videos-web y capturas-app.
 **Falta cargar:** logo Cobrex SVG, íconos 3D, badges App Store+Google Play, fondos con gráfico financiero.
 **Aprovechar la web:** alternar imágenes/videos de cobrex.io cada X posteos → variedad + dar a conocer la web (no hay que generar nada nuevo para arrancar).
-**🔁 Replicación obligatoria (regla fija de Fernando):** el banco se mantiene **SIEMPRE replicado y actualizado** en `Dropbox/AUREX/BANCO IMAGENES REDES SOCIALES COBREX/`. Cada cambio en GitHub → Code lo copia a Dropbox. Ambos lados idénticos.
+**🔁 REGLA DE SINCRONIZACIÓN (permanente, no negociable):** *"El banco se replica siempre en `Dropbox/AUREX/BANCO IMAGENES REDES SOCIALES COBREX/` — cualquier asset que entre al banco en GitHub entra también al Dropbox. No son dos lugares, son el mismo banco en dos ubicaciones sincronizadas."* Operativamente: cada commit que toque `mkt/assets/` lo sigue una copia a esa carpeta de Dropbox; ambos lados quedan idénticos. (Ya replicado, 02-jun.)
 
 ---
 
@@ -216,7 +224,16 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 | Reporte público (sin datos sensibles) como contenido de valor | Code | semana 1+ | — |
 | Aporte orgánico en grupos de inversores AR | Escritorio | semana 2+ | — |
 
-### YouTube (#3) — tutoriales educativos (SEO long-tail). LinkedIn/X — bajo esfuerzo hasta tener tracción. **Pauta paga (`paid-ads`): solo cuando haya piezas aprobadas y publicadas — nunca para llevar tráfico a un canal vacío.**
+### YouTube (#3)
+| Táctica | Responsable | Cuándo | KPI mínimo |
+|---|---|---|---|
+| Tutoriales educativos "Cómo usar Cobrex Pulse / Mercados / Alertas" (shorts + 1 video largo) — capturan búsqueda long-tail | Escritorio guion + Code edición (ffmpeg) | cuando esté OAuth | 1 short/sem |
+| SEO de YouTube: títulos/descripción/tags con keywords de inversión AR | Code (`ai-seo` + `app-store-optimization` aplicados a YouTube) | con cada video | aparecer en búsqueda de la keyword |
+| Thumbnails con identidad Cobrex (1280×720) | Code (`high-end-visual-design`) | con cada video | CTR >4% |
+| Reutilizar shorts en Reels IG + TikTok (cuando estén) | Code | continuo | — |
+
+### X (#4) / LinkedIn (#5) — bajo esfuerzo hasta tener tracción (datos/FinTwit en X; logros/credibilidad en LinkedIn cuando haya API).
+### Pauta paga (`paid-ads`): **solo cuando haya piezas aprobadas y publicadas** — nunca para llevar tráfico a un canal vacío.
 
 ---
 
@@ -239,22 +256,35 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 |---|---|---|---|
 | Telegram | — | ✅ lista | hecho |
 | X | — | ✅ credenciales cargadas; falta probar posteo | hoy |
-| **Instagram Graph** | nosotros | **crear FB Page Cobrex + vincular IG Business + token largo** (Escritorio en navegador / Code monta OAuth) | **horas — PRIORITARIO** |
+| **Instagram Graph** | nosotros | **PRIORITARIO — pasos exactos abajo ↓** | **horas** |
 | **YouTube Data** | nosotros | OAuth + app en GCP (reusar proyecto del SA de Play) | horas |
 | LinkedIn | aprobación Meta/LinkedIn | **solicitar Community Management API hoy** | semanas (no controlable) |
 | TikTok | aprobación TikTok | **solicitar Content Posting API hoy** | semanas (no controlable) |
 > Las que dependen de nosotros se sacan ya; las de aprobación externa se **piden ya** y se espera. **Cero manual mientras tanto.**
 
+**Setup Instagram — pasos exactos (quién hace qué):**
+| # | Paso | Quién | Dónde queda |
+|---|---|---|---|
+| 1 | Crear la **FB Page "Cobrex"** (si no existe) | **Escritorio** (navegador, sesión de Fernando) | facebook.com |
+| 2 | Vincular la cuenta **IG Business `cobrex.io`** a esa FB Page | **Escritorio** (Meta Business Suite / app IG → Configuración) | Meta |
+| 3 | Crear **app en developers.facebook.com** + producto Instagram Graph + permisos `instagram_content_publish`, `pages_show_list`, `instagram_basic` | **Escritorio** (navegador) | Meta for Developers |
+| 4 | Generar **token de larga duración** (long-lived, ~60 días, renovable) + obtener **IG Business Account ID** + **Page ID** | **Escritorio** (Graph API Explorer) | — |
+| 5 | **Guardar** token + IG Account ID + Page ID | **Escritorio → Railway** (vars `IG_ACCESS_TOKEN`, `IG_BUSINESS_ID`, `FB_PAGE_ID`) o archivo `SECRET/` — **NUNCA por chat** | Railway |
+| 6 | Montar el **publicador** (Graph API: `POST /{ig-id}/media` → `POST /{ig-id}/media_publish`) + renovación automática del token | **Code** | backend Railway |
+> Resultado: Instagram (canal #1) con publicación 100% automática. Pasos 1–5 (navegador) los hace Escritorio; el 6 (código) lo hace Code.
+
 ---
 
 ## 12. MÉTRICAS DE ÉXITO (¿cuándo sabemos que funciona?)
-| Métrica | Objetivo |
-|---|---|
-| Seguidores Instagram — semana 4 | 50 |
-| Seguidores Telegram — semana 4 | 50 |
-| Descargas atribuibles a redes | 10% del total |
-| Engagement rate por tipo de contenido | >3% |
-> Se miden con `social-media-analyzer` + los datos del reporte diario. Sin métricas no se ajusta.
+| Métrica | Objetivo | Quién mide | Frecuencia | Dónde se reporta |
+|---|---|---|---|---|
+| Seguidores Instagram | 50 a semana 4 | Code (Graph API) | semanal | grupo Telegram "Cobrex Performance" + Sheet |
+| Seguidores Telegram | 50 a semana 4 | Code (Bot API getChatMemberCount) | semanal | ídem |
+| Descargas atribuibles a redes (UTM `?utm_source=ig/tg…`) | 10% del total | Code (links UTM + reporte de descargas) | semanal | ídem |
+| Engagement rate por tipo de contenido | >3% | Code (`social-media-analyzer` + APIs) | semanal | ídem |
+| Alcance/impresiones por pieza | crece semana a semana | Code (APIs por red) | semanal | ídem |
+
+**Proceso (no intención):** Code agrega un **bloque "MKT" al reporte de Telegram** (mismo sistema que el reporte de performance) que cada **lunes** trae estas métricas vía las APIs de cada red + las guarda en el Sheet (histórico). Si una métrica no llega al objetivo 2 semanas seguidas → se ajusta el tipo/frecuencia de contenido de ese canal. **Los links de las piezas llevan UTM** para atribuir descargas a cada red.
 
 ---
 
@@ -269,14 +299,26 @@ Escritorio `.md`→`content/` → Code genera asset → `scheduled/` estado `pen
 
 ---
 
-## 14. PRÓXIMOS PASOS
-1. **Fernando confirma handles** de Instagram y TikTok (sin punto?) — bloquea el nombrado de contenido.
-2. **Setup Instagram Graph API ya** (FB Page + vincular + token) — PRIORITARIO, canal #1.
-3. **Solicitar hoy** LinkedIn + TikTok API (quedan en cola).
-4. Setup YouTube OAuth.
-5. Bajar badges App Store + Google Play a `mkt/assets/badges/`; confirmar logo SVG + búho a `mkt/assets/`.
-6. Banner in-app Telegram (feature flag) — táctica de adquisición #1 de Telegram.
-7. Escritorio: banco de 10 preguntas (4.7) + calendario editorial + spec de las primeras piezas IG.
-8. 1er lote de piezas → `pendiente_ok` → **OK de Fernando** → publicar.
+## 14. PREREQUISITOS Y LÍNEA DE TIEMPO (con fechas reales)
 
-> **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%.** Versionar v4.2… en cada cambio material.
+### 14.1. Prerequisitos para arrancar (antes de D0)
+| # | Prerequisito | Responsable | ETA |
+|---|---|---|---|
+| 1 | **Setup Instagram Graph** (FB Page + vincular IG + app + token → Railway) — pasos en §11 | Escritorio (1–5) + Code (6) | 2–3 jun |
+| 2 | Solicitar **LinkedIn + TikTok API** (quedan en cola, semanas) | Escritorio | 2 jun |
+| 3 | Setup **YouTube OAuth** | Escritorio + Code | 3–4 jun |
+| 4 | Completar banco: **logo SVG, íconos 3D, badges tiendas, fondos** | Code (genera) + Escritorio (logo/búho/IA) | 3–4 jun |
+| 5 | **Banner in-app "Unite al canal"** (feature flag) — adquisición #1 | Code (app) | 3–5 jun |
+| 6 | Escritorio: **banco de 10 preguntas (4.7) + calendario editorial + spec de las 1ras piezas IG** | Escritorio | 3–5 jun |
+| 7 | **1er lote de piezas** generado → `pendiente_ok` → **OK de Fernando** | Code genera, Fernando aprueba | 5–6 jun |
+
+### 14.2. Línea de tiempo (fechas)
+- **D0 = inicio Fase 1. OBJETIVO: lunes 9-jun-2026** (sujeto a que los 7 prerequisitos estén ✅ y a la confirmación de Fernando). *Si el setup IG se demora, D0 se corre — pero la fecha objetivo es el 9-jun.*
+- **Semana 1 (9–15 jun):** Instagram (3 piezas + reels) + Telegram (1 pieza/día) arrancan. Métricas desde el día 1.
+- **Semana 2 (16–22 jun):** sumar YouTube (si OAuth listo) + ritmo pleno IG/Telegram. 1er reporte MKT semanal (lunes 16).
+- **Semana 3 (23–29 jun):** debut de la **mascota búho** (o en la publicación #10, lo que llegue antes). Evaluar métricas vs objetivos.
+- **Semana 4 (30 jun–6 jul):** corte de métricas (objetivo: 50 seguidores IG + 50 Telegram). Ajustar mix.
+- **Semana 6 (~14 jul):** se habilitan las **comparativas** (§4.6).
+- **Fase 2:** LinkedIn + TikTok cuando aprueben las APIs; video con voz IA/animación búho.
+
+> **Nada se ejecuta sin OK formal de Fernando. Ningún canal sin automatización 100%. El banco siempre replicado en Dropbox.** Versionar v4.4… en cada cambio material.
