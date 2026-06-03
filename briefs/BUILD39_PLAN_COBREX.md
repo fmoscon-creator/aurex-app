@@ -17,7 +17,7 @@
 ## PARTE 1 — REGLAS Y PROCESO DE BUILD / COMPILACIÓN / TESTFLIGHT (acordado, no se cambia)
 
 ### 1.1. Reglas DURAS (no negociables)
-1. **🚫 Code NUNCA compila pesado en la Mac de Fernando sin OK explícito.** Prohibido `xcodebuild archive`, build de simulador desde cero, `pod install` completo por iniciativa propia (congeló la Mac 3 veces). La compilación/archive la **dispara Fernando** cuando NO está usando la Mac.
+1. **🚫 Code NUNCA compila por iniciativa propia.** Prohibido lanzar `xcodebuild archive` / build de simulador / `pod install` de sorpresa (congeló la Mac 3 veces). El clean + archive (§1.4) lo ejecuta **Code por CLI** (flujo oficial) **PERO solo con OK explícito de Fernando y la Mac libre** — nunca de sorpresa, nunca build de simulador con `-derivedDataPath` propio.
 2. **🚫 No se cambia ni "optimiza" un paso del proceso ya definido.** Se ejecuta literal. Cambios se proponen y se espera OK.
 3. **👁️ Validación de Code = REVISIÓN DE CÓDIGO (sin tocar la Mac de Fernando).** Code NO abre el simulador en la pantalla de Fernando, NO compila, NO le saca capacidad. Valida analizando el código (lógica, estructura, i18n, que el cambio sea correcto) y, si hace falta ver algo visual, genera un **preview PNG liviano** (HTML→PNG, no usa la Mac). **El resultado visual final se valida en TestFlight (Fernando)**, no en el simulador.
 4. **🔒 IDs que NO cambian** (rompen pagos/identidad): bundle `com.fernandomoscon.aurex`, Team `TX7C2F79U9`, product IDs `com.fernandomoscon.aurex.*`, RC `aurex_default`/`pro`/`elite`.
