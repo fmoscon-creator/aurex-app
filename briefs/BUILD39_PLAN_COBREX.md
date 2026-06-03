@@ -1,7 +1,14 @@
-# 🍎 BUILD 39 iOS (Cobrex) — Análisis de proceso + ajustes (v2)
+# 🍎 BUILD 39 iOS (Cobrex) — Análisis de proceso + ajustes (v3 — CONSOLIDADO)
 
-*Fecha: 03-jun-2026 · Autor: Code · Para validación de Escritorio + OK de Fernando · NADA se compila/envía sin OK.*
+*Fecha: 03-jun-2026 · Autor: Code · Validado con Escritorio (v1→v2→v3) · **EJECUCIÓN: mañana, no hoy** · NADA se compila/envía sin OK de Fernando.*
 *Base: `FLUJO_BUILD_IOS_ANDROID.md` + brief §1.h + memorias de proceso. No inventa nada — verificado contra los docs.*
+*📌 **Documento canónico = esta raw URL del repo público** (`briefs/BUILD39_PLAN_COBREX.md`). Cualquier mensaje/resumen es secundario; ante duda, vale este doc.*
+
+## CHANGELOG v2 → v3 (4 observaciones de Escritorio resueltas)
+1. **Doc canónico aclarado:** la referencia es esta raw URL, no los mensajes-resumen (que comprimen info).
+2. **Canal de devolución de traducciones definido** (ver §0): Escritorio deja las traducciones en `briefs/build39/translations/` (repo público) o vía Fernando; Code las cablea al i18n.
+3. **Ítem A (reseña) — gap técnico cerrado:** verificado que **NO hay librería de reseñas in-app instalada** en `~/AurexApp` → hay que **agregar `react-native-in-app-review`** (toca Podfile + `pod install` adicional, que ya entra en el clean del §1.4). Riesgo del ítem A sube a 🔴 por la dependencia nativa nueva. **Confirmar versión compatible con la RN del proyecto antes de codear A.**
+4. **Keywords ASO con margen:** el string de 98 chars estaba al límite → se propone quitar `analisis` (ya está en nombre/descripción) → **89 chars**, deja margen por si Apple objeta una keyword.
 
 ## CHANGELOG v1 → v2 (6 correcciones de Escritorio aplicadas)
 1. **Archive por CLI (`xcodebuild`), NO Xcode GUI** — corregido §1.4 con los comandos reales del flujo oficial. Lo ejecuta **Code via CLI** (Fernando solo sube con Transporter), con OK + Mac libre.
@@ -11,6 +18,13 @@
 5. **1.h.6 movido al paso 4** (riesgo alto), NO al paso 2 de i18n simple.
 6. **Ficha macOS (C): textos se cargan ya sin build** (Escritorio); solo las capturas se difieren.
 + 1.h.2 reusa el patrón de `SplashView.js` (no inventar).
+
+---
+
+## §0 — CÓMO SE MANEJAN CODE ↔ ESCRITORIO (canal concreto, todo en GitHub)
+- **Plan + snapshots de código → repo público `aurex-app`.** Escritorio audita por raw URL: el plan (`briefs/BUILD39_PLAN_COBREX.md`) + cada archivo a tocar (`briefs/build39/code_snapshot/<archivo>`). Code snapshotea cada archivo del repo privado **antes** de modificarlo, así Escritorio compara antes/después sin entrar al repo privado.
+- **Devolución de traducciones (1.h.9 / 1.h.7 / 1.h.6):** Escritorio entrega el **EN maestro + las traducciones** en un archivo (`.md`/`.json`) → lo deja en `briefs/build39/translations/` del repo público (si tiene push) **o** se lo pasa a Fernando → Code. **Code las cablea al i18n** y snapshotea el resultado para que Escritorio lo verifique.
+- **Dropbox NO es canal con Escritorio** (solo respaldo de Fernando).
 
 ---
 
@@ -77,7 +91,7 @@ xcodebuild -exportArchive \
 
 | # | Ajuste | Qué es / por qué | Dónde (archivo) | Cómo se hace | Riesgo | Valida |
 |---|---|---|---|---|---|---|
-| **A** | **Reseña in-app (corregido v2)** | Pedir reseña tras **3 días de USO ACTIVO** (días que abrió la app). | **API NATIVA `SKStoreReviewRequest` de iOS** (la que Apple recomienda — **maneja sus propios límites**: máx 3 veces/año, nunca si el usuario ya dejó reseña). Code SOLO **cuenta los 3 días de uso activo** (AsyncStorage) y **dispara `SKStoreReviewRequest.requestReview()`** en ese momento; **iOS decide** si lo muestra. **NO** un popup casero, NO link manual, NO contador propio de "3 apariciones" (eso lo gestiona iOS). En RN: módulo `StoreReview`/bridge nativo. | 🟡 | Code (revisión código) + Fernando (TestFlight) |
+| **A** | **Reseña in-app (corregido v2)** | Pedir reseña tras **3 días de USO ACTIVO** (días que abrió la app). | **API NATIVA `SKStoreReviewRequest` de iOS** (la que Apple recomienda — **maneja sus propios límites**: máx 3 veces/año, nunca si el usuario ya dejó reseña). Code SOLO **cuenta los 3 días de uso activo** (AsyncStorage) y **dispara `SKStoreReviewRequest.requestReview()`** en ese momento; **iOS decide** si lo muestra. **NO** un popup casero, NO link manual, NO contador propio de "3 apariciones" (eso lo gestiona iOS). ⚠️ **(v3) NO hay librería de reseñas instalada** → agregar **`react-native-in-app-review`** (toca Podfile + `pod install`; confirmar versión compatible con la RN del proyecto ANTES de codear). | 🔴 (dependencia nativa nueva) | Code (revisión código) + Fernando (TestFlight) |
 | **1.h.2** | Onboarding animado | Constelación que titila + logo/COBREX más grandes (cosmético). | onboarding RN | **Reusar el patrón de animación de `SplashView.js`** que ya funciona (NO inventar desde cero). Animación RN (Animated). Validar por revisión de código + Fernando en TestFlight. | 🔴 (animación) | Code (revisión código) + Fernando |
 | **1.h.3** | Paywall fresh-install | En instalación fresca el paywall se abre como PRO/ELITE. Fix: leer RC `getCustomerInfo()` en vez de AsyncStorage `aurex_plan`. **Bug real pero invisible en producción** (no hay pagos PRO/ELITE reales salvo la prueba). | `SubscriptionScreen`/lógica de plan | Cambiar la fuente del plan a RevenueCat. **Validación explícita (obligatoria):** probar (1) **install fresca** sin AsyncStorage → el paywall NO debe abrir como PRO/ELITE; (2) **cuenta PRO/ELITE activa** → SÍ debe reconocer el plan. Ambos casos en TestFlight. | 🔴 (lógica compra) | Code + Fernando (TestFlight, install fresca) |
 | **1.h.4** | Loading nativo | Quitar "Loading…" + spinner sol del `.storyboard` (restos del diseño viejo). | `LaunchScreen.storyboard` / nativo iOS | Code edita el **XML del `.storyboard` directamente** (es texto plano — no requiere abrir Xcode ni la Mac). Fernando confirma el arranque real en TestFlight. | 🔴 (nativo) | Code + Fernando |
@@ -85,7 +99,7 @@ xcodebuild -exportArchive \
 | **1.h.9** | Mensajes Login/Signup a i18n | Los `setStatus(...)` ("Email inválido", "contraseña ≥6", "ya tiene cuenta", "Revisá tu email", etc.) están en ES hardcodeado → pasar a i18n (8 idiomas). **+ quitar debug leftovers** ("Fetch OK — seteando sesión…", "SDK falló, probando fetch directo…") que NO deben verse. | `LoginScreen`/`SignupScreen` + i18n | Reemplazar strings por claves i18n + traducir 8 idiomas + borrar logs visibles. | 🟡 (i18n) | Code + Escritorio (traducciones) |
 | **1.h.7** | FAQ Perfil a i18n (Grupo 2) | El FAQ de Perfil (6 preguntas + 6 respuestas) está solo en ES+EN → faltan pt/zh/hi/fr/it/ar (~72 traducciones). | `PerfilScreen` (~957-962) + i18n | Pasar a i18n + traducir. **Volumen alto + riesgo de calidad de traducción.** | 🟡 (i18n volumen) | Code + Escritorio (traducciones) |
 | **1.h.6** | "Full AI Analysis" a i18n (Grupo 3) | Las frases que justifican la señal ("Precio subió X…", "RSI14 en X…", "Volumen…") están en ES hardcodeado **con condicionales embebidos** (alcista/bajista) → reestructurar a i18n. | `PortfolioScreen` (~1454+) + i18n | Reestructurar con cuidado (los condicionales hacen riesgoso el i18n). | 🔴 (estructura compleja) | Code + Escritorio |
-| **B** | **Keywords ASO** (búsqueda) | Agregar `cobrex`+`cedears` en ES + `cobrex` en los otros idiomas → arregla que no aparezca al buscar "cobrex" en AR. **NO es código** (metadata de la versión). | App Store Connect (no es build) | Escritorio carga las keywords en ASC junto con este envío. Texto ES listo: `cobrex,cripto,acciones,bolsa,trading,alertas,mercados,inversiones,analisis,cedears,IA,ETF,finanzas`. | 🟢 (metadata) | Escritorio (carga) |
+| **B** | **Keywords ASO** (búsqueda) | Agregar `cobrex`+`cedears` en ES + `cobrex` en los otros idiomas → arregla que no aparezca al buscar "cobrex" en AR. **NO es código** (metadata de la versión). | App Store Connect (no es build) | Escritorio carga las keywords en ASC. Texto ES (v3, **89 chars** con margen, se quitó `analisis` que ya está en nombre/descripción): `cobrex,cripto,acciones,bolsa,trading,alertas,mercados,inversiones,cedears,IA,ETF,finanzas`. | 🟢 (metadata) | Escritorio (carga) |
 | **C** | **Ficha macOS (corregido v2)** | El borrador macOS está vacío. **Los textos/descripción NO requieren build** (se cargan ya); solo las **capturas** requieren build macOS. | ASC app macOS (id 6761672161) | **Escritorio carga descripción + textos en ASC ahora** (sin build → no bloquea el iOS). Las **capturas** (1280×800/1440×900) se difieren hasta tener un build macOS. | 🟢 textos / difer. capturas | Escritorio (carga textos) |
 
 ---
