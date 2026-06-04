@@ -1,4 +1,4 @@
-# 📊 CRO Cobrex — ANÁLISIS DE ESCRITORIO (contexto de mercado)
+ 📊 CRO Cobrex — ANÁLISIS DE ESCRITORIO (contexto de mercado)
 
 > **Última actualización:** 03-jun-2026 — Escritorio
 > Análisis autónomo e independiente. Marcado: **[DATO]** (fuente verificada) · **[HIPÓTESIS]** (a confirmar).
