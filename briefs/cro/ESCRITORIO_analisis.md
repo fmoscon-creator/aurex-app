@@ -1,7 +1,7 @@
 # 📊 CRO Cobrex — ANÁLISIS DE ESCRITORIO (contexto de mercado)
 
 > **Última actualización:** 03-jun-2026 — Escritorio
-> Análisis autónomo e independiente. Marcado: **[DATO]** (fuente verificada) · **[HIPÓTESIS]** (a confirmar con datos de Code).
+> Análisis autónomo e independiente. Marcado: **[DATO]** (fuente verificada) · **[HIPÓTESIS]** (a confirmar).
 > **Regla madre: nada se cambia. Solo diagnóstico.**
 
 ---
@@ -84,15 +84,14 @@
 
 ---
 
-## E) LOGIN OBLIGATORIO — ANÁLISIS DE FRICCIÓN EN EL FUNNEL
+## E) LOGIN OBLIGATORIO — ANÁLISIS COMPLETO CON DATOS REALES
 
-> Sección agregada 03-jun-2026. Pregunta: ¿hay datos de usuarios que bajaron la app y no completaron el registro? ¿Qué ventaja tiene el login obligatorio?
+> Última actualización: 03-jun-2026. Datos de Supabase consultados directamente por Escritorio.
+> Code confirmó: no hay SSO (Apple/Google Sign-In) — solo mail+contraseña (signInWithPassword/signUp).
 
-### E.1) Flujo real del código — DATO verificado en App.js build36
+### E.1) Flujo real — verificado en App.js build36
 
-**[DATO] Código fuente leído directamente: briefs/iap_audit_18may/code_snapshot_build36/App.js**
-
-Flujo real confirmado:
+**[DATO] Código fuente: briefs/iap_audit_18may/code_snapshot_build36/App.js**
 
     Boot → SplashView (mínimo 2s)
       → ¿'aurex_onboarding_done' en AsyncStorage?
@@ -101,65 +100,85 @@ Flujo real confirmado:
                   → "Ya tengo cuenta" → LoginScreen
           SÍ → ¿JWT válido local? → si no → refreshSession() → si falla → LoginScreen
                si sí → biometría? → Face ID → RootNavigator (app)
-      → Build 36: post-login, plan=FREE → SubscriptionScreen (fromLogin:true)
-                  → "Continuar FREE" o "Saltar ✕" → Mercados
+      → Build 36: post-login FREE → SubscriptionScreen → "Continuar FREE" o "Saltar ✕" → Mercados
 
-**Hallazgo [DATO]:** el login se pide DESPUÉS del onboarding de 4 slides ✅. Correcto en términos de timing.
+**El login se pide DESPUÉS del onboarding de 4 slides ✅ — timing correcto.**
 
-**Problema de fricción acumulada:** un usuario nuevo hace 4 pasos antes de ver funcionalidad real:
-1. Ver 4 slides de onboarding
-2. Llenar formulario manual (mail + contraseña + confirmación) — SIN SSO
+**Fricción acumulada para usuario nuevo:**
+1. Ver 4 slides
+2. Llenar formulario manual (mail + contraseña + confirmación) — SIN SSO confirmado
 3. Ver pantalla de planes
-4. Recién entonces: acceder a Mercados
+4. Recién entonces: Mercados
 
 ### E.2) Por qué el login es necesario (no eliminar)
 
-**[DATO] Justificaciones técnicas verificadas en el código:**
+**[DATO] Justificaciones técnicas en el código:**
+1. **RevenueCat identity:** sin login RC usa $RCAnonymousID — se pierde al reinstalar. Con login: Purchases.logIn(user.id) → identity estable.
+2. **Persistencia de alertas:** guardadas en Supabase por user.id. Sin cuenta = sin recuperación cross-device.
+3. **Push notifications:** token FCM/APNs se registra post-login (registerForPushNotifications). Sin login = sin push.
+4. **Retención:** el email es el único canal propio para recuperar usuarios churned.
 
-1. **RevenueCat identity:** sin email registrado, RC usa $RCAnonymousID. Al reinstalar o cambiar dispositivo, se pierde el estado de suscripción. Con login: Purchases.logIn(user.id) post-auth → identity estable.
+**Conclusión: el login obligatorio es estructuralmente necesario. No se puede eliminar.**
 
-2. **Persistencia de alertas:** guardadas en Supabase vinculadas al user.id. Sin cuenta, no hay recuperación cross-device.
+### E.3) Datos reales de Supabase — consultados por Escritorio el 03-jun-2026
 
-3. **Push notifications:** token FCM/APNs se registra en backend post-login (registerForPushNotifications(s.user.id)). Sin login = sin push persistentes.
+**[DATO] Queries ejecutadas directamente en SQL Editor de Supabase:**
 
-4. **Retención:** el email es el único canal directo para recuperar usuarios churned.
+| Métrica | Valor | Fuente |
+|---|---|---|
+| auth.users total (completaron el formulario de mail) | **92** | SELECT COUNT(*) FROM auth.users |
+| Tabla usuarios (tienen fila en backend) | **48** | SELECT COUNT(*) FROM usuarios |
+| En auth SIN fila en tabla usuarios | **44** | LEFT JOIN con WHERE u.id IS NULL |
+| Plan FREE | 47 | GROUP BY plan |
+| Plan ELITE | 1 | GROUP BY plan |
+| Plan PRO | 0 | GROUP BY plan |
+| Primer registro | 28-mar-2026 | MIN(created_at) auth.users |
+| Último registro | 03-jun-2026 | MAX(created_at) auth.users |
 
-**Conclusión: el login obligatorio es estructuralmente necesario. No se puede eliminar sin rediseñar el backend.**
+**Crecimiento mensual (auth.users):**
+| Mes | Registros nuevos |
+|---|---|
+| Mar-2026 | 14 |
+| Abr-2026 | 29 |
+| May-2026 | 48 |
+| Jun-2026 | 1 (mes en curso) |
 
-### E.3) El problema real: cómo se pide el registro
+### E.4) Qué son los 44 "usuarios fantasma" — diagnóstico crítico
 
-**[DATO] Código actual (SignupScreen.js verificado):** solo mail + contraseña + confirmación manual. Sin Sign in with Apple. Sin Google Sign-In. No hay SSO en ninguna pantalla.
+**[DATO] Estos 44 usuarios:**
+- **Sí completaron el formulario de mail** (existen en auth.users = pasaron el SignupScreen)
+- **NO tienen fila en tabla usuarios** = el POST /api/usuario al backend falló o no se ejecutó
+- Esto es la "Capa 1 self-heal" del SignupScreen.js: si el POST falla, se loguea un warning pero el usuario entra igual
+- Pueden intentar loguearse pero el backend responde 404 en /api/usuario/:id → la app no sabe qué plan mostrarles
 
-**[DATO] Benchmarks drop en registro:**
-- Signup solo con mail+contraseña manual: drop **40–60%** en el paso
-- Con Apple/Google SSO como opción primaria: drop baja a **15–25%**
-- Fuentes: AppsFlyer Mobile App Trends 2024, UXCam onboarding benchmarks
+**Esto NO es drop por abandono del formulario** — esos 44 completaron el registro. Es un **bug técnico de sincronización** entre Supabase auth y el backend Railway.
 
-**[HIPÓTESIS] Estimación conservadora:** de 100 installs → 60 completan onboarding → 25–35 abandonan en el formulario de mail → ~30% del total de installs nunca llega a usar la app.
+**Impacto real:** 44 de 92 usuarios registrados (47.8%) tienen su backend roto. Si intentan usar la app, probablemente ven errores o la app los trata como FREE sin que quede registrado. Si alguno intentó pagar, RevenueCat puede no haberlos identificado correctamente (IAP-1).
 
-### E.4) Preguntas para Code — datos reales necesarios
+### E.5) Lo que NO podemos medir desde Supabase
 
-Datos que Code debe completar en CODE_analisis.md o CONSOLIDADO:
+**[DATO] Drop pre-registro (abandono antes de completar el mail):**
+Los usuarios que llegaron al formulario y NO lo completaron **nunca se crean en auth.users** → son invisibles para Supabase. Solo se pueden medir con analytics de onboarding (Firebase/eventos de pantalla).
 
-1. ¿Evento "signup_started" vs "signup_completed" en Firebase/Supabase? → % que inician y no completan.
+**¿Cuántos son?** No lo sabemos con certeza. Con los benchmarks de la industria (40–60% de drop en signup manual sin SSO), si 92 completaron el mail, potencialmente había entre 92 y 220 usuarios más que lo intentaron y abandonaron.
 
-2. En RevenueCat → Customers: ¿qué % tiene $RCAnonymousID vs UUID Supabase real? → Si anonymous > 30%, hay usuarios que usan la app sin registrarse (o bug IAP-1).
+**[DATO confirmado por Code]** No hay SSO (Sign in with Apple / Google Sign-In) — solo mail+contraseña manual. Esto maximiza el drop en el paso de registro.
 
-3. ¿Cuántos usuarios en tabla Supabase 'usuarios' vs total de installs acumulado? → Gap = instalaron pero no completaron registro.
+### E.6) Diagnóstico y posición de Escritorio
 
-4. ¿Sign in with Apple o Google Sign-In en roadmap Build 39 o posterior? → Del código confirmo que hoy NO existen.
+**Hay DOS problemas distintos que se confundían:**
 
-5. En Android: ¿mismo flow que iOS (mail+contraseña manual)? ¿hay Google Sign-In nativo?
+**Problema 1 (bug técnico — urgente):** 44 usuarios con auth pero sin fila en backend. Estos NO son abandono — completaron el registro pero el backend los perdió. Hay que decidir si se hace una migración/heal de esos 44 o si se deja que la Capa 2 los recupere cuando se logueen.
 
-6. ¿El OnboardingScreen trackea "slide_N_viewed"? → Para saber en qué slide abandona el usuario.
+**Problema 2 (fricción de UX — a trabajar en CRO activo):** Los usuarios que llegaron al formulario y nunca completaron el mail. Sin analytics de onboarding no podemos cuantificarlos. La solución de mayor impacto es Sign in with Apple (iOS) / Google Sign-In (Android) que reduce el drop de 40–60% a 15–25% según benchmarks.
 
-### E.5) Diagnóstico independiente
+**Qué se hace con el Problema 1 (opinión de Escritorio):**
+Es un bug que hay que cerrar antes de hacer cualquier CRO. No tiene sentido optimizar el funnel de adquisición si casi la mitad de los usuarios que ya pasaron el registro están rotos en el backend. Code debería hacer un heal batch: para cada auth.users sin fila en usuarios, crear la fila con plan=FREE y created_at del auth. Eso activa la Capa 2 para todos y cierra el problema.
 
-El login obligatorio **está bien ubicado** en el flujo (post-onboarding). El problema no es cuándo se pide sino cómo: formulario manual de mail + contraseña es la versión más friccionante del registro.
+**Qué se hace con el Problema 2 (opinión de Escritorio):**
+Esto es CRO puro — no tocar ahora. Cuando Fernando dé OK para CRO activo, la prioridad 1 es agregar Sign in with Apple en iOS. Es el cambio de mayor impacto/esfuerzo del funnel completo sin tocar arquitectura.
 
-Agregar **Sign in with Apple como opción principal** en iOS resolvería la mayor parte del problema con 1 tap, sin tocar la arquitectura de identidad (Supabase OAuth acepta Apple/Google nativamente). Es la mejora de mayor impacto/esfuerzo del funnel.
-
-Este análisis es solo diagnóstico. Cualquier cambio se decide con OK de Fernando en etapa de CRO activo.
+Este análisis es solo diagnóstico. Cualquier cambio se decide con OK de Fernando.
 
 ---
 
@@ -169,7 +188,8 @@ Este análisis es solo diagnóstico. Cualquier cambio se decide con OK de Fernan
 - **[DATO]** Build 36: "Continuar FREE" y "Saltar ✕" en paywall post-login → respeta Apple 3.1.2. ✅
 - **[DATO]** In-app review (Build 39 plan v3) = camino más directo para resolver el 1 rating.
 - **[HIPÓTESIS]** Mercado AR es el caso más urgente para geo-pricing: cepo + salario relativo + competencia gratuita local.
+- **[DATO]** 1 solo usuario ELITE en toda la base (92 registrados). 0 PRO. Tasa de conversión a pago: 1/92 = 1.08%.
 
 ---
 
-> **Para Code cuando leas esto:** cruzá con CODE_analisis.md y generá CONSOLIDADO_CRO_v2.md. Las preguntas de la sección E.4 son las más urgentes — necesito datos reales de Supabase/RC para cuantificar el drop en registro.
+> **Para Code:** Leé la sección E.4 y E.6. Hay dos problemas distintos. El Problema 1 (44 usuarios sin fila en backend) es un bug técnico que necesita resolución antes de hacer CRO. El Problema 2 (drop en formulario) es CRO puro para cuando Fernando lo active. Confirmá: ¿cuántos de los 44 tienen RAW en alguna tabla de alertas o activos configurados? Eso nos dice si realmente llegaron a usar la app o solo crearon la cuenta.
