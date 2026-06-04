@@ -1384,6 +1384,68 @@ docs(brief-maestro): §5 Landing — Fernando dio OK visual, arranca deploy
 
 ---
 
+## 13. EVALUACIÓN CONVERSIÓN / EMBUDO (CRO) — v1 (03-jun-2026) · 🔬 EN EVALUACIÓN
+
+> **🛑 REGLA MADRE — NADIE TOCA NI CAMBIA NADA.** Mientras dure esta evaluación, **no se modifica absolutamente nada** de lo que existe hoy: ni app, ni paywall, ni onboarding, ni precios, ni planes, ni tiendas. Es **100% diagnóstico** (observar, medir, leer, analizar, verificar). Cualquier cambio futuro se decide **aparte**, recién cuando el análisis esté validado, y **siempre con OK explícito de Fernando**. Esto se evalúa **con tiempo y sin urgencia**.
+
+### 13.1 El problema a entender
+Hay **descargas reales** (~77: iOS 33 + Android 44) pero **~0 compras de plan** (1 sub activa = la prueba propia de Fernando, ya cancelada). No se sabe si la fuga está en el **paywall**, el **onboarding**, los **precios**, o si es simplemente **volumen bajo**. **Objetivo:** ubicar la(s) fuga(s) **con datos, no adivinando** — para tener la conversión afinada **ANTES** de que el MKT (D0 tentativo 16-jun) traiga tráfico, no después.
+
+### 13.2 Caveat estadístico (no perderlo de vista)
+Con **~35 usuarios reales identificados**, 0-2 pagos es **estadísticamente indistinguible** de "todo funciona pero hay poca gente". El **volumen sigue siendo la palanca principal**. Esta evaluación **prepara la máquina de conversión**, NO reemplaza al MKT. Sirve para que, cuando llegue tráfico, no se desperdicie.
+
+### 13.3 Los 3 frentes de análisis
+1. **Embudo real con datos** (RC + Supabase): `install → registro → uso/“aha” → vista de paywall → compra`. Ubicar **la caída más grande**.
+2. **Auditoría del código real** de la app: **onboarding** + **paywall** — cuándo aparece, qué pide, qué muestra, cómo gatea. Leído en el código (`~/AurexApp/src`), sin suposiciones.
+3. **Estructura de precios de los planes vs mercado** — **NO solo AR**. Evaluar por mercado:
+   - **AR** (base, ~83% de los usuarios).
+   - **Mercados con descargas reales:** iOS → 🇺🇸 US · 🇨🇱 CL · 🇧🇪 BE · Android → 🇵🇭 PH · 🇮🇳 IN · 🇳🇬 NG · 🇧🇷 BR (y otros que surjan).
+   - **Los 8 mercados de idiomas configurados:** ES (AR/LatAm/España) · EN (US/UK) · PT (Brasil) · ZH (China) · FR (Francia) · IT (Italia) · HI (India) · AR-árabe (países árabes).
+   - Por cada uno: **poder adquisitivo local** + **qué cobran apps financieras/competidoras comparables** + **tiers de precio de App Store / Google Play por país** (los precios se pueden configurar por región).
+
+### 13.4 Señales preliminares (del snapshot 30-may — ⚠️ TODO A RE-VERIFICAR con datos actuales)
+- **77 installs → 35 identificados = ~45% ni siquiera registran.** (¿onboarding pide login muy pronto / antes de mostrar valor?)
+- **276 vistas de paywall / ~35 users ≈ 8× cada uno** y aun así no compran → **lo ven mucho y no compran** → apunta a **oferta / precio / timing**, no a "nunca aparece".
+- **83% Argentina** → hipótesis fuerte: **precio en USD alto para el bolsillo AR**.
+- (Son indicios, no conclusiones. El primer paso es construir el embudo real y verificar estos números.)
+
+### 13.5 🤝 Modelo de trabajo con Escritorio — DOBLE ANÁLISIS INDEPENDIENTE
+La idea: que Code y Escritorio analicen **el mismo frente desde ángulos distintos, sin verse entre sí hasta tener su propia conclusión** — así no se contaminan (uno no copia al otro) y donde **coinciden** hay señal fuerte; donde **discrepan**, hay algo para investigar más.
+
+- **Code aporta DATOS DUROS** (tiene: código de la app + backend + APIs RC/ASC/Google Play + Supabase):
+  - El **embudo real** medido (cuánta gente cae en cada etapa).
+  - El **flujo real** de onboarding/paywall leído en el código.
+  - La **config real de precios** publicada en las tiendas (por país).
+- **Escritorio aporta CONTEXTO DE MERCADO** (tiene: browser logueado en consolas + tiendas públicas + investigación web):
+  - **Benchmarks de precios** de apps competidoras/financieras por país (AR, LatAm, y cada mercado de idioma).
+  - **Mejores prácticas** de paywall / onboarding / pricing freemium.
+  - Lectura de **UX** desde la ficha pública + screenshots del paywall.
+  - Cualquier **dato propio** que releve (reseñas de competidores, tendencias, etc.).
+- **Cómo se cruza:** cada uno escribe **su** análisis en una sección **propia y claramente separada** del doc compartido en `briefs/cro/` (repo `aurex-app`). Primero cada uno completa **lo suyo** sin leer la conclusión del otro; **recién cuando ambos terminaron**, se cruzan y se reconcilian. **Canal = GitHub** (`briefs/cro/`), nunca Dropbox.
+- **Fernando es el árbitro:** lee ambos análisis, decide qué se valida y qué no. **Nada se cambia** por esto (regla madre 13).
+
+### 13.6 💲 PROPUESTA TENTATIVA DE PRECIOS (a evaluar — 03-jun) · NO se aplica, solo se compara
+> Valores que Fernando quiere **evaluar** contra cada mercado y competidores. **No reemplazan nada todavía** (regla madre 13).
+
+| Plan | Mensual | Anual (pago único) | = por mes en el anual | Ahorro vs 12× mensual |
+|---|---|---|---|---|
+| **PRO** | **US$ 5.99** | **US$ 57.50** | ~US$ 4.79/mes | US$ 14.38 (−20%) |
+| **ELITE** | **US$ 9.99** | **US$ 95.90** | ~US$ 7.99/mes | US$ 23.98 (−20%) |
+
+- **Lógica del anual:** `12 × mensual − 20%`. PRO 71.88 → **57.50**. ELITE 119.88 → **95.90** (Fernando anotó 95.50, ~US$0.40 menos, prácticamente igual → redondeo final a definir).
+- **⚠️ A verificar (Code):** los **precios actuales reales** publicados en las tiendas (de memoria PRO mensual estaba en US$ 9.99) → confirmar el delta exacto. Esta propuesta **parece bajar PRO** y mover **ELITE al precio que hoy tiene PRO**.
+
+**Las 2 preguntas a responder (frente 3 — precios):**
+1. **¿Cómo quedan estos precios vs los competidores, mercado por mercado?** (AR + mercados con descargas reales + los 8 de idiomas) → benchmark de qué cobran apps comparables en cada país.
+2. **¿Conviene precio diferente por mercado (geo-pricing)?** Ej. AR más bajo (ajustado a poder adquisitivo / inflación / tipo de cambio) y US/Europa más alto. **Técnicamente es 100% viable:** App Store y Google Play permiten fijar **precio por país/región** (no es un precio único global). La pregunta no es *si se puede*, sino **cuál conviene en cada mercado**.
+
+### 13.7 Estado
+- **v1: tema encuadrado** en el brief (esta sección). Workspace de trabajo: `briefs/cro/` (a crear al arrancar el primer frente).
+- **Próximo paso sugerido por Code** (a confirmar por Fernando): empezar por el **embudo real con datos** (te dice dónde mirar primero), en paralelo Escritorio arranca su relevamiento de **precios de mercado** por país.
+- **Sin urgencia. Sin cambios. Se llena a medida que se analiza, valida y verifica.**
+
+---
+
 **Fin brief maestro. Se actualiza con cada hito. Una sola URL canónica para Escritorio y Fernando.**
 
 ---
