@@ -82,8 +82,13 @@ Confirmado el hallazgo de Escritorio. **Solo lectura, NO se tocó nada.**
 - **38 de 44 con `last_sign_in_at`** → personas reales que vuelven a entrar.
 - **Actividad de los fantasma:** alertas 0 · **portfolio 23 filas / 7 usuarios distintos** · watchlist 0. → **7 usaron la app** (agregan al portfolio con su user_id de auth) pese a no tener fila `usuarios`.
 - **Impacto:** a esos 7 la app funciona parcial (portfolio sí), pero sin fila `usuarios` no tienen plan/identidad backend → fallan plan/gating/Telegram. Reconciliación embudo: signups reales ≈ **65** (36 con fila + 29 fantasma), no 36.
-- **Causa raíz (TBD):** el frontend llama `POST /api/usuario` tras signup para crear la fila; para estos 44 no quedó. Candidatas: el POST falló en su momento (red/deploy/timeout) · falla en el flujo signup→POST. **NO confirmada — investigar antes de cualquier heal batch.**
-- **Heal batch propuesto por Escritorio** (crear las filas faltantes con plan FREE + created_at del auth): razonable, pero **primero entender la causa** (para que no siga) **+ OK de Fernando**. Escribe en BD → no se corre sin eso.
+- **CAUSA RAÍZ (alta confianza, verificada en código + datos):** la fila `usuarios` se crea por un **self-heal de 2 capas** (agregado en "Build 19"):
+  - *Capa 1* (`SignupScreen.js:76`): POST `/api/usuario` **solo si `data.session`** (= confirmación de email OFF). Como la confirmación está ON (`SignupScreen.js:101` "te enviamos un email"), al registrarse NO hay sesión → **Capa 1 se saltea**.
+  - *Capa 2* (`usePlan.js:50`): si el GET del plan da 404, crea la fila y reintenta — pero **solo corre cuando la persona entra a la app con un build que tenga el fix**.
+  - Datos: **32/44 confirmaron mail**, **12 no** (nunca entraron); **último login Mar/Abr/May, 0 en junio**. → Los 44 son **backlog histórico (Mar–May)** de cuando el heal no existía/fallaba; no volvieron con un build nuevo para auto-repararse.
+- **¿Sigue pasando? NO parece.** Cero fantasmas creados o con login en junio → el código actual ya auto-repara los signups nuevos. Es un **lote histórico para limpiar 1 vez**, no una canilla abierta.
+- **Fix permanente robusto (recomendado):** un **trigger de Postgres en `auth.users`** que cree la fila `usuarios` (plan FREE) al instante del signup, independiente de que la app vuelva a abrirse. Elimina la dependencia del self-heal del cliente. → así NUNCA se repite.
+- **Heal batch** (crear las filas de los 44 con plan FREE + created_at del auth): seguro como limpieza one-time. Decisión: ¿los 44 o solo los 32 confirmados? **Ambas cosas (trigger + heal) escriben en BD → con OK de Fernando.** Nada tocado aún.
 
 ## 6. 📉 SIN ANALYTICS DE EVENTOS — verificado
 `package.json`: están `@react-native-firebase/app` + `/messaging` (push) pero **NO `/analytics`**; cero `logEvent` en `src/`. → El drop DENTRO del onboarding/signup (qué slide, signup_started vs completed) **no es medible hoy**. Agregar `@react-native-firebase/analytics` es low-friction (Firebase ya integrado para push) pero es dependencia nativa → va en un build.
