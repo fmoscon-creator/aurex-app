@@ -6,23 +6,23 @@
 
 ---
 
-## 1. EMBUDO REAL — primer pase
+## 1. EMBUDO REAL — medido (solo usuarios REALES, excluidas 12 cuentas de prueba)
 
-| Etapa | Valor | Fuente | Caída |
+| Etapa | Reales | Fuente | Caída |
 |---|---|---|---|
 | **Instalaciones** | **77** (iOS 33 + Android 44) | [DATO] ASC Sales + Google Play | — |
-| **Entraron a la app (pasaron el muro de registro)** | **36** | [DATO] RevenueCat customers no-anónimos = tienen sesión Supabase | ~41 de 77 **no entraron** (nunca abrieron la app, o abandonaron en onboarding/registro) |
-| **Activación (creó ≥1 alerta / usó)** | **?** | [A-VERIFICAR] Supabase (tabla alertas) | ? |
-| **Vio el paywall** | **?** | [A-VERIFICAR] ¿se trackea? (el "276" viejo era del Sheet manual 30-may) | ? |
-| **Pagó alguna vez** | **2** | [DATO] RevenueCat | — |
-| **Suscripción activa** | **1** (prueba propia de Fernando, Play Store, `will_not_renew`) | [DATO] RevenueCat | — |
+| **Se registraron** (cuenta Supabase, NO prueba) | **36** | [DATO] Supabase `usuarios` (48 total − 12 prueba). ✅ coincide exacto con los 36 de RevenueCat | de 77 → 36: **~41 no entraron** (muro de registro obligatorio; install≠RC son sistemas distintos, 41 aprox.) |
+| **Crearon ≥1 alerta** (función CENTRAL) | **1** | [DATO] Supabase `alertas` distinct user_id real | **35 de 36 NUNCA usaron la función principal** ← fuga más grande |
+| **Agregaron al portfolio** | **6** | [DATO] Supabase `portfolio` distinct user_id real | (se usa más que las alertas) |
+| **Pagaron un plan** | **0** reales | [DATO] todos los 36 reales están en FREE; el único pago/ELITE es cuenta de prueba de Fernando | — |
 
-**Contexto:** total customers RC ~320, de los cuales ~284 son anónimos ($RCAnonymousID, testing/sandbox/sesiones sin login — NO son usuarios reales). MRR $9. Ratings AR 4.8★(8) / US 5★(1) → producto bien valorado por quien lo usa.
+**Contexto:** total customers RC ~320 (~284 anónimos = testing/sandbox, NO reales). Ratings AR 4.8★(8) / US 5★(1) → bien valorado por quien lo usa. `alertas_disparadas` histórico = 58 (casi todo de testers).
 
 ### Lectura preliminar de Code (HIPÓTESIS, no conclusión)
-- **Fuga #1 candidata — Muro de registro obligatorio.** ✅ VERIFICADO EN CÓDIGO (`App.js`): el registro (mail+contraseña, Supabase) es **obligatorio**; NO hay modo invitado ni "explorar sin cuenta". Flujo: splash → onboarding → si no hay sesión → Login/Signup; solo con sesión válida se llega a `'app'`. → Hipótesis: forzar crear cuenta ANTES de mostrar valor frena a quien solo quería "probar". De 77 installs, 36 entraron; ~41 no. ⚠️ install (App Store/Play) y "36" (RC) son sistemas distintos → el 41 no es exacto; + para saber si rebotan en el onboarding o en el registro falta tracking de eventos.
-- **Fuga #2 candidata — Valor → Pago:** de 36 que entraron, solo 2 pagaron alguna vez. Con muestra de 36 NO se puede afirmar que el paywall "falla" (estadísticamente indistinguible de conversión normal con poca gente).
-- **Caveat madre:** el volumen sigue siendo la palanca #1. Esto es para tener la máquina lista, no para concluir con 36 usuarios.
+- **Fuga #1 — Muro de registro obligatorio.** ✅ VERIFICADO EN CÓDIGO (`App.js`): registro (mail+contraseña, Supabase) **obligatorio**; sin modo invitado/skip. Flujo: splash → onboarding → si no hay sesión → Login/Signup; solo con sesión se llega a `'app'`. Hipótesis: pedir cuenta ANTES de mostrar valor frena a quien solo quería probar (77 → 36).
+- **🔴 Fuga #2 — ACTIVACIÓN (la más grande): registrarse → usar la función central.** **De 36 reales, solo 1 creó una alerta.** Cobrex ES una app de alertas → 35 de 36 se registraron y nunca vivieron el valor central. Portfolio lo usaron 6. **Implicación clave: la fuga NO empieza en el paywall ni en el precio — empieza mucho antes, en la activación.** Si nadie llega a poner una alerta y verla funcionar, el precio es irrelevante. → Re-pensar precios importa, pero NO mueve la aguja si la gente no se activa primero.
+- **Fuga #3 — Paywall/precio:** queda como tercer eslabón, pero hoy es casi inobservable porque casi nadie llega activado. 0 pagos reales sobre 36.
+- **Caveats honestos:** muestra chica (36 reales) → 1 vs 6 son números absolutos bajos · "creó alerta" puede sub-contar levemente si alguien creó y borró (la fila desaparece) · la heurística de "cuenta de prueba" (emails con test/aurex/demo/fmoscon) es aproximada, pero el cuadre con los 36 de RC la respalda · el volumen sigue siendo la palanca #1.
 
 ---
 
@@ -43,6 +43,7 @@
 ---
 
 ## 4. PRÓXIMOS PULLS DE CODE (en orden)
-1. Embudo: contar usuarios reales en Supabase (tabla `usuarios`) + activación (tabla `alertas`) → completar etapas 3-4.
-2. Auditar onboarding + paywall en el código de la app.
-3. Extraer precios reales por país + capacidades de geo-pricing.
+1. ✅ **HECHO** — Embudo real medido (usuarios reales + activación alertas/portfolio), separando cuentas de prueba. Endpoint `/api/cro-funnel`.
+2. Auditar **onboarding + paywall** en el código de la app (qué muestra el onboarding antes del muro · cuándo/cómo aparece el paywall · gating por plan). → ayuda a entender la fuga #2 (por qué no se activan).
+3. Extraer **precios reales por país** + capacidades de geo-pricing.
+4. (Idea) ¿el onboarding/app empuja a crear la primera alerta? Si no hay un "primer alerta guiada", explica la fuga de activación.
