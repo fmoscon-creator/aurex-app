@@ -160,25 +160,66 @@
 **[DATO] Drop pre-registro (abandono antes de completar el mail):**
 Los usuarios que llegaron al formulario y NO lo completaron **nunca se crean en auth.users** → son invisibles para Supabase. Solo se pueden medir con analytics de onboarding (Firebase/eventos de pantalla).
 
-**¿Cuántos son?** No lo sabemos con certeza. Con los benchmarks de la industria (40–60% de drop en signup manual sin SSO), si 92 completaron el mail, potencialmente había entre 92 y 220 usuarios más que lo intentaron y abandonaron.
+**¿Cuántos son?** No lo sabemos. Con los benchmarks de la industria (40–60% de drop en signup manual sin SSO), si 92 completaron el mail, potencialmente había entre 92 y 220 usuarios más que lo intentaron y abandonaron.
 
 **[DATO confirmado por Code]** No hay SSO (Sign in with Apple / Google Sign-In) — solo mail+contraseña manual. Esto maximiza el drop en el paso de registro.
 
-### E.6) Diagnóstico y posición de Escritorio
+### E.6) HALLAZGO CRÍTICO: no hay analytics de ningún tipo en la app
 
-**Hay DOS problemas distintos que se confundían:**
+**[DATO] Verificado leyendo imports de App.js build36 + code_snapshot cobrex:**
 
-**Problema 1 (bug técnico — urgente):** 44 usuarios con auth pero sin fila en backend. Estos NO son abandono — completaron el registro pero el backend los perdió. Hay que decidir si se hace una migración/heal de esos 44 o si se deja que la Capa 2 los recupere cuando se logueen.
+Imports presentes: react-native-purchases (RevenueCat), supabase, notifee, react-native-biometrics, react-navigation, bootsplash, AsyncStorage.
 
-**Problema 2 (fricción de UX — a trabajar en CRO activo):** Los usuarios que llegaron al formulario y nunca completaron el mail. Sin analytics de onboarding no podemos cuantificarlos. La solución de mayor impacto es Sign in with Apple (iOS) / Google Sign-In (Android) que reduce el drop de 40–60% a 15–25% según benchmarks.
+**No existe ninguna librería de analytics de eventos:** ni Firebase Analytics, ni Mixpanel, ni Amplitude, ni Segment, ni PostHog, ni ninguna otra. Zero líneas de logEvent, trackEvent o track() en el código analizado.
 
-**Qué se hace con el Problema 1 (opinión de Escritorio):**
-Es un bug que hay que cerrar antes de hacer cualquier CRO. No tiene sentido optimizar el funnel de adquisición si casi la mitad de los usuarios que ya pasaron el registro están rotos en el backend. Code debería hacer un heal batch: para cada auth.users sin fila en usuarios, crear la fila con plan=FREE y created_at del auth. Eso activa la Capa 2 para todos y cierra el problema.
+**Consecuencia directa:** la app opera completamente a ciegas sobre el comportamiento del usuario. No sabe:
+- En qué slide del onboarding abandona el usuario
+- Cuántos llegan al formulario de registro vs cuántos lo abren
+- Cuántos tocan "Crear cuenta" vs "Ya tengo cuenta"
+- Cuánto tiempo pasa el usuario en cada pantalla
+- Qué features usa más dentro de la app
+- Por qué los usuarios no convierten a pago
 
-**Qué se hace con el Problema 2 (opinión de Escritorio):**
-Esto es CRO puro — no tocar ahora. Cuando Fernando dé OK para CRO activo, la prioridad 1 es agregar Sign in with Apple en iOS. Es el cambio de mayor impacto/esfuerzo del funnel completo sin tocar arquitectura.
+**Lo único que se puede medir hoy:**
+- Installs (App Store Connect / Play Console)
+- Usuarios que completaron el mail (auth.users = 92)
+- Usuarios que tienen backend activo (tabla usuarios = 48)
+- Usuarios que pagaron (RevenueCat = 1 ELITE)
 
-Este análisis es solo diagnóstico. Cualquier cambio se decide con OK de Fernando.
+**Esto hace imposible hacer CRO real.** Sin saber dónde se rompe el funnel, cualquier cambio es a ciegas.
+
+**Posición de Escritorio — qué se necesita agregar:**
+Antes de tocar precio, paywall o SSO, hay que instrumentar eventos mínimos. Firebase Analytics es gratuito, se integra en React Native en menos de 1 día, y da visibilidad inmediata del funnel. Los eventos mínimos son:
+
+    onboarding_slide_viewed (slide: 1|2|3|4)
+    onboarding_completed (target: signup|login)
+    signup_started
+    signup_completed
+    login_completed
+    paywall_viewed (from: login|feature)
+    paywall_dismissed
+    paywall_converted
+
+Con 2 semanas de datos tenés el funnel real y podés tomar decisiones de CRO con evidencia.
+
+Esto no es CRO activo — es infraestructura de medición. Sin esto, el CRO es opinión, no dato.
+
+### E.7) Diagnóstico y posición de Escritorio — resumen ejecutivo
+
+**Hay TRES problemas en orden de prioridad:**
+
+**Prioridad 1 — Bug técnico (hacer YA, antes de CRO):**
+44 usuarios con auth pero sin fila en backend. Heal batch: insertar fila plan=FREE para cada auth.users sin match en tabla usuarios. No tiene sentido optimizar adquisición si casi la mitad de los usuarios que ya se registraron están rotos.
+
+**Prioridad 2 — Infraestructura de medición (hacer antes de cualquier cambio de CRO):**
+Agregar Firebase Analytics con los 8 eventos mínimos del funnel. Sin esto no se puede medir el impacto de ningún cambio de CRO. Tiempo estimado: 1 día de Code.
+
+**Prioridad 3 — CRO activo (para cuando Fernando dé OK, con datos de Prioridad 2):**
+- Sign in with Apple (iOS) / Google Sign-In (Android) → mayor reducción de drop en registro
+- Revisar timing del paywall con datos reales de funnel
+- Geo-pricing para AR, IN, NG, PH
+
+Cualquier cambio se decide con OK de Fernando.
 
 ---
 
@@ -192,4 +233,4 @@ Este análisis es solo diagnóstico. Cualquier cambio se decide con OK de Fernan
 
 ---
 
-> **Para Code:** Leé la sección E.4 y E.6. Hay dos problemas distintos. El Problema 1 (44 usuarios sin fila en backend) es un bug técnico que necesita resolución antes de hacer CRO. El Problema 2 (drop en formulario) es CRO puro para cuando Fernando lo active. Confirmá: ¿cuántos de los 44 tienen RAW en alguna tabla de alertas o activos configurados? Eso nos dice si realmente llegaron a usar la app o solo crearon la cuenta.
+> **Para Code:** Leé secciones E.4, E.6 y E.7. Tres prioridades antes de CRO activo: (1) heal batch de 44 usuarios, (2) agregar Firebase Analytics con 8 eventos mínimos, (3) recién después tocar funnel. Confirmá también: ¿cuántos de los 44 tienen registros en tablas de alertas, activos o watchlist?
