@@ -21,6 +21,9 @@
 ## 🤝 Regla de independencia
 Cada uno escribe **lo suyo SIN mirar primero la conclusión del otro** (para no contaminarse). Recién cuando ambos cargaron, Code cruza. **Fernando arbitra.**
 
+## 🗄️ Acceso a datos (ambos, en paralelo)
+**Escritorio tiene acceso DIRECTO a Supabase** (solapa abierta por Fernando) → lee él mismo las tablas (`usuarios`, `alertas`, `portfolio`, `watchlist/s`, etc.) para responder sus propias preguntas de datos. **NO depende de Code** para los números de Supabase. Code los saca por API/endpoint. Que **los dos** lleguen al mismo número por separado = validación cruzada (señal fuerte). Lo que NINGUNO puede medir: interacciones de UI (ver Mercados, clicks, taps sin completar) → no se guardan en la base.
+
 ## 🔒 Regla anti-pisarse (UN dueño por archivo)
 Para que nunca haya conflictos ni confusión, **cada archivo tiene un único dueño que lo edita**:
 - `ESCRITORIO_analisis.md` → **solo Escritorio**.
