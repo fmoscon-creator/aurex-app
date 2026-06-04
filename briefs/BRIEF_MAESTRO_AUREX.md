@@ -1432,7 +1432,7 @@ La idea: que Code y Escritorio analicen **el mismo frente desde ángulos distint
 | **PRO** | **US$ 5.99** | **US$ 57.50** | ~US$ 4.79/mes | US$ 14.38 (−20%) |
 | **ELITE** | **US$ 9.99** | **US$ 95.90** | ~US$ 7.99/mes | US$ 23.98 (−20%) |
 
-- **Lógica del anual:** `12 × mensual − 20%`. PRO 71.88 → **57.50**. ELITE 119.88 → **95.90** (Fernando anotó 95.50, ~US$0.40 menos, prácticamente igual → redondeo final a definir).
+- **Lógica del anual:** `12 × mensual − 20%`. PRO 71.88 → **57.50** (ahorro 14.38). ELITE 119.88 → **95.90** (ahorro 23.98). ✅ Verificado 03-jun: ELITE anual = **95.90** (el 95.50 inicial era un typo; 95.90 es el 20% exacto).
 - **⚠️ A verificar (Code):** los **precios actuales reales** publicados en las tiendas (de memoria PRO mensual estaba en US$ 9.99) → confirmar el delta exacto. Esta propuesta **parece bajar PRO** y mover **ELITE al precio que hoy tiene PRO**.
 
 **Las 2 preguntas a responder (frente 3 — precios):**
