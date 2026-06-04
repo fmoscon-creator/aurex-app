@@ -75,7 +75,9 @@ Solo se guardan en Supabase las acciones que escriben en BD (alertas, portfolio,
 
 ---
 
-## 5. 🐛 BUG "usuarios fantasma" — VERIFICADO por Code (endpoint `/api/cro-ghosts`)
+## 5. 🐛 BUG "usuarios fantasma" — ✅ RESUELTO 04-jun-2026
+**Cerrado.** Escritorio aplicó el SQL (`fix_fantasmas.sql`) en Supabase con OK de Fernando; Code verificó independiente (dos fuentes coinciden): **usuarios 48→80 · fantasmas confirmados = 0 · 12 sin confirmar intactos**. Trigger `on_auth_user_ready` vivo en `auth.users` (dispara on insert OR update of email_confirmed_at → cubre mail/SSO/confirm-off) → **la causa quedó cerrada, no se repite.** Histórico del hallazgo abajo.
+
 Confirmado el hallazgo de Escritorio. **Solo lectura, NO se tocó nada.**
 - **92** `auth.users` · **48** `usuarios` · **44 fantasmas** (auth sin fila en `usuarios`): **29 reales** + 15 prueba.
 - Creados: **Mar 13 · Abr 21 · May 10 · Jun 0** → venía hace meses, pico abril; no aparece en junio (pero junio casi no tuvo altas).
