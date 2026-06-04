@@ -75,6 +75,19 @@ Solo se guardan en Supabase las acciones que escriben en BD (alertas, portfolio,
 
 ---
 
+## 5. 🐛 BUG "usuarios fantasma" — VERIFICADO por Code (endpoint `/api/cro-ghosts`)
+Confirmado el hallazgo de Escritorio. **Solo lectura, NO se tocó nada.**
+- **92** `auth.users` · **48** `usuarios` · **44 fantasmas** (auth sin fila en `usuarios`): **29 reales** + 15 prueba.
+- Creados: **Mar 13 · Abr 21 · May 10 · Jun 0** → venía hace meses, pico abril; no aparece en junio (pero junio casi no tuvo altas).
+- **38 de 44 con `last_sign_in_at`** → personas reales que vuelven a entrar.
+- **Actividad de los fantasma:** alertas 0 · **portfolio 23 filas / 7 usuarios distintos** · watchlist 0. → **7 usaron la app** (agregan al portfolio con su user_id de auth) pese a no tener fila `usuarios`.
+- **Impacto:** a esos 7 la app funciona parcial (portfolio sí), pero sin fila `usuarios` no tienen plan/identidad backend → fallan plan/gating/Telegram. Reconciliación embudo: signups reales ≈ **65** (36 con fila + 29 fantasma), no 36.
+- **Causa raíz (TBD):** el frontend llama `POST /api/usuario` tras signup para crear la fila; para estos 44 no quedó. Candidatas: el POST falló en su momento (red/deploy/timeout) · falla en el flujo signup→POST. **NO confirmada — investigar antes de cualquier heal batch.**
+- **Heal batch propuesto por Escritorio** (crear las filas faltantes con plan FREE + created_at del auth): razonable, pero **primero entender la causa** (para que no siga) **+ OK de Fernando**. Escribe en BD → no se corre sin eso.
+
+## 6. 📉 SIN ANALYTICS DE EVENTOS — verificado
+`package.json`: están `@react-native-firebase/app` + `/messaging` (push) pero **NO `/analytics`**; cero `logEvent` en `src/`. → El drop DENTRO del onboarding/signup (qué slide, signup_started vs completed) **no es medible hoy**. Agregar `@react-native-firebase/analytics` es low-friction (Firebase ya integrado para push) pero es dependencia nativa → va en un build.
+
 ## 4. PRÓXIMOS PULLS DE CODE (en orden)
 1. ✅ **HECHO** — Embudo real medido (usuarios reales + activación alertas/portfolio), separando cuentas de prueba. Endpoint `/api/cro-funnel`.
 2. Auditar **onboarding + paywall** en el código de la app (qué muestra el onboarding antes del muro · cuándo/cómo aparece el paywall · gating por plan). → ayuda a entender la fuga #2 (por qué no se activan).
