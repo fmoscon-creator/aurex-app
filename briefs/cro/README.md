@@ -21,6 +21,14 @@
 ## 🤝 Regla de independencia
 Cada uno escribe **lo suyo SIN mirar primero la conclusión del otro** (para no contaminarse). Recién cuando ambos cargaron, Code cruza. **Fernando arbitra.**
 
+## 🔒 Regla anti-pisarse (UN dueño por archivo)
+Para que nunca haya conflictos ni confusión, **cada archivo tiene un único dueño que lo edita**:
+- `ESCRITORIO_analisis.md` → **solo Escritorio**.
+- `CODE_analisis.md` → **solo Code**.
+- `CONSOLIDADO_CRO_vN.md` → **solo Code**.
+
+Nadie edita el archivo del otro. Se trabaja **en paralelo** (no por turnos): Escritorio no espera a Code ni Code a Escritorio. Como cada uno toca su propio archivo, es imposible pisarse en Git.
+
 ## ✍️ Cómo marcar la info
 - **[DATO]** = verificado, con fuente/link.
 - **[HIPÓTESIS]** = impresión / a confirmar.
