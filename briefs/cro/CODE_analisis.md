@@ -20,15 +20,48 @@
 
 ### Lectura preliminar de Code (HIPÓTESIS, no conclusión)
 - **Fuga #1 — Muro de registro obligatorio.** ✅ VERIFICADO EN CÓDIGO (`App.js`): registro (mail+contraseña, Supabase) **obligatorio**; sin modo invitado/skip. Flujo: splash → onboarding → si no hay sesión → Login/Signup; solo con sesión se llega a `'app'`. Hipótesis: pedir cuenta ANTES de mostrar valor frena a quien solo quería probar (77 → 36).
-- **🔴 Fuga #2 — ACTIVACIÓN (la más grande): registrarse → usar la función central.** **De 36 reales, solo 1 creó una alerta.** Cobrex ES una app de alertas → 35 de 36 se registraron y nunca vivieron el valor central. Portfolio lo usaron 6. **Implicación clave: la fuga NO empieza en el paywall ni en el precio — empieza mucho antes, en la activación.** Si nadie llega a poner una alerta y verla funcionar, el precio es irrelevante. → Re-pensar precios importa, pero NO mueve la aguja si la gente no se activa primero.
-- **Fuga #3 — Paywall/precio:** queda como tercer eslabón, pero hoy es casi inobservable porque casi nadie llega activado. 0 pagos reales sobre 36.
+- **🔴 Fuga #2 — ACTIVACIÓN (la más grande): registrarse → usar la función central.** **De 36 reales, solo 1 creó una alerta** (portfolio: 6). **Ahora explicado por el código (§2.b):** crear una alerta exige **2-3 pasos sin guía** (agregar activo al portfolio → tocar la campana 🔔 → completar el form); no hay pantalla de "crear alerta" ni atajo desde Mercados; el onboarding (§2.d) no empuja a hacerlo. Por eso arman portfolio pero no llegan a la alerta. **La fuga NO empieza en el precio — empieza en la activación.** Si nadie pone una alerta y la ve funcionar, el precio es irrelevante.
+- **🔴 Fuga #2-bis — Paywall ANTES del valor (§2.c):** al registrarse, el FREE ve el paywall **automático** (`App.js:244`) antes de usar nada → se le pide pagar sin haber vivido el producto. Sospecha fuerte de fricción temprana.
+- **Fuga #3 — Precio/oferta:** queda como tercer eslabón, hoy casi inobservable porque casi nadie llega activado. 0 pagos reales sobre 36. (Acá entran los precios tentativos a evaluar — útiles, pero no mueven la aguja si no se resuelve la activación primero.)
 - **Caveats honestos:** muestra chica (36 reales) → 1 vs 6 son números absolutos bajos · "creó alerta" puede sub-contar levemente si alguien creó y borró (la fila desaparece) · la heurística de "cuenta de prueba" (emails con test/aurex/demo/fmoscon) es aproximada, pero el cuadre con los 36 de RC la respalda · el volumen sigue siendo la palanca #1.
 
 ---
 
-## 2. ONBOARDING + PAYWALL (auditoría de código) — EN CURSO
-- ✅ **Registro obligatorio confirmado** (`App.js`): splash → onboarding → **muro Login/Signup** (Supabase mail+contraseña) → `'app'` solo con sesión. **Sin modo invitado/skip.** Archivos: `OnboardingScreen.js`, `LoginScreen.js`, `SignupScreen.js`, `navigation/RootNavigator.js`.
-- [A-VERIFICAR pendiente] El onboarding: ¿cuántas pantallas y qué muestra (vende valor antes del muro)? · cuándo se dispara el **paywall** (al abrir / tras usar / por gating de tipo de alerta) · qué muestra (planes, precios, trial) · gating por plan (FREE 5 alertas / PRO 14 / ELITE 15 según memoria — confirmar).
+## 2. ONBOARDING + PAYWALL + GATING (auditoría de código) — ✅ HECHO
+
+### 2.a Matriz FREE / PRO / ELITE (verificada en código)
+Backend `server.js:1760` (`PLAN_LIMITS`) + frontend `src/lib/usePlan.js:22` (espejo).
+| Capacidad | FREE | PRO | ELITE |
+|---|---|---|---|
+| Activos en Portafolio | **5** | ∞ | ∞ |
+| Watchlists (cantidad) | **1** | ∞ | ∞ |
+| Tipos de alerta | 6 básicos (precio) | 15 (+ IA/macro) | 16 (+ geopolítica) |
+| **Cantidad de alertas** | **SIN límite** | sin límite | sin límite |
+| Señales IA / día | 3 | ∞ | ∞ |
+| WhatsApp / día | 0 | 3 | 10 |
+| Telegram alertas | ✗ | ✓ | ✓ |
+| API access | ✗ | ✗ | ✓ |
+
+- **FREE SÍ puede crear alertas de precio** (umbral, precio_objetivo='precio', variacion_brusca='porcentaje', max_min, apertura, rsi_extremo). El gating es por **TIPO**, no por cantidad. Lo bloqueado a FREE: alertas avanzadas IA/macro (alta_conviccion_ia, cambio_zona_pulse, earnings, fed_fomc, geopolitica_gdelt, etc.).
+
+### 2.b Cómo se crea una alerta (SOLO 2 caminos)
+- 🔔 campana de un activo en **Portafolio** (`PortfolioScreen.js:966` → `AlertCreateModal`).
+- 🔔 campana de un activo en **Watchlist** (`WatchlistScreen.js:977` → `AlertCreateModal`).
+- **NO hay pantalla dedicada de crear alerta** (`MisAlertasScreen` solo lista el histórico disparado).
+- **Desde Mercados NO se crea alerta directo**: tap en un activo → se agrega al Portafolio (`PortfolioScreen.js:222`), recién ahí aparece la campana.
+- ⇒ **Para crear 1 alerta hacen falta 2-3 pasos** (agregar activo → tocar campana → completar form), sin guía. **Explica que portfolio (6 reales) > alertas (1 real):** arman portfolio pero no dan el paso de la campana.
+
+### 2.c Paywall — cuándo aparece (`SubscriptionScreen.js`)
+- 🔴 **AUTOMÁTICO apenas te registrás, si sos FREE** (`App.js:244`, solo en `SIGNED_IN`, no en boot con sesión) → **paywall ANTES de usar/ver valor.** Anti-patrón clásico.
+- Al chocar un límite duro (6º activo portfolio / 2ª watchlist / alerta avanzada) → backend 403 `plan_limit_reached` → `PlanLimitModal` → paywall (`AlertCreateModal.js:164`, `server.js:1382/1474/1565`).
+- Tap voluntario en `UpsellBanner` (Mercados/Perfil).
+
+### 2.d Onboarding (`OnboardingScreen.js`)
+- 4 slides de **storytelling** (ícono 3D + título + subtítulo i18n). Último slide: "Empezar gratis" → Signup / "Ya tengo cuenta" → Login.
+- **NO guía a crear la primera alerta ni a usar ninguna feature.** Post-onboarding: Signup → (paywall si FREE) → Mercados, con el Portafolio vacío.
+
+### 2.e Tracking disponible
+Solo se guardan en Supabase las acciones que escriben en BD (alertas, portfolio, watchlist/s, items). **NO se trackea:** ver pantallas (Mercados), búsquedas, taps sin completar, tocar la campana sin terminar el form, abrir el paywall. → "fue a Mercados / clickeó un activo / long-press" **NO es medible** sin tracking de eventos (no existe hoy).
 
 ---
 
