@@ -1,6 +1,6 @@
- 📊 CRO Cobrex — ANÁLISIS DE ESCRITORIO (contexto de mercado)
+📊 CRO Cobrex — ANÁLISIS DE ESCRITORIO (contexto de mercado)
 
-> **Última actualización:** 03-jun-2026 — Escritorio
+> **Última actualización:** 07-jun-2026 — Escritorio (Sección A ampliada: mercados nuevos + idiomas)
 > Análisis autónomo e independiente. Marcado: **[DATO]** (fuente verificada) · **[HIPÓTESIS]** (a confirmar).
 > **Regla madre: nada se cambia. Solo diagnóstico.**
 
@@ -9,6 +9,9 @@
 ## A) PRECIOS DE COMPETIDORES POR MERCADO
 
 **Nuestros precios tentativos:** PRO **US$5.99/mes · US$57.50/año** · ELITE **US$9.99/mes · US$95.90/año** (−20% anual).
+**Última actualización Sección A:** 07-jun-2026 — mercados nuevos (FR/TR/VN/MA) + mercados de idioma ampliados.
+
+---
 
 ### 🇦🇷 Argentina (83% de usuarios — PRIORIDAD 1)
 
@@ -21,18 +24,179 @@
 | IOL InvertirOnline | ✅ | GRATIS | GRATIS | [DATO] iol.com.ar |
 | Binance | ✅ | GRATIS | GRATIS | [DATO] binance.com |
 
-**Veredicto AR:** El usuario argentino NO compara Cobrex con TradingView. Su referencia real es Cocos e IOL, 100% gratuitos. US$5.99/mes compite contra "gratis" en su cabeza. El cepo agrava la fricción operativa. Necesita propuesta de valor muy clara o geo-pricing.
+**Veredicto AR:** El usuario argentino NO compara Cobrex con TradingView. Su referencia real es Cocos e IOL, 100% gratuitos. US$5.99/mes compite contra "gratis" en su cabeza. El cepo agrava la fricción operativa. **Geo-pricing recomendado — URGENTE.**
 
-### 🌍 Otros mercados
+---
 
-| Mercado | Competidor ref | Su precio | PRO Cobrex | Posicionamiento |
+### 🇫🇷 Francia (mercado nuevo — descargas orgánicas sin MKT)
+
+**Contexto:** Salario mínimo (SMIC) ~€1.801/mes neto. Alta penetración de apps de inversión. Broker local gratuito dominante: Boursorama. TradingView muy popular entre traders activos.
+
+| Competidor | Plan free? | Precio mensual | Precio anual | Fuente |
 |---|---|---|---|---|
-| 🇺🇸 US | TradingView Essential | US$12.95/mes | US$5.99/mes | 54% más barato — ventaja clara |
-| 🇧🇪 BE | TradingView / DEGIRO | US$12.95 / gratis | US$5.99/mes | Competitivo — Europa paga bien |
-| 🇧🇷 BR | TradingView | US$12.95/mes | US$5.99/mes | OK — mayor poder adquisitivo que AR |
-| 🇮🇳 IN | TradingView / Zerodha | US$12.95 / gratis | US$5.99/mes | Caro — geo-pricing recomendado |
-| 🇳🇬 NG | TradingView / locales | US$12.95 / gratis | US$5.99/mes | Caro — geo-pricing recomendado |
-| 🇵🇭 PH | TradingView | US$12.95/mes | US$5.99/mes | Justo pero sensible al precio |
+| TradingView Essential | ✅ | US$12.95 (~€11.90) | US$155.40 | [DATO] tradingview.com/pricing |
+| Investing.com Pro | ✅ | US$9.99 (~€9.20) | US$119.99 | [DATO] Play Store listing FR verificado |
+| Delta PRO | ✅ | US$5.29 (~€4.90) | US$49.99 | [DATO] App Store listing |
+| Boursorama | ✅ | GRATIS (broker) | GRATIS | [DATO] boursorama.com |
+| Fortuneo | ✅ | GRATIS (broker) | GRATIS | [DATO] fortuneo.fr |
+
+**Veredicto FR:** US$5.99/mes (~€5.50) — por debajo de TradingView e Investing.com. Francia tiene alto poder adquisitivo. **Mantener precio actual. Sin geo-pricing.**
+
+---
+
+### 🇹🇷 Turquía (mercado nuevo — descargas orgánicas sin MKT)
+
+**Contexto:** Lira turca muy devaluada. Salario mínimo ~20.000 TRY/mes ≈ USD 600. Apple y Google aplican precios localizados en TRY. Alta inflación reduce poder real.
+
+| Competidor | Plan free? | Precio mensual local | Equiv. USD | Fuente |
+|---|---|---|---|---|
+| TradingView Essential | ✅ | ~249,99 TRY/mes | ~USD 7.50 | [HIPÓTESIS] patrón geo-pricing TradingView |
+| Investing.com Pro | ✅ | ~149,99 TRY/mes | ~USD 4.50 | [HIPÓTESIS] App Store TR reportado |
+| Delta PRO | ✅ | ~109,99 TRY/mes | ~USD 3.30 | [HIPÓTESIS] estimación paridad regional |
+| IsBank / Garanti BBVA app | ✅ | GRATIS | GRATIS | [DATO] apps bancarias locales TR |
+
+**Veredicto TR:** Si competidores tienen precio local TRY y Cobrex no, el App Store convierte US$5.99 a TRY al tipo de cambio → queda más caro en términos relativos. **Geo-pricing recomendado.** Pendiente: verificar con Code si hay precio local en TRY configurado.
+
+---
+
+### 🇻🇳 Vietnam (mercado nuevo — descargas orgánicas sin MKT)
+
+**Contexto:** PIB per cápita ~USD 4.200/año. Mercado bursátil local (HoSE) en crecimiento. Apps locales gratuitas dominan (VPS, DNSE, BSC).
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView | ✅ | ~US$12.95 (sin precio local VND) | [HIPÓTESIS] |
+| VPS SmartOne | ✅ | GRATIS | [DATO] vps.com.vn |
+| DNSE Entrade | ✅ | GRATIS | [DATO] dnse.com.vn |
+| BSC iBoard | ✅ | GRATIS | [DATO] bsc.com.vn |
+
+**Veredicto VN:** Acceso a apps locales gratuitas para HoSE/HNX. Si usa Cobrex = probablemente para activos globales (segmento que puede pagar). **Evaluar con analytics antes de decidir geo-pricing.**
+
+---
+
+### 🇲🇦 Marruecos (mercado nuevo — descargas orgánicas sin MKT)
+
+**Contexto:** PIB per cápita ~USD 3.900/año. Habla francesa. Bolsa de Casablanca pequeña. Fintech en etapas tempranas.
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView | ✅ | ~US$12.95 (sin precio local MAD) | [HIPÓTESIS] |
+| Attijariwafa / BMCE apps | ✅ | GRATIS | [DATO] apps bancarias MA |
+| Capital.com | ✅ | GRATIS | [DATO] capital.com |
+
+**Veredicto MA:** Poder adquisitivo bajo relativo a USD. US$5.99/mes es significativo. **Geo-pricing recomendado si el volumen crece — prioridad baja por ahora.**
+
+---
+
+### 🇪🇸 España
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView Essential | ✅ | €12.95/mes | [DATO] tradingview.com (EUR) |
+| Investing.com Pro | ✅ | €9.99/mes | [DATO] App listing ES |
+| Delta PRO | ✅ | €4.99/mes | [DATO] App Store ES — precio local EUR |
+| DeGiro / XTB | ✅ | GRATIS (brokers) | [DATO] degiro.es / xtb.com/es |
+
+**Veredicto ES:** US$5.99 ≈ €5.50/mes. En línea con Delta PRO (€4.99). Muy por debajo de TradingView. **Competitivo. Mantener precio.**
+
+---
+
+### 🇬🇧 Reino Unido
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView Essential | ✅ | £10.99/mes | [DATO] tradingview.com (GBP) — precio local |
+| Investing.com Pro | ✅ | £7.99/mes | [DATO] App listing GB |
+| Delta PRO | ✅ | £4.49/mes | [DATO] App Store GB — precio local GBP |
+| Freetrade Standard | ✅ | £4.99/mes | [DATO] freetrade.io |
+| Trading 212 | ✅ | GRATIS | [DATO] trading212.com |
+
+**Veredicto UK:** US$5.99 ≈ £4.75/mes — en línea con Delta PRO y Freetrade. **Muy competitivo. Mantener. Sin geo-pricing.**
+
+---
+
+### 🇮🇹 Italia
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView Essential | ✅ | €12.95/mes | [DATO] tradingview.com (EUR) |
+| Delta PRO | ✅ | €4.99/mes | [DATO] App Store IT |
+| Fineco Bank / Directa SIM | ✅ | GRATIS (brokers) | [DATO] finecobank.com / directa.it |
+
+**Veredicto IT:** US$5.99 ≈ €5.50/mes. En línea con Delta PRO. **Competitivo. Mantener precio.**
+
+---
+
+### 🇨🇳 China
+
+**Contexto:** Gran Firewall bloquea apps occidentales. Apps locales dominan (Eastmoney, Tonghuashun, Xueqiu — gratuitas). Requiere licencia ICP para operar.
+
+**Veredicto CN:** Mercado inaccesible sin ICP y estrategia local. Descargas desde CN = probablemente diáspora. **No priorizar. Sin geo-pricing aplicable.** [HIPÓTESIS]
+
+---
+
+### 🇮🇳 India (profundizado)
+
+**Contexto:** Salario promedio urbano ~₹35.000-50.000/mes (≈US$420-600). Brokers locales gratuitos y excelentes (Zerodha, Groww, Upstox). Apple cobra en INR.
+
+| Competidor | Plan free? | Precio mensual local | Equiv. USD | Fuente |
+|---|---|---|---|---|
+| TradingView Essential | ✅ | ~₹649/mes | ~US$7.80 | [DATO] tradingview.com — precio local INR |
+| Zerodha Kite | ✅ | GRATIS | — | [DATO] zerodha.com/charges |
+| Groww / Upstox | ✅ | GRATIS | — | [DATO] groww.in / upstox.com |
+| Smallcase | ✅ | ₹125-250/mes | ~US$1.5-3 | [DATO] smallcase.com |
+
+**Veredicto IN:** US$5.99 ≈ ₹500/mes. Competidores locales son gratis. Nicho que paga = activos globales. **Geo-pricing recomendado (~₹350-450/mes). Prioridad media.**
+
+---
+
+### 🇦🇪 / 🇸🇦 UAE / Arabia Saudita
+
+**Contexto:** Alto poder adquisitivo (UAE PIB/cápita ~US$50.000). Sin restricciones de cambio. Mercados financieros activos.
+
+| Competidor | Plan free? | Precio mensual | Fuente |
+|---|---|---|---|
+| TradingView Essential | ✅ | US$12.95 | [DATO] tradingview.com |
+| Delta PRO | ✅ | US$5.29 | [DATO] App Store AE |
+| Mubasher / Wio | ✅ | GRATIS | [DATO] mubasher.info / wio.io |
+
+**Veredicto AE/SA:** US$5.99/mes percibido como accesible. **Precio muy competitivo — no tocar. Sin geo-pricing.**
+
+---
+
+### 🇧🇷 Brasil (profundizado)
+
+**Contexto:** Salario mínimo ~R$1.518/mes (≈US$280). B3 con alta participación personas físicas. Brokers gratuitos dominan. Tracker local: Status Invest muy popular.
+
+| Competidor | Plan free? | Precio mensual local | Equiv. USD | Fuente |
+|---|---|---|---|---|
+| TradingView Essential | ✅ | ~R$64,90/mes | ~US$12 | [DATO] tradingview.com — precio local BRL |
+| Delta PRO | ✅ | ~R$26,90/mes | ~US$5 | [DATO] App Store BR — precio local BRL |
+| Status Invest Pro | ✅ | R$19,90/mes | ~US$3.70 | [DATO] statusinvest.com.br |
+| XP / Rico / Clear | ✅ | GRATIS (brokers) | — | [DATO] sites de cada broker |
+
+**Veredicto BR:** US$5.99 ≈ R$32/mes sin localizar. Delta PRO local R$26,90 y Status Invest Pro R$19,90 → Cobrex más caro que los dos competidores de tracking local. **Geo-pricing recomendado (~R$24-28/mes). Prioridad media-alta.**
+
+---
+
+### 📊 RESUMEN EJECUTIVO GEO-PRICING
+
+| Mercado | Veredicto precio actual | Geo-pricing? | Prioridad |
+|---|---|---|---|
+| 🇦🇷 Argentina | Caro — compite con gratis | ✅ Sí, urgente | 🔴 ALTA |
+| 🇫🇷 Francia | Competitivo | ❌ No necesario | 🟢 Mantener |
+| 🇹🇷 Turquía | Potencialmente caro sin TRY local | ✅ Recomendado | 🟡 Media |
+| 🇻🇳 Vietnam | A analizar (depende del segmento) | ⚠️ Evaluar con analytics | 🟡 Media |
+| 🇲🇦 Marruecos | Caro relativo al poder adquisitivo | ✅ Si crece el volumen | 🟡 Baja-Media |
+| 🇪🇸 España | Competitivo (en línea con Delta) | ❌ No urgente | 🟢 Mantener |
+| 🇬🇧 UK | Muy competitivo | ❌ No tocar | 🟢 Mantener |
+| 🇮🇹 Italia | Competitivo | ❌ No urgente | 🟢 Mantener |
+| 🇨🇳 China | Irrelevante sin estrategia de entrada | — | ⚫ N/A |
+| 🇮🇳 India | Caro vs competidores locales gratis | ✅ Recomendado | 🟡 Media |
+| 🇦🇪/🇸🇦 UAE/SA | Muy competitivo — alto poder adquisitivo | ❌ No tocar | 🟢 Mantener |
+| 🇧🇷 Brasil | Más caro que Delta y Status Invest locales | ✅ Recomendado | 🟡 Media-Alta |
+
+**Implementación técnica:** RevenueCat soporta geo-pricing nativo. Se configura en App Store Connect y Play Console — no requiere cambios de código.
 
 ---
 
@@ -46,7 +210,7 @@
 
 **[DATO] US / Europa:** Sin restricciones de cambio, poder adquisitivo alto. US$5.99/mes es muy competitivo.
 
-**[HIPÓTESIS]** Geo-pricing conviene para AR, IN, NG, PH. En US/EU mantener precio actual.
+**[HIPÓTESIS]** Geo-pricing conviene para AR, IN, TR, BR. En US/UK/EU mantener precio actual.
 
 ---
 
@@ -93,133 +257,57 @@
 
 **[DATO] Código fuente: briefs/iap_audit_18may/code_snapshot_build36/App.js**
 
-    Boot → SplashView (mínimo 2s)
-      → ¿'aurex_onboarding_done' en AsyncStorage?
-          NO → OnboardingScreen (4 slides)
-                  → botón principal → SignupScreen (mail + contraseña + confirmación)
-                  → "Ya tengo cuenta" → LoginScreen
-          SÍ → ¿JWT válido local? → si no → refreshSession() → si falla → LoginScreen
-               si sí → biometría? → Face ID → RootNavigator (app)
-      → Build 36: post-login FREE → SubscriptionScreen → "Continuar FREE" o "Saltar ✕" → Mercados
+Boot → SplashView (mínimo 2s)
+→ ¿'aurex_onboarding_done' en AsyncStorage?
+NO → OnboardingScreen (4 slides)
+→ botón principal → SignupScreen (mail + contraseña + confirmación)
+→ "Ya tengo cuenta" → LoginScreen
+SÍ → ¿JWT válido local? → si no → refreshSession() → si falla → LoginScreen
+si sí → biometría? → Face ID → RootNavigator (app)
+→ Build 36: post-login FREE → SubscriptionScreen → "Continuar FREE" o "Saltar ✕" → Mercados
 
 **El login se pide DESPUÉS del onboarding de 4 slides ✅ — timing correcto.**
 
-**Fricción acumulada para usuario nuevo:**
-1. Ver 4 slides
-2. Llenar formulario manual (mail + contraseña + confirmación) — SIN SSO confirmado
-3. Ver pantalla de planes
-4. Recién entonces: Mercados
-
 ### E.2) Por qué el login es necesario (no eliminar)
 
-**[DATO] Justificaciones técnicas en el código:**
-1. **RevenueCat identity:** sin login RC usa $RCAnonymousID — se pierde al reinstalar. Con login: Purchases.logIn(user.id) → identity estable.
-2. **Persistencia de alertas:** guardadas en Supabase por user.id. Sin cuenta = sin recuperación cross-device.
-3. **Push notifications:** token FCM/APNs se registra post-login (registerForPushNotifications). Sin login = sin push.
-4. **Retención:** el email es el único canal propio para recuperar usuarios churned.
+1. RevenueCat identity estable con login (Purchases.logIn)
+2. Persistencia de alertas en Supabase por user.id
+3. Push notifications: token FCM/APNs se registra post-login
+4. Email = único canal propio para recuperar usuarios churned
 
 **Conclusión: el login obligatorio es estructuralmente necesario. No se puede eliminar.**
 
-### E.3) Datos reales de Supabase — consultados por Escritorio el 03-jun-2026
+### E.3) Datos reales de Supabase
 
-**[DATO] Queries ejecutadas directamente en SQL Editor de Supabase:**
-
-| Métrica | Valor | Fuente |
-|---|---|---|
-| auth.users total (completaron el formulario de mail) | **92** | SELECT COUNT(*) FROM auth.users |
-| Tabla usuarios (tienen fila en backend) | **48** | SELECT COUNT(*) FROM usuarios |
-| En auth SIN fila en tabla usuarios | **44** | LEFT JOIN con WHERE u.id IS NULL |
-| Plan FREE | 47 | GROUP BY plan |
-| Plan ELITE | 1 | GROUP BY plan |
-| Plan PRO | 0 | GROUP BY plan |
-| Primer registro | 28-mar-2026 | MIN(created_at) auth.users |
-| Último registro | 03-jun-2026 | MAX(created_at) auth.users |
-
-**Crecimiento mensual (auth.users):**
-| Mes | Registros nuevos |
+| Métrica | Valor |
 |---|---|
-| Mar-2026 | 14 |
-| Abr-2026 | 29 |
-| May-2026 | 48 |
-| Jun-2026 | 1 (mes en curso) |
+| auth.users total | **92** |
+| Tabla usuarios post-heal (04-jun-2026) | **80** |
+| Plan FREE | 79 |
+| Plan ELITE | 1 |
+| Plan PRO | 0 |
 
-### E.4) Qué son los 44 "usuarios fantasma" — diagnóstico crítico
+### E.4) Bug "usuarios fantasma" — RESUELTO (04-jun-2026)
 
-**[DATO] Estos 44 usuarios:**
-- **Sí completaron el formulario de mail** (existen en auth.users = pasaron el SignupScreen)
-- **NO tienen fila en tabla usuarios** = el POST /api/usuario al backend falló o no se ejecutó
-- Esto es la "Capa 1 self-heal" del SignupScreen.js: si el POST falla, se loguea un warning pero el usuario entra igual
-- Pueden intentar loguearse pero el backend responde 404 en /api/usuario/:id → la app no sabe qué plan mostrarles
-
-**Esto NO es drop por abandono del formulario** — esos 44 completaron el registro. Es un **bug técnico de sincronización** entre Supabase auth y el backend Railway.
-
-**Impacto real:** 44 de 92 usuarios registrados (47.8%) tienen su backend roto. Si intentan usar la app, probablemente ven errores o la app los trata como FREE sin que quede registrado. Si alguno intentó pagar, RevenueCat puede no haberlos identificado correctamente (IAP-1).
+Fix ejecutado: trigger permanente on_auth_user_ready + heal batch de los 32 confirmados.
+Post-fix: auth.users=92 / tabla usuarios=80 / fantasmas confirmados=0. Cerrado.
 
 ### E.5) Lo que NO podemos medir desde Supabase
 
-**[DATO] Drop pre-registro (abandono antes de completar el mail):**
-Los usuarios que llegaron al formulario y NO lo completaron **nunca se crean en auth.users** → son invisibles para Supabase. Solo se pueden medir con analytics de onboarding (Firebase/eventos de pantalla).
+Drop pre-registro invisible (no hay analytics). Solo medible con Firebase Analytics.
 
-**¿Cuántos son?** No lo sabemos. Con los benchmarks de la industria (40–60% de drop en signup manual sin SSO), si 92 completaron el mail, potencialmente había entre 92 y 220 usuarios más que lo intentaron y abandonaron.
+### E.6) HALLAZGO CRÍTICO: no hay analytics de eventos en la app
 
-**[DATO confirmado por Code]** No hay SSO (Sign in with Apple / Google Sign-In) — solo mail+contraseña manual. Esto maximiza el drop en el paso de registro.
+**Corrección de Code (aceptada):** @react-native-firebase/app y messaging SÍ existen. Falta el módulo /analytics + ~8 eventos logEvent.
 
-### E.6) HALLAZGO CRÍTICO: no hay analytics de ningún tipo en la app
+**[DATO] Decidido por Fernando (04-jun-2026):** Firebase Analytics entra en Build 39 iOS + próximo build Android.
+Eventos mínimos: onboarding_slide_viewed, onboarding_completed, signup_started, signup_completed, login_completed, primer_activo_agregado, primera_alerta_creada, paywall_visto.
 
-**[DATO] Verificado leyendo imports de App.js build36 + code_snapshot cobrex:**
+### E.7) Resumen ejecutivo
 
-Imports presentes: react-native-purchases (RevenueCat), supabase, notifee, react-native-biometrics, react-navigation, bootsplash, AsyncStorage.
-
-**No existe ninguna librería de analytics de eventos:** ni Firebase Analytics, ni Mixpanel, ni Amplitude, ni Segment, ni PostHog, ni ninguna otra. Zero líneas de logEvent, trackEvent o track() en el código analizado.
-
-**Consecuencia directa:** la app opera completamente a ciegas sobre el comportamiento del usuario. No sabe:
-- En qué slide del onboarding abandona el usuario
-- Cuántos llegan al formulario de registro vs cuántos lo abren
-- Cuántos tocan "Crear cuenta" vs "Ya tengo cuenta"
-- Cuánto tiempo pasa el usuario en cada pantalla
-- Qué features usa más dentro de la app
-- Por qué los usuarios no convierten a pago
-
-**Lo único que se puede medir hoy:**
-- Installs (App Store Connect / Play Console)
-- Usuarios que completaron el mail (auth.users = 92)
-- Usuarios que tienen backend activo (tabla usuarios = 48)
-- Usuarios que pagaron (RevenueCat = 1 ELITE)
-
-**Esto hace imposible hacer CRO real.** Sin saber dónde se rompe el funnel, cualquier cambio es a ciegas.
-
-**Posición de Escritorio — qué se necesita agregar:**
-Antes de tocar precio, paywall o SSO, hay que instrumentar eventos mínimos. Firebase Analytics es gratuito, se integra en React Native en menos de 1 día, y da visibilidad inmediata del funnel. Los eventos mínimos son:
-
-    onboarding_slide_viewed (slide: 1|2|3|4)
-    onboarding_completed (target: signup|login)
-    signup_started
-    signup_completed
-    login_completed
-    paywall_viewed (from: login|feature)
-    paywall_dismissed
-    paywall_converted
-
-Con 2 semanas de datos tenés el funnel real y podés tomar decisiones de CRO con evidencia.
-
-Esto no es CRO activo — es infraestructura de medición. Sin esto, el CRO es opinión, no dato.
-
-### E.7) Diagnóstico y posición de Escritorio — resumen ejecutivo
-
-**Hay TRES problemas en orden de prioridad:**
-
-**Prioridad 1 — Bug técnico (hacer YA, antes de CRO):**
-44 usuarios con auth pero sin fila en backend. Heal batch: insertar fila plan=FREE para cada auth.users sin match en tabla usuarios. No tiene sentido optimizar adquisición si casi la mitad de los usuarios que ya se registraron están rotos.
-
-**Prioridad 2 — Infraestructura de medición (hacer antes de cualquier cambio de CRO):**
-Agregar Firebase Analytics con los 8 eventos mínimos del funnel. Sin esto no se puede medir el impacto de ningún cambio de CRO. Tiempo estimado: 1 día de Code.
-
-**Prioridad 3 — CRO activo (para cuando Fernando dé OK, con datos de Prioridad 2):**
-- Sign in with Apple (iOS) / Google Sign-In (Android) → mayor reducción de drop en registro
-- Revisar timing del paywall con datos reales de funnel
-- Geo-pricing para AR, IN, NG, PH
-
-Cualquier cambio se decide con OK de Fernando.
+- **Prioridad 1 — Bug:** ✅ RESUELTO (04-jun-2026)
+- **Prioridad 2 — Analytics:** ✅ DECIDIDO (Build 39)
+- **Prioridad 3 — CRO activo:** SSO Apple/Google, timing paywall, geo-pricing AR/BR/IN/TR — para cuando haya datos de analytics
 
 ---
 
@@ -228,9 +316,9 @@ Cualquier cambio se decide con OK de Fernando.
 - **[DATO]** RevenueCat soporta geo-pricing nativo sin cambios de código.
 - **[DATO]** Build 36: "Continuar FREE" y "Saltar ✕" en paywall post-login → respeta Apple 3.1.2. ✅
 - **[DATO]** In-app review (Build 39 plan v3) = camino más directo para resolver el 1 rating.
-- **[HIPÓTESIS]** Mercado AR es el caso más urgente para geo-pricing: cepo + salario relativo + competencia gratuita local.
-- **[DATO]** 1 solo usuario ELITE en toda la base (92 registrados). 0 PRO. Tasa de conversión a pago: 1/92 = 1.08%.
+- **[HIPÓTESIS]** Mercado AR es el caso más urgente para geo-pricing.
+- **[DATO]** 1 solo usuario ELITE en toda la base (92 registrados). 0 PRO. Tasa de conversión: 1/92 = 1.08%.
 
 ---
 
-> **Para Code:** Leé secciones E.4, E.6 y E.7. Tres prioridades antes de CRO activo: (1) heal batch de 44 usuarios, (2) agregar Firebase Analytics con 8 eventos mínimos, (3) recién después tocar funnel. Confirmá también: ¿cuántos de los 44 tienen registros en tablas de alertas, activos o watchlist?
+> **Para Code:** Sección A ampliada (07-jun-2026). Mercados nuevos FR/TR/VN/MA + ES/UK/IT/CN/IN/AE-SA/BR detallados. Resumen geo-pricing en tabla final. Cruzar con precios reales de tiendas para CONSOLIDADO_CRO_v2.
