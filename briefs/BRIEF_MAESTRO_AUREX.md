@@ -35,6 +35,12 @@
 - Para profundidad técnica de cada frente → ver §10 "Archivos de referencia" (briefs específicos detallados).
 - Para historia de cambios al brief → `git log briefs/BRIEF_MAESTRO_AUREX.md`.
 
+> ## 🚨 REGLA MADRE — Escritorio NUNCA toca/lee/extrae del código (no tiene acceso al código vivo)
+> El código real vive en la máquina de Code (`~/AurexApp`, repo privado). **Escritorio NO lo ve** — solo ve "fotos" (snapshots) que pueden estar viejas. Por eso:
+> - **Escritorio NUNCA extrae strings del código, ni traduce leyendo el código, ni audita el código por su cuenta** → trabajaría sobre algo desactualizado (pasó con las traducciones de Signup, 08-jun: tradujo un campo "Nombre" que no existe).
+> - **El flujo correcto:** para CUALQUIER cosa basada en el código (traducciones, textos de UI, auditorías de strings), **Code extrae el contenido EXACTO y verbatim del código vivo y se lo pasa a Escritorio. Escritorio SOLO traduce/opina sobre esa lista.** Nunca al revés.
+> - Cuando Code le pasa la estructura/lista exacta → sale bien (ej. 1.h.6 AI Analysis ✅). Cuando Escritorio "lee el código" → sale desactualizado (ej. 1.h.9 ❌). Aprendido 08-jun.
+
 ---
 
 ## 0.a 🚀 CÓMO INICIA UNA SESIÓN NUEVA DE CODE (leer SIEMPRE primero)
