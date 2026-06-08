@@ -1491,7 +1491,7 @@ El precio se deriva de 4 anclas fijas, en orden:
 
 - **PRO $4.99:** el precio más bajo CREÍBLE — claramente debajo de Delta ($5.29), cruza sub-$5, sin entrar en zona "app de juguete". (Por eso $4.99 y NO el $5.99 inventado, ni $3.99 que arriesga credibilidad.)
 - **ELITE $9.99:** 2× PRO; muy por debajo de los premium (TradingView $12.95+, Investing $9.99). Es además el precio que HOY tiene PRO → reposiciona toda la grilla.
-- **Anual −20%** (regla de Fernando). *(Opción más agresiva si se quiere fijar compromiso anual temprano: −30%.)*
+- **Anual −20%** (regla de Fernando, confirmado 07-jun). **NO más agresivo:** el recorte mensual ya es fuerte (PRO −50%), un descuento anual mayor (ej. el 33% que propuso Escritorio) sobre-descontaría y regala valor sin necesidad. 20% sobre un mensual ya bajo es de por sí muy atractivo.
 - ⚠️ **Caveat madre:** la fuga #1 es **activación** (1 de ~65 creó alerta), no el precio. Este precio quita la fricción del precio para el test, pero **si tras el Build 39 + analytics la conversión no mejora, el problema es el funnel, no el precio — no seguir bajando.**
 
 **Pendiente menor:** `aurex.live` auto-renew OFF (expira abr-2027) — decidir si se deja morir (ya migrado a cobrex.io) o se mantiene.
