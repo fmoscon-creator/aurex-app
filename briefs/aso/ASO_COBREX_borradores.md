@@ -65,4 +65,19 @@ Escritorio v2 07-jun-2026.
 
 **Decisiones de producto reflejadas:** WhatsApp + API = "Próximamente" (API key → Build 40). Precios NUNCA en la descripción.
 
-**⏳ PENDIENTE Code:** armar EN/PT/FR/IT/ZH/HI/AR (subtítulo + keywords) con estas reglas, cruzando con los borradores de Escritorio.
+## CODE — 8 IDIOMAS (subtítulo + keywords) · 08-jun
+
+Regla aplicada: subtítulo = `acciones` antes que `cripto` + Alertas/IA (visible, ≤30 chars); keywords = `cobrex` + brand (`ia`/`ai`/`pulse`) + funciones, SIN repetir lo del subtítulo, ~100 chars (comas cuentan).
+
+| Idioma | Subtítulo (≤30) | Keywords (~100) |
+|---|---|---|
+| **ES** ✅ | `Acciones, Cripto y Alertas IA` (29) | `cobrex,ia,ai,divisas,bolsa,mercados,inversion,trading,dolar,finanzas,ETF,oro,pulse,futuros,señales` (98) |
+| **EN** | `Stocks, Crypto & AI Alerts` (26) | `cobrex,ai,pulse,forex,markets,investing,trading,dollar,finance,ETF,gold,futures,signals,portfolio` (97) |
+| **PT** | `Ações, Cripto e Alertas IA` (26) | `cobrex,ia,ai,pulse,bolsa,investimento,trading,dolar,financas,ETF,ouro,futuros,sinais,mercados` (93) |
+| **FR** | `Actions, Crypto & Alertes IA` (28) | `cobrex,ia,ai,pulse,bourse,investissement,trading,dollar,finance,ETF,or,signaux,devises,marches` (94) |
+| **IT** | `Azioni, Cripto e Avvisi IA` (26) | `cobrex,ia,ai,pulse,borsa,investimento,trading,dollaro,finanza,ETF,oro,futures,segnali,mercati` (93) |
+| **ZH** ⚠️ | `股票、加密货币和AI提醒` (Acciones,Cripto,Alertas IA) | tomar el string nativo de Escritorio + anteponer `cobrex,ai,pulse`; **Code NO reescribe el script — Escritorio confirma conteo en ASC** |
+| **HI** ⚠️ | `शेयर, क्रिप्टो, AI अलर्ट` | idem ZH — `cobrex,ai,pulse` + nativo de Escritorio, verificar ASC |
+| **AR** ⚠️ | `أسهم، عملات رقمية، تنبيهات AI` | idem — `cobrex,ai,pulse` + nativo de Escritorio, verificar ASC |
+
+**Notas:** FR/IT/PT tienen palabras largas → entran menos términos (93-94/100, esperado). EN no lleva `ia` (es español; "ai" cubre la marca). ZH es compacto → Escritorio puede sumar más términos al verificar. **Acciones/stocks va SIEMPRE antes que cripto en el subtítulo (regla de marca).**
