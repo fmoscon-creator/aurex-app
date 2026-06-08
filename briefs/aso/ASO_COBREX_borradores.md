@@ -49,3 +49,20 @@ Titulo: Cobrex: Mercados y Alertas (26/30). Desc corta: App de inversion con IA.
 EN/ES/PT/FR/IT/HI/AR: LISTOS 96-98/100. ZH: LISTO 78/100 Code verificar ASC. Subtitulo/Desc: pendiente OK Code. IAP/Android desc completa/Web: pendiente.
 
 Escritorio v2 07-jun-2026.
+
+---
+
+## CODE — ES BLOQUEADO (08-jun) + REGLAS PARA LOS 8 IDIOMAS
+**Subtítulo ES (30 chars, visible + indexado):** `Acciones, Cripto y Alertas IA` (29/30)
+**Keywords ES (100 chars):** `cobrex,ia,ai,divisas,bolsa,mercados,inversion,trading,dolar,finanzas,ETF,oro,pulse,futuros,señales` (98/100)
+
+**📏 REGLAS FIJAS (aplican a los 8 idiomas):**
+1. **Subtítulo:** `acciones`/stocks **SIEMPRE antes** que `cripto` (posicionamiento de marca: no parecer "solo cripto"). Lo importante primero (el subtítulo se VE y se INDEXA → el orden sí importa acá).
+2. **Keywords:** `cobrex` + `ia` + `ai` + `pulse` **siempre presentes**. (En keywords el orden NO importa — Apple indexa todo igual.)
+3. Usar **~100 chars** (las **comas cuentan**, **sin espacios** — los espacios también contarían).
+4. **NO repetir** en keywords lo que ya está en el **subtítulo o el nombre** (se indexan aparte → repetir desperdicia espacio).
+5. **Cada idioma se optimiza a SUS 100 chars por separado** (palabras de distinto largo: FR/IT/PT/DE largas → entran menos términos; ZH compacto → entran más).
+
+**Decisiones de producto reflejadas:** WhatsApp + API = "Próximamente" (API key → Build 40). Precios NUNCA en la descripción.
+
+**⏳ PENDIENTE Code:** armar EN/PT/FR/IT/ZH/HI/AR (subtítulo + keywords) con estas reglas, cruzando con los borradores de Escritorio.
