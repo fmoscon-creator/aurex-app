@@ -65,13 +65,26 @@ Solo se guardan en Supabase las acciones que escriben en BD (alertas, portfolio,
 
 ---
 
-## 3. PRECIOS REALES EN TIENDAS + GEO-PRICING — PENDIENTE
-[A-VERIFICAR] Extraer los **precios actuales reales** publicados (PRO/ELITE, mensual/anual, por país) vía RevenueCat offerings / ASC / Google Play androidpublisher. Confirmar:
-- ¿Cuánto cuesta hoy cada plan? (de memoria PRO mensual = US$9.99 → la propuesta de Fernando baja PRO a 5.99 y mueve ELITE a 9.99).
-- ¿Hay hoy precio único global o ya hay diferenciación por país?
-- ¿Qué permite cada tienda de geo-pricing (tiers por país)?
+## 3. PRECIOS REALES EN TIENDAS + GEO-PRICING — ✅ ANDROID HECHO (07-jun, endpoint `/api/cro-prices`)
+[DATO] Precios ACTUALES publicados (Google Play androidpublisher, `com.aurexapp`). iOS pendiente (el pull ASC devolvió vacío — ajustar include de subscriptionGroups; los price points de iOS suelen espejar Android).
+
+**Precios actuales (Android), mercados clave:**
+| Plan | 🇺🇸 US | 🇦🇷 AR | 🇮🇳 India | 🇧🇷 Brasil | 🇪🇸/UE | 🇹🇷 TR | 🇲🇦 MA | 🇻🇳 VN |
+|---|---|---|---|---|---|---|---|---|
+| PRO mensual | **$9.99** | **$9.99 USD** | ₹1100 (~$13) | R$48.99 (~$8.7) | €9.99 | ₺539 | MAD109 (~$11) | ₫263k (~$10.4) |
+| PRO anual | $89.99 | $89.99 USD | ₹10100 | R$444.99 | €89.99 | ₺4879 | MAD999 | ₫2.35M |
+| ELITE mensual | **$19.99** | **$19.99 USD** | ₹2250 (~$27) | R$97.99 | €20.99 | ₺1079 | MAD219 | ₫526k |
+| ELITE anual | $179.99 | $179.99 USD | ₹20200 | R$889.99 | €184.99 | ₺9769 | MAD1989 | ₫4.75M |
+
+**Hallazgos clave:**
+1. **La propuesta de Fernando es un RECORTE GRANDE vs lo actual:** PRO $9.99→**5.99** (−40%) · ELITE $19.99→**9.99** (−50% mensual; anual $179.99→95.90, −47%). No es un ajuste fino, es bajar a la mitad ELITE y −40% PRO.
+2. **🇦🇷 AR NO tiene geo-pricing hoy: paga el precio FULL en USD** ($9.99/$19.99), igual que US. Con cepo + menor poder adquisitivo + competidores **gratis** (Cocos/IOL) → es justo la fricción que marcó Escritorio. **AR es el caso #1 para geo-pricing.**
+3. **🇮🇳 India está SOBRE-precio:** ₹1100 ≈ **$13.2 > US $9.99**, siendo un mercado muy sensible al precio. Mal calibrado. (Idem revisar otros emergentes.)
+4. **El descuento anual actual es −25%** (PRO 89.99 vs 119.88; ELITE 179.99 vs 239.88); la propuesta tentativa es −20%.
+5. **Geo-pricing: la CAPACIDAD ya existe** (hay precios por país en moneda local) — el problema NO es técnico, es que **no está optimizado por poder adquisitivo** (hoy es ~precio plano equivalente-USD, con AR e India mal calibrados).
 
 **Propuesta tentativa de Fernando a comparar:** PRO $5.99/mes · $57.50/año · ELITE $9.99/mes · $95.90/año (−20% anual).
+**Pendiente Code:** arreglar el pull de precios iOS (ASC) para confirmar que espejan Android.
 
 ---
 
