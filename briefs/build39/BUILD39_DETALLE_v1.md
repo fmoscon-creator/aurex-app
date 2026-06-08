@@ -66,9 +66,9 @@
 ### A — Popup de reseña in-app · 🔴
 - **Qué:** pedir reseña tras **3 días de uso activo**, sólo si no dejó reseña; máx 3 apariciones; si tocó "Dejar reseña" no mostrar más.
 - **Dónde:** lógica nueva + dependencia nativa.
-- **Cómo:** `SKStoreReviewRequest` nativo vía librería **`react-native-in-app-review`** — ⚠️ **NO está instalada** (verificado en `package.json`). Requiere agregarla + Podfile + `pod install`.
-- **⚠️ PRIMER PASO antes de codear:** verificar **compatibilidad de `react-native-in-app-review` con RN 0.84.1** (la que usa el proyecto).
-- **Riesgo:** 🔴 dependencia nativa nueva. **Valida:** Code + Fernando (TestFlight).
+- **Cómo — ✅ VERIFICADO por Code (07-jun):** la librería `react-native-in-app-review` (v4.4.2) **NO soporta New Architecture** (sin `codegenConfig`, se buildea contra RN 0.63.4) y el proyecto usa **RN 0.84.1 (New Arch + bridgeless por defecto)** → **riesgo real confirmado** de romper el build/runtime. **DESCARTADA.**
+- **➡️ Camino recomendado (más robusto):** llamar **`SKStoreReviewRequest.requestReview()` de Apple (StoreKit)** vía un **módulo nativo propio mínimo** (unas líneas Swift/ObjC) → CERO dependencia de terceros, compatible con cualquier RN/New Arch. (Android In-App Review API, cuando toque, igual.)
+- **Riesgo:** 🟡 (con módulo nativo propio; era 🔴 con la lib). **Valida:** Code + Fernando (TestFlight).
 
 ### D — Firebase Analytics (eventos del funnel) · 🟡 · 🆕 (del CRO)
 - **Qué:** hoy NO hay analytics → el abandono dentro del onboarding/signup es **invisible**. Sin esto no se puede medir si el cambio de precio (u otra mejora) convierte.
