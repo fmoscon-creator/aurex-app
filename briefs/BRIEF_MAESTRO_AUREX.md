@@ -1494,6 +1494,12 @@ El precio se deriva de 4 anclas fijas, en orden:
 - **Anual −20%** (regla de Fernando, confirmado 07-jun). **NO más agresivo:** el recorte mensual ya es fuerte (PRO −50%), un descuento anual mayor (ej. el 33% que propuso Escritorio) sobre-descontaría y regala valor sin necesidad. 20% sobre un mensual ya bajo es de por sí muy atractivo.
 - ⚠️ **Caveat madre:** la fuga #1 es **activación** (1 de ~65 creó alerta), no el precio. Este precio quita la fricción del precio para el test, pero **si tras el Build 39 + analytics la conversión no mejora, el problema es el funnel, no el precio — no seguir bajando.**
 
+### 14.5 Cómo se APLICA el cambio de precio (operativa — son 2 cosas distintas)
+1. **Build 39 ítem E (CÓDIGO, va en el build):** dinamizar los precios hardcodeados (Perfil/FAQ/i18n) → la app queda lista para mostrar cualquier precio correcto. **Prerequisito.**
+2. **Cambio de precio (CONFIG de tiendas — NO build, NO código):** editar PRO **$4.99** / ELITE **$9.99** en **App Store Connect** (suscripciones) + **Play Console** (base plans). **RevenueCat NO se toca** (lee el precio de las tiendas). El anual −20% se setea como producto/precio anual en cada tienda.
+3. **ORDEN OBLIGATORIO:** primero el **Build 39 (paso 1) EN PRODUCCIÓN**, después el cambio de precio (paso 2). Al revés = incongruencia (paywall $4.99 vs Perfil $9.99 hardcodeado).
+4. **Quién ejecuta el paso 2:** Escritorio en las consolas (tiene ASC/Play) o Code (Play vía androidpublisher API), **con OK de Fernando**. Fernando no ejecuta. → confirma la duda de Escritorio: **el cambio de precio NO es parte del ítem E (que es solo código); es una tarea de config posterior al Build 39.**
+
 **Pendiente menor:** `aurex.live` auto-renew OFF (expira abr-2027) — decidir si se deja morir (ya migrado a cobrex.io) o se mantiene.
 
 ---
