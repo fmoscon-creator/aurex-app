@@ -11,6 +11,14 @@
 - Regla: no repetir en keywords lo que ya esta en nombre o subtitulo (Apple no lo penaliza pero desperdicia espacio).
 - Web cobrex.io: refuerzo SEO de marca, distinto de ASO de tienda.
 
+### 🔑 DIRECTIVA DE FERNANDO (07-jun) — usar SIEMPRE los 100 chars al máximo
+Fernando: *"no puede ser que se usen 20/30/40/50 si podemos usar 100 chars"*. **Regla fija:** llenar el campo Keywords **lo más cerca de 100 chars posible, en CADA idioma**. Y ser encontrable por las **variantes de marca: Cobrex · Cobrex AI · Cobrex Pulse · Cobrex IA** + todos los usos/funciones.
+**Técnica de Code para lograrlo sin desperdiciar (clave):**
+- `cobrex` YA está en el Nombre → **NO ponerlo en keywords** (Apple lo indexa del nombre). PERO Apple **COMBINA** los keywords con el nombre → para ser encontrado por **"cobrex ai" / "cobrex pulse" / "cobrex ia"**, agregar **`ai`, `pulse`, `ia`** como keywords sueltos (Apple forma cobrex+ai, cobrex+pulse, etc.). No hace falta escribir la frase entera = ahorra chars.
+- **Sin espacio después de las comas** (ahorra chars). **Singular** (Apple maneja plurales). No repetir palabra que ya esté en nombre/subtítulo.
+- Objetivo por idioma: **~98-100 chars** con variantes de marca (`ai,pulse,ia`) + funciones (alertas, portfolio, watchlist, señales, cripto, acciones, cedears, ETF, mercados, trading, IA, finanzas, inversión…).
+- **➡️ Mañana (Code):** optimizar cada string de keywords para acercarlo a 100 chars con esta técnica + cruzar con los borradores de Escritorio (los suyos están en ~87-91 → hay margen para sumar `ai,pulse,ia` + más términos).
+
 ---
 
 ## App Store iOS — superficies
