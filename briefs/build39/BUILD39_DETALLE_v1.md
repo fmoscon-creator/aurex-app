@@ -1,0 +1,100 @@
+# 🍎 BUILD 39 iOS (Cobrex) — DETALLE COMPLETO v1 (para revisión de Escritorio)
+*07-jun-2026 · verificado en código real (archivo:línea) · sigue v1.1, `CFBundleVersion` 38→39*
+
+> Esta es la **v1 del contenido completo** del Build 39, item por item: **qué es · dónde se hace (archivo:línea) · cómo · ¿requiere build? · riesgo · quién valida.** Complementa el plan de proceso `BUILD39_PLAN_COBREX.md` (que cubre cómo se compila/envía). **NADA se compila/envía sin OK de Fernando.**
+
+## Proceso (recordatorio, no se cambia)
+- Archive por **CLI `xcodebuild`** (NO Xcode GUI). Lo compila **Code** con **OK de Fernando + Mac libre**. Clean previo: `rm -rf ~/Library/Developer/Xcode/DerivedData/AurexApp-*` + `cd ios && pod install`.
+- Code valida por **revisión de código** (no abre simulador en la Mac de Fernando) + preview PNG. El visual final se ve en **TestFlight**.
+- **Fernando** sube el IPA con **Transporter** + aprieta "enviar a revisión". Signing `com.fernandomoscon.aurex` / `TX7C2F79U9`. IDs no se tocan.
+
+---
+
+## A) ITEMS SIN BUILD (metadata — se pueden cargar en paralelo, los hace Escritorio)
+| # | Qué | Dónde | Cómo | Valida |
+|---|---|---|---|---|
+| **B** | **Keywords ASO** (arregla que no aparezca al buscar "cobrex") | App Store Connect → la versión que se envía con el Build 39 → campo Keywords (por idioma) | Escritorio carga el texto ES (89 chars, con margen): `cobrex,cripto,acciones,bolsa,trading,alertas,mercados,inversiones,cedears,IA,ETF,finanzas` + `cobrex` en los otros 7 idiomas. Re-indexa 24-48h tras aprobar. ⚠️ Las keywords viajan CON el envío de la versión (no es 100% aislado del build, pero NO es código). | Escritorio carga · Fernando verifica búsqueda post-aprobación |
+| **C** | **Ficha macOS** (borrador vacío) | ASC app macOS (id `6761672161`) | Escritorio carga **descripción + textos** ahora (no requiere build → no bloquea iOS). Las **capturas** (1280×800/1440×900) se difieren hasta tener un build macOS. | Escritorio (textos) |
+
+---
+
+## B) ITEMS CON BUILD (código — los hace Code, valida en TestFlight)
+
+### 1.h.2 — Onboarding animado · 🔴
+- **Qué:** la constelación del onboarding titila + logo/"COBREX" más grandes (cosmético).
+- **Dónde:** `OnboardingScreen.js`.
+- **Cómo:** **reusar el patrón `Animated.loop`/`Animated.sequence` de `SplashView.js:31-38`** (ya funciona — NO inventar desde cero). Animación RN (`Animated`).
+- **Riesgo:** 🔴 animación. **Valida:** Code (revisión) + Fernando (TestFlight).
+
+### 1.h.3 — Fix paywall fresh-install · 🔴
+- **Qué:** en instalación fresca el paywall se abre como si fuera PRO/ELITE. **Bug real pero invisible en producción** (no hay pagos reales salvo la prueba propia).
+- **Dónde:** `SubscriptionScreen.js` (lógica de plan).
+- **Cómo:** la fuente del plan debe ser **RevenueCat `getCustomerInfo()`**, NO el `AsyncStorage 'aurex_plan'`.
+- **Validación OBLIGATORIA (doble):** (1) install fresca sin AsyncStorage → el paywall **NO** debe abrir como PRO/ELITE; (2) cuenta PRO/ELITE activa → **SÍ** reconoce el plan. Ambos en TestFlight.
+- **Riesgo:** 🔴 lógica de compra. **Valida:** Code + Fernando (install fresca).
+
+### 1.h.4 — Loading nativo (limpiar storyboard) · 🔴
+- **Qué:** quitar el `label "Loading…"` + el spinner/sol (`activityIndicatorView`) del splash nativo (restos del diseño viejo).
+- **Dónde:** `ios/AurexApp/BootSplash.storyboard` (XML).
+- **Cómo:** **Code edita el XML directamente** (es texto plano — no requiere abrir Xcode ni trabar la Mac).
+- **Riesgo:** 🔴 nativo. **Valida:** Code + Fernando (arranque real en TestFlight).
+
+### 1.h.8 — Links Términos/Privacidad sin scroll · 🟡
+- **Qué:** en la pantalla de planes los links Términos/Privacidad requieren scrollear ("nadie adivina el scroll").
+- **Dónde:** `SubscriptionScreen.js:264-273` (hoy los links `Linking.openURL(TERMS_URL/PRIVACY_URL)` están abajo).
+- **Cómo:** poner una línea compacta "Términos · Privacidad" **arriba, visible sin scroll** (reubicar/duplicar bajo el subtítulo).
+- **Riesgo:** 🟡 UI. **Valida:** Code (revisión) + Fernando.
+
+### 1.h.9 — Mensajes Login/Signup a i18n + quitar debug · 🟡
+- **Qué:** los `setStatus(...)` ("Email inválido", "contraseña ≥6", "ya tiene cuenta", "Revisá tu email"…) están en **ES hardcodeado** → pasar a i18n (8 idiomas). **+ quitar debug leftovers** ("Fetch OK — seteando sesión…", "SDK falló…") que NO deben verse.
+- **Dónde:** `LoginScreen.js` + `SignupScreen.js` + `i18n.js`.
+- **Cómo:** reemplazar strings por claves i18n + traducir 8 idiomas + borrar logs visibles.
+- **Riesgo:** 🟡 i18n. **Valida:** Code + Escritorio (traducciones).
+
+### 1.h.7 — FAQ Perfil a i18n · 🟡
+- **Qué:** el FAQ de Perfil (6 preguntas + 6 respuestas) está solo en ES+EN → faltan pt/zh/hi/fr/it/ar (~72 traducciones).
+- **Dónde:** `PerfilScreen.js` (~957-962) + `i18n.js`.
+- **Cómo:** pasar a i18n + traducir. Volumen alto + cuidar calidad de traducción.
+- **Riesgo:** 🟡 i18n volumen. **Valida:** Code + Escritorio (traducciones).
+
+### 1.h.6 — "Full AI Analysis" a i18n · 🔴
+- **Qué:** las frases que justifican la señal ("Precio subió X…", "RSI14 en X…", "Volumen…") están en ES hardcodeado **con condicionales embebidos** (alcista/bajista) → reestructurar a i18n.
+- **Dónde:** `PortfolioScreen.js` (~1454+) + `i18n.js`.
+- **Cómo:** reestructurar con cuidado (los condicionales hacen riesgoso el i18n).
+- **Riesgo:** 🔴 estructura compleja. **Valida:** Code + Escritorio.
+
+### A — Popup de reseña in-app · 🔴
+- **Qué:** pedir reseña tras **3 días de uso activo**, sólo si no dejó reseña; máx 3 apariciones; si tocó "Dejar reseña" no mostrar más.
+- **Dónde:** lógica nueva + dependencia nativa.
+- **Cómo:** `SKStoreReviewRequest` nativo vía librería **`react-native-in-app-review`** — ⚠️ **NO está instalada** (verificado en `package.json`). Requiere agregarla + Podfile + `pod install`.
+- **⚠️ PRIMER PASO antes de codear:** verificar **compatibilidad de `react-native-in-app-review` con RN 0.84.1** (la que usa el proyecto).
+- **Riesgo:** 🔴 dependencia nativa nueva. **Valida:** Code + Fernando (TestFlight).
+
+### D — Firebase Analytics (eventos del funnel) · 🟡 · 🆕 (del CRO)
+- **Qué:** hoy NO hay analytics → el abandono dentro del onboarding/signup es **invisible**. Sin esto no se puede medir si el cambio de precio (u otra mejora) convierte.
+- **Dónde:** `package.json` + pantallas del funnel + `pod install`. (Firebase ya está integrado para push: `@react-native-firebase/app` + `/messaging` → es **agregar el módulo `/analytics`**, no desde cero.)
+- **Cómo / ~8 eventos `logEvent`:** `App.js` → `onboarding_slide_viewed`, `onboarding_completed`, `signup_started`, `signup_completed`, `login_completed`; `PortfolioScreen` → `primer_activo_agregado`; `AlertCreateModal` → `primera_alerta_creada`; `SubscriptionScreen` → `paywall_visto`.
+- **Riesgo:** 🟡 dependencia nativa. **Valida:** Code + Fernando.
+
+### E — Dinamización de precios (planes SIEMPRE automáticos) · 🟡 · 🆕 (del CRO)
+- **Qué:** hay precios **hardcodeados** que NO se actualizan al cambiar el precio en las tiendas → muestran el viejo/erróneo y **rompen el geo-pricing** (al turco le mostrarían "$9,99" en vez de su precio local). El paywall principal (`SubscriptionScreen.js:231`) ya es dinámico — el modelo a copiar.
+- **Dónde:** `PerfilScreen.js` (cards: 429,437,441,472,480,484 · FAQ: 960) + `i18n.js` (493 `upsell_pro_titulo`, 494 `upsell_elite_titulo`, 828 `pro_anual_btn`, 829 `elite_anual_btn` — 8 idiomas c/u).
+- **Cómo:** `PerfilScreen` llama `Purchases.getOfferings()` (igual que `SubscriptionScreen.js:80`) y usa `product.priceString` en cada lugar; en i18n se saca el "$X" de la clave y se concatena el `priceString` al renderizar.
+- **Resultado:** subir/bajar precios (global o por país) = **CERO código/build para siempre**; cada usuario ve su precio local correcto en TODAS las pantallas. (Prerequisito para aplicar el precio nuevo $4.99/$9.99 — ver Brief §14.5.)
+- **Riesgo:** 🟡 UI/i18n. **Valida:** Code + Fernando.
+
+---
+
+## C) ORDEN DE EJECUCIÓN PROPUESTO (de menor a mayor riesgo)
+1. **Metadata sin build (Escritorio, en paralelo):** B keywords + C textos macOS.
+2. **i18n simple (texto, sin tocar lógica):** 1.h.9 + 1.h.7 (Escritorio entrega EN maestro → Code cablea). *(1.h.6 NO acá — tiene condicionales = riesgo alto.)*
+3. **UI / dinamización (Code, revisión + preview):** 1.h.8 (links arriba) + **E** (precios dinámicos) + 1.h.2 (onboarding, reusa SplashView).
+4. **Analytics:** **D** (módulo + eventos).
+5. **Riesgo alto (probar a fondo en TestFlight):** 1.h.6 (AI Analysis) + 1.h.3 (paywall fresh-install, validación doble) + 1.h.4 (storyboard) + **A** (reseña, dep nativa nueva — primero verificar compat RN 0.84.1).
+
+## D) Para Escritorio — qué revisar / confirmar
+1. ¿Falta algún ajuste, o alguno NO debería ir en este build?
+2. ¿El orden de ejecución es correcto?
+3. **Traducciones** (1.h.9 / 1.h.7 / 1.h.6 + cualquier clave i18n nueva de D/E): ¿las generás vos (EN maestro + revisión) y Code las cablea?
+4. **B keywords** y **C textos macOS:** ¿los cargás vos en ASC?
+5. ¿Algún riesgo que veas en D (analytics) o E (dinamización) antes de tocar?
