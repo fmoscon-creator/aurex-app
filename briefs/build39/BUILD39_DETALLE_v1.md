@@ -1,6 +1,12 @@
-# 🍎 BUILD 39 iOS (Cobrex) — DETALLE COMPLETO (v2)
-*07-jun-2026 · verificado en código real (archivo:línea) · sigue v1.1, `CFBundleVersion` 38→39*
+# 🍎 BUILD 39 iOS (Cobrex) — DETALLE COMPLETO (v3)
+*08-jun-2026 · verificado en código real (archivo:línea) · sigue v1.1, `CFBundleVersion` 38→39*
 
+> **CHANGELOG v2→v3 (08-jun — decisiones ASO + producto):**
+> - 🔎 **ASO incorporado.** Subtítulo nuevo (ES): **`Acciones, Cripto y Alertas IA`** (29/30). Keywords ES **BLOQUEADOS** (98/100): `cobrex,ia,ai,divisas,bolsa,mercados,inversion,trading,dolar,finanzas,ETF,oro,pulse,futuros,señales`. **Reglas fijas 8 idiomas:** `acciones` antes que `cripto` (marca, no parecer solo-cripto) · `cobrex`+`ia`+`ai`+`pulse` siempre · comas cuentan, sin espacios · NO repetir en keywords lo que está en subtítulo/nombre · cada idioma a SUS 100 chars. Detalle: `briefs/aso/ASO_COBREX_borradores.md`. **EN/PT/FR/IT/ZH/HI/AR = pendiente Code.**
+> - 🟡 **WhatsApp + API → "Próximamente"** en la descripción (no se sacan, se anuncian como próximas — honesto, están planeadas).
+> - 🗓️ **Diferido a Build 40:** 1.h.2 (onboarding animado) + **API key ELITE** (falta pantalla para generar la key + migración Supabase).
+> - 💲 **Precios NUNCA en la descripción** (se desactualizan) — los planes se describen por features.
+>
 > **CHANGELOG v1→v2 (revisión de Escritorio incorporada, 07-jun):**
 > - ❌ **1.h.2 (onboarding animado) SACADO del Build 39 → Build 40** (cosmético, no aporta a conversión, riesgo gratuito).
 > - 🔁 **A (reseña) movido a posición 4** del orden de ejecución (alto impacto ASO, probar temprano; ya es 🟡 con módulo nativo).
@@ -22,8 +28,12 @@
 ## A) ITEMS SIN BUILD (metadata — se pueden cargar en paralelo, los hace Escritorio)
 | # | Qué | Dónde | Cómo | Valida |
 |---|---|---|---|---|
-| **B** | **Keywords ASO** (arregla que no aparezca al buscar "cobrex") | App Store Connect → la versión que se envía con el Build 39 → campo Keywords (por idioma) | Escritorio carga el texto ES (89 chars, con margen): `cobrex,cripto,acciones,bolsa,trading,alertas,mercados,inversiones,cedears,IA,ETF,finanzas` + `cobrex` en los otros 7 idiomas. Re-indexa 24-48h tras aprobar. ⚠️ Las keywords viajan CON el envío de la versión (no es 100% aislado del build, pero NO es código). | Escritorio carga · Fernando verifica búsqueda post-aprobación |
-| **C** | **Ficha macOS** (borrador vacío) | ASC app macOS (id `6761672161`) | Escritorio carga **descripción + textos** ahora (no requiere build → no bloquea iOS). Las **capturas** (1280×800/1440×900) se difieren hasta tener un build macOS. | Escritorio (textos) |
+| **B** | **Keywords ASO** (8 idiomas) — máxima visibilidad "cobrex" + funciones | ASC → versión del Build 39 → campo Keywords por idioma (100 chars c/u) | **ES BLOQUEADO (98/100):** `cobrex,ia,ai,divisas,bolsa,mercados,inversion,trading,dolar,finanzas,ETF,oro,pulse,futuros,señales`. **EN/PT/FR/IT/ZH/HI/AR = pendiente Code** (reglas en changelog v3). Re-indexa 24-48h. | Code arma · Escritorio cruza · Fernando OK |
+| **Subtítulo** | Reemplaza el genérico viejo por uno con keywords (VISIBLE + indexado) | ASC → versión → Subtítulo (30 chars por idioma) | **ES:** `Acciones, Cripto y Alertas IA` (29/30). Otros idiomas = pendiente Code. Va CON el Build 39. | Code arma · Fernando OK |
+| **Descripción** | Mejorada, por features (NO precios) | ASC → versión → Descripción por idioma | WhatsApp + API access = **"Próximamente"**. **Sin precios escritos** (se desactualizan). Borrador ES en `ASO_COBREX_borradores.md`. | Escritorio redacta · Code revisa |
+| **C** | **Ficha macOS** (borrador vacío) | ASC app macOS (id `6761672161`) | Escritorio carga **descripción + textos** ahora (no requiere build → no bloquea iOS). Capturas (1280×800/1440×900) diferidas hasta build macOS. | Escritorio (textos) |
+
+> **🗓️ DIFERIDO a Build 40 (no entran en este build):** 1.h.2 (onboarding animado) · **API key ELITE** (falta pantalla para generar la key + migración Supabase) · WhatsApp (reactivar cuando se destrabe el número). En la ficha del Build 39, WhatsApp + API van como "Próximamente".
 
 ---
 
