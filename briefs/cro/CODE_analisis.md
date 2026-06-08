@@ -113,3 +113,30 @@ Confirmado el hallazgo de Escritorio. **Solo lectura, NO se tocó nada.**
 2. Auditar **onboarding + paywall** en el código de la app (qué muestra el onboarding antes del muro · cuándo/cómo aparece el paywall · gating por plan). → ayuda a entender la fuga #2 (por qué no se activan).
 3. Extraer **precios reales por país** + capacidades de geo-pricing.
 4. (Idea) ¿el onboarding/app empuja a crear la primera alerta? Si no hay un "primer alerta guiada", explica la fuga de activación.
+
+---
+
+## 7. 🔧 DINAMIZACIÓN DE PRECIOS — spec para Build 39 ("precios SIEMPRE automáticos")
+**Objetivo:** que NINGÚN precio esté escrito a mano en la app. Todos se leen de RevenueCat (que los lee de las tiendas, localizados por país del usuario). Así, cambiar un precio —global O por país (geo-pricing)— NUNCA requiere tocar código ni hacer build: se cambia solo en App Store Connect / Play Console y la app lo refleja solo, en la moneda/precio correcto de cada usuario.
+
+**Por qué funciona:** `product.priceString` (RevenueCat/StoreKit) devuelve el precio que la tienda calcula **para cada usuario según el país de su cuenta**. La app nunca decide el precio: pregunta y muestra. Si TODAS las pantallas leen ese mismo `priceString`, todas muestran el precio local correcto del usuario (₺ en Turquía, $ en US, etc.), idéntico en todos lados, sin lógica de países en el código.
+
+**Estado actual:**
+- ✅ **Paywall principal** (`SubscriptionScreen.js:80` `getOfferings()` + `:231` `pkg.product.priceString`) — YA dinámico. Es el modelo a copiar.
+- 🔴 **Falta dinamizar (hoy hardcodeado):**
+
+| # | Archivo:línea | Qué muestra hoy (fijo) | Cambiar a |
+|---|---|---|---|
+| 1 | `PerfilScreen.js:429,437,441` | Card PRO: $9,99 / $89,99 | `priceString` de PRO mensual/anual (desde `getOfferings()`) |
+| 2 | `PerfilScreen.js:472,480,484` | Card ELITE: $19,99 / $179,99 | `priceString` de ELITE mensual/anual |
+| 3 | `PerfilScreen.js:960` | FAQ "PRO ($9.99/mes)… ELITE ($19.99/mes)" | sacar el precio del texto (o interpolar `priceString`) |
+| 4 | `i18n.js:493` `upsell_pro_titulo` (8 idiomas) | "Pasate a PRO — $9,99/mes" | "Pasate a PRO" + `priceString` al render |
+| 5 | `i18n.js:494` `upsell_elite_titulo` (8 idiomas) | "Pasate a ELITE — $19,99/mes" | "Pasate a ELITE" + `priceString` |
+| 6 | `i18n.js:828` `pro_anual_btn` (8 idiomas) | "PRO Anual — $89,99" | "PRO Anual" + `priceString` anual |
+| 7 | `i18n.js:829` `elite_anual_btn` (8 idiomas) | "ELITE Anual — $179,99" | "ELITE Anual" + `priceString` anual |
+
+**Cómo:** `PerfilScreen` llama `Purchases.getOfferings()` (igual que `SubscriptionScreen.js:80`), mapea los 4 productos (PRO/ELITE × mensual/anual) y usa `product.priceString` en cada lugar. En `i18n`, sacar el "$X" de la clave y concatenar el `priceString` al renderizar.
+
+**Resultado:** tras esto, subir/bajar precios (global O geo-pricing por país) = solo ASC/Play Console, **CERO código, CERO build, para siempre** — y cada usuario ve su precio local correcto en TODAS las pantallas.
+
+⚠️ **Además revisar METADATA** de las fichas (App Store / Play descripción) por si mencionan "$9.99" — eso se edita sin build (metadata; Apple revisa metadata, Play no).

@@ -44,6 +44,11 @@ Cruzando los dos análisis aparece una conclusión más fina que "bajar a $5.99 
 - **(b) Geo-pricing selectivo** (recomendación que surge del cruce): mantener ~$9.99 en ricos + bajar en AR/BR/TR/IN.
 - O un híbrido. **Nada se aplica sin OK.**
 
+## 4.bis 🔧 CÓMO SE CAMBIAN LOS PRECIOS (clave para cualquier decisión)
+- **Los precios viven en App Store Connect / Play Console**, NO en el código ni en RevenueCat (RC solo los lee). Cambiarlos (global o por país) = config en las tiendas, **sin build ni revisión** de la app. RC los refleja solo.
+- **Geo-pricing NO requiere productos nuevos:** se editan los **mismos 4 productos** (PRO/ELITE × mensual/anual), poniendo precio por país. Misma operación que un cambio global, solo más casilleros.
+- ⚠️ **PERO hay precios hardcodeados en la app** (Perfil, FAQ, banners upsell, botones anuales i18n — ver CODE_analisis §7) que NO se actualizan solos → muestran el viejo/erróneo. El paywall principal sí es dinámico. → Para que TODA la app sea consistente y futuros cambios sean cero-código: **dinamizar esos precios en el Build 39** (spec en CODE_analisis §7). Sin eso, un geo-precio se ve mal (ej. al turco le aparecería "$9,99" en Perfil en vez de su precio local).
+
 ## 5. 📋 PENDIENTES
 - **Code:** arreglar el pull de precios **iOS** (confirmar que espejan Android). · cerrar la verificación de los [HIPÓTESIS] de Escritorio (precios competidores TRY/INR/BRL) donde se pueda.
 - **Escritorio:** los precios de competidores locales que quedaron [HIPÓTESIS] (App Store web bloqueó el scraping) — reintentar/confirmar.
