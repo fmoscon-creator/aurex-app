@@ -406,7 +406,16 @@ ELITE — كل ما في PRO، بالإضافة إلى:
 
 ---
 
-## 🔑 KEYWORDS (iOS, 100 chars, sin espacios) — pendiente cerrar
-Ver `briefs/aso/ASO_COBREX_borradores.md`. Estrategia: maximizar a 100 chars/idioma; `cobrex` NO (ya en nombre), sí `ai,pulse,ia`; acciones antes que cripto; sumar finanzas/divisas/bolsa/mercados/ETF/oro/futuros/señales.
+## 🔑 KEYWORDS (iOS, 100 chars máx, SIN espacios) — ✅ cerradas 8 idiomas
+> `cobrex` SÍ va incluido (seguro: hoy en AR no surge buscando solo "cobrex"). `ai+pulse+btc` en todas. `ia` donde entró.
+
+- **ES** (99): `cobrex,ai,pulse,btc,finanzas,inversion,trading,bolsa,mercados,dolar,ETF,oro,futuros,senales,cedears`
+- **EN** (98): `cobrex,ai,pulse,btc,finance,investing,trading,stocks,markets,forex,ETF,gold,futures,signals,crypto`
+- **PT** (97): `cobrex,ai,pulse,btc,ia,financas,investimento,trading,acoes,bolsa,mercados,ETF,ouro,futuros,sinais`
+- **FR** (99): `cobrex,ai,pulse,btc,ia,finance,investissement,trading,actions,bourse,marches,ETF,or,futures,signaux`
+- **IT** (96): `cobrex,ai,pulse,btc,ia,finanza,investimenti,trading,azioni,borsa,mercati,ETF,oro,futures,segnali`
+- **ZH** (82): `cobrex,ai,pulse,btc,ia,投资,股票,加密货币,交易,市场,期货,黄金,外汇,金融,信号,基金,美股,比特币,纳斯达克,期权,石油,道琼斯,白银`
+- **HI** (99): `cobrex,ai,pulse,btc,ia,निवेश,शेयर,क्रिप्टो,ट्रेडिंग,बाजार,फ्यूचर्स,सोना,फॉरेक्स,वित्त,संकेत,बिटकॉइन`
+- **AR** (97): `cobrex,ai,pulse,btc,ia,استثمار,اسهم,تداول,اسواق,عقود,ذهب,فوركس,مالية,اشارات,صناديق,بيتكوين,مؤشرات`
 
 _Code — 08-jun-2026._
