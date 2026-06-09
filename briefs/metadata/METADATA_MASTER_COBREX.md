@@ -40,7 +40,7 @@ QUÉ INCLUYE
 
 ALERTAS
 • Manuales: poné un precio o un % sobre cualquier activo y te avisamos cuando se cumple. Ilimitadas en todos los planes.
-• Automáticas: activá con un toque las que te interesan (señales IA, Cobrex Pulse, precio, eventos macro). El motor las dispara solo. Por push, Telegram (PRO) o WhatsApp (próximamente, ELITE).
+• Automáticas: activá con un toque las que te interesan (señales IA, Cobrex Pulse, precio, eventos macro). El motor las dispara solo. Por push o Telegram.
 
 PLANES
 
@@ -55,17 +55,16 @@ FREE
 
 PRO — todo lo de FREE, más:
 • Activos y señales IA ilimitados
-• Alertas automáticas: suma señales IA (Cambio de señal, Alta convicción, Señal en portfolio), Cobrex Pulse (Cambio de zona, Por categoría, Termómetro de riesgo) y eventos macro (FED/FOMC, CPI/PBI, Earnings)
+• Alertas automáticas: 14 — suma señales IA (Cambio de señal, Alta convicción, Señal en portfolio), Cobrex Pulse (Cambio de zona, Por categoría, Termómetro de riesgo) y eventos macro (FED/FOMC, CPI/PBI, Earnings)
 • Alertas por Telegram en tiempo real
 • Cobrex Pulse con variables y explicación
 • Sin publicidad · soporte prioritario
 
 ELITE — todo lo de PRO, más:
-• Alertas automáticas: suma alertas geopolíticas GDELT (exclusivas)
+• Alertas automáticas: 15 — suma alertas geopolíticas GDELT (exclusivas)
 • Cobrex Pulse completo: explicación profunda e historial
 • Señales IA con nivel de confianza y razón detallada
 • Análisis técnico avanzado (RSI, MACD)
-• Alertas por WhatsApp (próximamente)
 • Acceso anticipado a funciones beta
 
 IMPORTANTE: Cobrex es una herramienta informativa, no asesoramiento financiero.
