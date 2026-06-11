@@ -27,9 +27,9 @@
     },
     "youtube": {
       "handle": "@cobrex-io",
-      "auto_publicacion": "VIABLE",
-      "api": "YouTube Data API (upload, cuota ~6 videos/día)",
-      "falta": "OAuth + app en GCP (reusar proyecto del service account de Play)",
+      "auto_publicacion": "CONECTADA",
+      "api": "YouTube Data API v3 + OAuth2 refresh token (scope youtube.upload). Proyecto GCP 'Cobrex' (tribal-mapper-499119-k5). Vars en Railway: YT_CLIENT_ID/YT_CLIENT_SECRET/YT_REFRESH_TOKEN (refresh permanente, app en produccion)",
+      "falta": "Nada para conectar (validado 11-jun: /api/yt/verify → ok:true, scope youtube.upload). Funciones backend: ytUpload(videoUrl,title,desc,tags) + /api/yt/verify. Cuota ~6 videos/dia. Falta solo el CONTENIDO (Fase 2).",
       "prioridad": "P2"
     },
     "linkedin": {
