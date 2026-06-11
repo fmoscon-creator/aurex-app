@@ -12,17 +12,17 @@
     },
     "x": {
       "handle": "x.com/cobrexio",
-      "auto_publicacion": "VIABLE",
-      "api": "X API v2 (free tier ~500 posts/mes escritura)",
-      "falta": "Crear app en developer.x.com + OAuth tokens → Railway (login 1 vez)",
+      "auto_publicacion": "CONECTADA",
+      "api": "X API v2 + OAuth 1.0a (firma a mano, crypto nativo). Vars en Railway: X_API_KEY/X_API_SECRET/X_ACCESS_TOKEN/X_ACCESS_TOKEN_SECRET",
+      "falta": "Nada para conectar (validado 11-jun: /api/x/verify → ok:true @cobrexio). Funciones backend: xPublish(text,imgUrl) + /api/x/verify. Falta solo el CONTENIDO (Fase 2).",
       "prioridad": "P0"
     },
     "instagram": {
       "handle": "@cobrex.io",
       "_handle_a_confirmar": "El punto puede no ser válido como username de IG. Escritorio confirma: ¿@cobrex.io, @cobrex_io o @cobrexio?",
-      "auto_publicacion": "VIABLE_CON_SETUP",
-      "api": "Meta Graph API (cuenta Business)",
-      "falta": "Vincular IG Business a una FB Page Cobrex + token de larga duración",
+      "auto_publicacion": "CONECTADA",
+      "api": "Meta Graph API (cuenta Business). Page Token PERMANENTE derivado en backend desde vars de Railway",
+      "falta": "Nada para conectar (validado 11-jun: /api/ig/verify → ok:true cobrex.io). Funciones backend: igPublish(imgUrl,caption) + /api/ig/verify. Falta solo el CONTENIDO (Fase 2).",
       "prioridad": "P1"
     },
     "youtube": {
