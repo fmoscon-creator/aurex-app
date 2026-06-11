@@ -5,10 +5,10 @@
     "telegram": {
       "handle": "t.me/cobrexio",
       "tipo": "canal",
-      "auto_publicacion": "LISTA",
-      "api": "Telegram Bot API (bot @Aurexalertas_bot, ya en Railway)",
-      "falta": "Hacer al bot ADMIN del canal cobrexio (1 clic).",
-      "prioridad": "P0 — Fase 1 arranca acá hoy"
+      "auto_publicacion": "CONECTADA",
+      "api": "Telegram Bot API (bot @Aurexalertas_bot, ya en Railway). Bot YA es admin del canal.",
+      "falta": "Nada para conectar (validado 11-jun: /api/tg/verify → ok:true, administrator, puede_postear:true). Funciones backend: tgPublishChannel(text,imgUrl) + /api/tg/verify. Pendiente cosmetico: renombrar el bot Aurex->Cobrex en BotFather (se ve solo en la app, no en el canal) -> proximo build. Falta solo el CONTENIDO (Fase 2).",
+      "prioridad": "P0 — Fase 1"
     },
     "x": {
       "handle": "x.com/cobrexio",
