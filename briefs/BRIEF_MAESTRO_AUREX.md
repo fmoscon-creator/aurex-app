@@ -31,6 +31,11 @@
 
 ## 🔴 PENDIENTES ACTIVOS
 
+> **📅 PRÓXIMA SESIÓN (13-jun) — retomar MKT, lo que quedó abierto hoy 12-jun:**
+> 1. **🎬 TikTok — VIDEO DEMO + AUDITORÍA → Direct Post (API 100% automático, sin intervención de Fernando).** Hoy quedó conectado en sandbox (modo borrador funcionando). Construir la pantalla de demo real (Login TikTok + postear) + grabar el video + enviar a auditoría.
+> 2. **🌐🎥 VIDEO de presentación de la WEB** (mostrar cobrex.io / la app en movimiento) — para el posteo de lanzamiento (formato 9:16 sirve para TikTok / Reels / YouTube Shorts).
+> 3. **🎨 Seguir Fase 2 — contenido del lanzamiento (`001-lanzamiento`):** versión cuadrada 1:1 (X/LinkedIn/Telegram) + el video 9:16 + captions por canal. La imagen 4:5 ya está aprobada (v5).
+
 - **📣 MKT (PRIORIDAD):** producir el contenido por canal al banco de imágenes (Fase 2). Plan: `marketing/PLAN_MKT_COBREX_v4.md` (v4.6). Pendiente crítico del plan: adquisición de audiencia (0 seguidores; LinkedIn = 4.952). **NADA se publica sin OK formal de Fernando.**
 - **🎬 TIKTOK — video demo + auditoría (para Direct Post 100% automático):** hoy TikTok quedó CONECTADO en sandbox y funciona el modo **borrador** (`video.upload`: Code sube → Fernando publica con 1 toque). El público automático necesita la auditoría de TikTok, que exige un **video demo del flujo con UI** → hay que **construir una pantalla de demo real** (Login TikTok + postear) y grabarla (tools listos: Chrome headless + ffmpeg). App `Client Key awiuia5llnl7gp7o`, sandbox `sbaw56uywxjjxzg415`, vars `TIKTOK_*` en Railway.
 - **🔗 LINKEDIN — reconectar cada ~60 días:** el token de perfil personal NO trae refresh → caduca a los 60 días. Reconectar abriendo `/api/li/start` (30 seg). La **página de empresa** quedó parada (exige entidad legal constituida; se retoma si hay empresa).
