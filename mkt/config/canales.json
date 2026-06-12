@@ -33,11 +33,11 @@
       "prioridad": "P2"
     },
     "linkedin": {
-      "handle": "linkedin.com/company/cobrexio",
-      "auto_publicacion": "NO_AL_INICIO",
-      "api": "LinkedIn Community Management API (requiere aprobación, semanas)",
-      "falta": "Aprobación del programa; mientras → semi-manual (Escritorio)",
-      "prioridad": "P0_pero_semimanual"
+      "handle": "PERFIL PERSONAL Fernando Gabriel Moscon (5500+ seguidores) — NO la pagina de empresa",
+      "auto_publicacion": "CONECTADA",
+      "api": "LinkedIn 'Share on LinkedIn' (w_member_social) + Sign In OIDC. App 'Cobrex' Client 78qvkjylez4jf0. Vars Railway: LI_CLIENT_ID/LI_CLIENT_SECRET/LI_ACCESS_TOKEN",
+      "falta": "Nada para conectar (validado 11-jun: /api/li/verify → ok:true, Fernando Gabriel Moscon). Funciones: liPublish(text) + /api/li/start (reconectar) + /api/li/verify. OJO: token dura 60 dias SIN refresh -> reconectar c/~2 meses abriendo /api/li/start. La PAGINA DE EMPRESA (Community Management API) quedo PARADA: exige entidad legal constituida (no hay) -> se retoma si hay empresa. Falta solo CONTENIDO (Fase 2).",
+      "prioridad": "P0"
     },
     "tiktok": {
       "handle": "@cobrex.io",
