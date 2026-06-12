@@ -145,6 +145,25 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 
 ---
 
+## 🎨 SKILLS Y HERRAMIENTAS — qué se usa en cada tarea (permanente, OBLIGATORIO)
+
+> **REGLA (12-jun):** antes de CUALQUIER tarea de diseño/contenido/web, Code **declara qué skill usa, lo invoca de verdad (se ve el `Skill` en acción) y valida el resultado mirándolo** antes de mostrárselo a Fernando. NO improvisar HTML/diseño sin skill. Skills en `~/.claude/skills/`.
+
+**Skills disponibles (10):** `canvas-design` (arte/piezas estáticas PNG/PDF) · `brandkit` (piezas de marca premium: logos, identity decks, mockups) · `high-end-visual-design` (diseñar "como agencia top") · `design-taste-frontend` (UI/UX senior) · `image-to-code` (diseña imagen→construye web igual) · `imagegen-frontend-web` (referencias de diseño web, 1 img/sección) · `redesign-existing-projects` (rediseña web/app existente a premium) · `minimalist-ui` (estilo minimalista editorial) · `full-output-enforcement` (código completo sin recortes) · `find-skills` (buscar/instalar skills).
+
+**Qué skill en cada tarea:**
+| Tarea | Skill | Salida |
+|---|---|---|
+| Tarjetas / posts de redes (cards, contenido) | **canvas-design** (+ brandkit si es pieza de marca) | PNG |
+| Piezas de marca / mockups / identidad | **brandkit** | PNG |
+| Diseño de páginas/UI (web, pantallas) | **high-end-visual-design** + **design-taste-frontend** | HTML/CSS |
+| Rediseñar la web o la app | **redesign-existing-projects** | código |
+| Construir web desde un diseño | **image-to-code** / **imagegen-frontend-web** | código |
+
+**Herramientas (NO son skills, son utilitarios):** **ffmpeg** (crear/editar/cortar video, armar video desde imágenes) · **Chrome headless** (HTML→PNG, capturas ESTÁTICAS de web — NO capta animaciones) · **pandoc** (md→docx) · **sips** (info/resize) · **Playwright MCP** (automatizar navegador). **Video de la web CON movimiento real** = NINGÚN skill/headless lo hace → **grabación de pantalla QuickTime (Fernando)** + edición **ffmpeg (Code)**. **NO hay** generación de imágenes IA tipo Midjourney (eso es Escritorio).
+
+---
+
 ## 📊 REPORTES DIARIOS — STATUS / HEALTH / COBREX PERFORMANCE (permanente)
 
 **1) HEALTH / STATUS de conexiones** (`dailyHealthReport()` / `monthlyHealthReport()` en `aurex-backend`):
