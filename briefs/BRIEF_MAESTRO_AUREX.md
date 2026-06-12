@@ -160,7 +160,13 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 | Rediseñar la web o la app | **redesign-existing-projects** | código |
 | Construir web desde un diseño | **image-to-code** / **imagegen-frontend-web** | código |
 
-**Herramientas (NO son skills, son utilitarios):** **ffmpeg** (crear/editar/cortar video, armar video desde imágenes) · **Chrome headless** (HTML→PNG, capturas ESTÁTICAS de web — NO capta animaciones) · **pandoc** (md→docx) · **sips** (info/resize) · **Playwright MCP** (automatizar navegador). **Video de la web CON movimiento real** = NINGÚN skill/headless lo hace → **grabación de pantalla QuickTime (Fernando)** + edición **ffmpeg (Code)**. **NO hay** generación de imágenes IA tipo Midjourney (eso es Escritorio).
+**Herramientas (NO son skills, son utilitarios):** **ffmpeg** (crear/editar/cortar/recortar/acelerar/unir video, armar video desde imágenes, convertir formatos) · **Chrome headless** (HTML→PNG, capturas ESTÁTICAS de web — NO capta animaciones) · **pandoc** (md→docx) · **sips** (info/resize) · **pandoc/python** utilitarios. **NO hay** generación de imágenes IA tipo Midjourney (eso es Escritorio).
+
+**🎥 GRABAR Y EDITAR VIDEOS — Code lo hace SOLO (NO Escritorio, NO Fernando que NUNCA toca video):**
+- **Grabar la WEB (cobrex.io) o cualquier sitio CON su movimiento/animaciones real:** **Playwright + el Chrome instalado**. Receta verificada (12-jun): `cd /tmp/ttrec && PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 npm i playwright` → script Node: `chromium.launch({channel:'chrome', headless:true})` + `newContext({viewport:{width:1080,height:1920}, recordVideo:{dir, size:{width:1080,height:1920}}})` → `page.goto`, scroll lento en loop (`page.evaluate(window.scrollTo)` + `waitForTimeout`), `ctx.close()` → genera **.webm** del sitio en movimiento.
+- **Editar:** **ffmpeg** convierte el .webm → .mp4 vertical 9:16, recorta el negro inicial (`-ss`), ajusta velocidad (`setpts`), escala, une, etc.
+- **Imágenes/tarjetas** → skills de diseño (canvas-design/brandkit) + Chrome headless → PNG → ffmpeg para hacer video desde imágenes.
+- ⚠️ Lección 12-jun: NO volver a decir "no puedo grabar video / lo tiene que hacer Escritorio/Fernando" — **Code SÍ puede grabar y editar, fácil**. Ver [[feedback_nunca_afirmar_imposible_sin_verificar]].
 
 ---
 
