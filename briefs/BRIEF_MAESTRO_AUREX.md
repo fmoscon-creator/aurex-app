@@ -49,6 +49,18 @@
 1. Fernando abre Code en Terminal: `cd ~/Dropbox/AUREX` + `claude --add-dir ~/Downloads ~/Desktop`. **SIEMPRE desde `~/Dropbox/AUREX`** (define qué carpeta de memoria se autocarga; si cambia, la memoria "se parte").
 2. Code lee, en orden: (a) **memoria consolidada** `~/.claude/projects/-Users-fernandomoscon-Dropbox-AUREX/memory/` (empezar por `MEMORY.md`, índice de 1 línea por memoria); (b) **este brief**; (c) archivos de referencia (§REFERENCIA) para profundidad.
 
+**Cómo se inicia / re-inicia un chat con ESCRITORIO:** Escritorio **NO accede al repo privado `AurexApp` ni a Dropbox** — solo lee por **raw URL de GitHub** (repo público `aurex-app`). Para ponerlo al día: pasarle la **URL raw del brief** + la tarea puntual.
+- **URL canónica del brief (para Escritorio):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/BRIEF_MAESTRO_AUREX.md`
+- **Canal Code↔Escritorio = GitHub (raw URLs).** Para que Escritorio audite/traduzca código del repo privado, **Code copia el snapshot a `aurex-app/briefs/<tema>/code_snapshot/`, commit+push, y le pasa la raw URL** (Escritorio NUNCA lee el código vivo). **Dropbox NO es canal con Escritorio** (es uso personal de Fernando).
+- Lo de Escritorio SIEMPRE va en un **bloque rotulado aparte** ("📩 Para reenviar a Escritorio"); Code le habla a Fernando, no mezcla audiencias.
+
+**📦 GUARDADO EN 3 LUGARES (brief y docs importantes — regla fija):**
+1. **GitHub** (repo `aurex-app`, commit + push) → genera la **raw URL** que usa Escritorio. Verificar HTTP 200 post-push.
+2. **Dropbox `.docx` fijo:** `~/Dropbox/AUREX/MAPA DE TRABAJO/BRIEF_MAESTRO_AUREX.docx` (nombre fijo, para el Word de Fernando).
+3. **Dropbox `.docx` fechado:** mismo doc con sufijo `_DDMMM_vN.docx` (ej `_12JUN_v1.docx`) → Fernando compara versiones del día.
+- El `.md` mantiene **nombre fijo** (la historia vive en `git log`). Conversión: `pandoc -f gfm-tex_math_dollars <md> -o <docx>` (el flag evita que los precios con `$` se rompan como fórmulas TeX).
+- **Assets/imágenes** (no el brief): se guardan en el **Banco de imágenes de Dropbox** (ver §BANCO); lo que Code genera para MKT se replica SIEMPRE ahí.
+
 ---
 
 ## 🍎🤖 METODOLOGÍA DE COMPILACIÓN — iOS + Android (permanente)
@@ -168,3 +180,14 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 - **Marketing:** `marketing/PLAN_MKT_COBREX_v4.md` · Banco: `Dropbox/AUREX/BANCO IMAGENES REDES SOCIALES COBREX/` · Redes: `Dropbox/AUREX/REDES SOCIALES/REDES SOCIALES DE COBREX/`.
 - **Compilación:** `briefs/FLUJO_BUILD_IOS_ANDROID.md`. **Conexiones:** `Dropbox/AUREX/CONEXIONES y REPORTES DIARIOS APP/`.
 - **Historia completa anterior al 12-jun:** `briefs/ARCHIVO_BRIEF_HISTORICO_hasta_12jun.md`.
+
+---
+
+## 📚 BRIEF HISTÓRICO — todo lo depurado el 12-jun-2026 (NADA se borró)
+
+Al depurar este brief (12-jun, de **1607 → ~180 líneas**), **todo el contenido histórico se conservó íntegro** en un archivo aparte. Cómo acceder:
+- **📁 Dropbox (Fernando):** `~/Dropbox/AUREX/MAPA DE TRABAJO/ARCHIVO_BRIEF_HISTORICO_hasta_12jun.md` (+ `.docx` para Word).
+- **🐙 GitHub (Escritorio, raw URL):** `https://raw.githubusercontent.com/fmoscon-creator/aurex-app/main/briefs/ARCHIVO_BRIEF_HISTORICO_hasta_12jun.md`
+- **⏪ Git (versión original completa):** `git show <commit_anterior>:briefs/BRIEF_MAESTRO_AUREX.md`.
+
+**Qué contiene (lo que se movió al histórico):** changelog 27-may→11-jun (31 entradas) · §1 Resumen ejecutivo · §1.b–1.j (Builds iOS 17/32/33/35/36/37/38, landing aurex.live, rebrand Android, redes creación, plan de reportes) · §2 Apple Build 17 (cronología, 12 superficies ASC, análisis de rechazos, estrategia de marca/coexistencia, W-8BEN) · §8.2/§8.c.3–8.c.7 (auditoría detallada conexiones 24-may) · §9 mapa de archivos · §11/§12 (checklist 5 lugares + política de actualización).
