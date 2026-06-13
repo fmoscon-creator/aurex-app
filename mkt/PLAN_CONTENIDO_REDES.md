@@ -2,6 +2,17 @@
 
 Versión 2, hecha por Code + Escritorio. Incluye: decisiones tomadas, mejores horarios, **catálogo completo de contenido enumerado** y un **calendario real de 4 semanas** (cada día, cada canal, contenido, idioma y hora ARG). Pendiente de tu opinión, Fernando.
 
+
+## RESUMEN EJECUTIVO (leer esto primero)
+
+- **Qué es:** plan de contenido para los 6 canales de Cobrex, con estrategia de crecimiento desde 0 seguidores, catálogo completo (~56 piezas), calendario real de 4 semanas con fechas/horas/idioma, y todos los textos ES/EN ya redactados.
+- **Idioma:** alternado EN/ES, diferenciado por canal. **Frecuencia:** IG 3x, TikTok 4x, X 5x, Telegram 3x, LinkedIn 2x, YouTube 3x + "día de datos". **Publicación:** Metricool (decidido).
+- **Lo más importante (y lo que casi olvidamos):** con 0 seguidores, primero va la **fase semilla** (tu red, LinkedIn 4.952, cross-link, calentamiento) — sin eso publicaríamos al vacío.
+- **Bloqueante técnico:** la **PWA hay que actualizarla a Build 45/39** antes de grabar los 14 videos de uso de la app (hoy Build 18). Lo hace Code.
+- **Estado de canales (verificado en vivo):** 6/6 conectados (IG reconectado con token permanente).
+- **Listo:** pieza de lanzamiento + video web + 5 videos de sectores + todos los textos. **Falta producir:** los videos de app (post-PWA), carruseles/placas, página de links, kit visual.
+
+
 ---
 
 ## 1. DECISIONES TOMADAS (las definimos nosotros, como pediste)
@@ -343,3 +354,29 @@ Entregados por Escritorio, completos. Para no inflar este plan, van en el docume
 - De acuerdo con todo lo de Escritorio. Metricool es la decisión correcta para no frenarnos.
 - Sumo un pendiente operativo real: **reconectar Instagram** (token vencido 11-jun) — ver 8.5; propongo agregar un endpoint de reconexión OAuth para que no haya que copiar tokens a mano.
 - El "comodín de coyuntura" y el "caso real" requieren que alguien esté atento al mercado/reseñas: definir quién (Fernando aprueba, Code/Escritorio detectan).
+
+
+---
+
+## 11. ANÁLISIS Y RECOMENDACIÓN FINAL DE CODE
+
+Revisé el plan completo (mío + el aporte de Escritorio). Mi lectura:
+
+**El plan está completo y es ejecutable.** No falta estrategia ni contenido — falta ejecutar en orden. El riesgo #1 NO es el contenido (tenemos de sobra para 6-8 semanas): es la **adquisición inicial de audiencia** (0 seguidores). Por eso la fase semilla va PRIMERO, antes de publicar en serie.
+
+**Camino crítico (orden real de ejecución):**
+1. **Fase semilla + perfiles listos** (sección 2.bis + 8.3): los 6 perfiles 100% armados (foto, banner, bio, link), la página `cobrex.io/redes`, y el empuje de tu red (LinkedIn + contactos). Sin esto, todo lo demás publica al vacío.
+2. **Actualizar la PWA a Build 45/39** (sección 5): bloquea los 14 videos de app, que son el contenido de mayor valor. Es la tarea técnica más grande. La hace Code.
+3. **Producir el banco de piezas** con los textos que ya están: carruseles, placas, día de datos, y los videos de app (post-PWA).
+4. **Publicar con Metricool** siguiendo el calendario, con tu OK por pieza.
+
+**Lo que YO (Code) puedo arrancar ya, solo y sin depender de nadie:**
+- La página de links `cobrex.io/redes` (resuelve bios + WhatsApp + CTAs).
+- El kit visual + las placas/carruseles de los diferenciadores (con los textos listos).
+- La actualización de la PWA (el bloqueante).
+
+**Decisiones ya tomadas (no hace falta que las decidas, las cerramos por mejor práctica):** idioma alternado por canal, frecuencias, hashtags en 3 capas, Metricool para publicar, lanzamiento escalonado.
+
+**Lo único que requiere tu OK:** este plan en conjunto. Si lo aprobás, arranco por el camino crítico (perfiles/semilla + PWA en paralelo).
+
+**Mi recomendación:** dar el OK al plan y que yo arranque ya con (a) la página de links y el kit visual, y (b) la actualización de la PWA — las dos cosas que destraban todo lo demás. La fase semilla (tu red) la coordinás vos cuando estemos por lanzar.
