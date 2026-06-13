@@ -1,0 +1,75 @@
+# textos-9-videos-app-restantes
+
+TEXTOS ES/EN — 9 VIDEOS DE APP RESTANTES (v6)
+
+=== VIDEO #6 — FICHA DEL ACTIVO ===
+IG/TIKTOK ES — Gancho: "Haces click en un activo y Cobrex te da TODO. No solo el precio." Cuerpo: "Senal de IA con probabilidad real. Objetivo de precio. Stop loss. Los 5 motivos. RSI-14. MACD. Grafico. Y desde ahi: crea tu alerta o sumalo a tu watchlist." CTA: "Toca cualquier activo en Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #inversiones #mercados #IA #analisisTecnico #RSI #MACD #cripto #acciones #fintech #senales #portafolio #bitcoin #finanzaspersonales
+IG/TIKTOK EN — Hook: "Tap any asset in Cobrex. Get everything you need to decide." Body: "AI signal with real probability. Price target. Stop loss. 5 reasons behind the signal. RSI-14. MACD. Chart. Set an alert or add to watchlist. All in one screen." CTA: "Tap any asset in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #investing #stocks #crypto #AI #technicalanalysis #RSI #MACD #fintech #tradesignals #portfolio #bitcoin #SP500 #wealthbuilding
+X ES: "Haces click en un activo en Cobrex: senal IA + probabilidad + objetivo + stop + 5 motivos + RSI-14 + MACD. Todo en una pantalla. cobrex.io #inversiones #fintech"
+X EN: "Tap any asset in Cobrex: AI signal + probability + target + stop + 5 reasons + RSI-14 + MACD. Everything. One screen. cobrex.io #investing #fintech"
+LINKEDIN ES: "La mayoria de las apps te muestran un grafico y el precio. Cobrex te da la senal de IA, la probabilidad (55-88%), el objetivo, el stop loss, los 5 motivos, el RSI-14 real, el MACD, y desde ahi mismo podes crear una alerta o agregar a tu watchlist. Todo en una pantalla. cobrex.io #Cobrex #fintech #inversiones #IA #mercados"
+TELEGRAM ES: "Click en cualquier activo de Cobrex: senal IA, probabilidad, objetivo, stop, 5 motivos, RSI-14, MACD. Todo ahi. cobrex.io"
+
+=== VIDEO #10 — FILTROS DE COBREX PULSE ===
+IG/TIKTOK ES — Gancho: "El mercado tiene miedo o codicia? Cobrex Pulse te lo dice con 14 fuentes reales." Cuerpo: "Filtra por CRIPTO, ACCIONES, COMMODITIES o FUTUROS. 3 indicadores: Pulse general, sentimiento BTC y Fear & Greed cripto. Basado en VIX, futuros, oro, petroleo, macro FED y geopolitica global GDELT." CTA: "Abri el Pulse en Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #CobrexPulse #mercados #inversiones #cripto #acciones #VIX #bitcoin #fintech #sentimiento #finanzas
+IG/TIKTOK EN — Hook: "Is the market in fear or greed? Cobrex Pulse tells you with 14 real sources." Body: "Filter by CRYPTO, STOCKS, COMMODITIES or FUTURES. 3 live indicators: overall Pulse, Bitcoin sentiment, crypto Fear & Greed. Powered by VIX, futures, gold, oil, FED macro and GDELT geopolitics." CTA: "Open the Pulse in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #CobrexPulse #markets #investing #crypto #stocks #fearandgreed #VIX #bitcoin #fintech #sentiment
+X ES: "Cobrex Pulse: 14 fuentes, 3 indicadores, 5 zonas. Filtra por cripto, acciones o commodities. El sentimiento del mercado en tiempo real. cobrex.io #mercados #fintech"
+X EN: "Cobrex Pulse: 14 sources, 3 indicators, 5 zones. Filter by crypto, stocks or commodities. Market sentiment in real time. cobrex.io #markets #fintech"
+LINKEDIN ES: "El sentimiento del mercado no es un dato — son 14 al mismo tiempo. El Cobrex Pulse procesa VIX, futuros S&P/NASDAQ/Dow/Russell, oro, plata, petroleo, cobre, macro Fed y geopolitica GDELT. Todo en un medidor con 3 agujas y 5 zonas. cobrex.io #Cobrex #fintech #mercados #inversiones"
+TELEGRAM ES: "Miedo extremo o codicia extrema? El Cobrex Pulse lo mide con 14 fuentes. Filtralo por cripto, acciones o futuros. cobrex.io"
+
+=== VIDEO #11 — FILTROS TAB MERCADOS ===
+IG/TIKTOK ES — Gancho: "500 activos de 9 tipos y 7 paises. Filtrados como vos queras." Cuerpo: "Filtra por cripto, acciones, indices, metales, futuros, commodities, ETFs, Forex o CEDEARs. Filtra por pais. Ve el sparkline y el Pulse de cada activo al instante." CTA: "Explora los mercados en Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #mercados #inversiones #cripto #acciones #cedears #ETF #futuros #metales #indices #fintech #bitcoin #sp500
+IG/TIKTOK EN — Hook: "500+ assets. 9 types. 7 countries. Filtered your way." Body: "Filter by crypto, stocks, indices, metals, futures, commodities, ETFs, Forex or CEDEARs. Filter by country. See price sparkline and Pulse indicator instantly." CTA: "Explore the markets in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #markets #investing #crypto #stocks #ETF #futures #metals #indices #fintech #bitcoin #SP500 #gold
+X ES: "9 tipos de activos. 7 paises. Filtros en segundos. La tab Mercados de Cobrex tiene todo el mercado global. cobrex.io #mercados #fintech"
+X EN: "9 asset types. 7 countries. Filters in seconds. Cobrex Markets tab puts the global market in your pocket. cobrex.io #markets #fintech"
+LINKEDIN ES: "Cripto, acciones, indices, metales, futuros, commodities, ETFs, Forex y CEDEARs. Con filtros por tipo y por pais. Con sparkline y Pulse de cada activo. 500+ disponibles. cobrex.io #Cobrex #fintech #mercados #inversiones"
+TELEGRAM ES: "Cripto. Acciones. CEDEARs. Futuros. Metales. ETFs. Todo en la tab Mercados de Cobrex. cobrex.io"
+
+=== VIDEO #5 — COMPARAR 3 ACTIVOS EN WATCHLIST ===
+IG/TIKTOK ES — Gancho: "Bitcoin vs Ethereum vs Oro. Cual tiene mejor senal HOY? Cobrex te lo dice en segundos." Cuerpo: "Selecciona hasta 3 activos en tu Watchlist y comparalos con las 10 variables del motor de IA: RSI-14, MACD, tendencia 24h, volatilidad, correlaciones y mas." CTA: "Crea tu Watchlist en Cobrex y compara. Link en bio." Hashtags ES: #Cobrex #CobrexApp #watchlist #inversiones #bitcoin #ethereum #oro #comparar #IA #analisisTecnico #mercados #cripto #acciones #fintech
+IG/TIKTOK EN — Hook: "Bitcoin vs Ethereum vs Gold. Which has the best AI signal TODAY?" Body: "Select up to 3 assets from your Watchlist and compare across 10 AI variables: RSI-14, MACD, 24h trend, volatility, correlations and more. All at once, one screen." CTA: "Build your Watchlist in Cobrex and compare. Link in bio." Hashtags EN: #Cobrex #CobrexApp #watchlist #investing #bitcoin #ethereum #gold #compare #AI #technicalanalysis #crypto #stocks #fintech
+X ES: "BTC vs ETH vs Oro. Cual tiene mejor RSI? Cobrex compara 3 activos con 10 variables de IA al mismo tiempo. cobrex.io #cripto #inversiones"
+X EN: "BTC vs ETH vs Gold. Compare 3 assets with 10 AI variables at once in Cobrex. cobrex.io #crypto #investing"
+LINKEDIN ES: "El comparador de Cobrex: hasta 3 activos lado a lado con sus 10 variables de IA. RSI-14, MACD 12/26, tendencia 24h, volatilidad, correlaciones. Elegir con datos, no con intuicion. cobrex.io #Cobrex #fintech #inversiones #IA"
+TELEGRAM ES: "BTC, ETH y Oro en un comparador. 10 variables de IA para cada uno. cobrex.io"
+
+=== VIDEO #9 — 15 ALERTAS AUTOMATICAS ===
+IG/TIKTOK ES — Gancho: "15 alertas automaticas que ninguna app te da. Vos solo activas el toggle." Cuerpo: "IA: cambio de senal, alta conviccion, umbral de probabilidad, senal en portfolio. Pulse: zona extrema, por categoria, termometro. Precio: variacion brusca, max/min 30d, RSI extremo. Eventos: FOMC, CPI, PBI, apertura, earnings. GDELT solo ELITE." CTA: "Activa las tuyas en Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #alertas #inversiones #FOMC #CPI #RSI #bitcoin #cripto #acciones #fintech #IA #senales
+IG/TIKTOK EN — Hook: "15 automatic alerts no other investing app gives you. Just flip the toggle." Body: "AI: signal change, high conviction, probability threshold, portfolio signal. Pulse: extreme zone, by category, thermometer. Price: sudden move, 30d high/low, extreme RSI. Events: FOMC, CPI, GDP, market open, earnings. GDELT geopolitics exclusive to ELITE." CTA: "Activate yours in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #alerts #investing #FOMC #CPI #RSI #bitcoin #crypto #stocks #fintech #AI #signals
+X ES: "15 alertas automaticas: senal IA, alta conviccion, zona Pulse extrema, variacion de precio, RSI extremo, FOMC, CPI, PBI, earnings, apertura de mercado. Un toggle. cobrex.io #inversiones #fintech"
+X EN: "15 automatic alerts: AI signal, high conviction, extreme Pulse, price move, extreme RSI, FOMC, CPI, GDP, earnings, market open. One toggle each. cobrex.io #investing #fintech"
+LINKEDIN ES: "4 alertas de IA, 3 del Pulse, 3 de precio, 5 de eventos macro. 15 en total. Las geopoliticas GDELT son exclusivas del plan ELITE. Vos solo activas el toggle. cobrex.io #Cobrex #fintech #alertas #inversiones"
+TELEGRAM ES: "15 alertas automaticas en Cobrex. FOMC, CPI, RSI extremo, senal IA, zona Pulse, earnings. Un toggle cada una. cobrex.io"
+
+=== VIDEO #7 — COMPARTIR POR TELEGRAM/WHATSAPP ===
+IG/TIKTOK ES — Gancho: "Le pasas datos de mercado a tus amigos? En Cobrex es un toque." Cuerpo: "Desde la ficha de cualquier activo, compartis la senal de IA, el precio y los datos clave directamente por Telegram o WhatsApp. Sin capturar pantalla. Un boton." CTA: "Proba compartir desde Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #compartir #telegram #whatsapp #inversiones #mercados #cripto #acciones #fintech #senales #IA #bitcoin
+IG/TIKTOK EN — Hook: "Sharing market data with friends? In Cobrex it is one tap." Body: "From any asset page, share the AI signal, price and key data directly to Telegram or WhatsApp. No screenshot. No copy-paste. One button." CTA: "Try sharing from Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #share #telegram #whatsapp #investing #markets #crypto #stocks #fintech #signals #AI #bitcoin
+X ES: "Encontras una senal en Cobrex y la queres compartir? Un toque: senal, precio y datos por Telegram o WhatsApp directo desde la app. cobrex.io #inversiones #fintech"
+X EN: "Found a great signal in Cobrex? One tap: share signal, price and data via Telegram or WhatsApp from the app. cobrex.io #investing #fintech"
+LINKEDIN ES: "La informacion financiera util se comparte. En Cobrex compartis la senal de IA, precio y datos de cualquier activo directo por Telegram o WhatsApp desde la misma pantalla. cobrex.io #Cobrex #fintech #inversiones"
+TELEGRAM ES: "Ves una buena senal en Cobrex? Compartila aca mismo en dos segundos. cobrex.io"
+
+=== VIDEO #4 — ALERTA DE PRECIO EN WATCHLIST ===
+IG/TIKTOK ES — Gancho: "Tenes activos en tu Watchlist? Poneles una alerta y olvidate del precio." Cuerpo: "Desde cualquier activo de tu Watchlist, crea una alerta: precio objetivo o porcentaje de cambio. La recibes por push, Telegram o WhatsApp. Sin mirar el mercado todo el dia." CTA: "Crea tus alertas desde la Watchlist. Link en bio." Hashtags ES: #Cobrex #CobrexApp #watchlist #alertas #inversiones #mercados #bitcoin #cripto #acciones #fintech #precio #finanzaspersonales
+IG/TIKTOK EN — Hook: "Have assets in your Watchlist? Set an alert and stop watching the price all day." Body: "From any asset in your Cobrex Watchlist, set a price alert: target price or % change. Push, Telegram or WhatsApp notification." CTA: "Set your watchlist alerts in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #watchlist #alerts #investing #markets #bitcoin #crypto #stocks #fintech #pricealert #personalfinance
+X ES: "Watchlist en Cobrex: seguimiento + alerta cuando llega a tu precio objetivo o se mueve X%. Push, Telegram o WhatsApp. cobrex.io #inversiones #cripto"
+X EN: "Cobrex Watchlist: tracking + alert when asset hits target price or moves X%. Push, Telegram or WhatsApp. cobrex.io #investing #crypto"
+LINKEDIN ES: "Una Watchlist sin alertas es solo una lista. En Cobrex cada activo de tu Watchlist puede tener su alerta de precio. Objetivo en dolares o porcentaje. Push, Telegram o WhatsApp. cobrex.io #Cobrex #fintech #inversiones #watchlist"
+TELEGRAM ES: "Activos en tu Watchlist? Dale una alerta de precio a cada uno. Cobrex te avisa aca cuando llega. cobrex.io"
+
+=== VIDEO #14 — AGREGAR/QUITAR DE WATCHLIST ===
+IG/TIKTOK ES — Gancho: "Tus activos favoritos, organizados como queras. Watchlists ilimitadas." Cuerpo: "Crea todas las Watchlists que quieras: una para cripto, otra para CEDEARs, otra para metales. Agregas y sacas en segundos. Ilimitadas en todos los planes, gratis." CTA: "Organiza tus inversiones en Cobrex. Link en bio." Hashtags ES: #Cobrex #CobrexApp #watchlist #inversiones #cripto #acciones #cedears #metales #fintech #finanzaspersonales #bitcoin #portafolio
+IG/TIKTOK EN — Hook: "Your favorite assets, organized your way. Unlimited watchlists." Body: "Create as many Watchlists as you want: one for crypto, one for stocks, one for metals. Add and remove in seconds. Unlimited on all plans, free." CTA: "Organize your investments in Cobrex. Link in bio." Hashtags EN: #Cobrex #CobrexApp #watchlist #investing #crypto #stocks #metals #fintech #personalfinance #bitcoin #portfolio #gold
+X ES: "Watchlists ilimitadas en Cobrex. Cripto, acciones, CEDEARs — cada lista como queras. Gratis en todos los planes. cobrex.io #inversiones #fintech"
+X EN: "Unlimited watchlists in Cobrex. Crypto, stocks, metals — organize each list your way. Free on all plans. cobrex.io #investing #fintech"
+LINKEDIN ES: "Watchlists ilimitadas en todos los planes. Una para cada mercado, cada estrategia. Sin pagar extra. cobrex.io #Cobrex #fintech #inversiones #watchlist"
+TELEGRAM ES: "Watchlists ilimitadas en Cobrex. Cripto, acciones, CEDEARs, metales. cobrex.io"
+
+=== VIDEO #8 — CAMBIAR IDIOMA (BANDERA) ===
+IG/TIKTOK ES — Gancho: "Tu app de inversiones habla 8 idiomas. La tuya cuantos habla?" Cuerpo: "Cobrex esta en espanol, ingles, portugues, italiano, frances, chino, hindi y arabe. Cambia en segundos desde el header. Hasta las senales de IA y sus 5 motivos se auto-traducen." CTA: "Descarga Cobrex en tu idioma. Link en bio." Hashtags ES: #Cobrex #CobrexApp #idiomas #multilingue #inversiones #mercados #fintech #global #cripto #acciones #IA
+IG/TIKTOK EN — Hook: "Your investing app speaks 8 languages. Does yours?" Body: "Cobrex is available in Spanish, English, Portuguese, Italian, French, Chinese, Hindi and Arabic. Switch in seconds from the header. Even AI signals and their 5 reasons auto-translate." CTA: "Download Cobrex in your language. Link in bio." Hashtags EN: #Cobrex #CobrexApp #multilingual #investing #markets #fintech #global #crypto #stocks #AI
+X ES: "Cobrex en 8 idiomas: espanol, ingles, portugues, italiano, frances, chino, hindi y arabe. Las senales de IA se auto-traducen. Un toque desde el header. cobrex.io #fintech #global"
+X EN: "Cobrex in 8 languages: Spanish, English, Portuguese, Italian, French, Chinese, Hindi and Arabic. AI signals auto-translate. One tap. cobrex.io #fintech #global"
+LINKEDIN ES: "Una app global habla el idioma de sus usuarios. Cobrex: 8 idiomas, incluyendo chino, hindi y arabe. Los 5 motivos de cada senal se auto-traducen. cobrex.io #Cobrex #fintech #global #multilingue"
+TELEGRAM ES: "Cobrex en 8 idiomas. Las senales de IA se traducen solas. Un toque desde el header. cobrex.io"
