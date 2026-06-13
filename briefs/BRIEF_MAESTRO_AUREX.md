@@ -9,7 +9,7 @@
 ## ⚡ ESTADO ACTUAL (12-jun-2026)
 
 - 🍎 **iOS 1.3 (Build 45) PUBLICADO** en App Store · 🤖 **Android 1.0.39 PUBLICADO** en Google Play (177 países). **Las 2 plataformas al día.**
-- 📡 **Canales (verificado en vivo 13-jun):** 5/6 operativos (X, Telegram, YouTube, LinkedIn, TikTok-sandbox). **Instagram: token vencido 11-jun → reconectar.** Ver §CANALES. Plan de contenido vigente: `mkt/PLAN_CONTENIDO_REDES.md` (v6).
+- 📡 **Canales (verificado en vivo 13-jun): 6/6 operativos** (IG con Page Token permanente, X, Telegram, YouTube, LinkedIn, TikTok-sandbox). TikTok: falta auditoría Direct Post para postear público. Ver §CANALES. Plan de contenido: `mkt/PLAN_CONTENIDO_REDES.md` (v6).
 - 🎨 **MKT en ejecución:** banco de imágenes armado (§BANCO), pieza `001-lanzamiento` en progreso (imagen aprobada; falta video + captions).
 - ⚙️ Backend `aurex-backend` en Railway OK. Web `cobrex.io` (repo `fmoscon-creator/cobrex`, GitHub Pages). PWA en `cobrex.io/app`.
 
@@ -112,7 +112,7 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 
 | Canal | Handle | Estado | Mecanismo / vars Railway | Función |
 |---|---|---|---|---|
-| **Instagram** | @cobrex.io (Business, IG ID `17841435427260864`) | ⚠️ **TOKEN VENCIDO 11-jun-26 → RECONECTAR** (verificado en vivo 13-jun) | Graph API v21 · el page token se re-deriva de `IG_ACCESS_TOKEN` que **expira** (FB sessions ~caducan) · `FB_APP_ID/FB_APP_SECRET/IG_ACCESS_TOKEN/FB_PAGE_ID/IG_BUSINESS_ID`. **Pendiente: endpoint de reconexión OAuth + guardar el page token permanente directo.** | `igPublish(imgUrl,caption)` |
+| **Instagram** | @cobrex.io (Business, IG ID `17841435427260864`) | ✅ CONECTADO (reconectado 13-jun) | Graph API v21 · **Page Token PERMANENTE guardado directo en `IG_PAGE_TOKEN`** (expires_at=0, no caduca; el backend lo prefiere si está). Reconexión: endpoint `/api/ig/start`+`/callback` (requiere config FB Login Business) o Graph Explorer → derivar page token. `FB_APP_ID/FB_APP_SECRET/IG_PAGE_TOKEN/FB_PAGE_ID/IG_BUSINESS_ID` | `igPublish(imgUrl,caption)` |
 | **X/Twitter** | @cobrexio (id `2060017829294776320`) | ✅ CONECTADO | API v2 + **OAuth 1.0a firmado a mano** (HMAC-SHA1) · `X_API_KEY/X_API_SECRET/X_ACCESS_TOKEN/X_ACCESS_TOKEN_SECRET` | `xPublish(text,imgUrl)` |
 | **Telegram** | canal t.me/cobrexio | ✅ CONECTADO | bot `@Aurexalertas_bot` (ya admin del canal) · `TELEGRAM_BOT_TOKEN` · `MKT_TELEGRAM_CHANNEL` | `tgPublishChannel(text,imgUrl)` |
 | **YouTube** | @cobrex-io (canal `UCXb6q8eZsHPP4nu6yYm0diA`, Brand Account de fmoscon@gmail.com) | ✅ CONECTADO | Data API v3 + **refresh token PERMANENTE** (scope `youtube.upload`, app en producción) · GCP "Cobrex" `tribal-mapper-499119-k5` · `YT_CLIENT_ID/YT_CLIENT_SECRET/YT_REFRESH_TOKEN` | `ytUpload(url,title,desc,tags)` |
