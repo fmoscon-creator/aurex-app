@@ -1,4 +1,4 @@
-# Plan Maestro de Contenido — Redes Cobrex (v4)
+# Plan Maestro de Contenido — Redes Cobrex (v6 — consolidada Code + Escritorio)
 
 Versión 2, hecha por Code + Escritorio. Incluye: decisiones tomadas, mejores horarios, **catálogo completo de contenido enumerado** y un **calendario real de 4 semanas** (cada día, cada canal, contenido, idioma y hora ARG). Pendiente de tu opinión, Fernando.
 
@@ -279,7 +279,7 @@ Un plan de contenido no arranca sin esto. Lo agrego yo anticipándolo, no por un
 
 **8.4 Disclaimer legal** — todo contenido con opinión de mercado lleva una línea fija: "Esto no es asesoramiento financiero / Not financial advice." Importante para una fintech, evita problemas. Va en captions y en la bio.
 
-**8.5 Sistema de publicación (el "cómo publicamos")** — hoy solo están conectados Telegram + Supabase; faltan tokens/permisos del resto (IG, X, TikTok, YouTube, LinkedIn). Dos caminos: (a) automatizar con los tokens (cron Railway) o una herramienta tipo Metricool/Buffer; (b) publicación asistida (Code prepara, Fernando publica con 1 clic). Definir esto es clave: sin canal de publicación no hay grilla que valga.
+**8.5 Sistema de publicación — estado VERIFICADO en vivo 13-jun (endpoints /api/<canal>/verify):** conectados y funcionando: **X ✅, Telegram ✅, YouTube ✅ (listo para subir), LinkedIn ✅, TikTok ✅ (sandbox)**. Pendientes reales: **Instagram** (token vencido el 11-jun → reconectar) y **TikTok** (auditoría del Direct Post para postear público). O sea **5 de 6 operativos**. Decisión de publicación: ver 10.4 (arrancamos con Metricool; el sistema propio por API ya está 5/6 hecho).
 
 **8.6 Tracking / UTM** — links con etiqueta por canal (ej. cobrex.io/redes?utm=ig) para medir qué red trae descargas reales. Lo arma Code.
 
@@ -298,3 +298,48 @@ Un plan de contenido no arranca sin esto. Lo agrego yo anticipándolo, no por un
 - **PWA a Build 45/39:** Code (bloqueante para videos de app).
 - **Página de links + kit visual + bios + tracking:** Code.
 - **Sistema de publicación (tokens vs asistida):** decisión a definir entre los tres.
+
+---
+
+## 10. CONSOLIDACIÓN — aportes de Escritorio + análisis de Code (v6)
+
+Escritorio revisó la v4 (Issue #3). Integro sus aportes y agrego mi análisis/decisiones.
+
+### 10.1 Tono de voz (faltaba — lo definimos)
+Cobrex suena: **directo, inteligente, con datos reales, sin humo.**
+Cómo NO sonar: no como banco (frío/corporativo), no como influencer de cripto (hype y promesas de ganancias), no como app de trading genérica (jerga técnica vacía).
+Ejemplo OK: "Tu app te dice COMPRA. Cobrex te dice POR QUÉ." Ejemplo a evitar: "🚀🚀 La app que te hará millonario 🚀🚀".
+
+### 10.2 Onboarding de nuevos seguidores (aporte de Escritorio — lo tomamos)
+Quien llega nuevo al perfil tiene que entender Cobrex en 3 segundos:
+- **Instagram:** Highlights fijos "Qué es Cobrex / Cómo funciona / Descargala" + el video Tour (#1) siempre primero en el feed.
+- **TikTok:** el Tour fijado arriba.
+- Se suma a la sección 8 (Infraestructura).
+
+### 10.3 Disclaimer legal — texto exacto (aporte de Escritorio)
+- ES: "Esto no es asesoramiento financiero. Información educativa. Invertir implica riesgos."
+- EN: "Not financial advice. For educational purposes only. Investing involves risk."
+Va en: pie de cada caption de mercado, bio de los 6 perfiles, y cobrex.io/redes.
+
+### 10.4 Sistema de publicación — DECISIÓN (Escritorio propone, Code valida)
+Decisión: **arrancar con Metricool** (programa IG, TikTok, X, LinkedIn y YouTube desde un solo lugar, sin desarrollo). Telegram ya está conectado por API (Supabase). El sistema propio por API (que YA está 5/6 hecho, ver 8.5) queda como camino del mes 2 cuando haya volumen. Esto destraba la publicación HOY.
+
+### 10.5 Slot "comodín de coyuntura" (aporte de Escritorio — lo tomamos)
+1 slot por semana reservado para reaccionar a un evento de mercado (crash, decisión de la Fed, quiebra de exchange). Es el contenido que más se viraliza. Se agrega al calendario (sin número fijo de pieza, se decide en el momento).
+
+### 10.6 Ideas nuevas de contenido (13-18, de Escritorio)
+13. "Cobrex en 8 idiomas" — placa con 8 banderas + claim en cada idioma.
+14. "FREE vs PRO vs ELITE: cuánto cuesta no tener información" — costo de oportunidad (GDELT solo ELITE).
+15. "El bot de Telegram: la alerta que llega antes que las noticias" — demo de alerta en Telegram.
+16. Serie "Por qué el RSI importa" — RSI-14, MACD 12/26, soporte/resistencia 30d (carrusel/thread/PDF).
+17. "El FOMC mueve tu portafolio aunque no lo sepas" — educativo macro + alertas, timely.
+18. Formato "caso real" — captura de reseña + dato del activo + resultado (para cuando lleguen testimonios).
+→ El catálogo pasa de ~50 a ~56 piezas.
+
+### 10.7 Las 50 cuentas a seguir (Fase 1) y los textos ES/EN
+Entregados por Escritorio, completos. Para no inflar este plan, van en el documento aparte **TEXTOS_Y_CUENTAS_REDES** (Dropbox + GitHub): las 50 cuentas con handle + razón (AR/Latam x20, Cripto x10, Acciones x10, Fintech x10) y los textos ES/EN de los 5 videos prioritarios (gancho + cuerpo + CTA + hashtags por canal).
+
+### 10.8 Análisis de Code sobre la consolidación
+- De acuerdo con todo lo de Escritorio. Metricool es la decisión correcta para no frenarnos.
+- Sumo un pendiente operativo real: **reconectar Instagram** (token vencido 11-jun) — ver 8.5; propongo agregar un endpoint de reconexión OAuth para que no haya que copiar tokens a mano.
+- El "comodín de coyuntura" y el "caso real" requieren que alguien esté atento al mercado/reseñas: definir quién (Fernando aprueba, Code/Escritorio detectan).
