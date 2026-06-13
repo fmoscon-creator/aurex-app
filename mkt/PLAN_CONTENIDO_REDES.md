@@ -1,4 +1,4 @@
-# Plan Maestro de Contenido — Redes Cobrex — v3
+# Plan Maestro de Contenido — Redes Cobrex (v4)
 
 Versión 2, hecha por Code + Escritorio. Incluye: decisiones tomadas, mejores horarios, **catálogo completo de contenido enumerado** y un **calendario real de 4 semanas** (cada día, cada canal, contenido, idioma y hora ARG). Pendiente de tu opinión, Fernando.
 
@@ -87,6 +87,7 @@ Las redes arrancan con 0 seguidores. Sin esto, publicaríamos al vacío. Es la b
 - LinkedIn de Fernando (4.952 contactos): post de anuncio + pedido de seguir todos los canales y sumarse al Telegram. Mayor fuente inicial.
 - Red personal (WhatsApp/contactos): invitación directa al Telegram + pedir a 10-20 cercanos que sigan y compartan.
 - Botones "Seguinos" en la app (cobrex.io/app) y en la web cobrex.io: los usuarios y visitantes actuales = primeros seguidores.
+- Imagen de anuncio para enviar por WhatsApp a tu red + **página de links clickeable (cobrex.io/redes)** con cada red y la descarga de la app (ver 8.1). Pieza a producir en Fase 0 (no ahora).
 - Cross-link total: cada canal enlaza a los otros; bios con links; cobrex.io con los 6 íconos.
 
 **Fase 1 — Calentamiento social (seguir/comentar, empieza ya):**
@@ -263,3 +264,37 @@ Falta redactar el copy real (ES + EN) de TODOS los contenidos del catálogo (3.B
 2. Escritorio: opina, suma ideas/contenidos y arranca los textos ES/EN (Issue en GitHub).
 3. Code: actualiza la PWA (bloqueante) en paralelo.
 4. Con la v3 cerrada + textos + PWA lista → empezamos a producir y publicar (con la fase semilla primero).
+
+---
+
+## 8. INFRAESTRUCTURA Y OPERACIÓN (lo que falta para que el plan funcione — aporte proyectado de Code)
+
+Un plan de contenido no arranca sin esto. Lo agrego yo anticipándolo, no por una alerta puntual.
+
+**8.1 Página de links (cobrex.io/redes)** — una sola página clickeable con las 6 redes + descargar app (App Store / Google Play). Sirve para: la imagen de WhatsApp de Fase 0, la bio de cada red (un solo link), y todo CTA. Es prerrequisito de Fase 0. La hace Code (HTML, igual que la web).
+
+**8.2 Kit visual / consistencia de marca** — plantillas reutilizables (placas, carruseles, miniaturas YouTube, portadas) con la paleta dorada/oscura, tipografía Manrope y el emblema. Para que TODO el contenido se vea de la misma familia y profesional. Lo arma Code.
+
+**8.3 Bios + setup de los 6 perfiles** — texto de bio optimizado por canal (con keyword + link a cobrex.io/redes), foto, banner y handle consistente. Checklist de que los 6 perfiles estén 100% armados ANTES de publicar. (Code redacta bios; verificación de perfiles = Fernando/Escritorio.)
+
+**8.4 Disclaimer legal** — todo contenido con opinión de mercado lleva una línea fija: "Esto no es asesoramiento financiero / Not financial advice." Importante para una fintech, evita problemas. Va en captions y en la bio.
+
+**8.5 Sistema de publicación (el "cómo publicamos")** — hoy solo están conectados Telegram + Supabase; faltan tokens/permisos del resto (IG, X, TikTok, YouTube, LinkedIn). Dos caminos: (a) automatizar con los tokens (cron Railway) o una herramienta tipo Metricool/Buffer; (b) publicación asistida (Code prepara, Fernando publica con 1 clic). Definir esto es clave: sin canal de publicación no hay grilla que valga.
+
+**8.6 Tracking / UTM** — links con etiqueta por canal (ej. cobrex.io/redes?utm=ig) para medir qué red trae descargas reales. Lo arma Code.
+
+**8.7 Moderación y respuesta** — protocolo: responder TODOS los comentarios/DM en 48h (lo mide el algoritmo), FAQ con respuestas tipo, y manejo de comentarios negativos. Quién responde y cómo.
+
+**8.8 Contingencia PWA** — si la actualización de la PWA se demora, las semanas 3-4 se rellenan con: más diferenciadores (carruseles/placas que NO necesitan grabar la app), reseñas, días de datos y threads. El plan no se frena por el bloqueante.
+
+**8.9 Workflow de aprobación** — cada pieza pasa por tu OK antes de publicar (como venimos). Se mantiene formal: Code/Escritorio preparan → Fernando aprueba → se publica.
+
+---
+
+## 9. TAREAS ABIERTAS DEFINIDAS (quién hace qué)
+
+- **Fase 1 — 50 cuentas a seguir:** definir 50 cuentas (AR + principales de cada mercado: fintech, cripto, acciones, medios financieros, referentes LATAM/US). Tarea de Escritorio (puede navegar y verificar handles) con aporte de Code. Entregable: lista con handle + por qué + en qué red.
+- **Textos ES/EN de todo el catálogo:** lidera Escritorio (copy), con el mapa de funciones para datos exactos. Code consolida.
+- **PWA a Build 45/39:** Code (bloqueante para videos de app).
+- **Página de links + kit visual + bios + tracking:** Code.
+- **Sistema de publicación (tokens vs asistida):** decisión a definir entre los tres.
