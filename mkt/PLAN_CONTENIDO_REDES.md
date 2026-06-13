@@ -1,4 +1,4 @@
-# Plan Maestro de Contenido — Redes Cobrex (v6 — consolidada Code + Escritorio)
+# Plan Maestro de Contenido — Redes Cobrex (v7 — textos completos)
 
 Versión 2, hecha por Code + Escritorio. Incluye: decisiones tomadas, mejores horarios, **catálogo completo de contenido enumerado** y un **calendario real de 4 semanas** (cada día, cada canal, contenido, idioma y hora ARG). Pendiente de tu opinión, Fernando.
 
@@ -256,7 +256,7 @@ Los videos de la app (sección B + diferenciadores que muestran pantallas) requi
 
 ## 6. PENDIENTE — LOS TEXTOS (ES + EN) DE CADA CONTENIDO
 
-Falta redactar el copy real (ES + EN) de TODOS los contenidos del catálogo (3.B videos de app, 3.C diferenciadores, 4.D recurrentes): primera línea/gancho, cuerpo, CTA y hashtags por canal. Es el próximo gran entregable. Propuesta de división: **Escritorio lidera la redacción** (es su fuerte) usando el mapa de funciones reales (mkt/MAPA_FUNCIONES_APP.md); **Code produce los visuales/videos** y consolida. Cada texto se hace en sus dos idiomas.
+**✅ TEXTOS COMPLETOS (v7).** Todos los textos ES/EN (gancho + cuerpo + CTA + hashtags por canal) están redactados: 5 videos prioritarios + 9 videos de app restantes + 12 diferenciadores + 6 ideas, con datos exactos del mapa de funciones. Están en el documento **TEXTOS_Y_CUENTAS_REDES** (Dropbox + GitHub). Listos para usar al producir cada pieza.
 
 ## 7. PRÓXIMOS PASOS
 
