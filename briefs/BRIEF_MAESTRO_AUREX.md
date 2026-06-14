@@ -193,6 +193,8 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 | ELITE Mensual | $9.99 | $4.99 |
 | ELITE Anual | $95.99 | $47.99 |
 
+> 🔴 **PENDIENTE URGENTE (PWA + PayPal) — 13-jun:** la PWA (cobrex.io/app) cobra por **PayPal** con 4 planes que siguen en **AUREX** (nombre viejo) y **precios viejos** ($9.99/$89.99 PRO · $19.99/$179.99 ELITE). Plan IDs: PRO mensual `P-64Y46051CU7251058NHMGG4Y`, PRO anual `P-3FG40467BU710103WNHMGJSA`, ELITE mensual `P-9T718444CV910321WNHMGOWY`, ELITE anual `P-1WB81912S68516031NHMGRPY`. **(1)** Actualizar URGENTE en PayPal: rebrand a COBREX + precios vigentes (los de ASC/Play Console). **(2)** La PWA NO debe hardcodear precios/plan_ids: debe **leerlos automático de PayPal** (endpoint backend que consulta la API de PayPal → la PWA los muestra). Mientras tanto, los displays de la PWA están en precios viejos y NO se tocan hasta actualizar PayPal (sino muestra un precio y cobra otro).
+
 **🎁 Free trial 7 días** SOLO en los 2 **MENSUALES** (PRO + ELITE), con tarjeta, "adquisición de clientes nuevos". RevenueCat lo lee **en runtime** (Play Billing / StoreKit), NO en su dashboard.
 
 **Config por plataforma:**
