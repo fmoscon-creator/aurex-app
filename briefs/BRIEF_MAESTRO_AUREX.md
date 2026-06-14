@@ -193,7 +193,18 @@ Clean → bump `versionCode` **y** `versionName` (juntos) → `./gradlew bundleR
 | ELITE Mensual | $9.99 | $4.99 |
 | ELITE Anual | $95.99 | $47.99 |
 
-> 🔴 **PENDIENTE URGENTE (PWA + PayPal) — 13-jun:** la PWA (cobrex.io/app) cobra por **PayPal** con 4 planes que siguen en **AUREX** (nombre viejo) y **precios viejos** ($9.99/$89.99 PRO · $19.99/$179.99 ELITE). Plan IDs: PRO mensual `P-64Y46051CU7251058NHMGG4Y`, PRO anual `P-3FG40467BU710103WNHMGJSA`, ELITE mensual `P-9T718444CV910321WNHMGOWY`, ELITE anual `P-1WB81912S68516031NHMGRPY`. **(1)** Actualizar URGENTE en PayPal: rebrand a COBREX + precios vigentes (los de ASC/Play Console). **(2)** La PWA NO debe hardcodear precios/plan_ids: debe **leerlos automático de PayPal** (endpoint backend que consulta la API de PayPal → la PWA los muestra). Mientras tanto, los displays de la PWA están en precios viejos y NO se tocan hasta actualizar PayPal (sino muestra un precio y cobra otro).
+>  **PAYPAL / PWA — planes COBREX con geo-pricing (creados 13-jun, en progreso). Doc detallado: `Dropbox/AUREX/Paypal PWA/PAYPAL PWA al 13.06.2026.docx`.**
+>
+> Productos: Cobrex PRO `PROD-6HK29222W24001317` · Cobrex ELITE `PROD-31296005PJ8395110`. Webhook usa `PAYPAL_PLAN_MAP` (ya actualizado). Endpoint `/api/plans?country=AR` lee precios dinámico de PayPal (la PWA NO hardcodea).
+>
+> | Plan | Global | plan_id Global | Argentina | plan_id AR | Trial |
+> |---|---|---|---|---|---|
+> | PRO Mensual | $4.99 | `P-4JH161461V818874SNIW7UAA` | $2.99 | `P-6MT629485R3534414NIW7UAA` | 7d |
+> | PRO Anual | $47.99 | `P-2N0098015C849324MNIW7UAI` | $28.99 | `P-8MU00004R95532325NIW7UAI` | — |
+> | ELITE Mensual | $9.99 | `P-0AN884893H6644053NIW7UAQ` | $4.99 | `P-5E555182VJ9980530NIW7UAQ` | 7d |
+> | ELITE Anual | $95.99 | `P-11266502KC039145PNIW7UAQ` | $47.99 | `P-3RJ21860P6796451WNIW7UAY` | — |
+>
+> **PENDIENTE:** (a) wirear la PWA a estos planes (geo-detect AR/Global + lectura dinámica via `/api/plans`, sin hardcode); (b) desactivar los 4 planes viejos AUREX (`P-64Y…`, `P-3FG…`, `P-9T7…`, `P-1WB…`) cuando la PWA nueva esté en vivo. Planes viejos siguen ACTIVE durante la transición.
 
 **🎁 Free trial 7 días** SOLO en los 2 **MENSUALES** (PRO + ELITE), con tarjeta, "adquisición de clientes nuevos". RevenueCat lo lee **en runtime** (Play Billing / StoreKit), NO en su dashboard.
 
